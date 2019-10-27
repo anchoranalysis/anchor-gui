@@ -1,0 +1,147 @@
+package org.anchoranalysis.gui.io.loader.manifest.finder.historyfolder;
+
+/*
+ * #%L
+ * anchor-gui
+ * %%
+ * Copyright (C) 2016 ETH Zurich, University of Zurich, Owen Feehan
+ * %%
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ * 
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ * 
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ * #L%
+ */
+
+
+import java.util.List;
+
+import org.anchoranalysis.core.cache.ExecuteException;
+import org.anchoranalysis.core.cache.Operation;
+import org.anchoranalysis.core.index.GetOperationFailedException;
+import org.anchoranalysis.core.index.container.IBoundedIndexContainer;
+import org.anchoranalysis.gui.container.ContainerGetter;
+import org.anchoranalysis.io.deserializer.DeserializationFailedException;
+import org.anchoranalysis.io.manifest.ManifestRecorder;
+import org.anchoranalysis.io.manifest.deserializer.folder.LoadContainer;
+import org.anchoranalysis.io.manifest.finder.FinderSingleFolder;
+import org.anchoranalysis.io.manifest.finder.FinderUtilities;
+import org.anchoranalysis.io.manifest.folder.FolderWrite;
+import org.anchoranalysis.io.manifest.match.helper.folderwrite.FolderWriteFileFunctionType;
+
+public abstract class FinderHistoryFolder<T> extends FinderSingleFolder implements ContainerGetter<T> {
+
+	private LoadContainer<T> history;
+	
+	private String manifestFunction;
+	
+	private enum StorageType {
+		BUNDLE,
+		NON_BUNDLE
+	}
+	
+	// We remember what type from when we found the file, so
+	//   that we can use it again when deserializing
+	private StorageType foundStorage;
+
+	public FinderHistoryFolder(String manifestFunction) {
+		super();
+		this.manifestFunction = manifestFunction;
+	}
+
+	
+	// A simple method to override in each finder that is based upon finding a single file
+	@Override
+	protected FolderWrite findFolder( ManifestRecorder manifestRecorder ) {
+		
+		List<FolderWrite> incrementalListBundle = FinderUtilities.findListFolder(manifestRecorder, 
+			new FolderWriteFileFunctionType( this.manifestFunction, "serializedBundle" )
+		);
+		if (incrementalListBundle.size()>0) {
+			foundStorage = StorageType.BUNDLE;
+			return incrementalListBundle.get(0);
+		}
+		
+		List<FolderWrite>  incrementalList = FinderUtilities.findListFolder(manifestRecorder, 
+			new FolderWriteFileFunctionType( this.manifestFunction, "serialized" )
+		);
+		
+		// We take the frame from the first one
+		if (incrementalList.size()>0) {
+			foundStorage = StorageType.NON_BUNDLE;
+			return incrementalList.get(0);
+		}
+		
+		return null;
+	}
+	
+	protected abstract LoadContainer<T> createFromBundle( FolderWrite folder ) throws DeserializationFailedException;
+	
+	protected abstract LoadContainer<T> createFromSerialized( FolderWrite folder ) throws DeserializationFailedException;
+	
+	
+	private Operation<LoadContainer<T>> operation = new Operation<LoadContainer<T>>() {
+		@Override
+		public LoadContainer<T> doOperation() throws ExecuteException {
+			try {
+				return get();
+			} catch (GetOperationFailedException e) {
+				throw new ExecuteException(e);
+			}
+		}
+	};
+	
+	public Operation<LoadContainer<T>> getAsOperation() {
+		return operation;
+	}
+	
+		
+	public LoadContainer<T> get() throws GetOperationFailedException {
+		
+		try {
+			assert( exists() );
+			
+			if (history==null) {
+				
+				switch(foundStorage) {
+				case BUNDLE:
+					this.history = createFromBundle( getFoundFolder() );	
+					break;
+				case NON_BUNDLE:
+					this.history = createFromSerialized( getFoundFolder() );
+					break;
+				default:
+					assert false;
+					break;
+				}
+				
+			}
+		} catch (DeserializationFailedException e) {
+			throw new GetOperationFailedException(e);
+		}
+		
+		return this.history;
+	}
+	
+	
+
+	@Override
+	public IBoundedIndexContainer<T> getCntr()
+			throws GetOperationFailedException {
+		return get().getCntr();
+	}
+
+}

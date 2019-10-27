@@ -1,0 +1,64 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+        <groupId>org.anchoranalysis.anchor</groupId>
+   	    <artifactId>anchor-parent-gui</artifactId>
+		<version>0.0.4-SNAPSHOT</version>
+    </parent>
+  <artifactId>anchor-gui-import</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <dependencies>
+
+	<dependency>
+	  <groupId>${project.groupId}</groupId>
+	  <artifactId>anchor-bean</artifactId>
+	  <version>0.0.8-SNAPSHOT</version>
+	</dependency>
+	
+	<dependency>
+	  <groupId>${project.groupId}</groupId>
+	  <artifactId>anchor-gui-common</artifactId>
+	  <version>0.0.1-SNAPSHOT</version>
+	</dependency>
+	
+	<dependency>
+	  <groupId>${project.groupId}</groupId>
+	  <artifactId>anchor-gui-frame</artifactId>
+	  <version>0.0.1-SNAPSHOT</version>
+	</dependency>
+	
+	<dependency>
+	  <groupId>${project.groupId}</groupId>
+	  <artifactId>anchor-gui-feature-evaluator</artifactId>
+	  <version>0.0.1-SNAPSHOT</version>
+	</dependency>
+	
+	
+	
+
+	<dependency>
+    	<groupId>commons-io</groupId>
+    	<artifactId>commons-io</artifactId>
+    	<version>${commons-io.version}</version>
+    </dependency> 
+	<dependency>
+    	<groupId>commons-logging</groupId>
+    	<artifactId>commons-logging</artifactId>
+    	<version>1.1.1</version>
+    </dependency> 
+	<dependency>
+    	<groupId>commons-lang</groupId>
+    	<artifactId>commons-lang</artifactId>
+    	<version>2.6</version>
+    </dependency>   
+  
+    
+    
+    <dependency>
+	  <groupId>colt</groupId>
+	  <artifactId>colt</artifactId>
+	  <version>1.2.0</version>
+	</dependency>
+	
+  </dependencies>
+</project>

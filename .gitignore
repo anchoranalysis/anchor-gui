@@ -1,0 +1,6 @@
+/fallback.log
+target/
+.classpath
+.project
+.settings/
+*.versionsBackup

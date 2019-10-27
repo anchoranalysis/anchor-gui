@@ -1,0 +1,120 @@
+package org.anchoranalysis.gui.graph.creator;
+
+/*
+ * #%L
+ * anchor-gui
+ * %%
+ * Copyright (C) 2016 ETH Zurich, University of Zurich, Owen Feehan
+ * %%
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ * 
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ * 
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ * #L%
+ */
+
+
+import java.awt.Color;
+import java.awt.GradientPaint;
+import java.awt.geom.Point2D;
+import java.util.ArrayList;
+
+import org.anchoranalysis.anchor.graph.AxisLimits;
+import org.anchoranalysis.anchor.graph.bean.GraphDefinition;
+import org.anchoranalysis.core.bridge.IObjectBridge;
+import org.anchoranalysis.core.color.ColorIndex;
+import org.anchoranalysis.core.error.CreateException;
+import org.anchoranalysis.core.index.GetOperationFailedException;
+import org.anchoranalysis.feature.nrg.NRGTotal;
+import org.anchoranalysis.gui.graph.panel.ClickableGraphFactory;
+import org.anchoranalysis.gui.graph.panel.ClickableGraphInstance;
+
+import ch.ethz.biol.cell.mpp.gui.graph.jfreechart.bar.NRGGraphItem;
+import ch.ethz.biol.cell.mpp.instantstate.CfgNRGInstantState;
+import ch.ethz.biol.cell.mpp.mark.Mark;
+import ch.ethz.biol.cell.mpp.nrg.NRGPair;
+
+public class GenerateGraphNRGBreakdownFromInstantState implements IObjectBridge<CfgNRGInstantState,ClickableGraphInstance> {
+	
+	private final GraphDefinition<NRGGraphItem> definition;
+	private final ColorIndex colorIndex;
+	
+	public GenerateGraphNRGBreakdownFromInstantState(GraphDefinition<NRGGraphItem> definition,
+			ColorIndex colorIndex) {
+		super();
+		this.definition = definition;
+		this.colorIndex = colorIndex;
+	}
+
+	@Override
+	public ClickableGraphInstance bridgeElement(CfgNRGInstantState state) throws GetOperationFailedException {
+		
+		if (state.getCfgNRG()!=null) {
+			ArrayList<NRGGraphItem> list;
+			try {
+				list = createNRGCmp(state, colorIndex );
+				return ClickableGraphFactory.create(
+					definition,
+					list.iterator(),
+					null,
+					new AxisLimits(-0.5, 1)
+				);
+			} catch (CreateException e) {
+				throw new GetOperationFailedException(e);
+			}
+			
+		} else {
+			return null;
+		}
+	}
+	
+	
+	public static ArrayList<NRGGraphItem> createNRGCmp( CfgNRGInstantState state, ColorIndex colorIndex ) {
+		
+		ArrayList<NRGGraphItem> list = new ArrayList<>();
+		
+		// Each single nrg item
+		int i = 0;
+		for (NRGTotal nrg : state.getCfgNRG().getCalcMarkInd()) {
+			Mark m = state.getCfgNRG().getCfg().get(i++);
+			
+			NRGGraphItem item = new NRGGraphItem();
+			item.setNrg( nrg.getTotal() );
+			item.setObjectID( Integer.toString(m.getId()) );
+			item.setPaint( colorIndex.get(m.getId()).toAWTColor() );
+			
+			list.add(item);
+		}
+		
+		// Each double nrg item 
+		for (NRGPair pair : state.getCfgNRG().getCalcMarkPair().createPairsUnique()) {
+
+			NRGGraphItem item = new NRGGraphItem();
+			item.setNrg( pair.getNRG().getTotal() );
+			item.setObjectID( Integer.toString( pair.getPair().getSource().getId() ) + "--" + Integer.toString ( pair.getPair().getDestination().getId()) );
+			
+			Color colorSource = colorIndex.get( pair.getPair().getSource().getId() ).toAWTColor(); 
+			Color colorDestination = colorIndex.get( pair.getPair().getDestination().getId() ).toAWTColor();
+			
+			item.setPaint( new GradientPaint( new Point2D.Double(0,0), colorSource, new Point2D.Double(0,32), colorDestination) );
+			list.add(item);
+		}
+		
+		return list;
+	}
+	
+	
+}

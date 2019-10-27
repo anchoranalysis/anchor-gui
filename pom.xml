@@ -1,0 +1,66 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+	
+	<parent>
+        <groupId>org.anchoranalysis.anchor</groupId>
+   	    <artifactId>anchor-pom</artifactId>
+		<version>0.0.16-SNAPSHOT</version>
+    </parent> 
+
+    <artifactId>anchor-parent-gui</artifactId>
+    <packaging>pom</packaging>
+    <version>0.0.4-SNAPSHOT</version>
+    <name>anchor-parent-gui</name>
+      
+  	<scm>
+		<connection>scm:git:ssh://git@bitbucket.org/anchorimageanalysis/anchor-gui.git</connection>
+		<developerConnection>scm:git:ssh://git@bitbucket.org/anchorimageanalysis/anchor-gui.git</developerConnection>
+		<url>https://git@bitbucket.org/anchorimageanalysis/anchor-gui.git</url>
+	  <tag>anchor-parent-0.0.1</tag>
+  </scm>
+    
+    <modules>
+	   <module>anchor-gui-common</module>
+        <module>anchor-gui-browser</module>
+	   <module>anchor-gui-annotation</module>
+	   <module>anchor-gui-feature-evaluator</module>
+	   <module>anchor-gui-frame</module>
+	   <module>anchor-gui-export</module>
+	   <module>anchor-gui-import</module>
+	   <module>anchor-gui-finder</module>
+	   <module>anchor-gui-graph</module>
+	   <module>anchor-gui-mdi</module>
+	   <module>anchor-plugin-gui-annotation</module>
+	   <module>anchor-plugin-gui-export</module>
+	   <module>anchor-plugin-gui-import</module>
+	   <module>anchor-plugin-gui-live</module>
+    </modules>
+
+	<!-- Provides a means of reaching anchor-pom and ImageJ -->
+    <repositories>
+		<repository>
+		  <releases>
+			<enabled>true</enabled>
+			<updatePolicy>never</updatePolicy>
+			<checksumPolicy>warn</checksumPolicy>
+		  </releases>
+		  <snapshots>
+			<enabled>true</enabled>
+			<updatePolicy>always</updatePolicy>
+			<checksumPolicy>warn</checksumPolicy>
+		  </snapshots>
+		  <id>anchor</id>
+		   <name>anchor</name>
+		   <url>http://maven.anchoranalysis.org:8081/repository/anchor</url>
+		  <layout>default</layout>
+		</repository>
+		
+		<repository>
+			<id>imagej</id>
+			<name>ImageJ repository</name>
+			<url>http://maven.imagej.net/content/groups/public</url>
+		</repository>
+		
+	</repositories>
+	
+</project>
