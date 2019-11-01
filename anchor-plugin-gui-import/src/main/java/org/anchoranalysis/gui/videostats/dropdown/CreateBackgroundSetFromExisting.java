@@ -1,5 +1,7 @@
 package org.anchoranalysis.gui.videostats.dropdown;
 
+import org.anchoranalysis.anchor.mpp.bean.init.MPPInitParams;
+
 /*
  * #%L
  * anchor-gui
@@ -38,7 +40,6 @@ import org.anchoranalysis.image.init.ImageInitParams;
 import org.anchoranalysis.image.stack.wrap.WrapStackAsTimeSequence;
 import org.anchoranalysis.io.bean.output.OutputWriteSettings;
 
-import ch.ethz.biol.cell.beaninitparams.MPPInitParams;
 import ch.ethz.biol.cell.countchrom.experiment.SharedObjectsUtilities;
 
 public class CreateBackgroundSetFromExisting extends CachedOperationWithProgressReporter<BackgroundSet> {

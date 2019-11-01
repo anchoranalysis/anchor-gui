@@ -29,6 +29,9 @@ package org.anchoranalysis.gui.videostats.internalframe.annotator.tool;
 
 import java.util.List;
 
+import org.anchoranalysis.anchor.mpp.bean.regionmap.RegionMap;
+import org.anchoranalysis.anchor.mpp.mark.GlobalRegionIdentifiers;
+import org.anchoranalysis.anchor.mpp.regionmap.RegionMapSingleton;
 import org.anchoranalysis.core.geometry.Point3d;
 import org.anchoranalysis.core.geometry.Point3i;
 import org.anchoranalysis.gui.frame.overlays.ProposedCfg;
@@ -39,9 +42,6 @@ import org.anchoranalysis.gui.videostats.internalframe.annotator.navigation.ISwi
 import org.anchoranalysis.gui.videostats.internalframe.evaluator.EvaluatorWithContext;
 
 import ch.ethz.biol.cell.mpp.cfg.Cfg;
-import ch.ethz.biol.cell.mpp.mark.GlobalRegionIdentifiers;
-import ch.ethz.biol.cell.mpp.mark.regionmap.RegionMap;
-import ch.ethz.biol.cell.mpp.mark.regionmap.RegionMapSingleton;
 
 // Membership is always based upon SUBMARK_CORE
 public class DeleteTool extends AnnotationTool {

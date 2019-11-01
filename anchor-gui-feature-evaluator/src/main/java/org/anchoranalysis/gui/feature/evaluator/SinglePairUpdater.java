@@ -1,5 +1,6 @@
 package org.anchoranalysis.gui.feature.evaluator;
 
+import org.anchoranalysis.anchor.mpp.pair.Pair;
 import org.anchoranalysis.anchor.overlay.Overlay;
 import org.anchoranalysis.anchor.overlay.collection.OverlayCollection;
 
@@ -34,8 +35,6 @@ import org.anchoranalysis.feature.nrg.NRGStackWithParams;
 import org.anchoranalysis.gui.feature.evaluator.singlepair.IUpdatableSinglePair;
 import org.anchoranalysis.gui.feature.evaluator.singlepair.UpdatableSinglePairList;
 import org.anchoranalysis.gui.image.OverlayCollectionWithImgStack;
-
-import ch.ethz.biol.cell.mpp.pair.Pair;
 
 class SinglePairUpdater {
 

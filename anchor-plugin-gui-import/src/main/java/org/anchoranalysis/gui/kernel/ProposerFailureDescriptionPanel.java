@@ -43,9 +43,13 @@ import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreeModel;
 import javax.swing.tree.TreePath;
 
+import org.anchoranalysis.anchor.mpp.bean.regionmap.RegionMembershipWithFlags;
+import org.anchoranalysis.anchor.mpp.mark.GlobalRegionIdentifiers;
 import org.anchoranalysis.anchor.mpp.mark.Mark;
+import org.anchoranalysis.anchor.mpp.overlay.OverlayMark;
 import org.anchoranalysis.anchor.mpp.proposer.error.ErrorNodeImpl;
 import org.anchoranalysis.anchor.mpp.proposer.error.ProposerFailureDescription;
+import org.anchoranalysis.anchor.mpp.regionmap.RegionMapSingleton;
 import org.anchoranalysis.anchor.overlay.collection.ColoredOverlayCollection;
 import org.anchoranalysis.anchor.overlay.collection.OverlayCollection;
 import org.anchoranalysis.core.color.RGBColor;
@@ -56,11 +60,7 @@ import org.anchoranalysis.gui.cfgnrg.StatePanel;
 import org.anchoranalysis.gui.cfgnrg.StatePanelUpdateException;
 import org.anchoranalysis.gui.videostats.internalframe.IColoredCfgUpdater;
 
-import overlay.OverlayMark;
 import ch.ethz.biol.cell.imageprocessing.io.generator.raster.OverlayedDisplayStackUpdate;
-import ch.ethz.biol.cell.mpp.mark.GlobalRegionIdentifiers;
-import ch.ethz.biol.cell.mpp.mark.regionmap.RegionMapSingleton;
-import ch.ethz.biol.cell.mpp.mark.regionmap.RegionMembershipWithFlags;
 
 public class ProposerFailureDescriptionPanel extends StatePanel<ProposerFailureDescription> {
 

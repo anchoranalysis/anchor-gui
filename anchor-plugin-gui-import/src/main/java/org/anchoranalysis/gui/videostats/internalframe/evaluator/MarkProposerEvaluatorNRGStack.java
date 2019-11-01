@@ -4,6 +4,7 @@ import org.anchoranalysis.anchor.mpp.bean.proposer.MarkProposer;
 import org.anchoranalysis.anchor.mpp.mark.Mark;
 import org.anchoranalysis.anchor.mpp.proposer.ProposerContext;
 import org.anchoranalysis.anchor.mpp.proposer.error.ErrorNode;
+import org.anchoranalysis.anchor.mpp.pxlmark.memo.PxlMarkMemo;
 
 /*
  * #%L
@@ -40,7 +41,6 @@ import org.anchoranalysis.gui.videostats.internalframe.ProposalOperation;
 import anchor.provider.bean.ProposalAbnormalFailureException;
 import ch.ethz.biol.cell.mpp.cfg.Cfg;
 import ch.ethz.biol.cell.mpp.cfg.CfgGen;
-import ch.ethz.biol.cell.mpp.mark.pxlmark.memo.PxlMarkMemo;
 
 public class MarkProposerEvaluatorNRGStack implements ProposalOperationCreator {
 

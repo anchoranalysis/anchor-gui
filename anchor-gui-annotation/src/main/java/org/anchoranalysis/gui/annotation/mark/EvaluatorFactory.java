@@ -27,6 +27,7 @@ package org.anchoranalysis.gui.annotation.mark;
  */
 
 import org.anchoranalysis.anchor.mpp.bean.proposer.MarkProposer;
+import org.anchoranalysis.anchor.mpp.bean.regionmap.RegionMap;
 import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.gui.interactivebrowser.MarkEvaluatorRslvd;
 import org.anchoranalysis.gui.videostats.internalframe.annotator.InternalFrameAnnotator;
@@ -35,8 +36,6 @@ import org.anchoranalysis.gui.videostats.internalframe.evaluator.EvaluatorWithCo
 import org.anchoranalysis.gui.videostats.internalframe.evaluator.MarkProposerEvaluatorDimensions;
 import org.anchoranalysis.gui.videostats.internalframe.evaluator.MarkSphereOnPointProposerEvaluator;
 import org.anchoranalysis.image.extent.ImageDim;
-
-import ch.ethz.biol.cell.mpp.mark.regionmap.RegionMap;
 
 class EvaluatorFactory {
 

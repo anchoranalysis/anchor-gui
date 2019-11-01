@@ -36,6 +36,8 @@ import javax.swing.JComboBox;
 import javax.swing.JPanel;
 import javax.swing.event.EventListenerList;
 
+import org.anchoranalysis.anchor.mpp.bean.init.MPPInitParams;
+import org.anchoranalysis.anchor.mpp.bean.regionmap.RegionMap;
 import org.anchoranalysis.core.cache.ExecuteException;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.reporter.ErrorReporter;
@@ -44,9 +46,7 @@ import org.anchoranalysis.gui.interactivebrowser.MarkEvaluatorRslvd;
 import org.anchoranalysis.gui.interactivebrowser.MarkEvaluatorSetForImage;
 import org.anchoranalysis.gui.videostats.internalframe.evaluator.fromproposer.ProposalOperationCreatorFromProposer;
 
-import ch.ethz.biol.cell.beaninitparams.MPPInitParams;
 import ch.ethz.biol.cell.mpp.cfg.CfgGen;
-import ch.ethz.biol.cell.mpp.mark.regionmap.RegionMap;
 
 public class EvaluatorChooser {
 

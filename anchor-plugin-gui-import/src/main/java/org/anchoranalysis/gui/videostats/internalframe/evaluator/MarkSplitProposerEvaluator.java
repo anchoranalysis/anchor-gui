@@ -31,9 +31,12 @@ import java.awt.Color;
 import java.util.List;
 
 import org.anchoranalysis.anchor.mpp.bean.proposer.MarkSplitProposer;
+import org.anchoranalysis.anchor.mpp.mark.GlobalRegionIdentifiers;
 import org.anchoranalysis.anchor.mpp.mark.Mark;
+import org.anchoranalysis.anchor.mpp.pair.PairPxlMarkMemo;
 import org.anchoranalysis.anchor.mpp.proposer.ProposerContext;
 import org.anchoranalysis.anchor.mpp.proposer.error.ErrorNode;
+import org.anchoranalysis.anchor.mpp.pxlmark.memo.PxlMarkMemo;
 import org.anchoranalysis.core.color.RGBColor;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.geometry.Point3d;
@@ -46,9 +49,6 @@ import ch.ethz.biol.cell.mpp.cfg.Cfg;
 import ch.ethz.biol.cell.mpp.cfg.CfgGen;
 import ch.ethz.biol.cell.mpp.gui.videostats.internalframe.evaluator.EvaluatorUtilities;
 import ch.ethz.biol.cell.mpp.gui.videostats.internalframe.markredraw.ColoredCfg;
-import ch.ethz.biol.cell.mpp.mark.GlobalRegionIdentifiers;
-import ch.ethz.biol.cell.mpp.mark.pxlmark.memo.PxlMarkMemo;
-import ch.ethz.biol.cell.mpp.pair.PairPxlMarkMemo;
 
 public class MarkSplitProposerEvaluator implements ProposalOperationCreator {
 

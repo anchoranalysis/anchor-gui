@@ -30,6 +30,7 @@ package org.anchoranalysis.gui.retrieveelements;
 import java.util.Collection;
 
 import org.anchoranalysis.anchor.mpp.mark.Mark;
+import org.anchoranalysis.anchor.mpp.overlay.OverlayCollectionMarkFactory;
 import org.anchoranalysis.anchor.overlay.collection.OverlayCollection;
 import org.anchoranalysis.anchor.overlay.collection.OverlayCollectionObjMaskFactory;
 import org.anchoranalysis.image.io.objs.ObjMaskCollectionWriter;
@@ -39,7 +40,6 @@ import org.anchoranalysis.io.generator.collection.SubfolderGenerator;
 import org.anchoranalysis.io.generator.sequence.CollectionGenerator;
 import org.anchoranalysis.io.generator.serialized.ObjectOutputStreamGenerator;
 
-import overlay.OverlayCollectionMarkFactory;
 import ch.ethz.biol.cell.mpp.cfg.Cfg;
 
 public class RetrieveElementsOverlayCollection extends RetrieveElements {

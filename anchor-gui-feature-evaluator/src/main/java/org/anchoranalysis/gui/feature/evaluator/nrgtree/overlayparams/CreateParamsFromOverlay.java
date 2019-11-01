@@ -30,6 +30,8 @@ package org.anchoranalysis.gui.feature.evaluator.nrgtree.overlayparams;
 import java.util.List;
 
 import org.anchoranalysis.anchor.mpp.mark.Mark;
+import org.anchoranalysis.anchor.mpp.overlay.OverlayMark;
+import org.anchoranalysis.anchor.mpp.pair.Pair;
 import org.anchoranalysis.anchor.overlay.Overlay;
 import org.anchoranalysis.anchor.overlay.objmask.OverlayObjMask;
 import org.anchoranalysis.feature.nrg.NRGStackWithParams;
@@ -39,9 +41,6 @@ import org.anchoranalysis.gui.feature.FeatureWithRegionMap;
 import org.anchoranalysis.gui.feature.evaluator.nrgtree.createparams.CreateParamsIndFromObjMask;
 import org.anchoranalysis.gui.feature.evaluator.nrgtree.createparams.CreateParamsPairFromObjMask;
 import org.anchoranalysis.image.objmask.ObjMask;
-
-import overlay.OverlayMark;
-import ch.ethz.biol.cell.mpp.pair.Pair;
 
 public class CreateParamsFromOverlay {
 

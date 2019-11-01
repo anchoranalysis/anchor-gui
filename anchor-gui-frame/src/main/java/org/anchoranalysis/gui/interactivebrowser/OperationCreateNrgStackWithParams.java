@@ -1,5 +1,7 @@
 package org.anchoranalysis.gui.interactivebrowser;
 
+import org.anchoranalysis.anchor.mpp.bean.init.MPPInitParams;
+
 /*
  * #%L
  * anchor-gui
@@ -40,8 +42,6 @@ import org.anchoranalysis.feature.nrg.NRGStack;
 import org.anchoranalysis.feature.nrg.NRGStackWithParams;
 import org.anchoranalysis.image.experiment.identifiers.ImgStackIdentifiers;
 import org.anchoranalysis.image.stack.Stack;
-
-import ch.ethz.biol.cell.beaninitparams.MPPInitParams;
 
 class OperationCreateNrgStackWithParams extends CachedOperation<NRGStackWithParams> implements OperationWithProgressReporter<NRGStackWithParams> {
 

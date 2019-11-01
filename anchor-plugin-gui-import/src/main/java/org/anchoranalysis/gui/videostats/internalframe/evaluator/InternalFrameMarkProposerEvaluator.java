@@ -34,6 +34,8 @@ import java.util.List;
 
 import javax.swing.JPanel;
 
+import org.anchoranalysis.anchor.mpp.bean.init.MPPInitParams;
+import org.anchoranalysis.anchor.mpp.overlay.OverlayCollectionMarkFactory;
 import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.error.reporter.ErrorReporter;
 import org.anchoranalysis.core.name.provider.INamedProvider;
@@ -65,8 +67,6 @@ import org.anchoranalysis.gui.videostats.internalframe.evaluator.fromproposer.Pr
 import org.anchoranalysis.gui.videostats.module.DefaultModuleState;
 import org.anchoranalysis.io.bean.output.OutputWriteSettings;
 
-import overlay.OverlayCollectionMarkFactory;
-import ch.ethz.biol.cell.beaninitparams.MPPInitParams;
 import ch.ethz.biol.cell.imageprocessing.io.generator.raster.CfgWithDisplayStack;
 import ch.ethz.biol.cell.mpp.cfg.Cfg;
 

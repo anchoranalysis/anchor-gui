@@ -1,5 +1,8 @@
 package org.anchoranalysis.gui.videostats.internalframe.annotator.tool;
 
+import org.anchoranalysis.anchor.mpp.bean.points.fitter.InsufficientPointsException;
+import org.anchoranalysis.anchor.mpp.bean.points.fitter.PointsFitter;
+import org.anchoranalysis.anchor.mpp.bean.points.fitter.PointsFitterException;
 import org.anchoranalysis.anchor.mpp.mark.Mark;
 
 /*-
@@ -35,10 +38,6 @@ import org.anchoranalysis.gui.videostats.internalframe.annotator.currentstate.IC
 import org.anchoranalysis.gui.videostats.internalframe.annotator.currentstate.IQuerySelectedPoints;
 import org.anchoranalysis.gui.videostats.internalframe.evaluator.EvaluatorWithContext;
 import org.anchoranalysis.image.extent.ImageDim;
-
-import ch.ethz.biol.cell.mpp.mark.pointsfitter.InsufficientPointsException;
-import ch.ethz.biol.cell.mpp.mark.pointsfitter.PointsFitter;
-import ch.ethz.biol.cell.mpp.mark.pointsfitter.PointsFitterException;
 
 public class SelectPointsTool extends AnnotationTool {
 

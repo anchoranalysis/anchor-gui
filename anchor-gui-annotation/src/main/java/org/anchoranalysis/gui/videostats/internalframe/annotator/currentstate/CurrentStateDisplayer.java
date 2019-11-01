@@ -29,6 +29,7 @@ package org.anchoranalysis.gui.videostats.internalframe.annotator.currentstate;
 
 import java.util.List;
 
+import org.anchoranalysis.anchor.mpp.bean.regionmap.RegionMap;
 import org.anchoranalysis.anchor.mpp.mark.Mark;
 import org.anchoranalysis.core.geometry.Point3i;
 import org.anchoranalysis.gui.videostats.internalframe.annotator.SaveMonitor;
@@ -40,7 +41,6 @@ import org.anchoranalysis.image.extent.ImageDim;
 
 import ch.ethz.biol.cell.mpp.cfg.Cfg;
 import ch.ethz.biol.cell.mpp.gui.videostats.internalframe.markredraw.ColoredCfg;
-import ch.ethz.biol.cell.mpp.mark.regionmap.RegionMap;
 
 public class CurrentStateDisplayer {
 

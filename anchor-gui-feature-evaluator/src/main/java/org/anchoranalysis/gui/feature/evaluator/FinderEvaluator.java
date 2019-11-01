@@ -1,6 +1,17 @@
 package org.anchoranalysis.gui.feature.evaluator;
 
+import org.anchoranalysis.anchor.mpp.bean.regionmap.RegionMap;
+import org.anchoranalysis.anchor.mpp.bean.regionmap.RegionMembershipWithFlags;
+import org.anchoranalysis.anchor.mpp.feature.addcriteria.AddCriteriaPair;
+import org.anchoranalysis.anchor.mpp.feature.addcriteria.BBoxIntersection;
+import org.anchoranalysis.anchor.mpp.mark.GlobalRegionIdentifiers;
 import org.anchoranalysis.anchor.mpp.mark.Mark;
+import org.anchoranalysis.anchor.mpp.overlay.OverlayCollectionMarkFactory;
+import org.anchoranalysis.anchor.mpp.overlay.OverlayMark;
+import org.anchoranalysis.anchor.mpp.pair.Pair;
+import org.anchoranalysis.anchor.mpp.pxlmark.memo.PxlMarkMemo;
+import org.anchoranalysis.anchor.mpp.pxlmark.memo.PxlMarkMemoFactory;
+import org.anchoranalysis.anchor.mpp.regionmap.RegionMapSingleton;
 import org.anchoranalysis.anchor.overlay.Overlay;
 import org.anchoranalysis.anchor.overlay.collection.OverlayCollection;
 
@@ -39,18 +50,7 @@ import org.anchoranalysis.feature.nrg.NRGStackWithParams;
 import org.anchoranalysis.feature.shared.SharedFeatureSet;
 
 import ch.ethz.biol.cell.mpp.cfg.Cfg;
-import ch.ethz.biol.cell.mpp.mark.GlobalRegionIdentifiers;
-import ch.ethz.biol.cell.mpp.mark.pxlmark.memo.PxlMarkMemo;
-import ch.ethz.biol.cell.mpp.mark.pxlmark.memo.PxlMarkMemoFactory;
-import ch.ethz.biol.cell.mpp.mark.regionmap.RegionMap;
-import ch.ethz.biol.cell.mpp.mark.regionmap.RegionMapSingleton;
-import ch.ethz.biol.cell.mpp.mark.regionmap.RegionMembershipWithFlags;
 import ch.ethz.biol.cell.mpp.nrg.feature.session.FeatureSessionCreateParamsMPP;
-import ch.ethz.biol.cell.mpp.pair.Pair;
-import ch.ethz.biol.cell.mpp.pair.addcriteria.AddCriteriaPair;
-import ch.ethz.biol.cell.mpp.pair.addcriteria.BBoxIntersection;
-import overlay.OverlayCollectionMarkFactory;
-import overlay.OverlayMark;
 
 class FinderEvaluator {
 

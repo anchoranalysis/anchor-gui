@@ -1,6 +1,9 @@
 package org.anchoranalysis.gui.feature.evaluator.params;
 
+import org.anchoranalysis.anchor.mpp.bean.regionmap.RegionMap;
 import org.anchoranalysis.anchor.mpp.mark.Mark;
+import org.anchoranalysis.anchor.mpp.pxlmark.memo.PxlMarkMemo;
+import org.anchoranalysis.anchor.mpp.pxlmark.memo.PxlMarkMemoFactory;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.log.LogErrorReporter;
@@ -44,10 +47,6 @@ import org.anchoranalysis.feature.shared.SharedFeatureSet;
 
 import org.anchoranalysis.gui.feature.FeatureListWithRegionMap;
 import org.anchoranalysis.gui.feature.FeatureWithRegionMap;
-
-import ch.ethz.biol.cell.mpp.mark.pxlmark.memo.PxlMarkMemo;
-import ch.ethz.biol.cell.mpp.mark.pxlmark.memo.PxlMarkMemoFactory;
-import ch.ethz.biol.cell.mpp.mark.regionmap.RegionMap;
 
 /**
  * A session which calculates new parameters for every

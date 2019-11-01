@@ -1,5 +1,7 @@
 package org.anchoranalysis.gui.feature.evaluator.params;
 
+import org.anchoranalysis.anchor.mpp.pxlmark.memo.PxlMarkMemo;
+
 /*
  * #%L
  * anchor-gui
@@ -33,8 +35,6 @@ import org.anchoranalysis.feature.nrg.NRGStackWithParams;
 import org.anchoranalysis.image.binary.values.BinaryValuesByte;
 import org.anchoranalysis.image.feature.objmask.FeatureObjMaskParams;
 import org.anchoranalysis.image.objmask.ObjMask;
-
-import ch.ethz.biol.cell.mpp.mark.pxlmark.memo.PxlMarkMemo;
 
 public class FeatureObjMaskParamsFactory extends FeatureCalcParamsUnaryFactory {
 

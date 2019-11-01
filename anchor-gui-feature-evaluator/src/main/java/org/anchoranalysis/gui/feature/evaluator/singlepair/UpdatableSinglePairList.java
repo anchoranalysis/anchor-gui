@@ -29,10 +29,9 @@ package org.anchoranalysis.gui.feature.evaluator.singlepair;
 
 import java.util.ArrayList;
 
+import org.anchoranalysis.anchor.mpp.pair.Pair;
 import org.anchoranalysis.anchor.overlay.Overlay;
 import org.anchoranalysis.feature.nrg.NRGStackWithParams;
-
-import ch.ethz.biol.cell.mpp.pair.Pair;
 
 public class UpdatableSinglePairList implements IUpdatableSinglePair {
 

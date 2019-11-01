@@ -1,5 +1,8 @@
 package org.anchoranalysis.gui.feature.evaluator.params;
 
+import org.anchoranalysis.anchor.mpp.mark.GlobalRegionIdentifiers;
+import org.anchoranalysis.anchor.mpp.regionmap.RegionMapSingleton;
+
 /*-
  * #%L
  * anchor-gui-feature-evaluator
@@ -41,8 +44,6 @@ import org.anchoranalysis.image.feature.objmask.shared.FeatureObjMaskSharedObjec
 import org.anchoranalysis.image.feature.pixelwise.score.PixelScoreFeatureCalcParamsDescriptor;
 import org.anchoranalysis.image.feature.stack.nrg.FeatureNRGStackParamsDescriptor;
 
-import ch.ethz.biol.cell.mpp.mark.GlobalRegionIdentifiers;
-import ch.ethz.biol.cell.mpp.mark.regionmap.RegionMapSingleton;
 import ch.ethz.biol.cell.mpp.nrg.NRGElemAllCalcParamsDescriptor;
 import ch.ethz.biol.cell.mpp.nrg.NRGElemIndCalcParamsDescriptor;
 import ch.ethz.biol.cell.mpp.nrg.NRGElemPairCalcParamsDescriptor;

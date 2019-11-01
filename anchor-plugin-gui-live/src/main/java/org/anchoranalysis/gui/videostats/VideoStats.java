@@ -30,10 +30,10 @@ package org.anchoranalysis.gui.videostats;
 
 import javax.swing.SwingUtilities;
 
+import org.anchoranalysis.anchor.mpp.bean.init.MPPInitParams;
 import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.mpp.sgmn.optscheme.step.Reporting;
 
-import ch.ethz.biol.cell.beaninitparams.MPPInitParams;
 import ch.ethz.biol.cell.mpp.feedback.Aggregator;
 import ch.ethz.biol.cell.mpp.feedback.IAggregateReceiver;
 import ch.ethz.biol.cell.mpp.feedback.OptimizationFeedbackEndParams;

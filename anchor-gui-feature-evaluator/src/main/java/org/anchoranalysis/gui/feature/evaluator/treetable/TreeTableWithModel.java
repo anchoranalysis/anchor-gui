@@ -31,14 +31,13 @@ import java.awt.event.MouseListener;
 
 import javax.swing.JComponent;
 
+import org.anchoranalysis.anchor.mpp.pair.Pair;
 import org.anchoranalysis.anchor.overlay.Overlay;
 import org.anchoranalysis.feature.nrg.NRGStackWithParams;
 import org.anchoranalysis.feature.shared.SharedFeatureSet;
 import org.anchoranalysis.gui.feature.FeatureListWithRegionMap;
 import org.anchoranalysis.gui.feature.evaluator.nrgtree.FeatureCalcDescriptionTreeModel;
 import org.netbeans.swing.outline.Outline;
-
-import ch.ethz.biol.cell.mpp.pair.Pair;
 
 // Has a number of different tables for cliques sizes (0, 1, 2) all of which remain memory, but only one
 //   of which is visible at any given time

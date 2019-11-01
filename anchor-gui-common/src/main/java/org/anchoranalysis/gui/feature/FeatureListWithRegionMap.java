@@ -33,9 +33,9 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
+import org.anchoranalysis.anchor.mpp.bean.regionmap.RegionMap;
 import org.anchoranalysis.feature.bean.Feature;
 import org.anchoranalysis.feature.bean.list.FeatureList;
-import ch.ethz.biol.cell.mpp.mark.regionmap.RegionMap;
 
 // Associates a RegionMap with each feature
 public class FeatureListWithRegionMap implements Iterable<FeatureWithRegionMap>{

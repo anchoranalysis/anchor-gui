@@ -1,5 +1,8 @@
 package org.anchoranalysis.gui.interactivebrowser.input;
 
+import org.anchoranalysis.anchor.mpp.bean.regionmap.RegionMap;
+import org.anchoranalysis.anchor.mpp.regionmap.RegionMapSingleton;
+
 /*-
  * #%L
  * anchor-gui-import
@@ -42,8 +45,6 @@ import org.anchoranalysis.gui.feature.evaluator.treetable.FeatureListSrc;
 import org.anchoranalysis.gui.feature.evaluator.treetable.KeyValueParamsAugmenter;
 import org.anchoranalysis.feature.shared.SharedFeatureSet;
 
-import ch.ethz.biol.cell.mpp.mark.regionmap.RegionMap;
-import ch.ethz.biol.cell.mpp.mark.regionmap.RegionMapSingleton;
 import ch.ethz.biol.cell.mpp.nrg.NamedNRGSchemeSet;
 import ch.ethz.biol.cell.mpp.nrg.nrgscheme.NRGScheme;
 import ch.ethz.biol.cell.mpp.nrg.nrgscheme.creator.NRGSchemeCreator;

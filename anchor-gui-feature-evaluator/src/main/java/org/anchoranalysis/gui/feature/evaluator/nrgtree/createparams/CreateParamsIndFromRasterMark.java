@@ -1,5 +1,7 @@
 package org.anchoranalysis.gui.feature.evaluator.nrgtree.createparams;
 
+import org.anchoranalysis.anchor.mpp.pxlmark.memo.PxlMarkMemo;
+
 /*-
  * #%L
  * anchor-gui-feature-evaluator
@@ -33,8 +35,6 @@ import org.anchoranalysis.feature.calc.params.FeatureCalcParams;
 import org.anchoranalysis.feature.nrg.NRGStackWithParams;
 import org.anchoranalysis.feature.session.CreateParams;
 import org.anchoranalysis.gui.feature.evaluator.params.ParamsFactoryForFeature;
-
-import ch.ethz.biol.cell.mpp.mark.pxlmark.memo.PxlMarkMemo;
 
 public class CreateParamsIndFromRasterMark extends CreateParams  {
 

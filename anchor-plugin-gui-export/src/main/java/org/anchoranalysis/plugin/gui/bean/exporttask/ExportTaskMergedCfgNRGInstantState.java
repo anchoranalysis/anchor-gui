@@ -1,5 +1,8 @@
 package org.anchoranalysis.plugin.gui.bean.exporttask;
 
+import org.anchoranalysis.anchor.mpp.mark.GlobalRegionIdentifiers;
+import org.anchoranalysis.anchor.mpp.regionmap.RegionMapSingleton;
+
 /*
  * #%L
  * anchor-gui
@@ -30,8 +33,6 @@ package org.anchoranalysis.plugin.gui.bean.exporttask;
 import org.anchoranalysis.core.cache.CacheMonitor;
 
 import ch.ethz.biol.cell.mpp.instantstate.CfgNRGInstantState;
-import ch.ethz.biol.cell.mpp.mark.GlobalRegionIdentifiers;
-import ch.ethz.biol.cell.mpp.mark.regionmap.RegionMapSingleton;
 
 public class ExportTaskMergedCfgNRGInstantState extends ExportTaskRasterGeneratorFromBoundedIndexContainer<CfgNRGInstantState> {
 

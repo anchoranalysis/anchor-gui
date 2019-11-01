@@ -1,5 +1,6 @@
 package org.anchoranalysis.gui.videostats.internalframe.evaluator;
 
+import org.anchoranalysis.anchor.mpp.bean.regionmap.RegionMap;
 import org.anchoranalysis.feature.nrg.NRGStackWithParams;
 
 /*
@@ -30,7 +31,6 @@ import org.anchoranalysis.feature.nrg.NRGStackWithParams;
 
 
 import ch.ethz.biol.cell.mpp.cfg.CfgGen;
-import ch.ethz.biol.cell.mpp.mark.regionmap.RegionMap;
 
 public class EvaluatorWithContext {
 	private CfgGen cfgGen;

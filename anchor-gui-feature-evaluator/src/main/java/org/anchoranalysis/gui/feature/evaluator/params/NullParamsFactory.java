@@ -1,5 +1,7 @@
 package org.anchoranalysis.gui.feature.evaluator.params;
 
+import org.anchoranalysis.anchor.mpp.pxlmark.memo.PxlMarkMemo;
+
 /*-
  * #%L
  * anchor-gui-feature-evaluator
@@ -31,7 +33,6 @@ import org.anchoranalysis.feature.calc.params.FeatureCalcParams;
 import org.anchoranalysis.feature.calc.params.NullParams;
 import org.anchoranalysis.feature.nrg.NRGStackWithParams;
 
-import ch.ethz.biol.cell.mpp.mark.pxlmark.memo.PxlMarkMemo;
 import ch.ethz.biol.cell.mpp.nrg.MemoMarks;
 
 public class NullParamsFactory extends FeatureCalcParamsFactory {

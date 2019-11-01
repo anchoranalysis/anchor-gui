@@ -4,6 +4,8 @@ import java.awt.GraphicsConfiguration;
 import java.io.IOException;
 
 import org.anchoranalysis.anchor.graph.bean.colorscheme.GraphColorScheme;
+import org.anchoranalysis.anchor.mpp.bean.regionmap.RegionMap;
+import org.anchoranalysis.anchor.mpp.regionmap.RegionMapSingleton;
 
 /*
  * #%L
@@ -40,9 +42,6 @@ import org.anchoranalysis.gui.retrieveelements.ExportPopupParams;
 import org.anchoranalysis.gui.videostats.threading.InteractiveThreadPool;
 import org.anchoranalysis.io.params.InputContextParams;
 import org.anchoranalysis.plugin.gui.bean.exporttask.ExportTaskList;
-
-import ch.ethz.biol.cell.mpp.mark.regionmap.RegionMap;
-import ch.ethz.biol.cell.mpp.mark.regionmap.RegionMapSingleton;
 
 // Globally available parameters for a VideoStatsModule
 public class VideoStatsModuleGlobalParams {

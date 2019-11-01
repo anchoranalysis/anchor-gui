@@ -1,5 +1,6 @@
 package org.anchoranalysis.gui.videostats.internalframe.evaluator.fromproposer;
 
+import org.anchoranalysis.anchor.mpp.bean.init.MPPInitParams;
 import org.anchoranalysis.anchor.mpp.bean.proposer.MarkMergeProposer;
 import org.anchoranalysis.core.name.provider.INamedProvider;
 
@@ -32,8 +33,6 @@ import org.anchoranalysis.core.name.provider.INamedProvider;
 
 import org.anchoranalysis.gui.videostats.internalframe.evaluator.MarkMergeProposerEvaluator;
 import org.anchoranalysis.gui.videostats.internalframe.evaluator.ProposalOperationCreator;
-
-import ch.ethz.biol.cell.beaninitparams.MPPInitParams;
 
 public class FromMarkMergeProposer extends ProposalOperationCreatorFromProposer<MarkMergeProposer> {
 

@@ -30,6 +30,9 @@ package org.anchoranalysis.gui.mark;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.anchoranalysis.anchor.mpp.bean.regionmap.RegionMembershipWithFlags;
+import org.anchoranalysis.anchor.mpp.mark.GlobalRegionIdentifiers;
+import org.anchoranalysis.anchor.mpp.regionmap.RegionMapSingleton;
 import org.anchoranalysis.anchor.overlay.bean.objmask.writer.ObjMaskWriter;
 import org.anchoranalysis.anchor.overlay.writer.OverlayWriter;
 import org.anchoranalysis.io.bean.objmask.writer.IfElseWriter;
@@ -42,9 +45,6 @@ import org.anchoranalysis.io.bean.objmask.writer.RGBOutlineWriter;
 import org.anchoranalysis.io.bean.objmask.writer.RGBSolidWriter;
 
 import ch.ethz.biol.cell.mpp.cfgtoobjmaskwriter.SimpleOverlayWriter;
-import ch.ethz.biol.cell.mpp.mark.GlobalRegionIdentifiers;
-import ch.ethz.biol.cell.mpp.mark.regionmap.RegionMapSingleton;
-import ch.ethz.biol.cell.mpp.mark.regionmap.RegionMembershipWithFlags;
 
 // Contains display settings for a mark
 public class MarkDisplaySettings {

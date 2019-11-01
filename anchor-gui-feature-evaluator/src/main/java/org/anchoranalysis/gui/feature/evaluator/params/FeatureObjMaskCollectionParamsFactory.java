@@ -1,5 +1,8 @@
 package org.anchoranalysis.gui.feature.evaluator.params;
 
+import org.anchoranalysis.anchor.mpp.bean.regionmap.RegionMembershipWithFlags;
+import org.anchoranalysis.anchor.mpp.pxlmark.memo.PxlMarkMemo;
+
 /*
  * #%L
  * anchor-gui
@@ -34,9 +37,6 @@ import org.anchoranalysis.image.binary.values.BinaryValuesByte;
 import org.anchoranalysis.image.feature.objmask.collection.FeatureObjMaskCollectionParams;
 import org.anchoranalysis.image.objmask.ObjMask;
 import org.anchoranalysis.image.objmask.ObjMaskCollection;
-
-import ch.ethz.biol.cell.mpp.mark.pxlmark.memo.PxlMarkMemo;
-import ch.ethz.biol.cell.mpp.mark.regionmap.RegionMembershipWithFlags;
 
 public class FeatureObjMaskCollectionParamsFactory extends FeatureCalcParamsUnaryFactory {
 

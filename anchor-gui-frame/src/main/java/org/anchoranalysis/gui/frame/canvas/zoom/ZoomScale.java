@@ -1,5 +1,7 @@
 package org.anchoranalysis.gui.frame.canvas.zoom;
 
+import org.anchoranalysis.anchor.mpp.bounds.RslvdBound;
+
 /*-
  * #%L
  * anchor-gui-frame
@@ -31,8 +33,6 @@ import org.anchoranalysis.image.extent.BoundingBox;
 import org.anchoranalysis.image.extent.Extent;
 import org.anchoranalysis.image.extent.ImageDim;
 import org.apache.commons.lang.builder.HashCodeBuilder;
-
-import ch.ethz.biol.cell.imageprocessing.bound.RslvdBound;
 
 public class ZoomScale {
 

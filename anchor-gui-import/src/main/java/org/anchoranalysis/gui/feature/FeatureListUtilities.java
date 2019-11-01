@@ -2,6 +2,7 @@ package org.anchoranalysis.gui.feature;
 
 import java.util.List;
 
+import org.anchoranalysis.anchor.mpp.bean.regionmap.RegionMap;
 import org.anchoranalysis.anchor.mpp.mark.Mark;
 
 /*
@@ -42,7 +43,6 @@ import org.anchoranalysis.feature.calc.ResultsVector;
 import org.anchoranalysis.gui.feature.evaluator.params.FeatureCalcParamsFactorySession;
 import org.anchoranalysis.gui.serializedobjectset.MarkWithRaster;
 
-import ch.ethz.biol.cell.mpp.mark.regionmap.RegionMap;
 import ch.ethz.biol.cell.mpp.nrg.NamedNRGSchemeSet;
 import ch.ethz.biol.cell.mpp.nrg.nrgscheme.NRGScheme;
 
