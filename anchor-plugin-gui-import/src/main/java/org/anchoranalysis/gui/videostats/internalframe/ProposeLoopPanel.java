@@ -35,10 +35,9 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.JToggleButton;
 
+import org.anchoranalysis.anchor.mpp.proposer.ProposalAbnormalFailureException;
 import org.anchoranalysis.anchor.mpp.proposer.error.ErrorNode;
 import org.anchoranalysis.gui.frame.overlays.ProposedCfg;
-
-import anchor.provider.bean.ProposalAbnormalFailureException;
 
 // Makes multile proposals in a loop until success, and allows the user
 //  to configure-this and get feedback

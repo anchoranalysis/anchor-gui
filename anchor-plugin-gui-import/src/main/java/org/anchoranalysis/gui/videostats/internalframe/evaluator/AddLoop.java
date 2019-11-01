@@ -1,5 +1,7 @@
 package org.anchoranalysis.gui.videostats.internalframe.evaluator;
 
+import org.anchoranalysis.anchor.mpp.proposer.ProposalAbnormalFailureException;
+
 /*-
  * #%L
  * anchor-plugin-gui-import
@@ -34,7 +36,6 @@ import org.anchoranalysis.gui.frame.overlays.ProposedCfg;
 import org.anchoranalysis.gui.videostats.internalframe.ProposalOperation;
 import org.anchoranalysis.gui.videostats.internalframe.ProposeLoopPanel;
 
-import anchor.provider.bean.ProposalAbnormalFailureException;
 import ch.ethz.biol.cell.mpp.cfg.Cfg;
 import ch.ethz.biol.cell.mpp.cfg.CfgGen;
 

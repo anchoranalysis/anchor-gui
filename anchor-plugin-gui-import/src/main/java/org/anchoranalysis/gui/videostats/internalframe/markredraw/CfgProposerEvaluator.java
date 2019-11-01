@@ -1,6 +1,7 @@
 package org.anchoranalysis.gui.videostats.internalframe.markredraw;
 
 import org.anchoranalysis.anchor.mpp.mark.Mark;
+import org.anchoranalysis.anchor.mpp.proposer.ProposalAbnormalFailureException;
 
 /*-
  * #%L
@@ -35,7 +36,6 @@ import org.anchoranalysis.gui.frame.overlays.ProposedCfg;
 import org.anchoranalysis.gui.videostats.internalframe.ProposalOperation;
 import org.anchoranalysis.gui.videostats.internalframe.evaluator.ProposalOperationCreator;
 
-import anchor.provider.bean.ProposalAbnormalFailureException;
 import ch.ethz.biol.cell.mpp.cfg.Cfg;
 import ch.ethz.biol.cell.mpp.cfg.CfgGen;
 import ch.ethz.biol.cell.mpp.cfg.proposer.CfgProposer;

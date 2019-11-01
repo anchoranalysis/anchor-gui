@@ -1,5 +1,7 @@
 package org.anchoranalysis.gui.videostats.internalframe;
 
+import org.anchoranalysis.anchor.mpp.proposer.ProposalAbnormalFailureException;
+
 /*-
  * #%L
  * anchor-gui-frame
@@ -28,8 +30,6 @@ package org.anchoranalysis.gui.videostats.internalframe;
 
 import org.anchoranalysis.anchor.mpp.proposer.error.ErrorNode;
 import org.anchoranalysis.gui.frame.overlays.ProposedCfg;
-
-import anchor.provider.bean.ProposalAbnormalFailureException;
 
 public interface ProposalOperation {
 	

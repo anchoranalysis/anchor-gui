@@ -34,6 +34,7 @@ import java.awt.event.MouseEvent;
 import javax.swing.event.EventListenerList;
 
 import org.anchoranalysis.anchor.mpp.overlay.OverlayCollectionMarkFactory;
+import org.anchoranalysis.anchor.mpp.proposer.ProposalAbnormalFailureException;
 import org.anchoranalysis.anchor.mpp.proposer.ProposerContext;
 import org.anchoranalysis.anchor.mpp.proposer.error.ProposerFailureDescription;
 import org.anchoranalysis.core.error.OperationFailedException;
@@ -49,7 +50,6 @@ import org.anchoranalysis.gui.videostats.internalframe.evaluator.EvaluatorWithCo
 import org.anchoranalysis.gui.videostats.internalframe.evaluator.EvaluatorWithContextGetter;
 import org.anchoranalysis.gui.videostats.internalframe.evaluator.ProposalOperationCreator;
 
-import anchor.provider.bean.ProposalAbnormalFailureException;
 import ch.ethz.biol.cell.mpp.cfg.Cfg;
 
 public class CfgProposerMouseClickAdapter extends MouseAdapter {
