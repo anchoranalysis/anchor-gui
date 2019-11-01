@@ -1,5 +1,7 @@
 package org.anchoranalysis.gui.frame.overlays.onrgb;
 
+import org.anchoranalysis.anchor.overlay.collection.ColoredOverlayCollection;
+import org.anchoranalysis.anchor.overlay.id.IDGetterOverlayID;
 import org.anchoranalysis.core.error.InitException;
 
 
@@ -47,8 +49,6 @@ import org.anchoranalysis.gui.videostats.internalframe.IColoredCfgUpdater;
 import org.anchoranalysis.gui.videostats.internalframe.cfgtorgb.markdisplay.MarkDisplaySettingsWrapper;
 import org.anchoranalysis.gui.videostats.module.DefaultModuleState;
 
-import ch.ethz.biol.cell.gui.overlay.IDGetterOverlayID;
-import ch.ethz.biol.cell.gui.overlay.ColoredOverlayCollection;
 import ch.ethz.biol.cell.imageprocessing.io.generator.raster.OverlayedDisplayStackUpdate;
 import ch.ethz.biol.cell.imageprocessing.io.idgetter.IDGetterMarkID;
 

@@ -1,6 +1,8 @@
 package org.anchoranalysis.gui.feature.evaluator;
 
 import org.anchoranalysis.anchor.mpp.mark.Mark;
+import org.anchoranalysis.anchor.overlay.Overlay;
+import org.anchoranalysis.anchor.overlay.collection.OverlayCollection;
 
 /*-
  * #%L
@@ -36,8 +38,6 @@ import org.anchoranalysis.feature.init.FeatureInitParams;
 import org.anchoranalysis.feature.nrg.NRGStackWithParams;
 import org.anchoranalysis.feature.shared.SharedFeatureSet;
 
-import ch.ethz.biol.cell.gui.overlay.Overlay;
-import ch.ethz.biol.cell.gui.overlay.OverlayCollection;
 import ch.ethz.biol.cell.mpp.cfg.Cfg;
 import ch.ethz.biol.cell.mpp.mark.GlobalRegionIdentifiers;
 import ch.ethz.biol.cell.mpp.mark.pxlmark.memo.PxlMarkMemo;

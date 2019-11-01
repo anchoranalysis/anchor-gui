@@ -29,6 +29,7 @@ package org.anchoranalysis.gui.videostats.dropdown.addoverlays;
 
 import javax.swing.JFrame;
 
+import org.anchoranalysis.anchor.overlay.collection.OverlayCollection;
 import org.anchoranalysis.core.error.reporter.ErrorReporter;
 import org.anchoranalysis.core.event.IRoutableReceivable;
 import org.anchoranalysis.core.property.change.PropertyValueChangeEvent;
@@ -37,8 +38,6 @@ import org.anchoranalysis.gui.videostats.link.LinkModules;
 import org.anchoranalysis.gui.videostats.module.VideoStatsModule;
 import org.anchoranalysis.gui.videostats.module.VideoStatsModuleSubgroup;
 import org.anchoranalysis.gui.videostats.threading.InteractiveThreadPool;
-
-import ch.ethz.biol.cell.gui.overlay.OverlayCollection;
 
 public class AdderAddOverlaysWithStack implements IAddVideoStatsModule {
 

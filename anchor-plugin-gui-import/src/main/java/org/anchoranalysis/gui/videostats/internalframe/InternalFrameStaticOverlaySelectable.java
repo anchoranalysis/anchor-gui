@@ -1,5 +1,9 @@
 package org.anchoranalysis.gui.videostats.internalframe;
 
+import org.anchoranalysis.anchor.overlay.Overlay;
+import org.anchoranalysis.anchor.overlay.OverlayedInstantState;
+import org.anchoranalysis.anchor.overlay.collection.OverlayCollection;
+import org.anchoranalysis.anchor.overlay.id.IDGetterOverlayID;
 import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.idgetter.IDGetter;
 
@@ -37,11 +41,6 @@ import org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.ControllerPo
 import org.anchoranalysis.gui.videostats.IModuleCreatorDefaultState;
 import org.anchoranalysis.gui.videostats.dropdown.VideoStatsModuleGlobalParams;
 import org.anchoranalysis.gui.videostats.module.DefaultModuleState;
-
-import ch.ethz.biol.cell.gui.overlay.IDGetterOverlayID;
-import ch.ethz.biol.cell.gui.overlay.Overlay;
-import ch.ethz.biol.cell.gui.overlay.OverlayCollection;
-import ch.ethz.biol.cell.mpp.instantstate.OverlayedInstantState;
 
 public class InternalFrameStaticOverlaySelectable {
 

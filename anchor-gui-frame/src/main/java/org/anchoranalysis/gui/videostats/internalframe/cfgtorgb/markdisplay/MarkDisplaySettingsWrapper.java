@@ -1,5 +1,6 @@
 package org.anchoranalysis.gui.videostats.internalframe.cfgtorgb.markdisplay;
 
+import org.anchoranalysis.anchor.overlay.writer.OverlayWriter;
 import org.anchoranalysis.core.property.change.PropertyValueChangeEvent;
 import org.anchoranalysis.core.property.change.PropertyValueChangeListener;
 
@@ -37,8 +38,6 @@ import org.anchoranalysis.gui.videostats.action.changemarkdisplay.IChangeMarkDis
 import org.anchoranalysis.image.objmask.properties.ObjMaskWithProperties;
 import org.anchoranalysis.image.stack.rgb.RGBStack;
 import org.anchoranalysis.io.bean.objmask.writer.IfElseWriter;
-
-import ch.ethz.biol.cell.mpp.cfgtoobjmaskwriter.OverlayWriter;
 
 public class MarkDisplaySettingsWrapper implements IChangeMarkDisplaySendable {
 	

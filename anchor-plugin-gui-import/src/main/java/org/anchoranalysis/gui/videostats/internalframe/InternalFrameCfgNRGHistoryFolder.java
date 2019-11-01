@@ -1,5 +1,8 @@
 package org.anchoranalysis.gui.videostats.internalframe;
 
+import org.anchoranalysis.anchor.overlay.Overlay;
+import org.anchoranalysis.anchor.overlay.id.IDGetterOverlayID;
+
 /*-
  * #%L
  * anchor-plugin-gui-import
@@ -38,8 +41,6 @@ import org.anchoranalysis.gui.videostats.dropdown.VideoStatsModuleGlobalParams;
 import org.anchoranalysis.gui.videostats.module.DefaultModuleState;
 import org.anchoranalysis.io.manifest.deserializer.folder.LoadContainer;
 
-import ch.ethz.biol.cell.gui.overlay.IDGetterOverlayID;
-import ch.ethz.biol.cell.gui.overlay.Overlay;
 import ch.ethz.biol.cell.mpp.instantstate.CfgNRGInstantState;
 import ch.ethz.biol.cell.mpp.instantstate.CfgNRGInstantStateBridge;
 

@@ -32,6 +32,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import org.anchoranalysis.anchor.overlay.Overlay;
+import org.anchoranalysis.anchor.overlay.OverlayedInstantState;
+import org.anchoranalysis.anchor.overlay.id.IDGetterOverlayID;
 import org.anchoranalysis.core.bridge.IObjectBridgeIndex;
 import org.anchoranalysis.core.cache.ExecuteException;
 import org.anchoranalysis.core.error.InitException;
@@ -54,10 +57,6 @@ import org.anchoranalysis.gui.videostats.dropdown.common.NRGBackground;
 import org.anchoranalysis.gui.videostats.internalframe.cfgtorgb.MultiInput;
 import org.anchoranalysis.gui.videostats.module.DefaultModuleState;
 import org.anchoranalysis.gui.videostats.module.DefaultModuleStateManager;
-
-import ch.ethz.biol.cell.gui.overlay.IDGetterOverlayID;
-import ch.ethz.biol.cell.gui.overlay.Overlay;
-import ch.ethz.biol.cell.mpp.instantstate.OverlayedInstantState;
 
 class InternalFrameMultiOverlay<InputType> {
 	private InternalFrameOverlayedInstantStateToRGBSelectable delegate;

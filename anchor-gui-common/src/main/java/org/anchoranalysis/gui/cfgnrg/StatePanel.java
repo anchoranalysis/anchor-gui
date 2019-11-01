@@ -29,11 +29,10 @@ package org.anchoranalysis.gui.cfgnrg;
 
 import javax.swing.JPanel;
 
+import org.anchoranalysis.anchor.overlay.collection.OverlayCollection;
 import org.anchoranalysis.core.index.IntArray;
 import org.anchoranalysis.core.property.IPropertyValueReceivable;
 import org.anchoranalysis.core.property.IPropertyValueSendable;
-
-import ch.ethz.biol.cell.gui.overlay.OverlayCollection;
 
 public abstract class StatePanel<T> {
 

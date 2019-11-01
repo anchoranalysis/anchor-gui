@@ -28,6 +28,7 @@ package org.anchoranalysis.gui.videostats.link;
 
 import java.util.function.Function;
 
+import org.anchoranalysis.anchor.overlay.collection.OverlayCollection;
 import org.anchoranalysis.core.bridge.IObjectBridge;
 import org.anchoranalysis.core.event.IRoutableReceivable;
 import org.anchoranalysis.core.index.IntArray;
@@ -39,8 +40,6 @@ import org.anchoranalysis.gui.image.OverlayCollectionWithImgStack;
 import org.anchoranalysis.gui.videostats.module.VideoStatsModule;
 import org.anchoranalysis.gui.videostats.module.VideoStatsModule.ReceivableSendablePair;
 import org.anchoranalysis.image.stack.DisplayStack;
-
-import ch.ethz.biol.cell.gui.overlay.OverlayCollection;
 
 public class LinkModules {
 

@@ -1,5 +1,7 @@
 package org.anchoranalysis.gui.frame.threaded.overlay;
 
+import org.anchoranalysis.anchor.overlay.Overlay;
+
 /*-
  * #%L
  * anchor-gui-frame
@@ -47,7 +49,6 @@ import org.anchoranalysis.gui.videostats.module.DefaultModuleState;
 import org.anchoranalysis.gui.videostats.module.VideoStatsModule;
 import org.anchoranalysis.image.extent.ImageDim;
 
-import ch.ethz.biol.cell.gui.overlay.Overlay;
 import ch.ethz.biol.cell.gui.overlay.OverlayRetriever;
 import ch.ethz.biol.cell.mpp.gui.videostats.internalframe.cfgtorgb.IRedrawable;
 

@@ -29,6 +29,7 @@ package org.anchoranalysis.gui.frame.multioverlay;
 
 import java.util.List;
 
+import org.anchoranalysis.anchor.overlay.OverlayedInstantState;
 import org.anchoranalysis.core.bridge.IObjectBridgeIndex;
 import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.gui.videostats.dropdown.IAddVideoStatsModule;
@@ -38,8 +39,6 @@ import org.anchoranalysis.gui.videostats.dropdown.addoverlays.AdderAddOverlaysWi
 import org.anchoranalysis.gui.videostats.internalframe.cfgtorgb.MultiInput;
 import org.anchoranalysis.gui.videostats.module.VideoStatsModuleCreateException;
 import org.anchoranalysis.gui.videostats.modulecreator.VideoStatsModuleCreator;
-
-import ch.ethz.biol.cell.mpp.instantstate.OverlayedInstantState;
 
 public class RasterMultiCreator<InputType> extends VideoStatsModuleCreator {
 	

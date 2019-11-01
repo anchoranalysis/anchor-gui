@@ -1,6 +1,8 @@
 package org.anchoranalysis.gui.frame.overlays.onrgb;
 
 import org.anchoranalysis.anchor.mpp.mark.Mark;
+import org.anchoranalysis.anchor.overlay.Overlay;
+import org.anchoranalysis.anchor.overlay.collection.ColoredOverlayCollection;
 
 /*-
  * #%L
@@ -51,8 +53,6 @@ import org.anchoranalysis.image.extent.ImageDim;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import ch.ethz.biol.cell.gui.overlay.Overlay;
-import ch.ethz.biol.cell.gui.overlay.ColoredOverlayCollection;
 import ch.ethz.biol.cell.mpp.gui.videostats.internalframe.cfgtorgb.IRedrawable;
 
 class InternalFrameOverlaysOnRGB {

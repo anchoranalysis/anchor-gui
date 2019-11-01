@@ -28,10 +28,9 @@ package org.anchoranalysis.gui.feature.evaluator;
 
 import javax.swing.JPanel;
 
+import org.anchoranalysis.anchor.overlay.collection.OverlayCollection;
 import org.anchoranalysis.gui.cfgnrgtable.TablePanel;
 import org.anchoranalysis.gui.feature.evaluator.singlepair.IUpdatableSinglePair;
-
-import ch.ethz.biol.cell.gui.overlay.OverlayCollection;
 
 class OverlayDescriptionPanel {
 

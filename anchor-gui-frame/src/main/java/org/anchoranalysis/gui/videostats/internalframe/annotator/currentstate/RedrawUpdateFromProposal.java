@@ -1,5 +1,8 @@
 package org.anchoranalysis.gui.videostats.internalframe.annotator.currentstate;
 
+import org.anchoranalysis.anchor.overlay.collection.ColoredOverlayCollection;
+import org.anchoranalysis.anchor.overlay.collection.OverlayCollection;
+
 /*-
  * #%L
  * anchor-gui-frame
@@ -29,8 +32,6 @@ package org.anchoranalysis.gui.videostats.internalframe.annotator.currentstate;
 import org.anchoranalysis.gui.frame.overlays.ProposedCfg;
 import org.anchoranalysis.gui.frame.overlays.RedrawUpdate;
 
-import ch.ethz.biol.cell.gui.overlay.ColoredOverlayCollection;
-import ch.ethz.biol.cell.gui.overlay.OverlayCollection;
 import ch.ethz.biol.cell.imageprocessing.io.generator.raster.OverlayedDisplayStackUpdate;
 import ch.ethz.biol.cell.mpp.cfg.Cfg;
 import overlay.OverlayCollectionMarkFactory;

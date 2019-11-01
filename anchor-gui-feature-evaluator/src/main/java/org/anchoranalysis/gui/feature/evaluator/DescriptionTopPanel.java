@@ -33,10 +33,9 @@ import javax.swing.JPanel;
 import javax.swing.JTextPane;
 import javax.swing.JToggleButton;
 
+import org.anchoranalysis.anchor.overlay.collection.OverlayCollection;
 import org.anchoranalysis.core.index.IndicesSelection;
 import org.anchoranalysis.gui.reassign.SimpleToggleAction;
-
-import ch.ethz.biol.cell.gui.overlay.OverlayCollection;
 
 /**
  * Panel that describes the current selection, and offers a button to Freeze

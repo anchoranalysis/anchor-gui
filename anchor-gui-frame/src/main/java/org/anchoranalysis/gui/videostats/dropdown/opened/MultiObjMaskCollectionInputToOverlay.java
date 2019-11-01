@@ -1,5 +1,8 @@
 package org.anchoranalysis.gui.videostats.dropdown.opened;
 
+import org.anchoranalysis.anchor.overlay.OverlayedInstantState;
+import org.anchoranalysis.anchor.overlay.collection.OverlayCollection;
+import org.anchoranalysis.anchor.overlay.collection.OverlayCollectionObjMaskFactory;
 import org.anchoranalysis.core.bridge.IObjectBridgeIndex;
 
 /*
@@ -34,10 +37,6 @@ import org.anchoranalysis.core.idgetter.IDGetterIter;
 import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.gui.videostats.internalframe.cfgtorgb.MultiInput;
 import org.anchoranalysis.image.objmask.ObjMaskCollection;
-
-import ch.ethz.biol.cell.gui.overlay.OverlayCollection;
-import ch.ethz.biol.cell.gui.overlay.OverlayCollectionObjMaskFactory;
-import ch.ethz.biol.cell.mpp.instantstate.OverlayedInstantState;
 
 class MultiObjMaskCollectionInputToOverlay implements IObjectBridgeIndex<MultiInput<ObjMaskCollection>, OverlayedInstantState> {
 	@Override

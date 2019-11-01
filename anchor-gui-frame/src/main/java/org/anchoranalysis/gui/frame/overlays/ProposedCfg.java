@@ -30,9 +30,9 @@ package org.anchoranalysis.gui.frame.overlays;
 import overlay.OverlayCollectionMarkFactory;
 
 import org.anchoranalysis.anchor.mpp.proposer.error.ProposerFailureDescription;
+import org.anchoranalysis.anchor.overlay.collection.ColoredOverlayCollection;
 import org.anchoranalysis.image.extent.ImageDim;
 
-import ch.ethz.biol.cell.gui.overlay.ColoredOverlayCollection;
 import ch.ethz.biol.cell.mpp.cfg.Cfg;
 import ch.ethz.biol.cell.mpp.gui.videostats.internalframe.markredraw.ColoredCfg;
 import ch.ethz.biol.cell.mpp.mark.GlobalRegionIdentifiers;

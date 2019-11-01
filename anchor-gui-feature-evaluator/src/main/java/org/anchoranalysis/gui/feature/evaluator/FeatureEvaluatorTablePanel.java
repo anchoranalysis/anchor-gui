@@ -34,6 +34,7 @@ import javax.swing.JComponent;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
 
+import org.anchoranalysis.anchor.overlay.collection.OverlayCollection;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.index.IntArray;
 import org.anchoranalysis.core.log.LogErrorReporter;
@@ -43,8 +44,6 @@ import org.anchoranalysis.gui.cfgnrg.StatePanel;
 import org.anchoranalysis.gui.cfgnrg.StatePanelUpdateException;
 import org.anchoranalysis.gui.feature.evaluator.treetable.FeatureListSrc;
 import org.anchoranalysis.gui.image.OverlayCollectionWithImgStack;
-
-import ch.ethz.biol.cell.gui.overlay.OverlayCollection;
 
 /**
  * The panel shown in the "Feature Evaluator" frame

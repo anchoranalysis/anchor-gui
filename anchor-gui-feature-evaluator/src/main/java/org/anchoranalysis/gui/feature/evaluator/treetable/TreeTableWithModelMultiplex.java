@@ -36,11 +36,12 @@ import javax.swing.BorderFactory;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 
+import org.anchoranalysis.anchor.overlay.Overlay;
 import org.anchoranalysis.feature.nrg.NRGStackWithParams;
 import org.anchoranalysis.feature.shared.SharedFeatureSet;
 import org.anchoranalysis.gui.feature.FeatureListWithRegionMap;
 import org.netbeans.swing.outline.Outline;
-import ch.ethz.biol.cell.gui.overlay.Overlay;
+
 import ch.ethz.biol.cell.mpp.pair.Pair;
 
 // Has a number of different tables for cliques sizes (0, 1, 2) all of which remain memory, but only one

@@ -1,5 +1,10 @@
 package org.anchoranalysis.gui.frame.multioverlay.instantstate;
 
+import org.anchoranalysis.anchor.overlay.Overlay;
+import org.anchoranalysis.anchor.overlay.OverlayedInstantState;
+import org.anchoranalysis.anchor.overlay.collection.ColoredOverlayCollection;
+import org.anchoranalysis.anchor.overlay.collection.OverlayCollection;
+
 /*-
  * #%L
  * anchor-gui-frame
@@ -32,11 +37,6 @@ import org.anchoranalysis.core.color.ColorList;
 import org.anchoranalysis.core.idgetter.IDGetter;
 import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.gui.videostats.internalframe.cfgtorgb.ColoredOverlayedInstantState;
-
-import ch.ethz.biol.cell.gui.overlay.ColoredOverlayCollection;
-import ch.ethz.biol.cell.gui.overlay.Overlay;
-import ch.ethz.biol.cell.gui.overlay.OverlayCollection;
-import ch.ethz.biol.cell.mpp.instantstate.OverlayedInstantState;
 
 class AddColorBridge implements IObjectBridge<OverlayedInstantState, ColoredOverlayedInstantState> {
 

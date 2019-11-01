@@ -36,6 +36,7 @@ import java.util.ArrayList;
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 
+import org.anchoranalysis.anchor.overlay.collection.OverlayCollection;
 import org.anchoranalysis.core.color.ColorIndex;
 import org.anchoranalysis.core.index.IntArray;
 import org.anchoranalysis.core.property.IPropertyValueReceivable;
@@ -52,7 +53,6 @@ import org.anchoranalysis.gui.mark.CfgUtilities;
 import org.anchoranalysis.gui.propertyvalue.PropertyValueChangeListenerList;
 
 import overlay.OverlayCollectionMarkFactory;
-import ch.ethz.biol.cell.gui.overlay.OverlayCollection;
 import ch.ethz.biol.cell.mpp.cfg.Cfg;
 import ch.ethz.biol.cell.mpp.instantstate.CfgNRGInstantState;
 import ch.ethz.biol.cell.mpp.mark.GlobalRegionIdentifiers;

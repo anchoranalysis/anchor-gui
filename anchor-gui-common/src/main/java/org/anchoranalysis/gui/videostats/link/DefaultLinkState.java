@@ -1,5 +1,7 @@
 package org.anchoranalysis.gui.videostats.link;
 
+import org.anchoranalysis.anchor.overlay.collection.OverlayCollection;
+
 /*-
  * #%L
  * anchor-gui-common
@@ -30,8 +32,6 @@ import org.anchoranalysis.core.bridge.IObjectBridge;
 import org.anchoranalysis.gui.image.OverlayCollectionWithImgStack;
 import org.anchoranalysis.image.stack.DisplayStack;
 import org.apache.commons.lang.ArrayUtils;
-
-import ch.ethz.biol.cell.gui.overlay.OverlayCollection;
 
 /** Default values for all the linked variables */
 public class DefaultLinkState {

@@ -1,5 +1,7 @@
 package org.anchoranalysis.gui.image;
 
+import org.anchoranalysis.anchor.overlay.Overlay;
+import org.anchoranalysis.anchor.overlay.writer.OverlayWriter;
 import org.anchoranalysis.core.bridge.IObjectBridge;
 import org.anchoranalysis.core.error.CreateException;
 
@@ -39,9 +41,7 @@ import org.anchoranalysis.image.stack.DisplayStack;
 import ch.ethz.biol.cell.gui.image.provider.DisplayUpdate;
 import ch.ethz.biol.cell.gui.overlay.BoundColoredOverlayCollection;
 import ch.ethz.biol.cell.gui.overlay.OverlayRetriever;
-import ch.ethz.biol.cell.gui.overlay.Overlay;
 import ch.ethz.biol.cell.imageprocessing.io.generator.raster.OverlayedDisplayStackUpdate;
-import ch.ethz.biol.cell.mpp.cfgtoobjmaskwriter.OverlayWriter;
 
 /**
  * Creates DisplayUpdates from ColoredCfgRedrawUpdate by applying them to a overlayedDisplayStack

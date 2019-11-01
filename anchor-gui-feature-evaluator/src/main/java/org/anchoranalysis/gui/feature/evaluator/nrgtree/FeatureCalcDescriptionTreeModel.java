@@ -33,6 +33,7 @@ import java.util.List;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreeNode;
 
+import org.anchoranalysis.anchor.overlay.Overlay;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.error.OperationFailedException;
@@ -49,7 +50,6 @@ import org.anchoranalysis.gui.feature.FeatureListWithRegionMap;
 import org.anchoranalysis.gui.feature.evaluator.nrgtree.overlayparams.CreateParamsFromOverlay;
 import org.anchoranalysis.gui.feature.evaluator.singlepair.IUpdatableSinglePair;
 
-import ch.ethz.biol.cell.gui.overlay.Overlay;
 import ch.ethz.biol.cell.mpp.pair.Pair;
 
 public class FeatureCalcDescriptionTreeModel extends DefaultTreeModel implements IUpdatableSinglePair {

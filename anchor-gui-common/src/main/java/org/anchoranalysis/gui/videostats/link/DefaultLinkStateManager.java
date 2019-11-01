@@ -29,13 +29,12 @@ package org.anchoranalysis.gui.videostats.link;
 
 import java.util.HashMap;
 
+import org.anchoranalysis.anchor.overlay.collection.OverlayCollection;
 import org.anchoranalysis.core.bridge.IObjectBridge;
 import org.anchoranalysis.core.index.IntArray;
 import org.anchoranalysis.core.property.IPropertyValueSendable;
 import org.anchoranalysis.gui.image.OverlayCollectionWithImgStack;
 import org.anchoranalysis.image.stack.DisplayStack;
-
-import ch.ethz.biol.cell.gui.overlay.OverlayCollection;
 
 /**
  * When a new module is created, this sets a sensible default value for all of these linked

@@ -31,6 +31,7 @@ import overlay.OverlayCollectionMarkFactory;
 
 import java.util.function.Supplier;
 
+import org.anchoranalysis.anchor.overlay.OverlayedInstantState;
 import org.anchoranalysis.core.bridge.IObjectBridge;
 import org.anchoranalysis.core.cache.CacheMonitor;
 import org.anchoranalysis.core.color.ColorIndex;
@@ -48,7 +49,6 @@ import org.anchoranalysis.gui.mergebridge.TransformToCfg;
 import ch.ethz.biol.cell.mpp.cfg.Cfg;
 import ch.ethz.biol.cell.mpp.instantstate.CfgNRGNonHandleInstantState;
 import ch.ethz.biol.cell.mpp.instantstate.CfgNRGInstantState;
-import ch.ethz.biol.cell.mpp.instantstate.OverlayedInstantState;
 import ch.ethz.biol.cell.mpp.mark.regionmap.RegionMembershipWithFlags;
 import ch.ethz.biol.cell.mpp.nrg.CfgNRG;
 import ch.ethz.biol.cell.mpp.nrg.CfgWithNrgTotal;

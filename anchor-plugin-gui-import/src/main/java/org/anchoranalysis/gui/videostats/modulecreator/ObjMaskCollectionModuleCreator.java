@@ -1,5 +1,8 @@
 package org.anchoranalysis.gui.videostats.modulecreator;
 
+import org.anchoranalysis.anchor.overlay.collection.OverlayCollection;
+import org.anchoranalysis.anchor.overlay.collection.OverlayCollectionObjMaskFactory;
+
 /*
  * #%L
  * anchor-gui
@@ -42,8 +45,6 @@ import org.anchoranalysis.gui.videostats.operation.combine.IVideoStatsOperationC
 import org.anchoranalysis.image.objmask.ObjMask;
 import org.anchoranalysis.image.objmask.ObjMaskCollection;
 
-import ch.ethz.biol.cell.gui.overlay.OverlayCollection;
-import ch.ethz.biol.cell.gui.overlay.OverlayCollectionObjMaskFactory;
 import ch.ethz.biol.cell.mpp.cfg.Cfg;
 
 public class ObjMaskCollectionModuleCreator extends VideoStatsModuleCreator {

@@ -31,7 +31,8 @@ package org.anchoranalysis.gui.feature.evaluator;
 import java.util.ArrayList;
 import java.util.Collections;
 
-import org.anchoranalysis.anchor.mpp.mark.OverlayProperties;
+import org.anchoranalysis.anchor.overlay.Overlay;
+import org.anchoranalysis.anchor.overlay.OverlayProperties;
 import org.anchoranalysis.core.name.value.ComparatorOrderByName;
 import org.anchoranalysis.core.name.value.INameValue;
 import org.anchoranalysis.feature.nrg.NRGStackWithParams;
@@ -39,7 +40,6 @@ import org.anchoranalysis.gui.cfgnrgtable.TitleValueTableModel;
 import org.anchoranalysis.gui.feature.evaluator.singlepair.IUpdatableSinglePair;
 import org.anchoranalysis.image.extent.ImageRes;
 
-import ch.ethz.biol.cell.gui.overlay.Overlay;
 import ch.ethz.biol.cell.mpp.pair.Pair;
 
 class OverlayDescription extends TitleValueTableModel implements IUpdatableSinglePair {

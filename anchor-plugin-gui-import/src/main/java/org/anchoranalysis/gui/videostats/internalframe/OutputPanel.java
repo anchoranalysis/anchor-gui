@@ -34,6 +34,7 @@ import javax.swing.AbstractAction;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
+import org.anchoranalysis.anchor.overlay.id.IDGetterOverlayID;
 import org.anchoranalysis.core.color.ColorIndex;
 import org.anchoranalysis.core.error.reporter.ErrorReporter;
 import org.anchoranalysis.io.bean.objmask.writer.RGBOutlineWriter;
@@ -44,7 +45,6 @@ import org.anchoranalysis.io.output.bound.BoundOutputManagerRouteErrors;
 import org.anchoranalysis.io.output.namestyle.IndexableOutputNameStyle;
 import org.anchoranalysis.io.output.namestyle.IntegerSuffixOutputNameStyle;
 
-import ch.ethz.biol.cell.gui.overlay.IDGetterOverlayID;
 import ch.ethz.biol.cell.imageprocessing.io.generator.raster.CfgGenerator;
 import ch.ethz.biol.cell.imageprocessing.io.generator.raster.CfgWithDisplayStack;
 import ch.ethz.biol.cell.imageprocessing.io.generator.raster.ColoredCfgWithDisplayStack;

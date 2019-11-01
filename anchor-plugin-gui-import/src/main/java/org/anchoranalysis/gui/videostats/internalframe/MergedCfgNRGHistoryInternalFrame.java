@@ -3,6 +3,10 @@ package org.anchoranalysis.gui.videostats.internalframe;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.anchoranalysis.anchor.overlay.Overlay;
+import org.anchoranalysis.anchor.overlay.OverlayedInstantState;
+import org.anchoranalysis.anchor.overlay.id.IDGetterOverlayID;
+
 /*
  * #%L
  * anchor-gui
@@ -49,11 +53,8 @@ import org.anchoranalysis.gui.videostats.dropdown.VideoStatsModuleGlobalParams;
 import org.anchoranalysis.gui.videostats.module.DefaultModuleState;
 import org.anchoranalysis.io.manifest.deserializer.folder.LoadContainer;
 
-import ch.ethz.biol.cell.gui.overlay.IDGetterOverlayID;
-import ch.ethz.biol.cell.gui.overlay.Overlay;
 import ch.ethz.biol.cell.mpp.cfg.Cfg;
 import ch.ethz.biol.cell.mpp.instantstate.CfgNRGInstantState;
-import ch.ethz.biol.cell.mpp.instantstate.OverlayedInstantState;
 
 public class MergedCfgNRGHistoryInternalFrame {
 

@@ -31,11 +31,11 @@ import java.awt.event.MouseListener;
 
 import javax.swing.JComponent;
 
+import org.anchoranalysis.anchor.overlay.Overlay;
 import org.anchoranalysis.feature.nrg.NRGStackWithParams;
 import org.anchoranalysis.gui.feature.evaluator.singlepair.IUpdatableSinglePair;
 import org.netbeans.swing.outline.Outline;
 
-import ch.ethz.biol.cell.gui.overlay.Overlay;
 import ch.ethz.biol.cell.mpp.pair.Pair;
 
 public interface ITreeTableModel extends IUpdatableSinglePair {

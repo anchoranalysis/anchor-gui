@@ -32,6 +32,7 @@ import java.util.List;
 
 import javax.swing.JPopupMenu;
 
+import org.anchoranalysis.anchor.overlay.OverlayedInstantState;
 import org.anchoranalysis.core.bridge.IObjectBridgeIndex;
 import org.anchoranalysis.core.cache.Operation;
 import org.anchoranalysis.core.progress.IdentityOperationWithProgressReporter;
@@ -51,8 +52,6 @@ import org.anchoranalysis.gui.videostats.operation.VideoStatsOperationMenu;
 import org.anchoranalysis.gui.videostats.operation.VideoStatsOperationOrMenu;
 import org.anchoranalysis.gui.videostats.operation.VideoStatsOperationSequence;
 import org.anchoranalysis.gui.videostats.operation.combine.IVideoStatsOperationCombine;
-
-import ch.ethz.biol.cell.mpp.instantstate.OverlayedInstantState;
 
 public class OpenedFileGUIMultipleDropDown {
 

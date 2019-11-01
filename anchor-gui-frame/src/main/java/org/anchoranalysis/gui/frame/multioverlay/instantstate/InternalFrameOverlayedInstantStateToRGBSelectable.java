@@ -1,5 +1,10 @@
 package org.anchoranalysis.gui.frame.multioverlay.instantstate;
 
+import org.anchoranalysis.anchor.overlay.Overlay;
+import org.anchoranalysis.anchor.overlay.OverlayedInstantState;
+import org.anchoranalysis.anchor.overlay.collection.ColoredOverlayCollection;
+import org.anchoranalysis.anchor.overlay.collection.OverlayCollection;
+
 /*
  * #%L
  * anchor-gui
@@ -56,11 +61,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import anchor.gui.videostats.internalframe.cfgtorgb.IGetOverlayCollection;
-import ch.ethz.biol.cell.gui.overlay.Overlay;
-import ch.ethz.biol.cell.gui.overlay.ColoredOverlayCollection;
-import ch.ethz.biol.cell.gui.overlay.OverlayCollection;
 import ch.ethz.biol.cell.gui.overlay.OverlayRetriever;
-import ch.ethz.biol.cell.mpp.instantstate.OverlayedInstantState;
 
 // An internal frame, that converts a configuration to RGB
 public class InternalFrameOverlayedInstantStateToRGBSelectable {

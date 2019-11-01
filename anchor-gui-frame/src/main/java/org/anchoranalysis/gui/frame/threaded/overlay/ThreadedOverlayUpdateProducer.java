@@ -1,5 +1,7 @@
 package org.anchoranalysis.gui.frame.threaded.overlay;
 
+import org.anchoranalysis.anchor.overlay.Overlay;
+import org.anchoranalysis.anchor.overlay.writer.OverlayWriter;
 import org.anchoranalysis.core.bridge.IObjectBridge;
 import org.anchoranalysis.core.error.InitException;
 
@@ -46,9 +48,7 @@ import org.anchoranalysis.gui.videostats.internalframe.cfgtorgb.markdisplay.Mark
 import org.anchoranalysis.gui.videostats.threading.InteractiveThreadPool;
 
 import ch.ethz.biol.cell.gui.overlay.OverlayRetriever;
-import ch.ethz.biol.cell.gui.overlay.Overlay;
 import ch.ethz.biol.cell.imageprocessing.io.generator.raster.OverlayedDisplayStackUpdate;
-import ch.ethz.biol.cell.mpp.cfgtoobjmaskwriter.OverlayWriter;
 import ch.ethz.biol.cell.mpp.gui.videostats.internalframe.cfgtorgb.IRedrawable;
 
 

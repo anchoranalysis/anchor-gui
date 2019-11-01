@@ -30,6 +30,8 @@ package org.anchoranalysis.gui.mark;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.anchoranalysis.anchor.overlay.bean.objmask.writer.ObjMaskWriter;
+import org.anchoranalysis.anchor.overlay.writer.OverlayWriter;
 import org.anchoranalysis.io.bean.objmask.writer.IfElseWriter;
 import org.anchoranalysis.io.bean.objmask.writer.NullWriter;
 import org.anchoranalysis.io.bean.objmask.writer.ObjMaskListWriter;
@@ -39,8 +41,6 @@ import org.anchoranalysis.io.bean.objmask.writer.RGBOrientationWriter;
 import org.anchoranalysis.io.bean.objmask.writer.RGBOutlineWriter;
 import org.anchoranalysis.io.bean.objmask.writer.RGBSolidWriter;
 
-import ch.ethz.biol.cell.imageprocessing.io.objmask.ObjMaskWriter;
-import ch.ethz.biol.cell.mpp.cfgtoobjmaskwriter.OverlayWriter;
 import ch.ethz.biol.cell.mpp.cfgtoobjmaskwriter.SimpleOverlayWriter;
 import ch.ethz.biol.cell.mpp.mark.GlobalRegionIdentifiers;
 import ch.ethz.biol.cell.mpp.mark.regionmap.RegionMapSingleton;

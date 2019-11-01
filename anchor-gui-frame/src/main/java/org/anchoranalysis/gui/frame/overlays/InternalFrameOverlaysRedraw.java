@@ -1,5 +1,6 @@
 package org.anchoranalysis.gui.frame.overlays;
 
+import org.anchoranalysis.anchor.overlay.collection.OverlayCollection;
 import org.anchoranalysis.core.error.InitException;
 
 /*
@@ -48,8 +49,6 @@ import org.anchoranalysis.gui.videostats.module.DefaultModuleState;
 import org.anchoranalysis.gui.videostats.module.VideoStatsModule;
 import org.anchoranalysis.image.stack.DisplayStack;
 import org.anchoranalysis.io.bean.output.OutputWriteSettings;
-
-import ch.ethz.biol.cell.gui.overlay.OverlayCollection;
 
 
 // A frame that supports quickly drawing marks on top of existing images based upon a mouse-click

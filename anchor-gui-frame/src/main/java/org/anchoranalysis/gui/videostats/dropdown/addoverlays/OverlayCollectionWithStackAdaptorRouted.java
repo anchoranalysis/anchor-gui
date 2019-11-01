@@ -31,6 +31,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
+import org.anchoranalysis.anchor.overlay.collection.OverlayCollection;
 import org.anchoranalysis.core.error.reporter.ErrorReporter;
 import org.anchoranalysis.core.event.IRoutableReceivable;
 import org.anchoranalysis.core.event.RoutableEvent;
@@ -41,8 +42,6 @@ import org.anchoranalysis.gui.image.OverlayCollectionWithImgStack;
 import org.anchoranalysis.gui.videostats.INRGStackGetter;
 import org.anchoranalysis.gui.videostats.threading.InteractiveThreadPool;
 import org.anchoranalysis.gui.videostats.threading.InteractiveWorker;
-
-import ch.ethz.biol.cell.gui.overlay.OverlayCollection;
 
 // Triggers a OverlayCollectionWithStack event, every time a OverlayCollection event occurs
 class OverlayCollectionWithStackAdaptorRouted implements IRoutableReceivable<PropertyValueChangeEvent<OverlayCollectionWithImgStack>> {

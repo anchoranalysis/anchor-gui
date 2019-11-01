@@ -32,6 +32,8 @@ import java.awt.event.MouseEvent;
 
 import javax.swing.SwingUtilities;
 
+import org.anchoranalysis.anchor.overlay.collection.ColoredOverlayCollection;
+import org.anchoranalysis.anchor.overlay.collection.OverlayCollection;
 import org.anchoranalysis.core.geometry.Point3i;
 import org.anchoranalysis.core.index.IndicesSelection;
 import org.anchoranalysis.core.property.IPropertyValueReceivable;
@@ -41,9 +43,7 @@ import org.anchoranalysis.gui.image.ISliceNumGetter;
 import org.anchoranalysis.gui.indices.DualIndicesSelection;
 import org.anchoranalysis.gui.propertyvalue.PropertyValueChangeListenerList;
 
-import ch.ethz.biol.cell.gui.overlay.ColoredOverlayCollection;
 import ch.ethz.biol.cell.gui.overlay.OverlayRetriever;
-import ch.ethz.biol.cell.gui.overlay.OverlayCollection;
 
 class ClickAdapter extends MouseAdapter {
 	

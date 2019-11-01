@@ -30,6 +30,9 @@ package org.anchoranalysis.plugin.gui.bean.createrastergenerator.cfgnrginstantst
 import overlay.OverlayCollectionMarkFactory;
 
 import org.anchoranalysis.anchor.mpp.mark.Mark;
+import org.anchoranalysis.anchor.overlay.bean.objmask.writer.ObjMaskWriter;
+import org.anchoranalysis.anchor.overlay.collection.ColoredOverlayCollection;
+import org.anchoranalysis.anchor.overlay.id.IDGetterOverlayID;
 import org.anchoranalysis.bean.annotation.BeanField;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.idgetter.IDGetter;
@@ -45,13 +48,10 @@ import org.anchoranalysis.io.generator.IterableObjectGeneratorBridge;
 import org.anchoranalysis.plugin.gui.bean.createrastergenerator.CreateRasterGenerator;
 import org.anchoranalysis.plugin.gui.bean.exporttask.MappedFrom;
 
-import ch.ethz.biol.cell.gui.overlay.IDGetterOverlayID;
-import ch.ethz.biol.cell.gui.overlay.ColoredOverlayCollection;
 import ch.ethz.biol.cell.imageprocessing.io.generator.raster.CachedRGB;
 import ch.ethz.biol.cell.imageprocessing.io.generator.raster.CfgCachedGenerator;
 import ch.ethz.biol.cell.imageprocessing.io.generator.raster.OverlayedDisplayStackUpdate;
 import ch.ethz.biol.cell.imageprocessing.io.idgetter.IDGetterMarkID;
-import ch.ethz.biol.cell.imageprocessing.io.objmask.ObjMaskWriter;
 import ch.ethz.biol.cell.mpp.cfg.Cfg;
 import ch.ethz.biol.cell.mpp.cfgtoobjmaskwriter.SimpleOverlayWriter;
 import ch.ethz.biol.cell.mpp.gui.videostats.internalframe.markredraw.ColoredCfg;

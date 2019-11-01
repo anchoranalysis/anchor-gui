@@ -1,5 +1,6 @@
 package org.anchoranalysis.gui.frame.multioverlay.instantstate;
 
+import org.anchoranalysis.anchor.overlay.Overlay;
 import org.anchoranalysis.core.bridge.IObjectBridge;
 import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.idgetter.IDGetter;
@@ -58,7 +59,6 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import ch.ethz.biol.cell.gui.overlay.OverlayRetriever;
-import ch.ethz.biol.cell.gui.overlay.Overlay;
 import ch.ethz.biol.cell.imageprocessing.io.generator.raster.OverlayedDisplayStackUpdate;
 import ch.ethz.biol.cell.mpp.gui.videostats.internalframe.cfgtorgb.IRedrawable;
 
