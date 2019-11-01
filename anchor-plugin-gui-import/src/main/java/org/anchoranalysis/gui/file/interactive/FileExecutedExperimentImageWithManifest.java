@@ -31,11 +31,10 @@ import java.io.File;
 
 import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.error.OperationFailedException;
+import org.anchoranalysis.gui.bean.filecreator.MarkCreatorParams;
 import org.anchoranalysis.gui.file.opened.OpenedFile;
 import org.anchoranalysis.gui.file.opened.OpenedFileGUI;
-import org.anchoranalysis.gui.interactivebrowser.MarkEvaluatorManager;
 import org.anchoranalysis.gui.videostats.dropdown.IAddVideoStatsModule;
-import org.anchoranalysis.gui.videostats.dropdown.VideoStatsModuleGlobalParams;
 import org.anchoranalysis.gui.videostats.dropdown.manifest.ManifestDropDown;
 import org.anchoranalysis.image.io.bean.rasterreader.RasterReader;
 import org.anchoranalysis.io.manifest.CoupledManifests;
@@ -47,20 +46,17 @@ public class FileExecutedExperimentImageWithManifest extends InteractiveFile {
 	private ManifestDropDown manifestDropDown;
 	
 	private CoupledManifests coupledManifests;
-	private VideoStatsModuleGlobalParams mpg;
 	private RasterReader rasterReader;
-	private MarkEvaluatorManager markEvaluatorManager;
+	private MarkCreatorParams markCreatorParams;
 	
 	public FileExecutedExperimentImageWithManifest(
 		CoupledManifests coupledManifests,
 		RasterReader rasterReader,
-		MarkEvaluatorManager markEvaluatorManager,
-		VideoStatsModuleGlobalParams mpg
+		MarkCreatorParams markCreatorParams
 	) {
 		this.coupledManifests = coupledManifests;
 		this.rasterReader = rasterReader;
-		this.mpg = mpg;
-		this.markEvaluatorManager = markEvaluatorManager;
+		this.markCreatorParams = markCreatorParams;
 	}
 
 	@Override
@@ -69,15 +65,18 @@ public class FileExecutedExperimentImageWithManifest extends InteractiveFile {
 		final BoundOutputManagerRouteErrors outputManager		
 	) throws OperationFailedException {
 		
-		manifestDropDown = new ManifestDropDown(coupledManifests);
+		manifestDropDown = new ManifestDropDown(
+			coupledManifests,
+			markCreatorParams.getMarkDisplaySettings()
+		);
 
 		try {
 			manifestDropDown.init(
 				adder,
 				rasterReader,
-				markEvaluatorManager,
+				markCreatorParams.getMarkEvaluatorManager(),
 				outputManager,
-				mpg
+				markCreatorParams.getModuleParams()
 			);
 		} catch (InitException e) {
 			throw new OperationFailedException(e);

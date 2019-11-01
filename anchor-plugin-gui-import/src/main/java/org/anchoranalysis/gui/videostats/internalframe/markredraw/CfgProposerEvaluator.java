@@ -1,5 +1,7 @@
 package org.anchoranalysis.gui.videostats.internalframe.markredraw;
 
+import org.anchoranalysis.anchor.mpp.mark.Mark;
+
 /*-
  * #%L
  * anchor-plugin-gui-import
@@ -39,7 +41,6 @@ import ch.ethz.biol.cell.mpp.cfg.CfgGen;
 import ch.ethz.biol.cell.mpp.cfg.proposer.CfgProposer;
 import ch.ethz.biol.cell.mpp.gui.videostats.internalframe.evaluator.EvaluatorUtilities;
 import ch.ethz.biol.cell.mpp.gui.videostats.internalframe.markredraw.ColoredCfg;
-import ch.ethz.biol.cell.mpp.mark.Mark;
 
 public class CfgProposerEvaluator implements ProposalOperationCreator {
 

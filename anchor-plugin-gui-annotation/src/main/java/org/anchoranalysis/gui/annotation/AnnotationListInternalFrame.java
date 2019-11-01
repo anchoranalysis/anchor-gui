@@ -47,12 +47,11 @@ import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.progress.OperationWithProgressReporter;
 import org.anchoranalysis.core.progress.ProgressReporter;
 import org.anchoranalysis.core.progress.ProgressReporterNull;
+import org.anchoranalysis.gui.bean.filecreator.MarkCreatorParams;
 import org.anchoranalysis.gui.interactivebrowser.IOpenFile;
-import org.anchoranalysis.gui.interactivebrowser.MarkEvaluatorManager;
 import org.anchoranalysis.gui.interactivebrowser.filelist.InteractiveFileListInternalFrame;
 import org.anchoranalysis.gui.videostats.IModuleCreatorDefaultState;
 import org.anchoranalysis.gui.videostats.dropdown.IAddVideoStatsModule;
-import org.anchoranalysis.gui.videostats.dropdown.VideoStatsModuleGlobalParams;
 import org.anchoranalysis.image.io.input.StackInputBase;
 import org.anchoranalysis.io.deserializer.DeserializationFailedException;
 
@@ -82,8 +81,7 @@ public class AnnotationListInternalFrame {
 		final AnnotationInputManager<StackInputBase,T> inputManager,
 		IAddVideoStatsModule adder,
 		IOpenFile fileOpenManager,
-		final MarkEvaluatorManager markEvaluatorManager,
-		final VideoStatsModuleGlobalParams mpg,
+		MarkCreatorParams params,
 		final ProgressReporter progressReporter,
 		int widthDescriptionColumn 
 	) throws InitException {
@@ -93,14 +91,14 @@ public class AnnotationListInternalFrame {
 			public AnnotationProject doOperation( ProgressReporter progressReporter ) throws ExecuteException {
 				try {
 					Collection<AnnotationWithStrategy<T>> inputObjs = inputManager.inputObjects(
-						mpg.createInputContext(),
+						params.getModuleParams().createInputContext(),
 						progressReporter
 					); 
 					
 					AnnotationProject ap = new AnnotationProject(
 						inputObjs,
-						markEvaluatorManager,
-						mpg,
+						params.getMarkEvaluatorManager(),
+						params.getModuleParams(),
 						ProgressReporterNull.get()
 					);
 					
@@ -114,9 +112,14 @@ public class AnnotationListInternalFrame {
 		
 		try {
 			annotationTableModel = new AnnotationTableModel(opAnnotationProject, progressReporter);
-			delegate.init(adder, annotationTableModel, fileOpenManager, mpg );
-			
-			
+			delegate.init(
+				adder,
+				annotationTableModel,
+				fileOpenManager,
+				params.getModuleParams(),
+				params.getMarkDisplaySettings()
+			);
+						
 			progressBar = createProgressBar();
 			refreshProgressBar();
 			

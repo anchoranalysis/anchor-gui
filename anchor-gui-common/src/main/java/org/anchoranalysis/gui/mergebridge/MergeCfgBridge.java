@@ -30,20 +30,27 @@ package org.anchoranalysis.gui.mergebridge;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.function.Supplier;
 
+import org.anchoranalysis.anchor.mpp.mark.Mark;
 import org.anchoranalysis.core.bridge.IObjectBridge;
 import org.anchoranalysis.core.index.GetOperationFailedException;
-
 import overlay.OverlayCollectionMarkFactory;
 import ch.ethz.biol.cell.gui.overlay.OverlayCollection;
 import ch.ethz.biol.cell.mpp.cfg.Cfg;
 import ch.ethz.biol.cell.mpp.instantstate.OverlayedInstantState;
-import ch.ethz.biol.cell.mpp.mark.Mark;
+import ch.ethz.biol.cell.mpp.mark.regionmap.RegionMembershipWithFlags;
 
 public class MergeCfgBridge implements IObjectBridge<IndexedDualState<Cfg>, OverlayedInstantState> {
-
-	private ArrayList<ProposalState> lastProposalState;
 	
+	private Supplier<RegionMembershipWithFlags> regionMembership;
+	private ArrayList<ProposalState> lastProposalState;
+		
+	public MergeCfgBridge(Supplier<RegionMembershipWithFlags> regionMembership) {
+		super();
+		this.regionMembership = regionMembership;
+	}
+
 	// From the memory of the last set of proposals, get a particlar indexed items
 	public ProposalState getLastProposalStateForIndex( int index ) {
 		
@@ -155,7 +162,10 @@ public class MergeCfgBridge implements IObjectBridge<IndexedDualState<Cfg>, Over
 			copyAsUnchanged( sourceObject.getSecondary(), mergedCfg, lastProposalState);
 		}
 		
-		OverlayCollection oc = OverlayCollectionMarkFactory.createWithoutColor(mergedCfg);
+		OverlayCollection oc = OverlayCollectionMarkFactory.createWithoutColor(
+			mergedCfg,
+			regionMembership.get()
+		);
 		return new OverlayedInstantState( sourceObject.getIndex(), oc);
 	}
 

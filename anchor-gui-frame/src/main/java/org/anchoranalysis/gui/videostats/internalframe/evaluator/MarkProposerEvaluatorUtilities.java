@@ -30,6 +30,8 @@ package org.anchoranalysis.gui.videostats.internalframe.evaluator;
 import java.awt.Color;
 
 import org.anchoranalysis.anchor.mpp.bean.proposer.MarkProposer;
+import org.anchoranalysis.anchor.mpp.mark.Mark;
+import org.anchoranalysis.anchor.mpp.mark.MarkAbstractPosition;
 import org.anchoranalysis.anchor.mpp.proposer.visualization.ICreateProposalVisualization;
 import org.anchoranalysis.core.color.RGBColor;
 import org.anchoranalysis.core.geometry.Point3d;
@@ -38,8 +40,6 @@ import org.anchoranalysis.image.extent.ImageDim;
 
 import ch.ethz.biol.cell.mpp.gui.videostats.internalframe.evaluator.EvaluatorUtilities;
 import ch.ethz.biol.cell.mpp.gui.videostats.internalframe.markredraw.ColoredCfg;
-import ch.ethz.biol.cell.mpp.mark.Mark;
-import ch.ethz.biol.cell.mpp.mark.MarkAbstractPosition;
 
 public class MarkProposerEvaluatorUtilities {
 

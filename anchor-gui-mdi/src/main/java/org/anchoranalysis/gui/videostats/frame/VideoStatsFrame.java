@@ -95,8 +95,6 @@ public class VideoStatsFrame extends JFrame implements IGetToolbar {
 	
 	private MarkDisplaySettings lastMarkDisplaySettings = new MarkDisplaySettings();
 	
-	//private static Log log = LogFactory.getLog(VideoStatsFrame.class);
-	
 	private ModuleEventRouter moduleEventRouter;
 	
 	private InteractiveThreadPool threadPool = new InteractiveThreadPool( new InteractiveThreadPool.AddProgressBarInternalFrame() {
@@ -370,5 +368,9 @@ public class VideoStatsFrame extends JFrame implements IGetToolbar {
 
 	public JInternalFrame selectFrame(boolean forward) {
 		return desktopPane.selectFrame(forward);
+	}
+	
+	public MarkDisplaySettings getLastMarkDisplaySettings() {
+		return lastMarkDisplaySettings;
 	}
 }

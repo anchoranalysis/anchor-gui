@@ -49,6 +49,7 @@ import org.anchoranalysis.gui.interactivebrowser.MarkEvaluatorSetForImage;
 import org.anchoranalysis.gui.io.loader.manifest.finder.CfgNRGFinderContext;
 import org.anchoranalysis.gui.io.loader.manifest.finder.FinderCfgFolder;
 import org.anchoranalysis.gui.io.loader.manifest.finder.historyfolder.FinderHistoryFolderKernelIterDescription;
+import org.anchoranalysis.gui.mark.MarkDisplaySettings;
 import org.anchoranalysis.gui.series.TimeSequenceProvider;
 import org.anchoranalysis.gui.videostats.dropdown.BoundVideoStatsModuleDropDown;
 import org.anchoranalysis.gui.videostats.dropdown.IAddVideoStatsModule;
@@ -83,9 +84,12 @@ public class ManifestDropDown {
 
 	private CoupledManifests manifests;
 	
+	private MarkDisplaySettings markDisplaySettings;
+	
 	// A dropdown menu representing a particular manifest
-	public ManifestDropDown(CoupledManifests manifests ) {
+	public ManifestDropDown(CoupledManifests manifests, MarkDisplaySettings markDisplaySettings ) {
 		this.manifests = manifests;
+		this.markDisplaySettings = markDisplaySettings;
 		this.delegate = new BoundVideoStatsModuleDropDown( manifests.descriptiveName(), "/toolbarIcon/rectangle.png");
 	}
 
@@ -216,7 +220,13 @@ public class ManifestDropDown {
 		// Add: Cfgs, Rasters and ObjMasks
 		boolean defaultAdded = addCfgs(	opBackgroundNRG, finderNrgStack, mpg );
 		addRaster( opBackgroundNRG, mpg, defaultAdded );
-		new AddObjs( delegate, manifests, finderNrgStack, mpg ).apply(opBackgroundNRG);
+		new AddObjs(
+			delegate,
+			manifests,
+			finderNrgStack,
+			mpg,
+			markDisplaySettings
+		).apply(opBackgroundNRG);
 
 		// Various useful finders
 		FinderSerializedObject<KernelProposer<CfgNRGPixelized>> finderKernelProposer = createFinderKernelProposer( mpg );
@@ -358,6 +368,7 @@ public class ManifestDropDown {
 					"Final Cfg",
 					operationBwsaWithNRG.nrgBackground(),
 					mpg,
+					markDisplaySettings,
 					true
 				);
 				defaultAdded = true;
@@ -442,6 +453,7 @@ public class ManifestDropDown {
 				provider,
 				operationBwsaWithNRG.nrgBackground(),
 				mpg,
+				markDisplaySettings,
 				false
 			);
 			

@@ -38,6 +38,7 @@ import org.anchoranalysis.core.progress.IdentityOperationWithProgressReporter;
 import org.anchoranalysis.gui.file.opened.IOpenedFileGUI;
 import org.anchoranalysis.gui.frame.multioverlay.RasterMultiCreator;
 import org.anchoranalysis.gui.frame.multiraster.NamedRasterSet;
+import org.anchoranalysis.gui.mark.MarkDisplaySettings;
 import org.anchoranalysis.gui.videostats.dropdown.DualMenuWrapper;
 import org.anchoranalysis.gui.videostats.dropdown.IAddVideoStatsModule;
 import org.anchoranalysis.gui.videostats.dropdown.VideoStatsModuleCreatorAndAdder;
@@ -58,8 +59,14 @@ public class OpenedFileGUIMultipleDropDown {
 	private JPopupMenu popupMenu = new JPopupMenu();
 	private IAddVideoStatsModule adder;
 	private VideoStatsModuleGlobalParams mpg;
+	private MarkDisplaySettings markDisplaySettings;
 	
-	public OpenedFileGUIMultipleDropDown( IAddVideoStatsModule adder, List<IOpenedFileGUI> listOpenedGUI, final VideoStatsModuleGlobalParams moduleParamsGlobal ) {
+	public OpenedFileGUIMultipleDropDown(
+		IAddVideoStatsModule adder,
+		List<IOpenedFileGUI> listOpenedGUI,
+		VideoStatsModuleGlobalParams moduleParamsGlobal,
+		MarkDisplaySettings markDisplaySettings
+	) {
 		
 		if (listOpenedGUI.size()==0) {
 			return;
@@ -67,6 +74,7 @@ public class OpenedFileGUIMultipleDropDown {
 		
 		this.adder = adder;
 		this.mpg = moduleParamsGlobal;
+		this.markDisplaySettings = markDisplaySettings;
 		
 		//@SuppressWarnings("unused")
 		//ManifestDropDown first = listManifestDropDown.get(0);
@@ -81,12 +89,22 @@ public class OpenedFileGUIMultipleDropDown {
 		VideoStatsOperationMenu individually = out.createSubMenu("Individually", false);
 		VideoStatsOperationMenu combined = out.createSubMenu("Combined", false);
 		
-		traverse(firstList,individually,combined);
+		traverse(
+			firstList,
+			individually,
+			combined,
+			markDisplaySettings
+		);
 
 
 	}
 	
-	private void traverse( List<VideoStatsOperationMenu> listIn, VideoStatsOperationMenu outIndividually, VideoStatsOperationMenu outCombined ) {
+	private void traverse(
+		List<VideoStatsOperationMenu> listIn,
+		VideoStatsOperationMenu outIndividually,
+		VideoStatsOperationMenu outCombined,
+		MarkDisplaySettings markDisplaySettings
+	) {
 		
 		VideoStatsOperationMenu first = listIn.get(0);
 		
@@ -94,7 +112,13 @@ public class OpenedFileGUIMultipleDropDown {
 			if (vsoom.isSeparator()) {
 				outIndividually.addSeparator();
 			} else if (vsoom.isOperation()) {
-				addOperation(vsoom.getOperation(), listIn, outIndividually, outCombined);
+				addOperation(
+					vsoom.getOperation(),
+					listIn,
+					outIndividually,
+					outCombined,
+					markDisplaySettings
+				);
 			} else if (vsoom.isMenu()) {
 				addMenu(vsoom.getMenu(), listIn, outIndividually, outCombined);
 			} else {
@@ -104,8 +128,13 @@ public class OpenedFileGUIMultipleDropDown {
 		
 	}
 	
-	private void addOperation( VideoStatsOperation or, List<VideoStatsOperationMenu> list, VideoStatsOperationMenu outIndividually, VideoStatsOperationMenu outCombined) {
-		
+	private void addOperation(
+		VideoStatsOperation or,
+		List<VideoStatsOperationMenu> list,
+		VideoStatsOperationMenu outIndividually,
+		VideoStatsOperationMenu outCombined,
+		MarkDisplaySettings markDisplaySettings
+	) {	
 		VideoStatsOperationSequence all = new VideoStatsOperationSequence( or.getName() );
 		all.add(or);
 		
@@ -130,18 +159,42 @@ public class OpenedFileGUIMultipleDropDown {
 		outIndividually.add( all );
 		
 		if (listCombined.size()>0) {
-			addCombinedOperations(listCombined, outCombined, or);
+			addCombinedOperations(
+				listCombined,
+				outCombined,
+				or,
+				markDisplaySettings
+			);
 		}
 	}
 	
 	
 	// We can improve this logic, as it's not the most clear cut
-	private void addCombinedOperations( List<IVideoStatsOperationCombine> listCombined, VideoStatsOperationMenu out, VideoStatsOperation rootOperation ) {
+	private void addCombinedOperations(
+		List<IVideoStatsOperationCombine> listCombined,
+		VideoStatsOperationMenu out,
+		VideoStatsOperation rootOperation,
+		MarkDisplaySettings markDisplaySettings
+	) {
 		addBackgroundSetAndNoObjs(listCombined, out);
 		
 		// Get cfg menu
-		addMulti(listCombined, out, rootOperation, "Cfg", new MultiCfgInputToOverlay(), (op)->op.getCfg() );
-		addMulti(listCombined, out, rootOperation, "Objs", new MultiObjMaskCollectionInputToOverlay(), (op)->op.getObjMaskCollection() );
+		addMulti(
+			listCombined,
+			out,
+			rootOperation,
+			"Cfg",
+			new MultiCfgInputToOverlay(	markDisplaySettings	),
+			(op)->op.getCfg()
+		);
+		addMulti(
+			listCombined,
+			out,
+			rootOperation,
+			"Objs",
+			new MultiObjMaskCollectionInputToOverlay(),
+			(op)->op.getObjMaskCollection()
+		);
 	}
 	
 	
@@ -232,7 +285,7 @@ public class OpenedFileGUIMultipleDropDown {
 		}
 		
 		VideoStatsOperationMenu menuNew = out.createSubMenu(menu.getName(), true);
-		traverse(menuIn,menuNew,outCombined);
+		traverse(menuIn,menuNew,outCombined,markDisplaySettings);
 	}
 	
 	private static VideoStatsOperation findOperationOfSameNameOrNull( VideoStatsOperation src, VideoStatsOperationMenu menu) {

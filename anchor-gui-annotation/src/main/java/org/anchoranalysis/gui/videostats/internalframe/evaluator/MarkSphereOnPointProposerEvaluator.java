@@ -29,6 +29,7 @@ package org.anchoranalysis.gui.videostats.internalframe.evaluator;
 
 import java.awt.Color;
 
+import org.anchoranalysis.anchor.mpp.mark.conic.MarkSphere;
 import org.anchoranalysis.anchor.mpp.proposer.ProposerContext;
 import org.anchoranalysis.anchor.mpp.proposer.error.ErrorNode;
 import org.anchoranalysis.core.color.RGBColor;
@@ -41,7 +42,9 @@ import org.anchoranalysis.image.extent.ImageDim;
 import overlay.OverlayMark;
 import ch.ethz.biol.cell.mpp.cfg.Cfg;
 import ch.ethz.biol.cell.mpp.cfg.CfgGen;
-import ch.ethz.biol.cell.mpp.mark.MarkSphere;
+import ch.ethz.biol.cell.mpp.mark.GlobalRegionIdentifiers;
+import ch.ethz.biol.cell.mpp.mark.regionmap.RegionMapSingleton;
+import ch.ethz.biol.cell.mpp.mark.regionmap.RegionMembershipWithFlags;
 
 public class MarkSphereOnPointProposerEvaluator implements ProposalOperationCreator {
 
@@ -49,7 +52,9 @@ public class MarkSphereOnPointProposerEvaluator implements ProposalOperationCrea
 	
 	private ImageDim dim;
 	
-	
+	private static RegionMembershipWithFlags regionMembership = RegionMapSingleton.instance().membershipWithFlagsForIndex(
+		GlobalRegionIdentifiers.SUBMARK_INSIDE
+	);
 	
 	public MarkSphereOnPointProposerEvaluator(ImageDim dim) {
 		super();
@@ -81,7 +86,10 @@ public class MarkSphereOnPointProposerEvaluator implements ProposalOperationCrea
 				
 				proposedCfg.getCfgCore().add(markSphere);
 				proposedCfg.getCfgToRedraw().add(markSphere);
-				proposedCfg.getColoredCfg().add( new OverlayMark(markSphere), colorMark );
+				proposedCfg.getColoredCfg().add(
+					new OverlayMark(markSphere, regionMembership),
+					colorMark
+				);
 				proposedCfg.setSuggestedSliceNum( (int) position.getZ() ); 
 				
 				return proposedCfg;

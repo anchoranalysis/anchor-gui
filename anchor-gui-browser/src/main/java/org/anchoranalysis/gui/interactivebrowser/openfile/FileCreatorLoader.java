@@ -61,7 +61,7 @@ public class FileCreatorLoader {
 	) {
 		super();
 		this.params = params;
-		this.mpg = params.getModuleParamsGlobal();
+		this.mpg = params.getMarkCreatorParams().getModuleParams();
 		this.fileOpenManager = fileOpenManager;
 		this.globalSubgroupAdder = globalSubgroupAdder;
 	}

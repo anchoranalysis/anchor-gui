@@ -35,6 +35,7 @@ import org.anchoranalysis.core.progress.OperationWithProgressReporter;
 import org.anchoranalysis.core.progress.ProgressReporter;
 import org.anchoranalysis.gui.backgroundset.BackgroundSet;
 import org.anchoranalysis.gui.interactivebrowser.MarkEvaluatorSetForImage;
+import org.anchoranalysis.gui.mark.MarkDisplaySettings;
 import org.anchoranalysis.gui.videostats.dropdown.BoundVideoStatsModuleDropDown;
 import org.anchoranalysis.gui.videostats.dropdown.IAddVideoStatsModule;
 import org.anchoranalysis.gui.videostats.dropdown.OperationNRGStackFromMarkEvaluatorSet;
@@ -106,10 +107,18 @@ public class DropDownUtilities {
 		String name,
 		NRGBackgroundAdder nrgBackground,
 		VideoStatsModuleGlobalParams mpg,
+		MarkDisplaySettings markDisplaySettings,
 		boolean addAsDefault
 	) {
 		
-		VideoStatsModuleCreator module = new CfgModuleCreator(delegate.getName(), name, op, nrgBackground.getNRGBackground(), mpg );
+		VideoStatsModuleCreator module = new CfgModuleCreator(
+			delegate.getName(),
+			name,
+			op,
+			nrgBackground.getNRGBackground(),
+			mpg,
+			markDisplaySettings
+		);
 		addModule(module, menu, nrgBackground.getAdder(), name, mpg, addAsDefault );
 	}
 	
@@ -158,6 +167,7 @@ public class DropDownUtilities {
 		final INamedProvider<Cfg> cfgProvider,
 		NRGBackgroundAdder nrgBackground,
 		VideoStatsModuleGlobalParams mpg,
+		MarkDisplaySettings markDisplaySettings,
 		boolean addAsDefault
 	) {
 		if (cfgProvider.keys().size()==0) {
@@ -188,6 +198,7 @@ public class DropDownUtilities {
 				providerName,
 				nrgBackground,
 				mpg,
+				markDisplaySettings,
 				addAsDefault
 			);
 		}

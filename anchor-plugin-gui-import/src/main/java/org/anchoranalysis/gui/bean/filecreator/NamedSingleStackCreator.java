@@ -54,8 +54,6 @@ public class NamedSingleStackCreator extends FileCreatorGeneralList {
 	private InputManager<? extends StackInputBase> input;
 	// END BEAN PROPERTIES
 	
-	//private static Log log = LogFactory.getLog(NamedChnlCollectionCreator.class);
-	
 	@Override
 	public void addFilesToList(List<InteractiveFile> listFiles,
 			FileCreatorParams params, ProgressReporter progressReporter) throws CreateException {
@@ -73,8 +71,7 @@ public class NamedSingleStackCreator extends FileCreatorGeneralList {
 				
 				FileSingleStack file = new FileSingleStack(
 					obj,
-					params.getMarkEvaluatorManager(),
-					params.getModuleParamsGlobal()
+					params.getMarkCreatorParams()
 				);
 				listFiles.add(file);
 

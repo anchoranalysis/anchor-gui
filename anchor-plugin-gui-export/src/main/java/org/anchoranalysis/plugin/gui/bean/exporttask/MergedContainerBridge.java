@@ -29,6 +29,8 @@ package org.anchoranalysis.plugin.gui.bean.exporttask;
 
 import overlay.OverlayCollectionMarkFactory;
 
+import java.util.function.Supplier;
+
 import org.anchoranalysis.core.bridge.IObjectBridge;
 import org.anchoranalysis.core.cache.CacheMonitor;
 import org.anchoranalysis.core.color.ColorIndex;
@@ -47,15 +49,18 @@ import ch.ethz.biol.cell.mpp.cfg.Cfg;
 import ch.ethz.biol.cell.mpp.instantstate.CfgNRGNonHandleInstantState;
 import ch.ethz.biol.cell.mpp.instantstate.CfgNRGInstantState;
 import ch.ethz.biol.cell.mpp.instantstate.OverlayedInstantState;
+import ch.ethz.biol.cell.mpp.mark.regionmap.RegionMembershipWithFlags;
 import ch.ethz.biol.cell.mpp.nrg.CfgNRG;
 import ch.ethz.biol.cell.mpp.nrg.CfgWithNrgTotal;
 
 class MergedContainerBridge implements IObjectBridge<ExportTaskParams,IBoundedIndexContainer<CfgNRGInstantState>> {
 
 	private CacheMonitor cacheMonitor;
+	private Supplier<RegionMembershipWithFlags> regionMembership;
 	
-	public MergedContainerBridge() {
+	public MergedContainerBridge( Supplier<RegionMembershipWithFlags> regionMembership ) {
 		super();
+		this.regionMembership = regionMembership;
 	}
 
 	private BoundedIndexContainerBridgeWithoutIndex<OverlayedInstantState,CfgNRGInstantState> retBridge = null;
@@ -77,7 +82,7 @@ class MergedContainerBridge implements IObjectBridge<ExportTaskParams,IBoundedIn
 				throw new GetOperationFailedException(e);
 			}
 			
-			MergeCfgBridge mergeCfgBridge = new MergeCfgBridge();
+			MergeCfgBridge mergeCfgBridge = new MergeCfgBridge(regionMembership);
 
 			ColorIndex mergedColorIndex = new MergedColorIndex(mergeCfgBridge);
 

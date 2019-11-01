@@ -76,8 +76,7 @@ public class AnnotationCreator extends FileCreator {
 				input,
 				adder,
 				fileOpenManager,
-				params.getMarkEvaluatorManager(),
-				mpg,
+				params.getMarkCreatorParams(),
 				progressReporter,
 				weightWidthDescription
 			);

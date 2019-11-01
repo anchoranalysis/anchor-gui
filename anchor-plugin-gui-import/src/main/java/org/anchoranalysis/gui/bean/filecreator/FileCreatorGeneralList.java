@@ -81,7 +81,14 @@ public abstract class FileCreatorGeneralList extends FileCreator {
 				
 		SimpleInteractiveFileListInternalFrame manifestListSummary = new SimpleInteractiveFileListInternalFrame( name );
 		try {
-			manifestListSummary.init( adder, op, fileOpenManager, mpg, progressReporter );
+			manifestListSummary.init(
+				adder,
+				op,
+				fileOpenManager,
+				mpg,
+				params.getMarkCreatorParams().getMarkDisplaySettings(),
+				progressReporter
+			);
 		} catch (InitException e) {
 			throw new VideoStatsModuleCreateException(e);
 		}

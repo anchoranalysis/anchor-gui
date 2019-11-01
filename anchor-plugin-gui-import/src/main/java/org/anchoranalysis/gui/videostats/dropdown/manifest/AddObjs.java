@@ -36,6 +36,7 @@ import org.anchoranalysis.core.name.provider.OperationFromNamedProvider;
 import org.anchoranalysis.gui.finder.FinderNrgStack;
 import org.anchoranalysis.gui.io.loader.manifest.finder.FinderCfgFolder;
 import org.anchoranalysis.gui.io.loader.manifest.finder.FinderObjMaskCollectionFolder;
+import org.anchoranalysis.gui.mark.MarkDisplaySettings;
 import org.anchoranalysis.gui.videostats.dropdown.BoundVideoStatsModuleDropDown;
 import org.anchoranalysis.gui.videostats.dropdown.MenuAddException;
 import org.anchoranalysis.gui.videostats.dropdown.OperationCreateBackgroundSetWithAdder;
@@ -58,16 +59,18 @@ class AddObjs {
 
 	private BoundVideoStatsModuleDropDown delegate;
 	private CoupledManifests manifests;
-	FinderNrgStack finderNrgStack;
-	VideoStatsModuleGlobalParams mpg;
+	private FinderNrgStack finderNrgStack;
+	private VideoStatsModuleGlobalParams mpg;
+	private MarkDisplaySettings markDisplaySettings;
 		
 	public AddObjs(BoundVideoStatsModuleDropDown delegate, CoupledManifests manifests, FinderNrgStack finderNrgStack,
-			VideoStatsModuleGlobalParams mpg) {
+			VideoStatsModuleGlobalParams mpg, MarkDisplaySettings markDisplaySettings) {
 		super();
 		this.delegate = delegate;
 		this.manifests = manifests;
 		this.finderNrgStack = finderNrgStack;
 		this.mpg = mpg;
+		this.markDisplaySettings = markDisplaySettings;
 	}
 	
 	public boolean apply( OperationCreateBackgroundSetWithAdder operationBwsaWithNRG ) {
@@ -183,6 +186,7 @@ class AddObjs {
 				provider,
 				operationBwsaWithNRG.nrgBackground(),
 				mpg,
+				markDisplaySettings,
 				false
 			);
 			

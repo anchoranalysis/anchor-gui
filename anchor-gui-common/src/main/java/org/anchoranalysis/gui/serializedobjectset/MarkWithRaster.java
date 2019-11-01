@@ -1,5 +1,6 @@
 package org.anchoranalysis.gui.serializedobjectset;
 
+import org.anchoranalysis.anchor.mpp.mark.Mark;
 import org.anchoranalysis.core.index.IIndexGetter;
 import org.anchoranalysis.feature.nrg.NRGStackWithParams;
 
@@ -31,8 +32,6 @@ import org.anchoranalysis.feature.nrg.NRGStackWithParams;
 
 
 import org.anchoranalysis.gui.backgroundset.BackgroundSet;
-
-import ch.ethz.biol.cell.mpp.mark.Mark;
 
 public class MarkWithRaster implements IIndexGetter, Comparable<IIndexGetter> {
 		

@@ -162,24 +162,27 @@ public class MarkDisplaySettings {
 		}		
 	}
 	
+	public RegionMembershipWithFlags regionMembership() {
+		int identifier = showShell ? GlobalRegionIdentifiers.SUBMARK_SHELL :
+			GlobalRegionIdentifiers.SUBMARK_INSIDE;
+		return RegionMapSingleton.instance().membershipWithFlagsForIndex(identifier);
+	}
+	
 	private static SimpleOverlayWriter determineWriter( List<ObjMaskWriter> insideList, List<ObjMaskWriter> shellList ) {
 
 		ObjMaskWriter insideWriter = createWriterFromList(insideList);
 		ObjMaskWriter shellWriter = createWriterFromList(shellList);
-		
-		RegionMembershipWithFlags inside = RegionMapSingleton.instance().membershipWithFlagsForIndex(GlobalRegionIdentifiers.SUBMARK_INSIDE);
-		RegionMembershipWithFlags shell = RegionMapSingleton.instance().membershipWithFlagsForIndex(GlobalRegionIdentifiers.SUBMARK_SHELL);
 				
 		if (shellList.size()>0) {
-			return new SimpleOverlayWriter(	shellWriter, shell );
+			return new SimpleOverlayWriter(	shellWriter );
 		} else {
 			
 			if (insideList.size()>0) {
-				return new SimpleOverlayWriter(	insideWriter, inside );
+				return new SimpleOverlayWriter(	insideWriter );
 			} else {
 				// Then there is no mask
 				// We should not get here at the moment, as it is impossible to disable showInside
-				return new SimpleOverlayWriter(	new NullWriter(), inside );
+				return new SimpleOverlayWriter(	new NullWriter() );
 			}
 		}
 	}

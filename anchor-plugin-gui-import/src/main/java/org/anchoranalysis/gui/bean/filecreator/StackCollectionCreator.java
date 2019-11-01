@@ -72,8 +72,7 @@ public class StackCollectionCreator extends FileCreatorGeneralList {
 				
 				FileStackCollection file = new FileStackCollection(
 					obj,
-					params.getModuleParamsGlobal(),
-					params.getMarkEvaluatorManager()
+					params.getMarkCreatorParams()
 				);
 				listFiles.add(file);
 			}

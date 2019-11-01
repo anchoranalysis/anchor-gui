@@ -1,5 +1,7 @@
 package org.anchoranalysis.gui.videostats.internalframe.annotator.tool;
 
+import org.anchoranalysis.anchor.mpp.mark.Mark;
+
 /*-
  * #%L
  * anchor-gui-annotation
@@ -34,7 +36,6 @@ import org.anchoranalysis.gui.videostats.internalframe.annotator.currentstate.IQ
 import org.anchoranalysis.gui.videostats.internalframe.evaluator.EvaluatorWithContext;
 import org.anchoranalysis.image.extent.ImageDim;
 
-import ch.ethz.biol.cell.mpp.mark.Mark;
 import ch.ethz.biol.cell.mpp.mark.pointsfitter.InsufficientPointsException;
 import ch.ethz.biol.cell.mpp.mark.pointsfitter.PointsFitter;
 import ch.ethz.biol.cell.mpp.mark.pointsfitter.PointsFitterException;

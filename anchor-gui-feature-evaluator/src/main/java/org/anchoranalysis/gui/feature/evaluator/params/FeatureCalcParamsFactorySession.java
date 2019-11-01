@@ -1,5 +1,6 @@
 package org.anchoranalysis.gui.feature.evaluator.params;
 
+import org.anchoranalysis.anchor.mpp.mark.Mark;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.log.LogErrorReporter;
@@ -44,7 +45,6 @@ import org.anchoranalysis.feature.shared.SharedFeatureSet;
 import org.anchoranalysis.gui.feature.FeatureListWithRegionMap;
 import org.anchoranalysis.gui.feature.FeatureWithRegionMap;
 
-import ch.ethz.biol.cell.mpp.mark.Mark;
 import ch.ethz.biol.cell.mpp.mark.pxlmark.memo.PxlMarkMemo;
 import ch.ethz.biol.cell.mpp.mark.pxlmark.memo.PxlMarkMemoFactory;
 import ch.ethz.biol.cell.mpp.mark.regionmap.RegionMap;

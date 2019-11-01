@@ -32,14 +32,14 @@ import java.io.File;
 import org.anchoranalysis.core.cache.ExecuteException;
 import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.error.OperationFailedException;
+import org.anchoranalysis.core.log.LogErrorReporter;
 import org.anchoranalysis.core.name.store.LazyEvaluationStore;
 import org.anchoranalysis.core.params.KeyValueParams;
+import org.anchoranalysis.gui.bean.filecreator.MarkCreatorParams;
 import org.anchoranalysis.gui.file.opened.OpenedFile;
 import org.anchoranalysis.gui.file.opened.OpenedFileGUI;
-import org.anchoranalysis.gui.interactivebrowser.MarkEvaluatorManager;
 import org.anchoranalysis.gui.series.TimeSequenceProvider;
 import org.anchoranalysis.gui.videostats.dropdown.IAddVideoStatsModule;
-import org.anchoranalysis.gui.videostats.dropdown.VideoStatsModuleGlobalParams;
 import org.anchoranalysis.gui.videostats.dropdown.multicollection.MultiCollectionDropDown;
 import org.anchoranalysis.image.objmask.ObjMaskCollection;
 import org.anchoranalysis.image.stack.TimeSequence;
@@ -51,23 +51,19 @@ import ch.ethz.biol.cell.mpp.cfg.Cfg;
 public class FileMultiCollection extends InteractiveFile {
 
 	private MultiInput inputObject;
-	private VideoStatsModuleGlobalParams mpg;
-	private MarkEvaluatorManager mem;
+	private MarkCreatorParams markCreatorParams;
 	
 	public FileMultiCollection(
 		MultiInput inputObject,
-		VideoStatsModuleGlobalParams mpg,
-		MarkEvaluatorManager markEvaluatorManager
+		MarkCreatorParams markCreatorParams
 	) {
 		super();
 		this.inputObject = inputObject;
-		this.mem = markEvaluatorManager;
-		this.mpg = mpg;
+		this.markCreatorParams = markCreatorParams;
 	}
 
 	@Override
 	public String identifier() {
-		//return FilenameUtils.removeExtension( new File(inputObject.descriptiveName()).getName() );
 		return inputObject.descriptiveName();
 	}
 	
@@ -87,16 +83,29 @@ public class FileMultiCollection extends InteractiveFile {
 			BoundOutputManagerRouteErrors outputManager
 		) throws OperationFailedException {
 		
-		LazyEvaluationStore<TimeSequence> stacks = new LazyEvaluationStore<>(mpg.getLogErrorReporter(),"stacks"); 
+		LazyEvaluationStore<TimeSequence> stacks = new LazyEvaluationStore<>(
+			markCreatorParams.getModuleParams().getLogErrorReporter(),
+			"stacks"
+		); 
 		inputObject.stack().addToStore(stacks);
 		
-		LazyEvaluationStore<Cfg> cfgs = new LazyEvaluationStore<>(mpg.getLogErrorReporter(),"cfg");
+		LazyEvaluationStore<Cfg> cfgs = new LazyEvaluationStore<>(
+			markCreatorParams.getModuleParams().getLogErrorReporter(),
+			"cfg"
+		);
 		inputObject.cfg().addToStore(cfgs);
 
-		LazyEvaluationStore<KeyValueParams> keyValueParams = new LazyEvaluationStore<>(mpg.getLogErrorReporter(),"keyValueParams");
+		LogErrorReporter logErrorReporter = markCreatorParams.getModuleParams().getLogErrorReporter();
+		LazyEvaluationStore<KeyValueParams> keyValueParams = new LazyEvaluationStore<>(
+			logErrorReporter,
+			"keyValueParams"
+		);
 		inputObject.keyValueParams().addToStore(keyValueParams);
 		
-		LazyEvaluationStore<ObjMaskCollection> objs = new LazyEvaluationStore<>(mpg.getLogErrorReporter(),"objMaskCollection");
+		LazyEvaluationStore<ObjMaskCollection> objs = new LazyEvaluationStore<>(
+			logErrorReporter,
+			"objMaskCollection"
+		);
 		inputObject.objs().addToStore(objs);
 		
 		MultiCollectionDropDown dropDown = new MultiCollectionDropDown(
@@ -111,9 +120,8 @@ public class FileMultiCollection extends InteractiveFile {
 		try {
 			dropDown.init(
 				globalSubgroupAdder,
-				mem,
 				outputManager,
-				mpg
+				markCreatorParams
 			);
 		} catch (InitException e) {
 			throw new OperationFailedException(e);

@@ -32,6 +32,7 @@ import overlay.OverlayCollectionMarkFactory;
 import org.anchoranalysis.core.bridge.IObjectBridgeIndex;
 import org.anchoranalysis.core.cache.ExecuteException;
 import org.anchoranalysis.core.index.GetOperationFailedException;
+import org.anchoranalysis.gui.mark.MarkDisplaySettings;
 import org.anchoranalysis.gui.videostats.internalframe.cfgtorgb.MultiInput;
 
 import ch.ethz.biol.cell.gui.overlay.OverlayCollection;
@@ -39,6 +40,14 @@ import ch.ethz.biol.cell.mpp.cfg.Cfg;
 import ch.ethz.biol.cell.mpp.instantstate.OverlayedInstantState;
 
 class MultiCfgInputToOverlay implements IObjectBridgeIndex<MultiInput<Cfg>, OverlayedInstantState> {
+	
+	private MarkDisplaySettings markDisplaySettings;
+	
+	public MultiCfgInputToOverlay(MarkDisplaySettings markDisplaySettings) {
+		super();
+		this.markDisplaySettings = markDisplaySettings;
+	}
+
 	@Override
 	public OverlayedInstantState bridgeElement(int index,
 			MultiInput<Cfg> sourceObject)
@@ -46,7 +55,10 @@ class MultiCfgInputToOverlay implements IObjectBridgeIndex<MultiInput<Cfg>, Over
 		try {
 			Cfg cfg = sourceObject.getAssociatedObjects().doOperation();
 			
-			OverlayCollection oc = OverlayCollectionMarkFactory.createWithoutColor(cfg);
+			OverlayCollection oc = OverlayCollectionMarkFactory.createWithoutColor(
+				cfg,
+				markDisplaySettings.regionMembership()
+			);
 			return new OverlayedInstantState(index, oc);
 		} catch (ExecuteException e) {
 			throw new GetOperationFailedException(e);

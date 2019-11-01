@@ -29,6 +29,7 @@ package org.anchoranalysis.gui.feature.evaluator.nrgtree.overlayparams;
 
 import java.util.List;
 
+import org.anchoranalysis.anchor.mpp.mark.Mark;
 import org.anchoranalysis.feature.nrg.NRGStackWithParams;
 import org.anchoranalysis.feature.session.CreateParams;
 import org.anchoranalysis.gui.feature.FeatureListWithRegionMap;
@@ -40,7 +41,6 @@ import org.anchoranalysis.image.objmask.ObjMask;
 import overlay.OverlayMark;
 import ch.ethz.biol.cell.gui.overlay.Overlay;
 import ch.ethz.biol.cell.gui.overlay.OverlayObjMask;
-import ch.ethz.biol.cell.mpp.mark.Mark;
 import ch.ethz.biol.cell.mpp.pair.Pair;
 
 public class CreateParamsFromOverlay {

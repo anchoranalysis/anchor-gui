@@ -1,5 +1,7 @@
 package org.anchoranalysis.gui.videostats.internalframe.annotator.currentstate;
 
+import org.anchoranalysis.anchor.mpp.mark.Mark;
+
 /*-
  * #%L
  * anchor-gui-annotation
@@ -27,8 +29,6 @@ package org.anchoranalysis.gui.videostats.internalframe.annotator.currentstate;
  */
 
 import org.anchoranalysis.gui.videostats.internalframe.annotator.undoredo.IRecordSnapshot;
-
-import ch.ethz.biol.cell.mpp.mark.Mark;
 
 /** Records a undo snapshot upon each operation */
 class SnapshotChangeSelectedPoints implements IChangeSelectedPoints {

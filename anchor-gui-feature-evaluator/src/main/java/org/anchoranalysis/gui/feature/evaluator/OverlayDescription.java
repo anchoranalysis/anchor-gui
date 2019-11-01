@@ -31,7 +31,7 @@ package org.anchoranalysis.gui.feature.evaluator;
 import java.util.ArrayList;
 import java.util.Collections;
 
-import org.anchoranalysis.core.name.provider.NameValueSet;
+import org.anchoranalysis.anchor.mpp.mark.OverlayProperties;
 import org.anchoranalysis.core.name.value.ComparatorOrderByName;
 import org.anchoranalysis.core.name.value.INameValue;
 import org.anchoranalysis.feature.nrg.NRGStackWithParams;
@@ -90,10 +90,10 @@ class OverlayDescription extends TitleValueTableModel implements IUpdatableSingl
 	
 	private void addOverlayDetails( Overlay overlay, String titlePrefix, ImageRes sr ) {
 
-		NameValueSet<String> nvc = overlay.generateProperties(sr);
+		OverlayProperties op = overlay.generateProperties(sr);
 		
 		ArrayList<INameValue<String>> listToAdd = new ArrayList<>(); 
-		for (INameValue<String> nv : nvc) {
+		for (INameValue<String> nv : op) {
 			listToAdd.add(nv);
 		}
 		

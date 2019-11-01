@@ -39,6 +39,7 @@ import org.anchoranalysis.gui.file.interactive.InteractiveFile;
 import org.anchoranalysis.gui.file.opened.IOpenedFileGUI;
 import org.anchoranalysis.gui.file.opened.OpenedFile;
 import org.anchoranalysis.gui.interactivebrowser.IOpenFile;
+import org.anchoranalysis.gui.mark.MarkDisplaySettings;
 import org.anchoranalysis.gui.videostats.dropdown.IAddVideoStatsModule;
 import org.anchoranalysis.gui.videostats.dropdown.VideoStatsModuleGlobalParams;
 import org.anchoranalysis.gui.videostats.dropdown.opened.OpenedFileGUIMultipleDropDown;
@@ -50,16 +51,20 @@ public class InteractiveFileListMouseListener extends MouseAdapter {
 	private InteractiveFileListTableModel tableModel;
 	private IOpenFile fileOpenManager;
 	private VideoStatsModuleGlobalParams mpg;
+	private MarkDisplaySettings markDisplaySettings;
 	
 	public InteractiveFileListMouseListener(IAddVideoStatsModule adder,
 			InteractiveFileListTableModel tableModel,
 			IOpenFile fileOpenManager,
-			VideoStatsModuleGlobalParams mpg) {
+			VideoStatsModuleGlobalParams mpg,
+			MarkDisplaySettings markDisplaySettings
+	) {
 		super();
 		this.adder = adder;
 		this.tableModel = tableModel;
 		this.fileOpenManager = fileOpenManager;
 		this.mpg = mpg;
+		this.markDisplaySettings = markDisplaySettings;
 	}
 
 	// NB  Popup can occur on mousePressed (Linux,MacOS)  or on mouseReleased (Windows)
@@ -186,7 +191,12 @@ public class InteractiveFileListMouseListener extends MouseAdapter {
   		// We create a special drop-down menu, that resembles the manifest dropdowns in the others
   		//  but only shows items that exist in all
   		
-  		OpenedFileGUIMultipleDropDown dropDown = new OpenedFileGUIMultipleDropDown( adder, listSelectedDropDown, mpg );
+  		OpenedFileGUIMultipleDropDown dropDown = new OpenedFileGUIMultipleDropDown(
+  			adder,
+  			listSelectedDropDown,
+  			mpg,
+  			markDisplaySettings
+  		);
   		dropDown.getPopupMenu().show(
   			e.getComponent(),
   			e.getX(),

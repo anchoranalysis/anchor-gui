@@ -119,13 +119,16 @@ public class ExecutedExperimentFileCreator extends FileCreatorGeneralList {
 		}
 	}
 	
-	private void addVideoStatsFileToList( CoupledManifests coupledManifests, FileCreatorParams params, List<InteractiveFile> listFiles ) {
+	private void addVideoStatsFileToList(
+		CoupledManifests coupledManifests,
+		FileCreatorParams params,
+		List<InteractiveFile> listFiles
+	) {
 		
 		FileExecutedExperimentImageWithManifest file = new FileExecutedExperimentImageWithManifest(
 			coupledManifests,
 			params.getRasterReader(),
-			params.getMarkEvaluatorManager(),
-			params.getModuleParamsGlobal()
+			params.getMarkCreatorParams()
 		);
 
 		listFiles.add(file);		

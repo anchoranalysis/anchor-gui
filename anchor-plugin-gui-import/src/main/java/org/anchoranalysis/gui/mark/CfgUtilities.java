@@ -1,5 +1,7 @@
 package org.anchoranalysis.gui.mark;
 
+import org.anchoranalysis.anchor.mpp.mark.Mark;
+
 /*-
  * #%L
  * anchor-plugin-gui-import
@@ -29,7 +31,6 @@ package org.anchoranalysis.gui.mark;
 import org.anchoranalysis.core.index.IndicesSelection;
 
 import ch.ethz.biol.cell.mpp.cfg.Cfg;
-import ch.ethz.biol.cell.mpp.mark.Mark;
 
 public class CfgUtilities {
 

@@ -1,5 +1,7 @@
 package org.anchoranalysis.gui.feature.evaluator;
 
+import org.anchoranalysis.anchor.mpp.mark.Mark;
+
 /*-
  * #%L
  * anchor-gui-feature-evaluator
@@ -37,10 +39,12 @@ import org.anchoranalysis.feature.shared.SharedFeatureSet;
 import ch.ethz.biol.cell.gui.overlay.Overlay;
 import ch.ethz.biol.cell.gui.overlay.OverlayCollection;
 import ch.ethz.biol.cell.mpp.cfg.Cfg;
-import ch.ethz.biol.cell.mpp.mark.Mark;
+import ch.ethz.biol.cell.mpp.mark.GlobalRegionIdentifiers;
 import ch.ethz.biol.cell.mpp.mark.pxlmark.memo.PxlMarkMemo;
 import ch.ethz.biol.cell.mpp.mark.pxlmark.memo.PxlMarkMemoFactory;
 import ch.ethz.biol.cell.mpp.mark.regionmap.RegionMap;
+import ch.ethz.biol.cell.mpp.mark.regionmap.RegionMapSingleton;
+import ch.ethz.biol.cell.mpp.mark.regionmap.RegionMembershipWithFlags;
 import ch.ethz.biol.cell.mpp.nrg.feature.session.FeatureSessionCreateParamsMPP;
 import ch.ethz.biol.cell.mpp.pair.Pair;
 import ch.ethz.biol.cell.mpp.pair.addcriteria.AddCriteriaPair;
@@ -112,6 +116,10 @@ class FinderEvaluator {
 		LogErrorReporter logger
 	) throws CreateException {
 		
+		RegionMembershipWithFlags regionMembership = RegionMapSingleton
+				.instance()
+				.membershipWithFlagsForIndex( GlobalRegionIdentifiers.SUBMARK_INSIDE );
+		
 		if (cfg.size()<=1) {
 			return null;
 		}
@@ -138,7 +146,10 @@ class FinderEvaluator {
 				assert(m2!=null);
 								
 				if (edgeTester.canGenerateEdge( m1, m2 )) {
-					return new Pair<Overlay>( new OverlayMark(m1), new OverlayMark(m2) );
+					return new Pair<Overlay>(
+						new OverlayMark(m1, regionMembership),
+						new OverlayMark(m2, regionMembership)
+					);
 				}
 			}
 			

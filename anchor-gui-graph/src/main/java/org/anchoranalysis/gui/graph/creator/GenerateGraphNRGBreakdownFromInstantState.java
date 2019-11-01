@@ -34,6 +34,7 @@ import java.util.ArrayList;
 
 import org.anchoranalysis.anchor.graph.AxisLimits;
 import org.anchoranalysis.anchor.graph.bean.GraphDefinition;
+import org.anchoranalysis.anchor.mpp.mark.Mark;
 import org.anchoranalysis.core.bridge.IObjectBridge;
 import org.anchoranalysis.core.color.ColorIndex;
 import org.anchoranalysis.core.error.CreateException;
@@ -44,7 +45,6 @@ import org.anchoranalysis.gui.graph.panel.ClickableGraphInstance;
 
 import ch.ethz.biol.cell.mpp.gui.graph.jfreechart.bar.NRGGraphItem;
 import ch.ethz.biol.cell.mpp.instantstate.CfgNRGInstantState;
-import ch.ethz.biol.cell.mpp.mark.Mark;
 import ch.ethz.biol.cell.mpp.nrg.NRGPair;
 
 public class GenerateGraphNRGBreakdownFromInstantState implements IObjectBridge<CfgNRGInstantState,ClickableGraphInstance> {

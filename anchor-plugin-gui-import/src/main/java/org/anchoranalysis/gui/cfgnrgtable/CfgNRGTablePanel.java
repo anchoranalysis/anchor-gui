@@ -55,6 +55,9 @@ import overlay.OverlayCollectionMarkFactory;
 import ch.ethz.biol.cell.gui.overlay.OverlayCollection;
 import ch.ethz.biol.cell.mpp.cfg.Cfg;
 import ch.ethz.biol.cell.mpp.instantstate.CfgNRGInstantState;
+import ch.ethz.biol.cell.mpp.mark.GlobalRegionIdentifiers;
+import ch.ethz.biol.cell.mpp.mark.regionmap.RegionMapSingleton;
+import ch.ethz.biol.cell.mpp.mark.regionmap.RegionMembershipWithFlags;
 
 public class CfgNRGTablePanel extends StatePanel<CfgNRGInstantState> {
 
@@ -116,7 +119,10 @@ public class CfgNRGTablePanel extends StatePanel<CfgNRGInstantState> {
 
 		
 	
-	public CfgNRGTablePanel( ColorIndex colorIndex, NRGStackWithParams associatedRaster ) {
+	public CfgNRGTablePanel(
+		ColorIndex colorIndex,
+		NRGStackWithParams associatedRaster
+	) {
 		super();
 		
 		this.associatedRaster = associatedRaster;
@@ -137,17 +143,11 @@ public class CfgNRGTablePanel extends StatePanel<CfgNRGInstantState> {
 		panelBig.add( summaryPanel.getPanel(), BorderLayout.NORTH);
 		
 		JPanel panelScroll = new JPanel();
-		//JScrollPane scrollPane = new JScrollPane( panelScroll );
 		panelScroll.setBorder( BorderFactory.createEmptyBorder(2, 0, 2, 0) );
-		
-		//panelScroll.setLayout( new BorderLayout() );
-		//panelScroll.add( individualPanel.getPanel(), BorderLayout.NORTH);
-		//panelScroll.add( pairPanel.getPanel(), BorderLayout.SOUTH);
 		
 		panelScroll.setLayout( new GridLayout(2,1) );
 		panelScroll.add( individualPanel.getPanel() );
 		panelScroll.add( pairPanel.getPanel() );
-		//panelScroll.setF.setFillsViewportHeight(true);
 		
 		panelBig.add(panelScroll, BorderLayout.CENTER);
 		
@@ -161,7 +161,11 @@ public class CfgNRGTablePanel extends StatePanel<CfgNRGInstantState> {
 		Cfg cfg = state.getCfgNRG() != null ? state.getCfgNRG().getCfg() : null;
 		if (cfg!=null) {
 			Cfg cfgSubset = CfgUtilities.createCfgSubset( cfg, selectionIndices.getCurrentSelection() );
-			OverlayCollection overlaySubset = OverlayCollectionMarkFactory.createWithoutColor(cfgSubset);
+			RegionMembershipWithFlags regionMembership = RegionMapSingleton.instance().membershipWithFlagsForIndex( GlobalRegionIdentifiers.SUBMARK_INSIDE );
+			OverlayCollection overlaySubset = OverlayCollectionMarkFactory.createWithoutColor(
+				cfgSubset,
+				regionMembership
+			);
 			triggerObjectChangeEvent( overlaySubset );
 		}
 	}

@@ -36,6 +36,7 @@ import org.anchoranalysis.core.progress.ProgressReporter;
 import org.anchoranalysis.gui.file.interactive.InteractiveFile;
 import org.anchoranalysis.gui.interactivebrowser.IOpenFile;
 import org.anchoranalysis.gui.interactivebrowser.SimpleVideoStatsFileListTableModel;
+import org.anchoranalysis.gui.mark.MarkDisplaySettings;
 import org.anchoranalysis.gui.videostats.dropdown.IAddVideoStatsModule;
 import org.anchoranalysis.gui.videostats.dropdown.VideoStatsModuleGlobalParams;
 import org.anchoranalysis.gui.videostats.module.DefaultModuleState;
@@ -51,10 +52,16 @@ public class SimpleInteractiveFileListInternalFrame {
 	}
 
 	public void init(IAddVideoStatsModule adder, OperationWithProgressReporter<List<InteractiveFile>> opListFile,
-			IOpenFile fileOpenManager, VideoStatsModuleGlobalParams mpg, ProgressReporter progressReporter) throws InitException {
+			IOpenFile fileOpenManager, VideoStatsModuleGlobalParams mpg, MarkDisplaySettings markDisplaySettings, ProgressReporter progressReporter) throws InitException {
 		
 		try {
-			delegate.init(adder, new SimpleVideoStatsFileListTableModel(opListFile, progressReporter), fileOpenManager, mpg);
+			delegate.init(
+				adder,
+				new SimpleVideoStatsFileListTableModel(opListFile, progressReporter),
+				fileOpenManager,
+				mpg,
+				markDisplaySettings
+			);
 		} catch (CreateException e) {
 			throw new InitException(e);
 		}

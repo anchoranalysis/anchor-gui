@@ -186,7 +186,8 @@ public class InteractiveBrowser {
 			fileOpenManager,
 			markEvaluatorManager,
 			cacheMonitor,
-			importerSettings
+			importerSettings,
+			videoStatsFrame.getLastMarkDisplaySettings()
 		);
 	}
 	

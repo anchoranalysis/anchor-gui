@@ -29,12 +29,12 @@ package org.anchoranalysis.gui.videostats.internalframe.annotator.tool;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.anchoranalysis.anchor.mpp.mark.Mark;
 import org.anchoranalysis.core.geometry.Point3d;
 import org.anchoranalysis.core.geometry.Point3i;
 import org.anchoranalysis.gui.videostats.internalframe.annotator.currentstate.IQuerySelectedPoints;
 
 import ch.ethz.biol.cell.mpp.cfg.Cfg;
-import ch.ethz.biol.cell.mpp.mark.Mark;
 import ch.ethz.biol.cell.mpp.mark.regionmap.RegionMap;
 import ch.ethz.biol.cell.mpp.mark.regionmap.RegionMembershipWithFlags;
 

@@ -35,10 +35,13 @@ import org.anchoranalysis.image.extent.ImageDim;
 import ch.ethz.biol.cell.gui.overlay.ColoredOverlayCollection;
 import ch.ethz.biol.cell.mpp.cfg.Cfg;
 import ch.ethz.biol.cell.mpp.gui.videostats.internalframe.markredraw.ColoredCfg;
+import ch.ethz.biol.cell.mpp.mark.GlobalRegionIdentifiers;
+import ch.ethz.biol.cell.mpp.mark.regionmap.RegionMapSingleton;
+import ch.ethz.biol.cell.mpp.mark.regionmap.RegionMembershipWithFlags;
 
 public class ProposedCfg {
 
-	private ColoredOverlayCollection cfg = new ColoredOverlayCollection();				// The total cfg to be drawn
+	private ColoredOverlayCollection overlays = new ColoredOverlayCollection();				// The total cfg to be drawn
 	private Cfg cfgToRedraw = new Cfg();		// The marks that need to be redrawn, as they have changed
 	private Cfg cfgCore = new Cfg();	// The core part of the cfg
 	private ImageDim dim;
@@ -49,8 +52,16 @@ public class ProposedCfg {
 	private boolean hasSuggestedSliceNum = false;
 	private int suggestedSliceNum = -1;
 	
+	private RegionMembershipWithFlags regionMembership;
+	
 	public ProposedCfg() {
 		// Do we need to initialise pfd with a default???
+		this.regionMembership = RegionMapSingleton.instance()
+				.membershipWithFlagsForIndex( GlobalRegionIdentifiers.SUBMARK_INSIDE );
+	}
+	
+	public RegionMembershipWithFlags getRegionMembership() {
+		return regionMembership;
 	}
 	
 	public ProposerFailureDescription getPfd() {
@@ -66,15 +77,18 @@ public class ProposedCfg {
 		this.success = success;
 	}
 	public ColoredOverlayCollection getColoredCfg() {
-		return cfg;
+		return overlays;
 	}
 	
 	public void setColoredCfg(ColoredCfg cfg) {
-		this.cfg = OverlayCollectionMarkFactory.createColor(cfg);
+		this.overlays = OverlayCollectionMarkFactory.createColor(
+			cfg,
+			regionMembership
+		);
 	}
 	
 	public void setColoredCfg(ColoredOverlayCollection cfg) {
-		this.cfg = cfg;
+		this.overlays = cfg;
 	}
 	
 	public boolean hasSugestedSliceNum() {

@@ -43,6 +43,7 @@ import javax.swing.table.TableCellRenderer;
 import org.anchoranalysis.core.progress.ProgressReporter;
 import org.anchoranalysis.gui.cfgnrgtable.CellSelectedListener;
 import org.anchoranalysis.gui.interactivebrowser.IOpenFile;
+import org.anchoranalysis.gui.mark.MarkDisplaySettings;
 import org.anchoranalysis.gui.progressreporter.ProgressReporterInteractiveWorker;
 import org.anchoranalysis.gui.videostats.IModuleCreatorDefaultState;
 import org.anchoranalysis.gui.videostats.dropdown.IAddVideoStatsModule;
@@ -73,7 +74,8 @@ public class InteractiveFileListInternalFrame {
 		final IAddVideoStatsModule adder,
 		final InteractiveFileListTableModel tableModel,
 		final IOpenFile fileOpenManager,
-		final VideoStatsModuleGlobalParams mpg
+		final VideoStatsModuleGlobalParams mpg,
+		MarkDisplaySettings markDisplaySettings
 	) {
 		
 		assert( mpg.getExportPopupParams()!=null );
@@ -86,7 +88,13 @@ public class InteractiveFileListInternalFrame {
 		
 		tablePanel.setHeaderVisible(false);
 		tablePanel.addMouseListener(
-			new InteractiveFileListMouseListener(adder,tableModel,fileOpenManager,mpg)
+			new InteractiveFileListMouseListener(
+				adder,
+				tableModel,
+				fileOpenManager,
+				mpg,
+				markDisplaySettings
+			)
 		);
 		tablePanel.setBorder( BorderFactory.createEmptyBorder(0, 0, 0, 0) );
 		

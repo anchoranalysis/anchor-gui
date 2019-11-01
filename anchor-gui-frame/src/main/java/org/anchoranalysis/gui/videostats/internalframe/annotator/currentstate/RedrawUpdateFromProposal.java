@@ -45,10 +45,13 @@ public class RedrawUpdateFromProposal {
 		);
 	}
 
-	private static OverlayedDisplayStackUpdate selectUpdate( ProposedCfg er, Cfg bboxRedraw ) {
-		ColoredOverlayCollection oc = er.getColoredCfg();
+	private static OverlayedDisplayStackUpdate selectUpdate( ProposedCfg cfg, Cfg bboxRedraw ) {
+		ColoredOverlayCollection oc = cfg.getColoredCfg();
 		if (bboxRedraw!=null) {
-			OverlayCollection ocRedraw = OverlayCollectionMarkFactory.createWithoutColor( bboxRedraw );
+			OverlayCollection ocRedraw = OverlayCollectionMarkFactory.createWithoutColor(
+				bboxRedraw,
+				cfg.getRegionMembership()
+			);
 			return OverlayedDisplayStackUpdate.updateOverlaysWithSimilar(oc, ocRedraw);
 		} else {
 			return OverlayedDisplayStackUpdate.updateOverlaysWithSimilar(oc);

@@ -35,10 +35,12 @@ import org.anchoranalysis.core.name.store.NamedProviderStore;
 import org.anchoranalysis.core.params.KeyValueParams;
 import org.anchoranalysis.core.progress.OperationWithProgressReporter;
 import org.anchoranalysis.feature.nrg.NRGStackWithParams;
+import org.anchoranalysis.gui.bean.filecreator.MarkCreatorParams;
 import org.anchoranalysis.gui.file.opened.IOpenedFileGUI;
 import org.anchoranalysis.gui.finder.OperationFindNrgStackFromStackCollection;
 import org.anchoranalysis.gui.interactivebrowser.MarkEvaluatorManager;
 import org.anchoranalysis.gui.interactivebrowser.MarkEvaluatorSetForImage;
+import org.anchoranalysis.gui.mark.MarkDisplaySettings;
 import org.anchoranalysis.gui.series.TimeSequenceProvider;
 import org.anchoranalysis.gui.videostats.dropdown.BoundVideoStatsModuleDropDown;
 import org.anchoranalysis.gui.videostats.dropdown.IAddVideoStatsModule;
@@ -88,9 +90,8 @@ public class MultiCollectionDropDown {
 	
 	public void init(
 		final IAddVideoStatsModule adder,
-		MarkEvaluatorManager markEvaluatorManager,
 		BoundOutputManagerRouteErrors outputManager,
-		VideoStatsModuleGlobalParams mpg
+		MarkCreatorParams params
 	) throws InitException {
 		
 		OperationCreateBackgroundSetWithAdder operationBwsa = new OperationCreateBackgroundSetWithAdder(
@@ -99,8 +100,8 @@ public class MultiCollectionDropDown {
 				new GuessNRGStackFromStacks(rasterProvider)
 			),
 			adder,
-			mpg.getThreadPool(),
-			mpg.getLogErrorReporter().getErrorReporter()
+			params.getModuleParams().getThreadPool(),
+			params.getModuleParams().getLogErrorReporter().getErrorReporter()
 		);
 		
 		DropDownUtilitiesRaster.addRaster(
@@ -108,7 +109,7 @@ public class MultiCollectionDropDown {
 			delegate,
 			operationBwsa.nrgBackground(),
 			"Raster",
-			mpg,
+			params.getModuleParams(),
 			true		// Adds as default operation
 		);
 		
@@ -118,7 +119,8 @@ public class MultiCollectionDropDown {
 				delegate,
 				cfgCollection,
 				operationBwsa.nrgBackground(),
-				mpg,
+				params.getModuleParams(),
+				params.getMarkDisplaySettings(),
 				false
 			);
 		}
@@ -129,13 +131,18 @@ public class MultiCollectionDropDown {
 				delegate,
 				objCollection,
 				operationBwsa.nrgBackground(),
-				mpg,
+				params.getModuleParams(),
 				false
 			);
 		}
 		
 		if (addProposerEvaluator) {
-			addProposerEvaluator(markEvaluatorManager, operationBwsa, mpg, outputManager);
+			addProposerEvaluator(
+				params.getMarkEvaluatorManager(),
+				operationBwsa,
+				params.getModuleParams(),
+				outputManager
+			);
 		}
 	}
 	

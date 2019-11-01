@@ -1,5 +1,7 @@
 package org.anchoranalysis.gui.videostats.internalframe.annotator.currentstate;
 
+import org.anchoranalysis.anchor.mpp.mark.Mark;
+
 /*
  * #%L
  * anchor-gui
@@ -35,7 +37,6 @@ import org.anchoranalysis.gui.videostats.internalframe.annotator.tool.ToolErrorR
 import org.anchoranalysis.image.extent.ImageDim;
 
 import ch.ethz.biol.cell.mpp.cfg.Cfg;
-import ch.ethz.biol.cell.mpp.mark.Mark;
 import ch.ethz.biol.cell.mpp.mark.overlap.OverlapUtilities;
 import ch.ethz.biol.cell.mpp.mark.pxlmark.memo.PxlMarkMemo;
 import ch.ethz.biol.cell.mpp.mark.regionmap.RegionMap;

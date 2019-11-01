@@ -29,6 +29,7 @@ package org.anchoranalysis.plugin.gui.bean.createrastergenerator.cfgnrginstantst
 
 import overlay.OverlayCollectionMarkFactory;
 
+import org.anchoranalysis.anchor.mpp.mark.Mark;
 import org.anchoranalysis.bean.annotation.BeanField;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.idgetter.IDGetter;
@@ -56,8 +57,8 @@ import ch.ethz.biol.cell.mpp.cfgtoobjmaskwriter.SimpleOverlayWriter;
 import ch.ethz.biol.cell.mpp.gui.videostats.internalframe.markredraw.ColoredCfg;
 import ch.ethz.biol.cell.mpp.instantstate.CfgNRGInstantState;
 import ch.ethz.biol.cell.mpp.mark.GlobalRegionIdentifiers;
-import ch.ethz.biol.cell.mpp.mark.Mark;
 import ch.ethz.biol.cell.mpp.mark.regionmap.RegionMapSingleton;
+import ch.ethz.biol.cell.mpp.mark.regionmap.RegionMembershipWithFlags;
 import ch.ethz.biol.cell.mpp.nrg.CfgNRG;
 
 public class ObjMaskWriterFromCfgNRGInstantState extends CreateRasterGenerator<CfgNRGInstantState> {
@@ -116,8 +117,7 @@ public class ObjMaskWriterFromCfgNRGInstantState extends CreateRasterGenerator<C
 			); 
 			
 			SimpleOverlayWriter writer = new SimpleOverlayWriter(
-				objMaskWriter,
-				RegionMapSingleton.instance().membershipWithFlagsForIndex(GlobalRegionIdentifiers.SUBMARK_INSIDE)
+				objMaskWriter
 			);
 			
 			ccGenerator.updateMaskWriter(writer);
@@ -144,8 +144,15 @@ public class ObjMaskWriterFromCfgNRGInstantState extends CreateRasterGenerator<C
 				params.getColorIndexMarks(),
 				colorGetter()
 			);
+			
+			RegionMembershipWithFlags regionMembership = RegionMapSingleton.instance().membershipWithFlagsForIndex(
+				GlobalRegionIdentifiers.SUBMARK_INSIDE
+			);
 		
-			ColoredOverlayCollection oc = OverlayCollectionMarkFactory.createColor( coloredCfg );
+			ColoredOverlayCollection oc = OverlayCollectionMarkFactory.createColor(
+				coloredCfg,
+				regionMembership
+			);
 			return OverlayedDisplayStackUpdate.assignOverlaysAndBackground(oc,backgroundStack);
 			
 		} catch (CreateException e) {

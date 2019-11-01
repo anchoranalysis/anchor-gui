@@ -84,7 +84,9 @@ public class MergedCfgNRGHistoryInternalFrame {
 		dualHistory.init( mpg.getCacheMonitor() );
 
 		
-		MergeCfgBridge mergeCfgBridge = new MergeCfgBridge();
+		MergeCfgBridge mergeCfgBridge = new MergeCfgBridge(
+			() -> defaultState.getMarkDisplaySettings().regionMembership()
+		);
 		
 		// We map each DualCfgInstantState to a CfgInstantState
 		IBoundedIndexContainer<OverlayedInstantState> cfgCntnr = new BoundedIndexContainerBridgeWithoutIndex<>(

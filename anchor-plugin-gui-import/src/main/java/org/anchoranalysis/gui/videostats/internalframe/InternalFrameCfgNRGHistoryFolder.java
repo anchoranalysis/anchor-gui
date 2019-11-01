@@ -61,7 +61,12 @@ public class InternalFrameCfgNRGHistoryFolder {
 		IDGetter<Overlay> idGetter = new IDGetterOverlayID();
 		
 		ISliderState sliderState = this.delegate.init(
-			new BoundedIndexContainerBridgeWithoutIndex<>(history.getCntr(), new CfgNRGInstantStateBridge() ),
+			new BoundedIndexContainerBridgeWithoutIndex<>(
+				history.getCntr(),
+				new CfgNRGInstantStateBridge(
+					defaultState.getMarkDisplaySettings().regionMembership()		
+				)
+			),
 			mpg.getDefaultColorIndexForMarks(),
 			idGetter,
 			idGetter,

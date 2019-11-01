@@ -29,12 +29,14 @@ package org.anchoranalysis.gui.interactivebrowser.browser;
 import org.anchoranalysis.core.cache.CacheMonitor;
 import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.gui.bean.filecreator.FileCreatorParams;
+import org.anchoranalysis.gui.bean.filecreator.MarkCreatorParams;
 import org.anchoranalysis.gui.feature.evaluator.treetable.FeatureListSrc;
 import org.anchoranalysis.gui.interactivebrowser.FileOpenManager;
 import org.anchoranalysis.gui.interactivebrowser.MarkEvaluatorManager;
 import org.anchoranalysis.gui.interactivebrowser.SubgrouppedAdder;
 import org.anchoranalysis.gui.interactivebrowser.openfile.FileCreatorLoader;
 import org.anchoranalysis.gui.interactivebrowser.openfile.importer.ImporterSettings;
+import org.anchoranalysis.gui.mark.MarkDisplaySettings;
 import org.anchoranalysis.gui.toolbar.VideoStatsToolbar;
 import org.anchoranalysis.gui.videostats.dropdown.VideoStatsModuleGlobalParams;
 import org.anchoranalysis.image.io.bean.rasterreader.RasterReader;
@@ -65,14 +67,18 @@ class AdderWithNrg {
 			FileOpenManager fileOpenManager,
 			MarkEvaluatorManager markEvaluatorManager,
 			CacheMonitor cacheMonitor,
-			ImporterSettings importerSettings
+			ImporterSettings importerSettings,
+			MarkDisplaySettings markDisplaySettings
 	) {
 		
 		FileCreatorParams params = new FileCreatorParams();
 		params.setCacheMonitor(cacheMonitor);
-		params.setModuleParamsGlobal( moduleParams );
+		params.setMarkCreatorParams( new MarkCreatorParams(
+			moduleParams,
+			markDisplaySettings,
+			markEvaluatorManager
+		));
 		params.setRasterReader(rasterReader);
-		params.setMarkEvaluatorManager(markEvaluatorManager);
 		params.setImporterSettings(importerSettings);
 		
 		return new FileCreatorLoader( params, fileOpenManager, globalSubgroupAdder );

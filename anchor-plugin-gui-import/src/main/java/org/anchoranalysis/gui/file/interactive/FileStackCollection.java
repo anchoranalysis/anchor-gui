@@ -33,12 +33,11 @@ import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.name.store.EagerEvaluationStore;
 import org.anchoranalysis.core.params.KeyValueParams;
+import org.anchoranalysis.gui.bean.filecreator.MarkCreatorParams;
 import org.anchoranalysis.gui.file.opened.OpenedFile;
 import org.anchoranalysis.gui.file.opened.OpenedFileGUI;
-import org.anchoranalysis.gui.interactivebrowser.MarkEvaluatorManager;
 import org.anchoranalysis.gui.videostats.dropdown.IAddVideoStatsModule;
 import org.anchoranalysis.gui.videostats.dropdown.ExtractTimeSequenceFromInput;
-import org.anchoranalysis.gui.videostats.dropdown.VideoStatsModuleGlobalParams;
 import org.anchoranalysis.gui.videostats.dropdown.multicollection.MultiCollectionDropDown;
 import org.anchoranalysis.image.io.input.StackSequenceInput;
 import org.anchoranalysis.io.output.bound.BoundOutputManagerRouteErrors;
@@ -47,18 +46,15 @@ import org.apache.commons.io.FilenameUtils;
 public class FileStackCollection extends InteractiveFile {
 
 	private StackSequenceInput inputObject;
-	private VideoStatsModuleGlobalParams mpg;
-	private MarkEvaluatorManager mem;
+	private MarkCreatorParams params;
 	
 	public FileStackCollection(
 		StackSequenceInput inputObject,
-		VideoStatsModuleGlobalParams mpg,
-		MarkEvaluatorManager markEvaluatorManager
+		MarkCreatorParams params
 	) {
 		super();
 		this.inputObject = inputObject;
-		this.mem = markEvaluatorManager;
-		this.mpg = mpg;
+		this.params = params;
 	}
 
 	@Override
@@ -94,9 +90,8 @@ public class FileStackCollection extends InteractiveFile {
 		try {
 			dropDown.init(
 				globalSubgroupAdder,
-				mem,
 				outputManager,
-				mpg
+				params
 			);
 		} catch (InitException e) {
 			throw new OperationFailedException(e);

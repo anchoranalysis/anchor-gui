@@ -1,5 +1,7 @@
 package org.anchoranalysis.gui.frame.overlays.onrgb;
 
+import org.anchoranalysis.anchor.mpp.mark.Mark;
+
 /*-
  * #%L
  * anchor-gui-frame
@@ -52,7 +54,6 @@ import org.apache.commons.logging.LogFactory;
 import ch.ethz.biol.cell.gui.overlay.Overlay;
 import ch.ethz.biol.cell.gui.overlay.ColoredOverlayCollection;
 import ch.ethz.biol.cell.mpp.gui.videostats.internalframe.cfgtorgb.IRedrawable;
-import ch.ethz.biol.cell.mpp.mark.Mark;
 
 class InternalFrameOverlaysOnRGB {
 

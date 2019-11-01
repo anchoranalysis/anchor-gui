@@ -1,5 +1,7 @@
 package org.anchoranalysis.gui.videostats.internalframe.annotator.currentstate;
 
+import org.anchoranalysis.anchor.mpp.mark.Mark;
+
 /*
  * #%L
  * anchor-mpp
@@ -28,7 +30,6 @@ package org.anchoranalysis.gui.videostats.internalframe.annotator.currentstate;
 
 
 import ch.ethz.biol.cell.mpp.cfg.Cfg;
-import ch.ethz.biol.cell.mpp.mark.Mark;
 
 public class DualCfg implements IQueryAcceptedRejected {
 

@@ -31,6 +31,7 @@ import java.awt.Color;
 import java.util.List;
 
 import org.anchoranalysis.anchor.mpp.bean.proposer.MarkMergeProposer;
+import org.anchoranalysis.anchor.mpp.mark.Mark;
 import org.anchoranalysis.anchor.mpp.proposer.ProposerContext;
 import org.anchoranalysis.anchor.mpp.proposer.error.ErrorNode;
 import org.anchoranalysis.core.color.RGBColor;
@@ -45,7 +46,6 @@ import ch.ethz.biol.cell.mpp.cfg.Cfg;
 import ch.ethz.biol.cell.mpp.cfg.CfgGen;
 import ch.ethz.biol.cell.mpp.gui.videostats.internalframe.evaluator.EvaluatorUtilities;
 import ch.ethz.biol.cell.mpp.gui.videostats.internalframe.markredraw.ColoredCfg;
-import ch.ethz.biol.cell.mpp.mark.Mark;
 import ch.ethz.biol.cell.mpp.mark.pxlmark.memo.PxlMarkMemo;
 
 public class MarkMergeProposerEvaluator implements ProposalOperationCreator {

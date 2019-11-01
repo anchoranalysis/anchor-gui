@@ -31,9 +31,7 @@ import java.io.IOException;
 
 import org.anchoranalysis.core.cache.CacheMonitor;
 import org.anchoranalysis.core.log.LogErrorReporter;
-import org.anchoranalysis.gui.interactivebrowser.MarkEvaluatorManager;
 import org.anchoranalysis.gui.interactivebrowser.openfile.importer.ImporterSettings;
-import org.anchoranalysis.gui.videostats.dropdown.VideoStatsModuleGlobalParams;
 import org.anchoranalysis.image.io.bean.rasterreader.RasterReader;
 import org.anchoranalysis.io.params.InputContextParams;
 
@@ -43,14 +41,13 @@ public class FileCreatorParams {
 	private RasterReader rasterReader;
 	
 	// Params from General Environment
-	private VideoStatsModuleGlobalParams moduleParamsGlobal;
+	private MarkCreatorParams markCreatorParams;
 	
 	public InputContextParams createInputContext() throws IOException {
-		return moduleParamsGlobal.createInputContext();
+		return markCreatorParams.getModuleParams().createInputContext();
 	}
 	
 	private CacheMonitor cacheMonitor;
-	private MarkEvaluatorManager markEvaluatorManager;
 	private ImporterSettings importerSettings;
 
 	public CacheMonitor getCacheMonitor() {
@@ -65,21 +62,8 @@ public class FileCreatorParams {
 	public void setRasterReader(RasterReader rasterReader) {
 		this.rasterReader = rasterReader;
 	}
-	public MarkEvaluatorManager getMarkEvaluatorManager() {
-		return markEvaluatorManager;
-	}
-	public void setMarkEvaluatorManager(MarkEvaluatorManager markEvaluatorManager) {
-		this.markEvaluatorManager = markEvaluatorManager;
-	}
-	public VideoStatsModuleGlobalParams getModuleParamsGlobal() {
-		return moduleParamsGlobal;
-	}
-	public void setModuleParamsGlobal(
-			VideoStatsModuleGlobalParams moduleParamsGlobal) {
-		this.moduleParamsGlobal = moduleParamsGlobal;
-	}
 	public LogErrorReporter getLogErrorReporter() {
-		return moduleParamsGlobal.getLogErrorReporter();
+		return markCreatorParams.getModuleParams().getLogErrorReporter();
 	}
 	public ImporterSettings getImporterSettings() {
 		return importerSettings;
@@ -87,6 +71,10 @@ public class FileCreatorParams {
 	public void setImporterSettings(ImporterSettings importerSettings) {
 		this.importerSettings = importerSettings;
 	}
-	
-	
+	public MarkCreatorParams getMarkCreatorParams() {
+		return markCreatorParams;
+	}
+	public void setMarkCreatorParams(MarkCreatorParams markCreatorParams) {
+		this.markCreatorParams = markCreatorParams;
+	}
 }

@@ -69,8 +69,7 @@ public class NamedMultiCollectionCreator extends FileCreatorGeneralList {
 				
 				FileMultiCollection file = new FileMultiCollection(
 					obj,
-					params.getModuleParamsGlobal(),
-					params.getMarkEvaluatorManager()
+					params.getMarkCreatorParams()
 				);
 				listFiles.add(file);
 			}

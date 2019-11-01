@@ -43,6 +43,7 @@ import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreeModel;
 import javax.swing.tree.TreePath;
 
+import org.anchoranalysis.anchor.mpp.mark.Mark;
 import org.anchoranalysis.anchor.mpp.proposer.error.ErrorNodeImpl;
 import org.anchoranalysis.anchor.mpp.proposer.error.ProposerFailureDescription;
 import org.anchoranalysis.core.color.RGBColor;
@@ -57,7 +58,9 @@ import overlay.OverlayMark;
 import ch.ethz.biol.cell.gui.overlay.ColoredOverlayCollection;
 import ch.ethz.biol.cell.gui.overlay.OverlayCollection;
 import ch.ethz.biol.cell.imageprocessing.io.generator.raster.OverlayedDisplayStackUpdate;
-import ch.ethz.biol.cell.mpp.mark.Mark;
+import ch.ethz.biol.cell.mpp.mark.GlobalRegionIdentifiers;
+import ch.ethz.biol.cell.mpp.mark.regionmap.RegionMapSingleton;
+import ch.ethz.biol.cell.mpp.mark.regionmap.RegionMembershipWithFlags;
 
 public class ProposerFailureDescriptionPanel extends StatePanel<ProposerFailureDescription> {
 
@@ -151,7 +154,11 @@ public class ProposerFailureDescriptionPanel extends StatePanel<ProposerFailureD
 				
 				if (node.getAssociatedMark()!=null) {
 					
-					ColoredOverlayCollection coc = createOverlayForMark( node.getAssociatedMark() );
+					RegionMembershipWithFlags regionMembership = RegionMapSingleton.instance().membershipWithFlagsForIndex(
+						GlobalRegionIdentifiers.SUBMARK_INSIDE
+					);
+					
+					ColoredOverlayCollection coc = createOverlayForMark( node.getAssociatedMark(), regionMembership );
 					
 					OverlayedDisplayStackUpdate update = OverlayedDisplayStackUpdate.assignOverlays(coc);
 					setCfg.applyUpdate( update );
@@ -161,12 +168,15 @@ public class ProposerFailureDescriptionPanel extends StatePanel<ProposerFailureD
 	}
 	
 	
-	private static ColoredOverlayCollection createOverlayForMark( Mark mark ) {
+	private static ColoredOverlayCollection createOverlayForMark(
+		Mark mark,
+		RegionMembershipWithFlags regionMembership
+	) {
 		
 		Mark dup = mark.duplicate();
 		dup.setId(0);
 		
-		OverlayMark ol = new OverlayMark(dup);
+		OverlayMark ol = new OverlayMark(dup, regionMembership);
 		
 		ColoredOverlayCollection coc = new ColoredOverlayCollection();
 		coc.add( ol, new RGBColor(Color.YELLOW) );

@@ -34,6 +34,7 @@ import org.anchoranalysis.core.cache.Operation;
 import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.gui.image.frame.canvas.ISliderState;
 import org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.definition.ChangeableBackgroundDefinitionSimple;
+import org.anchoranalysis.gui.mark.MarkDisplaySettings;
 import org.anchoranalysis.gui.videostats.dropdown.IAddVideoStatsModule;
 import org.anchoranalysis.gui.videostats.dropdown.ModuleAddUtilities;
 import org.anchoranalysis.gui.videostats.dropdown.VideoStatsModuleGlobalParams;
@@ -53,15 +54,15 @@ public class CfgModuleCreator extends VideoStatsModuleCreator {
 	private Operation<Cfg> opCfg;
 	private NRGBackground nrgBackground;
 	private VideoStatsModuleGlobalParams mpg;
-	
-	
+	private MarkDisplaySettings markDisplaySettings;
 	
 	public CfgModuleCreator(
 		String fileIdentifier,
 		String name,
 		Operation<Cfg> opCfg,
 		NRGBackground nrgBackground,
-		VideoStatsModuleGlobalParams mpg
+		VideoStatsModuleGlobalParams mpg,
+		MarkDisplaySettings markDisplaySettings
 	) {
 		super();
 		this.fileIdentifier = fileIdentifier;
@@ -69,9 +70,8 @@ public class CfgModuleCreator extends VideoStatsModuleCreator {
 		this.opCfg = opCfg;
 		this.nrgBackground = nrgBackground;
 		this.mpg = mpg;
+		this.markDisplaySettings = markDisplaySettings;
 	}
-
-
 
 	@Override
 	public void createAndAddVideoStatsModule(IAddVideoStatsModule adder)
@@ -79,7 +79,10 @@ public class CfgModuleCreator extends VideoStatsModuleCreator {
 		
 		try {
 			Cfg cfg = opCfg.doOperation();
-			OverlayCollection oc = OverlayCollectionMarkFactory.createWithoutColor(cfg);
+			OverlayCollection oc = OverlayCollectionMarkFactory.createWithoutColor(
+				cfg,
+				markDisplaySettings.regionMembership()
+			);
 			
 			String frameName = String.format("%s: %s", fileIdentifier, name);
 			InternalFrameStaticOverlaySelectable imageFrame = new InternalFrameStaticOverlaySelectable( frameName, true );
