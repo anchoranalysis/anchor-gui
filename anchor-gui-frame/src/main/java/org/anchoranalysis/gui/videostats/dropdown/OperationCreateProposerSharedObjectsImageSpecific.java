@@ -93,16 +93,6 @@ public class OperationCreateProposerSharedObjectsImageSpecific extends CachedOpe
 		}
 	}
 	
-	private static Set<String> namesFromListNamedItems( List<NamedBean<AnchorBean<?>>> list) {
-		
-		HashSet<String> out = new HashSet<>();
-		for( NamedBean<?> item : list ) {
-			out.add( item.getName() );
-		}
-		return out;
-	}
-	
-	
 	@Override
 	protected MPPInitParams execute() throws ExecuteException {
 
@@ -123,4 +113,12 @@ public class OperationCreateProposerSharedObjectsImageSpecific extends CachedOpe
 		}
 	}
 
+	private static Set<String> namesFromListNamedItems( List<NamedBean<AnchorBean<?>>> list) {
+		
+		HashSet<String> out = new HashSet<>();
+		for( NamedBean<?> item : list ) {
+			out.add( item.getName() );
+		}
+		return out;
+	}
 }
