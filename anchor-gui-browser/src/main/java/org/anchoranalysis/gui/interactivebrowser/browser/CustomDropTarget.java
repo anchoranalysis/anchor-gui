@@ -35,6 +35,7 @@ import java.awt.dnd.DropTargetDropEvent;
 import java.io.File;
 import java.util.List;
 
+import org.anchoranalysis.core.error.reporter.ErrorReporter;
 import org.anchoranalysis.gui.interactivebrowser.openfile.OpenFile;
 import org.anchoranalysis.gui.interactivebrowser.openfile.importer.ImporterSettings;
 
@@ -47,12 +48,14 @@ class CustomDropTarget extends DropTarget {
 	private OpenFile openFileCreator;
 	private Component parentComponent;
 	private ImporterSettings importerSettings;
+	private ErrorReporter errorReporter;
 			
-	public CustomDropTarget(OpenFile openFileCreator, Component parentComponent, ImporterSettings importerSettings) throws HeadlessException {
+	public CustomDropTarget(OpenFile openFileCreator, Component parentComponent, ImporterSettings importerSettings, ErrorReporter errorReporter) throws HeadlessException {
 		super();
 		this.openFileCreator = openFileCreator;
 		this.parentComponent = parentComponent;
 		this.importerSettings = importerSettings;
+		this.errorReporter = errorReporter;
 	}
 
 	public synchronized void drop(DropTargetDropEvent evt) {
@@ -61,8 +64,8 @@ class CustomDropTarget extends DropTarget {
             @SuppressWarnings("unchecked")
 			List<File> droppedFiles = (List<File>) evt.getTransferable().getTransferData(DataFlavor.javaFileListFlavor);
         	openFileCreator.openFileCreator(droppedFiles, null, parentComponent, importerSettings);
-        } catch (Exception ex) {
-            ex.printStackTrace();
+        } catch (Exception exc) {
+            errorReporter.recordError(CustomDropTarget.class, exc);
         }
     }
 }

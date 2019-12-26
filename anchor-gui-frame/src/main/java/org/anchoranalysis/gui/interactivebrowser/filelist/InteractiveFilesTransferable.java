@@ -47,12 +47,12 @@ import org.anchoranalysis.gui.file.interactive.InteractiveFile;
 class InteractiveFilesTransferable implements Transferable, ClipboardOwner {
 	
 	@SuppressWarnings("deprecation")
-	public static final DataFlavor plainTextFlavor = DataFlavor.plainTextFlavor;
-	public static final DataFlavor localStringFlavor = DataFlavor.stringFlavor;
-	public static final DataFlavor fileListFlavor = DataFlavor.javaFileListFlavor;
+	private static final DataFlavor plainTextFlavor = DataFlavor.plainTextFlavor;
+	private static final DataFlavor localStringFlavor = DataFlavor.stringFlavor;
+	private static final DataFlavor fileListFlavor = DataFlavor.javaFileListFlavor;
 	
 
-	public static final DataFlavor[] flavors = {
+	private static final DataFlavor[] flavors = {
 	    InteractiveFilesTransferable.plainTextFlavor,
 	    InteractiveFilesTransferable.localStringFlavor,
 	    InteractiveFilesTransferable.fileListFlavor

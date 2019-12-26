@@ -59,8 +59,6 @@ public class OperationCreateProposerSharedObjectsImageSpecific extends CachedOpe
 	private Define namedDefinitions;
 	private RandomNumberGenerator re;
 	
-	//private static Log log = LogFactory.getLog(OperationCreateProposerSharedObjectsImageSpecific.class);
-	
 	public OperationCreateProposerSharedObjectsImageSpecific(
 			OperationWithProgressReporter<INamedProvider<Stack>> namedImgStackCollection,
 			Operation<KeyValueParams> keyParams,
@@ -86,11 +84,10 @@ public class OperationCreateProposerSharedObjectsImageSpecific extends CachedOpe
 			Set<String> out = new HashSet<>();
 			out.addAll( namesFromListNamedItems( namedDefinitions.getList(StackProvider.class) ));
 			
-			// TO fix
 			try {
 				out.addAll( namedImgStackCollection.doOperation( ProgressReporterNull.get() ).keys() );
 			} catch (ExecuteException e) {
-				e.printStackTrace();
+				logErrorReporter.getErrorReporter().recordError(OperationCreateProposerSharedObjectsImageSpecific.class, e);
 			}
 			return out;
 		}

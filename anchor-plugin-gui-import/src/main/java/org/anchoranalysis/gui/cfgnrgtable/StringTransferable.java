@@ -42,11 +42,10 @@ import java.util.List;
 class StringTransferable implements Transferable, ClipboardOwner {
 	
 	@SuppressWarnings("deprecation")
-	public static final DataFlavor plainTextFlavor = DataFlavor.plainTextFlavor;
-	public static final DataFlavor localStringFlavor = DataFlavor.stringFlavor;
+	private static final DataFlavor plainTextFlavor = DataFlavor.plainTextFlavor;
+	private static final DataFlavor localStringFlavor = DataFlavor.stringFlavor;
 	
-
-	public static final DataFlavor[] flavors = {
+	private static final DataFlavor[] flavors = {
 	    StringTransferable.plainTextFlavor,
 	    StringTransferable.localStringFlavor
 	};
@@ -54,9 +53,6 @@ class StringTransferable implements Transferable, ClipboardOwner {
 	private static final List<DataFlavor> flavorList = Arrays.asList( flavors );
 
 	private String string;
-	  
-	  
-	  
 	  
 	public StringTransferable(String string) {
 		super();

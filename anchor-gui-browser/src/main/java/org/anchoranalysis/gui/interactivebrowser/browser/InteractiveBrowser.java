@@ -221,7 +221,7 @@ public class InteractiveBrowser {
 		fileCreatorLoader.addFileListSummaryModule( fileCreators, videoStatsFrame );
 		
 		videoStatsFrame.setDropTarget(
-			new CustomDropTarget(openFileCreator, videoStatsFrame, fileCreatorLoader.getImporterSettings())
+			new CustomDropTarget(openFileCreator, videoStatsFrame, fileCreatorLoader.getImporterSettings(), logErrorReporter.getErrorReporter() )
 		);
 		
 	}

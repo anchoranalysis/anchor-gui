@@ -28,10 +28,10 @@ package org.anchoranalysis.gui.videostats.link;
 
 
 class LinkFramesUniqueID {
-	public static String FRAME_INDEX = "frameIndex";
-	public static String SLICE_NUM = "sliceNum";
-	public static String MARK_INDICES = "markIndices";
-	public static String OVERLAYS = "markAsCfg";
-	public static String OVERLAYS_WITH_STACK = "markAsCfgWithStack";
-	public static String BACKGROUND = "background";
+	public final static String FRAME_INDEX = "frameIndex";
+	public final static String SLICE_NUM = "sliceNum";
+	public final static String MARK_INDICES = "markIndices";
+	public final static String OVERLAYS = "markAsCfg";
+	public final static String OVERLAYS_WITH_STACK = "markAsCfgWithStack";
+	public final static String BACKGROUND = "background";
 }
