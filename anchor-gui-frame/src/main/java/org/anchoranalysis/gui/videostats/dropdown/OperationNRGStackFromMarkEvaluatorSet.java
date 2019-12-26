@@ -53,9 +53,7 @@ public class OperationNRGStackFromMarkEvaluatorSet implements OperationWithProgr
 		
 		try {
 			return markEvaluatorSet.get( markEvaluatorIdentifier ).getNRGStack();
-		} catch (IllegalArgumentException e) {
-			throw new ExecuteException(e);
-		} catch (GetOperationFailedException e) {
+		} catch (IllegalArgumentException | GetOperationFailedException e) {
 			throw new ExecuteException(e);
 		}
 	}
