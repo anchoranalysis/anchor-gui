@@ -29,9 +29,9 @@ package org.anchoranalysis.gui.interactivebrowser.openfile.importer;
 import java.io.File;
 
 import org.anchoranalysis.gui.bean.filecreator.FileCreator;
-import org.anchoranalysis.image.io.bean.input.NamedChnlsBase;
 import org.anchoranalysis.image.io.input.StackInputBase;
 import org.anchoranalysis.io.bean.input.InputManager;
+import org.anchoranalysis.plugin.io.bean.input.chnl.NamedChnlsBase;
 
 public class ImporterFromNamedChnls extends ImporterFromBean {
 

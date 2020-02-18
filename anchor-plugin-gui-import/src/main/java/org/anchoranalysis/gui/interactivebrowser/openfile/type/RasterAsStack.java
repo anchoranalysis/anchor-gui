@@ -36,10 +36,10 @@ import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.gui.bean.filecreator.FileCreator;
 import org.anchoranalysis.gui.bean.filecreator.StackCollectionCreator;
 import org.anchoranalysis.gui.interactivebrowser.openfile.importer.ImporterSettings;
-import org.anchoranalysis.image.io.bean.input.Stacks;
 import org.anchoranalysis.image.io.bean.rasterreader.RasterReader;
 import org.anchoranalysis.io.bean.provider.file.FileList;
-import org.anchoranalysis.plugin.io.bean.input.Files;
+import org.anchoranalysis.plugin.io.bean.input.file.Files;
+import org.anchoranalysis.plugin.io.bean.input.stack.Stacks;
 
 public class RasterAsStack extends OpenFileType {
 

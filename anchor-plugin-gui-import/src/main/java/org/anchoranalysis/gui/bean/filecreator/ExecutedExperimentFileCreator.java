@@ -41,7 +41,7 @@ import org.anchoranalysis.gui.file.interactive.InteractiveFile;
 import org.anchoranalysis.io.deserializer.DeserializationFailedException;
 import org.anchoranalysis.io.manifest.ManifestRecorder;
 import org.anchoranalysis.io.manifest.finder.FinderSerializedObject;
-import org.anchoranalysis.plugin.io.bean.input.CoupledManifestsInputManager;
+import org.anchoranalysis.plugin.io.bean.input.manifest.CoupledManifestsInputManager;
 import org.anchoranalysis.plugin.io.manifest.CoupledManifests;
 import org.anchoranalysis.plugin.io.manifest.ManifestCouplingDefinition;
 
