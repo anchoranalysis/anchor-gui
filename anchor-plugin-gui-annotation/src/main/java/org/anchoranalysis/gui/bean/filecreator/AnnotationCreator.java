@@ -39,7 +39,7 @@ import org.anchoranalysis.gui.videostats.dropdown.VideoStatsModuleGlobalParams;
 import org.anchoranalysis.gui.videostats.module.DefaultModuleState;
 import org.anchoranalysis.gui.videostats.module.VideoStatsModule;
 import org.anchoranalysis.gui.videostats.module.VideoStatsModuleCreateException;
-import org.anchoranalysis.image.io.input.StackInput;
+import org.anchoranalysis.image.io.input.ProvidesStackInput;
 
 // A named channel collection derived from a file
 public class AnnotationCreator extends FileCreator {
@@ -58,7 +58,7 @@ public class AnnotationCreator extends FileCreator {
 	
 	// START BEAN PROPERTIES
 	@BeanField
-	private AnnotationInputManager<StackInput,?> input;
+	private AnnotationInputManager<ProvidesStackInput,?> input;
 	// END BEAN PROPERTIES
 	
 	//private static Log log = LogFactory.getLog(NamedChnlCollectionCreator.class);
@@ -97,11 +97,11 @@ public class AnnotationCreator extends FileCreator {
 		return "untitled raster set";
 	}
 
-	public AnnotationInputManager<StackInput,?> getInput() {
+	public AnnotationInputManager<ProvidesStackInput,?> getInput() {
 		return input;
 	}
 
-	public void setInput(AnnotationInputManager<StackInput,?> input) {
+	public void setInput(AnnotationInputManager<ProvidesStackInput,?> input) {
 		this.input = input;
 	}
 }

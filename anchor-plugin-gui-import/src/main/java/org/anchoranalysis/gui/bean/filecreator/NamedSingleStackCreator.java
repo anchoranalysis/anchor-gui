@@ -37,7 +37,7 @@ import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.progress.ProgressReporter;
 import org.anchoranalysis.gui.file.interactive.FileSingleStack;
 import org.anchoranalysis.gui.file.interactive.InteractiveFile;
-import org.anchoranalysis.image.io.input.StackInput;
+import org.anchoranalysis.image.io.input.ProvidesStackInput;
 import org.anchoranalysis.io.bean.input.InputManager;
 import org.anchoranalysis.io.deserializer.DeserializationFailedException;
 
@@ -51,7 +51,7 @@ public class NamedSingleStackCreator extends FileCreatorGeneralList {
 
 	// START BEAN PROPERTIES
 	@BeanField
-	private InputManager<? extends StackInput> input;
+	private InputManager<? extends ProvidesStackInput> input;
 	// END BEAN PROPERTIES
 	
 	@Override
@@ -60,14 +60,14 @@ public class NamedSingleStackCreator extends FileCreatorGeneralList {
 
 		try {
 
-			Iterator<? extends StackInput> itr = input.inputObjects(
+			Iterator<? extends ProvidesStackInput> itr = input.inputObjects(
 				params.createInputContext(),
 				progressReporter
 			).iterator();
 			
 			while ( itr.hasNext() ) {
 			
-				StackInput obj = itr.next();	
+				ProvidesStackInput obj = itr.next();	
 				
 				FileSingleStack file = new FileSingleStack(
 					obj,
@@ -96,11 +96,11 @@ public class NamedSingleStackCreator extends FileCreatorGeneralList {
 		return "untitled raster set";
 	}
 
-	public InputManager<? extends StackInput> getInput() {
+	public InputManager<? extends ProvidesStackInput> getInput() {
 		return input;
 	}
 
-	public void setInput(InputManager<? extends StackInput> input) {
+	public void setInput(InputManager<? extends ProvidesStackInput> input) {
 		this.input = input;
 	}
 }

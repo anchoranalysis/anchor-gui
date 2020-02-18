@@ -29,7 +29,7 @@ package org.anchoranalysis.gui.interactivebrowser.openfile.importer;
 import java.io.File;
 
 import org.anchoranalysis.gui.bean.filecreator.FileCreator;
-import org.anchoranalysis.image.io.input.StackInput;
+import org.anchoranalysis.image.io.input.ProvidesStackInput;
 import org.anchoranalysis.io.bean.input.InputManager;
 import org.anchoranalysis.plugin.io.bean.input.chnl.NamedChnlsBase;
 
@@ -49,7 +49,7 @@ public class ImporterFromNamedChnls extends ImporterFromBean {
 	@Override
 	public FileCreator create(Object bean, File file) {
 		return XMLBeanListHelper.createSingleStack(
-			(InputManager<? extends StackInput>) bean,
+			(InputManager<? extends ProvidesStackInput>) bean,
 			file
 		);
 	}

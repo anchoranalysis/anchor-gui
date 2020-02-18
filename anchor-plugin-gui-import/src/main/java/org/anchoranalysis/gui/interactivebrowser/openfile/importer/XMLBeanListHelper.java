@@ -39,12 +39,12 @@ import org.anchoranalysis.gui.bean.filecreator.FileCreator;
 import org.anchoranalysis.gui.bean.filecreator.FileFeatureEvaluatorCreator;
 import org.anchoranalysis.gui.bean.filecreator.NamedSingleStackCreator;
 import org.anchoranalysis.gui.interactivebrowser.openfile.type.NrgSchemeCreatorState;
-import org.anchoranalysis.image.io.input.StackInput;
+import org.anchoranalysis.image.io.input.ProvidesStackInput;
 import org.anchoranalysis.io.bean.input.InputManager;
 
 class XMLBeanListHelper {
 	
-	public static FileCreator createSingleStack( InputManager<? extends StackInput> inputManager, File f) {
+	public static FileCreator createSingleStack( InputManager<? extends ProvidesStackInput> inputManager, File f) {
 		return CreatorFactory.create(
 			new NamedSingleStackCreator(),				
 			inputManager,

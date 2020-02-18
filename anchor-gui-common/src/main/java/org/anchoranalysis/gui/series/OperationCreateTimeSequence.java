@@ -33,15 +33,15 @@ import org.anchoranalysis.core.log.LogUtilities;
 import org.anchoranalysis.core.name.store.LazyEvaluationStore;
 import org.anchoranalysis.core.progress.CachedOperationWithProgressReporter;
 import org.anchoranalysis.core.progress.ProgressReporter;
-import org.anchoranalysis.image.io.input.StackInput;
+import org.anchoranalysis.image.io.input.ProvidesStackInput;
 import org.anchoranalysis.image.stack.TimeSequence;
 
 public class OperationCreateTimeSequence extends CachedOperationWithProgressReporter<TimeSequenceProvider> {
 
-	private StackInput inputObject;
+	private ProvidesStackInput inputObject;
 	private int seriesNum;
 	
-	public OperationCreateTimeSequence( StackInput inputObject, int seriesNum ) {
+	public OperationCreateTimeSequence( ProvidesStackInput inputObject, int seriesNum ) {
 		super();
 		this.inputObject = inputObject;
 		this.seriesNum = seriesNum;
