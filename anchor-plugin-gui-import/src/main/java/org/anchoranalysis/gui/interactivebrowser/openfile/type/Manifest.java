@@ -37,9 +37,8 @@ import org.anchoranalysis.gui.bean.filecreator.ExecutedExperimentFileCreator;
 import org.anchoranalysis.gui.bean.filecreator.FileCreator;
 import org.anchoranalysis.gui.interactivebrowser.openfile.importer.ImporterSettings;
 import org.anchoranalysis.io.bean.provider.file.FileList;
+import org.anchoranalysis.plugin.io.bean.input.CoupledManifestsInputManager;
 import org.apache.commons.io.FilenameUtils;
-
-import ch.ethz.biol.cell.imageprocessing.io.inputmanager.CoupledManifestsInputManager;
 
 public class Manifest extends OpenFileType {
 

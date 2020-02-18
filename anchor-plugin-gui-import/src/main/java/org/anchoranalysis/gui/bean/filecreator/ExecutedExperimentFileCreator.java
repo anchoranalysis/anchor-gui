@@ -43,8 +43,8 @@ import org.anchoranalysis.io.manifest.CoupledManifests;
 import org.anchoranalysis.io.manifest.ManifestCouplingDefinition;
 import org.anchoranalysis.io.manifest.ManifestRecorder;
 import org.anchoranalysis.io.manifest.finder.FinderSerializedObject;
+import org.anchoranalysis.plugin.io.bean.input.CoupledManifestsInputManager;
 
-import ch.ethz.biol.cell.imageprocessing.io.inputmanager.CoupledManifestsInputManager;
 import ch.ethz.biol.cell.mpp.nrg.nrgscheme.NRGScheme;
 
 // TODO duplication not right

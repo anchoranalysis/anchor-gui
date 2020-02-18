@@ -39,7 +39,7 @@ import org.anchoranalysis.gui.interactivebrowser.openfile.importer.ImporterSetti
 import org.anchoranalysis.image.io.bean.input.Stacks;
 import org.anchoranalysis.image.io.bean.rasterreader.RasterReader;
 import org.anchoranalysis.io.bean.provider.file.FileList;
-import org.anchoranalysis.io.bean.input.Files;
+import org.anchoranalysis.plugin.io.bean.input.Files;
 
 public class RasterAsStack extends OpenFileType {
 

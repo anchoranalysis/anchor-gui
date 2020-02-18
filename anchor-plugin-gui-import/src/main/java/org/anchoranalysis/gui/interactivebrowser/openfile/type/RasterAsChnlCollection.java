@@ -40,7 +40,7 @@ import org.anchoranalysis.image.io.bean.chnl.map.creator.ImgChnlMapAutoname;
 import org.anchoranalysis.image.io.bean.input.NamedChnls;
 import org.anchoranalysis.image.io.bean.rasterreader.RasterReader;
 import org.anchoranalysis.io.bean.provider.file.FileList;
-import org.anchoranalysis.io.bean.input.Files;
+import org.anchoranalysis.plugin.io.bean.input.Files;
 
 public class RasterAsChnlCollection extends OpenFileType {
 
