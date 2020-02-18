@@ -66,7 +66,7 @@ public abstract class FinderRasterChnl extends FinderSingleFile implements Finde
 		Path filePath = fileWrite.calcPath();
 		
 		try (OpenedRaster openedRaster = rasterReader.openFile(filePath)) {
-			if (openedRaster.getNumSeries()!=1) {
+			if (openedRaster.numSeries()!=1) {
 				throw new CreateException("there must be exactly one series");
 			}
 			

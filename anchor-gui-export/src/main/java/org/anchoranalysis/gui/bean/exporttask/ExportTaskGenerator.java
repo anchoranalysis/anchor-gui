@@ -1,5 +1,7 @@
 package org.anchoranalysis.gui.bean.exporttask;
 
+
+
 /*
  * #%L
  * anchor-gui
@@ -72,7 +74,6 @@ public class ExportTaskGenerator<IterableType> implements IExportTask {
 			throw new ExportTaskFailedException(e);
 		}
 		
-    	
     	int numWritten = params.getOutputManager().getWriterCheckIfAllowed().write(
     		outputNameStyle,
     		()->generator.getGenerator(),
