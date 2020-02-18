@@ -37,8 +37,8 @@ import org.anchoranalysis.gui.file.opened.OpenedFileGUI;
 import org.anchoranalysis.gui.videostats.dropdown.IAddVideoStatsModule;
 import org.anchoranalysis.gui.videostats.dropdown.manifest.ManifestDropDown;
 import org.anchoranalysis.image.io.bean.rasterreader.RasterReader;
-import org.anchoranalysis.io.manifest.CoupledManifests;
 import org.anchoranalysis.io.output.bound.BoundOutputManagerRouteErrors;
+import org.anchoranalysis.plugin.io.manifest.CoupledManifests;
 
 // A file representing the results applied to an image within an executed experiment
 public class FileExecutedExperimentImageWithManifest extends InteractiveFile {

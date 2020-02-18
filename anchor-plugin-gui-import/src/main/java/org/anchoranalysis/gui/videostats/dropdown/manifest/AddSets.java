@@ -35,7 +35,7 @@ import org.anchoranalysis.gui.videostats.dropdown.BoundVideoStatsModuleDropDown;
 import org.anchoranalysis.gui.videostats.dropdown.CombinedMenu;
 import org.anchoranalysis.gui.videostats.dropdown.MenuAddException;
 import org.anchoranalysis.gui.videostats.dropdown.OperationCreateBackgroundSetWithAdder;
-import org.anchoranalysis.io.manifest.CoupledManifests;
+import org.anchoranalysis.plugin.io.manifest.CoupledManifests;
 
 class AddSets {
 	
