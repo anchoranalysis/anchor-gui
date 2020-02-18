@@ -39,8 +39,8 @@ import org.anchoranalysis.gui.file.opened.OpenedFileGUI;
 import org.anchoranalysis.gui.videostats.dropdown.IAddVideoStatsModule;
 import org.anchoranalysis.gui.videostats.dropdown.ExtractTimeSequenceFromInput;
 import org.anchoranalysis.gui.videostats.dropdown.multicollection.MultiCollectionDropDown;
-import org.anchoranalysis.image.io.input.StackSequenceInput;
 import org.anchoranalysis.io.output.bound.BoundOutputManagerRouteErrors;
+import org.anchoranalysis.plugin.io.bean.input.stack.StackSequenceInput;
 import org.apache.commons.io.FilenameUtils;
 
 public class FileStackCollection extends InteractiveFile {

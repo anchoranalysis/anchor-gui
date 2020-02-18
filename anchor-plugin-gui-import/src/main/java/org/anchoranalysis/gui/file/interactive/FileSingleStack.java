@@ -39,16 +39,16 @@ import org.anchoranalysis.gui.file.opened.OpenedFileGUI;
 import org.anchoranalysis.gui.series.OperationCreateTimeSequence;
 import org.anchoranalysis.gui.videostats.dropdown.IAddVideoStatsModule;
 import org.anchoranalysis.gui.videostats.dropdown.multicollection.MultiCollectionDropDown;
-import org.anchoranalysis.image.io.input.StackInputBase;
+import org.anchoranalysis.image.io.input.StackInput;
 import org.anchoranalysis.io.output.bound.BoundOutputManagerRouteErrors;
 
 public class FileSingleStack extends InteractiveFile {
 
-	private StackInputBase inputObject;
+	private StackInput inputObject;
 	private MarkCreatorParams params;
 	
 	public FileSingleStack(
-		StackInputBase ncc,
+		StackInput ncc,
 		MarkCreatorParams params
 	) {
 		super();

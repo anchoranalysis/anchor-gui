@@ -36,8 +36,8 @@ import org.anchoranalysis.core.progress.CachedOperationWithProgressReporter;
 import org.anchoranalysis.core.progress.ProgressReporter;
 import org.anchoranalysis.gui.series.TimeSequenceProvider;
 import org.anchoranalysis.image.io.RasterIOException;
-import org.anchoranalysis.image.io.input.StackSequenceInput;
 import org.anchoranalysis.image.stack.TimeSequence;
+import org.anchoranalysis.plugin.io.bean.input.stack.StackSequenceInput;
 
 public class ExtractTimeSequenceFromInput extends CachedOperationWithProgressReporter<TimeSequenceProvider> {
 

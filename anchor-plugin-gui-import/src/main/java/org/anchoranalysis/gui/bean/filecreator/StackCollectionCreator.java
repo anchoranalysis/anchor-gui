@@ -37,9 +37,9 @@ import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.progress.ProgressReporter;
 import org.anchoranalysis.gui.file.interactive.FileStackCollection;
 import org.anchoranalysis.gui.file.interactive.InteractiveFile;
-import org.anchoranalysis.image.io.input.StackSequenceInput;
 import org.anchoranalysis.io.bean.input.InputManager;
 import org.anchoranalysis.io.deserializer.DeserializationFailedException;
+import org.anchoranalysis.plugin.io.bean.input.stack.StackSequenceInput;
 
 // A named channel collection derived from a file
 public class StackCollectionCreator extends FileCreatorGeneralList {

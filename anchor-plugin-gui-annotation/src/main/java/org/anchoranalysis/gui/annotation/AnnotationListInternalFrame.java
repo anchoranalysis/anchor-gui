@@ -52,7 +52,7 @@ import org.anchoranalysis.gui.interactivebrowser.IOpenFile;
 import org.anchoranalysis.gui.interactivebrowser.filelist.InteractiveFileListInternalFrame;
 import org.anchoranalysis.gui.videostats.IModuleCreatorDefaultState;
 import org.anchoranalysis.gui.videostats.dropdown.IAddVideoStatsModule;
-import org.anchoranalysis.image.io.input.StackInputBase;
+import org.anchoranalysis.image.io.input.StackInput;
 import org.anchoranalysis.io.deserializer.DeserializationFailedException;
 
 public class AnnotationListInternalFrame {
@@ -78,7 +78,7 @@ public class AnnotationListInternalFrame {
 	 * @throws InitException
 	 */
 	public <T extends AnnotatorStrategy> void init(
-		final AnnotationInputManager<StackInputBase,T> inputManager,
+		final AnnotationInputManager<StackInput,T> inputManager,
 		IAddVideoStatsModule adder,
 		IOpenFile fileOpenManager,
 		MarkCreatorParams params,
