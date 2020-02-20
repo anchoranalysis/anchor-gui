@@ -65,7 +65,7 @@ import org.anchoranalysis.gui.videostats.internalframe.evaluator.fromproposer.Fr
 import org.anchoranalysis.gui.videostats.internalframe.evaluator.fromproposer.FromMarkSplitProposer;
 import org.anchoranalysis.gui.videostats.internalframe.evaluator.fromproposer.ProposalOperationCreatorFromProposer;
 import org.anchoranalysis.gui.videostats.module.DefaultModuleState;
-import org.anchoranalysis.io.bean.output.OutputWriteSettings;
+import org.anchoranalysis.io.output.bean.OutputWriteSettings;
 
 import ch.ethz.biol.cell.imageprocessing.io.generator.raster.CfgWithDisplayStack;
 import ch.ethz.biol.cell.mpp.cfg.Cfg;

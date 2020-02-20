@@ -41,9 +41,9 @@ import org.anchoranalysis.io.bean.objmask.writer.RGBOutlineWriter;
 import org.anchoranalysis.io.generator.sequence.GeneratorSequenceIncrementalRerouteErrors;
 import org.anchoranalysis.io.generator.sequence.GeneratorSequenceIncrementalWriter;
 import org.anchoranalysis.io.manifest.ManifestDescription;
+import org.anchoranalysis.io.namestyle.IndexableOutputNameStyle;
+import org.anchoranalysis.io.namestyle.IntegerSuffixOutputNameStyle;
 import org.anchoranalysis.io.output.bound.BoundOutputManagerRouteErrors;
-import org.anchoranalysis.io.output.namestyle.IndexableOutputNameStyle;
-import org.anchoranalysis.io.output.namestyle.IntegerSuffixOutputNameStyle;
 
 import ch.ethz.biol.cell.imageprocessing.io.generator.raster.CfgGenerator;
 import ch.ethz.biol.cell.imageprocessing.io.generator.raster.CfgWithDisplayStack;

@@ -37,7 +37,7 @@ import org.anchoranalysis.core.cache.CacheMonitor;
 import org.anchoranalysis.core.index.SetOperationFailedException;
 import org.anchoranalysis.io.generator.IterableGenerator;
 import org.anchoranalysis.io.generator.sequence.SequenceMemory;
-import org.anchoranalysis.io.output.namestyle.IndexableOutputNameStyle;
+import org.anchoranalysis.io.namestyle.IndexableOutputNameStyle;
 
 public class ExportTaskGenerator<IterableType> implements IExportTask {
 
