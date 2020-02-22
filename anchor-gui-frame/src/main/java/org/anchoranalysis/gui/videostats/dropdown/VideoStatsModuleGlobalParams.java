@@ -61,7 +61,6 @@ public class VideoStatsModuleGlobalParams {
 		InputContextParams out = new InputContextParams();
 		out.setGuiMode(true);
 		out.setDebugMode(false);
-		out.setInputDir(null);
 		return out;
 	}
 	
