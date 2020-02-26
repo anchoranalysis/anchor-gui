@@ -27,7 +27,6 @@ package org.anchoranalysis.gui.bean.filecreator;
  */
 
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Iterator;
 import java.util.List;
@@ -39,7 +38,7 @@ import org.anchoranalysis.gui.file.interactive.FileSingleStack;
 import org.anchoranalysis.gui.file.interactive.InteractiveFile;
 import org.anchoranalysis.image.io.input.ProvidesStackInput;
 import org.anchoranalysis.io.bean.input.InputManager;
-import org.anchoranalysis.io.deserializer.DeserializationFailedException;
+import org.anchoranalysis.io.error.AnchorIOException;
 
 // A named channel collection derived from a file
 public class NamedSingleStackCreator extends FileCreatorGeneralList {
@@ -62,7 +61,8 @@ public class NamedSingleStackCreator extends FileCreatorGeneralList {
 
 			Iterator<? extends ProvidesStackInput> itr = input.inputObjects(
 				params.createInputContext(),
-				progressReporter
+				progressReporter,
+				params.getLogErrorReporter()
 			).iterator();
 			
 			while ( itr.hasNext() ) {
@@ -77,11 +77,7 @@ public class NamedSingleStackCreator extends FileCreatorGeneralList {
 
 			}
 			
-		} catch (FileNotFoundException e) {
-			throw new CreateException(e);
-		} catch (IOException e) {
-			throw new CreateException(e);
-		} catch (DeserializationFailedException e) {
+		} catch (AnchorIOException | IOException e) {
 			throw new CreateException(e);
 		}
 	}

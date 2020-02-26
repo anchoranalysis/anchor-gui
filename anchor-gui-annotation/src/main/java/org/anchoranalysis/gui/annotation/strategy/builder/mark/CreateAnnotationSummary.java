@@ -27,7 +27,6 @@ package org.anchoranalysis.gui.annotation.strategy.builder.mark;
  */
 
 import java.awt.Color;
-import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -37,6 +36,7 @@ import org.anchoranalysis.annotation.mark.MarkAnnotation;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.gui.annotation.state.AnnotationProgressState;
 import org.anchoranalysis.gui.annotation.state.AnnotationSummary;
+import org.anchoranalysis.io.error.AnchorIOException;
 
 class CreateAnnotationSummary {
 	
@@ -59,7 +59,7 @@ class CreateAnnotationSummary {
 				as.setColor( color(aps, a.isAccepted()) );
 				as.setExistsFinished(true);
 				
-			} catch (IOException e) {
+			} catch (AnchorIOException e) {
 				throw new CreateException(e);
 			}
 		} else {

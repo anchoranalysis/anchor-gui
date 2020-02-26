@@ -38,7 +38,7 @@ import org.anchoranalysis.core.progress.ProgressReporter;
 import org.anchoranalysis.gui.file.interactive.FileStackCollection;
 import org.anchoranalysis.gui.file.interactive.InteractiveFile;
 import org.anchoranalysis.io.bean.input.InputManager;
-import org.anchoranalysis.io.deserializer.DeserializationFailedException;
+import org.anchoranalysis.io.error.AnchorIOException;
 import org.anchoranalysis.plugin.io.bean.input.stack.StackSequenceInput;
 
 // A named channel collection derived from a file
@@ -63,7 +63,8 @@ public class StackCollectionCreator extends FileCreatorGeneralList {
 		try {
 			Iterator<StackSequenceInput> itr = input.inputObjects(
 				params.createInputContext(),
-				progressReporter
+				progressReporter,
+				params.getLogErrorReporter()
 			).iterator();
 			
 			while ( itr.hasNext() ) {
@@ -81,7 +82,7 @@ public class StackCollectionCreator extends FileCreatorGeneralList {
 			throw new CreateException(e);
 		} catch (IOException e) {
 			throw new CreateException(e);
-		} catch (DeserializationFailedException e) {
+		} catch (AnchorIOException e) {
 			throw new CreateException(e);
 		} 
 	}

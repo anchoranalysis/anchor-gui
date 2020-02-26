@@ -27,8 +27,6 @@ package org.anchoranalysis.gui.interactivebrowser.launch;
  */
 
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,6 +35,7 @@ import org.anchoranalysis.bean.annotation.BeanField;
 import org.anchoranalysis.bean.annotation.DefaultInstance;
 import org.anchoranalysis.bean.annotation.Optional;
 import org.anchoranalysis.bean.shared.params.keyvalue.KeyValueParamsProvider;
+import org.anchoranalysis.core.log.LogErrorReporter;
 import org.anchoranalysis.core.progress.ProgressReporter;
 import org.anchoranalysis.feature.bean.list.FeatureListProvider;
 import org.anchoranalysis.gui.bean.filecreator.FileCreator;
@@ -46,7 +45,7 @@ import org.anchoranalysis.gui.interactivebrowser.openfile.importer.ImporterSetti
 import org.anchoranalysis.image.io.bean.rasterreader.RasterReader;
 import org.anchoranalysis.io.bean.filepath.provider.FilePathProvider;
 import org.anchoranalysis.io.bean.input.InputManager;
-import org.anchoranalysis.io.deserializer.DeserializationFailedException;
+import org.anchoranalysis.io.error.AnchorIOException;
 import org.anchoranalysis.io.params.InputContextParams;
 
 import ch.ethz.biol.cell.mpp.nrg.nrgscheme.creator.NRGSchemeCreator;
@@ -85,8 +84,8 @@ public class InteractiveBrowserInputManager extends InputManager<InteractiveBrow
 	// END BEAN PROPERTIES
 
 	@Override
-	public List<InteractiveBrowserInput> inputObjects(InputContextParams inputContext, ProgressReporter progressReporter)
-			throws FileNotFoundException, IOException, DeserializationFailedException {
+	public List<InteractiveBrowserInput> inputObjects(InputContextParams inputContext, ProgressReporter progressReporter, LogErrorReporter logger)
+			throws AnchorIOException {
 		
 		InteractiveBrowserInput ibi = new InteractiveBrowserInput();
 		ibi.setListFileCreators( listFileCreators );

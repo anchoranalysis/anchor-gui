@@ -26,7 +26,6 @@ package org.anchoranalysis.gui.annotation.additional;
  * #L%
  */
 
-import java.io.IOException;
 import java.nio.file.Path;
 import java.util.List;
 
@@ -36,6 +35,7 @@ import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.image.io.bean.rasterreader.RasterReader;
 import org.anchoranalysis.io.bean.filepath.generator.FilePathGenerator;
+import org.anchoranalysis.io.error.AnchorIOException;
 
 public class ShowAdditionalRasters {
 
@@ -63,7 +63,7 @@ public class ShowAdditionalRasters {
 				Path rasterPath = filePathGenerator.outFilePath(matchPath, false);
 				showRaster.openAndShow( name, rasterPath, rasterReader );
 			}
-		} catch (IOException | InitException | GetOperationFailedException | ExecuteException e) {
+		} catch (AnchorIOException | InitException | GetOperationFailedException | ExecuteException e) {
 			throw new OperationFailedException(e);
 		}
 	}

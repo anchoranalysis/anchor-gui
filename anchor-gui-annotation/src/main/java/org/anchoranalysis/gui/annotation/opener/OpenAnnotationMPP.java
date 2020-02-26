@@ -26,7 +26,6 @@ package org.anchoranalysis.gui.annotation.opener;
  * #L%
  */
 
-import java.io.IOException;
 import java.nio.file.Path;
 
 import org.anchoranalysis.annotation.AnnotationWithCfg;
@@ -39,6 +38,7 @@ import org.anchoranalysis.gui.annotation.AnnotatorModuleCreator;
 import org.anchoranalysis.gui.videostats.internalframe.annotator.currentstate.DualCfg;
 import org.anchoranalysis.gui.videostats.module.VideoStatsModuleCreateException;
 import org.anchoranalysis.io.deserializer.DeserializationFailedException;
+import org.anchoranalysis.io.error.AnchorIOException;
 
 import ch.ethz.biol.cell.mpp.cfg.Cfg;
 
@@ -137,7 +137,7 @@ public class OpenAnnotationMPP implements IOpenAnnotation {
 			// We try to read an existing annotation
 			// If we can read an annotation let's do it
 			return annotationReader.read(annotationPath);
-		} catch (IOException e) {
+		} catch (AnchorIOException e) {
 			throw new VideoStatsModuleCreateException(e);
 		}
 	}

@@ -27,7 +27,6 @@ package org.anchoranalysis.gui.annotation.export;
  */
 
 import java.io.File;
-import java.io.IOException;
 import java.nio.file.Path;
 
 import javax.swing.JFrame;
@@ -39,6 +38,7 @@ import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.error.OptionalOperationUnsupportedException;
 import org.anchoranalysis.gui.annotation.AnnotationRefresher;
 import org.anchoranalysis.gui.videostats.internalframe.annotator.AnnotationWriterGUI;
+import org.anchoranalysis.io.error.AnchorIOException;
 import org.apache.commons.io.FilenameUtils;
 
 public class ExportScaledMarks extends ExportAnnotation {
@@ -88,7 +88,7 @@ public class ExportScaledMarks extends ExportAnnotation {
 				null
 			);
 			writerGUI.saveAnnotation(ann, path, parentFrame);
-		} catch (IOException | OptionalOperationUnsupportedException e) {
+		} catch (AnchorIOException | OptionalOperationUnsupportedException e) {
 			throw new OperationFailedException(e);
 		}
 	}

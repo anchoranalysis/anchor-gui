@@ -80,7 +80,8 @@ public class ExecutedExperimentFileCreator extends FileCreatorGeneralList {
 		try {
 			manifestCouplingDefinition = coupledManifestsInputManager.manifestCouplingDefinition(
 				progressReporter,
-				params.createInputContext()
+				params.createInputContext(),
+				params.getLogErrorReporter()
 			);
 		} catch (DeserializationFailedException | IOException e) {
 			throw new CreateException(e);

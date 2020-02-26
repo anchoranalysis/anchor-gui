@@ -53,7 +53,7 @@ import org.anchoranalysis.gui.interactivebrowser.filelist.InteractiveFileListInt
 import org.anchoranalysis.gui.videostats.IModuleCreatorDefaultState;
 import org.anchoranalysis.gui.videostats.dropdown.IAddVideoStatsModule;
 import org.anchoranalysis.image.io.input.ProvidesStackInput;
-import org.anchoranalysis.io.deserializer.DeserializationFailedException;
+import org.anchoranalysis.io.error.AnchorIOException;
 
 public class AnnotationListInternalFrame {
 
@@ -92,7 +92,8 @@ public class AnnotationListInternalFrame {
 				try {
 					Collection<AnnotationWithStrategy<T>> inputObjs = inputManager.inputObjects(
 						params.getModuleParams().createInputContext(),
-						progressReporter
+						progressReporter,
+						params.getModuleParams().getLogErrorReporter()
 					); 
 					
 					AnnotationProject ap = new AnnotationProject(
@@ -104,7 +105,7 @@ public class AnnotationListInternalFrame {
 					
 					return ap;
 					
-				} catch (IOException | DeserializationFailedException | CreateException e) {
+				} catch (AnchorIOException | IOException | CreateException e) {
 					throw new ExecuteException(e);
 				}
 			}
