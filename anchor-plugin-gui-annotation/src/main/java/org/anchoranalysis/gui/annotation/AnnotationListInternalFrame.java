@@ -53,6 +53,7 @@ import org.anchoranalysis.gui.interactivebrowser.filelist.InteractiveFileListInt
 import org.anchoranalysis.gui.videostats.IModuleCreatorDefaultState;
 import org.anchoranalysis.gui.videostats.dropdown.IAddVideoStatsModule;
 import org.anchoranalysis.image.io.input.ProvidesStackInput;
+import org.anchoranalysis.io.bean.input.InputManagerParams;
 import org.anchoranalysis.io.error.AnchorIOException;
 
 public class AnnotationListInternalFrame {
@@ -91,9 +92,11 @@ public class AnnotationListInternalFrame {
 			public AnnotationProject doOperation( ProgressReporter progressReporter ) throws ExecuteException {
 				try {
 					Collection<AnnotationWithStrategy<T>> inputObjs = inputManager.inputObjects(
-						params.getModuleParams().createInputContext(),
-						progressReporter,
-						params.getModuleParams().getLogErrorReporter()
+						new InputManagerParams(
+							params.getModuleParams().createInputContext(),
+							progressReporter,
+							params.getModuleParams().getLogErrorReporter()
+						)
 					); 
 					
 					AnnotationProject ap = new AnnotationProject(

@@ -38,6 +38,7 @@ import org.anchoranalysis.gui.file.interactive.FileSingleStack;
 import org.anchoranalysis.gui.file.interactive.InteractiveFile;
 import org.anchoranalysis.image.io.input.ProvidesStackInput;
 import org.anchoranalysis.io.bean.input.InputManager;
+import org.anchoranalysis.io.bean.input.InputManagerParams;
 import org.anchoranalysis.io.error.AnchorIOException;
 
 // A named channel collection derived from a file
@@ -60,9 +61,11 @@ public class NamedSingleStackCreator extends FileCreatorGeneralList {
 		try {
 
 			Iterator<? extends ProvidesStackInput> itr = input.inputObjects(
-				params.createInputContext(),
-				progressReporter,
-				params.getLogErrorReporter()
+				new InputManagerParams(
+					params.createInputContext(),
+					progressReporter,
+					params.getLogErrorReporter()
+				)
 			).iterator();
 			
 			while ( itr.hasNext() ) {
