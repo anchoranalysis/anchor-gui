@@ -37,7 +37,7 @@ import org.anchoranalysis.image.extent.ImageDim;
 import org.anchoranalysis.image.extent.IncorrectImageSizeException;
 import org.anchoranalysis.image.stack.DisplayStack;
 import org.anchoranalysis.image.stack.Stack;
-import org.anchoranalysis.image.voxel.datatype.VoxelDataTypeByte;
+import org.anchoranalysis.image.voxel.datatype.VoxelDataTypeUnsignedByte;
 
 public class CombineRGBBoundedIndexContainer implements IBoundedIndexContainer<DisplayStack> {
 
@@ -217,7 +217,7 @@ public class CombineRGBBoundedIndexContainer implements IBoundedIndexContainer<D
 			} else {
 				// TODO, why do we create an empty initialised here
 				assert(dim!=null);
-				Chnl chnlNew = ChnlFactory.instance().createEmptyInitialised(dim, VoxelDataTypeByte.instance);
+				Chnl chnlNew = ChnlFactory.instance().createEmptyInitialised(dim, VoxelDataTypeUnsignedByte.instance);
 				stackNew.addChnl( chnlNew );
 			}
 		} catch (IncorrectImageSizeException e) {
