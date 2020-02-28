@@ -59,7 +59,6 @@ public class VideoStatsModuleGlobalParams {
 	
 	public InputContextParams createInputContext() throws IOException {
 		InputContextParams out = new InputContextParams();
-		out.setGuiMode(true);
 		out.setDebugMode(false);
 		return out;
 	}
