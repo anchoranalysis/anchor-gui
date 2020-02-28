@@ -35,7 +35,7 @@ import org.anchoranalysis.bean.AnchorBean;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.gui.bean.filecreator.FileCreator;
 import org.anchoranalysis.gui.interactivebrowser.openfile.importer.ImporterSettings;
-import org.anchoranalysis.io.bean.provider.file.FileList;
+import org.anchoranalysis.io.bean.provider.file.SpecificPathList;
 import org.apache.commons.io.FilenameUtils;
 
 // Describes what type of file we are opening
@@ -62,8 +62,8 @@ public abstract class OpenFileType extends AnchorBean<OpenFileType> {
 		}
 	}
 	
-	protected static FileList createFileList( List<File> files ) {
-		FileList out = new FileList();
+	protected static SpecificPathList createFileList( List<File> files ) {
+		SpecificPathList out = new SpecificPathList();
 		
 		for( File f : files) {
 			out.getListPaths().add( f.getPath() );
@@ -71,8 +71,8 @@ public abstract class OpenFileType extends AnchorBean<OpenFileType> {
 		return out;
 	}
 	
-	protected static FileList createFileList( File f ) {
-		FileList out = new FileList();
+	protected static SpecificPathList createFileList( File f ) {
+		SpecificPathList out = new SpecificPathList();
 		out.getListPaths().add(f.getPath());
 		return out;
 	}

@@ -37,7 +37,7 @@ import org.anchoranalysis.gui.bean.filecreator.FileCreator;
 import org.anchoranalysis.gui.bean.filecreator.StackCollectionCreator;
 import org.anchoranalysis.gui.interactivebrowser.openfile.importer.ImporterSettings;
 import org.anchoranalysis.image.io.bean.rasterreader.RasterReader;
-import org.anchoranalysis.io.bean.provider.file.FileList;
+import org.anchoranalysis.io.bean.provider.file.SpecificPathList;
 import org.anchoranalysis.plugin.io.bean.input.file.Files;
 import org.anchoranalysis.plugin.io.bean.input.stack.Stacks;
 
@@ -61,7 +61,7 @@ public class RasterAsStack extends OpenFileType {
 	@Override
 	public List<FileCreator> creatorForFile(List<File> files, ImporterSettings importerSettings) throws CreateException {
 		
-		FileList fileList = createFileList(files);
+		SpecificPathList fileList = createFileList(files);
 		
 		Files fileInputManager = new Files();
 		fileInputManager.setFileProvider(fileList);
