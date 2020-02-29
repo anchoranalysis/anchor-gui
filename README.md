@@ -4,6 +4,8 @@ This is part of the source-distribution for the [Anchor Image Analysis](http://w
 
 It contains the **GUI** for Anchor - a Swing graphical application.
 
+**Note the GUI is considered a legacy part of Anchor, whose primary interface is through the command-line client**.
+
 ## What is Anchor?
 
 Anchor is a platform for image analysis, developed by [Owen Feehan](http://www.owenfeehan.com) at:
