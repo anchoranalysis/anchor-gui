@@ -2,7 +2,7 @@
 
 This is part of the source-distribution for the [Anchor Image Analysis](http://www.anchoranalysis.org) software.
 
-It contains the **GUI** for Anchor.
+It contains the **GUI** for Anchor - a Swing graphical application.
 
 ## What is Anchor?
 
