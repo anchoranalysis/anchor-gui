@@ -33,6 +33,7 @@ import org.anchoranalysis.bean.annotation.BeanField;
 import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.experiment.JobExecutionException;
 import org.anchoranalysis.experiment.bean.task.TaskWithoutSharedState;
+import org.anchoranalysis.experiment.task.InputTypesExpected;
 import org.anchoranalysis.experiment.task.ParametersBound;
 import org.anchoranalysis.gui.interactivebrowser.browser.InteractiveBrowser;
 import org.anchoranalysis.gui.interactivebrowser.input.InteractiveBrowserInput;
@@ -50,17 +51,14 @@ public class InteractiveBrowserTask extends TaskWithoutSharedState<InteractiveBr
 	@BeanField
 	private ExportTaskList exportTaskList;
 	// END BEAN PROPERTIES
-	
-	public ExportTaskList getExportTaskList() {
-		return exportTaskList;
-	}
 
-	public void setExportTaskList(ExportTaskList exportTaskList) {
-		this.exportTaskList = exportTaskList;
-	}
-	
 	@Override
-	protected void doJobOnInputObject(ParametersBound<InteractiveBrowserInput,Object> params)	throws JobExecutionException {
+	public InputTypesExpected inputTypesExpected() {
+		return new InputTypesExpected(InteractiveBrowserInput.class);
+	}
+		
+	@Override
+	public void doJobOnInputObject(ParametersBound<InteractiveBrowserInput,Object> params)	throws JobExecutionException {
 		
 		try {
 			InteractiveBrowser browser = new InteractiveBrowser(
@@ -79,5 +77,13 @@ public class InteractiveBrowserTask extends TaskWithoutSharedState<InteractiveBr
 	@Override
 	public boolean hasVeryQuickPerInputExecution() {
 		return true;
+	}
+	
+	public ExportTaskList getExportTaskList() {
+		return exportTaskList;
+	}
+
+	public void setExportTaskList(ExportTaskList exportTaskList) {
+		this.exportTaskList = exportTaskList;
 	}
 }
