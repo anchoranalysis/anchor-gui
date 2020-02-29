@@ -55,7 +55,7 @@ import org.anchoranalysis.image.stack.Stack;
 import org.anchoranalysis.image.stack.TimeSequence;
 import org.anchoranalysis.image.stack.wrap.WrapStackAsTimeSequence;
 import org.anchoranalysis.image.stack.wrap.WrapTimeSequenceAsStack;
-import org.anchoranalysis.io.bean.output.OutputWriteSettings;
+import org.anchoranalysis.io.output.bean.OutputWriteSettings;
 import org.anchoranalysis.io.output.bound.BoundOutputManagerRouteErrors;
 
 import ch.ethz.biol.cell.mpp.cfg.Cfg;

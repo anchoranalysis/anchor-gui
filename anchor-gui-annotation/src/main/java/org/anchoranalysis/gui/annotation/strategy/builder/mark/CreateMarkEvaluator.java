@@ -42,6 +42,7 @@ import org.anchoranalysis.gui.annotation.strategy.MarkProposerStrategy;
 import org.anchoranalysis.gui.interactivebrowser.MarkEvaluatorManager;
 import org.anchoranalysis.gui.interactivebrowser.MarkEvaluatorSetForImage;
 import org.anchoranalysis.image.stack.Stack;
+import org.anchoranalysis.io.error.AnchorIOException;
 
 class CreateMarkEvaluator {
 
@@ -78,12 +79,12 @@ class CreateMarkEvaluator {
 				stacks,
 				opLoadKeyValueParams(pathForBinding, strategy)
 			);
-		} catch (IOException e) {
+		} catch (AnchorIOException e) {
 			throw new CreateException(e);
 		}
 	}
 	
-	private static Operation<KeyValueParams> opLoadKeyValueParams( Path pathForBinding, MarkProposerStrategy strategy ) throws IOException {
+	private static Operation<KeyValueParams> opLoadKeyValueParams( Path pathForBinding, MarkProposerStrategy strategy ) throws AnchorIOException {
 		Path kvpPath = new GenerathorPathRslvr( pathForBinding ).pathOrNull(
 			strategy.getKeyValueParamsFilePathGenerator()
 		);

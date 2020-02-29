@@ -38,13 +38,14 @@ import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.progress.ProgressReporter;
 import org.anchoranalysis.gui.file.interactive.FileExecutedExperimentImageWithManifest;
 import org.anchoranalysis.gui.file.interactive.InteractiveFile;
+import org.anchoranalysis.io.bean.input.InputManagerParams;
 import org.anchoranalysis.io.deserializer.DeserializationFailedException;
-import org.anchoranalysis.io.manifest.CoupledManifests;
-import org.anchoranalysis.io.manifest.ManifestCouplingDefinition;
 import org.anchoranalysis.io.manifest.ManifestRecorder;
 import org.anchoranalysis.io.manifest.finder.FinderSerializedObject;
+import org.anchoranalysis.plugin.io.bean.input.manifest.CoupledManifestsInputManager;
+import org.anchoranalysis.plugin.io.manifest.CoupledManifests;
+import org.anchoranalysis.plugin.io.manifest.ManifestCouplingDefinition;
 
-import ch.ethz.biol.cell.imageprocessing.io.inputmanager.CoupledManifestsInputManager;
 import ch.ethz.biol.cell.mpp.nrg.nrgscheme.NRGScheme;
 
 // TODO duplication not right
@@ -79,8 +80,11 @@ public class ExecutedExperimentFileCreator extends FileCreatorGeneralList {
 		ManifestCouplingDefinition manifestCouplingDefinition;
 		try {
 			manifestCouplingDefinition = coupledManifestsInputManager.manifestCouplingDefinition(
-				progressReporter,
-				params.createInputContext()
+				new InputManagerParams(
+					params.createInputContext(),
+					progressReporter,
+					params.getLogErrorReporter()
+				)
 			);
 		} catch (DeserializationFailedException | IOException e) {
 			throw new CreateException(e);

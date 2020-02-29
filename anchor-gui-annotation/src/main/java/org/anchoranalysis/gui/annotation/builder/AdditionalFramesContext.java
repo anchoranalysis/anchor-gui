@@ -28,7 +28,7 @@ package org.anchoranalysis.gui.annotation.builder;
 
 import org.anchoranalysis.gui.videostats.dropdown.IAddVideoStatsModule;
 import org.anchoranalysis.gui.videostats.dropdown.VideoStatsModuleGlobalParams;
-import org.anchoranalysis.io.bean.output.OutputWriteSettings;
+import org.anchoranalysis.io.output.bean.OutputWriteSettings;
 
 public class AdditionalFramesContext {
 

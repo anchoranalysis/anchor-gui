@@ -38,7 +38,8 @@ import org.anchoranalysis.core.progress.ProgressReporter;
 import org.anchoranalysis.gui.file.interactive.FileMultiCollection;
 import org.anchoranalysis.gui.file.interactive.InteractiveFile;
 import org.anchoranalysis.io.bean.input.InputManager;
-import org.anchoranalysis.io.deserializer.DeserializationFailedException;
+import org.anchoranalysis.io.bean.input.InputManagerParams;
+import org.anchoranalysis.io.error.AnchorIOException;
 import org.anchoranalysis.mpp.io.input.MultiInput;
 
 public class NamedMultiCollectionCreator extends FileCreatorGeneralList {
@@ -59,8 +60,11 @@ public class NamedMultiCollectionCreator extends FileCreatorGeneralList {
 		
 		try {
 			Iterator<MultiInput> itr = input.inputObjects(
-				params.createInputContext(),
-				progressReporter
+				new InputManagerParams(
+					params.createInputContext(),
+					progressReporter,
+					params.getLogErrorReporter()
+				)
 			).iterator();
 			
 			while ( itr.hasNext() ) {
@@ -78,7 +82,7 @@ public class NamedMultiCollectionCreator extends FileCreatorGeneralList {
 			throw new CreateException(e);
 		} catch (IOException e) {
 			throw new CreateException(e);
-		} catch (DeserializationFailedException e) {
+		} catch (AnchorIOException e) {
 			throw new CreateException(e);
 		} 
 	}

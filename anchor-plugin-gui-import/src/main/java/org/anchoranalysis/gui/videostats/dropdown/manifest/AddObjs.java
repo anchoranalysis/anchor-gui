@@ -46,9 +46,9 @@ import org.anchoranalysis.gui.videostats.dropdown.contextualmodulecreator.NRGTab
 import org.anchoranalysis.gui.videostats.dropdown.contextualmodulecreator.SingleContextualModuleCreator;
 import org.anchoranalysis.gui.videostats.operation.VideoStatsOperationMenu;
 import org.anchoranalysis.image.objmask.ObjMaskCollection;
-import org.anchoranalysis.io.manifest.CoupledManifests;
 import org.anchoranalysis.io.manifest.deserializer.folder.LoadContainer;
 import org.anchoranalysis.io.manifest.finder.FinderSerializedObject;
+import org.anchoranalysis.plugin.io.manifest.CoupledManifests;
 
 import ch.ethz.biol.cell.mpp.cfg.Cfg;
 import ch.ethz.biol.cell.mpp.instantstate.CfgNRGInstantState;

@@ -36,10 +36,9 @@ import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.gui.bean.filecreator.ExecutedExperimentFileCreator;
 import org.anchoranalysis.gui.bean.filecreator.FileCreator;
 import org.anchoranalysis.gui.interactivebrowser.openfile.importer.ImporterSettings;
-import org.anchoranalysis.io.bean.provider.file.FileList;
+import org.anchoranalysis.io.bean.provider.file.SpecificPathList;
+import org.anchoranalysis.plugin.io.bean.input.manifest.CoupledManifestsInputManager;
 import org.apache.commons.io.FilenameUtils;
-
-import ch.ethz.biol.cell.imageprocessing.io.inputmanager.CoupledManifestsInputManager;
 
 public class Manifest extends OpenFileType {
 
@@ -71,8 +70,8 @@ public class Manifest extends OpenFileType {
 			creator.setCustomName( "experiment: multiple" );
 		}
 		
-		FileList fileListExp = new FileList();
-		FileList fileListInput = new FileList();
+		SpecificPathList fileListExp = new SpecificPathList();
+		SpecificPathList fileListInput = new SpecificPathList();
 		
 		for( File f : files) {
 			if (f.getName().equals("manifestExperiment.ser")) {

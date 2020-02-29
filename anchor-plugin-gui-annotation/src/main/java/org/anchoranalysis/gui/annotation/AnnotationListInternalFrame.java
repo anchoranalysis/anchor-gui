@@ -52,8 +52,9 @@ import org.anchoranalysis.gui.interactivebrowser.IOpenFile;
 import org.anchoranalysis.gui.interactivebrowser.filelist.InteractiveFileListInternalFrame;
 import org.anchoranalysis.gui.videostats.IModuleCreatorDefaultState;
 import org.anchoranalysis.gui.videostats.dropdown.IAddVideoStatsModule;
-import org.anchoranalysis.image.io.input.StackInputBase;
-import org.anchoranalysis.io.deserializer.DeserializationFailedException;
+import org.anchoranalysis.image.io.input.ProvidesStackInput;
+import org.anchoranalysis.io.bean.input.InputManagerParams;
+import org.anchoranalysis.io.error.AnchorIOException;
 
 public class AnnotationListInternalFrame {
 
@@ -78,7 +79,7 @@ public class AnnotationListInternalFrame {
 	 * @throws InitException
 	 */
 	public <T extends AnnotatorStrategy> void init(
-		final AnnotationInputManager<StackInputBase,T> inputManager,
+		final AnnotationInputManager<ProvidesStackInput,T> inputManager,
 		IAddVideoStatsModule adder,
 		IOpenFile fileOpenManager,
 		MarkCreatorParams params,
@@ -91,8 +92,11 @@ public class AnnotationListInternalFrame {
 			public AnnotationProject doOperation( ProgressReporter progressReporter ) throws ExecuteException {
 				try {
 					Collection<AnnotationWithStrategy<T>> inputObjs = inputManager.inputObjects(
-						params.getModuleParams().createInputContext(),
-						progressReporter
+						new InputManagerParams(
+							params.getModuleParams().createInputContext(),
+							progressReporter,
+							params.getModuleParams().getLogErrorReporter()
+						)
 					); 
 					
 					AnnotationProject ap = new AnnotationProject(
@@ -104,7 +108,7 @@ public class AnnotationListInternalFrame {
 					
 					return ap;
 					
-				} catch (IOException | DeserializationFailedException | CreateException e) {
+				} catch (AnchorIOException | IOException | CreateException e) {
 					throw new ExecuteException(e);
 				}
 			}

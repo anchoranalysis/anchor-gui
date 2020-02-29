@@ -38,8 +38,8 @@ import org.anchoranalysis.gui.bean.exporttask.ExportTaskFailedException;
 import org.anchoranalysis.gui.bean.exporttask.ExportTaskParams;
 import org.anchoranalysis.io.generator.sequence.IGeneratorSequenceNonIncremental;
 import org.anchoranalysis.io.manifest.sequencetype.IncrementalSequenceType;
-import org.anchoranalysis.io.output.OutputWriteFailedException;
 import org.anchoranalysis.io.output.bound.BoundOutputManagerRouteErrors;
+import org.anchoranalysis.io.output.error.OutputWriteFailedException;
 
 /**
  * 

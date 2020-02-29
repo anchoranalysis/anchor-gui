@@ -51,9 +51,9 @@ import org.anchoranalysis.image.extent.IncorrectImageSizeException;
 import org.anchoranalysis.image.stack.DisplayStack;
 import org.anchoranalysis.image.stack.Stack;
 import org.anchoranalysis.image.stack.TimeSequence;
-import org.anchoranalysis.image.voxel.datatype.VoxelDataTypeByte;
-import org.anchoranalysis.io.bean.output.OutputWriteSettings;
+import org.anchoranalysis.image.voxel.datatype.VoxelDataTypeUnsignedByte;
 import org.anchoranalysis.io.manifest.deserializer.folder.LoadContainer;
+import org.anchoranalysis.io.output.bean.OutputWriteSettings;
 
 public class BackgroundSetFactory {
 
@@ -205,7 +205,7 @@ public class BackgroundSetFactory {
 		try {
 			Stack stack = new Stack();
 			stack.addChnl(
-				ChnlFactory.instance().createEmptyInitialised(sd, VoxelDataTypeByte.instance )
+				ChnlFactory.instance().createEmptyInitialised(sd, VoxelDataTypeUnsignedByte.instance )
 			);
 			return stack;
 		} catch (IncorrectImageSizeException e) {

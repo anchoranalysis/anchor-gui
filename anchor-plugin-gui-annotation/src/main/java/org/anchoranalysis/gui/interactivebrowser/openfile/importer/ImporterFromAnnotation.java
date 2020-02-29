@@ -32,7 +32,7 @@ import org.anchoranalysis.annotation.io.bean.input.AnnotationInputManager;
 import org.anchoranalysis.annotation.io.bean.strategy.AnnotatorStrategy;
 import org.anchoranalysis.gui.bean.filecreator.AnnotationCreator;
 import org.anchoranalysis.gui.bean.filecreator.FileCreator;
-import org.anchoranalysis.image.io.input.StackInputBase;
+import org.anchoranalysis.image.io.input.ProvidesStackInput;
 
 public class ImporterFromAnnotation extends ImporterFromBean {
 
@@ -49,12 +49,12 @@ public class ImporterFromAnnotation extends ImporterFromBean {
 	@SuppressWarnings("unchecked")
 	@Override
 	public FileCreator create(Object bean, File file) {
-		return createAnnotation( (AnnotationInputManager<StackInputBase,AnnotatorStrategy>) bean, file);
+		return createAnnotation( (AnnotationInputManager<ProvidesStackInput,AnnotatorStrategy>) bean, file);
 	}
 	
 
 	// For now we assume we are always dealing with NamedChnlCollectionInputObject
-	private static FileCreator createAnnotation( AnnotationInputManager<StackInputBase,?> inputManager, File f) {
+	private static FileCreator createAnnotation( AnnotationInputManager<ProvidesStackInput,?> inputManager, File f) {
 		return CreatorFactory.create(
 			new AnnotationCreator( inputManager.getAnnotatorStrategy().weightWidthDescription() ),				
 			inputManager,

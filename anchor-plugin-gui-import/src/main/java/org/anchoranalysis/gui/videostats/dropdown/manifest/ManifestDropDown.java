@@ -66,11 +66,11 @@ import org.anchoranalysis.gui.videostats.dropdown.modulecreator.graph.KernelIter
 import org.anchoranalysis.image.io.bean.rasterreader.RasterReader;
 import org.anchoranalysis.image.stack.Stack;
 import org.anchoranalysis.image.stack.wrap.WrapStackAsTimeSequence;
-import org.anchoranalysis.io.manifest.CoupledManifests;
 import org.anchoranalysis.io.manifest.deserializer.folder.LoadContainer;
 import org.anchoranalysis.io.manifest.finder.FinderSerializedObject;
 import org.anchoranalysis.io.output.bound.BoundOutputManagerRouteErrors;
 import org.anchoranalysis.mpp.sgmn.bean.kernel.proposer.KernelProposer;
+import org.anchoranalysis.plugin.io.manifest.CoupledManifests;
 
 import ch.ethz.biol.cell.mpp.cfg.Cfg;
 import ch.ethz.biol.cell.mpp.instantstate.CfgNRGInstantState;

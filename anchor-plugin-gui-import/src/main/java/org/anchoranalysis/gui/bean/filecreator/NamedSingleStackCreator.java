@@ -27,7 +27,6 @@ package org.anchoranalysis.gui.bean.filecreator;
  */
 
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Iterator;
 import java.util.List;
@@ -37,9 +36,10 @@ import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.progress.ProgressReporter;
 import org.anchoranalysis.gui.file.interactive.FileSingleStack;
 import org.anchoranalysis.gui.file.interactive.InteractiveFile;
-import org.anchoranalysis.image.io.input.StackInputBase;
+import org.anchoranalysis.image.io.input.ProvidesStackInput;
 import org.anchoranalysis.io.bean.input.InputManager;
-import org.anchoranalysis.io.deserializer.DeserializationFailedException;
+import org.anchoranalysis.io.bean.input.InputManagerParams;
+import org.anchoranalysis.io.error.AnchorIOException;
 
 // A named channel collection derived from a file
 public class NamedSingleStackCreator extends FileCreatorGeneralList {
@@ -51,7 +51,7 @@ public class NamedSingleStackCreator extends FileCreatorGeneralList {
 
 	// START BEAN PROPERTIES
 	@BeanField
-	private InputManager<? extends StackInputBase> input;
+	private InputManager<? extends ProvidesStackInput> input;
 	// END BEAN PROPERTIES
 	
 	@Override
@@ -60,14 +60,17 @@ public class NamedSingleStackCreator extends FileCreatorGeneralList {
 
 		try {
 
-			Iterator<? extends StackInputBase> itr = input.inputObjects(
-				params.createInputContext(),
-				progressReporter
+			Iterator<? extends ProvidesStackInput> itr = input.inputObjects(
+				new InputManagerParams(
+					params.createInputContext(),
+					progressReporter,
+					params.getLogErrorReporter()
+				)
 			).iterator();
 			
 			while ( itr.hasNext() ) {
 			
-				StackInputBase obj = itr.next();	
+				ProvidesStackInput obj = itr.next();	
 				
 				FileSingleStack file = new FileSingleStack(
 					obj,
@@ -77,11 +80,7 @@ public class NamedSingleStackCreator extends FileCreatorGeneralList {
 
 			}
 			
-		} catch (FileNotFoundException e) {
-			throw new CreateException(e);
-		} catch (IOException e) {
-			throw new CreateException(e);
-		} catch (DeserializationFailedException e) {
+		} catch (AnchorIOException | IOException e) {
 			throw new CreateException(e);
 		}
 	}
@@ -96,11 +95,11 @@ public class NamedSingleStackCreator extends FileCreatorGeneralList {
 		return "untitled raster set";
 	}
 
-	public InputManager<? extends StackInputBase> getInput() {
+	public InputManager<? extends ProvidesStackInput> getInput() {
 		return input;
 	}
 
-	public void setInput(InputManager<? extends StackInputBase> input) {
+	public void setInput(InputManager<? extends ProvidesStackInput> input) {
 		this.input = input;
 	}
 }

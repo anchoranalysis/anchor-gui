@@ -48,7 +48,7 @@ import org.anchoranalysis.gui.videostats.internalframe.annotator.AnnotationInitP
 import org.anchoranalysis.gui.videostats.internalframe.annotator.InternalFrameAnnotator;
 import org.anchoranalysis.gui.videostats.module.VideoStatsModuleCreateException;
 import org.anchoranalysis.gui.videostats.modulecreator.VideoStatsModuleCreator;
-import org.anchoranalysis.io.bean.output.OutputWriteSettings;
+import org.anchoranalysis.io.output.bean.OutputWriteSettings;
 
 public class AnnotatorModuleCreator<T extends AnnotationInitParams> extends VideoStatsModuleCreator {
 	

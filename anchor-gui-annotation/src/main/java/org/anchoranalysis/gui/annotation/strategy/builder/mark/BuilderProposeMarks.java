@@ -26,7 +26,6 @@ package org.anchoranalysis.gui.annotation.strategy.builder.mark;
  * #L%
  */
 
-import java.io.IOException;
 import java.nio.file.Path;
 
 import org.anchoranalysis.annotation.io.input.AnnotationWithStrategy;
@@ -51,6 +50,7 @@ import org.anchoranalysis.gui.videostats.internalframe.annotator.AnnotationFrame
 import org.anchoranalysis.gui.videostats.internalframe.annotator.AnnotationPanelParams;
 import org.anchoranalysis.gui.videostats.internalframe.annotator.navigation.PanelNavigation;
 import org.anchoranalysis.gui.videostats.module.VideoStatsModuleCreateException;
+import org.anchoranalysis.io.error.AnchorIOException;
 
 public class BuilderProposeMarks extends AnnotationGuiBuilderWithDelegate<InitParamsProposeMarks,MarkProposerStrategy> {
 
@@ -58,12 +58,12 @@ public class BuilderProposeMarks extends AnnotationGuiBuilderWithDelegate<InitPa
 		
 	private OpenAnnotationMPP openAnnotation;
 
-	public BuilderProposeMarks(AnnotationWithStrategy<MarkProposerStrategy> delegate) throws IOException {
+	public BuilderProposeMarks(AnnotationWithStrategy<MarkProposerStrategy> delegate) throws AnchorIOException {
 		super(delegate);
 		this.openAnnotation = createOpenAnnotation();
 	}
 	
-	private OpenAnnotationMPP createOpenAnnotation() throws IOException {
+	private OpenAnnotationMPP createOpenAnnotation() throws AnchorIOException {
 		Path cfgPath = new GenerathorPathRslvr(pathForBinding()).pathOrNull(
 			getStrategy().getDefaultCfgFilePathGenerator()
 		); 

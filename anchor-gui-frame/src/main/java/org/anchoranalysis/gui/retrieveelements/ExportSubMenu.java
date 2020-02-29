@@ -47,8 +47,8 @@ import org.anchoranalysis.io.generator.OperationGenerator;
 import org.anchoranalysis.io.manifest.ManifestDescription;
 import org.anchoranalysis.io.manifest.ManifestFolderDescription;
 import org.anchoranalysis.io.manifest.sequencetype.IncrementalSequenceType;
+import org.anchoranalysis.io.namestyle.IntegerSuffixOutputNameStyle;
 import org.anchoranalysis.io.output.bound.BoundOutputManagerRouteErrors;
-import org.anchoranalysis.io.output.namestyle.IntegerSuffixOutputNameStyle;
 
 public class ExportSubMenu implements IAddToExportSubMenu {
 

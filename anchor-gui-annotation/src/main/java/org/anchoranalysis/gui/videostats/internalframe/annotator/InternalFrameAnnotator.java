@@ -47,7 +47,7 @@ import org.anchoranalysis.gui.videostats.dropdown.VideoStatsModuleGlobalParams;
 import org.anchoranalysis.gui.videostats.internalframe.annotator.navigation.PanelNavigation;
 import org.anchoranalysis.gui.videostats.internalframe.annotator.tool.ToolErrorReporter;
 import org.anchoranalysis.gui.videostats.module.DefaultModuleState;
-import org.anchoranalysis.io.bean.output.OutputWriteSettings;
+import org.anchoranalysis.io.output.bean.OutputWriteSettings;
 
 public class InternalFrameAnnotator {
 

@@ -31,7 +31,7 @@ import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.index.SetOperationFailedException;
 import org.anchoranalysis.image.stack.DisplayStack;
 import org.anchoranalysis.io.generator.IterableObjectGenerator;
-import org.anchoranalysis.io.output.OutputWriteFailedException;
+import org.anchoranalysis.io.output.error.OutputWriteFailedException;
 
 import ch.ethz.biol.cell.gui.image.provider.DisplayUpdate;
 import ch.ethz.biol.cell.gui.image.provider.BoundOverlayedDisplayStack;
