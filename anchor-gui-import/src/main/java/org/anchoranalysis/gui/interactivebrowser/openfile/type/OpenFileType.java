@@ -63,7 +63,7 @@ public abstract class OpenFileType extends AnchorBean<OpenFileType> {
 	}
 	
 	protected static SpecificPathList createFileList( List<File> files ) {
-		SpecificPathList out = new SpecificPathList();
+		SpecificPathList out = SpecificPathList.createWithEmptyList();
 		
 		for( File f : files) {
 			out.getListPaths().add( f.getPath() );
@@ -72,7 +72,7 @@ public abstract class OpenFileType extends AnchorBean<OpenFileType> {
 	}
 	
 	protected static SpecificPathList createFileList( File f ) {
-		SpecificPathList out = new SpecificPathList();
+		SpecificPathList out = SpecificPathList.createWithEmptyList();
 		out.getListPaths().add(f.getPath());
 		return out;
 	}

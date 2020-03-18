@@ -113,14 +113,13 @@ public class MarkDisplaySettings {
 		return edgeSelectableWriter;
 	}
 	
-	// We don't bother with an ObjMaskListWriter if there's a single item - to avoid minor overhead
 	private static ObjMaskWriter createWriterFromList( List<ObjMaskWriter> writerList ) {
 		
 		if (writerList.size()==0) {
 			return null;
 		}
 		
-		return writerList.size() > 1 ? new ObjMaskListWriter(writerList) : writerList.get(0);
+		return new ObjMaskListWriter(writerList);
 	}
 			
 	private void addShowInside( List<ObjMaskWriter> insideList, IfElseWriter.Condition conditionSelected, int borderSize ) {
