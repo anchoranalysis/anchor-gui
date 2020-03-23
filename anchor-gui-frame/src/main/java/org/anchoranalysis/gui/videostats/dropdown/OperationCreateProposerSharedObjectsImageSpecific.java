@@ -1,5 +1,7 @@
 package org.anchoranalysis.gui.videostats.dropdown;
 
+
+
 /*
  * #%L
  * anchor-gui
@@ -31,6 +33,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.anchoranalysis.anchor.mpp.bean.init.GeneralInitParams;
 import org.anchoranalysis.anchor.mpp.bean.init.MPPInitParams;
 import org.anchoranalysis.bean.AnchorBean;
 import org.anchoranalysis.bean.NamedBean;
@@ -40,13 +43,11 @@ import org.anchoranalysis.core.cache.ExecuteException;
 import org.anchoranalysis.core.cache.Operation;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.OperationFailedException;
-import org.anchoranalysis.core.log.LogErrorReporter;
 import org.anchoranalysis.core.name.provider.INamedProvider;
 import org.anchoranalysis.core.name.store.SharedObjects;
 import org.anchoranalysis.core.params.KeyValueParams;
 import org.anchoranalysis.core.progress.OperationWithProgressReporter;
 import org.anchoranalysis.core.progress.ProgressReporterNull;
-import org.anchoranalysis.core.random.RandomNumberGenerator;
 import org.anchoranalysis.image.bean.provider.stack.StackProvider;
 import org.anchoranalysis.image.init.ImageInitParams;
 import org.anchoranalysis.image.stack.Stack;
@@ -55,22 +56,21 @@ public class OperationCreateProposerSharedObjectsImageSpecific extends CachedOpe
 
 	private OperationWithProgressReporter<INamedProvider<Stack>> namedImgStackCollection;
 	private Operation<KeyValueParams> keyParams;
-	private LogErrorReporter logErrorReporter;
+	
 	private Define namedDefinitions;
-	private RandomNumberGenerator re;
+	
+	private GeneralInitParams paramsGeneral;
 	
 	public OperationCreateProposerSharedObjectsImageSpecific(
 			OperationWithProgressReporter<INamedProvider<Stack>> namedImgStackCollection,
 			Operation<KeyValueParams> keyParams,
-			LogErrorReporter logErrorReporter,
 			Define namedDefinitions,
-			RandomNumberGenerator re
+			GeneralInitParams paramsGeneral
 			) {
 		super();
 		this.namedImgStackCollection = namedImgStackCollection;
-		this.logErrorReporter = logErrorReporter;
+		this.paramsGeneral = paramsGeneral;
 		this.namedDefinitions = namedDefinitions;
-		this.re = re;
 		this.keyParams = keyParams;
 	}
 
@@ -87,7 +87,7 @@ public class OperationCreateProposerSharedObjectsImageSpecific extends CachedOpe
 			try {
 				out.addAll( namedImgStackCollection.doOperation( ProgressReporterNull.get() ).keys() );
 			} catch (ExecuteException e) {
-				logErrorReporter.getErrorReporter().recordError(OperationCreateProposerSharedObjectsImageSpecific.class, e);
+				paramsGeneral.getLogErrorReporter().getErrorReporter().recordError(OperationCreateProposerSharedObjectsImageSpecific.class, e);
 			}
 			return out;
 		}
@@ -98,9 +98,13 @@ public class OperationCreateProposerSharedObjectsImageSpecific extends CachedOpe
 
 		// We initialise the markEvaluator
 		try {
-			SharedObjects so = new SharedObjects( logErrorReporter );			
+			SharedObjects so = new SharedObjects( paramsGeneral.getLogErrorReporter() );			
 			
-			MPPInitParams soMPP = MPPInitParams.create(so, namedDefinitions, logErrorReporter, re);
+			MPPInitParams soMPP = MPPInitParams.create(
+				so,
+				namedDefinitions,
+				paramsGeneral
+			);
 			ImageInitParams soImage = soMPP.getImage();
 			
 			soImage.copyStackCollectionFrom( namedImgStackCollection.doOperation( ProgressReporterNull.get() ) );

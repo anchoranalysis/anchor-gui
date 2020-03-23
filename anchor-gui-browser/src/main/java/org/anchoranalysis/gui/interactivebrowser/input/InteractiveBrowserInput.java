@@ -40,7 +40,6 @@ import org.anchoranalysis.core.error.reporter.ErrorReporter;
 import org.anchoranalysis.core.log.LogErrorReporter;
 import org.anchoranalysis.core.name.store.SharedObjects;
 import org.anchoranalysis.core.params.KeyValueParams;
-import org.anchoranalysis.core.random.RandomNumberGenerator;
 import org.anchoranalysis.feature.bean.list.FeatureListProvider;
 import org.anchoranalysis.feature.shared.SharedFeaturesInitParams;
 import org.anchoranalysis.gui.bean.filecreator.FileCreator;
@@ -67,8 +66,7 @@ public class InteractiveBrowserInput implements InputFromManager {
 	
 	public FeatureListSrc createFeatureListSrc(
 		BoundOutputManagerRouteErrors outputManager,
-		LogErrorReporter logErrorReporter,
-		RandomNumberGenerator re
+		LogErrorReporter logErrorReporter
 	) throws CreateException {
 		
 		SharedObjects so = new SharedObjects( logErrorReporter );

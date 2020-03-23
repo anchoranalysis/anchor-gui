@@ -37,6 +37,7 @@ import org.anchoranalysis.image.extent.BoundingBox;
 import org.anchoranalysis.image.extent.Extent;
 import org.anchoranalysis.image.extent.ImageDim;
 import org.anchoranalysis.image.extent.ImageRes;
+import org.anchoranalysis.image.scale.ScaleFactor;
 import org.anchoranalysis.image.voxel.datatype.VoxelDataType;
 
 import ch.ethz.biol.cell.gui.image.provider.BoundOverlayedDisplayStack;
@@ -65,7 +66,9 @@ class DisplayStackViewportZoomed {
 	// The bounding box should refer to the Scaled space
 	public BufferedImage updateView(BoundingBox bbox) throws OperationFailedException {
 		BoundingBox bboxScaled = new BoundingBox(bbox);
-		bboxScaled.scaleXYPosAndExtnt( zoomScale.getScaleInv(), zoomScale.getScaleInv() );
+		bboxScaled.scaleXYPosAndExtnt(
+			new ScaleFactor(zoomScale.getScaleInv())
+		);
 		
 		// Scaling seemingly can produce a bbox that is slightly too-big
 		bboxScaled.clipTo( delegate.getDisplayStackEntireImage().getDimensions().getExtnt() );
@@ -79,7 +82,9 @@ class DisplayStackViewportZoomed {
 		Extent canvasExtntImg = zoomScale.removeScale(canvasExtnt);
 		
 		BoundingBox shiftedBox = delegate.createBoxForShiftedView(shiftImg, canvasExtntImg);
-		shiftedBox.scaleXYPosAndExtnt(zoomScale.getScale(), zoomScale.getScale() );
+		shiftedBox.scaleXYPosAndExtnt(
+			new ScaleFactor(zoomScale.getScale())
+		);
 		
 		assert( shiftedBox.getCrnrMin().getX() >= 0 );
 		assert( shiftedBox.getCrnrMin().getY() >= 0 );
@@ -133,7 +138,9 @@ class DisplayStackViewportZoomed {
 	
 	public ImageDim createDimensionsEntireScaled() {
 		ImageDim sd = new ImageDim( getDimensionsEntire() );
-		sd.scaleXYBy( zoomScale.getScale(), zoomScale.getScale() );
+		sd.scaleXYBy(
+			new ScaleFactor(zoomScale.getScale())
+		);
 		return sd;
 	}
 
@@ -163,7 +170,6 @@ class DisplayStackViewportZoomed {
 		return crnrPnt;
 	}
 	
-	// 
 	public Point2i calcNewCrnrPosAfterChangeInZoom(Extent canvasExtntOld, ZoomScale zoomScaleOld,
 			Extent canvasExtntNew, Point2i scrollValImage) {
 		

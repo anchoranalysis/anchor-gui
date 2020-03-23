@@ -1,5 +1,7 @@
 package org.anchoranalysis.gui.interactivebrowser.launch;
 
+import org.anchoranalysis.anchor.mpp.bean.init.GeneralInitParams;
+
 /*
  * #%L
  * anchor-gui
@@ -63,7 +65,10 @@ public class InteractiveBrowserTask extends TaskWithoutSharedState<InteractiveBr
 		try {
 			InteractiveBrowser browser = new InteractiveBrowser(
 				params.getOutputManager(),
-				params.getLogErrorReporter(),
+				new GeneralInitParams(
+					params.getExperimentArguments().getModelDirectory(),
+					params.getLogErrorReporter()
+				),
 				getExportTaskList()
 			);
 			browser.init( params.getInputObject() );

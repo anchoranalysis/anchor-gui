@@ -1,5 +1,7 @@
 package org.anchoranalysis.gui.interactivebrowser.browser;
 
+
+
 /*-
  * #%L
  * anchor-gui-browser
@@ -28,15 +30,13 @@ package org.anchoranalysis.gui.interactivebrowser.browser;
 
 import java.util.List;
 
+import org.anchoranalysis.anchor.mpp.bean.init.GeneralInitParams;
 import org.anchoranalysis.bean.NamedBean;
 import org.anchoranalysis.core.cache.CacheMonitor;
 import org.anchoranalysis.core.color.ColorIndex;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.error.OperationFailedException;
-import org.anchoranalysis.core.log.LogErrorReporter;
-import org.anchoranalysis.core.random.RandomNumberGenerator;
-import org.anchoranalysis.core.random.RandomNumberGeneratorMersenneConstant;
 import org.anchoranalysis.gui.bean.filecreator.FileCreator;
 import org.anchoranalysis.gui.bean.mpp.MarkEvaluator;
 import org.anchoranalysis.gui.feature.evaluator.treetable.FeatureListSrc;
@@ -71,14 +71,10 @@ public class InteractiveBrowser {
 	
 	private ExportTaskList exportTaskList;
 	
-	private LogErrorReporter logErrorReporter;
-	
 	// How long the splash screen displays for
 	private int SplashScreenTime = 2000;
 	
 	private CacheMonitor cacheMonitor = new CacheMonitor();
-	
-	private RandomNumberGenerator re = new RandomNumberGeneratorMersenneConstant();
 	
 	// Manages the available mark evaluators
 	private MarkEvaluatorManager markEvaluatorManager;
@@ -87,11 +83,13 @@ public class InteractiveBrowser {
 	
 	private OpenFileTypeFactory openFileTypeFactory;
 	
-	public InteractiveBrowser(BoundOutputManagerRouteErrors outputManager, LogErrorReporter logErrorReporter, ExportTaskList exportTaskList ) {
+	private GeneralInitParams paramsGeneral;
+	
+	public InteractiveBrowser(BoundOutputManagerRouteErrors outputManager, GeneralInitParams paramsGeneral, ExportTaskList exportTaskList ) {
 		super();
 		this.outputManager = outputManager;
 		this.exportTaskList = exportTaskList;
-		this.logErrorReporter = logErrorReporter;
+		this.paramsGeneral = paramsGeneral;
 	}
 	
 	public void init(
@@ -115,7 +113,7 @@ public class InteractiveBrowser {
 		
 			VideoStatsModuleGlobalParams moduleParams = createModuleParams(popUpParams, colorIndex);
 			
-			markEvaluatorManager = new MarkEvaluatorManager( logErrorReporter, re );
+			markEvaluatorManager = new MarkEvaluatorManager(paramsGeneral);
 			
 			if (interactiveBrowserInput.getNamedItemMarkEvaluatorList()!=null) {
 				for( NamedBean<MarkEvaluator> ni : interactiveBrowserInput.getNamedItemMarkEvaluatorList()) {
@@ -150,8 +148,7 @@ public class InteractiveBrowser {
 	) throws CreateException, InitException {
 		FeatureListSrc featureListSrc = interactiveBrowserInput.createFeatureListSrc(
 			outputManager,
-			logErrorReporter,
-			re
+			paramsGeneral.getLogErrorReporter()
 		); 
 		
 		AdderWithNrg adderWithNrg = new AdderWithNrg(
@@ -167,7 +164,12 @@ public class InteractiveBrowser {
 			interactiveBrowserInput.getImporterSettings()
 		);
 		
-		openFileCreator = new OpenFile(videoStatsFrame, fileCreatorLoader, openFileTypeFactory, logErrorReporter);
+		openFileCreator = new OpenFile(
+			videoStatsFrame,
+			fileCreatorLoader,
+			openFileTypeFactory,
+			paramsGeneral.getLogErrorReporter()
+		);
 		videoStatsFrame.getListFileActions().add( openFileCreator );
 					
 		
@@ -200,7 +202,7 @@ public class InteractiveBrowser {
 		videoStatsFrame.getToolbar().add( openFileCreator);
 		videoStatsFrame.getToolbar().addSeparator();
 		
-		videoStatsFrame.initBeforeAddingFrames( logErrorReporter.getErrorReporter() );
+		videoStatsFrame.initBeforeAddingFrames( paramsGeneral.getErrorReporter() );
 		
 		videoStatsFrame.getToolbar().addSeparator();
 		
@@ -221,14 +223,21 @@ public class InteractiveBrowser {
 		fileCreatorLoader.addFileListSummaryModule( fileCreators, videoStatsFrame );
 		
 		videoStatsFrame.setDropTarget(
-			new CustomDropTarget(openFileCreator, videoStatsFrame, fileCreatorLoader.getImporterSettings(), logErrorReporter.getErrorReporter() )
+			new CustomDropTarget(
+				openFileCreator,
+				videoStatsFrame,
+				fileCreatorLoader.getImporterSettings(),
+				paramsGeneral.getErrorReporter()
+			)
 		);
 		
 	}
 
 	private ExportPopupParams createExportPopupParams() {
 		SequenceMemory sequenceMemory = new SequenceMemory();
-		final ExportPopupParams popUpParams = new ExportPopupParams(logErrorReporter.getErrorReporter());
+		ExportPopupParams popUpParams = new ExportPopupParams(
+			paramsGeneral.getErrorReporter()
+		);
 		assert( outputManager!= null );
 		popUpParams.setOutputManager( outputManager );
 		popUpParams.setParentFrame( videoStatsFrame );
@@ -240,9 +249,9 @@ public class InteractiveBrowser {
 	private VideoStatsModuleGlobalParams createModuleParams( ExportPopupParams popUpParams, ColorIndex colorIndex ) {
 		VideoStatsModuleGlobalParams moduleParams = new VideoStatsModuleGlobalParams();
 		moduleParams.setExportPopupParams(popUpParams);
-		moduleParams.setLogErrorReporter(logErrorReporter);
+		moduleParams.setLogErrorReporter( paramsGeneral.getLogErrorReporter() );
 		moduleParams.setThreadPool(videoStatsFrame.getThreadPool());
-		moduleParams.setRandomNumberGenerator(re);
+		moduleParams.setRandomNumberGenerator( paramsGeneral.getRe() );
 		moduleParams.setExportTaskList(exportTaskList);
 		moduleParams.setDefaultColorIndexForMarks(colorIndex);
 		moduleParams.setGraphicsCurrentScreen( videoStatsFrame.getGraphicsConfiguration() );
@@ -263,7 +272,7 @@ public class InteractiveBrowser {
 			"/appSplash/anchor_splash.png",
 			videoStatsFrame,
 			SplashScreenTime,
-			logErrorReporter.getErrorReporter()
+			paramsGeneral.getErrorReporter()
 		);
 	}
 }
