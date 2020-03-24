@@ -27,7 +27,6 @@ package org.anchoranalysis.gui.videostats.dropdown.common;
  */
 
 import org.anchoranalysis.core.cache.ExecuteException;
-import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.name.provider.INamedProvider;
@@ -56,7 +55,7 @@ public class GuessNRGStackFromStacks implements OperationWithProgressReporter<NR
 			
 			return new NRGStackWithParams(stack);
 			
-		} catch (CreateException | OperationFailedException e) {
+		} catch (OperationFailedException e) {
 			throw new ExecuteException(e);
 		}
 	}
