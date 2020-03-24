@@ -106,6 +106,10 @@ public class InteractiveBrowser {
 	
 		setup( interactiveBrowserInput );
 	}
+		
+	public void showWithDefaultView() {
+		videoStatsFrame.showWithDefaultView();
+	}
 	
 	private void setup( InteractiveBrowserInput interactiveBrowserInput ) throws InitException {
 		SubgrouppedAdder globalSubgroupAdder = new SubgrouppedAdder(videoStatsFrame,new DefaultModuleState());
@@ -200,10 +204,6 @@ public class InteractiveBrowser {
 			importerSettings,
 			videoStatsFrame.getLastMarkDisplaySettings()
 		);
-	}
-	
-	public void showWithDefaultView() {
-		videoStatsFrame.showWithDefaultView();
 	}
 	
 	private void addGUIComponentsInner( AdderWithNrg adderNrg, FileCreatorLoader fileCreatorLoader, FileOpenManager fileOpenManager, List<FileCreator> fileCreators ) throws InitException {
