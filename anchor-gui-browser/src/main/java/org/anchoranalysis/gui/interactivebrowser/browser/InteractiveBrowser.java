@@ -96,47 +96,50 @@ public class InteractiveBrowser {
 		InteractiveBrowserInput interactiveBrowserInput
 	) throws InitException {
 		
-		try {
-			videoStatsFrame = new VideoStatsFrame( "Interactive Browser" );
+		videoStatsFrame = new VideoStatsFrame( "Interactive Browser" );
 
-			openFileTypeFactory = new OpenFileTypeFactory(
-				interactiveBrowserInput.getImporterSettings().getOpenFileImporters()
-			);
-			
-			displaySplashScreen();
+		openFileTypeFactory = new OpenFileTypeFactory(
+			interactiveBrowserInput.getImporterSettings().getOpenFileImporters()
+		);
 		
-			final ExportPopupParams popUpParams = createExportPopupParams();
-			final SubgrouppedAdder globalSubgroupAdder = new SubgrouppedAdder(videoStatsFrame,new DefaultModuleState());
-			
-			ColorIndex colorIndex = createColorIndex();
-						
+		displaySplashScreen();
+	
+		setup( interactiveBrowserInput );
+	}
+	
+	private void setup( InteractiveBrowserInput interactiveBrowserInput ) throws InitException {
+		SubgrouppedAdder globalSubgroupAdder = new SubgrouppedAdder(videoStatsFrame,new DefaultModuleState());
 		
-			VideoStatsModuleGlobalParams moduleParams = createModuleParams(popUpParams, colorIndex);
-			
-			markEvaluatorManager = new MarkEvaluatorManager(paramsGeneral);
-			
-			if (interactiveBrowserInput.getNamedItemMarkEvaluatorList()!=null) {
-				for( NamedBean<MarkEvaluator> ni : interactiveBrowserInput.getNamedItemMarkEvaluatorList()) {
-					markEvaluatorManager.add(ni.getName(), ni.getValue());;
-				}
+		VideoStatsModuleGlobalParams moduleParams = createModuleParams(
+			createExportPopupParams(),
+			createColorIndex()
+		);
+		
+		initMarkEvaluatorManager(interactiveBrowserInput);
+		
+		addGUIComponents(
+			interactiveBrowserInput,
+			moduleParams,
+			globalSubgroupAdder,
+			createFileOpenManager(globalSubgroupAdder)
+		);
+	}
+	
+	private FileOpenManager createFileOpenManager( SubgrouppedAdder globalSubgroupAdder ) {
+		return new FileOpenManager(
+			globalSubgroupAdder,
+			videoStatsFrame,
+			outputManager
+		);
+	}
+	
+	private void initMarkEvaluatorManager( InteractiveBrowserInput interactiveBrowserInput ) {
+		markEvaluatorManager = new MarkEvaluatorManager(paramsGeneral);
+		
+		if (interactiveBrowserInput.getNamedItemMarkEvaluatorList()!=null) {
+			for( NamedBean<MarkEvaluator> ni : interactiveBrowserInput.getNamedItemMarkEvaluatorList()) {
+				markEvaluatorManager.add(ni.getName(), ni.getValue());;
 			}
-			
-			
-			final FileOpenManager fileOpenManager = new FileOpenManager(
-				globalSubgroupAdder,
-				videoStatsFrame,
-				outputManager
-			);
-			
-			addGUIComponents(
-				interactiveBrowserInput,
-				moduleParams,
-				globalSubgroupAdder,
-				fileOpenManager
-			);
-			
-		} catch (CreateException e) {
-			throw new InitException(e);
 		}
 	}
 	
@@ -145,11 +148,17 @@ public class InteractiveBrowser {
 		VideoStatsModuleGlobalParams moduleParams,
 		SubgrouppedAdder globalSubgroupAdder,
 		FileOpenManager fileOpenManager
-	) throws CreateException, InitException {
-		FeatureListSrc featureListSrc = interactiveBrowserInput.createFeatureListSrc(
-			outputManager,
-			paramsGeneral.getLogErrorReporter()
-		); 
+	) throws InitException {
+		
+		FeatureListSrc featureListSrc;
+		try {
+			featureListSrc = interactiveBrowserInput.createFeatureListSrc(
+				outputManager,
+				paramsGeneral.getLogErrorReporter()
+			);
+		} catch (CreateException e) {
+			throw new InitException(e);
+		} 
 		
 		AdderWithNrg adderWithNrg = new AdderWithNrg(
 			moduleParams,
