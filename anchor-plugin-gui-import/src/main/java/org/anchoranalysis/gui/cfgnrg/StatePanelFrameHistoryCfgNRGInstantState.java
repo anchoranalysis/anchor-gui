@@ -1,5 +1,6 @@
 package org.anchoranalysis.gui.cfgnrg;
 
+import org.anchoranalysis.anchor.mpp.feature.instantstate.CfgNRGInstantState;
 import org.anchoranalysis.core.error.InitException;
 
 /*
@@ -30,11 +31,9 @@ import org.anchoranalysis.core.error.InitException;
 
 
 import org.anchoranalysis.core.error.reporter.ErrorReporter;
-import org.anchoranalysis.gui.frame.details.canvas.ControllerSize;
+import org.anchoranalysis.gui.image.frame.ControllerSize;
 import org.anchoranalysis.gui.videostats.IModuleCreatorDefaultState;
 import org.anchoranalysis.io.manifest.deserializer.folder.LoadContainer;
-
-import ch.ethz.biol.cell.mpp.instantstate.CfgNRGInstantState;
 
 public class StatePanelFrameHistoryCfgNRGInstantState {
 

@@ -1,5 +1,7 @@
 package org.anchoranalysis.plugin.gui.bean.createrastergenerator.cfgnrginstantstate.dynamically;
 
+import org.anchoranalysis.anchor.mpp.feature.instantstate.CfgNRGInstantState;
+
 /*-
  * #%L
  * anchor-plugin-gui-export
@@ -31,8 +33,6 @@ import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.index.container.IBoundedIndexContainer;
 import org.anchoranalysis.gui.io.loader.manifest.finder.csvstatistic.CSVStatistic;
 import org.anchoranalysis.plugin.gui.bean.exporttask.MappedFrom;
-
-import ch.ethz.biol.cell.mpp.instantstate.CfgNRGInstantState;
 
 /**
  * 1. Finds the nearest (previous or equal) CSVStatistic

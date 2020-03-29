@@ -38,7 +38,7 @@ import org.anchoranalysis.gui.backgroundset.BackgroundSet;
 import org.anchoranalysis.gui.frame.details.canvas.ControllerAction;
 import org.anchoranalysis.gui.frame.details.canvas.controller.imageview.ControllerImageView;
 import org.anchoranalysis.gui.frame.overlays.onrgb.InternalFrameEditableOverlays;
-import org.anchoranalysis.gui.image.frame.canvas.ISliderState;
+import org.anchoranalysis.gui.image.frame.ISliderState;
 import org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.ControllerPopupMenuWithBackground;
 import org.anchoranalysis.gui.propertyvalue.PropertyValueChangeListenerList;
 import org.anchoranalysis.gui.videostats.IModuleCreatorDefaultStateSliderState;

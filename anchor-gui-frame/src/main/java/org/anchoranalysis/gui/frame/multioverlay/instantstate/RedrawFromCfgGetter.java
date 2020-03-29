@@ -34,10 +34,9 @@ import org.anchoranalysis.core.index.IntArray;
 import org.anchoranalysis.core.log.LogErrorReporter;
 import org.anchoranalysis.core.property.change.PropertyValueChangeEvent;
 import org.anchoranalysis.core.property.change.PropertyValueChangeListener;
-
-import anchor.gui.videostats.internalframe.cfgtorgb.IGetOverlayCollection;
-import ch.ethz.biol.cell.imageprocessing.io.generator.raster.OverlayedDisplayStackUpdate;
-import ch.ethz.biol.cell.mpp.gui.videostats.internalframe.cfgtorgb.IRedrawable;
+import org.anchoranalysis.gui.frame.display.IRedrawable;
+import org.anchoranalysis.gui.frame.display.OverlayedDisplayStackUpdate;
+import org.anchoranalysis.gui.frame.display.overlay.IGetOverlayCollection;
 
 /**
  * Triggers redraw updates in response to changes in the currently selected overlay

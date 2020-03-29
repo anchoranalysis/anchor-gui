@@ -1,6 +1,7 @@
 package org.anchoranalysis.gui.videostats.internalframe.annotator.currentstate;
 
 import org.anchoranalysis.anchor.mpp.bean.regionmap.RegionMap;
+import org.anchoranalysis.anchor.mpp.cfg.Cfg;
 import org.anchoranalysis.anchor.mpp.mark.Mark;
 import org.anchoranalysis.anchor.mpp.overlap.OverlapUtilities;
 import org.anchoranalysis.anchor.mpp.pxlmark.memo.PxlMarkMemo;
@@ -38,8 +39,6 @@ import org.anchoranalysis.feature.calc.FeatureCalcException;
 import org.anchoranalysis.feature.nrg.NRGStack;
 import org.anchoranalysis.gui.videostats.internalframe.annotator.tool.ToolErrorReporter;
 import org.anchoranalysis.image.extent.ImageDim;
-
-import ch.ethz.biol.cell.mpp.cfg.Cfg;
 
 
 // Always uses the first region

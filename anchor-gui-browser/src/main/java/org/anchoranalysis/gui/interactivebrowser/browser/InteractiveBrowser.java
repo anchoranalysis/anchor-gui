@@ -31,6 +31,7 @@ package org.anchoranalysis.gui.interactivebrowser.browser;
 import java.util.List;
 
 import org.anchoranalysis.anchor.mpp.bean.init.GeneralInitParams;
+import org.anchoranalysis.anchor.mpp.feature.bean.mark.MarkEvaluator;
 import org.anchoranalysis.bean.NamedBean;
 import org.anchoranalysis.core.cache.CacheMonitor;
 import org.anchoranalysis.core.color.ColorIndex;
@@ -38,7 +39,6 @@ import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.gui.bean.filecreator.FileCreator;
-import org.anchoranalysis.gui.bean.mpp.MarkEvaluator;
 import org.anchoranalysis.gui.feature.evaluator.treetable.FeatureListSrc;
 import org.anchoranalysis.gui.interactivebrowser.FileOpenManager;
 import org.anchoranalysis.gui.interactivebrowser.MarkEvaluatorManager;

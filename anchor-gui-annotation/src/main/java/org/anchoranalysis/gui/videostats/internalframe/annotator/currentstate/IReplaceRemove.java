@@ -28,10 +28,9 @@ package org.anchoranalysis.gui.videostats.internalframe.annotator.currentstate;
 
 import java.util.List;
 
+import org.anchoranalysis.anchor.mpp.cfg.Cfg;
+import org.anchoranalysis.anchor.mpp.cfg.ColoredCfg;
 import org.anchoranalysis.core.geometry.Point3i;
-
-import ch.ethz.biol.cell.mpp.cfg.Cfg;
-import ch.ethz.biol.cell.mpp.gui.videostats.internalframe.markredraw.ColoredCfg;
 
 public interface IReplaceRemove {
 

@@ -28,13 +28,12 @@ package org.anchoranalysis.plugin.gui.bean.graphdefinition.line;
 
 import org.anchoranalysis.anchor.graph.GetForSeries;
 import org.anchoranalysis.anchor.graph.index.LinePlot.YValGetter;
+import org.anchoranalysis.anchor.mpp.feature.nrg.cfg.CfgNRGPixelized;
+import org.anchoranalysis.anchor.mpp.graph.execution.KernelExecutionTime;
 import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.gui.graph.creator.IterAndExecutionTime;
 import org.anchoranalysis.gui.graph.definition.line.GraphDefinitionLineIterVsKernelExecutionTime;
 import org.anchoranalysis.mpp.sgmn.bean.kernel.proposer.KernelProposer;
-
-import ch.ethz.biol.cell.mpp.gui.graph.jfreechart.bar.KernelExecutionTime;
-import ch.ethz.biol.cell.mpp.nrg.CfgNRGPixelized;
 
 public class GraphDefinitionLineIterVsKernelExecutionTimeByKernel extends GraphDefinitionLineIterVsKernelExecutionTime {
 

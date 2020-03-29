@@ -1,5 +1,6 @@
 package org.anchoranalysis.gui.graph.creator;
 
+import org.anchoranalysis.anchor.mpp.feature.instantstate.CfgNRGInstantState;
 import org.anchoranalysis.core.bridge.IObjectBridge;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.index.GetOperationFailedException;
@@ -36,8 +37,6 @@ import org.anchoranalysis.core.index.container.bridge.BoundedIndexContainerBridg
 import org.anchoranalysis.gui.io.loader.manifest.finder.FinderCSVStats;
 import org.anchoranalysis.gui.io.loader.manifest.finder.csvstatistic.CSVStatistic;
 import org.anchoranalysis.gui.io.loader.manifest.finder.historyfolder.FinderHistoryFolder;
-
-import ch.ethz.biol.cell.mpp.instantstate.CfgNRGInstantState;
 
 public abstract class BridgedGraphFromDualFinderCreator<DestType> extends GraphFromDualFinderCreator<DestType> {
 	

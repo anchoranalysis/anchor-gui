@@ -33,7 +33,7 @@ import org.anchoranalysis.gui.frame.details.ControllerPopupMenu;
 import org.anchoranalysis.gui.frame.details.IGenerateExtraDetail;
 import org.anchoranalysis.gui.frame.multiraster.ThreadedIndexedDisplayStackSetter;
 import org.anchoranalysis.gui.frame.threaded.stack.InternalFrameThreadedProvider;
-import org.anchoranalysis.gui.image.frame.canvas.ISliderState;
+import org.anchoranalysis.gui.image.frame.ISliderState;
 import org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.IBackgroundSetter;
 import org.anchoranalysis.gui.retrieveelements.IRetrieveElements;
 import org.anchoranalysis.gui.videostats.IModuleCreatorDefaultState;

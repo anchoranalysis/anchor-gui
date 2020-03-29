@@ -1,10 +1,8 @@
-package org.anchoranalysis.gui.bean.mpp;
-
-
+package org.anchoranalysis.gui.io.loader.manifest.finder.historyfolder;
 
 /*
  * #%L
- * anchor-gui
+ * anchor-mpp-io
  * %%
  * Copyright (C) 2016 ETH Zurich, University of Zurich, Owen Feehan
  * %%
@@ -29,52 +27,25 @@ package org.anchoranalysis.gui.bean.mpp;
  */
 
 
-import org.anchoranalysis.bean.annotation.BeanField;
-import org.anchoranalysis.bean.define.Define;
-import org.anchoranalysis.feature.bean.FeatureBean;
+import org.anchoranalysis.core.cache.CacheMonitor;
+import org.anchoranalysis.core.index.ITypedGetFromIndex;
+import org.anchoranalysis.io.manifest.deserializer.folder.DeserializeFromFolderBundle;
+import org.anchoranalysis.io.manifest.deserializer.folder.DeserializedObjectFromFolderBundle;
+import org.anchoranalysis.io.manifest.deserializer.folder.DeserializedObjectFromFolderBundle.BundleDeserializers;
+import org.anchoranalysis.io.manifest.folder.FolderWrite;
+import org.anchoranalysis.mpp.sgmn.kernel.proposer.KernelIterDescription;
 
-import ch.ethz.biol.cell.mpp.cfg.CfgGen;
-import ch.ethz.biol.cell.mpp.nrg.nrgscheme.creator.NRGSchemeCreator;
+class DeserializeFromBundleKernelIterDescription extends DeserializeFromFolderBundle<KernelIterDescription,KernelIterDescription> {
 
-public class MarkEvaluator extends FeatureBean<MarkEvaluator> {
-	
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 8930110016806371922L;
-
-	// START BEAN PROPERTIES
-	@BeanField
-	private CfgGen cfgGen;
-	
-	@BeanField
-	private Define namedDefinitions;
-	
-	@BeanField
-	private NRGSchemeCreator nrgSchemeCreator;
-	// END BEAN PROPERTIES
-
-	public Define getNamedDefinitions() {
-		return namedDefinitions;
+	public DeserializeFromBundleKernelIterDescription(
+			BundleDeserializers<KernelIterDescription> deserializer, FolderWrite cfgNRGFolder, CacheMonitor cacheMonitor) {
+		super(deserializer, cfgNRGFolder, cacheMonitor);
 	}
 
-	public void setNamedDefinitions(Define namedDefinitions) {
-		this.namedDefinitions = namedDefinitions;
+	@Override
+	protected ITypedGetFromIndex<KernelIterDescription> createCntr(
+			DeserializedObjectFromFolderBundle<KernelIterDescription> deserializeFromBundle) {
+		return deserializeFromBundle;
 	}
 
-	public CfgGen getCfgGen() {
-		return cfgGen;
-	}
-
-	public void setCfgGen(CfgGen cfgGen) {
-		this.cfgGen = cfgGen;
-	}
-
-	public NRGSchemeCreator getNrgSchemeCreator() {
-		return nrgSchemeCreator;
-	}
-
-	public void setNrgSchemeCreator(NRGSchemeCreator nrgSchemeCreator) {
-		this.nrgSchemeCreator = nrgSchemeCreator;
-	}
 }

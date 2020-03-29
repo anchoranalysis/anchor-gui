@@ -31,14 +31,13 @@ import java.util.List;
 
 import javax.swing.Action;
 
+import org.anchoranalysis.anchor.mpp.cfg.Cfg;
 import org.anchoranalysis.core.index.IntArray;
 import org.anchoranalysis.gui.IconFactory;
 import org.anchoranalysis.gui.videostats.ModuleEventRouter;
 import org.anchoranalysis.gui.videostats.SubgroupRetriever;
 import org.anchoranalysis.gui.videostats.module.VideoStatsModule;
-
-import ch.ethz.biol.cell.imageprocessing.io.generator.raster.CfgWithDisplayStack;
-import ch.ethz.biol.cell.mpp.cfg.Cfg;
+import org.anchoranalysis.mpp.io.cfg.CfgWithDisplayStack;
 
 public class LinkedPropertiesAmongModules {
 	

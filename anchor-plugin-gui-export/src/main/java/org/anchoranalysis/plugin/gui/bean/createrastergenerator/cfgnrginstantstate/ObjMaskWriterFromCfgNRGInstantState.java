@@ -27,7 +27,12 @@ package org.anchoranalysis.plugin.gui.bean.createrastergenerator.cfgnrginstantst
  */
 
 import org.anchoranalysis.anchor.mpp.bean.regionmap.RegionMembershipWithFlags;
+import org.anchoranalysis.anchor.mpp.cfg.Cfg;
+import org.anchoranalysis.anchor.mpp.cfg.ColoredCfg;
+import org.anchoranalysis.anchor.mpp.feature.instantstate.CfgNRGInstantState;
+import org.anchoranalysis.anchor.mpp.feature.nrg.cfg.CfgNRG;
 import org.anchoranalysis.anchor.mpp.mark.GlobalRegionIdentifiers;
+import org.anchoranalysis.anchor.mpp.mark.IDGetterMarkID;
 import org.anchoranalysis.anchor.mpp.mark.Mark;
 import org.anchoranalysis.anchor.mpp.overlay.OverlayCollectionMarkFactory;
 import org.anchoranalysis.anchor.mpp.regionmap.RegionMapSingleton;
@@ -40,24 +45,16 @@ import org.anchoranalysis.core.idgetter.IDGetter;
 import org.anchoranalysis.core.idgetter.IDGetterIter;
 import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.gui.bean.exporttask.ExportTaskParams;
+import org.anchoranalysis.gui.frame.display.OverlayedDisplayStackUpdate;
 import org.anchoranalysis.image.io.generator.raster.RasterGeneratorFromDisplayStack;
 import org.anchoranalysis.image.stack.DisplayStack;
 import org.anchoranalysis.image.stack.Stack;
 import org.anchoranalysis.io.bean.objmask.writer.RGBOutlineWriter;
 import org.anchoranalysis.io.generator.IterableObjectGenerator;
 import org.anchoranalysis.io.generator.IterableObjectGeneratorBridge;
+import org.anchoranalysis.mpp.io.cfg.generator.SimpleOverlayWriter;
 import org.anchoranalysis.plugin.gui.bean.createrastergenerator.CreateRasterGenerator;
 import org.anchoranalysis.plugin.gui.bean.exporttask.MappedFrom;
-
-import ch.ethz.biol.cell.imageprocessing.io.generator.raster.CachedRGB;
-import ch.ethz.biol.cell.imageprocessing.io.generator.raster.CfgCachedGenerator;
-import ch.ethz.biol.cell.imageprocessing.io.generator.raster.OverlayedDisplayStackUpdate;
-import ch.ethz.biol.cell.imageprocessing.io.idgetter.IDGetterMarkID;
-import ch.ethz.biol.cell.mpp.cfg.Cfg;
-import ch.ethz.biol.cell.mpp.cfgtoobjmaskwriter.SimpleOverlayWriter;
-import ch.ethz.biol.cell.mpp.gui.videostats.internalframe.markredraw.ColoredCfg;
-import ch.ethz.biol.cell.mpp.instantstate.CfgNRGInstantState;
-import ch.ethz.biol.cell.mpp.nrg.CfgNRG;
 
 public class ObjMaskWriterFromCfgNRGInstantState extends CreateRasterGenerator<CfgNRGInstantState> {
 

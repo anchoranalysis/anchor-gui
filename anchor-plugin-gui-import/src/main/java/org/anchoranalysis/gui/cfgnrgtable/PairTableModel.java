@@ -29,12 +29,11 @@ package org.anchoranalysis.gui.cfgnrgtable;
 
 import javax.swing.table.AbstractTableModel;
 
+import org.anchoranalysis.anchor.mpp.feature.instantstate.CfgNRGInstantState;
+import org.anchoranalysis.anchor.mpp.feature.nrg.NRGPair;
+import org.anchoranalysis.anchor.mpp.feature.nrg.saved.NRGSavedPairs;
 import org.anchoranalysis.core.color.ColorIndex;
 import org.anchoranalysis.core.color.RGBColor;
-
-import ch.ethz.biol.cell.mpp.instantstate.CfgNRGInstantState;
-import ch.ethz.biol.cell.mpp.nrg.NRGPair;
-import ch.ethz.biol.cell.mpp.nrg.NRGSavedPairs;
 
 public class PairTableModel extends AbstractTableModel implements IUpdateTableData {
 

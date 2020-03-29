@@ -36,12 +36,11 @@ import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.idgetter.IDGetter;
 import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.index.SetOperationFailedException;
+import org.anchoranalysis.gui.frame.display.BoundColoredOverlayCollection;
+import org.anchoranalysis.gui.frame.display.DisplayUpdate;
+import org.anchoranalysis.gui.frame.display.OverlayedDisplayStackUpdate;
+import org.anchoranalysis.gui.frame.display.overlay.OverlayRetriever;
 import org.anchoranalysis.image.stack.DisplayStack;
-
-import ch.ethz.biol.cell.gui.image.provider.DisplayUpdate;
-import ch.ethz.biol.cell.gui.overlay.BoundColoredOverlayCollection;
-import ch.ethz.biol.cell.gui.overlay.OverlayRetriever;
-import ch.ethz.biol.cell.imageprocessing.io.generator.raster.OverlayedDisplayStackUpdate;
 
 /**
  * Creates DisplayUpdates from ColoredCfgRedrawUpdate by applying them to a overlayedDisplayStack

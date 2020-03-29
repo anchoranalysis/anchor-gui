@@ -1,5 +1,8 @@
 package org.anchoranalysis.gui.interactivebrowser;
 
+import org.anchoranalysis.anchor.mpp.bean.cfg.CfgGen;
+import org.anchoranalysis.anchor.mpp.feature.bean.nrgscheme.NRGScheme;
+
 /*
  * #%L
  * anchor-gui
@@ -32,9 +35,6 @@ import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.params.KeyValueParams;
 import org.anchoranalysis.feature.nrg.NRGStackWithParams;
 import org.anchoranalysis.gui.videostats.dropdown.OperationCreateProposerSharedObjectsImageSpecific;
-
-import ch.ethz.biol.cell.mpp.cfg.CfgGen;
-import ch.ethz.biol.cell.mpp.nrg.nrgscheme.NRGScheme;
 
 // A MarkEvaluator after it has been resolved for usage by converting
 //  it into a ProposerSharedObjectsImageSpecific and other necessary components

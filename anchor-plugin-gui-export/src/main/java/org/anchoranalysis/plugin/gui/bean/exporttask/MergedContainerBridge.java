@@ -29,6 +29,11 @@ package org.anchoranalysis.plugin.gui.bean.exporttask;
 import java.util.function.Supplier;
 
 import org.anchoranalysis.anchor.mpp.bean.regionmap.RegionMembershipWithFlags;
+import org.anchoranalysis.anchor.mpp.cfg.Cfg;
+import org.anchoranalysis.anchor.mpp.feature.instantstate.CfgNRGInstantState;
+import org.anchoranalysis.anchor.mpp.feature.instantstate.CfgNRGNonHandleInstantState;
+import org.anchoranalysis.anchor.mpp.feature.nrg.cfg.CfgNRG;
+import org.anchoranalysis.anchor.mpp.feature.nrg.cfg.CfgWithNrgTotal;
 import org.anchoranalysis.anchor.mpp.overlay.OverlayCollectionMarkFactory;
 import org.anchoranalysis.anchor.overlay.OverlayedInstantState;
 import org.anchoranalysis.core.bridge.IObjectBridge;
@@ -44,12 +49,6 @@ import org.anchoranalysis.gui.mergebridge.DualCfgNRGContainer;
 import org.anchoranalysis.gui.mergebridge.MergeCfgBridge;
 import org.anchoranalysis.gui.mergebridge.MergedColorIndex;
 import org.anchoranalysis.gui.mergebridge.TransformToCfg;
-
-import ch.ethz.biol.cell.mpp.cfg.Cfg;
-import ch.ethz.biol.cell.mpp.instantstate.CfgNRGNonHandleInstantState;
-import ch.ethz.biol.cell.mpp.instantstate.CfgNRGInstantState;
-import ch.ethz.biol.cell.mpp.nrg.CfgNRG;
-import ch.ethz.biol.cell.mpp.nrg.CfgWithNrgTotal;
 
 class MergedContainerBridge implements IObjectBridge<ExportTaskParams,IBoundedIndexContainer<CfgNRGInstantState>> {
 
@@ -68,7 +67,6 @@ class MergedContainerBridge implements IObjectBridge<ExportTaskParams,IBoundedIn
 			ExportTaskParams sourceObject) throws GetOperationFailedException {
 
 		// TODO fix
-		// A container that supplies DualCfgInstantState
 		if (retBridge==null) {
 			DualCfgNRGContainer<Cfg> dualHistory = new DualCfgNRGContainer<>(
 				ContainerUtilities.listCntrs( sourceObject.getAllFinderCfgNRGHistory() ),
@@ -85,7 +83,6 @@ class MergedContainerBridge implements IObjectBridge<ExportTaskParams,IBoundedIn
 			ColorIndex mergedColorIndex = new MergedColorIndex(mergeCfgBridge);
 
 			
-			// We map each DualCfgInstantState to a CfgInstantState
 			IBoundedIndexContainer<OverlayedInstantState> cfgCntr = new BoundedIndexContainerBridgeWithoutIndex<>(
 				dualHistory,
 				mergeCfgBridge

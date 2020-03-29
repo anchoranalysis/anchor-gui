@@ -38,13 +38,17 @@ public class ShowError implements IShowError {
 	
 	@Override
 	public void showError(String message) {
-		panelNavigation.setErrorLabelText(message);
+		if (panelNavigation!=null) {
+			panelNavigation.setErrorLabelText(message);
+		}
 		
 	}
 
 	@Override
 	public void clearErrors() {
-		panelNavigation.setErrorLabelText("");
+		if (panelNavigation!=null) {
+			panelNavigation.setErrorLabelText("");
+		}
 	}
 
 	public void setPanelNavigation(PanelNavigation panelNavigation) {

@@ -35,11 +35,10 @@ import org.anchoranalysis.anchor.graph.GraphInstance;
 import org.anchoranalysis.anchor.graph.bean.GraphDefinition;
 import org.anchoranalysis.anchor.graph.bean.colorscheme.GraphColorScheme;
 import org.anchoranalysis.anchor.graph.index.BarChart;
+import org.anchoranalysis.anchor.mpp.graph.execution.KernelExecutionTime;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.gui.graph.definition.line.GraphDefinitionLineIterVsKernelExecutionTimeByState;
-
-import ch.ethz.biol.cell.mpp.gui.graph.jfreechart.bar.KernelExecutionTime;
 
 public abstract class GraphDefinitionBarKernelExecutionTime extends GraphDefinition<KernelExecutionTime> {
 

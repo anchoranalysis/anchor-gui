@@ -1,5 +1,7 @@
 package org.anchoranalysis.plugin.gui.bean.createrastergenerator;
 
+import org.anchoranalysis.anchor.mpp.feature.nrg.cfg.CfgNRG;
+
 /*-
  * #%L
  * anchor-plugin-gui-export
@@ -27,8 +29,6 @@ package org.anchoranalysis.plugin.gui.bean.createrastergenerator;
  */
 
 import org.anchoranalysis.bean.annotation.BeanField;
-
-import ch.ethz.biol.cell.mpp.nrg.CfgNRG;
 
 public class ConstantStringRasterGenerator extends CreateStringRasterGenerator {
 

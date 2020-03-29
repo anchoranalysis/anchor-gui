@@ -35,6 +35,7 @@ import java.util.List;
 import javax.swing.JPanel;
 
 import org.anchoranalysis.anchor.mpp.bean.init.MPPInitParams;
+import org.anchoranalysis.anchor.mpp.cfg.Cfg;
 import org.anchoranalysis.anchor.mpp.overlay.OverlayCollectionMarkFactory;
 import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.error.reporter.ErrorReporter;
@@ -49,7 +50,7 @@ import org.anchoranalysis.gui.frame.overlays.IShowEvaluationResult;
 import org.anchoranalysis.gui.frame.overlays.IShowOverlays;
 import org.anchoranalysis.gui.frame.overlays.InternalFrameOverlaysRedraw;
 import org.anchoranalysis.gui.frame.overlays.ProposedCfg;
-import org.anchoranalysis.gui.image.frame.canvas.ISliderState;
+import org.anchoranalysis.gui.image.frame.ISliderState;
 import org.anchoranalysis.gui.interactivebrowser.MarkEvaluatorSetForImage;
 import org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.ControllerPopupMenuWithBackground;
 import org.anchoranalysis.gui.kernel.ProposerFailureDescriptionPanel;
@@ -66,9 +67,7 @@ import org.anchoranalysis.gui.videostats.internalframe.evaluator.fromproposer.Fr
 import org.anchoranalysis.gui.videostats.internalframe.evaluator.fromproposer.ProposalOperationCreatorFromProposer;
 import org.anchoranalysis.gui.videostats.module.DefaultModuleState;
 import org.anchoranalysis.io.output.bean.OutputWriteSettings;
-
-import ch.ethz.biol.cell.imageprocessing.io.generator.raster.CfgWithDisplayStack;
-import ch.ethz.biol.cell.mpp.cfg.Cfg;
+import org.anchoranalysis.mpp.io.cfg.CfgWithDisplayStack;
 
 public class InternalFrameMarkProposerEvaluator {
 

@@ -34,13 +34,13 @@ import java.util.Map;
 import java.util.Set;
 
 import org.anchoranalysis.anchor.mpp.bean.init.GeneralInitParams;
+import org.anchoranalysis.anchor.mpp.feature.bean.mark.MarkEvaluator;
 import org.anchoranalysis.core.cache.Operation;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.name.provider.INamedProvider;
 import org.anchoranalysis.core.params.KeyValueParams;
 import org.anchoranalysis.core.progress.OperationWithProgressReporter;
-import org.anchoranalysis.gui.bean.mpp.MarkEvaluator;
 import org.anchoranalysis.image.stack.Stack;
 
 // Manages the various MarkEvaluators that are available in the application

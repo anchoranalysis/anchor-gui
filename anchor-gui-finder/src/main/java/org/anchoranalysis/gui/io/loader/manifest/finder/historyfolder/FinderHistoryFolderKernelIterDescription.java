@@ -39,8 +39,6 @@ import org.anchoranalysis.io.manifest.deserializer.folder.DeserializedObjectFrom
 import org.anchoranalysis.io.manifest.folder.FolderWrite;
 import org.anchoranalysis.mpp.sgmn.kernel.proposer.KernelIterDescription;
 
-import ch.ethz.biol.cell.mpp.nrg.history.DeserializeFromFolderBundleKernelIterDescription;
-
 public class FinderHistoryFolderKernelIterDescription extends FinderHistoryFolder<KernelIterDescription> {
 	
 	private CacheMonitor cacheMonitor;
@@ -57,7 +55,7 @@ public class FinderHistoryFolderKernelIterDescription extends FinderHistoryFolde
 			new ObjectInputStreamDeserializer<Bundle<KernelIterDescription>>(),
 			new ObjectInputStreamDeserializer<BundleParameters>()
 		); 
-		return new DeserializeFromFolderBundleKernelIterDescription(deserializers, folder, cacheMonitor).create();		
+		return new DeserializeFromBundleKernelIterDescription(deserializers, folder, cacheMonitor).create();		
 	}
 	
 	@Override

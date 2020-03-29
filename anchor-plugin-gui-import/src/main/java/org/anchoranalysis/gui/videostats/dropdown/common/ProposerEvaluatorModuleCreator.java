@@ -30,7 +30,7 @@ import org.anchoranalysis.core.error.InitException;
 
 
 import org.anchoranalysis.core.progress.IdentityOperationWithProgressReporter;
-import org.anchoranalysis.gui.image.frame.canvas.ISliderState;
+import org.anchoranalysis.gui.image.frame.ISliderState;
 import org.anchoranalysis.gui.interactivebrowser.MarkEvaluatorSetForImage;
 import org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.IBackgroundUpdater;
 import org.anchoranalysis.gui.videostats.dropdown.CreateBackgroundSetFromExisting;

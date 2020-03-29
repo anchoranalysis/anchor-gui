@@ -1,6 +1,6 @@
 package org.anchoranalysis.gui.frame.canvas.zoom;
 
-import org.anchoranalysis.anchor.mpp.bounds.RslvdBound;
+import org.anchoranalysis.anchor.mpp.bean.bound.RslvdBound;
 
 /*-
  * #%L

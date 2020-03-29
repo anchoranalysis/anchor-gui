@@ -35,7 +35,6 @@ import org.anchoranalysis.gui.displayupdate.OverlayedDisplayStack;
 import org.anchoranalysis.gui.videostats.internalframe.cfgtorgb.ColoredOverlayedInstantState;
 import org.anchoranalysis.image.stack.DisplayStack;
 
-// Maps integers to a CfgInstantState but creating a CfgInstantState with the index of the source
 class IndexToRedrawUpdate implements IObjectBridge<Integer, OverlayedDisplayStack> {
 
 	private BoundedIndexBridge<ColoredOverlayedInstantState> delegate;

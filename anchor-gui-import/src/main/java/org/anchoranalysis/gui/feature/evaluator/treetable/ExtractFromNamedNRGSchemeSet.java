@@ -1,5 +1,7 @@
 package org.anchoranalysis.gui.feature.evaluator.treetable;
 
+import org.anchoranalysis.anchor.mpp.feature.nrg.scheme.NamedNRGSchemeSet;
+
 /*-
  * #%L
  * anchor-gui-import
@@ -31,8 +33,6 @@ import org.anchoranalysis.feature.nrg.NRGStackWithParams;
 import org.anchoranalysis.feature.shared.SharedFeatureSet;
 import org.anchoranalysis.gui.feature.FeatureListUtilities;
 import org.anchoranalysis.gui.feature.FeatureListWithRegionMap;
-
-import ch.ethz.biol.cell.mpp.nrg.NamedNRGSchemeSet;
 
 public class ExtractFromNamedNRGSchemeSet extends FeatureListSrc {
 

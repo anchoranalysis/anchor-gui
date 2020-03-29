@@ -38,11 +38,10 @@ import org.anchoranalysis.core.error.reporter.ErrorReporter;
 import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.index.IIndexGettableSettable;
 import org.anchoranalysis.gui.displayupdate.IDisplayUpdateRememberStack;
+import org.anchoranalysis.gui.frame.display.BoundOverlayedDisplayStack;
+import org.anchoranalysis.gui.frame.display.DisplayUpdate;
 import org.anchoranalysis.gui.videostats.threading.InteractiveThreadPool;
 import org.anchoranalysis.gui.videostats.threading.InteractiveWorker;
-
-import ch.ethz.biol.cell.gui.image.provider.DisplayUpdate;
-import ch.ethz.biol.cell.gui.image.provider.BoundOverlayedDisplayStack;
 
 /**
  * Retrieves DisplayUpdates when an index is changed, or when an explicit update command is set.

@@ -39,8 +39,10 @@ import org.anchoranalysis.gui.frame.details.IGenerateExtraDetail;
 import org.anchoranalysis.gui.frame.details.canvas.ControllerAction;
 import org.anchoranalysis.gui.frame.details.canvas.InternalFrameCanvas;
 import org.anchoranalysis.gui.frame.details.canvas.controller.imageview.ControllerImageView;
+import org.anchoranalysis.gui.frame.display.IRedrawable;
+import org.anchoranalysis.gui.frame.display.overlay.OverlayRetriever;
 import org.anchoranalysis.gui.frame.threaded.stack.InternalFrameThreadedProvider;
-import org.anchoranalysis.gui.image.frame.canvas.ISliderState;
+import org.anchoranalysis.gui.image.frame.ISliderState;
 import org.anchoranalysis.gui.retrieveelements.IRetrieveElements;
 import org.anchoranalysis.gui.videostats.IModuleCreatorDefaultState;
 import org.anchoranalysis.gui.videostats.dropdown.VideoStatsModuleGlobalParams;
@@ -48,9 +50,6 @@ import org.anchoranalysis.gui.videostats.internalframe.cfgtorgb.markdisplay.Mark
 import org.anchoranalysis.gui.videostats.module.DefaultModuleState;
 import org.anchoranalysis.gui.videostats.module.VideoStatsModule;
 import org.anchoranalysis.image.extent.ImageDim;
-
-import ch.ethz.biol.cell.gui.overlay.OverlayRetriever;
-import ch.ethz.biol.cell.mpp.gui.videostats.internalframe.cfgtorgb.IRedrawable;
 
 public class InternalFrameThreadedOverlayProvider {
 

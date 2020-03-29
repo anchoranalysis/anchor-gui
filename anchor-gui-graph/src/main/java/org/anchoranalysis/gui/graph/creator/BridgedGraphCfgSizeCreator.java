@@ -2,6 +2,7 @@ package org.anchoranalysis.gui.graph.creator;
 
 import org.anchoranalysis.anchor.graph.bean.GraphDefinition;
 import org.anchoranalysis.anchor.graph.bean.colorscheme.GraphColorScheme;
+import org.anchoranalysis.anchor.mpp.feature.instantstate.CfgNRGInstantState;
 import org.anchoranalysis.core.bridge.IObjectBridge;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.index.GetOperationFailedException;
@@ -36,8 +37,6 @@ import org.anchoranalysis.gui.graph.definition.line.GraphDefinitionLineIterVsCfg
 
 
 import org.anchoranalysis.gui.io.loader.manifest.finder.csvstatistic.CSVStatistic;
-
-import ch.ethz.biol.cell.mpp.instantstate.CfgNRGInstantState;
 
 public class BridgedGraphCfgSizeCreator extends BridgedGraphFromDualFinderCreator<GraphDefinitionLineIterVsCfgSize.Item> {
 

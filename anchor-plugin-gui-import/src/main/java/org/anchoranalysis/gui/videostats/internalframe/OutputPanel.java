@@ -34,6 +34,7 @@ import javax.swing.AbstractAction;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
+import org.anchoranalysis.anchor.mpp.mark.IDGetterMarkID;
 import org.anchoranalysis.anchor.overlay.id.IDGetterOverlayID;
 import org.anchoranalysis.core.color.ColorIndex;
 import org.anchoranalysis.core.error.reporter.ErrorReporter;
@@ -44,11 +45,9 @@ import org.anchoranalysis.io.manifest.ManifestDescription;
 import org.anchoranalysis.io.namestyle.IndexableOutputNameStyle;
 import org.anchoranalysis.io.namestyle.IntegerSuffixOutputNameStyle;
 import org.anchoranalysis.io.output.bound.BoundOutputManagerRouteErrors;
-
-import ch.ethz.biol.cell.imageprocessing.io.generator.raster.CfgGenerator;
-import ch.ethz.biol.cell.imageprocessing.io.generator.raster.CfgWithDisplayStack;
-import ch.ethz.biol.cell.imageprocessing.io.generator.raster.ColoredCfgWithDisplayStack;
-import ch.ethz.biol.cell.imageprocessing.io.idgetter.IDGetterMarkID;
+import org.anchoranalysis.mpp.io.cfg.CfgWithDisplayStack;
+import org.anchoranalysis.mpp.io.cfg.ColoredCfgWithDisplayStack;
+import org.anchoranalysis.mpp.io.cfg.generator.CfgGenerator;
 
 public class OutputPanel {
 

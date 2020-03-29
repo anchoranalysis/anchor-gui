@@ -1,5 +1,7 @@
 package org.anchoranalysis.gui.videostats.dropdown.contextualmodulecreator;
 
+import org.anchoranalysis.anchor.mpp.feature.instantstate.CfgNRGInstantState;
+
 /*
  * #%L
  * anchor-gui
@@ -40,8 +42,6 @@ import org.anchoranalysis.gui.videostats.module.DefaultModuleStateManager;
 import org.anchoranalysis.gui.videostats.module.VideoStatsModuleCreateException;
 import org.anchoranalysis.gui.videostats.modulecreator.VideoStatsModuleCreatorContext;
 import org.anchoranalysis.io.manifest.deserializer.folder.LoadContainer;
-
-import ch.ethz.biol.cell.mpp.instantstate.CfgNRGInstantState;
 
 public class NRGTableCreator extends VideoStatsModuleCreatorContext {
 

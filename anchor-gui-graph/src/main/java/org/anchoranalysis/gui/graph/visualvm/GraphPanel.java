@@ -35,10 +35,10 @@ import java.util.TimeZone;
 import javax.swing.JInternalFrame;
 import javax.swing.JPanel;
 
+import org.anchoranalysis.anchor.mpp.feature.nrg.cfg.CfgWithNrgTotal;
 import org.anchoranalysis.gui.graph.definition.GraphDefinition;
 import org.anchoranalysis.gui.videostats.ICfgNRGUpdater;
-import ch.ethz.biol.cell.mpp.feedback.Aggregator;
-import ch.ethz.biol.cell.mpp.nrg.CfgWithNrgTotal;
+import org.anchoranalysis.mpp.sgmn.optscheme.feedback.aggregate.Aggregator;
 
 import com.sun.tools.visualvm.charts.ChartFactory;
 import com.sun.tools.visualvm.charts.SimpleXYChartSupport;

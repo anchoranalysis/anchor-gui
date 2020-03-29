@@ -1,5 +1,7 @@
 package org.anchoranalysis.gui.videostats.modulecreator;
 
+import org.anchoranalysis.anchor.mpp.cfg.Cfg;
+
 /*-
  * #%L
  * anchor-plugin-gui-import
@@ -31,7 +33,7 @@ import org.anchoranalysis.anchor.overlay.collection.OverlayCollection;
 import org.anchoranalysis.core.cache.ExecuteException;
 import org.anchoranalysis.core.cache.Operation;
 import org.anchoranalysis.core.error.InitException;
-import org.anchoranalysis.gui.image.frame.canvas.ISliderState;
+import org.anchoranalysis.gui.image.frame.ISliderState;
 import org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.definition.ChangeableBackgroundDefinitionSimple;
 import org.anchoranalysis.gui.mark.MarkDisplaySettings;
 import org.anchoranalysis.gui.videostats.dropdown.IAddVideoStatsModule;
@@ -42,8 +44,6 @@ import org.anchoranalysis.gui.videostats.internalframe.InternalFrameStaticOverla
 import org.anchoranalysis.gui.videostats.module.VideoStatsModuleCreateException;
 import org.anchoranalysis.gui.videostats.operation.combine.IVideoStatsOperationCombine;
 import org.anchoranalysis.image.objmask.ObjMaskCollection;
-
-import ch.ethz.biol.cell.mpp.cfg.Cfg;
 
 public class CfgModuleCreator extends VideoStatsModuleCreator {
 

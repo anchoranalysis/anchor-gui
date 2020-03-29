@@ -31,6 +31,8 @@ import java.nio.file.Path;
 
 import java.util.List;
 
+import org.anchoranalysis.anchor.mpp.feature.bean.mark.MarkEvaluator;
+import org.anchoranalysis.anchor.mpp.feature.bean.nrgscheme.NRGSchemeCreator;
 import org.anchoranalysis.bean.NamedBean;
 import org.anchoranalysis.bean.shared.params.keyvalue.KeyValueParamsInitParams;
 import org.anchoranalysis.bean.shared.params.keyvalue.KeyValueParamsProvider;
@@ -43,15 +45,12 @@ import org.anchoranalysis.core.params.KeyValueParams;
 import org.anchoranalysis.feature.bean.list.FeatureListProvider;
 import org.anchoranalysis.feature.shared.SharedFeaturesInitParams;
 import org.anchoranalysis.gui.bean.filecreator.FileCreator;
-import org.anchoranalysis.gui.bean.mpp.MarkEvaluator;
 import org.anchoranalysis.gui.feature.evaluator.treetable.FeatureListSrc;
 import org.anchoranalysis.gui.interactivebrowser.openfile.importer.ImporterSettings;
 import org.anchoranalysis.image.io.bean.rasterreader.RasterReader;
 import org.anchoranalysis.io.bean.filepath.provider.FilePathProvider;
 import org.anchoranalysis.io.input.InputFromManager;
 import org.anchoranalysis.io.output.bound.BoundOutputManagerRouteErrors;
-
-import ch.ethz.biol.cell.mpp.nrg.nrgscheme.creator.NRGSchemeCreator;
 
 public class InteractiveBrowserInput implements InputFromManager {
 	

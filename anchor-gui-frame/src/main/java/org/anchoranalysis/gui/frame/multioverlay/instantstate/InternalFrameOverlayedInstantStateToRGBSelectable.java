@@ -43,7 +43,9 @@ import org.anchoranalysis.core.property.IPropertyValueReceivable;
 import org.anchoranalysis.core.property.PropertyValueReceivableFromIndicesSelection;
 import org.anchoranalysis.gui.frame.details.IGenerateExtraDetail;
 import org.anchoranalysis.gui.frame.details.canvas.InternalFrameCanvas;
-import org.anchoranalysis.gui.image.frame.canvas.ISliderState;
+import org.anchoranalysis.gui.frame.display.overlay.IGetOverlayCollection;
+import org.anchoranalysis.gui.frame.display.overlay.OverlayRetriever;
+import org.anchoranalysis.gui.image.frame.ISliderState;
 import org.anchoranalysis.gui.indices.DualIndicesSelection;
 import org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.ControllerPopupMenuWithBackground;
 import org.anchoranalysis.gui.retrieveelements.IRetrieveElements;
@@ -59,9 +61,6 @@ import org.anchoranalysis.gui.videostats.module.DefaultModuleState;
 import org.anchoranalysis.gui.videostats.module.VideoStatsModule;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-
-import anchor.gui.videostats.internalframe.cfgtorgb.IGetOverlayCollection;
-import ch.ethz.biol.cell.gui.overlay.OverlayRetriever;
 
 // An internal frame, that converts a configuration to RGB
 public class InternalFrameOverlayedInstantStateToRGBSelectable {

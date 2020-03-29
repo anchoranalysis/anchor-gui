@@ -32,6 +32,7 @@ import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.error.reporter.ErrorReporter;
 import org.anchoranalysis.core.index.IIndexGettableSettable;
 import org.anchoranalysis.gui.displayupdate.IDisplayUpdateRememberStack;
+import org.anchoranalysis.gui.frame.display.DisplayUpdate;
 import org.anchoranalysis.gui.frame.threaded.stack.IThreadedProducer;
 import org.anchoranalysis.gui.frame.threaded.stack.ThreadedDisplayUpdateConsumer;
 import org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.IBackgroundSetter;
@@ -40,8 +41,6 @@ import org.anchoranalysis.image.io.generator.raster.DisplayStackGenerator;
 import org.anchoranalysis.image.stack.DisplayStack;
 import org.anchoranalysis.io.generator.IterableObjectGenerator;
 import org.anchoranalysis.io.generator.IterableObjectGeneratorBridge;
-
-import ch.ethz.biol.cell.gui.image.provider.DisplayUpdate;
 
 /** Provides a method for updating a display stack in response to index changes, or setImageStackCntr() */
 public class ThreadedIndexedDisplayStackSetter implements IBackgroundSetter, IThreadedProducer {

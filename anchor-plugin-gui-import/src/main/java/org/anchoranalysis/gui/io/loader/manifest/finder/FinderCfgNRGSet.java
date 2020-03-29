@@ -28,6 +28,7 @@ package org.anchoranalysis.gui.io.loader.manifest.finder;
 
 import javax.swing.JFrame;
 
+import org.anchoranalysis.anchor.mpp.feature.instantstate.CfgNRGInstantState;
 import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.index.container.IBoundedIndexContainer;
@@ -43,8 +44,6 @@ import org.anchoranalysis.gui.videostats.operation.VideoStatsOperationMenu;
 import org.anchoranalysis.io.manifest.ManifestRecorder;
 import org.anchoranalysis.io.manifest.deserializer.folder.LoadContainer;
 import org.anchoranalysis.io.manifest.finder.Finder;
-
-import ch.ethz.biol.cell.mpp.instantstate.CfgNRGInstantState;
 
 // Looks for the essential items of a CfgNRGSet and creates a CfgNRGHistoryDropDown
 public class FinderCfgNRGSet extends Finder implements ContainerGetter<CfgNRGInstantState> {

@@ -1,5 +1,11 @@
 package org.anchoranalysis.gui.videostats;
 
+import org.anchoranalysis.anchor.mpp.cfg.Cfg;
+import org.anchoranalysis.anchor.mpp.feature.instantstate.CfgWithNrgTotalInstantState;
+import org.anchoranalysis.anchor.mpp.feature.nrg.cfg.CfgNRGPixelized;
+import org.anchoranalysis.anchor.mpp.feature.nrg.cfg.CfgWithNrgTotal;
+import org.anchoranalysis.anchor.mpp.feature.nrg.scheme.NRGSchemeWithSharedFeatures;
+import org.anchoranalysis.anchor.mpp.feature.nrg.scheme.NamedNRGSchemeSet;
 import org.anchoranalysis.core.bridge.IObjectBridge;
 
 /*
@@ -58,7 +64,7 @@ import org.anchoranalysis.gui.graph.definition.NRGGraphDefinition;
 import org.anchoranalysis.gui.graph.definition.TemperatureGraphDefinition;
 import org.anchoranalysis.gui.graph.visualvm.GraphPanel;
 import org.anchoranalysis.gui.graph.visualvm.GraphPanelList;
-import org.anchoranalysis.gui.image.frame.canvas.ISliderState;
+import org.anchoranalysis.gui.image.frame.ISliderState;
 import org.anchoranalysis.gui.interactivebrowser.SubgrouppedAdder;
 import org.anchoranalysis.gui.retrieveelements.ExportPopupParams;
 import org.anchoranalysis.gui.videostats.dropdown.AdderAppendNRGStack;
@@ -72,6 +78,7 @@ import org.anchoranalysis.gui.videostats.module.VideoStatsModule;
 import org.anchoranalysis.gui.videostats.module.VideoStatsModuleCreateException;
 import org.anchoranalysis.gui.videostats.module.VideoStatsModuleSubgroup;
 import org.anchoranalysis.image.experiment.identifiers.ImgStackIdentifiers;
+import org.anchoranalysis.image.init.CreateCombinedStack;
 import org.anchoranalysis.image.init.ImageInitParams;
 import org.anchoranalysis.image.stack.DisplayStack;
 import org.anchoranalysis.image.stack.wrap.WrapStackAsTimeSequence;
@@ -81,19 +88,11 @@ import org.anchoranalysis.io.color.HashedColorSet;
 import org.anchoranalysis.io.generator.sequence.SequenceMemory;
 import org.anchoranalysis.io.output.bound.BoundOutputManagerRouteErrors;
 import org.anchoranalysis.mpp.sgmn.kernel.proposer.WeightedKernelList;
+import org.anchoranalysis.mpp.sgmn.optscheme.feedback.OptimizationFeedbackInitParams;
+import org.anchoranalysis.mpp.sgmn.optscheme.feedback.ReporterException;
+import org.anchoranalysis.mpp.sgmn.optscheme.feedback.aggregate.Aggregator;
 import org.anchoranalysis.mpp.sgmn.optscheme.step.Reporting;
 import org.anchoranalysis.plugin.gui.bean.exporttask.ExportTaskList;
-
-import ch.ethz.biol.cell.countchrom.experiment.SharedObjectsUtilities;
-import ch.ethz.biol.cell.mpp.cfg.Cfg;
-import ch.ethz.biol.cell.mpp.feedback.Aggregator;
-import ch.ethz.biol.cell.mpp.feedback.OptimizationFeedbackInitParams;
-import ch.ethz.biol.cell.mpp.feedback.ReporterException;
-import ch.ethz.biol.cell.mpp.instantstate.CfgWithNrgTotalInstantState;
-import ch.ethz.biol.cell.mpp.nrg.CfgNRGPixelized;
-import ch.ethz.biol.cell.mpp.nrg.CfgWithNrgTotal;
-import ch.ethz.biol.cell.mpp.nrg.NRGSchemeWithSharedFeatures;
-import ch.ethz.biol.cell.mpp.nrg.NamedNRGSchemeSet;
 
 
 // Called from VideoStats so that we can run all the GUI operations on the EDT Thread because of Swing
@@ -129,7 +128,7 @@ public class VideoStatsEDT {
 		
 		try {
 			backgroundSet = BackgroundSetFactory.createBackgroundSet(
-				new WrapStackAsTimeSequence(SharedObjectsUtilities.createCombinedStacks(so)),
+				new WrapStackAsTimeSequence(CreateCombinedStack.apply(so)),
 				ProgressReporterNull.get()
 			);
 			

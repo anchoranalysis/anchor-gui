@@ -37,6 +37,8 @@ import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 
 import org.anchoranalysis.anchor.mpp.bean.regionmap.RegionMembershipWithFlags;
+import org.anchoranalysis.anchor.mpp.cfg.Cfg;
+import org.anchoranalysis.anchor.mpp.feature.instantstate.CfgNRGInstantState;
 import org.anchoranalysis.anchor.mpp.mark.GlobalRegionIdentifiers;
 import org.anchoranalysis.anchor.mpp.overlay.OverlayCollectionMarkFactory;
 import org.anchoranalysis.anchor.mpp.regionmap.RegionMapSingleton;
@@ -55,9 +57,6 @@ import org.anchoranalysis.gui.image.OverlayCollectionWithImgStack;
 import org.anchoranalysis.gui.indices.DualIndicesSelection;
 import org.anchoranalysis.gui.mark.CfgUtilities;
 import org.anchoranalysis.gui.propertyvalue.PropertyValueChangeListenerList;
-
-import ch.ethz.biol.cell.mpp.cfg.Cfg;
-import ch.ethz.biol.cell.mpp.instantstate.CfgNRGInstantState;
 
 public class CfgNRGTablePanel extends StatePanel<CfgNRGInstantState> {
 

@@ -31,6 +31,7 @@ import java.util.ArrayList;
 
 import org.anchoranalysis.anchor.graph.bean.GraphDefinition;
 import org.anchoranalysis.anchor.graph.bean.colorscheme.GraphColorScheme;
+import org.anchoranalysis.anchor.mpp.feature.instantstate.CfgNRGInstantState;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.progress.OperationWithProgressReporter;
 import org.anchoranalysis.gui.graph.creator.GraphFromDualFinderCreator;
@@ -42,8 +43,6 @@ import org.anchoranalysis.gui.videostats.dropdown.VideoStatsModuleCreatorAndAdde
 import org.anchoranalysis.gui.videostats.dropdown.VideoStatsModuleGlobalParams;
 import org.anchoranalysis.gui.videostats.dropdown.contextualmodulecreator.ContextualModuleCreator;
 import org.anchoranalysis.gui.videostats.modulecreator.VideoStatsModuleCreator;
-
-import ch.ethz.biol.cell.mpp.instantstate.CfgNRGInstantState;
 
 public class GraphDualFinderCreator<ItemType> extends ContextualModuleCreator {
 

@@ -33,7 +33,7 @@ import org.anchoranalysis.core.index.container.IBoundedRangeIncompleteDynamic;
 import org.anchoranalysis.core.property.IPropertyValueSendable;
 import org.anchoranalysis.core.property.change.PropertyValueChangeListener;
 import org.anchoranalysis.gui.frame.canvas.ImageCanvas;
-import org.anchoranalysis.gui.image.frame.canvas.ISliderState;
+import org.anchoranalysis.gui.image.frame.ISliderState;
 import org.anchoranalysis.gui.videostats.link.LinkModules.Adder;
 
 class WrappedSlider implements ISliderState {

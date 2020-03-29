@@ -30,10 +30,9 @@ import java.io.File;
 
 import javax.swing.JOptionPane;
 
+import org.anchoranalysis.anchor.mpp.feature.bean.nrgscheme.NRGSchemeCreator;
 import org.anchoranalysis.gui.bean.filecreator.FileCreator;
 import org.anchoranalysis.gui.interactivebrowser.openfile.type.NrgSchemeCreatorState;
-
-import ch.ethz.biol.cell.mpp.nrg.nrgscheme.creator.NRGSchemeCreator;
 
 public class ImporterNRGSchemeCreator extends ImporterFromBean {
 

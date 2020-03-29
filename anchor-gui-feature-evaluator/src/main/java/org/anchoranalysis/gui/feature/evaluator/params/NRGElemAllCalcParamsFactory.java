@@ -1,5 +1,8 @@
 package org.anchoranalysis.gui.feature.evaluator.params;
 
+import org.anchoranalysis.anchor.mpp.feature.mark.MemoMarks;
+import org.anchoranalysis.anchor.mpp.feature.nrg.elem.NRGElemAllCalcParams;
+
 /*-
  * #%L
  * anchor-gui-feature-evaluator
@@ -29,9 +32,6 @@ package org.anchoranalysis.gui.feature.evaluator.params;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.feature.calc.params.FeatureCalcParams;
 import org.anchoranalysis.feature.nrg.NRGStackWithParams;
-
-import ch.ethz.biol.cell.mpp.nrg.NRGElemAllCalcParams;
-import ch.ethz.biol.cell.mpp.nrg.MemoMarks;
 
 public class NRGElemAllCalcParamsFactory extends FeatureCalcParamsAllFactory {
 

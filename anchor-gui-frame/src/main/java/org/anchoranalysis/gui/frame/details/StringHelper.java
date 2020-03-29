@@ -31,7 +31,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.anchoranalysis.gui.frame.details.canvas.InternalFrameCanvas;
-import org.anchoranalysis.gui.image.frame.canvas.ISliderState;
+import org.anchoranalysis.gui.image.frame.ISliderState;
 import org.anchoranalysis.image.extent.ImageRes;
 import org.anchoranalysis.image.voxel.datatype.VoxelDataType;
 

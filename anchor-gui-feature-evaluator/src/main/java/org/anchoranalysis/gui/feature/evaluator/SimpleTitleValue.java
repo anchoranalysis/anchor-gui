@@ -1,5 +1,7 @@
 package org.anchoranalysis.gui.feature.evaluator;
 
+import org.anchoranalysis.anchor.mpp.feature.instantstate.CfgNRGInstantState;
+
 /*
  * #%L
  * anchor-gui
@@ -28,8 +30,6 @@ package org.anchoranalysis.gui.feature.evaluator;
 
 
 import org.anchoranalysis.gui.cfgnrgtable.TitleValueTableModel.ITitleValueRow;
-
-import ch.ethz.biol.cell.mpp.instantstate.CfgNRGInstantState;
 
 class SimpleTitleValue implements ITitleValueRow {
 

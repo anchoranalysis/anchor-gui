@@ -29,6 +29,7 @@ package org.anchoranalysis.gui.cfgnrg;
 
 import javax.swing.JPanel;
 
+import org.anchoranalysis.anchor.mpp.feature.instantstate.CfgNRGInstantState;
 import org.anchoranalysis.anchor.overlay.collection.OverlayCollection;
 import org.anchoranalysis.core.bridge.IObjectBridge;
 import org.anchoranalysis.core.index.GetOperationFailedException;
@@ -37,8 +38,6 @@ import org.anchoranalysis.core.property.IPropertyValueReceivable;
 import org.anchoranalysis.core.property.IPropertyValueSendable;
 import org.anchoranalysis.gui.graph.panel.ClickableGraphInstance;
 import org.anchoranalysis.gui.graph.panel.GraphPanel;
-
-import ch.ethz.biol.cell.mpp.instantstate.CfgNRGInstantState;
 
 public class CfgNRGInstantStateGraphPanel extends StatePanel<CfgNRGInstantState> {
 

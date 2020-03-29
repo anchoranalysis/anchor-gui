@@ -31,8 +31,7 @@ import java.util.function.Supplier;
 import org.anchoranalysis.core.bridge.IObjectBridge;
 import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.gui.displayupdate.OverlayedDisplayStack;
-
-import ch.ethz.biol.cell.imageprocessing.io.generator.raster.OverlayedDisplayStackUpdate;
+import org.anchoranalysis.gui.frame.display.OverlayedDisplayStackUpdate;
 
 // Finds ColoredCfgRedrawUpdate which implement changes to existing ColoredCfg
 class FindCorrectUpdate implements IObjectBridge<Integer,OverlayedDisplayStackUpdate> {

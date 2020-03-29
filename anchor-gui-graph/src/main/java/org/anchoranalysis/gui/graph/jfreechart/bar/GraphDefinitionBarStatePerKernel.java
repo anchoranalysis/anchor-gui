@@ -1,5 +1,7 @@
 package org.anchoranalysis.gui.graph.jfreechart.bar;
 
+import org.anchoranalysis.anchor.mpp.graph.execution.KernelExecutionTime;
+
 /*-
  * #%L
  * anchor-gui-graph
@@ -27,7 +29,6 @@ package org.anchoranalysis.gui.graph.jfreechart.bar;
  */
 
 import org.anchoranalysis.core.error.InitException;
-import ch.ethz.biol.cell.mpp.gui.graph.jfreechart.bar.KernelExecutionTime;
 
 public class GraphDefinitionBarStatePerKernel extends GraphDefinitionBarKernelExecutionTime {
 	

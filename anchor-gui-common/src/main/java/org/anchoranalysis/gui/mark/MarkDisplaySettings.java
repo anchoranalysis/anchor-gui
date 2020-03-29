@@ -43,8 +43,7 @@ import org.anchoranalysis.io.bean.objmask.writer.RGBMidpointWriter;
 import org.anchoranalysis.io.bean.objmask.writer.RGBOrientationWriter;
 import org.anchoranalysis.io.bean.objmask.writer.RGBOutlineWriter;
 import org.anchoranalysis.io.bean.objmask.writer.RGBSolidWriter;
-
-import ch.ethz.biol.cell.mpp.cfgtoobjmaskwriter.SimpleOverlayWriter;
+import org.anchoranalysis.mpp.io.cfg.generator.SimpleOverlayWriter;
 
 // Contains display settings for a mark
 public class MarkDisplaySettings {

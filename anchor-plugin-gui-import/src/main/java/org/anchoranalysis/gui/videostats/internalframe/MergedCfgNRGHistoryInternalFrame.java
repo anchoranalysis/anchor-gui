@@ -3,6 +3,8 @@ package org.anchoranalysis.gui.videostats.internalframe;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.anchoranalysis.anchor.mpp.cfg.Cfg;
+import org.anchoranalysis.anchor.mpp.feature.instantstate.CfgNRGInstantState;
 import org.anchoranalysis.anchor.overlay.Overlay;
 import org.anchoranalysis.anchor.overlay.OverlayedInstantState;
 import org.anchoranalysis.anchor.overlay.id.IDGetterOverlayID;
@@ -42,7 +44,7 @@ import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.index.container.IBoundedIndexContainer;
 import org.anchoranalysis.core.index.container.bridge.BoundedIndexContainerBridgeWithoutIndex;
 import org.anchoranalysis.gui.frame.multioverlay.instantstate.InternalFrameOverlayedInstantStateToRGBSelectable;
-import org.anchoranalysis.gui.image.frame.canvas.ISliderState;
+import org.anchoranalysis.gui.image.frame.ISliderState;
 import org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.ControllerPopupMenuWithBackground;
 import org.anchoranalysis.gui.mergebridge.DualCfgNRGContainer;
 import org.anchoranalysis.gui.mergebridge.MergeCfgBridge;
@@ -52,9 +54,6 @@ import org.anchoranalysis.gui.videostats.IModuleCreatorDefaultState;
 import org.anchoranalysis.gui.videostats.dropdown.VideoStatsModuleGlobalParams;
 import org.anchoranalysis.gui.videostats.module.DefaultModuleState;
 import org.anchoranalysis.io.manifest.deserializer.folder.LoadContainer;
-
-import ch.ethz.biol.cell.mpp.cfg.Cfg;
-import ch.ethz.biol.cell.mpp.instantstate.CfgNRGInstantState;
 
 public class MergedCfgNRGHistoryInternalFrame {
 
@@ -89,7 +88,7 @@ public class MergedCfgNRGHistoryInternalFrame {
 			() -> defaultState.getMarkDisplaySettings().regionMembership()
 		);
 		
-		// We map each DualCfgInstantState to a CfgInstantState
+		// We map each DualCfgInstantState
 		IBoundedIndexContainer<OverlayedInstantState> cfgCntnr = new BoundedIndexContainerBridgeWithoutIndex<>(
 			dualHistory,
 			mergeCfgBridge

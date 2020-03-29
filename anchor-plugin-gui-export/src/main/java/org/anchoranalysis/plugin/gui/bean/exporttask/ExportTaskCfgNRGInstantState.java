@@ -4,6 +4,7 @@ package org.anchoranalysis.plugin.gui.bean.exporttask;
 
 import java.util.List;
 
+import org.anchoranalysis.anchor.mpp.feature.instantstate.CfgNRGInstantState;
 
 /*
  * #%L
@@ -41,8 +42,6 @@ import org.anchoranalysis.gui.bean.exporttask.ExportTaskParams;
 import org.anchoranalysis.gui.container.ContainerGetter;
 import org.anchoranalysis.gui.container.ContainerUtilities;
 import org.anchoranalysis.gui.mergebridge.DualCfgNRGContainer;
-
-import ch.ethz.biol.cell.mpp.instantstate.CfgNRGInstantState;
 
 public class ExportTaskCfgNRGInstantState extends ExportTaskRasterGeneratorFromBoundedIndexContainer<DualStateWithoutIndex<CfgNRGInstantState>> {
 

@@ -33,6 +33,7 @@ import org.anchoranalysis.anchor.mpp.bean.proposer.MarkProposer;
 import org.anchoranalysis.anchor.mpp.bean.regionmap.RegionMap;
 import org.anchoranalysis.core.cache.ExecuteException;
 import org.anchoranalysis.core.error.CreateException;
+import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.log.LogErrorReporter;
 import org.anchoranalysis.core.name.store.NamedProviderStore;
@@ -59,29 +60,14 @@ public class MarkAnnotator {
 		LogErrorReporter logErrorReporter
 	) throws CreateException {
 		
-		try {
-			markEvaluatorRslvd = markEvaluatorSet.get(annotationStrategy.getMarkEvaluatorName());
-		} catch (GetOperationFailedException e1) {
-			throw new CreateException(e1);
-		}
+		markEvaluatorRslvd = setupMarkEvaluator( annotationStrategy, markEvaluatorSet );
 		
-		MPPInitParams soMPP;
-		try {
-			soMPP = markEvaluatorRslvd.getProposerSharedObjectsOperation().doOperation();
-			
-			pointsFitterSelectPoints = soMPP.getPoints().getPointsFitterSet().getException(annotationStrategy.getPointsFitterName());
-			
-		} catch (ExecuteException | GetOperationFailedException e) {
-			throw new CreateException(e);
-		}
-			
-		try {
-			markProposerGuess = soMPP.getMarkProposerSet().getException(annotationStrategy.getMarkProposerName());
-		} catch (GetOperationFailedException e) {
-			markProposerGuess = null;
-			logErrorReporter.getLogReporter().log("Proceeding without 'Guess Tool' as an error occured");
-			logErrorReporter.getErrorReporter().recordError(AnnotatorModuleCreator.class, e);
-		}
+		MPPInitParams soMPP = setupEvaluatorAndPointsFitter(markEvaluatorRslvd, annotationStrategy);
+		
+		pointsFitterSelectPoints = extractPointsFitter(annotationStrategy, soMPP);
+		
+		// Nullable
+		markProposerGuess = setupGuess( soMPP, annotationStrategy, logErrorReporter );
 		
 		this.backgroundStacks = soMPP.getImage().getStackCollection();
 	}
@@ -119,5 +105,45 @@ public class MarkAnnotator {
 		return pointsFitterSelectPoints;
 	}
 
+	private static MPPInitParams setupEvaluatorAndPointsFitter( MarkEvaluatorRslvd markEvaluator, MarkProposerStrategy annotationStrategy ) throws CreateException {
+		try {
+			return markEvaluator.getProposerSharedObjectsOperation().doOperation();
+			
+		} catch (ExecuteException e) {
+			throw new CreateException(e);
+		}
+	}
+	
+	private static PointsFitter extractPointsFitter( MarkProposerStrategy annotationStrategy, MPPInitParams soMPP ) throws CreateException {
+		try {
+			return soMPP.getPoints().getPointsFitterSet().getException(annotationStrategy.getPointsFitterName());
+		} catch (GetOperationFailedException e) {
+			throw new CreateException(e);
+		}
+	}
+	
+	private static MarkProposer setupGuess( MPPInitParams soMPP, MarkProposerStrategy annotationStrategy, LogErrorReporter logErrorReporter ) {
+		try {
+			return soMPP.getMarkProposerSet().getException(annotationStrategy.getMarkProposerName());
+		} catch (GetOperationFailedException e) {
+			logErrorReporter.getLogReporter().log("Proceeding without 'Guess Tool' as an error occured");
+			logErrorReporter.getErrorReporter().recordError(AnnotatorModuleCreator.class, e);
+			return null;
+		}
+	}
 
+	private static MarkEvaluatorRslvd setupMarkEvaluator( MarkProposerStrategy annotationStrategy, MarkEvaluatorSetForImage markEvaluatorSet ) throws CreateException {
+		try {
+			if (annotationStrategy.getMarkEvaluator()!=null) {
+				markEvaluatorSet.add(
+					annotationStrategy.getMarkEvaluatorName(),
+					annotationStrategy.getMarkEvaluator()
+				);
+			}
+			
+			return markEvaluatorSet.get(annotationStrategy.getMarkEvaluatorName());
+		} catch (GetOperationFailedException | OperationFailedException e1) {
+			throw new CreateException(e1);
+		}		
+	}
 }

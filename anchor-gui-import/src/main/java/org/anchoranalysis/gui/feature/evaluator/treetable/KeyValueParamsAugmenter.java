@@ -1,5 +1,8 @@
 package org.anchoranalysis.gui.feature.evaluator.treetable;
 
+import org.anchoranalysis.anchor.mpp.feature.bean.nrgscheme.NRGScheme;
+import org.anchoranalysis.anchor.mpp.feature.nrg.scheme.KeyValueParamsForImageCreator;
+
 /*-
  * #%L
  * anchor-gui-import
@@ -32,9 +35,6 @@ import org.anchoranalysis.core.params.KeyValueParams;
 import org.anchoranalysis.feature.calc.FeatureCalcException;
 import org.anchoranalysis.feature.nrg.NRGStackWithParams;
 import org.anchoranalysis.feature.shared.SharedFeatureSet;
-
-import ch.ethz.biol.cell.mpp.nrg.KeyValueParamsForImageCreator;
-import ch.ethz.biol.cell.mpp.nrg.nrgscheme.NRGScheme;
 
 /** Adds key value params from the image-features of a NRGScheme */
 public class KeyValueParamsAugmenter {

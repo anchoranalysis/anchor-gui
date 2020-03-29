@@ -29,12 +29,11 @@ package org.anchoranalysis.gui.frame.multiraster;
 import org.anchoranalysis.core.bridge.IObjectBridge;
 import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.index.SetOperationFailedException;
+import org.anchoranalysis.gui.frame.display.BoundOverlayedDisplayStack;
+import org.anchoranalysis.gui.frame.display.DisplayUpdate;
 import org.anchoranalysis.image.stack.DisplayStack;
 import org.anchoranalysis.io.generator.IterableObjectGenerator;
 import org.anchoranalysis.io.output.error.OutputWriteFailedException;
-
-import ch.ethz.biol.cell.gui.image.provider.DisplayUpdate;
-import ch.ethz.biol.cell.gui.image.provider.BoundOverlayedDisplayStack;
 
 class NoOverlayBridgeFromGenerator implements IObjectBridge<Integer, DisplayUpdate> {
 

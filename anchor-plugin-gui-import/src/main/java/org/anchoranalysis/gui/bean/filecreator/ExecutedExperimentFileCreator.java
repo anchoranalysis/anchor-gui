@@ -33,6 +33,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import org.anchoranalysis.anchor.mpp.feature.bean.nrgscheme.NRGScheme;
 import org.anchoranalysis.bean.annotation.BeanField;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.progress.ProgressReporter;
@@ -45,8 +46,6 @@ import org.anchoranalysis.io.manifest.finder.FinderSerializedObject;
 import org.anchoranalysis.plugin.io.bean.input.manifest.CoupledManifestsInputManager;
 import org.anchoranalysis.plugin.io.manifest.CoupledManifests;
 import org.anchoranalysis.plugin.io.manifest.ManifestCouplingDefinition;
-
-import ch.ethz.biol.cell.mpp.nrg.nrgscheme.NRGScheme;
 
 // TODO duplication not right
 public class ExecutedExperimentFileCreator extends FileCreatorGeneralList {

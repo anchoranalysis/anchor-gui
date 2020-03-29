@@ -34,9 +34,8 @@ import org.anchoranalysis.core.error.reporter.ErrorReporter;
 import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.index.IIndexGettableSettable;
 import org.anchoranalysis.gui.displayupdate.IOverlayedImgStackProvider;
+import org.anchoranalysis.gui.frame.display.BoundOverlayedDisplayStack;
 import org.anchoranalysis.gui.reassign.FrameTitleGenerator;
-
-import ch.ethz.biol.cell.gui.image.provider.BoundOverlayedDisplayStack;
 
 class TitleBoundsUpdater implements ChangeListener {
 	

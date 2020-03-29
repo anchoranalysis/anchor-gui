@@ -1,4 +1,4 @@
-package org.anchoranalysis.gui.frame.details.canvas;
+package org.anchoranalysis.gui.image.frame;
 
 /*-
  * #%L
@@ -26,24 +26,16 @@ package org.anchoranalysis.gui.frame.details.canvas;
  * #L%
  */
 
-import java.awt.Dimension;
+import org.anchoranalysis.gui.image.ISliceNumGetter;
+import org.anchoranalysis.gui.videostats.link.LinkModules.Adder;
 
-public abstract class ControllerSize {
-
-	/** Sets the minimum and preferred to the same size */
-	public void configureSize( int width, int height ) {
-		Dimension dim = new Dimension(width, height);
-		setPreferredSize( dim );
-		setMinimumSize( dim );
-	}
+public interface ISliderState extends ISliceNumGetter {
 	
-	/** Sets the minimum and preferred to the same size */
-	public void configureSize( int minimumWidth, int minimumHeight, int preferredWidth, int preferredHeight ) {
-		setPreferredSize( new Dimension(preferredWidth, preferredHeight) );
-		setMinimumSize( new Dimension(minimumWidth, minimumHeight) );
-	}
+	int getIndex();
 	
-	protected abstract void setMinimumSize(Dimension minimumSize);
-
-	protected abstract void setPreferredSize(Dimension preferredSize);
+	void setSliceNum( int sliceNum );
+	
+	void addSliceTo( Adder<Integer> adder );
+	
+	void addIndexTo( Adder<Integer> adder );
 }

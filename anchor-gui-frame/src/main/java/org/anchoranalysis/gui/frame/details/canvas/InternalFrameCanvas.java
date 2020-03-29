@@ -58,7 +58,9 @@ import org.anchoranalysis.gui.frame.canvas.zoom.DefaultZoomSuggestor;
 import org.anchoranalysis.gui.frame.canvas.zoom.ZoomScale;
 import org.anchoranalysis.gui.frame.details.ControllerPopupMenu;
 import org.anchoranalysis.gui.frame.details.canvas.controller.imageview.ControllerImageView;
-import org.anchoranalysis.gui.image.frame.canvas.ISliderState;
+import org.anchoranalysis.gui.frame.display.BoundOverlayedDisplayStack;
+import org.anchoranalysis.gui.image.frame.ControllerSize;
+import org.anchoranalysis.gui.image.frame.ISliderState;
 import org.anchoranalysis.gui.retrieveelements.ExportPopupParams;
 import org.anchoranalysis.gui.retrieveelements.IRetrieveElements;
 import org.anchoranalysis.gui.retrieveelements.InternalFrameIJPopupClickListener;
@@ -69,8 +71,6 @@ import org.anchoranalysis.image.extent.ImageDim;
 import org.anchoranalysis.image.extent.ImageRes;
 import org.anchoranalysis.image.stack.DisplayStack;
 import org.anchoranalysis.image.voxel.datatype.VoxelDataType;
-
-import ch.ethz.biol.cell.gui.image.provider.BoundOverlayedDisplayStack;
 
 public class InternalFrameCanvas {
 

@@ -29,6 +29,7 @@ package org.anchoranalysis.gui.file.interactive;
 
 import java.io.File;
 
+import org.anchoranalysis.anchor.mpp.cfg.Cfg;
 import org.anchoranalysis.core.cache.ExecuteException;
 import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.error.OperationFailedException;
@@ -45,8 +46,6 @@ import org.anchoranalysis.image.objmask.ObjMaskCollection;
 import org.anchoranalysis.image.stack.TimeSequence;
 import org.anchoranalysis.io.output.bound.BoundOutputManagerRouteErrors;
 import org.anchoranalysis.mpp.io.input.MultiInput;
-
-import ch.ethz.biol.cell.mpp.cfg.Cfg;
 
 public class FileMultiCollection extends InteractiveFile {
 

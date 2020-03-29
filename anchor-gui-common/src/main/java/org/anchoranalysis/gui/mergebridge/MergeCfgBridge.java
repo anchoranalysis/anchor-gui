@@ -33,14 +33,13 @@ import java.util.HashSet;
 import java.util.function.Supplier;
 
 import org.anchoranalysis.anchor.mpp.bean.regionmap.RegionMembershipWithFlags;
+import org.anchoranalysis.anchor.mpp.cfg.Cfg;
 import org.anchoranalysis.anchor.mpp.mark.Mark;
 import org.anchoranalysis.anchor.mpp.overlay.OverlayCollectionMarkFactory;
 import org.anchoranalysis.anchor.overlay.OverlayedInstantState;
 import org.anchoranalysis.anchor.overlay.collection.OverlayCollection;
 import org.anchoranalysis.core.bridge.IObjectBridge;
 import org.anchoranalysis.core.index.GetOperationFailedException;
-
-import ch.ethz.biol.cell.mpp.cfg.Cfg;
 
 public class MergeCfgBridge implements IObjectBridge<IndexedDualState<Cfg>, OverlayedInstantState> {
 	

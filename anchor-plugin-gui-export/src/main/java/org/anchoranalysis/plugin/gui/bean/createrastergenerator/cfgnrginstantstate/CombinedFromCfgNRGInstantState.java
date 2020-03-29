@@ -1,5 +1,7 @@
 package org.anchoranalysis.plugin.gui.bean.createrastergenerator.cfgnrginstantstate;
 
+import org.anchoranalysis.anchor.mpp.feature.instantstate.CfgNRGInstantState;
+
 /*-
  * #%L
  * anchor-plugin-gui-export
@@ -27,8 +29,6 @@ package org.anchoranalysis.plugin.gui.bean.createrastergenerator.cfgnrginstantst
  */
 
 import org.anchoranalysis.plugin.gui.bean.createrastergenerator.Combined;
-
-import ch.ethz.biol.cell.mpp.instantstate.CfgNRGInstantState;
 
 public class CombinedFromCfgNRGInstantState extends Combined<CfgNRGInstantState> {
 

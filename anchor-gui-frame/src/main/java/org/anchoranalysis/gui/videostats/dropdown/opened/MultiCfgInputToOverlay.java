@@ -1,5 +1,7 @@
 package org.anchoranalysis.gui.videostats.dropdown.opened;
 
+import org.anchoranalysis.anchor.mpp.cfg.Cfg;
+
 /*-
  * #%L
  * anchor-gui-frame
@@ -34,8 +36,6 @@ import org.anchoranalysis.core.cache.ExecuteException;
 import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.gui.mark.MarkDisplaySettings;
 import org.anchoranalysis.gui.videostats.internalframe.cfgtorgb.MultiInput;
-
-import ch.ethz.biol.cell.mpp.cfg.Cfg;
 
 class MultiCfgInputToOverlay implements IObjectBridgeIndex<MultiInput<Cfg>, OverlayedInstantState> {
 	

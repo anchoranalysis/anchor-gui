@@ -1,6 +1,8 @@
 package org.anchoranalysis.gui.videostats.dropdown.modulecreator.graph;
 
 import org.anchoranalysis.anchor.graph.bean.GraphDefinition;
+import org.anchoranalysis.anchor.mpp.feature.instantstate.CfgNRGInstantState;
+import org.anchoranalysis.anchor.mpp.graph.NRGGraphItem;
 import org.anchoranalysis.core.color.ColorIndex;
 import org.anchoranalysis.core.error.InitException;
 
@@ -42,9 +44,6 @@ import org.anchoranalysis.gui.videostats.dropdown.VideoStatsModuleGlobalParams;
 import org.anchoranalysis.gui.videostats.module.DefaultModuleStateManager;
 import org.anchoranalysis.gui.videostats.module.VideoStatsModuleCreateException;
 import org.anchoranalysis.gui.videostats.modulecreator.VideoStatsModuleCreatorContext;
-
-import ch.ethz.biol.cell.mpp.gui.graph.jfreechart.bar.NRGGraphItem;
-import ch.ethz.biol.cell.mpp.instantstate.CfgNRGInstantState;
 
 public class GraphNRGBreakdownModuleCreator extends VideoStatsModuleCreatorContext {
 

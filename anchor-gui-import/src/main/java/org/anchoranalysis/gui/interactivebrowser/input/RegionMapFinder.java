@@ -1,5 +1,8 @@
 package org.anchoranalysis.gui.interactivebrowser.input;
 
+import org.anchoranalysis.anchor.mpp.feature.bean.nrgscheme.NRGScheme;
+import org.anchoranalysis.anchor.mpp.feature.nrg.scheme.NamedNRGSchemeSet;
+
 /*-
  * #%L
  * anchor-gui-import
@@ -28,9 +31,6 @@ package org.anchoranalysis.gui.interactivebrowser.input;
 
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.feature.bean.list.FeatureList;
-
-import ch.ethz.biol.cell.mpp.nrg.NamedNRGSchemeSet;
-import ch.ethz.biol.cell.mpp.nrg.nrgscheme.NRGScheme;
 
 class RegionMapFinder {
 		

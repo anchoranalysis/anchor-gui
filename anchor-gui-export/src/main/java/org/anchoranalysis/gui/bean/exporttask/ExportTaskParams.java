@@ -3,6 +3,8 @@ package org.anchoranalysis.gui.bean.exporttask;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.anchoranalysis.anchor.mpp.feature.instantstate.CfgNRGInstantState;
+
 /*
  * #%L
  * anchor-gui
@@ -36,8 +38,6 @@ import org.anchoranalysis.gui.container.ContainerGetter;
 import org.anchoranalysis.gui.finder.imgstackcollection.FinderImgStackCollection;
 import org.anchoranalysis.gui.io.loader.manifest.finder.FinderCSVStats;
 import org.anchoranalysis.io.output.bound.BoundOutputManagerRouteErrors;
-
-import ch.ethz.biol.cell.mpp.instantstate.CfgNRGInstantState;
 
 
 // Parameters an exportTask can draw itself from

@@ -31,7 +31,7 @@ import java.util.ArrayList;
 
 import javax.swing.table.AbstractTableModel;
 
-import ch.ethz.biol.cell.mpp.instantstate.CfgNRGInstantState;
+import org.anchoranalysis.anchor.mpp.feature.instantstate.CfgNRGInstantState;
 
 public class TitleValueTableModel extends AbstractTableModel {
 

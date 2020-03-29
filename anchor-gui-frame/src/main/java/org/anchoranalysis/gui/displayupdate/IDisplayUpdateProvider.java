@@ -33,8 +33,7 @@ package org.anchoranalysis.gui.displayupdate;
 import javax.swing.event.ChangeListener;
 
 import org.anchoranalysis.core.index.GetOperationFailedException;
-
-import ch.ethz.biol.cell.gui.image.provider.DisplayUpdate;
+import org.anchoranalysis.gui.frame.display.DisplayUpdate;
 
 
 public interface IDisplayUpdateProvider {

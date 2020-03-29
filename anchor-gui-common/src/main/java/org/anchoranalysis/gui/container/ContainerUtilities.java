@@ -29,10 +29,9 @@ package org.anchoranalysis.gui.container;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.anchoranalysis.anchor.mpp.feature.instantstate.CfgNRGInstantState;
 import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.index.container.IBoundedIndexContainer;
-
-import ch.ethz.biol.cell.mpp.instantstate.CfgNRGInstantState;
 
 public class ContainerUtilities {
 	

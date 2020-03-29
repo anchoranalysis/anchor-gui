@@ -40,16 +40,15 @@ import org.anchoranalysis.core.property.change.PropertyValueChangeEvent;
 import org.anchoranalysis.core.property.change.PropertyValueChangeListener;
 import org.anchoranalysis.gui.displayupdate.IDisplayUpdateRememberStack;
 import org.anchoranalysis.gui.displayupdate.OverlayedDisplayStack;
+import org.anchoranalysis.gui.frame.display.IRedrawable;
+import org.anchoranalysis.gui.frame.display.OverlayedDisplayStackUpdate;
+import org.anchoranalysis.gui.frame.display.overlay.OverlayRetriever;
 import org.anchoranalysis.gui.frame.threaded.stack.IThreadedProducer;
 import org.anchoranalysis.gui.frame.threaded.stack.ThreadedDisplayUpdateConsumer;
 import org.anchoranalysis.gui.image.DisplayUpdateCreator;
 import org.anchoranalysis.gui.mark.MarkDisplaySettings;
 import org.anchoranalysis.gui.videostats.internalframe.cfgtorgb.markdisplay.MarkDisplaySettingsWrapper;
 import org.anchoranalysis.gui.videostats.threading.InteractiveThreadPool;
-
-import ch.ethz.biol.cell.gui.overlay.OverlayRetriever;
-import ch.ethz.biol.cell.imageprocessing.io.generator.raster.OverlayedDisplayStackUpdate;
-import ch.ethz.biol.cell.mpp.gui.videostats.internalframe.cfgtorgb.IRedrawable;
 
 
 /**

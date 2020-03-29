@@ -1,5 +1,7 @@
 package org.anchoranalysis.gui.videostats.dropdown.multicollection;
 
+import org.anchoranalysis.anchor.mpp.cfg.Cfg;
+
 /*-
  * #%L
  * anchor-plugin-gui-import
@@ -57,8 +59,6 @@ import org.anchoranalysis.image.stack.wrap.WrapStackAsTimeSequence;
 import org.anchoranalysis.image.stack.wrap.WrapTimeSequenceAsStack;
 import org.anchoranalysis.io.output.bean.OutputWriteSettings;
 import org.anchoranalysis.io.output.bound.BoundOutputManagerRouteErrors;
-
-import ch.ethz.biol.cell.mpp.cfg.Cfg;
 
 @SuppressWarnings("unused")
 public class MultiCollectionDropDown {
