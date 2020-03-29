@@ -36,6 +36,7 @@ import org.anchoranalysis.anchor.mpp.feature.nrg.cfg.CfgNRG;
 import org.anchoranalysis.anchor.mpp.feature.nrg.cfg.CfgWithNrgTotal;
 import org.anchoranalysis.anchor.mpp.overlay.OverlayCollectionMarkFactory;
 import org.anchoranalysis.anchor.overlay.OverlayedInstantState;
+import org.anchoranalysis.core.bridge.BridgeElementException;
 import org.anchoranalysis.core.bridge.IObjectBridge;
 import org.anchoranalysis.core.cache.CacheMonitor;
 import org.anchoranalysis.core.color.ColorIndex;
@@ -64,18 +65,22 @@ class MergedContainerBridge implements IObjectBridge<ExportTaskParams,IBoundedIn
 	
 	@Override
 	public IBoundedIndexContainer<CfgNRGInstantState> bridgeElement(
-			ExportTaskParams sourceObject) throws GetOperationFailedException {
+			ExportTaskParams sourceObject) throws BridgeElementException {
 
 		// TODO fix
 		if (retBridge==null) {
-			DualCfgNRGContainer<Cfg> dualHistory = new DualCfgNRGContainer<>(
-				ContainerUtilities.listCntrs( sourceObject.getAllFinderCfgNRGHistory() ),
-				new TransformToCfg()
-			);
+
+			DualCfgNRGContainer<Cfg> dualHistory;
+			
 			try {
+				dualHistory = new DualCfgNRGContainer<>(
+					ContainerUtilities.listCntrs( sourceObject.getAllFinderCfgNRGHistory() ),
+					new TransformToCfg()
+				);
+				
 				dualHistory.init( cacheMonitor );
-			} catch (InitException e) {
-				throw new GetOperationFailedException(e);
+			} catch (InitException | GetOperationFailedException e) {
+				throw new BridgeElementException(e);
 			}
 			
 			MergeCfgBridge mergeCfgBridge = new MergeCfgBridge(regionMembership);

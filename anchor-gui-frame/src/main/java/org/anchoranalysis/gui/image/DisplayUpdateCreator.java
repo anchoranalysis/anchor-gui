@@ -2,6 +2,7 @@ package org.anchoranalysis.gui.image;
 
 import org.anchoranalysis.anchor.overlay.Overlay;
 import org.anchoranalysis.anchor.overlay.writer.OverlayWriter;
+import org.anchoranalysis.core.bridge.BridgeElementException;
 import org.anchoranalysis.core.bridge.IObjectBridge;
 import org.anchoranalysis.core.error.CreateException;
 
@@ -34,7 +35,6 @@ import org.anchoranalysis.core.error.CreateException;
 
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.idgetter.IDGetter;
-import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.index.SetOperationFailedException;
 import org.anchoranalysis.gui.frame.display.BoundColoredOverlayCollection;
 import org.anchoranalysis.gui.frame.display.DisplayUpdate;
@@ -73,7 +73,7 @@ public class DisplayUpdateCreator implements IObjectBridge<Integer, DisplayUpdat
 
 	@Override
 	public DisplayUpdate bridgeElement(Integer sourceObject)
-			throws GetOperationFailedException {
+			throws BridgeElementException {
 		try {
 			OverlayedDisplayStackUpdate update = src.bridgeElement(sourceObject);
 			
@@ -94,7 +94,7 @@ public class DisplayUpdateCreator implements IObjectBridge<Integer, DisplayUpdat
 			return update.applyAndCreateDisplayUpdate(boundOverlay);
 
 		} catch (CreateException | OperationFailedException e) {
-			throw new GetOperationFailedException(e);
+			throw new BridgeElementException(e);
 		}
 		
 	}
@@ -102,8 +102,4 @@ public class DisplayUpdateCreator implements IObjectBridge<Integer, DisplayUpdat
 	public OverlayRetriever getOverlayRetriever() {
 		return boundOverlay.getPrecalculatedCache();
 	}
-	
-//	public List<BoundingBox> bboxListForCfg(Cfg cfg) {
-//		return boundOverlay.bboxListForCfg(cfg);
-//	}
 }

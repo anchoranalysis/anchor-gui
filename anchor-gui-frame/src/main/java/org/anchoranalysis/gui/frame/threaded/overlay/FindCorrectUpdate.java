@@ -28,8 +28,8 @@ package org.anchoranalysis.gui.frame.threaded.overlay;
 
 import java.util.function.Supplier;
 
+import org.anchoranalysis.core.bridge.BridgeElementException;
 import org.anchoranalysis.core.bridge.IObjectBridge;
-import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.gui.displayupdate.OverlayedDisplayStack;
 import org.anchoranalysis.gui.frame.display.OverlayedDisplayStackUpdate;
 
@@ -55,9 +55,7 @@ class FindCorrectUpdate implements IObjectBridge<Integer,OverlayedDisplayStackUp
 
 	@Override
 	public OverlayedDisplayStackUpdate bridgeElement(Integer sourceObject)
-			throws GetOperationFailedException {
-
-		//System.out.printf("ThreadedCfgToRGB bridge element\n");
+			throws BridgeElementException {
 		
 		// If our index hasn't changed, then we just apply whatever local updates are queued for processing
 		if (funcHasBeenInit.get() && sourceObject.equals(oldIndex)) {
@@ -65,13 +63,8 @@ class FindCorrectUpdate implements IObjectBridge<Integer,OverlayedDisplayStackUp
 			OverlayedDisplayStackUpdate update = getClearUpdate.getAndClearWaitingUpdate();
 			return update;
 		} else {
-			// Otherwise we apply an external update, and calculate what areas need to be refreshed
-			//System.out.printf("externalUpdate\n");
-			
 			OverlayedDisplayStack ods = integerToOverlayedBridge.bridgeElement(sourceObject);
 			oldIndex = sourceObject;
-			
-			//ColoredOverlayCollection oc = OverlayUtilities.createColor( coloredCfg.getCfg());
 			
 			OverlayedDisplayStackUpdate update = OverlayedDisplayStackUpdate.assignOverlaysAndBackground(
 				ods.getColoredOverlayCollection(),

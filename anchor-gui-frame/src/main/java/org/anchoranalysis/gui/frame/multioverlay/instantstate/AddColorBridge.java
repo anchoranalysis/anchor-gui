@@ -35,7 +35,6 @@ import org.anchoranalysis.core.bridge.IObjectBridge;
 import org.anchoranalysis.core.color.ColorIndex;
 import org.anchoranalysis.core.color.ColorList;
 import org.anchoranalysis.core.idgetter.IDGetter;
-import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.gui.videostats.internalframe.cfgtorgb.ColoredOverlayedInstantState;
 
 class AddColorBridge implements IObjectBridge<OverlayedInstantState, ColoredOverlayedInstantState> {
@@ -51,8 +50,7 @@ class AddColorBridge implements IObjectBridge<OverlayedInstantState, ColoredOver
 	}
 
 	@Override
-	public ColoredOverlayedInstantState bridgeElement(OverlayedInstantState sourceObject)
-			throws GetOperationFailedException {
+	public ColoredOverlayedInstantState bridgeElement(OverlayedInstantState sourceObject) {
 		
 		OverlayCollection oc = sourceObject.getOverlayCollection(); 
 		

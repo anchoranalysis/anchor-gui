@@ -1,5 +1,6 @@
 package org.anchoranalysis.gui.backgroundset;
 
+import org.anchoranalysis.core.bridge.BridgeElementException;
 import org.anchoranalysis.core.error.CreateException;
 
 /*
@@ -78,7 +79,7 @@ public class BackgroundStackCntrFactory {
 				try {
 					return convert(s);
 				} catch (CreateException e) {
-					throw new GetOperationFailedException(e);
+					throw new BridgeElementException(e);
 				}
 			}
 		); 

@@ -34,8 +34,8 @@ import org.anchoranalysis.anchor.mpp.regionmap.RegionMapSingleton;
 
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.InitException;
-import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.log.LogErrorReporter;
+import org.anchoranalysis.core.name.provider.NamedProviderGetException;
 import org.anchoranalysis.core.name.store.NamedProviderStore;
 import org.anchoranalysis.feature.bean.Feature;
 import org.anchoranalysis.feature.bean.list.FeatureList;
@@ -135,8 +135,10 @@ public class FeatureListSrcBuilder {
 				
 				nrgElemSet.add(key, new NRGScheme(outUnary, outPairwise, regionMap ) );
 				
-			} catch (GetOperationFailedException | FeatureCalcException  e) {
+			} catch (FeatureCalcException  e) {
 				logErrorReporter.getErrorReporter().recordError(FeatureListSrcBuilder.class, e);
+			} catch (NamedProviderGetException e) {
+				logErrorReporter.getErrorReporter().recordError(FeatureListSrcBuilder.class, e.summarize());
 			}
 		}
 	}

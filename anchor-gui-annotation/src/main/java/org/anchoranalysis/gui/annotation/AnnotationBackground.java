@@ -1,5 +1,7 @@
 package org.anchoranalysis.gui.annotation;
 
+import org.anchoranalysis.core.bridge.BridgeElementException;
+
 /*-
  * #%L
  * anchor-gui-annotation
@@ -68,7 +70,7 @@ public class AnnotationBackground {
 				
 				dimViewer = new ImageDim(defaultBackground.bridgeElement(0).getDimensions());
 				
-			} catch (GetOperationFailedException | ExecuteException e) {
+			} catch (BridgeElementException | ExecuteException | GetOperationFailedException e) {
 				throw new CreateException(e);
 			}
 		}		

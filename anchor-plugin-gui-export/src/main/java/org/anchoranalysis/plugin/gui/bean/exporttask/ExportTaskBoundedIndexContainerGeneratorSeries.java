@@ -31,6 +31,7 @@ import javax.swing.ProgressMonitor;
 
 import org.anchoranalysis.bean.AnchorBean;
 import org.anchoranalysis.bean.annotation.BeanField;
+import org.anchoranalysis.core.bridge.BridgeElementException;
 import org.anchoranalysis.core.bridge.IObjectBridge;
 import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.index.container.IBoundedIndexContainer;
@@ -69,6 +70,49 @@ public class ExportTaskBoundedIndexContainerGeneratorSeries<T> extends AnchorBea
 	
 	public ExportTaskBoundedIndexContainerGeneratorSeries() {
 	}	
+	
+	public boolean execute( ExportTaskParams params, ProgressMonitor progressMonitor, IGeneratorSequenceNonIncremental<MappedFrom<T>> generatorSequenceWriter, BoundOutputManagerRouteErrors outputManager, String outputName ) throws ExportTaskFailedException {
+		try {
+			return execute(
+				containerBridge.bridgeElement(params),
+				progressMonitor,
+				generatorSequenceWriter,
+				outputManager,
+				outputName
+			);
+		} catch (OutputWriteFailedException e) {
+			throw new ExportTaskFailedException(e);
+		} catch (BridgeElementException e) {
+			throw new ExportTaskFailedException(e);
+		} catch (GetOperationFailedException e) {
+			throw new ExportTaskFailedException(e);
+		}
+	}
+	
+	public int getMinProgress( ExportTaskParams params ) throws ExportTaskFailedException {
+		try {
+			return containerBridge.bridgeElement(params).getMinimumIndex();
+		} catch (BridgeElementException e) {
+			throw new ExportTaskFailedException(e);
+		}
+	}
+	
+	public int getMaxProgress( ExportTaskParams params ) throws ExportTaskFailedException {
+		try {
+			return containerBridge.bridgeElement(params).getMaximumIndex();
+		} catch (BridgeElementException e) {
+			throw new ExportTaskFailedException(e);
+		}
+	}
+	
+	public String getDscrContrib() {
+		return String.format("incrementSize=%d", this.incrementSize );
+	}
+
+
+	public IObjectBridge<ExportTaskParams, IBoundedIndexContainer<T>> getContainerBridge() {
+		return containerBridge;
+	}
 	
 	private boolean execute( IBoundedIndexContainer<T> cfgNRGCntr, ProgressMonitor progressMonitor, IGeneratorSequenceNonIncremental<MappedFrom<T>> generatorSequenceWriter, BoundOutputManagerRouteErrors outputManager, String outputName  ) throws OutputWriteFailedException, GetOperationFailedException {
 		
@@ -145,41 +189,6 @@ public class ExportTaskBoundedIndexContainerGeneratorSeries<T> extends AnchorBea
 			new MappedFrom<>( i, cntr.get(index) ),
 			String.valueOf(indexOut)
 		);
-	}
-		
-	public boolean execute( ExportTaskParams params, ProgressMonitor progressMonitor, IGeneratorSequenceNonIncremental<MappedFrom<T>> generatorSequenceWriter, BoundOutputManagerRouteErrors outputManager, String outputName ) throws ExportTaskFailedException {
-		try {
-			return execute( containerBridge.bridgeElement(params), progressMonitor, generatorSequenceWriter, outputManager, outputName);
-		} catch (OutputWriteFailedException e) {
-			throw new ExportTaskFailedException(e);
-		} catch (GetOperationFailedException e) {
-			throw new ExportTaskFailedException(e);
-		}
-	}
-	
-	public int getMinProgress( ExportTaskParams params ) throws ExportTaskFailedException {
-		try {
-			return containerBridge.bridgeElement(params).getMinimumIndex();
-		} catch (GetOperationFailedException e) {
-			throw new ExportTaskFailedException(e);
-		}
-	}
-	
-	public int getMaxProgress( ExportTaskParams params ) throws ExportTaskFailedException {
-		try {
-			return containerBridge.bridgeElement(params).getMaximumIndex();
-		} catch (GetOperationFailedException e) {
-			throw new ExportTaskFailedException(e);
-		}
-	}
-
-	public String getDscrContrib() {
-		return String.format("incrementSize=%d", this.incrementSize );
-	}
-
-
-	public IObjectBridge<ExportTaskParams, IBoundedIndexContainer<T>> getContainerBridge() {
-		return containerBridge;
 	}
 
 	public void setContainerBridge(

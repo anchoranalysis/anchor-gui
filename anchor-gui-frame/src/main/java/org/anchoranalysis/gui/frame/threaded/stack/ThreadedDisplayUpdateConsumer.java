@@ -33,6 +33,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.EventListenerList;
 
+import org.anchoranalysis.core.bridge.BridgeElementException;
 import org.anchoranalysis.core.bridge.IObjectBridge;
 import org.anchoranalysis.core.error.reporter.ErrorReporter;
 import org.anchoranalysis.core.index.GetOperationFailedException;
@@ -131,7 +132,7 @@ public class ThreadedDisplayUpdateConsumer implements IDisplayUpdateRememberStac
 					currentDisplayStack = currentUpdate.getDisplayStack();
 				}
 
-			} catch (GetOperationFailedException e) {
+			} catch (BridgeElementException e) {
 				currentUpdate = null;
 				errorReporter.recordError(ThreadedDisplayUpdateConsumer.class, e);
 			} finally {

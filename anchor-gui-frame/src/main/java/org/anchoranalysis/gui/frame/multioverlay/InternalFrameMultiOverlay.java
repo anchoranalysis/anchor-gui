@@ -35,6 +35,7 @@ import java.util.Set;
 import org.anchoranalysis.anchor.overlay.Overlay;
 import org.anchoranalysis.anchor.overlay.OverlayedInstantState;
 import org.anchoranalysis.anchor.overlay.id.IDGetterOverlayID;
+import org.anchoranalysis.core.bridge.BridgeElementException;
 import org.anchoranalysis.core.bridge.IObjectBridgeIndex;
 import org.anchoranalysis.core.cache.ExecuteException;
 import org.anchoranalysis.core.error.InitException;
@@ -119,10 +120,12 @@ class InternalFrameMultiOverlay<InputType> {
 		return name -> sourceObject -> {
 			try {
 				return list.get(sourceObject).getNrgBackground().getBackgroundSet().doOperation(
-						ProgressReporterNull.get()
+					ProgressReporterNull.get()
 				).singleStack(name);
 			} catch (ExecuteException e) {
-				throw new GetOperationFailedException(e);
+				throw new BridgeElementException(e.getCause());
+			} catch (GetOperationFailedException e) {
+				throw new BridgeElementException(e);
 			}
 		};
 	}

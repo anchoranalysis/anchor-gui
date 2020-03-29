@@ -1,5 +1,7 @@
 package org.anchoranalysis.gui.frame.multiraster;
 
+import org.anchoranalysis.core.bridge.BridgeElementException;
+
 /*-
  * #%L
  * anchor-gui-frame
@@ -27,7 +29,6 @@ package org.anchoranalysis.gui.frame.multiraster;
  */
 
 import org.anchoranalysis.core.bridge.IObjectBridge;
-import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.image.stack.DisplayStack;
 
 // Ensure unsigned 8-bit
@@ -42,7 +43,7 @@ class EnsureUnsigned8Bit implements IObjectBridge<Integer,DisplayStack> {
 
 	@Override
 	public DisplayStack bridgeElement(Integer sourceObject)
-			throws GetOperationFailedException {
+			throws BridgeElementException {
 		return bridge.bridgeElement(sourceObject);
 	}
 	

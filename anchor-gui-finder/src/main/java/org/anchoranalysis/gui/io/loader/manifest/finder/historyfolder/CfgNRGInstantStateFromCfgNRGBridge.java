@@ -31,14 +31,11 @@ import org.anchoranalysis.anchor.mpp.feature.nrg.cfg.CfgNRG;
  */
 
 import org.anchoranalysis.core.bridge.IObjectBridgeIndex;
-import org.anchoranalysis.core.index.GetOperationFailedException;
 
 class CfgNRGInstantStateFromCfgNRGBridge implements IObjectBridgeIndex<CfgNRG, CfgNRGInstantState> {
 	
 	@Override
-	public CfgNRGInstantState bridgeElement(int index, CfgNRG sourceObject)
-			throws GetOperationFailedException {
-		
+	public CfgNRGInstantState bridgeElement(int index, CfgNRG sourceObject) {
 		return new CfgNRGNonHandleInstantState(index, sourceObject);
 	}
 }

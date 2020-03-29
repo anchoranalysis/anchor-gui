@@ -1,6 +1,7 @@
 package org.anchoranalysis.gui.frame.multioverlay.instantstate;
 
 import org.anchoranalysis.anchor.overlay.Overlay;
+import org.anchoranalysis.core.bridge.BridgeElementException;
 import org.anchoranalysis.core.bridge.IObjectBridge;
 import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.idgetter.IDGetter;
@@ -32,7 +33,6 @@ import org.anchoranalysis.core.idgetter.IDGetter;
  */
 
 
-import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.index.IIndexGettableSettable;
 import org.anchoranalysis.core.index.SetOperationFailedException;
 import org.anchoranalysis.core.index.container.IBoundedIndexContainer;
@@ -203,7 +203,7 @@ class InternalFrameOverlayedInstantStateToRGB {
 					sliderState.getIndex()
 				);
 				delegate.getRedrawable().applyRedrawUpdate( OverlayedDisplayStackUpdate.assignBackground(backgroundNew) );
-			} catch (GetOperationFailedException e) {
+			} catch (BridgeElementException e) {
 				throw new SetOperationFailedException(e);
 			}
 		};

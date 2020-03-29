@@ -28,7 +28,7 @@ package org.anchoranalysis.gui.videostats.dropdown.multicollection;
 
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.error.reporter.ErrorReporter;
-import org.anchoranalysis.core.index.GetOperationFailedException;
+import org.anchoranalysis.core.name.provider.NamedProviderGetException;
 import org.anchoranalysis.core.name.store.NamedProviderStore;
 import org.anchoranalysis.core.params.KeyValueParams;
 
@@ -42,8 +42,8 @@ class ParamsUtils {
 			if (paramsCollection.keys().contains("input_params")) {
 				try {
 					return paramsCollection.getNull("input_params");
-				} catch (GetOperationFailedException e) {
-					errorReporter.recordError(ParamsUtils.class, e);
+				} catch (NamedProviderGetException e) {
+					errorReporter.recordError(ParamsUtils.class, e.summarize());
 				}
 			}
 			
@@ -52,8 +52,8 @@ class ParamsUtils {
 		} else if (paramsCollection.keys().size()==1) {
 			try {
 				return paramsCollection.getException( paramsCollection.keys().iterator().next() );
-			} catch (GetOperationFailedException e) {
-				errorReporter.recordError(ParamsUtils.class, e );
+			} catch (NamedProviderGetException e) {
+				errorReporter.recordError(ParamsUtils.class, e.summarize() );
 				return new KeyValueParams();
 			}
 		} else {

@@ -38,10 +38,10 @@ import org.anchoranalysis.anchor.mpp.feature.instantstate.CfgNRGInstantState;
 import org.anchoranalysis.anchor.mpp.feature.nrg.NRGPair;
 import org.anchoranalysis.anchor.mpp.graph.NRGGraphItem;
 import org.anchoranalysis.anchor.mpp.mark.Mark;
+import org.anchoranalysis.core.bridge.BridgeElementException;
 import org.anchoranalysis.core.bridge.IObjectBridge;
 import org.anchoranalysis.core.color.ColorIndex;
 import org.anchoranalysis.core.error.CreateException;
-import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.feature.nrg.NRGTotal;
 import org.anchoranalysis.gui.graph.panel.ClickableGraphFactory;
 import org.anchoranalysis.gui.graph.panel.ClickableGraphInstance;
@@ -59,7 +59,7 @@ public class GenerateGraphNRGBreakdownFromInstantState implements IObjectBridge<
 	}
 
 	@Override
-	public ClickableGraphInstance bridgeElement(CfgNRGInstantState state) throws GetOperationFailedException {
+	public ClickableGraphInstance bridgeElement(CfgNRGInstantState state) throws BridgeElementException {
 		
 		if (state.getCfgNRG()!=null) {
 			ArrayList<NRGGraphItem> list;
@@ -72,7 +72,7 @@ public class GenerateGraphNRGBreakdownFromInstantState implements IObjectBridge<
 					new AxisLimits(-0.5, 1)
 				);
 			} catch (CreateException e) {
-				throw new GetOperationFailedException(e);
+				throw new BridgeElementException(e);
 			}
 			
 		} else {

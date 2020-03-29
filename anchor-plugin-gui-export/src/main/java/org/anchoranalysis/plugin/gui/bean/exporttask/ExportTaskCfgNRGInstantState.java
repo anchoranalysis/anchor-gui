@@ -5,6 +5,7 @@ package org.anchoranalysis.plugin.gui.bean.exporttask;
 import java.util.List;
 
 import org.anchoranalysis.anchor.mpp.feature.instantstate.CfgNRGInstantState;
+import org.anchoranalysis.core.bridge.BridgeElementException;
 
 /*
  * #%L
@@ -59,14 +60,18 @@ public class ExportTaskCfgNRGInstantState extends ExportTaskRasterGeneratorFromB
 		setBridge( s->convert(s) );
 	}
 
-	private IBoundedIndexContainer<DualStateWithoutIndex<CfgNRGInstantState>> convert( ExportTaskParams sourceObject ) throws GetOperationFailedException {
+	private IBoundedIndexContainer<DualStateWithoutIndex<CfgNRGInstantState>> convert( ExportTaskParams sourceObject ) throws BridgeElementException {
 		assert(sourceObject.numCfgNRGHistory()>0);
-		if (sourceObject.numCfgNRGHistory()==1) {
-			return createPrimaryOnly(sourceObject);
-		} else {
-			return createMergedBridge(sourceObject);
-		}
 		
+		try {
+			if (sourceObject.numCfgNRGHistory()==1) {
+				return createPrimaryOnly(sourceObject);
+			} else {
+				return createMergedBridge(sourceObject);
+			}
+		} catch (GetOperationFailedException e) {
+			throw new BridgeElementException(e);
+		}
 	}
 	
 	private IBoundedIndexContainer<DualStateWithoutIndex<CfgNRGInstantState>> createPrimaryOnly(ExportTaskParams sourceObject) throws GetOperationFailedException {

@@ -36,6 +36,7 @@ import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.log.LogErrorReporter;
+import org.anchoranalysis.core.name.provider.NamedProviderGetException;
 import org.anchoranalysis.core.name.store.NamedProviderStore;
 import org.anchoranalysis.gui.annotation.AnnotatorModuleCreator;
 import org.anchoranalysis.gui.annotation.strategy.MarkProposerStrategy;
@@ -117,7 +118,7 @@ public class MarkAnnotator {
 	private static PointsFitter extractPointsFitter( MarkProposerStrategy annotationStrategy, MPPInitParams soMPP ) throws CreateException {
 		try {
 			return soMPP.getPoints().getPointsFitterSet().getException(annotationStrategy.getPointsFitterName());
-		} catch (GetOperationFailedException e) {
+		} catch (NamedProviderGetException e) {
 			throw new CreateException(e);
 		}
 	}
@@ -125,9 +126,9 @@ public class MarkAnnotator {
 	private static MarkProposer setupGuess( MPPInitParams soMPP, MarkProposerStrategy annotationStrategy, LogErrorReporter logErrorReporter ) {
 		try {
 			return soMPP.getMarkProposerSet().getException(annotationStrategy.getMarkProposerName());
-		} catch (GetOperationFailedException e) {
+		} catch (NamedProviderGetException e) {
 			logErrorReporter.getLogReporter().log("Proceeding without 'Guess Tool' as an error occured");
-			logErrorReporter.getErrorReporter().recordError(AnnotatorModuleCreator.class, e);
+			logErrorReporter.getErrorReporter().recordError(AnnotatorModuleCreator.class, e.summarize().toString());
 			return null;
 		}
 	}
