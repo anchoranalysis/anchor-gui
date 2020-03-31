@@ -27,10 +27,9 @@ package org.anchoranalysis.gui.videostats.dropdown.common;
  */
 
 import org.anchoranalysis.core.cache.ExecuteException;
-import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.OperationFailedException;
-import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.name.provider.INamedProvider;
+import org.anchoranalysis.core.name.provider.NamedProviderGetException;
 import org.anchoranalysis.core.progress.OperationWithProgressReporter;
 import org.anchoranalysis.core.progress.ProgressReporter;
 import org.anchoranalysis.core.progress.ProgressReporterNull;
@@ -56,7 +55,7 @@ public class GuessNRGStackFromStacks implements OperationWithProgressReporter<NR
 			
 			return new NRGStackWithParams(stack);
 			
-		} catch (CreateException | OperationFailedException e) {
+		} catch (OperationFailedException e) {
 			throw new ExecuteException(e);
 		}
 	}
@@ -68,8 +67,10 @@ public class GuessNRGStackFromStacks implements OperationWithProgressReporter<NR
 			
 			// If a time sequence, assume nrg stack is always t=0
 			return stacks.getException(arbitraryKey);
-		} catch (ExecuteException | GetOperationFailedException e) {
+		} catch (ExecuteException e) {
 			throw new OperationFailedException(e);
+		} catch (NamedProviderGetException e) {
+			throw new OperationFailedException(e.summarize());
 		}
 	}
 

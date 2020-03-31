@@ -33,7 +33,7 @@ import org.anchoranalysis.core.geometry.Point3d;
 import org.anchoranalysis.gui.annotation.WrapAction;
 import org.anchoranalysis.gui.frame.details.canvas.ControllerKeyboard;
 import org.anchoranalysis.gui.frame.details.canvas.ControllerMouse;
-import org.anchoranalysis.gui.image.frame.canvas.ISliderState;
+import org.anchoranalysis.gui.image.frame.ISliderState;
 import org.anchoranalysis.gui.videostats.internalframe.annotator.navigation.PanelMark;
 import org.anchoranalysis.gui.videostats.internalframe.annotator.navigation.PanelTool;
 

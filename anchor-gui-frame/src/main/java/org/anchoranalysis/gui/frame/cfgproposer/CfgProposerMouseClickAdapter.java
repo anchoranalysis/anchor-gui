@@ -33,9 +33,11 @@ import java.awt.event.MouseEvent;
 
 import javax.swing.event.EventListenerList;
 
+import org.anchoranalysis.anchor.mpp.cfg.Cfg;
 import org.anchoranalysis.anchor.mpp.overlay.OverlayCollectionMarkFactory;
 import org.anchoranalysis.anchor.mpp.proposer.ProposalAbnormalFailureException;
 import org.anchoranalysis.anchor.mpp.proposer.ProposerContext;
+import org.anchoranalysis.anchor.mpp.proposer.error.ErrorNodeNull;
 import org.anchoranalysis.anchor.mpp.proposer.error.ProposerFailureDescription;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.error.reporter.ErrorReporter;
@@ -44,13 +46,11 @@ import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.random.RandomNumberGenerator;
 import org.anchoranalysis.gui.frame.overlays.IExtractOverlays;
 import org.anchoranalysis.gui.frame.overlays.ProposedCfg;
-import org.anchoranalysis.gui.image.frame.canvas.ISliderState;
+import org.anchoranalysis.gui.image.frame.ISliderState;
 import org.anchoranalysis.gui.videostats.internalframe.ProposalOperation;
 import org.anchoranalysis.gui.videostats.internalframe.evaluator.EvaluatorWithContext;
 import org.anchoranalysis.gui.videostats.internalframe.evaluator.EvaluatorWithContextGetter;
 import org.anchoranalysis.gui.videostats.internalframe.evaluator.ProposalOperationCreator;
-
-import ch.ethz.biol.cell.mpp.cfg.Cfg;
 
 public class CfgProposerMouseClickAdapter extends MouseAdapter {
 
@@ -85,8 +85,8 @@ public class CfgProposerMouseClickAdapter extends MouseAdapter {
 			return;
 		}
 		
-		int modifiers = arg0.getModifiersEx();
-	    if ((modifiers & InputEvent.BUTTON1_DOWN_MASK) != InputEvent.BUTTON1_DOWN_MASK) {
+		int modifiers = arg0.getModifiers();
+	    if ((modifiers & InputEvent.BUTTON1_MASK) != InputEvent.BUTTON1_MASK) {
 	    	// If it's not the left mouse button, we ignore it
 	    	return;
 	    }
@@ -152,7 +152,7 @@ public class CfgProposerMouseClickAdapter extends MouseAdapter {
 					re,
 					evaluatorWithContext.getNrgStack(),
 					evaluatorWithContext.getRegionMap(),
-					null	// ignored
+					ErrorNodeNull.instance()
 				);
 				
 				final ProposalOperation proposalOperation = evaluator.create(

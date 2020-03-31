@@ -31,11 +31,11 @@ import java.util.List;
 
 import org.anchoranalysis.annotation.AnnotationWithCfg;
 import org.anchoranalysis.annotation.io.bean.comparer.MultipleComparer;
+import org.anchoranalysis.core.bridge.BridgeElementException;
 import org.anchoranalysis.core.bridge.IObjectBridge;
 import org.anchoranalysis.core.cache.ExecuteException;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.OperationFailedException;
-import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.log.LogErrorReporter;
 import org.anchoranalysis.core.name.value.INameValue;
 import org.anchoranalysis.gui.annotation.AnnotatorModuleCreator;
@@ -87,7 +87,7 @@ public class ShowComparers {
 				logErrorReporter,
 				false
 			);
-		} catch (CreateException | GetOperationFailedException e1) {
+		} catch (CreateException | BridgeElementException e1) {
 			logErrorReporter.getErrorReporter().recordError(AnnotatorModuleCreator.class, e1);
 			return;
 		}

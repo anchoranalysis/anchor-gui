@@ -32,7 +32,7 @@ import java.util.List;
 import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.gui.frame.multiraster.InternalFrameMultiRaster;
 import org.anchoranalysis.gui.frame.multiraster.NamedRasterSet;
-import org.anchoranalysis.gui.image.frame.canvas.ISliderState;
+import org.anchoranalysis.gui.image.frame.ISliderState;
 import org.anchoranalysis.gui.videostats.dropdown.IAddVideoStatsModule;
 import org.anchoranalysis.gui.videostats.dropdown.VideoStatsModuleGlobalParams;
 import org.anchoranalysis.gui.videostats.module.VideoStatsModule;

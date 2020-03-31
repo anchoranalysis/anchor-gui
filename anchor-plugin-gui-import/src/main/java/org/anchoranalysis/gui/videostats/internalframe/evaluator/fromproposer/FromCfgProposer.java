@@ -1,6 +1,7 @@
 package org.anchoranalysis.gui.videostats.internalframe.evaluator.fromproposer;
 
 import org.anchoranalysis.anchor.mpp.bean.init.MPPInitParams;
+import org.anchoranalysis.anchor.mpp.bean.proposer.CfgProposer;
 import org.anchoranalysis.core.name.provider.INamedProvider;
 
 /*
@@ -32,8 +33,6 @@ import org.anchoranalysis.core.name.provider.INamedProvider;
 
 import org.anchoranalysis.gui.videostats.internalframe.evaluator.ProposalOperationCreator;
 import org.anchoranalysis.gui.videostats.internalframe.markredraw.CfgProposerEvaluator;
-
-import ch.ethz.biol.cell.mpp.cfg.proposer.CfgProposer;
 
 public class FromCfgProposer extends ProposalOperationCreatorFromProposer<CfgProposer> {
 

@@ -1,5 +1,6 @@
 package org.anchoranalysis.gui.videostats.dropdown.modulecreator.graph;
 
+import org.anchoranalysis.anchor.mpp.feature.nrg.cfg.CfgNRGPixelized;
 import org.anchoranalysis.core.error.InitException;
 
 /*
@@ -43,8 +44,6 @@ import org.anchoranalysis.gui.videostats.modulecreator.VideoStatsModuleCreatorCo
 import org.anchoranalysis.io.manifest.finder.FinderSerializedObject;
 import org.anchoranalysis.mpp.sgmn.bean.kernel.proposer.KernelProposer;
 import org.anchoranalysis.mpp.sgmn.kernel.proposer.KernelIterDescription;
-
-import ch.ethz.biol.cell.mpp.nrg.CfgNRGPixelized;
 
 public class KernelIterDescriptionModuleCreator extends VideoStatsModuleCreatorContext {
 

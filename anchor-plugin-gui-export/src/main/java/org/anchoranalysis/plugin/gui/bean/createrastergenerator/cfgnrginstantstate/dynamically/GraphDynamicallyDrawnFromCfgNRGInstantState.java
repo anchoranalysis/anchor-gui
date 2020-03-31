@@ -1,5 +1,6 @@
 package org.anchoranalysis.plugin.gui.bean.createrastergenerator.cfgnrginstantstate.dynamically;
 
+import org.anchoranalysis.anchor.mpp.feature.instantstate.CfgNRGInstantState;
 import org.anchoranalysis.core.bridge.IObjectBridge;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.index.GetOperationFailedException;
@@ -39,8 +40,6 @@ import org.anchoranalysis.io.generator.IterableObjectGeneratorBridge;
 import org.anchoranalysis.plugin.gui.bean.createrastergenerator.CreateRasterGraph;
 import org.anchoranalysis.plugin.gui.bean.createrastergenerator.csvstatistic.GraphDynamicallyDrawnFromCSVStatistic;
 import org.anchoranalysis.plugin.gui.bean.exporttask.MappedFrom;
-
-import ch.ethz.biol.cell.mpp.instantstate.CfgNRGInstantState;
 
 
 /**

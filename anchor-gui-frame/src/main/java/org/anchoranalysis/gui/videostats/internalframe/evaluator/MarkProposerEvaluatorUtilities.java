@@ -30,16 +30,15 @@ package org.anchoranalysis.gui.videostats.internalframe.evaluator;
 import java.awt.Color;
 
 import org.anchoranalysis.anchor.mpp.bean.proposer.MarkProposer;
+import org.anchoranalysis.anchor.mpp.cfg.ColoredCfg;
 import org.anchoranalysis.anchor.mpp.mark.Mark;
 import org.anchoranalysis.anchor.mpp.mark.MarkAbstractPosition;
+import org.anchoranalysis.anchor.mpp.mark.conic.MarkConicFactory;
 import org.anchoranalysis.anchor.mpp.proposer.visualization.ICreateProposalVisualization;
 import org.anchoranalysis.core.color.RGBColor;
 import org.anchoranalysis.core.geometry.Point3d;
 import org.anchoranalysis.core.random.RandomNumberGenerator;
 import org.anchoranalysis.image.extent.ImageDim;
-
-import ch.ethz.biol.cell.mpp.gui.videostats.internalframe.evaluator.EvaluatorUtilities;
-import ch.ethz.biol.cell.mpp.gui.videostats.internalframe.markredraw.ColoredCfg;
 
 public class MarkProposerEvaluatorUtilities {
 
@@ -75,7 +74,7 @@ public class MarkProposerEvaluatorUtilities {
 	}
 	
 	private static void addMaskAtMousePoint(Point3d position, ColoredCfg cfg, boolean do3D) {
-		Mark mousePoint = EvaluatorUtilities.createMarkFromPoint3d(position, 1, do3D);
+		Mark mousePoint = MarkConicFactory.createMarkFromPoint3d(position, 1, do3D);
 		cfg.addChangeID(mousePoint, new RGBColor(Color.GREEN) );
 	}
 }

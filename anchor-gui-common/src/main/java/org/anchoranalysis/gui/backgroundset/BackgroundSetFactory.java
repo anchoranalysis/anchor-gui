@@ -29,6 +29,7 @@ package org.anchoranalysis.gui.backgroundset;
 
 import java.util.Set;
 
+import org.anchoranalysis.core.bridge.BridgeElementException;
 import org.anchoranalysis.core.bridge.IObjectBridge;
 import org.anchoranalysis.core.cache.CachedOperation;
 import org.anchoranalysis.core.cache.ExecuteException;
@@ -39,6 +40,7 @@ import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.index.container.IBoundedIndexContainer;
 import org.anchoranalysis.core.index.container.bridge.BoundedIndexContainerBridgeWithoutIndex;
 import org.anchoranalysis.core.name.provider.INamedProvider;
+import org.anchoranalysis.core.name.provider.NamedProviderGetException;
 import org.anchoranalysis.core.progress.ProgressReporter;
 import org.anchoranalysis.core.progress.ProgressReporterIncrement;
 import org.anchoranalysis.gui.container.background.BackgroundStackCntr;
@@ -118,9 +120,13 @@ public class BackgroundSetFactory {
 
 				@Override
 				public DisplayStack bridgeElement(
-						MarkWithRaster sourceObject) throws GetOperationFailedException {
+						MarkWithRaster sourceObject) throws BridgeElementException {
 					assert(sourceObject!=null);
-					return sourceObject.getBackgroundSet().singleStack(name);
+					try {
+						return sourceObject.getBackgroundSet().singleStack(name);
+					} catch (GetOperationFailedException e) {
+						throw new BridgeElementException(e);
+					}
 				}
 			}
 		);		
@@ -155,7 +161,7 @@ public class BackgroundSetFactory {
 					);
 				}
 
-			} catch (OperationFailedException | GetOperationFailedException e) {
+			} catch (OperationFailedException | NamedProviderGetException e) {
 				throw new ExecuteException(e);
 			}
 		}
@@ -196,8 +202,8 @@ public class BackgroundSetFactory {
 	private static ImageDim guessDimensions( INamedProvider<TimeSequence> imageStackCollection ) throws OperationFailedException {
 		try {
 			return imageStackCollection.getException( imageStackCollection.keys().iterator().next() ).getDimensions();
-		} catch (GetOperationFailedException e) {
-			throw new OperationFailedException(e);
+		} catch (NamedProviderGetException e) {
+			throw new OperationFailedException(e.summarize());
 		}
 	}
 	
@@ -244,8 +250,8 @@ public class BackgroundSetFactory {
 				pri.update();
 			}
 			
-		} catch (GetOperationFailedException e) {
-			throw new OperationFailedException(e);
+		} catch (NamedProviderGetException e) {
+			throw new OperationFailedException( e.summarize() );
 		} finally {
 			pri.close();
 		}

@@ -1,5 +1,7 @@
 package org.anchoranalysis.gui.graph.creator;
 
+import org.anchoranalysis.anchor.mpp.graph.execution.KernelExecutionTimeAllEach;
+
 /*-
  * #%L
  * anchor-gui-graph
@@ -27,8 +29,6 @@ package org.anchoranalysis.gui.graph.creator;
  */
 
 import org.anchoranalysis.core.index.IIndexGetter;
-
-import ch.ethz.biol.cell.mpp.gui.graph.jfreechart.bar.KernelExecutionTimeAllEach;
 
 public class IterAndExecutionTime implements IIndexGetter {
 

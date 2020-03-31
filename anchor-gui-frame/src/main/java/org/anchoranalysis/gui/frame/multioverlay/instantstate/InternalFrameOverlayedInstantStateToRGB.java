@@ -1,6 +1,7 @@
 package org.anchoranalysis.gui.frame.multioverlay.instantstate;
 
 import org.anchoranalysis.anchor.overlay.Overlay;
+import org.anchoranalysis.core.bridge.BridgeElementException;
 import org.anchoranalysis.core.bridge.IObjectBridge;
 import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.idgetter.IDGetter;
@@ -32,7 +33,6 @@ import org.anchoranalysis.core.idgetter.IDGetter;
  */
 
 
-import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.index.IIndexGettableSettable;
 import org.anchoranalysis.core.index.SetOperationFailedException;
 import org.anchoranalysis.core.index.container.IBoundedIndexContainer;
@@ -41,8 +41,11 @@ import org.anchoranalysis.gui.frame.details.IGenerateExtraDetail;
 import org.anchoranalysis.gui.frame.details.canvas.ControllerAction;
 import org.anchoranalysis.gui.frame.details.canvas.InternalFrameCanvas;
 import org.anchoranalysis.gui.frame.details.canvas.controller.imageview.ControllerImageView;
+import org.anchoranalysis.gui.frame.display.IRedrawable;
+import org.anchoranalysis.gui.frame.display.OverlayedDisplayStackUpdate;
+import org.anchoranalysis.gui.frame.display.overlay.OverlayRetriever;
 import org.anchoranalysis.gui.frame.threaded.overlay.InternalFrameThreadedOverlayProvider;
-import org.anchoranalysis.gui.image.frame.canvas.ISliderState;
+import org.anchoranalysis.gui.image.frame.ISliderState;
 import org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.ControllerPopupMenuWithBackground;
 import org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.IBackgroundSetter;
 import org.anchoranalysis.gui.retrieveelements.IRetrieveElements;
@@ -57,10 +60,6 @@ import org.anchoranalysis.image.extent.ImageDim;
 import org.anchoranalysis.image.stack.DisplayStack;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-
-import ch.ethz.biol.cell.gui.overlay.OverlayRetriever;
-import ch.ethz.biol.cell.imageprocessing.io.generator.raster.OverlayedDisplayStackUpdate;
-import ch.ethz.biol.cell.mpp.gui.videostats.internalframe.cfgtorgb.IRedrawable;
 
 class InternalFrameOverlayedInstantStateToRGB {
 
@@ -204,7 +203,7 @@ class InternalFrameOverlayedInstantStateToRGB {
 					sliderState.getIndex()
 				);
 				delegate.getRedrawable().applyRedrawUpdate( OverlayedDisplayStackUpdate.assignBackground(backgroundNew) );
-			} catch (GetOperationFailedException e) {
+			} catch (BridgeElementException e) {
 				throw new SetOperationFailedException(e);
 			}
 		};

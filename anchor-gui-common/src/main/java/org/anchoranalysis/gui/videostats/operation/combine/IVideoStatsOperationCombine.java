@@ -1,5 +1,7 @@
 package org.anchoranalysis.gui.videostats.operation.combine;
 
+import org.anchoranalysis.anchor.mpp.cfg.Cfg;
+
 /*
  * #%L
  * anchor-gui
@@ -30,8 +32,6 @@ package org.anchoranalysis.gui.videostats.operation.combine;
 import org.anchoranalysis.core.cache.Operation;
 import org.anchoranalysis.gui.videostats.dropdown.common.NRGBackground;
 import org.anchoranalysis.image.objmask.ObjMaskCollection;
-
-import ch.ethz.biol.cell.mpp.cfg.Cfg;
 
 // 
 /**

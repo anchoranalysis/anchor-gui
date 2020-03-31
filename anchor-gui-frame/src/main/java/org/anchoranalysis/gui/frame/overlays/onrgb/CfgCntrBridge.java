@@ -1,5 +1,7 @@
 package org.anchoranalysis.gui.frame.overlays.onrgb;
 
+import org.anchoranalysis.core.bridge.BridgeElementException;
+
 /*-
  * #%L
  * anchor-gui-frame
@@ -42,7 +44,11 @@ class CfgCntrBridge implements IObjectBridge<Integer,OverlayedDisplayStack> {
 
 	@Override
 	public OverlayedDisplayStack bridgeElement(Integer sourceObject)
-			throws GetOperationFailedException {
-		return cfgCntr.get(0);
+			throws BridgeElementException {
+		try {
+			return cfgCntr.get(0);
+		} catch (GetOperationFailedException e) {
+			throw new BridgeElementException(e);
+		}
 	}
 }

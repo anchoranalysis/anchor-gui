@@ -4,7 +4,7 @@ package org.anchoranalysis.gui.frame.overlays;
  * #%L
  * anchor-gui-frame
  * %%
- * Copyright (C) 2010 - 2019 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann la Roche
+ * Copyright (C) 2010 - 2020 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann la Roche
  * %%
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -26,7 +26,7 @@ package org.anchoranalysis.gui.frame.overlays;
  * #L%
  */
 
-import ch.ethz.biol.cell.mpp.cfg.Cfg;
+import org.anchoranalysis.anchor.mpp.cfg.Cfg;
 
 @FunctionalInterface
 public interface IShowEvaluationResult {

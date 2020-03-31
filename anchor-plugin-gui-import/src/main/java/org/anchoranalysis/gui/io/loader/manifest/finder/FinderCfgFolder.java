@@ -29,6 +29,7 @@ package org.anchoranalysis.gui.io.loader.manifest.finder;
 
 import java.util.List;
 
+import org.anchoranalysis.anchor.mpp.cfg.Cfg;
 import org.anchoranalysis.core.cache.CachedOperation;
 import org.anchoranalysis.core.cache.ExecuteException;
 import org.anchoranalysis.core.error.OperationFailedException;
@@ -48,8 +49,6 @@ import org.anchoranalysis.io.manifest.match.FolderWriteAnd;
 import org.anchoranalysis.io.manifest.match.FolderWritePath;
 import org.anchoranalysis.io.manifest.match.helper.folderwrite.FolderWriteFileFunctionType;
 import org.anchoranalysis.io.manifest.sequencetype.SequenceType;
-
-import ch.ethz.biol.cell.mpp.cfg.Cfg;
 
 public class FinderCfgFolder extends FinderSingleFolder {
 

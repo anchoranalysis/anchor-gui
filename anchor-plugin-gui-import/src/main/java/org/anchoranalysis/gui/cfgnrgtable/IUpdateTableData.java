@@ -1,10 +1,10 @@
 package org.anchoranalysis.gui.cfgnrgtable;
 
-/*
+/*-
  * #%L
- * anchor-gui
+ * anchor-plugin-gui-import
  * %%
- * Copyright (C) 2016 ETH Zurich, University of Zurich, Owen Feehan
+ * Copyright (C) 2010 - 2020 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann la Roche
  * %%
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -26,8 +26,7 @@ package org.anchoranalysis.gui.cfgnrgtable;
  * #L%
  */
 
-
-import ch.ethz.biol.cell.mpp.instantstate.CfgNRGInstantState;
+import org.anchoranalysis.anchor.mpp.feature.instantstate.CfgNRGInstantState;
 
 public interface IUpdateTableData {
 	void updateTableData( CfgNRGInstantState state );

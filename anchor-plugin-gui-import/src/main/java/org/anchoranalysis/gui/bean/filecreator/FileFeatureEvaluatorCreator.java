@@ -29,6 +29,7 @@ package org.anchoranalysis.gui.bean.filecreator;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.anchoranalysis.anchor.mpp.feature.bean.nrgscheme.NRGSchemeCreator;
 import org.anchoranalysis.bean.NamedBean;
 import org.anchoranalysis.bean.annotation.BeanField;
 import org.anchoranalysis.bean.annotation.NonEmpty;
@@ -48,8 +49,6 @@ import org.anchoranalysis.gui.videostats.dropdown.VideoStatsModuleGlobalParams;
 import org.anchoranalysis.gui.videostats.module.VideoStatsModule;
 import org.anchoranalysis.gui.videostats.module.VideoStatsModuleCreateException;
 import org.anchoranalysis.gui.videostats.modulecreator.FeatureEvaluatorCreator;
-
-import ch.ethz.biol.cell.mpp.nrg.nrgscheme.creator.NRGSchemeCreator;
 
 /**
  * Creates a feature-evaluator for a particular list of features 

@@ -33,7 +33,7 @@ import java.awt.Dimension;
 import javax.swing.JInternalFrame;
 
 import org.anchoranalysis.core.property.change.PropertyValueChangeListener;
-import org.anchoranalysis.gui.frame.details.canvas.ControllerSize;
+import org.anchoranalysis.gui.image.frame.ControllerSize;
 import org.anchoranalysis.gui.videostats.IModuleCreatorDefaultState;
 import org.anchoranalysis.gui.videostats.link.LinkModules;
 import org.anchoranalysis.gui.videostats.module.VideoStatsModule;

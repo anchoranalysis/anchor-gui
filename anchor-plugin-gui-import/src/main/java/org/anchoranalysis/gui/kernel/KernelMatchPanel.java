@@ -34,6 +34,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import org.anchoranalysis.anchor.mpp.feature.nrg.cfg.CfgNRGPixelized;
 import org.anchoranalysis.core.index.IndicesSelection;
 import org.anchoranalysis.gui.kernel.match.MatchKernel;
 import org.anchoranalysis.gui.kernel.match.MatchKernelAccptd;
@@ -45,8 +46,6 @@ import org.anchoranalysis.gui.kernel.match.MatchKernelExecutionTimeGreaterThanEq
 import org.anchoranalysis.gui.kernel.match.MatchKernelProp;
 import org.anchoranalysis.mpp.sgmn.bean.kernel.proposer.KernelProposer;
 import org.anchoranalysis.mpp.sgmn.kernel.proposer.WeightedKernel;
-
-import ch.ethz.biol.cell.mpp.nrg.CfgNRGPixelized;
 
 public class KernelMatchPanel {
 

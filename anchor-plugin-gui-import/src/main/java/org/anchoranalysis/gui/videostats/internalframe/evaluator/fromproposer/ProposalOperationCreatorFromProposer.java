@@ -31,8 +31,8 @@ import java.util.Set;
 
 import org.anchoranalysis.anchor.mpp.bean.init.MPPInitParams;
 import org.anchoranalysis.core.error.CreateException;
-import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.name.provider.INamedProvider;
+import org.anchoranalysis.core.name.provider.NamedProviderGetException;
 import org.anchoranalysis.gui.videostats.internalframe.evaluator.ProposalOperationCreator;
 
 public abstract class ProposalOperationCreatorFromProposer<T> 
@@ -51,7 +51,7 @@ public abstract class ProposalOperationCreatorFromProposer<T>
 		return set.keys();
 	}
 	
-	private T getItem( String itemName ) throws GetOperationFailedException {
+	private T getItem( String itemName ) throws NamedProviderGetException {
 		return set.getException( itemName );
 	}
 	
@@ -59,7 +59,7 @@ public abstract class ProposalOperationCreatorFromProposer<T>
 		try {
 			T proposer = getItem(itemName);
 			return creatorFromProposer(proposer);
-		} catch (GetOperationFailedException e) {
+		} catch (NamedProviderGetException e) {
 			throw new CreateException(e);
 		}
 	}

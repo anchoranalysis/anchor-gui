@@ -33,16 +33,16 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.EventListenerList;
 
+import org.anchoranalysis.core.bridge.BridgeElementException;
 import org.anchoranalysis.core.bridge.IObjectBridge;
 import org.anchoranalysis.core.error.reporter.ErrorReporter;
 import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.index.IIndexGettableSettable;
 import org.anchoranalysis.gui.displayupdate.IDisplayUpdateRememberStack;
+import org.anchoranalysis.gui.frame.display.BoundOverlayedDisplayStack;
+import org.anchoranalysis.gui.frame.display.DisplayUpdate;
 import org.anchoranalysis.gui.videostats.threading.InteractiveThreadPool;
 import org.anchoranalysis.gui.videostats.threading.InteractiveWorker;
-
-import ch.ethz.biol.cell.gui.image.provider.DisplayUpdate;
-import ch.ethz.biol.cell.gui.image.provider.BoundOverlayedDisplayStack;
 
 /**
  * Retrieves DisplayUpdates when an index is changed, or when an explicit update command is set.
@@ -132,7 +132,7 @@ public class ThreadedDisplayUpdateConsumer implements IDisplayUpdateRememberStac
 					currentDisplayStack = currentUpdate.getDisplayStack();
 				}
 
-			} catch (GetOperationFailedException e) {
+			} catch (BridgeElementException e) {
 				currentUpdate = null;
 				errorReporter.recordError(ThreadedDisplayUpdateConsumer.class, e);
 			} finally {

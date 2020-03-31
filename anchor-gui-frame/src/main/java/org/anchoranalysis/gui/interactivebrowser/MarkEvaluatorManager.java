@@ -1,5 +1,7 @@
 package org.anchoranalysis.gui.interactivebrowser;
 
+
+
 /*
  * #%L
  * anchor-gui
@@ -31,15 +33,14 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+import org.anchoranalysis.anchor.mpp.bean.init.GeneralInitParams;
+import org.anchoranalysis.anchor.mpp.feature.bean.mark.MarkEvaluator;
 import org.anchoranalysis.core.cache.Operation;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.OperationFailedException;
-import org.anchoranalysis.core.log.LogErrorReporter;
 import org.anchoranalysis.core.name.provider.INamedProvider;
 import org.anchoranalysis.core.params.KeyValueParams;
 import org.anchoranalysis.core.progress.OperationWithProgressReporter;
-import org.anchoranalysis.core.random.RandomNumberGenerator;
-import org.anchoranalysis.gui.bean.mpp.MarkEvaluator;
 import org.anchoranalysis.image.stack.Stack;
 
 // Manages the various MarkEvaluators that are available in the application
@@ -47,13 +48,11 @@ public class MarkEvaluatorManager {
 
 	private Map<String,MarkEvaluator> map = new HashMap<>(); 
 
-	private LogErrorReporter logErrorReporter;
-	private RandomNumberGenerator re;
+	private GeneralInitParams paramsGeneral;
 	
-	public MarkEvaluatorManager(LogErrorReporter logErrorReporter, RandomNumberGenerator re) {
+	public MarkEvaluatorManager( GeneralInitParams paramsGeneral ) {
 		super();
-		this.logErrorReporter = logErrorReporter;
-		this.re = re;
+		this.paramsGeneral = paramsGeneral;
 	}
 
 	public Set<String> keySet() {
@@ -69,8 +68,7 @@ public class MarkEvaluatorManager {
 			MarkEvaluatorSetForImage out = new MarkEvaluatorSetForImage(
 				namedImgStackCollection,
 				keyParams,
-				logErrorReporter,
-				re
+				paramsGeneral
 			);
 			
 			for( String key : map.keySet()) {

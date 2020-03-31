@@ -28,6 +28,7 @@ package org.anchoranalysis.gui.annotation.opener;
 
 import java.nio.file.Path;
 
+import org.anchoranalysis.anchor.mpp.cfg.Cfg;
 import org.anchoranalysis.annotation.AnnotationWithCfg;
 import org.anchoranalysis.annotation.io.mark.MarkAnnotationReader;
 import org.anchoranalysis.annotation.mark.MarkAnnotation;
@@ -39,8 +40,6 @@ import org.anchoranalysis.gui.videostats.internalframe.annotator.currentstate.Du
 import org.anchoranalysis.gui.videostats.module.VideoStatsModuleCreateException;
 import org.anchoranalysis.io.deserializer.DeserializationFailedException;
 import org.anchoranalysis.io.error.AnchorIOException;
-
-import ch.ethz.biol.cell.mpp.cfg.Cfg;
 
 public class OpenAnnotationMPP implements IOpenAnnotation {
 	

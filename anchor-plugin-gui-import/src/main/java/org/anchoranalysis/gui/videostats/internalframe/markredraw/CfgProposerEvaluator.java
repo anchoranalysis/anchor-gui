@@ -1,5 +1,11 @@
 package org.anchoranalysis.gui.videostats.internalframe.markredraw;
 
+import java.awt.Color;
+
+import org.anchoranalysis.anchor.mpp.bean.cfg.CfgGen;
+import org.anchoranalysis.anchor.mpp.bean.proposer.CfgProposer;
+import org.anchoranalysis.anchor.mpp.cfg.Cfg;
+import org.anchoranalysis.anchor.mpp.cfg.ColoredCfg;
 import org.anchoranalysis.anchor.mpp.mark.Mark;
 import org.anchoranalysis.anchor.mpp.proposer.ProposalAbnormalFailureException;
 
@@ -31,16 +37,12 @@ import org.anchoranalysis.anchor.mpp.proposer.ProposalAbnormalFailureException;
 
 import org.anchoranalysis.anchor.mpp.proposer.ProposerContext;
 import org.anchoranalysis.anchor.mpp.proposer.error.ErrorNode;
+import org.anchoranalysis.core.color.ColorList;
+import org.anchoranalysis.core.color.RGBColor;
 import org.anchoranalysis.core.geometry.Point3d;
 import org.anchoranalysis.gui.frame.overlays.ProposedCfg;
 import org.anchoranalysis.gui.videostats.internalframe.ProposalOperation;
 import org.anchoranalysis.gui.videostats.internalframe.evaluator.ProposalOperationCreator;
-
-import ch.ethz.biol.cell.mpp.cfg.Cfg;
-import ch.ethz.biol.cell.mpp.cfg.CfgGen;
-import ch.ethz.biol.cell.mpp.cfg.proposer.CfgProposer;
-import ch.ethz.biol.cell.mpp.gui.videostats.internalframe.evaluator.EvaluatorUtilities;
-import ch.ethz.biol.cell.mpp.gui.videostats.internalframe.markredraw.ColoredCfg;
 
 public class CfgProposerEvaluator implements ProposalOperationCreator {
 
@@ -65,7 +67,7 @@ public class CfgProposerEvaluator implements ProposalOperationCreator {
 			m.setId(0);
 		}
 		
-		return new ColoredCfg(cfgNew, EvaluatorUtilities.createDefaultColorList() );
+		return new ColoredCfg(cfgNew, createDefaultColorList() );
 	}
 
 	@Override
@@ -106,5 +108,14 @@ public class CfgProposerEvaluator implements ProposalOperationCreator {
 		
 		//lastMark = m;
 		return doProposal;
+	}
+	
+	private static ColorList createDefaultColorList() {
+		ColorList colorList = new ColorList();
+		colorList.add( new RGBColor(Color.BLUE) );		//  0 is the mark added
+		colorList.add( new RGBColor(Color.RED) );		//  1 is any debug marks
+		colorList.add( new RGBColor(Color.GREEN) );		//  2 centre point
+		colorList.add( new RGBColor(Color.YELLOW) );
+		return colorList;
 	}
 }

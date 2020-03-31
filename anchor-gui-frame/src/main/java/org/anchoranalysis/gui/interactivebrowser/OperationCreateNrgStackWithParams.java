@@ -33,8 +33,8 @@ import org.anchoranalysis.core.cache.CachedOperation;
 import org.anchoranalysis.core.cache.ExecuteException;
 import org.anchoranalysis.core.cache.Operation;
 import org.anchoranalysis.core.error.CreateException;
-import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.name.provider.INamedProvider;
+import org.anchoranalysis.core.name.provider.NamedProviderGetException;
 import org.anchoranalysis.core.params.KeyValueParams;
 import org.anchoranalysis.core.progress.OperationWithProgressReporter;
 import org.anchoranalysis.core.progress.ProgressReporter;
@@ -100,7 +100,9 @@ class OperationCreateNrgStackWithParams extends CachedOperation<NRGStackWithPara
 				return null;
 			}
 			
-		} catch (ExecuteException | GetOperationFailedException e) {
+		} catch (ExecuteException e) {
+			throw new CreateException(e.getCause());
+		} catch( NamedProviderGetException e) {
 			throw new CreateException(e);
 		}
 	}

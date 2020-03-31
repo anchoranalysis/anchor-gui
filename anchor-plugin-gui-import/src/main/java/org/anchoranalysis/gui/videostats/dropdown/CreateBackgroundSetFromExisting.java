@@ -36,11 +36,10 @@ import org.anchoranalysis.core.progress.OperationWithProgressReporter;
 import org.anchoranalysis.core.progress.ProgressReporter;
 import org.anchoranalysis.gui.backgroundset.BackgroundSet;
 import org.anchoranalysis.gui.backgroundset.BackgroundSetFactory;
+import org.anchoranalysis.image.init.CreateCombinedStack;
 import org.anchoranalysis.image.init.ImageInitParams;
 import org.anchoranalysis.image.stack.wrap.WrapStackAsTimeSequence;
 import org.anchoranalysis.io.output.bean.OutputWriteSettings;
-
-import ch.ethz.biol.cell.countchrom.experiment.SharedObjectsUtilities;
 
 public class CreateBackgroundSetFromExisting extends CachedOperationWithProgressReporter<BackgroundSet> {
 
@@ -69,7 +68,7 @@ public class CreateBackgroundSetFromExisting extends CachedOperationWithProgress
 			
 			return BackgroundSetFactory.createBackgroundSetFromExisting(
 				bsExisting,
-				new WrapStackAsTimeSequence( SharedObjectsUtilities.createCombinedStacks(soImage) ),
+				new WrapStackAsTimeSequence( CreateCombinedStack.apply(soImage) ),
 				ows,
 				progressReporter
 			);

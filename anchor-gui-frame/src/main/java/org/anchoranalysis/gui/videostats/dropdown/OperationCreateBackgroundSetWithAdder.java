@@ -1,5 +1,6 @@
 package org.anchoranalysis.gui.videostats.dropdown;
 
+import org.anchoranalysis.core.bridge.BridgeElementException;
 import org.anchoranalysis.core.bridge.IObjectBridge;
 
 /*
@@ -135,7 +136,7 @@ public class OperationCreateBackgroundSetWithAdder extends CachedOperationWithPr
 		DisplayStack initialStack;
 		try {
 			initialStack = initialBackground.bridgeElement(0);
-		} catch (GetOperationFailedException e) {
+		} catch (BridgeElementException e) {
 			throw new ExecuteException( new OperationFailedException("Cannot set defaultModuleState background: " + e) );
 		}
 		

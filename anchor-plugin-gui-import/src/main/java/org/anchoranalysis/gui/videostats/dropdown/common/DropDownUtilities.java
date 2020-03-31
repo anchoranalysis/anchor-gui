@@ -2,6 +2,8 @@ package org.anchoranalysis.gui.videostats.dropdown.common;
 
 
 
+import org.anchoranalysis.anchor.mpp.cfg.Cfg;
+
 /*-
  * #%L
  * anchor-plugin-gui-import
@@ -30,8 +32,8 @@ package org.anchoranalysis.gui.videostats.dropdown.common;
 
 import org.anchoranalysis.core.cache.ExecuteException;
 import org.anchoranalysis.core.cache.Operation;
-import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.name.provider.INamedProvider;
+import org.anchoranalysis.core.name.provider.NamedProviderGetException;
 import org.anchoranalysis.core.progress.CachedOperationWithProgressReporter;
 import org.anchoranalysis.core.progress.OperationWithProgressReporter;
 import org.anchoranalysis.core.progress.ProgressReporter;
@@ -53,8 +55,6 @@ import org.anchoranalysis.io.manifest.ManifestDescription;
 import org.anchoranalysis.io.manifest.ManifestFolderDescription;
 import org.anchoranalysis.io.output.bean.OutputWriteSettings;
 import org.anchoranalysis.io.output.bound.BoundOutputManagerRouteErrors;
-
-import ch.ethz.biol.cell.mpp.cfg.Cfg;
 
 public class DropDownUtilities {
 	
@@ -180,17 +180,12 @@ public class DropDownUtilities {
 		
 		for( final String providerName : cfgProvider.keys() ) {
 			
-			Operation<Cfg> opCfg = new Operation<Cfg>() {
-
-				@Override
-				public Cfg doOperation() throws ExecuteException {
-					try {
-						return cfgProvider.getException(providerName);
-					} catch (GetOperationFailedException e) {
-						throw new ExecuteException(e);
-					}
+			Operation<Cfg> opCfg = () -> {
+				try {
+					return cfgProvider.getException(providerName);
+				} catch (NamedProviderGetException e) {
+					throw new ExecuteException(e.summarize());
 				}
-				
 			};
 			
 			addCfg(
@@ -230,8 +225,8 @@ public class DropDownUtilities {
 					public ObjMaskCollection doOperation() throws ExecuteException {
 						try {
 							return provider.getException(providerName);
-						} catch (GetOperationFailedException e) {
-							throw new ExecuteException(e);
+						} catch (NamedProviderGetException e) {
+							throw new ExecuteException(e.summarize());
 						}
 					}
 					

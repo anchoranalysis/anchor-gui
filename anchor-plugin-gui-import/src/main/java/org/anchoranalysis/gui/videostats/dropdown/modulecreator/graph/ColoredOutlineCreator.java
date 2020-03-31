@@ -1,5 +1,6 @@
 package org.anchoranalysis.gui.videostats.dropdown.modulecreator.graph;
 
+import org.anchoranalysis.anchor.mpp.feature.instantstate.CfgNRGInstantState;
 import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.progress.OperationWithProgressReporter;
@@ -32,7 +33,7 @@ import org.anchoranalysis.core.progress.OperationWithProgressReporter;
 
 
 import org.anchoranalysis.gui.backgroundset.BackgroundSet;
-import org.anchoranalysis.gui.image.frame.canvas.ISliderState;
+import org.anchoranalysis.gui.image.frame.ISliderState;
 import org.anchoranalysis.gui.io.loader.manifest.finder.historyfolder.FinderHistoryFolder;
 import org.anchoranalysis.gui.videostats.IModuleCreatorDefaultState;
 import org.anchoranalysis.gui.videostats.dropdown.VideoStatsModuleGlobalParams;
@@ -40,8 +41,6 @@ import org.anchoranalysis.gui.videostats.internalframe.InternalFrameCfgNRGHistor
 import org.anchoranalysis.gui.videostats.module.DefaultModuleStateManager;
 import org.anchoranalysis.gui.videostats.module.VideoStatsModuleCreateException;
 import org.anchoranalysis.gui.videostats.modulecreator.VideoStatsModuleCreatorContext;
-
-import ch.ethz.biol.cell.mpp.instantstate.CfgNRGInstantState;
 
 public class ColoredOutlineCreator extends VideoStatsModuleCreatorContext {
 

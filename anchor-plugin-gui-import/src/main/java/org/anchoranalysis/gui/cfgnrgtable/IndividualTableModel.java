@@ -29,13 +29,12 @@ package org.anchoranalysis.gui.cfgnrgtable;
 
 import javax.swing.table.AbstractTableModel;
 
+import org.anchoranalysis.anchor.mpp.cfg.Cfg;
+import org.anchoranalysis.anchor.mpp.feature.instantstate.CfgNRGInstantState;
+import org.anchoranalysis.anchor.mpp.feature.nrg.saved.NRGSavedInd;
 import org.anchoranalysis.anchor.mpp.mark.Mark;
 import org.anchoranalysis.core.color.ColorIndex;
 import org.anchoranalysis.core.color.RGBColor;
-
-import ch.ethz.biol.cell.mpp.cfg.Cfg;
-import ch.ethz.biol.cell.mpp.instantstate.CfgNRGInstantState;
-import ch.ethz.biol.cell.mpp.nrg.NRGSavedInd;
 
 public class IndividualTableModel extends AbstractTableModel implements IUpdateTableData {
 

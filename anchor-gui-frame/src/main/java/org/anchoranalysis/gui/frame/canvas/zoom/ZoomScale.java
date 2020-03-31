@@ -1,6 +1,6 @@
 package org.anchoranalysis.gui.frame.canvas.zoom;
 
-import org.anchoranalysis.anchor.mpp.bounds.RslvdBound;
+import org.anchoranalysis.anchor.mpp.bean.bound.RslvdBound;
 
 /*-
  * #%L
@@ -32,6 +32,7 @@ import org.anchoranalysis.core.geometry.Point2i;
 import org.anchoranalysis.image.extent.BoundingBox;
 import org.anchoranalysis.image.extent.Extent;
 import org.anchoranalysis.image.extent.ImageDim;
+import org.anchoranalysis.image.scale.ScaleFactor;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 
 public class ZoomScale {
@@ -134,7 +135,7 @@ public class ZoomScale {
 	
 	public BoundingBox applyScale( BoundingBox bbox ) {
 		BoundingBox out = new BoundingBox(bbox);
-		out.scaleXYPosAndExtnt( scale, scale );
+		out.scaleXYPosAndExtnt( new ScaleFactor(scale) );
 		return out;
 	}
 		

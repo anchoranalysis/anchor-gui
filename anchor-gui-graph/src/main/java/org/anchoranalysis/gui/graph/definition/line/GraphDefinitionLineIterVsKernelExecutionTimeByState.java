@@ -28,10 +28,9 @@ package org.anchoranalysis.gui.graph.definition.line;
 
 import org.anchoranalysis.anchor.graph.GetForSeries;
 import org.anchoranalysis.anchor.graph.index.LinePlot.YValGetter;
+import org.anchoranalysis.anchor.mpp.graph.execution.KernelExecutionTime;
 import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.gui.graph.creator.IterAndExecutionTime;
-
-import ch.ethz.biol.cell.mpp.gui.graph.jfreechart.bar.KernelExecutionTime;
 
 public class GraphDefinitionLineIterVsKernelExecutionTimeByState extends GraphDefinitionLineIterVsKernelExecutionTime {
 

@@ -1,6 +1,8 @@
 package org.anchoranalysis.plugin.gui.bean.createrastergenerator.cfgnrginstantstate;
 
 import org.anchoranalysis.anchor.graph.GraphInstance;
+import org.anchoranalysis.anchor.mpp.feature.instantstate.CfgNRGInstantState;
+import org.anchoranalysis.anchor.mpp.graph.NRGGraphItem;
 import org.anchoranalysis.core.error.CreateException;
 
 /*
@@ -38,9 +40,6 @@ import org.anchoranalysis.io.generator.IterableObjectGenerator;
 import org.anchoranalysis.io.generator.IterableObjectGeneratorBridge;
 import org.anchoranalysis.plugin.gui.bean.createrastergenerator.CreateRasterGraph;
 import org.anchoranalysis.plugin.gui.bean.exporttask.MappedFrom;
-
-import ch.ethz.biol.cell.mpp.gui.graph.jfreechart.bar.NRGGraphItem;
-import ch.ethz.biol.cell.mpp.instantstate.CfgNRGInstantState;
 
 public class GraphFromCfgNRGInstantState extends CreateRasterGraph<NRGGraphItem,CfgNRGInstantState> {
 

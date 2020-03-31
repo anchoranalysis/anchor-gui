@@ -3,6 +3,7 @@ package org.anchoranalysis.gui.mergebridge;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.anchoranalysis.anchor.mpp.feature.instantstate.CfgNRGInstantState;
 
 /*
  * #%L
@@ -38,8 +39,6 @@ import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.index.container.BoundChangeListener;
 import org.anchoranalysis.core.index.container.IBoundedIndexContainer;
 import org.anchoranalysis.io.manifest.sequencetype.IncrementalSequenceType;
-
-import ch.ethz.biol.cell.mpp.instantstate.CfgNRGInstantState;
 
 // Contains both the selected and proposal histories
 public class DualCfgNRGContainer<T> implements IBoundedIndexContainer<IndexedDualState<T>> {

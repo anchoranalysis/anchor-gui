@@ -35,6 +35,7 @@ import java.util.Set;
 import org.anchoranalysis.anchor.overlay.Overlay;
 import org.anchoranalysis.anchor.overlay.OverlayedInstantState;
 import org.anchoranalysis.anchor.overlay.id.IDGetterOverlayID;
+import org.anchoranalysis.core.bridge.BridgeElementException;
 import org.anchoranalysis.core.bridge.IObjectBridgeIndex;
 import org.anchoranalysis.core.cache.ExecuteException;
 import org.anchoranalysis.core.error.InitException;
@@ -46,7 +47,7 @@ import org.anchoranalysis.core.index.container.IBoundedIndexContainer;
 import org.anchoranalysis.core.index.container.bridge.BoundedIndexContainerBridgeWithIndex;
 import org.anchoranalysis.core.progress.ProgressReporterNull;
 import org.anchoranalysis.gui.frame.multioverlay.instantstate.InternalFrameOverlayedInstantStateToRGBSelectable;
-import org.anchoranalysis.gui.image.frame.canvas.ISliderState;
+import org.anchoranalysis.gui.image.frame.ISliderState;
 import org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.ControllerPopupMenuWithBackground;
 import org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.IGetNames;
 import org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.definition.IImageStackCntrFromName;
@@ -119,10 +120,12 @@ class InternalFrameMultiOverlay<InputType> {
 		return name -> sourceObject -> {
 			try {
 				return list.get(sourceObject).getNrgBackground().getBackgroundSet().doOperation(
-						ProgressReporterNull.get()
+					ProgressReporterNull.get()
 				).singleStack(name);
 			} catch (ExecuteException e) {
-				throw new GetOperationFailedException(e);
+				throw new BridgeElementException(e.getCause());
+			} catch (GetOperationFailedException e) {
+				throw new BridgeElementException(e);
 			}
 		};
 	}

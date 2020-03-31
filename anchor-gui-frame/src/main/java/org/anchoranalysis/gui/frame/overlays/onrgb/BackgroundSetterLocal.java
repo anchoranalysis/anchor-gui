@@ -1,5 +1,7 @@
 package org.anchoranalysis.gui.frame.overlays.onrgb;
 
+import org.anchoranalysis.core.bridge.BridgeElementException;
+
 /*-
  * #%L
  * anchor-gui-frame
@@ -27,13 +29,11 @@ package org.anchoranalysis.gui.frame.overlays.onrgb;
  */
 
 import org.anchoranalysis.core.bridge.IObjectBridge;
-import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.index.SetOperationFailedException;
+import org.anchoranalysis.gui.frame.display.IRedrawable;
+import org.anchoranalysis.gui.frame.display.OverlayedDisplayStackUpdate;
 import org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.IBackgroundSetter;
 import org.anchoranalysis.image.stack.DisplayStack;
-
-import ch.ethz.biol.cell.imageprocessing.io.generator.raster.OverlayedDisplayStackUpdate;
-import ch.ethz.biol.cell.mpp.gui.videostats.internalframe.cfgtorgb.IRedrawable;
 
 class BackgroundSetterLocal implements IBackgroundSetter {
 	
@@ -53,7 +53,7 @@ class BackgroundSetterLocal implements IBackgroundSetter {
 		DisplayStack stack;
 		try {
 			stack = imageStackCntr.bridgeElement(0);
-		} catch (GetOperationFailedException e) {
+		} catch (BridgeElementException e) {
 			throw new SetOperationFailedException(e);
 		}
 		

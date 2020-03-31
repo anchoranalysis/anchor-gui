@@ -1,6 +1,7 @@
 package org.anchoranalysis.gui.frame.overlays;
 
 import org.anchoranalysis.anchor.overlay.collection.OverlayCollection;
+import org.anchoranalysis.core.bridge.BridgeElementException;
 import org.anchoranalysis.core.error.InitException;
 
 /*
@@ -30,7 +31,6 @@ import org.anchoranalysis.core.error.InitException;
  */
 
 
-import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.progress.OperationWithProgressReporter;
 import org.anchoranalysis.core.property.change.PropertyValueChangeEvent;
 import org.anchoranalysis.core.property.change.PropertyValueChangeListener;
@@ -38,7 +38,7 @@ import org.anchoranalysis.gui.backgroundset.BackgroundSet;
 import org.anchoranalysis.gui.frame.details.canvas.ControllerAction;
 import org.anchoranalysis.gui.frame.details.canvas.controller.imageview.ControllerImageView;
 import org.anchoranalysis.gui.frame.overlays.onrgb.InternalFrameEditableOverlays;
-import org.anchoranalysis.gui.image.frame.canvas.ISliderState;
+import org.anchoranalysis.gui.image.frame.ISliderState;
 import org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.ControllerPopupMenuWithBackground;
 import org.anchoranalysis.gui.propertyvalue.PropertyValueChangeListenerList;
 import org.anchoranalysis.gui.videostats.IModuleCreatorDefaultStateSliderState;
@@ -81,7 +81,7 @@ public class InternalFrameOverlaysRedraw {
 		// For now we keep background as it is
 		try {
 			background = defaultState.getLinkState().getBackground().bridgeElement(0) ;
-		} catch (GetOperationFailedException e) {
+		} catch (BridgeElementException e) {
 			throw new InitException(e);
 		}
 		

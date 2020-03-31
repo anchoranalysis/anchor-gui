@@ -2,6 +2,7 @@ package org.anchoranalysis.plugin.gui.bean.graphdefinition.line;
 
 import org.anchoranalysis.anchor.graph.bean.colorscheme.GraphColorScheme;
 import org.anchoranalysis.anchor.graph.index.LinePlot.YValGetter;
+import org.anchoranalysis.anchor.mpp.feature.nrg.cfg.CfgNRGPixelized;
 import org.anchoranalysis.core.index.GetOperationFailedException;
 
 /*
@@ -33,8 +34,6 @@ import org.anchoranalysis.core.index.GetOperationFailedException;
 
 import org.anchoranalysis.gui.io.loader.manifest.finder.csvstatistic.CSVStatistic;
 import org.anchoranalysis.mpp.sgmn.bean.kernel.proposer.KernelProposer;
-
-import ch.ethz.biol.cell.mpp.nrg.CfgNRGPixelized;
 
 public class GraphDefinitionLineIterVsKernelProp extends GraphDefinitionLineIterVsCSVStatistic {
 	

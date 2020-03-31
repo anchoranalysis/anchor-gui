@@ -1,5 +1,7 @@
 package org.anchoranalysis.gui.frame.multioverlay.instantstate;
 
+import org.anchoranalysis.core.bridge.BridgeElementException;
+
 /*-
  * #%L
  * anchor-gui-frame
@@ -28,14 +30,12 @@ package org.anchoranalysis.gui.frame.multioverlay.instantstate;
 
 import org.anchoranalysis.core.bridge.IObjectBridge;
 import org.anchoranalysis.core.index.BoundedIndexBridge;
-import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.index.SetOperationFailedException;
 import org.anchoranalysis.core.index.container.IBoundedIndexContainer;
 import org.anchoranalysis.gui.displayupdate.OverlayedDisplayStack;
 import org.anchoranalysis.gui.videostats.internalframe.cfgtorgb.ColoredOverlayedInstantState;
 import org.anchoranalysis.image.stack.DisplayStack;
 
-// Maps integers to a CfgInstantState but creating a CfgInstantState with the index of the source
 class IndexToRedrawUpdate implements IObjectBridge<Integer, OverlayedDisplayStack> {
 
 	private BoundedIndexBridge<ColoredOverlayedInstantState> delegate;
@@ -51,7 +51,7 @@ class IndexToRedrawUpdate implements IObjectBridge<Integer, OverlayedDisplayStac
 	
 	@Override
 	public OverlayedDisplayStack bridgeElement(Integer sourceObject)
-			throws GetOperationFailedException {
+			throws BridgeElementException {
 		
 		ColoredOverlayedInstantState found = delegate.bridgeElement(sourceObject);
 		

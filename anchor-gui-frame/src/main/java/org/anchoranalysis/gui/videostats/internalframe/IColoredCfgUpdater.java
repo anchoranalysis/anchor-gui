@@ -1,12 +1,10 @@
 package org.anchoranalysis.gui.videostats.internalframe;
 
-
-
-/*
+/*-
  * #%L
- * anchor-gui
+ * anchor-gui-frame
  * %%
- * Copyright (C) 2016 ETH Zurich, University of Zurich, Owen Feehan
+ * Copyright (C) 2010 - 2020 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann la Roche
  * %%
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,7 +27,8 @@ package org.anchoranalysis.gui.videostats.internalframe;
  */
 
 
-import ch.ethz.biol.cell.imageprocessing.io.generator.raster.OverlayedDisplayStackUpdate;
+
+import org.anchoranalysis.gui.frame.display.OverlayedDisplayStackUpdate;
 
 public interface IColoredCfgUpdater {
 	void applyUpdate( OverlayedDisplayStackUpdate update );

@@ -31,9 +31,9 @@ import java.util.Iterator;
 import org.anchoranalysis.anchor.graph.AxisLimits;
 import org.anchoranalysis.anchor.graph.GraphInstance;
 import org.anchoranalysis.anchor.graph.bean.GraphDefinition;
+import org.anchoranalysis.core.bridge.BridgeElementException;
 import org.anchoranalysis.core.bridge.IObjectBridge;
 import org.anchoranalysis.core.error.CreateException;
-import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.index.container.IBoundedIndexContainer;
 import org.anchoranalysis.core.index.container.bridge.BoundedIndexContainerBridgeWithoutIndex;
 import org.anchoranalysis.gui.graph.BoundedIndexContainerIterator;
@@ -68,7 +68,7 @@ class GraphInstanceBridge<T> implements IObjectBridge<MappedFrom<CSVStatistic>,G
 	
 	@Override
 	public GraphInstance bridgeElement(MappedFrom<CSVStatistic> sourceObject)
-			throws GetOperationFailedException {
+			throws BridgeElementException {
 		
 		assert(graphDefinition!=null);
 		
@@ -96,7 +96,7 @@ class GraphInstanceBridge<T> implements IObjectBridge<MappedFrom<CSVStatistic>,G
 				rangeLimits
 			);
 		} catch (CreateException e) {
-			throw new GetOperationFailedException(e);
+			throw new BridgeElementException(e);
 		}
 	}
 	

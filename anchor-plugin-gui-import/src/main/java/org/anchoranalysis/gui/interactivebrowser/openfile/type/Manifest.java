@@ -30,6 +30,7 @@ package org.anchoranalysis.gui.interactivebrowser.openfile.type;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.anchoranalysis.core.error.CreateException;
@@ -64,34 +65,54 @@ public class Manifest extends OpenFileType {
 			throws CreateException {
 		ExecutedExperimentFileCreator creator = new ExecutedExperimentFileCreator();
 		
+		creator.setCustomName(
+			customNameForExperiment(files)
+		);
+		
+		List<String> fileListExp = new ArrayList<>();
+		List<String> fileListInput = new ArrayList<>();
+		
+		populateFileList(files, fileListExp, fileListInput);
+		
+		creator.setCoupledManifestsInputManager(
+			createCoupledManifests(fileListExp, fileListInput)
+		);
+
+		return Arrays.asList(creator);
+	}
+	
+	private static String customNameForExperiment(List<File> files) {
 		if (files.size()==1) {
-			creator.setCustomName( String.format("experiment: %s", FilenameUtils.removeExtension(files.get(0).getName()) ) );
+			return String.format(
+				"experiment: %s",
+				FilenameUtils.removeExtension(files.get(0).getName())
+			);
 		} else {
-			creator.setCustomName( "experiment: multiple" );
+			return "experiment: multiple";
 		}
-		
-		SpecificPathList fileListExp = new SpecificPathList();
-		SpecificPathList fileListInput = new SpecificPathList();
-		
+	}
+	
+	private static void populateFileList(List<File> files, List<String> fileListExp, List<String> fileListInput) {
 		for( File f : files) {
 			if (f.getName().equals("manifestExperiment.ser")) {
-				fileListExp.getListPaths().add(f.getPath());
+				fileListExp.add(f.getPath());
 			} else {
-				fileListInput.getListPaths().add(f.getPath());
+				fileListInput.add(f.getPath());
 			}
 		}
-		
+	}
+	
+	private static CoupledManifestsInputManager createCoupledManifests(List<String> fileListExp, List<String> fileListInput) {
 		CoupledManifestsInputManager coupledManifests = new CoupledManifestsInputManager();
 		
+		coupledManifests.setManifestExperimentInputFileSet(
+			new SpecificPathList(fileListExp)
+		);
 		
-		coupledManifests.setManifestExperimentInputFileSet(fileListExp);
-		coupledManifests.setManifestInputFileSet(fileListInput);
+		coupledManifests.setManifestInputFileSet(
+			new SpecificPathList(fileListInput)
+		);
 		
-		creator.setCoupledManifestsInputManager(coupledManifests);
-		
-		List<FileCreator> outList = new ArrayList<>();
-		outList.add(creator);
-		return outList;
+		return coupledManifests;
 	}
-
 }

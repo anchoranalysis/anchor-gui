@@ -34,14 +34,14 @@ public class InitAnnotation {
 
 	private AnnotationWithCfg annotation;
 	private DualCfg initCfg;
-	private String initMsg = "";		// A message that loads at the start;
+	private String initMsg;		// A message that loads at the start;
 	
 	public InitAnnotation(AnnotationWithCfg annotation) {
-		this(annotation, null, null);
+		this(annotation, null, "");
 	}
 	
 	public InitAnnotation(AnnotationWithCfg annotation, DualCfg initCfg) {
-		this(annotation, initCfg, null);
+		this(annotation, initCfg, "");
 	}
 	
 	public InitAnnotation(AnnotationWithCfg annotation, DualCfg cfg, String initMsg) {

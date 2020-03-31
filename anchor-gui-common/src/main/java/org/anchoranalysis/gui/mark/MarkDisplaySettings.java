@@ -43,8 +43,7 @@ import org.anchoranalysis.io.bean.objmask.writer.RGBMidpointWriter;
 import org.anchoranalysis.io.bean.objmask.writer.RGBOrientationWriter;
 import org.anchoranalysis.io.bean.objmask.writer.RGBOutlineWriter;
 import org.anchoranalysis.io.bean.objmask.writer.RGBSolidWriter;
-
-import ch.ethz.biol.cell.mpp.cfgtoobjmaskwriter.SimpleOverlayWriter;
+import org.anchoranalysis.mpp.io.cfg.generator.SimpleOverlayWriter;
 
 // Contains display settings for a mark
 public class MarkDisplaySettings {
@@ -113,14 +112,13 @@ public class MarkDisplaySettings {
 		return edgeSelectableWriter;
 	}
 	
-	// We don't bother with an ObjMaskListWriter if there's a single item - to avoid minor overhead
 	private static ObjMaskWriter createWriterFromList( List<ObjMaskWriter> writerList ) {
 		
 		if (writerList.size()==0) {
 			return null;
 		}
 		
-		return writerList.size() > 1 ? new ObjMaskListWriter(writerList) : writerList.get(0);
+		return new ObjMaskListWriter(writerList);
 	}
 			
 	private void addShowInside( List<ObjMaskWriter> insideList, IfElseWriter.Condition conditionSelected, int borderSize ) {

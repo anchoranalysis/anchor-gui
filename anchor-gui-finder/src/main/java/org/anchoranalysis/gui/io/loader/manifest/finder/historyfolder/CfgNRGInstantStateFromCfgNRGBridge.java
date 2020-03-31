@@ -1,8 +1,12 @@
-package org.anchoranalysis.gui.image.frame.canvas;
+package org.anchoranalysis.gui.io.loader.manifest.finder.historyfolder;
+
+import org.anchoranalysis.anchor.mpp.feature.instantstate.CfgNRGInstantState;
+import org.anchoranalysis.anchor.mpp.feature.instantstate.CfgNRGNonHandleInstantState;
+import org.anchoranalysis.anchor.mpp.feature.nrg.cfg.CfgNRG;
 
 /*-
  * #%L
- * anchor-gui-common
+ * anchor-mpp-io
  * %%
  * Copyright (C) 2010 - 2019 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann la Roche
  * %%
@@ -26,16 +30,12 @@ package org.anchoranalysis.gui.image.frame.canvas;
  * #L%
  */
 
-import org.anchoranalysis.gui.image.ISliceNumGetter;
-import org.anchoranalysis.gui.videostats.link.LinkModules.Adder;
+import org.anchoranalysis.core.bridge.IObjectBridgeIndex;
 
-public interface ISliderState extends ISliceNumGetter {
+class CfgNRGInstantStateFromCfgNRGBridge implements IObjectBridgeIndex<CfgNRG, CfgNRGInstantState> {
 	
-	int getIndex();
-	
-	void setSliceNum( int sliceNum );
-	
-	void addSliceTo( Adder<Integer> adder );
-	
-	void addIndexTo( Adder<Integer> adder );
+	@Override
+	public CfgNRGInstantState bridgeElement(int index, CfgNRG sourceObject) {
+		return new CfgNRGNonHandleInstantState(index, sourceObject);
+	}
 }

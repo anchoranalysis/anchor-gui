@@ -1,5 +1,7 @@
 package org.anchoranalysis.gui.interactivebrowser;
 
+
+
 /*
  * #%L
  * anchor-gui
@@ -31,6 +33,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+import org.anchoranalysis.anchor.mpp.bean.init.GeneralInitParams;
+import org.anchoranalysis.anchor.mpp.feature.bean.mark.MarkEvaluator;
 import org.anchoranalysis.core.cache.CachedOperation;
 import org.anchoranalysis.core.cache.ExecuteException;
 import org.anchoranalysis.core.cache.Operation;
@@ -38,12 +42,9 @@ import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.index.GetOperationFailedException;
-import org.anchoranalysis.core.log.LogErrorReporter;
 import org.anchoranalysis.core.name.provider.INamedProvider;
 import org.anchoranalysis.core.params.KeyValueParams;
 import org.anchoranalysis.core.progress.OperationWithProgressReporter;
-import org.anchoranalysis.core.random.RandomNumberGenerator;
-import org.anchoranalysis.gui.bean.mpp.MarkEvaluator;
 import org.anchoranalysis.gui.videostats.dropdown.OperationCreateProposerSharedObjectsImageSpecific;
 import org.anchoranalysis.image.stack.Stack;
 
@@ -53,20 +54,17 @@ public class MarkEvaluatorSetForImage {
 
 	private OperationWithProgressReporter<INamedProvider<Stack>> namedImgStackCollection;
 	private Operation<KeyValueParams> keyParams;
-	private LogErrorReporter logErrorReporter;
-	private RandomNumberGenerator re;
+	private GeneralInitParams paramsGeneral;
 
 	public MarkEvaluatorSetForImage(
 		OperationWithProgressReporter<INamedProvider<Stack>> namedImgStackCollection,
 		Operation<KeyValueParams> keyParams,
-		LogErrorReporter logErrorReporter,
-		RandomNumberGenerator re
+		GeneralInitParams paramsGeneral
 	) {
 		super();
 		this.keyParams = keyParams;
 		this.namedImgStackCollection = namedImgStackCollection;
-		this.logErrorReporter = logErrorReporter;
-		this.re = re;
+		this.paramsGeneral = paramsGeneral;
 	}
 
 	private class Rslv extends CachedOperation<MarkEvaluatorRslvd> {
@@ -80,17 +78,18 @@ public class MarkEvaluatorSetForImage {
 				new OperationCreateProposerSharedObjectsImageSpecific(
 					namedImgStackCollection,
 					keyParams,
-					logErrorReporter,
-					
 					/// TODO Do we need this duplication?
 					me.getNamedDefinitions().duplicateBean(),
-					re
+					paramsGeneral
 				);
 			
 			try {
 				// TODO owen, this is causing a bug in the annotorator, we need to get our feature params from somewhere else
 				//  i.e. where they are being passed around
-				me.initRecursive( operationProposerSharedObjects.doOperation().getFeature(), logErrorReporter);
+				me.initRecursive(
+					operationProposerSharedObjects.doOperation().getFeature(),
+					paramsGeneral.getLogErrorReporter()
+				);
 			} catch (InitException | ExecuteException e) {
 				throw new CreateException(e);
 			}

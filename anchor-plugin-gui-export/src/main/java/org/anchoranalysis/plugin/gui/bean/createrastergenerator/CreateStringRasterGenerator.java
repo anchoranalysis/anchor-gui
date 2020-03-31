@@ -1,5 +1,8 @@
 package org.anchoranalysis.plugin.gui.bean.createrastergenerator;
 
+import org.anchoranalysis.anchor.mpp.feature.instantstate.CfgNRGInstantState;
+import org.anchoranalysis.anchor.mpp.feature.nrg.cfg.CfgNRG;
+
 /*-
  * #%L
  * anchor-plugin-gui-export
@@ -34,9 +37,6 @@ import org.anchoranalysis.image.stack.Stack;
 import org.anchoranalysis.io.generator.IterableObjectGenerator;
 import org.anchoranalysis.io.generator.IterableObjectGeneratorBridge;
 import org.anchoranalysis.plugin.gui.bean.exporttask.MappedFrom;
-
-import ch.ethz.biol.cell.mpp.instantstate.CfgNRGInstantState;
-import ch.ethz.biol.cell.mpp.nrg.CfgNRG;
 
 public abstract class CreateStringRasterGenerator extends CreateRasterGenerator<CfgNRGInstantState> {
 

@@ -1,5 +1,7 @@
 package org.anchoranalysis.gui.frame.multiraster;
 
+import org.anchoranalysis.core.bridge.BridgeElementException;
+
 /*-
  * #%L
  * anchor-gui-frame
@@ -27,14 +29,12 @@ package org.anchoranalysis.gui.frame.multiraster;
  */
 
 import org.anchoranalysis.core.bridge.IObjectBridge;
-import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.index.SetOperationFailedException;
+import org.anchoranalysis.gui.frame.display.BoundOverlayedDisplayStack;
+import org.anchoranalysis.gui.frame.display.DisplayUpdate;
 import org.anchoranalysis.image.stack.DisplayStack;
 import org.anchoranalysis.io.generator.IterableObjectGenerator;
 import org.anchoranalysis.io.output.error.OutputWriteFailedException;
-
-import ch.ethz.biol.cell.gui.image.provider.DisplayUpdate;
-import ch.ethz.biol.cell.gui.image.provider.BoundOverlayedDisplayStack;
 
 class NoOverlayBridgeFromGenerator implements IObjectBridge<Integer, DisplayUpdate> {
 
@@ -48,14 +48,14 @@ class NoOverlayBridgeFromGenerator implements IObjectBridge<Integer, DisplayUpda
 
 	@Override
 	public DisplayUpdate bridgeElement(Integer sourceObject)
-			throws GetOperationFailedException {
+			throws BridgeElementException {
 		try {
 			generator.setIterableElement(sourceObject);
 			BoundOverlayedDisplayStack overlayedStack = new BoundOverlayedDisplayStack(generator.getGenerator().generate());
 			return DisplayUpdate.assignNewStack(overlayedStack);
 			
 		} catch (SetOperationFailedException | OutputWriteFailedException e) {
-			throw new GetOperationFailedException(e);
+			throw new BridgeElementException(e);
 		}
 		
 	}

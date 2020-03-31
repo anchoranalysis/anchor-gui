@@ -28,6 +28,7 @@ package org.anchoranalysis.gui.frame.multiraster;
 
 
 import org.anchoranalysis.core.cache.ExecuteException;
+import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.index.container.IBoundedIndexContainer;
 import org.anchoranalysis.core.progress.ProgressReporterNull;
@@ -36,7 +37,7 @@ import org.anchoranalysis.image.stack.DisplayStack;
 
 class ConvertToDisplayStack {
 	
-	public static DisplayStack apply( NamedRasterSet set ) throws GetOperationFailedException {
+	public static DisplayStack apply( NamedRasterSet set ) throws OperationFailedException {
 		return extractAtIndex(
 			convertBackgroundSet(
 				backgroundFromSet(set)
@@ -44,25 +45,33 @@ class ConvertToDisplayStack {
 		);
 	}
 	
-	private static BackgroundSet backgroundFromSet( NamedRasterSet set ) throws GetOperationFailedException {
+	private static BackgroundSet backgroundFromSet( NamedRasterSet set ) throws OperationFailedException {
 		try {
 			return set.getBackgroundSet().doOperation( ProgressReporterNull.get() );
 		} catch (ExecuteException e) {
-			throw new GetOperationFailedException(e);
+			throw new OperationFailedException("Cannot create background-set", e.getCause());
 		}
 	}
 	
-	private static IBoundedIndexContainer<DisplayStack> convertBackgroundSet( BackgroundSet bg ) throws GetOperationFailedException {
-		return bg.getItem(
-			bg.names().iterator().next()	// Arbitrary name
-		).backgroundStackCntr();
+	private static IBoundedIndexContainer<DisplayStack> convertBackgroundSet( BackgroundSet bg ) throws OperationFailedException {
+		try {
+			return bg.getItem(
+				bg.names().iterator().next()	// Arbitrary name
+			).backgroundStackCntr();
+		} catch (GetOperationFailedException e) {
+			throw new OperationFailedException(e);
+		}
 	}
 	
-	private static DisplayStack extractAtIndex( IBoundedIndexContainer<DisplayStack> indexCntr ) throws GetOperationFailedException {
+	private static DisplayStack extractAtIndex( IBoundedIndexContainer<DisplayStack> indexCntr ) throws OperationFailedException {
 		if (indexCntr.getMinimumIndex()!=indexCntr.getMaximumIndex()) {
-			throw new GetOperationFailedException( String.format("BackgroundSet has more than one image") );
+			throw new OperationFailedException( "BackgroundSet has more than one image" );
 		}
-		return indexCntr.get(indexCntr.getMinimumIndex());
+		try {
+			return indexCntr.get(indexCntr.getMinimumIndex());
+		} catch (GetOperationFailedException e) {
+			throw new OperationFailedException(e);
+		}
 	}
 	
 }

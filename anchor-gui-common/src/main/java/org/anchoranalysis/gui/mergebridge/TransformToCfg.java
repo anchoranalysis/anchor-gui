@@ -1,5 +1,8 @@
 package org.anchoranalysis.gui.mergebridge;
 
+import org.anchoranalysis.anchor.mpp.cfg.Cfg;
+import org.anchoranalysis.anchor.mpp.feature.instantstate.CfgNRGInstantState;
+
 /*-
  * #%L
  * anchor-gui-common
@@ -27,9 +30,6 @@ package org.anchoranalysis.gui.mergebridge;
  */
 
 import org.anchoranalysis.gui.mergebridge.DualCfgNRGContainer.TransformInstanteState;
-
-import ch.ethz.biol.cell.mpp.cfg.Cfg;
-import ch.ethz.biol.cell.mpp.instantstate.CfgNRGInstantState;
 
 public class TransformToCfg implements TransformInstanteState<Cfg> {
 

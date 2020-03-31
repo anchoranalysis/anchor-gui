@@ -1,5 +1,11 @@
 package org.anchoranalysis.gui.videostats.dropdown.manifest;
 
+import org.anchoranalysis.anchor.mpp.cfg.Cfg;
+import org.anchoranalysis.anchor.mpp.feature.instantstate.CfgNRGInstantState;
+import org.anchoranalysis.anchor.mpp.feature.instantstate.CfgNRGNonHandleInstantState;
+import org.anchoranalysis.anchor.mpp.feature.nrg.cfg.CfgNRG;
+import org.anchoranalysis.anchor.mpp.feature.nrg.cfg.CfgNRGPixelized;
+
 /*
  * #%L
  * anchor-gui
@@ -71,12 +77,6 @@ import org.anchoranalysis.io.manifest.finder.FinderSerializedObject;
 import org.anchoranalysis.io.output.bound.BoundOutputManagerRouteErrors;
 import org.anchoranalysis.mpp.sgmn.bean.kernel.proposer.KernelProposer;
 import org.anchoranalysis.plugin.io.manifest.CoupledManifests;
-
-import ch.ethz.biol.cell.mpp.cfg.Cfg;
-import ch.ethz.biol.cell.mpp.instantstate.CfgNRGInstantState;
-import ch.ethz.biol.cell.mpp.instantstate.CfgNRGNonHandleInstantState;
-import ch.ethz.biol.cell.mpp.nrg.CfgNRG;
-import ch.ethz.biol.cell.mpp.nrg.CfgNRGPixelized;
 
 public class ManifestDropDown {
 	

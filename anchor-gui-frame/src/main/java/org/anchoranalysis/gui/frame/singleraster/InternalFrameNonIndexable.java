@@ -32,7 +32,7 @@ import org.anchoranalysis.gui.frame.details.ControllerPopupMenu;
 import org.anchoranalysis.gui.frame.details.InternalFrameWithDetailsTopPanel;
 import org.anchoranalysis.gui.frame.details.canvas.ControllerFrame;
 import org.anchoranalysis.gui.frame.details.canvas.InitialSliderState;
-import org.anchoranalysis.gui.image.frame.canvas.ISliderState;
+import org.anchoranalysis.gui.image.frame.ISliderState;
 import org.anchoranalysis.gui.retrieveelements.IRetrieveElements;
 import org.anchoranalysis.gui.videostats.dropdown.VideoStatsModuleGlobalParams;
 

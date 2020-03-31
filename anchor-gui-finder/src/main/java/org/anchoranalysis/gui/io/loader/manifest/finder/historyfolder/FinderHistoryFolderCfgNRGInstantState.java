@@ -1,5 +1,8 @@
 package org.anchoranalysis.gui.io.loader.manifest.finder.historyfolder;
 
+import org.anchoranalysis.anchor.mpp.feature.instantstate.CfgNRGInstantState;
+import org.anchoranalysis.anchor.mpp.feature.nrg.cfg.CfgNRG;
+
 /*
  * #%L
  * anchor-gui
@@ -38,11 +41,6 @@ import org.anchoranalysis.io.manifest.deserializer.folder.LoadContainer;
 import org.anchoranalysis.io.manifest.deserializer.folder.DeserializedObjectFromFolderBundle.BundleDeserializers;
 import org.anchoranalysis.io.manifest.folder.FolderWrite;
 
-import ch.ethz.biol.cell.mpp.instantstate.CfgNRGInstantState;
-import ch.ethz.biol.cell.mpp.nrg.CfgNRG;
-import ch.ethz.biol.cell.mpp.nrg.history.DeserializeFromFolderBundleCfgNRGInstantState;
-import ch.ethz.biol.cell.mpp.nrg.history.DeserializeFromFolderCfgNRGInstantState;
-
 public class FinderHistoryFolderCfgNRGInstantState extends FinderHistoryFolder<CfgNRGInstantState> {
 	
 	private CacheMonitor cacheMonitor;
@@ -60,7 +58,7 @@ public class FinderHistoryFolderCfgNRGInstantState extends FinderHistoryFolder<C
 			new ObjectInputStreamDeserializer<Bundle<CfgNRG>>(),
 			new ObjectInputStreamDeserializer<BundleParameters>()
 		); 
-		HistoryCreator<CfgNRGInstantState> cfgNRGHistory = new DeserializeFromFolderBundleCfgNRGInstantState(deserializers, folder, cacheMonitor);
+		HistoryCreator<CfgNRGInstantState> cfgNRGHistory = new DeserializeFromBundleCfgNRG(deserializers, folder, cacheMonitor);
 		return cfgNRGHistory.create();		
 	}
 	
@@ -68,7 +66,7 @@ public class FinderHistoryFolderCfgNRGInstantState extends FinderHistoryFolder<C
 	protected LoadContainer<CfgNRGInstantState> createFromSerialized( FolderWrite folder ) throws DeserializationFailedException {
 
 		Deserializer<CfgNRG> deserializer = new ObjectInputStreamDeserializer<>();
-		HistoryCreator<CfgNRGInstantState> cfgNRGHistory = new DeserializeFromFolderCfgNRGInstantState(deserializer, folder);
+		HistoryCreator<CfgNRGInstantState> cfgNRGHistory = new DeserializeFromSerializedCfgNRG(deserializer, folder);
 		return cfgNRGHistory.create();
 	}
 

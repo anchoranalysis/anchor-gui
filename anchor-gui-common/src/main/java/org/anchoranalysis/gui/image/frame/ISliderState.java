@@ -1,10 +1,10 @@
-package org.anchoranalysis.gui.interactivebrowser;
+package org.anchoranalysis.gui.image.frame;
 
-/*
+/*-
  * #%L
- * anchor-gui
+ * anchor-gui-common
  * %%
- * Copyright (C) 2016 ETH Zurich, University of Zurich, Owen Feehan
+ * Copyright (C) 2010 - 2019 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann la Roche
  * %%
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -26,15 +26,16 @@ package org.anchoranalysis.gui.interactivebrowser;
  * #L%
  */
 
+import org.anchoranalysis.gui.image.ISliceNumGetter;
+import org.anchoranalysis.gui.videostats.link.LinkModules.Adder;
 
-import java.io.File;
-
-public class DefaultFilePaths {
-
-	// HACK this is just because it's convenient to us to find the config files, in the final version we might
-	//  want to have different default directories
-	public static File getConfigDirectory() {
-		File parentDir = new File(DefaultFilePaths.class.getClassLoader().getResource("").getPath()).getParentFile();
-		return new File(parentDir,"config/");
-	}
+public interface ISliderState extends ISliceNumGetter {
+	
+	int getIndex();
+	
+	void setSliceNum( int sliceNum );
+	
+	void addSliceTo( Adder<Integer> adder );
+	
+	void addIndexTo( Adder<Integer> adder );
 }

@@ -1,5 +1,10 @@
 package org.anchoranalysis.gui.feature.evaluator.params;
 
+import org.anchoranalysis.anchor.mpp.feature.bean.cfg.FeatureCfgParamsDescriptor;
+import org.anchoranalysis.anchor.mpp.feature.bean.mark.FeatureMarkParamsDescriptor;
+import org.anchoranalysis.anchor.mpp.feature.nrg.elem.NRGElemAllCalcParamsDescriptor;
+import org.anchoranalysis.anchor.mpp.feature.nrg.elem.NRGElemIndCalcParamsDescriptor;
+import org.anchoranalysis.anchor.mpp.feature.nrg.elem.NRGElemPairCalcParamsDescriptor;
 import org.anchoranalysis.anchor.mpp.mark.GlobalRegionIdentifiers;
 import org.anchoranalysis.anchor.mpp.regionmap.RegionMapSingleton;
 
@@ -43,12 +48,6 @@ import org.anchoranalysis.image.feature.objmask.pair.merged.FeatureObjMaskPairMe
 import org.anchoranalysis.image.feature.objmask.shared.FeatureObjMaskSharedObjectsParamsDescriptor;
 import org.anchoranalysis.image.feature.pixelwise.score.PixelScoreFeatureCalcParamsDescriptor;
 import org.anchoranalysis.image.feature.stack.nrg.FeatureNRGStackParamsDescriptor;
-
-import ch.ethz.biol.cell.mpp.nrg.NRGElemAllCalcParamsDescriptor;
-import ch.ethz.biol.cell.mpp.nrg.NRGElemIndCalcParamsDescriptor;
-import ch.ethz.biol.cell.mpp.nrg.NRGElemPairCalcParamsDescriptor;
-import ch.ethz.biol.cell.mpp.nrg.feature.cfg.FeatureCfgParamsDescriptor;
-import ch.ethz.biol.cell.mpp.nrg.feature.mark.FeatureMarkParamsDescriptor;
 
 public class ParamsFactoryForFeature {
 

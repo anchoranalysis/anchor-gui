@@ -31,8 +31,8 @@ import static org.anchoranalysis.gui.frame.details.canvas.controller.imageview.U
 import java.awt.GraphicsConfiguration;
 
 import org.anchoranalysis.gui.frame.canvas.zoom.DefaultZoomSuggestor;
-import org.anchoranalysis.gui.frame.details.canvas.ControllerSize;
 import org.anchoranalysis.gui.frame.details.canvas.ControllerZoom;
+import org.anchoranalysis.gui.image.frame.ControllerSize;
 import org.anchoranalysis.image.extent.Extent;
 import org.anchoranalysis.image.extent.ImageDim;
 

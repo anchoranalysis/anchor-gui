@@ -39,11 +39,10 @@ import org.anchoranalysis.core.index.IndicesSelection;
 import org.anchoranalysis.core.property.IPropertyValueReceivable;
 import org.anchoranalysis.core.property.change.PropertyValueChangeEvent;
 import org.anchoranalysis.core.property.change.PropertyValueChangeListener;
+import org.anchoranalysis.gui.frame.display.overlay.OverlayRetriever;
 import org.anchoranalysis.gui.image.ISliceNumGetter;
 import org.anchoranalysis.gui.indices.DualIndicesSelection;
 import org.anchoranalysis.gui.propertyvalue.PropertyValueChangeListenerList;
-
-import ch.ethz.biol.cell.gui.overlay.OverlayRetriever;
 
 class ClickAdapter extends MouseAdapter {
 	

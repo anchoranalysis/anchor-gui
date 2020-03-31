@@ -1,6 +1,9 @@
 package org.anchoranalysis.gui.interactivebrowser.input;
 
 import org.anchoranalysis.anchor.mpp.bean.regionmap.RegionMap;
+import org.anchoranalysis.anchor.mpp.feature.bean.nrgscheme.NRGScheme;
+import org.anchoranalysis.anchor.mpp.feature.bean.nrgscheme.NRGSchemeCreator;
+import org.anchoranalysis.anchor.mpp.feature.nrg.scheme.NamedNRGSchemeSet;
 import org.anchoranalysis.anchor.mpp.regionmap.RegionMapSingleton;
 
 /*-
@@ -31,8 +34,8 @@ import org.anchoranalysis.anchor.mpp.regionmap.RegionMapSingleton;
 
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.InitException;
-import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.log.LogErrorReporter;
+import org.anchoranalysis.core.name.provider.NamedProviderGetException;
 import org.anchoranalysis.core.name.store.NamedProviderStore;
 import org.anchoranalysis.feature.bean.Feature;
 import org.anchoranalysis.feature.bean.list.FeatureList;
@@ -44,10 +47,6 @@ import org.anchoranalysis.gui.feature.evaluator.treetable.ExtractFromNamedNRGSch
 import org.anchoranalysis.gui.feature.evaluator.treetable.FeatureListSrc;
 import org.anchoranalysis.gui.feature.evaluator.treetable.KeyValueParamsAugmenter;
 import org.anchoranalysis.feature.shared.SharedFeatureSet;
-
-import ch.ethz.biol.cell.mpp.nrg.NamedNRGSchemeSet;
-import ch.ethz.biol.cell.mpp.nrg.nrgscheme.NRGScheme;
-import ch.ethz.biol.cell.mpp.nrg.nrgscheme.creator.NRGSchemeCreator;
 
 public class FeatureListSrcBuilder {
 
@@ -136,8 +135,10 @@ public class FeatureListSrcBuilder {
 				
 				nrgElemSet.add(key, new NRGScheme(outUnary, outPairwise, regionMap ) );
 				
-			} catch (GetOperationFailedException | FeatureCalcException  e) {
+			} catch (FeatureCalcException  e) {
 				logErrorReporter.getErrorReporter().recordError(FeatureListSrcBuilder.class, e);
+			} catch (NamedProviderGetException e) {
+				logErrorReporter.getErrorReporter().recordError(FeatureListSrcBuilder.class, e.summarize());
 			}
 		}
 	}

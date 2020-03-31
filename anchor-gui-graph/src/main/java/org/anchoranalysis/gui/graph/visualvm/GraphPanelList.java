@@ -33,10 +33,9 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 
+import org.anchoranalysis.anchor.mpp.feature.nrg.cfg.CfgWithNrgTotal;
 import org.anchoranalysis.gui.videostats.ICfgNRGUpdater;
-
-import ch.ethz.biol.cell.mpp.feedback.Aggregator;
-import ch.ethz.biol.cell.mpp.nrg.CfgWithNrgTotal;
+import org.anchoranalysis.mpp.sgmn.optscheme.feedback.aggregate.Aggregator;
 
 public class GraphPanelList implements ICfgNRGUpdater, Collection<GraphPanel> {
 

@@ -30,8 +30,12 @@ package org.anchoranalysis.gui.videostats.internalframe.evaluator;
 import java.awt.Color;
 import java.util.List;
 
+import org.anchoranalysis.anchor.mpp.bean.cfg.CfgGen;
 import org.anchoranalysis.anchor.mpp.bean.proposer.MarkMergeProposer;
+import org.anchoranalysis.anchor.mpp.cfg.Cfg;
+import org.anchoranalysis.anchor.mpp.cfg.ColoredCfg;
 import org.anchoranalysis.anchor.mpp.mark.Mark;
+import org.anchoranalysis.anchor.mpp.mark.points.MarkPointListFactory;
 import org.anchoranalysis.anchor.mpp.proposer.ProposalAbnormalFailureException;
 import org.anchoranalysis.anchor.mpp.proposer.ProposerContext;
 import org.anchoranalysis.anchor.mpp.proposer.error.ErrorNode;
@@ -42,11 +46,6 @@ import org.anchoranalysis.core.geometry.Point3d;
 import org.anchoranalysis.core.geometry.Point3f;
 import org.anchoranalysis.gui.frame.overlays.ProposedCfg;
 import org.anchoranalysis.gui.videostats.internalframe.ProposalOperation;
-
-import ch.ethz.biol.cell.mpp.cfg.Cfg;
-import ch.ethz.biol.cell.mpp.cfg.CfgGen;
-import ch.ethz.biol.cell.mpp.gui.videostats.internalframe.evaluator.EvaluatorUtilities;
-import ch.ethz.biol.cell.mpp.gui.videostats.internalframe.markredraw.ColoredCfg;
 
 public class MarkMergeProposerEvaluator implements ProposalOperationCreator {
 
@@ -115,7 +114,7 @@ public class MarkMergeProposerEvaluator implements ProposalOperationCreator {
 		{
 			List<Point3f> pts = markMergeProposer.getLastPnts1();
 			if (pts!=null) {
-				cfgOut.addChangeID( EvaluatorUtilities.createMarkFromPoints3f(pts,false), new RGBColor( Color.GREEN) );	// 1 is just to give us a different color
+				cfgOut.addChangeID( MarkPointListFactory.createMarkFromPoints3f(pts,false), new RGBColor( Color.GREEN) );	// 1 is just to give us a different color
 			}
 		}
 		
@@ -123,7 +122,7 @@ public class MarkMergeProposerEvaluator implements ProposalOperationCreator {
 		{
 			List<Point3f> pts = markMergeProposer.getLastPnts2();
 			if (pts!=null) {
-				cfgOut.addChangeID( EvaluatorUtilities.createMarkFromPoints3f(pts,false), new RGBColor( Color.YELLOW) );	// 1 is just to give us a different color
+				cfgOut.addChangeID( MarkPointListFactory.createMarkFromPoints3f(pts,false), new RGBColor( Color.YELLOW) );	// 1 is just to give us a different color
 			}
 		}
 		

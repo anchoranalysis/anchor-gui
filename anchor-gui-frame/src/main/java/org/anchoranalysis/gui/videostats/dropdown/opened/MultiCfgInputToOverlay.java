@@ -1,5 +1,7 @@
 package org.anchoranalysis.gui.videostats.dropdown.opened;
 
+import org.anchoranalysis.anchor.mpp.cfg.Cfg;
+
 /*-
  * #%L
  * anchor-gui-frame
@@ -29,13 +31,11 @@ package org.anchoranalysis.gui.videostats.dropdown.opened;
 import org.anchoranalysis.anchor.mpp.overlay.OverlayCollectionMarkFactory;
 import org.anchoranalysis.anchor.overlay.OverlayedInstantState;
 import org.anchoranalysis.anchor.overlay.collection.OverlayCollection;
+import org.anchoranalysis.core.bridge.BridgeElementException;
 import org.anchoranalysis.core.bridge.IObjectBridgeIndex;
 import org.anchoranalysis.core.cache.ExecuteException;
-import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.gui.mark.MarkDisplaySettings;
 import org.anchoranalysis.gui.videostats.internalframe.cfgtorgb.MultiInput;
-
-import ch.ethz.biol.cell.mpp.cfg.Cfg;
 
 class MultiCfgInputToOverlay implements IObjectBridgeIndex<MultiInput<Cfg>, OverlayedInstantState> {
 	
@@ -48,8 +48,7 @@ class MultiCfgInputToOverlay implements IObjectBridgeIndex<MultiInput<Cfg>, Over
 
 	@Override
 	public OverlayedInstantState bridgeElement(int index,
-			MultiInput<Cfg> sourceObject)
-			throws GetOperationFailedException {
+			MultiInput<Cfg> sourceObject) throws BridgeElementException {
 		try {
 			Cfg cfg = sourceObject.getAssociatedObjects().doOperation();
 			
@@ -59,7 +58,7 @@ class MultiCfgInputToOverlay implements IObjectBridgeIndex<MultiInput<Cfg>, Over
 			);
 			return new OverlayedInstantState(index, oc);
 		} catch (ExecuteException e) {
-			throw new GetOperationFailedException(e);
+			throw new BridgeElementException(e);
 		}
 	}
 }

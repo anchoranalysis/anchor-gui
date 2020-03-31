@@ -29,8 +29,14 @@ package org.anchoranalysis.plugin.gui.bean.exporttask;
 import java.util.function.Supplier;
 
 import org.anchoranalysis.anchor.mpp.bean.regionmap.RegionMembershipWithFlags;
+import org.anchoranalysis.anchor.mpp.cfg.Cfg;
+import org.anchoranalysis.anchor.mpp.feature.instantstate.CfgNRGInstantState;
+import org.anchoranalysis.anchor.mpp.feature.instantstate.CfgNRGNonHandleInstantState;
+import org.anchoranalysis.anchor.mpp.feature.nrg.cfg.CfgNRG;
+import org.anchoranalysis.anchor.mpp.feature.nrg.cfg.CfgWithNrgTotal;
 import org.anchoranalysis.anchor.mpp.overlay.OverlayCollectionMarkFactory;
 import org.anchoranalysis.anchor.overlay.OverlayedInstantState;
+import org.anchoranalysis.core.bridge.BridgeElementException;
 import org.anchoranalysis.core.bridge.IObjectBridge;
 import org.anchoranalysis.core.cache.CacheMonitor;
 import org.anchoranalysis.core.color.ColorIndex;
@@ -44,12 +50,6 @@ import org.anchoranalysis.gui.mergebridge.DualCfgNRGContainer;
 import org.anchoranalysis.gui.mergebridge.MergeCfgBridge;
 import org.anchoranalysis.gui.mergebridge.MergedColorIndex;
 import org.anchoranalysis.gui.mergebridge.TransformToCfg;
-
-import ch.ethz.biol.cell.mpp.cfg.Cfg;
-import ch.ethz.biol.cell.mpp.instantstate.CfgNRGNonHandleInstantState;
-import ch.ethz.biol.cell.mpp.instantstate.CfgNRGInstantState;
-import ch.ethz.biol.cell.mpp.nrg.CfgNRG;
-import ch.ethz.biol.cell.mpp.nrg.CfgWithNrgTotal;
 
 class MergedContainerBridge implements IObjectBridge<ExportTaskParams,IBoundedIndexContainer<CfgNRGInstantState>> {
 
@@ -65,19 +65,22 @@ class MergedContainerBridge implements IObjectBridge<ExportTaskParams,IBoundedIn
 	
 	@Override
 	public IBoundedIndexContainer<CfgNRGInstantState> bridgeElement(
-			ExportTaskParams sourceObject) throws GetOperationFailedException {
+			ExportTaskParams sourceObject) throws BridgeElementException {
 
 		// TODO fix
-		// A container that supplies DualCfgInstantState
 		if (retBridge==null) {
-			DualCfgNRGContainer<Cfg> dualHistory = new DualCfgNRGContainer<>(
-				ContainerUtilities.listCntrs( sourceObject.getAllFinderCfgNRGHistory() ),
-				new TransformToCfg()
-			);
+
+			DualCfgNRGContainer<Cfg> dualHistory;
+			
 			try {
+				dualHistory = new DualCfgNRGContainer<>(
+					ContainerUtilities.listCntrs( sourceObject.getAllFinderCfgNRGHistory() ),
+					new TransformToCfg()
+				);
+				
 				dualHistory.init( cacheMonitor );
-			} catch (InitException e) {
-				throw new GetOperationFailedException(e);
+			} catch (InitException | GetOperationFailedException e) {
+				throw new BridgeElementException(e);
 			}
 			
 			MergeCfgBridge mergeCfgBridge = new MergeCfgBridge(regionMembership);
@@ -85,7 +88,6 @@ class MergedContainerBridge implements IObjectBridge<ExportTaskParams,IBoundedIn
 			ColorIndex mergedColorIndex = new MergedColorIndex(mergeCfgBridge);
 
 			
-			// We map each DualCfgInstantState to a CfgInstantState
 			IBoundedIndexContainer<OverlayedInstantState> cfgCntr = new BoundedIndexContainerBridgeWithoutIndex<>(
 				dualHistory,
 				mergeCfgBridge

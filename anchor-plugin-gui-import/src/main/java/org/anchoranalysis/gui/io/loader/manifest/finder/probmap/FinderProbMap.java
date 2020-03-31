@@ -1,5 +1,6 @@
 package org.anchoranalysis.gui.io.loader.manifest.finder.probmap;
 
+import org.anchoranalysis.core.bridge.BridgeElementException;
 import org.anchoranalysis.core.bridge.IObjectBridge;
 import org.anchoranalysis.core.error.CreateException;
 
@@ -145,11 +146,11 @@ public class FinderProbMap extends Finder implements BackgroundStackCntr, Finder
 
 		@Override
 		public DisplayStack bridgeElement(Stack sourceObject)
-				throws GetOperationFailedException {
+				throws BridgeElementException {
 			try {
 				return DisplayStack.create(sourceObject );
 			} catch (CreateException e) {
-				throw new GetOperationFailedException(e);
+				throw new BridgeElementException(e);
 			}
 		}
 		

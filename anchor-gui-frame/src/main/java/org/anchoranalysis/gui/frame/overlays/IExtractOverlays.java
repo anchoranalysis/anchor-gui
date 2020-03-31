@@ -1,5 +1,7 @@
 package org.anchoranalysis.gui.frame.overlays;
 
+import org.anchoranalysis.gui.frame.display.overlay.IGetOverlayCollection;
+
 /*-
  * #%L
  * anchor-gui-frame
@@ -27,8 +29,6 @@ package org.anchoranalysis.gui.frame.overlays;
  */
 
 import org.anchoranalysis.image.extent.ImageDim;
-
-import anchor.gui.videostats.internalframe.cfgtorgb.IGetOverlayCollection;
 
 public interface IExtractOverlays extends IGetOverlayCollection {
 

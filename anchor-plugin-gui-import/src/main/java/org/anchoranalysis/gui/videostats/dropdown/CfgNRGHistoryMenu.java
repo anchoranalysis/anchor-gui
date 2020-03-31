@@ -30,6 +30,9 @@ package org.anchoranalysis.gui.videostats.dropdown;
 import javax.swing.JFrame;
 
 import org.anchoranalysis.anchor.graph.bean.GraphDefinition;
+import org.anchoranalysis.anchor.mpp.feature.instantstate.CfgNRGInstantState;
+import org.anchoranalysis.anchor.mpp.feature.nrg.cfg.CfgNRGPixelized;
+import org.anchoranalysis.anchor.mpp.graph.bean.GraphDefinitionBarNRGBreakdown;
 import org.anchoranalysis.bean.error.BeanDuplicateException;
 import org.anchoranalysis.core.cache.CacheMonitor;
 import org.anchoranalysis.core.cache.ExecuteException;
@@ -66,10 +69,6 @@ import org.anchoranalysis.plugin.gui.bean.graphdefinition.line.GraphDefinitionLi
 import org.anchoranalysis.plugin.gui.bean.graphdefinition.line.GraphDefinitionLineIterVsTemperature;
 import org.anchoranalysis.plugin.gui.bean.graphdefinition.line.GraphDefinitionLineIterVsTime;
 import org.anchoranalysis.plugin.gui.bean.graphdefinition.line.GraphDefinitionLineIterVsTimePerIter;
-
-import ch.ethz.biol.cell.mpp.gui.graph.jfreechart.bar.GraphDefinitionBarNRGBreakdown;
-import ch.ethz.biol.cell.mpp.instantstate.CfgNRGInstantState;
-import ch.ethz.biol.cell.mpp.nrg.CfgNRGPixelized;
 
 // TODO needs heavy refactoring for readability
 public class CfgNRGHistoryMenu {

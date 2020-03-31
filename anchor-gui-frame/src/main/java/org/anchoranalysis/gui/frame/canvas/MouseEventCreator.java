@@ -55,12 +55,12 @@ class MouseEventCreator {
 	public MouseEvent mouseEventNew( MouseEvent evOld ) {
 		
 		Point2i pntNew = cnvrtCrnrPoint( evOld.getX(), evOld.getY() );
-		
+			
 		MouseEvent evNew = new MouseEvent(
 			((Component) evOld.getSource()),
 			evOld.getID(),
 			evOld.getWhen(),
-			evOld.getModifiersEx(),
+			evOld.getModifiers(),
 			pntNew.getX(),
 			pntNew.getY(),
 			evOld.getClickCount(),

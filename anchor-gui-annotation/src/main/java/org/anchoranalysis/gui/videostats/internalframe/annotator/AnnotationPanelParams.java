@@ -27,7 +27,7 @@ package org.anchoranalysis.gui.videostats.internalframe.annotator;
  */
 
 import org.anchoranalysis.core.random.RandomNumberGenerator;
-import org.anchoranalysis.gui.image.frame.canvas.ISliderState;
+import org.anchoranalysis.gui.image.frame.ISliderState;
 import org.anchoranalysis.gui.videostats.internalframe.annotator.tool.ToolErrorReporter;
 
 public class AnnotationPanelParams {

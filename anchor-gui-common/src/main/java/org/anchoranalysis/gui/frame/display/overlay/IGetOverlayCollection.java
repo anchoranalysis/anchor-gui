@@ -1,8 +1,8 @@
-package org.anchoranalysis.gui.frame.details.canvas;
+package org.anchoranalysis.gui.frame.display.overlay;
 
 /*-
  * #%L
- * anchor-gui-common
+ * anchor-mpp-io
  * %%
  * Copyright (C) 2010 - 2019 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann la Roche
  * %%
@@ -26,24 +26,8 @@ package org.anchoranalysis.gui.frame.details.canvas;
  * #L%
  */
 
-import java.awt.Dimension;
+import org.anchoranalysis.anchor.overlay.collection.ColoredOverlayCollection;
 
-public abstract class ControllerSize {
-
-	/** Sets the minimum and preferred to the same size */
-	public void configureSize( int width, int height ) {
-		Dimension dim = new Dimension(width, height);
-		setPreferredSize( dim );
-		setMinimumSize( dim );
-	}
-	
-	/** Sets the minimum and preferred to the same size */
-	public void configureSize( int minimumWidth, int minimumHeight, int preferredWidth, int preferredHeight ) {
-		setPreferredSize( new Dimension(preferredWidth, preferredHeight) );
-		setMinimumSize( new Dimension(minimumWidth, minimumHeight) );
-	}
-	
-	protected abstract void setMinimumSize(Dimension minimumSize);
-
-	protected abstract void setPreferredSize(Dimension preferredSize);
+public interface IGetOverlayCollection {
+	ColoredOverlayCollection getOverlayCollection();
 }

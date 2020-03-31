@@ -27,8 +27,7 @@ package org.anchoranalysis.gui.frame.overlays;
  */
 
 import org.anchoranalysis.anchor.overlay.collection.OverlayCollection;
-
-import ch.ethz.biol.cell.imageprocessing.io.generator.raster.OverlayedDisplayStackUpdate;
+import org.anchoranalysis.gui.frame.display.OverlayedDisplayStackUpdate;
 
 /** Constructors a redraw update from some underlying objects */
 public class RedrawUpdate {

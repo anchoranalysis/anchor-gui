@@ -28,13 +28,12 @@ package org.anchoranalysis.gui.io.loader.manifest.finder;
 
 import javax.swing.JFrame;
 
+import org.anchoranalysis.anchor.mpp.feature.nrg.cfg.CfgNRGPixelized;
 import org.anchoranalysis.gui.finder.imgstackcollection.FinderImgStackCollection;
 import org.anchoranalysis.gui.videostats.dropdown.VideoStatsModuleGlobalParams;
 import org.anchoranalysis.io.manifest.finder.FinderSerializedObject;
 import org.anchoranalysis.io.output.bound.BoundOutputManagerRouteErrors;
 import org.anchoranalysis.mpp.sgmn.bean.kernel.proposer.KernelProposer;
-
-import ch.ethz.biol.cell.mpp.nrg.CfgNRGPixelized;
 
 public class CfgNRGFinderContext {
 
