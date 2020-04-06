@@ -35,6 +35,7 @@ import javax.swing.tree.TreeNode;
 import org.anchoranalysis.core.error.reporter.ErrorReporter;
 import org.anchoranalysis.feature.bean.Feature;
 import org.anchoranalysis.feature.bean.list.FeatureList;
+import org.anchoranalysis.feature.cache.CacheableParams;
 import org.anchoranalysis.feature.calc.params.FeatureCalcParams;
 import org.anchoranalysis.feature.session.Subsession;
 
@@ -45,13 +46,13 @@ class CustomRootNode extends FeatureListNode {
 		initChildFeatures( new FeatureList(), new ArrayList<>(), null );
 	}
 	
-	public void replaceFeatureList( FeatureList featureList, List<FeatureCalcParams> paramsList, Subsession subsession ) {
+	public void replaceFeatureList( FeatureList featureList, List<CacheableParams<? extends FeatureCalcParams>> paramsList, Subsession subsession ) {
 		getFeatures().clear();
 		resetCalcList();
 		this.initChildFeatures(featureList, paramsList, subsession );
 	}
 	
-	public void replaceCalcParams( List<FeatureCalcParams> paramsList, Subsession subsession ) {
+	public void replaceCalcParams( List<CacheableParams<? extends FeatureCalcParams>> paramsList, Subsession subsession ) {
 		updateValueSource( paramsList, subsession );
 	}
 
@@ -87,15 +88,11 @@ class CustomRootNode extends FeatureListNode {
 	}
 
 	@Override
-	protected void updateValueSource(FeatureCalcParams params,
-			Subsession subsession) {
-		super.updateValueSourceNoTransformParams(params, subsession);
+	protected void updateValueSource(List<CacheableParams<? extends FeatureCalcParams>> paramsList, Subsession subsession) {
 	}
-	
+
 	@Override
-	protected void updateValueSource(List<FeatureCalcParams> paramsList,
-			Subsession subsession) {
-		super.updateValueSourceNoTransformParams(paramsList, subsession);
+	protected void updateValueSource(CacheableParams<? extends FeatureCalcParams> params, Subsession subsession) {
 	}
 
 }

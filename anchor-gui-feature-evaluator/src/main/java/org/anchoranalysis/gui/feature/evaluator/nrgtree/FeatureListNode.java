@@ -38,6 +38,7 @@ import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.reporter.ErrorReporter;
 import org.anchoranalysis.feature.bean.Feature;
 import org.anchoranalysis.feature.bean.list.FeatureList;
+import org.anchoranalysis.feature.cache.CacheableParams;
 import org.anchoranalysis.feature.calc.ResultsVector;
 import org.anchoranalysis.feature.calc.params.FeatureCalcParams;
 import org.anchoranalysis.feature.session.Subsession;
@@ -54,7 +55,7 @@ abstract class FeatureListNode extends Node {
 	
 	
 	private List<FeatureValueNode> calcList = null;
-	private List<FeatureCalcParams> paramsList;
+	private List<CacheableParams<? extends FeatureCalcParams>> paramsList;
 	private ErrorReporter errorReporter;
 	
 	private Subsession subsession;
@@ -63,7 +64,7 @@ abstract class FeatureListNode extends Node {
 		this.errorReporter = errorReporter;
 	}
 	
-	protected void initChildFeatures(FeatureList features,List<FeatureCalcParams> paramsList, Subsession subsession ) {
+	protected void initChildFeatures(FeatureList features,List<CacheableParams<? extends FeatureCalcParams>> paramsList, Subsession subsession ) {
 		this.childFeatures = new FeatureList(features);
 		
 		// Sort out features in alphabetical order
@@ -78,13 +79,16 @@ abstract class FeatureListNode extends Node {
 	}
 	
 
-	protected void updateValueSourceNoTransformParams(FeatureCalcParams params, Subsession subsession) {
+	protected void updateValueSourceNoTransformParams(CacheableParams<? extends FeatureCalcParams> params, Subsession subsession) {
 		this.subsession = subsession;
-		updateValueSourceNoTransformParams( listSize(params, childFeatures.size() ), subsession);
+		updateValueSourceNoTransformParams(
+			listSize(params, childFeatures.size() ),
+			subsession
+		);
 	}
 
 	
-	protected void updateValueSourceNoTransformParams(List<FeatureCalcParams> paramsList, Subsession subsession) {
+	protected void updateValueSourceNoTransformParams(List<CacheableParams<? extends FeatureCalcParams>> paramsList, Subsession subsession) {
 		
 		//System.out.println("updateValueSource");
 		
@@ -102,8 +106,8 @@ abstract class FeatureListNode extends Node {
 	}
 
 	
-	protected static List<FeatureCalcParams> listSize( FeatureCalcParams params, int size ) {
-		List<FeatureCalcParams> list = new ArrayList<>();
+	private static <T> List<T> listSize( T params, int size ) {
+		List<T> list = new ArrayList<>();
 		for( int i=0; i<size; i++) {
 			list.add(params);
 		}
@@ -139,11 +143,16 @@ abstract class FeatureListNode extends Node {
 		for (int i=0; i<rv.length(); i++) {
 			
 			Feature f = childFeatures.get(i);
-			FeatureCalcParams params = paramsList.get(i);
-			
+			CacheableParams<? extends FeatureCalcParams> params = paramsList.get(i);
 			assert(f!=null);
 			
-			FeatureValueNode node = new FeatureValueNode( f, parent, params, errorReporter, subsession );
+			FeatureValueNode node = new FeatureValueNode(
+				f,
+				parent,
+				params,
+				errorReporter,
+				subsession
+			);
 			setNodeFromResultsVector( node, rv, i );
 			
 			listNodes.add( node );
@@ -152,12 +161,12 @@ abstract class FeatureListNode extends Node {
 	
 	
 	// We update the immediate children, and all their children
-	private void updateNodes( ResultsVector rv, FeatureList features, List<FeatureCalcParams> paramsList, List<FeatureValueNode> listNodes ) {
+	private void updateNodes( ResultsVector rv, FeatureList features, List<CacheableParams<? extends FeatureCalcParams>> paramsList, List<FeatureValueNode> listNodes ) {
 		assert(rv.length()==features.size());
 		// update our tree
 		for (int i=0; i<features.size(); i++) {
 			
-			FeatureCalcParams params = paramsList.get(i);			
+			CacheableParams<? extends FeatureCalcParams> params = paramsList.get(i);			
 			
 			FeatureValueNode node = listNodes.get(i);
 			setNodeFromResultsVector( node, rv, i );

@@ -46,6 +46,7 @@ import org.anchoranalysis.feature.init.FeatureInitParams;
 import org.anchoranalysis.feature.nrg.NRGStackWithParams;
 import org.anchoranalysis.feature.session.CreateParams;
 import org.anchoranalysis.feature.session.SequentialSession;
+import org.anchoranalysis.feature.session.SessionUtilities;
 import org.anchoranalysis.feature.shared.SharedFeatureSet;
 import org.anchoranalysis.gui.feature.FeatureListWithRegionMap;
 import org.anchoranalysis.gui.feature.evaluator.nrgtree.overlayparams.CreateParamsFromOverlay;
@@ -201,7 +202,11 @@ public class FeatureCalcDescriptionTreeModel extends DefaultTreeModel implements
 				//log.info( String.format("first") );
 				assert( createParamsList.size()==featureList.size() );
 				
-				root.replaceFeatureList( featureList, paramsList, session.createSubsession() );
+				root.replaceFeatureList(
+					featureList,
+					SessionUtilities.createCacheable(paramsList, featureList, sharedFeatures),
+					session.createSubsession()
+				);
 				
 				nodeStructureChanged(root);
 				reload();
@@ -211,7 +216,10 @@ public class FeatureCalcDescriptionTreeModel extends DefaultTreeModel implements
 				//log.info( String.format("updateValueSource") );
 				assert( createParamsList.size()==featureList.size() );
 				
-				root.replaceCalcParams(paramsList, session.createSubsession() );
+				root.replaceCalcParams(
+					SessionUtilities.createCacheable(paramsList, featureList, sharedFeatures),
+					session.createSubsession()
+				);
 
 				nodeChanged(root);
 			}
@@ -228,5 +236,4 @@ public class FeatureCalcDescriptionTreeModel extends DefaultTreeModel implements
 		dup.removeIfExists(featureList);
 		return dup;
 	}
-
 }

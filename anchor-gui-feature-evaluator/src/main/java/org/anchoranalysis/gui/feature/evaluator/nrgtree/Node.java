@@ -32,6 +32,7 @@ import java.util.List;
 import javax.swing.tree.TreeNode;
 
 import org.anchoranalysis.feature.bean.Feature;
+import org.anchoranalysis.feature.cache.CacheableParams;
 import org.anchoranalysis.feature.calc.params.FeatureCalcParams;
 import org.anchoranalysis.feature.session.Subsession;
 
@@ -42,10 +43,10 @@ public abstract class Node implements TreeNode {
 	public abstract Feature getFeature();
 	
 	// A list of different CreateParams for each feature
-	protected abstract void updateValueSource( List<FeatureCalcParams> paramsList, Subsession subsession );
+	protected abstract void updateValueSource( List<CacheableParams<? extends FeatureCalcParams>> paramsList, Subsession subsession );
 	
 	// A single CreateParams for all features
-	protected abstract void updateValueSource( FeatureCalcParams params, Subsession subsession );
+	protected abstract void updateValueSource( CacheableParams<? extends FeatureCalcParams> params, Subsession subsession );
 	
 	public abstract boolean hasError();
 	
