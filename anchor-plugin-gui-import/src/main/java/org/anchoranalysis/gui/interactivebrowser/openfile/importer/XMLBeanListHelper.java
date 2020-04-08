@@ -35,6 +35,7 @@ import org.anchoranalysis.bean.AnchorBean;
 import org.anchoranalysis.bean.NamedBean;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.feature.bean.list.FeatureListProvider;
+import org.anchoranalysis.feature.calc.params.FeatureCalcParams;
 import org.anchoranalysis.gui.bean.filecreator.FileCreator;
 import org.anchoranalysis.gui.bean.filecreator.FileFeatureEvaluatorCreator;
 import org.anchoranalysis.gui.bean.filecreator.NamedSingleStackCreator;
@@ -82,7 +83,7 @@ class XMLBeanListHelper {
 		AnchorBean<?> item = namedBean.getItem(); 
 		
 		if (item instanceof FeatureListProvider) {
-			return createFeatureEvaluator( (List<NamedBean<FeatureListProvider>>) bean, f);
+			return createFeatureEvaluator( (List<NamedBean<FeatureListProvider<FeatureCalcParams>>>) bean, f);
 		} else {
 			throw new CreateException(
 				String.format("The class of named-bean is not currently supported: %s", item.getClass() )
@@ -90,7 +91,7 @@ class XMLBeanListHelper {
 		}
 	}
 	
-	private static FileCreator createFeatureEvaluator(List<NamedBean<FeatureListProvider>> features, File f) {
+	private static FileCreator createFeatureEvaluator(List<NamedBean<FeatureListProvider<FeatureCalcParams>>> features, File f) {
 		return create(
 			new FileFeatureEvaluatorCreator(),
 			features,

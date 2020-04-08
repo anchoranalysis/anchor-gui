@@ -31,6 +31,8 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.tree.TreeNode;
 
+import org.anchoranalysis.anchor.mpp.feature.nrg.elem.NRGElemAllCalcParams;
+import org.anchoranalysis.anchor.mpp.feature.nrg.elem.NRGElemPairCalcParams;
 import org.anchoranalysis.bean.error.BeanMisconfiguredException;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.reporter.ErrorReporter;
@@ -47,15 +49,15 @@ class FeatureValueNode extends FeatureListNode {
 	// The current value defining the feature (to be displayed to the user)
 	private String value;
 	
-	private Feature parentFeature;
+	private Feature<FeatureCalcParams> parentFeature;
 	private String errorText = "";
 	private Throwable error;
 	
 	private TreeNode parentNode;
 	
-	private FeatureList childFeatures;
+	private FeatureList<FeatureCalcParams> childFeatures;
 	
-	public FeatureValueNode(Feature parentFeature, TreeNode parentNode, CacheableParams<? extends FeatureCalcParams> params, ErrorReporter errorReporter, Subsession subsession ) throws CreateException {
+	public FeatureValueNode(Feature<FeatureCalcParams> parentFeature, TreeNode parentNode, CacheableParams<FeatureCalcParams> params, ErrorReporter errorReporter, Subsession subsession ) throws CreateException {
 		super(errorReporter);
 	
 		this.parentNode = parentNode;
@@ -65,7 +67,7 @@ class FeatureValueNode extends FeatureListNode {
 			childFeatures = parentFeature.createListChildFeatures(true);
 		} catch (BeanMisconfiguredException e) {
 			errorReporter.recordError(FeatureValueNode.class, e);
-			childFeatures = new FeatureList();
+			childFeatures = new FeatureList<>();
 		}
 		
 		// For the children, we embed the createParams that is used for the parent
@@ -79,7 +81,7 @@ class FeatureValueNode extends FeatureListNode {
 		);
 	}
 	
-	private static CacheableParams<? extends FeatureCalcParams> createChildParam( Feature parentFeature, CacheableParams<? extends FeatureCalcParams> parentParams, Feature childFeature ) throws CreateException {
+	private static CacheableParams<FeatureCalcParams> createChildParam( Feature<FeatureCalcParams> parentFeature, CacheableParams<FeatureCalcParams> parentParams, Feature<FeatureCalcParams> childFeature ) throws CreateException {
 		try {
 			return parentFeature.transformParams(parentParams, childFeature);
 		} catch (FeatureCalcException e) {
@@ -87,11 +89,11 @@ class FeatureValueNode extends FeatureListNode {
 		}
 	}
 	
-	private static List<CacheableParams<? extends FeatureCalcParams>> createAllChildParams( Feature parentFeature, CacheableParams<? extends FeatureCalcParams> parentParams, FeatureList childFeatures ) throws CreateException {
+	private static List<CacheableParams<FeatureCalcParams>> createAllChildParams( Feature<FeatureCalcParams> parentFeature, CacheableParams<FeatureCalcParams> parentParams, FeatureList<FeatureCalcParams> childFeatures ) throws CreateException {
 		
-		List<CacheableParams<? extends FeatureCalcParams>> list = new ArrayList<>();
+		List<CacheableParams<FeatureCalcParams>> list = new ArrayList<>();
 		
-		for( Feature f : childFeatures ) {
+		for( Feature<FeatureCalcParams> f : childFeatures ) {
 			list.add(
 				createChildParam(parentFeature, parentParams, f)
 			);
@@ -100,15 +102,16 @@ class FeatureValueNode extends FeatureListNode {
 		return list;
 	}
 	
-	private static List<CacheableParams<? extends FeatureCalcParams>> creatAllChildParams( Feature parentFeature, List<CacheableParams<? extends FeatureCalcParams>> parentParams, FeatureList childFeatures ) throws CreateException {
+	// TODO merge with createAllChildParams, very similar names, what's the necessary difference/
+	private static List<CacheableParams<FeatureCalcParams>> creatAllChildParams( Feature<FeatureCalcParams> parentFeature, List<CacheableParams<FeatureCalcParams>> parentParams, FeatureList<FeatureCalcParams> childFeatures ) throws CreateException {
 		
 		assert(parentParams.size()==childFeatures.size());
 		
-		List<CacheableParams<? extends FeatureCalcParams>> list = new ArrayList<>();
+		List<CacheableParams<FeatureCalcParams>> list = new ArrayList<>();
 		
 		for( int i=0; i<childFeatures.size(); i++ ) {
-			Feature f = childFeatures.get(i);
-			CacheableParams<? extends FeatureCalcParams> params = parentParams.get(i);
+			Feature<FeatureCalcParams> f = childFeatures.get(i);
+			CacheableParams<FeatureCalcParams> params = parentParams.get(i);
 			
 			list.add(
 				createChildParam(parentFeature, params, f)
@@ -119,9 +122,9 @@ class FeatureValueNode extends FeatureListNode {
 	}
 
 	@Override
-	protected void updateValueSource(CacheableParams<? extends FeatureCalcParams> params, Subsession subsession) {
+	protected void updateValueSource(CacheableParams<FeatureCalcParams> params, Subsession subsession) {
 		try {
-			CacheableParams<? extends FeatureCalcParams> childParams = createChildParam(
+			CacheableParams<FeatureCalcParams> childParams = createChildParam(
 				parentFeature,
 				params,
 				null
@@ -133,9 +136,9 @@ class FeatureValueNode extends FeatureListNode {
 	}
 
 	@Override
-	protected void updateValueSource(List<CacheableParams<? extends FeatureCalcParams>> createParamsList, Subsession subsession) {
+	protected void updateValueSource(List<CacheableParams<FeatureCalcParams>> createParamsList, Subsession subsession) {
 		try {
-			List<CacheableParams<? extends FeatureCalcParams>> childParams = creatAllChildParams(parentFeature, createParamsList, childFeatures);
+			List<CacheableParams<FeatureCalcParams>> childParams = creatAllChildParams(parentFeature, createParamsList, childFeatures);
 			super.updateValueSourceNoTransformParams(childParams, subsession);
 		} catch (CreateException e) {
 			getErrorReporter().recordError(FeatureValueNode.class, e);

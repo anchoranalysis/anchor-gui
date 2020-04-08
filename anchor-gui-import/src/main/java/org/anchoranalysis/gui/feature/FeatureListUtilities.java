@@ -42,6 +42,7 @@ import org.anchoranalysis.feature.bean.Feature;
 import org.anchoranalysis.feature.bean.list.FeatureList;
 import org.anchoranalysis.feature.bean.operator.Sum;
 import org.anchoranalysis.feature.calc.ResultsVector;
+import org.anchoranalysis.feature.calc.params.FeatureCalcParams;
 import org.anchoranalysis.gui.feature.evaluator.params.FeatureCalcParamsFactorySession;
 import org.anchoranalysis.gui.serializedobjectset.MarkWithRaster;
 
@@ -57,9 +58,9 @@ public class FeatureListUtilities {
 	 * @param includeLastExecution
 	 * @return
 	 */
-	public static FeatureListWithRegionMap createFeatureList( NamedNRGSchemeSet elemSet, int cliqueSize, boolean includeLastExecution ) {
+	public static FeatureListWithRegionMap<FeatureCalcParams> createFeatureList( NamedNRGSchemeSet elemSet, int cliqueSize, boolean includeLastExecution ) {
 		
-		FeatureListWithRegionMap featureList = new FeatureListWithRegionMap(); 
+		FeatureListWithRegionMap<FeatureCalcParams> featureList = new FeatureListWithRegionMap<>(); 
 		
 		for( NamedBean<NRGScheme> nnec : elemSet ) {
 			
@@ -70,23 +71,23 @@ public class FeatureListUtilities {
 			if (nnec.getName().startsWith("lastExecution")) {
 				
 				if (includeLastExecution) {
-					Sum rootFeature = new Sum();
+					Sum<FeatureCalcParams> rootFeature = new Sum<>();
 					rootFeature.setList( nnec.getValue().getElemByCliqueSize( cliqueSize) );
 					rootFeature.setCustomName(nnec.getName());
 					featureList.add( rootFeature, regionMap );
 				}
 			} else if (nnec.getName().equals("user_defined")) {
 				
-				for(Feature f : nnec.getValue().getElemByCliqueSize(cliqueSize) ) {
+				for(Feature<FeatureCalcParams> f : nnec.getValue().getElemByCliqueSize(cliqueSize) ) {
 					featureList.add(f, regionMap );
 				}
 				
 			} else {
 				
-				FeatureList fl = nnec.getValue().getElemByCliqueSize(cliqueSize);
+				FeatureList<FeatureCalcParams> fl = nnec.getValue().getElemByCliqueSize(cliqueSize);
 				
 				if (fl.size()>0) {
-					Sum rootFeature = new Sum();
+					Sum<FeatureCalcParams> rootFeature = new Sum<>();
 					rootFeature.setList( fl );
 					rootFeature.setCustomName(nnec.getName());
 					featureList.add(rootFeature, regionMap );
@@ -99,14 +100,14 @@ public class FeatureListUtilities {
 
 
 	// listMarks is an optional variable for writing out return values to the list
-	public static CalculatedFeatureValues calculateFeatureList(
-		FeatureListWithRegionMap featureList,
+	public static <T extends FeatureCalcParams> CalculatedFeatureValues calculateFeatureList(
+		FeatureListWithRegionMap<T> featureList,
 		IBoundedIndexContainer<MarkWithRaster> cntr,
 		List<Mark> listMarks,
 		LogErrorReporter logger
 	) throws OperationFailedException {
 		
-		FeatureCalcParamsFactorySession session = new FeatureCalcParamsFactorySession(featureList,logger);
+		FeatureCalcParamsFactorySession<T> session = new FeatureCalcParamsFactorySession<>(featureList,logger);
 		session.start();
 		
 		try {

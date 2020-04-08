@@ -57,13 +57,13 @@ import org.anchoranalysis.gui.feature.FeatureWithRegionMap;
  * @author Owen Feehan
  *
  */
-public class FeatureCalcParamsFactorySession extends FeatureSession {
+public class FeatureCalcParamsFactorySession<T extends FeatureCalcParams> extends FeatureSession {
 
-	private FeatureListWithRegionMap featureList;
+	private FeatureListWithRegionMap<T> featureList;
 	private SimpleSession delegate;
 	private LogErrorReporter logger;
 	
-	public FeatureCalcParamsFactorySession( FeatureListWithRegionMap featureList, LogErrorReporter logger ) {
+	public FeatureCalcParamsFactorySession( FeatureListWithRegionMap<T> featureList, LogErrorReporter logger ) {
 		//delegate = new SequentialSession( featureList.createFeatureList() );
 		this.delegate = new SimpleSession();
 		this.featureList = featureList;
@@ -78,11 +78,11 @@ public class FeatureCalcParamsFactorySession extends FeatureSession {
 		ResultsVector rv = new ResultsVector( featureList.size() );
 		
 		FeatureInitParams paramsInit = new FeatureInitParams();
-		SharedFeatureSet sharedFeatures = new SharedFeatureSet();
+		SharedFeatureSet<T> sharedFeatures = new SharedFeatureSet<>();
 		
 		// Now we calculate all the features one at a time
 		int featureIndex = 0;
-		for( FeatureWithRegionMap feature : featureList ) {
+		for( FeatureWithRegionMap<T> feature : featureList ) {
 		
 			double featVal;
 			try {
@@ -101,7 +101,7 @@ public class FeatureCalcParamsFactorySession extends FeatureSession {
 		return rv;
 	}
 	
-	private double calcFeature( Feature feature, NRGStackWithParams raster, Mark mark, RegionMap regionMap, FeatureInitParams initParams, SharedFeatureSet sharedFeatures ) throws FeatureCalcException, InitException {
+	private double calcFeature( Feature<T> feature, NRGStackWithParams raster, Mark mark, RegionMap regionMap, FeatureInitParams initParams, SharedFeatureSet sharedFeatures ) throws FeatureCalcException, InitException {
 		
 		PxlMarkMemo pmm = PxlMarkMemoFactory.create( mark, raster.getNrgStack(), regionMap );
 		

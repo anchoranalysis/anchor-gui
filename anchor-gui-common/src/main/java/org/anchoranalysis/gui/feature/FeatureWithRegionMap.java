@@ -28,12 +28,14 @@ package org.anchoranalysis.gui.feature;
 
 import org.anchoranalysis.anchor.mpp.bean.regionmap.RegionMap;
 import org.anchoranalysis.feature.bean.Feature;
+import org.anchoranalysis.feature.calc.params.FeatureCalcParams;
 
-public class FeatureWithRegionMap {
-	private Feature feature;
+public class FeatureWithRegionMap<T extends FeatureCalcParams> {
+	
+	private Feature<T> feature;
 	private RegionMap regionMap;
 	
-	public FeatureWithRegionMap(Feature feature, RegionMap regionMap) {
+	public FeatureWithRegionMap(Feature<T> feature, RegionMap regionMap) {
 		super();
 		assert(feature!=null);
 		assert(regionMap!=null);
@@ -41,7 +43,7 @@ public class FeatureWithRegionMap {
 		this.regionMap = regionMap;
 	}
 
-	public Feature getFeature() {
+	public Feature<T> getFeature() {
 		return feature;
 	}
 

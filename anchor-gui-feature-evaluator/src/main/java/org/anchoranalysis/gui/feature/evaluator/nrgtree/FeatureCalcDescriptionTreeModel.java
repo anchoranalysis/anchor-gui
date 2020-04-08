@@ -41,6 +41,7 @@ import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.log.LogErrorReporter;
 import org.anchoranalysis.feature.bean.Feature;
 import org.anchoranalysis.feature.bean.list.FeatureList;
+import org.anchoranalysis.feature.calc.FeatureCalcException;
 import org.anchoranalysis.feature.calc.params.FeatureCalcParams;
 import org.anchoranalysis.feature.init.FeatureInitParams;
 import org.anchoranalysis.feature.nrg.NRGStackWithParams;
@@ -59,21 +60,21 @@ public class FeatureCalcDescriptionTreeModel extends DefaultTreeModel implements
 	 */
 	private static final long serialVersionUID = -5795973516009041187L;
 
-	private FeatureListWithRegionMap featureListWithRegions;
-	private FeatureList featureList;
+	private FeatureListWithRegionMap<FeatureCalcParams> featureListWithRegions;
+	private FeatureList<FeatureCalcParams> featureList;
 	
 	private LogErrorReporter logErrorReporter;
-	private SharedFeatureSet sharedFeatures;
+	private SharedFeatureSet<FeatureCalcParams> sharedFeatures;
 	
-	private SequentialSession session = null;
+	private SequentialSession<FeatureCalcParams> session = null;
 	
 	//private static Log log = LogFactory.getLog(FeatureCalcDescriptionTreeModel.class);
 	
 	private boolean first = true;
 	
 	public FeatureCalcDescriptionTreeModel(
-		FeatureListWithRegionMap featureListWithRegions,
-		SharedFeatureSet sharedFeatures,
+		FeatureListWithRegionMap<FeatureCalcParams> featureListWithRegions,
+		SharedFeatureSet<FeatureCalcParams> sharedFeatures,
 		LogErrorReporter logErrorReporter
 	) {
 		super( null );
@@ -112,7 +113,7 @@ public class FeatureCalcDescriptionTreeModel extends DefaultTreeModel implements
 				return;
 			}
 			
-			List<CreateParams> createParamsList = new ArrayList<>();
+			List<CreateParams<FeatureCalcParams>> createParamsList = new ArrayList<>();
 			CreateParamsFromOverlay.addForOverlay( overlay, nrgStack, featureListWithRegions, createParamsList );
 			
 			updateOrReload(
@@ -139,7 +140,7 @@ public class FeatureCalcDescriptionTreeModel extends DefaultTreeModel implements
 			}
 			
 			// Create a pair for each region map
-			List<CreateParams> createParamsList = new ArrayList<>();
+			List<CreateParams<FeatureCalcParams>> createParamsList = new ArrayList<>();
 			
 			CreateParamsFromOverlay.addForOverlayPair( pair, nrgStack, featureListWithRegions, createParamsList );
 			
@@ -154,7 +155,7 @@ public class FeatureCalcDescriptionTreeModel extends DefaultTreeModel implements
 		}
 	}
 	
-	private List<FeatureCalcParams> createParamsList( List<CreateParams> listCreate, FeatureList features ) throws CreateException {
+	private List<FeatureCalcParams> createParamsList( List<CreateParams<FeatureCalcParams>> listCreate, FeatureList<?> features ) throws CreateException {
 		assert( listCreate.size()==features.size() );
 		
 		FeatureCalcParams paramsGlobal=null;
@@ -162,8 +163,8 @@ public class FeatureCalcDescriptionTreeModel extends DefaultTreeModel implements
 		List<FeatureCalcParams> listOut = new ArrayList<>();
 		
 		for( int i=0; i<features.size(); i++) {
-			CreateParams cp = listCreate.get(i);
-			Feature f = features.get(i);
+			CreateParams<FeatureCalcParams> cp = listCreate.get(i);
+			Feature<?> f = features.get(i);
 			
 			FeatureCalcParams params = cp.createForFeature(f);
 			
@@ -183,7 +184,7 @@ public class FeatureCalcDescriptionTreeModel extends DefaultTreeModel implements
 	}
 	
 	
-	private void updateOrReload( FeatureList featureList, List<CreateParams> createParamsList, NRGStackWithParams nrgStack ) throws OperationFailedException {
+	private void updateOrReload( FeatureList<FeatureCalcParams> featureList, List<CreateParams<FeatureCalcParams>> createParamsList, NRGStackWithParams nrgStack ) throws OperationFailedException {
 		
 		try {
 			// Create a list of params for each feature
@@ -192,19 +193,29 @@ public class FeatureCalcDescriptionTreeModel extends DefaultTreeModel implements
 			CustomRootNode root = (CustomRootNode) getRoot();
 			//root.setFeatureCalcParams(featureCalcParams);
 	
+			FeatureInitParams paramsInit = createInitParams(nrgStack); 
 			if (first) {
 				// Later on, both the features in featureList and various dependent features will be called through Subsessions
 				//   so we rely on these dependent features being initialised through session.start() as the initialization
 				//   procedure is recursive
-				session = new SequentialSession(this.featureList);
-				session.start( createInitParams(nrgStack), sharedFeatures, logErrorReporter );
+				
+				
+				
+				session = new SequentialSession<>(this.featureList);
+				session.start( paramsInit, sharedFeatures, logErrorReporter );
 				
 				//log.info( String.format("first") );
 				assert( createParamsList.size()==featureList.size() );
 				
 				root.replaceFeatureList(
 					featureList,
-					SessionUtilities.createCacheable(paramsList, featureList, sharedFeatures),
+					SessionUtilities.createCacheable(
+						paramsList,
+						featureList,
+						sharedFeatures,
+						paramsInit,
+						logErrorReporter
+					),
 					session.createSubsession()
 				);
 				
@@ -217,22 +228,31 @@ public class FeatureCalcDescriptionTreeModel extends DefaultTreeModel implements
 				assert( createParamsList.size()==featureList.size() );
 				
 				root.replaceCalcParams(
-					SessionUtilities.createCacheable(paramsList, featureList, sharedFeatures),
+					SessionUtilities.createCacheable(
+						paramsList,
+						featureList,
+						sharedFeatures,
+						paramsInit,
+						logErrorReporter
+					),
 					session.createSubsession()
 				);
 
 				nodeChanged(root);
 			}
 			
-		} catch (InitException | CreateException e) {
+		} catch (InitException | CreateException | FeatureCalcException e) {
 			throw new OperationFailedException(e);
 		}
 	}
 
 	/** Removes features from shared, which also exist in the FeatureList, as they should
 	 *  not be in both */
-	private static SharedFeatureSet removeFeaturesFromShared( SharedFeatureSet sharedFeatures, FeatureList featureList ) {
-		SharedFeatureSet dup = sharedFeatures.duplicate();
+	private static SharedFeatureSet<FeatureCalcParams> removeFeaturesFromShared(
+		SharedFeatureSet<FeatureCalcParams> sharedFeatures,
+		FeatureList<FeatureCalcParams> featureList
+	) {
+		SharedFeatureSet<FeatureCalcParams> dup = sharedFeatures.duplicate();
 		dup.removeIfExists(featureList);
 		return dup;
 	}

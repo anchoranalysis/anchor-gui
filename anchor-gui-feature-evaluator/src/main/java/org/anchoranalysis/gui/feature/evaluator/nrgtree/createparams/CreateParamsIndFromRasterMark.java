@@ -36,7 +36,7 @@ import org.anchoranalysis.feature.nrg.NRGStackWithParams;
 import org.anchoranalysis.feature.session.CreateParams;
 import org.anchoranalysis.gui.feature.evaluator.params.ParamsFactoryForFeature;
 
-public class CreateParamsIndFromRasterMark extends CreateParams  {
+public class CreateParamsIndFromRasterMark extends CreateParams<FeatureCalcParams> {
 
 	private PxlMarkMemo pmm;
 	private NRGStackWithParams raster;
@@ -49,7 +49,7 @@ public class CreateParamsIndFromRasterMark extends CreateParams  {
 	}
 
 	@Override
-	public FeatureCalcParams createForFeature(Feature feature) throws CreateException {
+	public FeatureCalcParams createForFeature(Feature<?> feature) throws CreateException {
 		try {
 			return ParamsFactoryForFeature.factoryFor( feature ).create(pmm, raster);
 		} catch (FeatureCalcException e) {

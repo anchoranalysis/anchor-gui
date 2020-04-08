@@ -38,14 +38,14 @@ class RegionMapFinder {
 			
 		nrgElemSet.add(
 			"elem_ind",
-			new NRGScheme( new FeatureList( nrgScheme.getElemInd()	),
-			new FeatureList( nrgScheme.getElemPair() ),
+			new NRGScheme( new FeatureList<>( nrgScheme.getElemInd()	),
+			new FeatureList<>( nrgScheme.getElemPair() ),
 			nrgScheme.getRegionMap()
 		));
 		nrgElemSet.add(
 			"elem_pair",
-			new NRGScheme( new FeatureList(nrgScheme.getElemInd() ),
-			new FeatureList( nrgScheme.getElemPair() ),
+			new NRGScheme( new FeatureList<>(nrgScheme.getElemInd() ),
+			new FeatureList<>( nrgScheme.getElemPair() ),
 			nrgScheme.getRegionMap()
 		));
 	}

@@ -51,7 +51,7 @@ import org.anchoranalysis.image.feature.stack.nrg.FeatureNRGStackParamsDescripto
 
 public class ParamsFactoryForFeature {
 
-	public static FeatureCalcParamsFactory factoryFor( Feature f ) throws FeatureCalcException {
+	public static FeatureCalcParamsFactory factoryFor( Feature<?> f ) throws FeatureCalcException {
 		
 		FeatureParamsDescriptor paramType = f.paramType();
 		

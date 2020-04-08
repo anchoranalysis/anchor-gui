@@ -51,11 +51,11 @@ abstract class FeatureListNode extends Node {
 	/**
 	 * The child features of this particular node
 	 */
-	private FeatureList childFeatures;
+	private FeatureList<FeatureCalcParams> childFeatures;
 	
 	
 	private List<FeatureValueNode> calcList = null;
-	private List<CacheableParams<? extends FeatureCalcParams>> paramsList;
+	private List<CacheableParams<FeatureCalcParams>> paramsList;
 	private ErrorReporter errorReporter;
 	
 	private Subsession subsession;
@@ -64,8 +64,8 @@ abstract class FeatureListNode extends Node {
 		this.errorReporter = errorReporter;
 	}
 	
-	protected void initChildFeatures(FeatureList features,List<CacheableParams<? extends FeatureCalcParams>> paramsList, Subsession subsession ) {
-		this.childFeatures = new FeatureList(features);
+	protected void initChildFeatures(FeatureList<FeatureCalcParams> features,List<CacheableParams<FeatureCalcParams>> paramsList, Subsession subsession ) {
+		this.childFeatures = new FeatureList<>(features);
 		
 		// Sort out features in alphabetical order
 		Collections.sort( childFeatures, (f1,f2)->f1.getFriendlyName().compareTo(f2.getFriendlyName() ));
@@ -79,7 +79,7 @@ abstract class FeatureListNode extends Node {
 	}
 	
 
-	protected void updateValueSourceNoTransformParams(CacheableParams<? extends FeatureCalcParams> params, Subsession subsession) {
+	protected void updateValueSourceNoTransformParams(CacheableParams<FeatureCalcParams> params, Subsession subsession) {
 		this.subsession = subsession;
 		updateValueSourceNoTransformParams(
 			listSize(params, childFeatures.size() ),
@@ -88,7 +88,7 @@ abstract class FeatureListNode extends Node {
 	}
 
 	
-	protected void updateValueSourceNoTransformParams(List<CacheableParams<? extends FeatureCalcParams>> paramsList, Subsession subsession) {
+	protected void updateValueSourceNoTransformParams(List<CacheableParams<FeatureCalcParams>> paramsList, Subsession subsession) {
 		
 		//System.out.println("updateValueSource");
 		
@@ -143,7 +143,7 @@ abstract class FeatureListNode extends Node {
 		for (int i=0; i<rv.length(); i++) {
 			
 			Feature f = childFeatures.get(i);
-			CacheableParams<? extends FeatureCalcParams> params = paramsList.get(i);
+			CacheableParams<FeatureCalcParams> params = paramsList.get(i);
 			assert(f!=null);
 			
 			FeatureValueNode node = new FeatureValueNode(
@@ -161,12 +161,12 @@ abstract class FeatureListNode extends Node {
 	
 	
 	// We update the immediate children, and all their children
-	private void updateNodes( ResultsVector rv, FeatureList features, List<CacheableParams<? extends FeatureCalcParams>> paramsList, List<FeatureValueNode> listNodes ) {
+	private void updateNodes( ResultsVector rv, FeatureList features, List<CacheableParams<FeatureCalcParams>> paramsList, List<FeatureValueNode> listNodes ) {
 		assert(rv.length()==features.size());
 		// update our tree
 		for (int i=0; i<features.size(); i++) {
 			
-			CacheableParams<? extends FeatureCalcParams> params = paramsList.get(i);			
+			CacheableParams<FeatureCalcParams> params = paramsList.get(i);			
 			
 			FeatureValueNode node = listNodes.get(i);
 			setNodeFromResultsVector( node, rv, i );

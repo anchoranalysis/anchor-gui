@@ -38,6 +38,7 @@ import org.anchoranalysis.bean.annotation.DefaultInstance;
 import org.anchoranalysis.bean.annotation.Optional;
 import org.anchoranalysis.bean.shared.params.keyvalue.KeyValueParamsProvider;
 import org.anchoranalysis.feature.bean.list.FeatureListProvider;
+import org.anchoranalysis.feature.calc.params.FeatureCalcParams;
 import org.anchoranalysis.gui.bean.filecreator.FileCreator;
 import org.anchoranalysis.gui.interactivebrowser.input.InteractiveBrowserInput;
 import org.anchoranalysis.gui.interactivebrowser.openfile.importer.ImporterSettings;
@@ -65,7 +66,8 @@ public class InteractiveBrowserInputManager extends InputManager<InteractiveBrow
 	private NRGSchemeCreator nrgSchemeCreator;
 	
 	@BeanField
-	private List<NamedBean<FeatureListProvider>> namedItemSharedFeatureList = new ArrayList<NamedBean<FeatureListProvider>>();
+	private List<NamedBean<FeatureListProvider<FeatureCalcParams>>> namedItemSharedFeatureList
+		= new ArrayList<NamedBean<FeatureListProvider<FeatureCalcParams>>>();
 	
 	@BeanField
 	private List<NamedBean<MarkEvaluator>> namedItemMarkEvaluatorList = new ArrayList<NamedBean<MarkEvaluator>>();
@@ -121,12 +123,12 @@ public class InteractiveBrowserInputManager extends InputManager<InteractiveBrow
 		this.nrgSchemeCreator = nrgSchemeCreator;
 	}
 
-	public List<NamedBean<FeatureListProvider>> getNamedItemSharedFeatureList() {
+	public List<NamedBean<FeatureListProvider<FeatureCalcParams>>> getNamedItemSharedFeatureList() {
 		return namedItemSharedFeatureList;
 	}
 
 	public void setNamedItemSharedFeatureList(
-			List<NamedBean<FeatureListProvider>> namedItemSharedFeatureList) {
+			List<NamedBean<FeatureListProvider<FeatureCalcParams>>> namedItemSharedFeatureList) {
 		this.namedItemSharedFeatureList = namedItemSharedFeatureList;
 	}
 
