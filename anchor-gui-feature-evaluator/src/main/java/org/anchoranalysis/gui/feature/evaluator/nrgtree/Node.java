@@ -40,7 +40,7 @@ public abstract class Node implements TreeNode {
 	
 	public abstract String getValue();
 	
-	public abstract Feature getFeature();
+	public abstract Feature<FeatureCalcParams> getFeature();
 	
 	// A list of different CreateParams for each feature
 	protected abstract void updateValueSource( List<CacheableParams<FeatureCalcParams>> paramsList, Subsession subsession );

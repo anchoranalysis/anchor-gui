@@ -180,7 +180,11 @@ class FinderEvaluator {
 			if (relevantFeatures.size()>0) {
 				session = new FeatureSessionCreateParamsMPP( relevantFeatures, raster.getNrgStack(), raster.getParams() );
 				try {
-					session.start( new FeatureInitParams(null), sharedFeatureList, logger);
+					session.start(
+						new FeatureInitParams(null),
+						sharedFeatureList,
+						logger
+					);
 				} catch (InitException e) {
 					throw new CreateException(e);
 				}
