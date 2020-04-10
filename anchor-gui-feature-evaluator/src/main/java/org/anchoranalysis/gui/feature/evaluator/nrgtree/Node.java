@@ -34,7 +34,7 @@ import javax.swing.tree.TreeNode;
 import org.anchoranalysis.feature.bean.Feature;
 import org.anchoranalysis.feature.cache.CacheableParams;
 import org.anchoranalysis.feature.calc.params.FeatureCalcParams;
-import org.anchoranalysis.feature.session.Subsession;
+
 
 public abstract class Node implements TreeNode {
 	

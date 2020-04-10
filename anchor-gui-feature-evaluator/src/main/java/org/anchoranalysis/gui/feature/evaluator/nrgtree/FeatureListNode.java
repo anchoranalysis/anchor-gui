@@ -41,7 +41,7 @@ import org.anchoranalysis.feature.bean.list.FeatureList;
 import org.anchoranalysis.feature.cache.CacheableParams;
 import org.anchoranalysis.feature.calc.ResultsVector;
 import org.anchoranalysis.feature.calc.params.FeatureCalcParams;
-import org.anchoranalysis.feature.session.Subsession;
+
 
 //
 //  TODO  close
@@ -252,7 +252,7 @@ abstract class FeatureListNode extends Node {
 				);
 			} catch (Exception e) {
 				res.setError(i,e);
-				errorReporter.recordError(Subsession.class, e);
+				errorReporter.recordError(FeatureListNode.class, e);
 			}
 			
 		}
