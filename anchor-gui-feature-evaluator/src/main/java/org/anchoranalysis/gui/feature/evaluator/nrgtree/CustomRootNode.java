@@ -43,17 +43,20 @@ class CustomRootNode extends FeatureListNode {
 	
 	public CustomRootNode( ErrorReporter errorReporter ) {
 		super(errorReporter);
-		initChildFeatures( new FeatureList(), new ArrayList<>(), null );
+		initChildFeatures( new FeatureList<>(), new ArrayList<>() );
 	}
 	
-	public void replaceFeatureList( FeatureList featureList, List<CacheableParams<FeatureCalcParams>> paramsList, Subsession subsession ) {
+	public void replaceFeatureList(
+		FeatureList<FeatureCalcParams> featureList,
+		List<CacheableParams<FeatureCalcParams>> paramsList
+	) {
 		getFeatures().clear();
 		resetCalcList();
-		this.initChildFeatures(featureList, paramsList, subsession );
+		this.initChildFeatures(featureList, paramsList);
 	}
 	
-	public void replaceCalcParams( List<CacheableParams<FeatureCalcParams>> paramsList, Subsession subsession ) {
-		updateValueSource( paramsList, subsession );
+	public void replaceCalcParams( List<CacheableParams<FeatureCalcParams>> paramsList ) {
+		updateValueSource( paramsList );
 	}
 
 	@Override
@@ -67,7 +70,7 @@ class CustomRootNode extends FeatureListNode {
 	}
 
 	@Override
-	public Feature getFeature() {
+	public Feature<FeatureCalcParams> getFeature() {
 		return null;
 	}
 
@@ -88,11 +91,11 @@ class CustomRootNode extends FeatureListNode {
 	}
 
 	@Override
-	protected void updateValueSource(List<CacheableParams<FeatureCalcParams>> paramsList, Subsession subsession) {
+	protected void updateValueSource(List<CacheableParams<FeatureCalcParams>> paramsList) {
 	}
 
 	@Override
-	protected void updateValueSource(CacheableParams<FeatureCalcParams> params, Subsession subsession) {
+	protected void updateValueSource(CacheableParams<FeatureCalcParams> params) {
 	}
 
 }

@@ -5,6 +5,7 @@ import org.anchoranalysis.anchor.mpp.bean.regionmap.RegionMembershipWithFlags;
 import org.anchoranalysis.anchor.mpp.cfg.Cfg;
 import org.anchoranalysis.anchor.mpp.feature.addcriteria.AddCriteriaPair;
 import org.anchoranalysis.anchor.mpp.feature.addcriteria.BBoxIntersection;
+import org.anchoranalysis.anchor.mpp.feature.nrg.elem.NRGElemPairCalcParams;
 import org.anchoranalysis.anchor.mpp.feature.session.FeatureSessionCreateParamsMPP;
 import org.anchoranalysis.anchor.mpp.mark.GlobalRegionIdentifiers;
 import org.anchoranalysis.anchor.mpp.mark.Mark;
@@ -49,6 +50,7 @@ import org.anchoranalysis.core.log.LogErrorReporter;
 import org.anchoranalysis.feature.bean.list.FeatureList;
 import org.anchoranalysis.feature.init.FeatureInitParams;
 import org.anchoranalysis.feature.nrg.NRGStackWithParams;
+import org.anchoranalysis.feature.session.SequentialSession;
 import org.anchoranalysis.feature.shared.SharedFeatureSet;
 
 class FinderEvaluator {
@@ -166,22 +168,22 @@ class FinderEvaluator {
 		private RegionMap regionMap = new RegionMap(0);
 		
 		private NRGStackWithParams raster;
-		private FeatureSessionCreateParamsMPP session;
+		private SequentialSession<NRGElemPairCalcParams> session;
 		
 		public EdgeTester(
 			NRGStackWithParams raster,
-			SharedFeatureSet sharedFeatureList,
+			SharedFeatureSet<NRGElemPairCalcParams> sharedFeatureList,
 			LogErrorReporter logger
 		) throws CreateException {
 			
 			this.raster = raster;
 			
-			FeatureList relevantFeatures = addCriteria.orderedListOfFeatures();
+			FeatureList<NRGElemPairCalcParams> relevantFeatures = addCriteria.orderedListOfFeatures();
 			if (relevantFeatures.size()>0) {
-				session = new FeatureSessionCreateParamsMPP( relevantFeatures, raster.getNrgStack(), raster.getParams() );
+				session = new SequentialSession<>( relevantFeatures );
 				try {
 					session.start(
-						new FeatureInitParams(null),
+						new FeatureInitParams( raster.getParams() ),
 						sharedFeatureList,
 						logger
 					);

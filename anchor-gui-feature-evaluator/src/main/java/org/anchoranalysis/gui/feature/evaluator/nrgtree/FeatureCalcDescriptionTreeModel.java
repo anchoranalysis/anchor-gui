@@ -41,13 +41,13 @@ import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.log.LogErrorReporter;
 import org.anchoranalysis.feature.bean.Feature;
 import org.anchoranalysis.feature.bean.list.FeatureList;
+import org.anchoranalysis.feature.cache.CacheableParams;
 import org.anchoranalysis.feature.calc.FeatureCalcException;
 import org.anchoranalysis.feature.calc.params.FeatureCalcParams;
 import org.anchoranalysis.feature.init.FeatureInitParams;
 import org.anchoranalysis.feature.nrg.NRGStackWithParams;
 import org.anchoranalysis.feature.session.CreateParams;
 import org.anchoranalysis.feature.session.SequentialSession;
-import org.anchoranalysis.feature.session.SessionUtilities;
 import org.anchoranalysis.feature.shared.SharedFeatureSet;
 import org.anchoranalysis.gui.feature.FeatureListWithRegionMap;
 import org.anchoranalysis.gui.feature.evaluator.nrgtree.overlayparams.CreateParamsFromOverlay;
@@ -209,14 +209,7 @@ public class FeatureCalcDescriptionTreeModel extends DefaultTreeModel implements
 				
 				root.replaceFeatureList(
 					featureList,
-					SessionUtilities.createCacheable(
-						paramsList,
-						featureList,
-						sharedFeatures,
-						paramsInit,
-						logErrorReporter
-					),
-					session.createSubsession()
+					createCacheable(paramsList,	session, paramsInit)
 				);
 				
 				nodeStructureChanged(root);
@@ -228,14 +221,7 @@ public class FeatureCalcDescriptionTreeModel extends DefaultTreeModel implements
 				assert( createParamsList.size()==featureList.size() );
 				
 				root.replaceCalcParams(
-					SessionUtilities.createCacheable(
-						paramsList,
-						featureList,
-						sharedFeatures,
-						paramsInit,
-						logErrorReporter
-					),
-					session.createSubsession()
+					createCacheable(paramsList,	session, paramsInit)
 				);
 
 				nodeChanged(root);
@@ -244,6 +230,10 @@ public class FeatureCalcDescriptionTreeModel extends DefaultTreeModel implements
 		} catch (InitException | CreateException | FeatureCalcException e) {
 			throw new OperationFailedException(e);
 		}
+	}
+	
+	private List<CacheableParams<FeatureCalcParams>> createCacheable( List<FeatureCalcParams> paramsList, SequentialSession<FeatureCalcParams> session, FeatureInitParams paramsInit  ) throws FeatureCalcException {
+		return session.createCacheable(paramsList);
 	}
 
 	/** Removes features from shared, which also exist in the FeatureList, as they should

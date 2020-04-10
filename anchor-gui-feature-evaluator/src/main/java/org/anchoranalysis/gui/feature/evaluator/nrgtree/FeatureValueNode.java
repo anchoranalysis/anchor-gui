@@ -31,8 +31,6 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.tree.TreeNode;
 
-import org.anchoranalysis.anchor.mpp.feature.nrg.elem.NRGElemAllCalcParams;
-import org.anchoranalysis.anchor.mpp.feature.nrg.elem.NRGElemPairCalcParams;
 import org.anchoranalysis.bean.error.BeanMisconfiguredException;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.reporter.ErrorReporter;
@@ -57,7 +55,12 @@ class FeatureValueNode extends FeatureListNode {
 	
 	private FeatureList<FeatureCalcParams> childFeatures;
 	
-	public FeatureValueNode(Feature<FeatureCalcParams> parentFeature, TreeNode parentNode, CacheableParams<FeatureCalcParams> params, ErrorReporter errorReporter, Subsession subsession ) throws CreateException {
+	public FeatureValueNode(
+		Feature<FeatureCalcParams> parentFeature,
+		TreeNode parentNode,
+		CacheableParams<FeatureCalcParams> params,
+		ErrorReporter errorReporter
+	) throws CreateException {
 		super(errorReporter);
 	
 		this.parentNode = parentNode;
@@ -76,8 +79,7 @@ class FeatureValueNode extends FeatureListNode {
 		
 		initChildFeatures(
 			childFeatures,
-			createAllChildParams(parentFeature,params,childFeatures),
-			subsession
+			createAllChildParams(parentFeature,params,childFeatures)
 		);
 	}
 	
@@ -122,24 +124,24 @@ class FeatureValueNode extends FeatureListNode {
 	}
 
 	@Override
-	protected void updateValueSource(CacheableParams<FeatureCalcParams> params, Subsession subsession) {
+	protected void updateValueSource(CacheableParams<FeatureCalcParams> params) {
 		try {
 			CacheableParams<FeatureCalcParams> childParams = createChildParam(
 				parentFeature,
 				params,
 				null
 			);
-			super.updateValueSourceNoTransformParams( childParams, subsession);
+			super.updateValueSourceNoTransformParams(childParams);
 		} catch (CreateException e) {
 			getErrorReporter().recordError(FeatureValueNode.class, e);
 		}
 	}
 
 	@Override
-	protected void updateValueSource(List<CacheableParams<FeatureCalcParams>> createParamsList, Subsession subsession) {
+	protected void updateValueSource(List<CacheableParams<FeatureCalcParams>> createParamsList) {
 		try {
 			List<CacheableParams<FeatureCalcParams>> childParams = creatAllChildParams(parentFeature, createParamsList, childFeatures);
-			super.updateValueSourceNoTransformParams(childParams, subsession);
+			super.updateValueSourceNoTransformParams(childParams);
 		} catch (CreateException e) {
 			getErrorReporter().recordError(FeatureValueNode.class, e);
 		}

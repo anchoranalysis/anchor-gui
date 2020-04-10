@@ -43,10 +43,10 @@ public abstract class Node implements TreeNode {
 	public abstract Feature<FeatureCalcParams> getFeature();
 	
 	// A list of different CreateParams for each feature
-	protected abstract void updateValueSource( List<CacheableParams<FeatureCalcParams>> paramsList, Subsession subsession );
+	protected abstract void updateValueSource( List<CacheableParams<FeatureCalcParams>> paramsList );
 	
 	// A single CreateParams for all features
-	protected abstract void updateValueSource( CacheableParams<FeatureCalcParams> params, Subsession subsession );
+	protected abstract void updateValueSource( CacheableParams<FeatureCalcParams> params );
 	
 	public abstract boolean hasError();
 	
