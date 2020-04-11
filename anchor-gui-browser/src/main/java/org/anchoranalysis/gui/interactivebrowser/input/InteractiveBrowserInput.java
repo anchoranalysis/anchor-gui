@@ -85,7 +85,7 @@ public class InteractiveBrowserInput implements InputFromManager {
 			throw new CreateException(e2);
 		}
 		
-		return new FeatureListSrcBuilder(logErrorReporter).build(soFeature, nrgSchemeCreator);
+		return new FeatureListSrcBuilder<>(logErrorReporter).build(soFeature, nrgSchemeCreator);
 	}
 	
 	private void addKeyValueParams( KeyValueParamsInitParams soParams ) throws OperationFailedException {

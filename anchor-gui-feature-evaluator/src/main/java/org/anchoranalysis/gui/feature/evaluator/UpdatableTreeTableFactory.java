@@ -59,7 +59,7 @@ class UpdatableTreeTableFactory {
     	
 		SinglePairUpdater markPairList = new SinglePairUpdater(
 			overlayDescriptionPanel,
-			new FinderEvaluator(featureListSrc.sharedFeatures(), logger),
+			new FinderEvaluator(featureListSrc.sharedFeatures().downcast(), logger),
 			treeTable
 		);
 		

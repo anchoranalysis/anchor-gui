@@ -59,6 +59,10 @@ public class FeatureListWithRegionMap<T extends FeatureCalcParams> implements It
 		return fl;
 	}
 	
+	@SuppressWarnings("unchecked")
+	public FeatureListWithRegionMap<FeatureCalcParams> upcast() {
+		return (FeatureListWithRegionMap<FeatureCalcParams>) this;
+	}
 	
 	public void sortAlphaAscend() {
 		Comparator<FeatureWithRegionMap<T>> c = new Comparator<FeatureWithRegionMap<T>>() {

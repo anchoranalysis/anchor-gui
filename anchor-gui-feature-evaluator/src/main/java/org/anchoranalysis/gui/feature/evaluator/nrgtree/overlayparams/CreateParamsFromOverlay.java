@@ -41,7 +41,6 @@ import org.anchoranalysis.gui.feature.FeatureListWithRegionMap;
 import org.anchoranalysis.gui.feature.FeatureWithRegionMap;
 import org.anchoranalysis.gui.feature.evaluator.nrgtree.createparams.CreateParamsIndFromObjMask;
 import org.anchoranalysis.gui.feature.evaluator.nrgtree.createparams.CreateParamsPairFromObjMask;
-import org.anchoranalysis.image.feature.objmask.FeatureObjMaskParams;
 import org.anchoranalysis.image.objmask.ObjMask;
 
 public class CreateParamsFromOverlay {

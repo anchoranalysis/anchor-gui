@@ -38,7 +38,6 @@ import org.anchoranalysis.feature.calc.params.FeatureCalcParams;
 import org.anchoranalysis.feature.nrg.NRGStackWithParams;
 import org.anchoranalysis.feature.session.CreateParams;
 import org.anchoranalysis.gui.feature.evaluator.nrgtree.createparams.CreateParamsIndFromRasterMark;
-import org.anchoranalysis.image.feature.objmask.FeatureObjMaskParams;
 
 class CreateParamsIndCache {
 	

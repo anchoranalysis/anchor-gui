@@ -44,23 +44,21 @@ import org.anchoranalysis.anchor.overlay.collection.OverlayCollection;
  */
 
 import org.anchoranalysis.core.error.CreateException;
-import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.log.LogErrorReporter;
 import org.anchoranalysis.feature.bean.list.FeatureList;
 import org.anchoranalysis.feature.calc.FeatureCalcException;
 import org.anchoranalysis.feature.init.FeatureInitParams;
 import org.anchoranalysis.feature.nrg.NRGStackWithParams;
-import org.anchoranalysis.feature.session.SequentialSession;
 import org.anchoranalysis.feature.session.SessionFactory;
 import org.anchoranalysis.feature.session.calculator.FeatureCalculatorMulti;
 import org.anchoranalysis.feature.shared.SharedFeatureSet;
 
 class FinderEvaluator {
 
-	private SharedFeatureSet sharedFeatureList;
+	private SharedFeatureSet<NRGElemPairCalcParams> sharedFeatureList;
 	private LogErrorReporter logger;
 		
-	public FinderEvaluator(SharedFeatureSet sharedFeatureList, LogErrorReporter logger) {
+	public FinderEvaluator(SharedFeatureSet<NRGElemPairCalcParams> sharedFeatureList, LogErrorReporter logger) {
 		super();
 		this.sharedFeatureList = sharedFeatureList;
 		this.logger = logger;
@@ -115,7 +113,7 @@ class FinderEvaluator {
 	private static Pair<Overlay> findPairFromCurrentSelectionMark(
 		Cfg cfg,
 		NRGStackWithParams raster,
-		SharedFeatureSet sharedFeatureList,
+		SharedFeatureSet<NRGElemPairCalcParams> sharedFeatureList,
 		LogErrorReporter logger
 	) throws CreateException {
 		

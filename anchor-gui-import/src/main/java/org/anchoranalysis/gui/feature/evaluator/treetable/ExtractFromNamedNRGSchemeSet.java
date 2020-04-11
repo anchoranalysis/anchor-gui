@@ -1,5 +1,8 @@
 package org.anchoranalysis.gui.feature.evaluator.treetable;
 
+import org.anchoranalysis.anchor.mpp.feature.nrg.elem.NRGElemAllCalcParams;
+import org.anchoranalysis.anchor.mpp.feature.nrg.elem.NRGElemIndCalcParams;
+import org.anchoranalysis.anchor.mpp.feature.nrg.elem.NRGElemPairCalcParams;
 import org.anchoranalysis.anchor.mpp.feature.nrg.scheme.NamedNRGSchemeSet;
 
 /*-
@@ -29,6 +32,7 @@ import org.anchoranalysis.anchor.mpp.feature.nrg.scheme.NamedNRGSchemeSet;
  */
 
 import org.anchoranalysis.core.error.OperationFailedException;
+import org.anchoranalysis.feature.calc.params.FeatureCalcParamsNRGStack;
 import org.anchoranalysis.feature.nrg.NRGStackWithParams;
 import org.anchoranalysis.feature.shared.SharedFeatureSet;
 import org.anchoranalysis.gui.feature.FeatureListUtilities;
@@ -55,22 +59,34 @@ public class ExtractFromNamedNRGSchemeSet extends FeatureListSrc {
 	}
 		
 	@Override
-	public FeatureListWithRegionMap createInd() {
-		return FeatureListUtilities.createFeatureList(src, 0, true);
+	public FeatureListWithRegionMap<NRGElemIndCalcParams> createInd() {
+		return FeatureListUtilities.createFeatureList(
+			src,
+			nrgScheme -> nrgScheme.getElemIndAsFeatureList(),
+			true
+		);
 	}
 
 	@Override
-	public FeatureListWithRegionMap createPair() {
-		return FeatureListUtilities.createFeatureList(src, 1, true);
+	public FeatureListWithRegionMap<NRGElemPairCalcParams> createPair() {
+		return FeatureListUtilities.createFeatureList(
+			src,
+			nrgScheme -> nrgScheme.getElemPairAsFeatureList(),
+			true
+		);
 	}
 
 	@Override
-	public FeatureListWithRegionMap createAll() {
-		return FeatureListUtilities.createFeatureList(src, -1, true);
+	public FeatureListWithRegionMap<NRGElemAllCalcParams> createAll() {
+		return FeatureListUtilities.createFeatureList(
+			src,
+			nrgScheme -> nrgScheme.getElemAllAsFeatureList(),
+			true
+		);		
 	}
 
 	@Override
-	public SharedFeatureSet sharedFeatures() {
+	public SharedFeatureSet<FeatureCalcParamsNRGStack> sharedFeatures() {
 		return src.getSharedFeatures();
 	}
 

@@ -69,7 +69,9 @@ public class FeatureListSrcBuilder<T extends FeatureCalcParams> {
 	 */
 	public FeatureListSrc build( SharedFeaturesInitParams soFeature, NRGSchemeCreator nrgSchemeCreator ) throws CreateException {
 
-		NamedNRGSchemeSet nrgElemSet = new NamedNRGSchemeSet(soFeature.getSharedFeatureSet() );
+		NamedNRGSchemeSet nrgElemSet = new NamedNRGSchemeSet(
+			soFeature.getSharedFeatureSet().downcast()
+		);
 		
 		if (nrgSchemeCreator!=null) {
 			return buildWith( soFeature, nrgElemSet, nrgSchemeCreator );

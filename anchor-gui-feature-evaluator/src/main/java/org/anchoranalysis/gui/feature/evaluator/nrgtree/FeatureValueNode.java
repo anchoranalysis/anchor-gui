@@ -149,7 +149,7 @@ class FeatureValueNode extends FeatureListNode {
 	}
 	
 	@Override
-	public Feature getFeature() {
+	public Feature<FeatureCalcParams> getFeature() {
 		return parentFeature;
 	}
 
