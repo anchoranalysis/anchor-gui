@@ -48,6 +48,8 @@ import org.anchoranalysis.feature.init.FeatureInitParams;
 import org.anchoranalysis.feature.nrg.NRGStackWithParams;
 import org.anchoranalysis.feature.session.CreateParams;
 import org.anchoranalysis.feature.session.SequentialSession;
+import org.anchoranalysis.feature.session.SessionFactory;
+import org.anchoranalysis.feature.session.calculator.FeatureCalculatorMulti;
 import org.anchoranalysis.feature.shared.SharedFeatureSet;
 import org.anchoranalysis.gui.feature.FeatureListWithRegionMap;
 import org.anchoranalysis.gui.feature.evaluator.nrgtree.overlayparams.CreateParamsFromOverlay;
@@ -66,7 +68,7 @@ public class FeatureCalcDescriptionTreeModel extends DefaultTreeModel implements
 	private LogErrorReporter logErrorReporter;
 	private SharedFeatureSet<FeatureCalcParams> sharedFeatures;
 	
-	private SequentialSession<FeatureCalcParams> session = null;
+	private FeatureCalculatorMulti<FeatureCalcParams> session = null;
 	
 	//private static Log log = LogFactory.getLog(FeatureCalcDescriptionTreeModel.class);
 	
@@ -198,18 +200,19 @@ public class FeatureCalcDescriptionTreeModel extends DefaultTreeModel implements
 				// Later on, both the features in featureList and various dependent features will be called through Subsessions
 				//   so we rely on these dependent features being initialised through session.start() as the initialization
 				//   procedure is recursive
-				
-				
-				
-				session = new SequentialSession<>(this.featureList);
-				session.start( paramsInit, sharedFeatures, logErrorReporter );
+				session = SessionFactory.createAndStart(
+					featureList,
+					paramsInit,
+					sharedFeatures,
+					logErrorReporter
+				);
 				
 				//log.info( String.format("first") );
 				assert( createParamsList.size()==featureList.size() );
 				
 				root.replaceFeatureList(
 					featureList,
-					createCacheable(paramsList,	session, paramsInit)
+					session.createCacheable(paramsList)
 				);
 				
 				nodeStructureChanged(root);
@@ -221,19 +224,15 @@ public class FeatureCalcDescriptionTreeModel extends DefaultTreeModel implements
 				assert( createParamsList.size()==featureList.size() );
 				
 				root.replaceCalcParams(
-					createCacheable(paramsList,	session, paramsInit)
+					session.createCacheable(paramsList)
 				);
 
 				nodeChanged(root);
 			}
 			
-		} catch (InitException | CreateException | FeatureCalcException e) {
+		} catch (CreateException | FeatureCalcException e) {
 			throw new OperationFailedException(e);
 		}
-	}
-	
-	private List<CacheableParams<FeatureCalcParams>> createCacheable( List<FeatureCalcParams> paramsList, SequentialSession<FeatureCalcParams> session, FeatureInitParams paramsInit  ) throws FeatureCalcException {
-		return session.createCacheable(paramsList);
 	}
 
 	/** Removes features from shared, which also exist in the FeatureList, as they should

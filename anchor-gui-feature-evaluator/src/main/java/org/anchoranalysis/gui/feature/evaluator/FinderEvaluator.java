@@ -47,9 +47,12 @@ import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.log.LogErrorReporter;
 import org.anchoranalysis.feature.bean.list.FeatureList;
+import org.anchoranalysis.feature.calc.FeatureCalcException;
 import org.anchoranalysis.feature.init.FeatureInitParams;
 import org.anchoranalysis.feature.nrg.NRGStackWithParams;
 import org.anchoranalysis.feature.session.SequentialSession;
+import org.anchoranalysis.feature.session.SessionFactory;
+import org.anchoranalysis.feature.session.calculator.FeatureCalculatorMulti;
 import org.anchoranalysis.feature.shared.SharedFeatureSet;
 
 class FinderEvaluator {
@@ -167,7 +170,7 @@ class FinderEvaluator {
 		private RegionMap regionMap = new RegionMap(0);
 		
 		private NRGStackWithParams raster;
-		private SequentialSession<NRGElemPairCalcParams> session;
+		private FeatureCalculatorMulti<NRGElemPairCalcParams> session;
 		
 		public EdgeTester(
 			NRGStackWithParams raster,
@@ -176,22 +179,7 @@ class FinderEvaluator {
 		) throws CreateException {
 			
 			this.raster = raster;
-			
-			FeatureList<NRGElemPairCalcParams> relevantFeatures = addCriteria.orderedListOfFeatures();
-			if (relevantFeatures.size()>0) {
-				session = new SequentialSession<>( relevantFeatures );
-				try {
-					session.start(
-						new FeatureInitParams( raster.getParams() ),
-						sharedFeatureList,
-						logger
-					);
-				} catch (InitException e) {
-					throw new CreateException(e);
-				}
-			} else {
-				session = null;
-			}
+			this.session = createSession(sharedFeatureList, logger);
 		}
 		
 		public boolean canGenerateEdge( Mark m1, Mark m2 ) throws CreateException {
@@ -199,7 +187,28 @@ class FinderEvaluator {
 			PxlMarkMemo pmm2 = PxlMarkMemoFactory.create( m2, raster.getNrgStack(), regionMap );
 			return (addCriteria.generateEdge(pmm1, pmm2, raster, session, raster.getDimensions().getZ()>1 )!=null);
 		}
-	}
+		
+		private FeatureCalculatorMulti<NRGElemPairCalcParams> createSession(
+			SharedFeatureSet<NRGElemPairCalcParams> sharedFeatureList,
+			LogErrorReporter logger	
+		) throws CreateException {
+			FeatureList<NRGElemPairCalcParams> relevantFeatures = addCriteria.orderedListOfFeatures();
+			if (relevantFeatures.size()>0) {
+				
+				try {
+					return SessionFactory.createAndStart(
+						relevantFeatures,
+						new FeatureInitParams( raster.getParams() ),
+						sharedFeatureList,
+						logger
+					);
+				} catch (FeatureCalcException e) {
+					throw new CreateException(e);
+				}
 
-	
+			} else {
+				return null;
+			}
+		}		
+	}
 }
