@@ -36,34 +36,39 @@ import java.util.List;
 import org.anchoranalysis.anchor.mpp.bean.regionmap.RegionMap;
 import org.anchoranalysis.feature.bean.Feature;
 import org.anchoranalysis.feature.bean.list.FeatureList;
+import org.anchoranalysis.feature.calc.params.FeatureCalcParams;
 
 // Associates a RegionMap with each feature
-public class FeatureListWithRegionMap implements Iterable<FeatureWithRegionMap>{
+public class FeatureListWithRegionMap<T extends FeatureCalcParams> implements Iterable<FeatureWithRegionMap<T>>{
 
-	private List<FeatureWithRegionMap> list = new ArrayList<>();
+	private List<FeatureWithRegionMap<T>> list = new ArrayList<>();
 	
 	public FeatureListWithRegionMap() {
 		super();
 	}
 	
-	public FeatureWithRegionMap get( int index ) {
+	public FeatureWithRegionMap<T> get( int index ) {
 		return list.get(index);
 	}
 	
-	public FeatureList createFeatureList() {
-		FeatureList fl = new FeatureList();
-		for (FeatureWithRegionMap f : list) {
+	public FeatureList<T> createFeatureList() {
+		FeatureList<T> fl = new FeatureList<>();
+		for (FeatureWithRegionMap<T> f : list) {
 			fl.add(f.getFeature());
 		}
 		return fl;
 	}
 	
+	@SuppressWarnings("unchecked")
+	public FeatureListWithRegionMap<FeatureCalcParams> upcast() {
+		return (FeatureListWithRegionMap<FeatureCalcParams>) this;
+	}
 	
 	public void sortAlphaAscend() {
-		Comparator<FeatureWithRegionMap> c = new Comparator<FeatureWithRegionMap>() {
+		Comparator<FeatureWithRegionMap<T>> c = new Comparator<FeatureWithRegionMap<T>>() {
 
 			@Override
-			public int compare(FeatureWithRegionMap o1, FeatureWithRegionMap o2) {
+			public int compare(FeatureWithRegionMap<T> o1, FeatureWithRegionMap<T> o2) {
 				String s1 = o1.getFeature().getFriendlyName();
 				String s2 = o2.getFeature().getFriendlyName();
 				return s1.compareTo(s2);
@@ -73,8 +78,8 @@ public class FeatureListWithRegionMap implements Iterable<FeatureWithRegionMap>{
 		Collections.sort(list, c);
 	}
 
-	public void add( Feature feature, RegionMap regionMap ) {
-		list.add( new FeatureWithRegionMap(feature, regionMap) );
+	public void add( Feature<T> feature, RegionMap regionMap ) {
+		list.add( new FeatureWithRegionMap<>(feature, regionMap) );
 	}
 	
 	public int size() {
@@ -83,7 +88,7 @@ public class FeatureListWithRegionMap implements Iterable<FeatureWithRegionMap>{
 	
 
 	@Override
-	public Iterator<FeatureWithRegionMap> iterator() {
+	public Iterator<FeatureWithRegionMap<T>> iterator() {
 		return list.iterator();
 	}
 }

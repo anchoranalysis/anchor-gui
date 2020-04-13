@@ -62,7 +62,7 @@ public class GraphDefinitionCfgNRGSummary extends GraphDefinition<Integer> {
 		return new BoxAndWhiskerItem( mean, median, q1, q3, min, max, min, max, new ArrayList() );
 	}
 	
-	public GraphDefinitionCfgNRGSummary( final List<CalculatedFeatureValues> tableModelList, final FeatureListWithRegionMap features, final List<String> seriesNames) throws InitException {
+	public GraphDefinitionCfgNRGSummary( final List<CalculatedFeatureValues> tableModelList, final FeatureListWithRegionMap<?> features, final List<String> seriesNames) throws InitException {
 		
 		delegate = new BoxPlot<>(
 				getTitle(),

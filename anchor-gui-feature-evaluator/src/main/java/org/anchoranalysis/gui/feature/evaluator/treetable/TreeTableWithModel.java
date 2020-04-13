@@ -33,6 +33,7 @@ import javax.swing.JComponent;
 
 import org.anchoranalysis.anchor.mpp.pair.Pair;
 import org.anchoranalysis.anchor.overlay.Overlay;
+import org.anchoranalysis.feature.calc.params.FeatureCalcParams;
 import org.anchoranalysis.feature.nrg.NRGStackWithParams;
 import org.anchoranalysis.feature.shared.SharedFeatureSet;
 import org.anchoranalysis.gui.feature.FeatureListWithRegionMap;
@@ -48,8 +49,8 @@ public class TreeTableWithModel implements ITreeTableModel {
 
 	public TreeTableWithModel(
 		TreeTableProperties properties,
-		FeatureListWithRegionMap featureList,
-		SharedFeatureSet sharedFeatures
+		FeatureListWithRegionMap<FeatureCalcParams> featureList,
+		SharedFeatureSet<FeatureCalcParams> sharedFeatures
 	) {
 		super();
 		this.featureTree = new FeatureCalcDescriptionTreeModel(

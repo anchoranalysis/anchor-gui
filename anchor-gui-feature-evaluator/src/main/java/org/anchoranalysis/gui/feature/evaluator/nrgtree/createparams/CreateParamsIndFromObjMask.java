@@ -34,7 +34,7 @@ import org.anchoranalysis.feature.session.CreateParams;
 import org.anchoranalysis.image.feature.objmask.FeatureObjMaskParams;
 import org.anchoranalysis.image.objmask.ObjMask;
 
-public class CreateParamsIndFromObjMask extends CreateParams {
+public class CreateParamsIndFromObjMask extends CreateParams<FeatureCalcParams> {
 
 	private FeatureObjMaskParams params;
 	
@@ -46,7 +46,7 @@ public class CreateParamsIndFromObjMask extends CreateParams {
 	}
 
 	@Override
-	public FeatureCalcParams createForFeature(Feature feature)
+	public FeatureCalcParams createForFeature(Feature<?> feature)
 			throws CreateException {
 		return params;
 	}

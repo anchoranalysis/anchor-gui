@@ -34,6 +34,7 @@ import org.anchoranalysis.anchor.mpp.bean.regionmap.RegionMap;
 import org.anchoranalysis.anchor.mpp.mark.Mark;
 import org.anchoranalysis.anchor.mpp.pxlmark.memo.PxlMarkMemo;
 import org.anchoranalysis.anchor.mpp.pxlmark.memo.PxlMarkMemoFactory;
+import org.anchoranalysis.feature.calc.params.FeatureCalcParams;
 import org.anchoranalysis.feature.nrg.NRGStackWithParams;
 import org.anchoranalysis.feature.session.CreateParams;
 import org.anchoranalysis.gui.feature.evaluator.nrgtree.createparams.CreateParamsPairFromRasterMark;
@@ -43,7 +44,7 @@ class CreateParamsPairCache {
 	private Mark markSrc;
 	private Mark markDest;
 	private NRGStackWithParams raster;
-	private Map<RegionMap,CreateParams> map = new HashMap<RegionMap,CreateParams>();
+	private Map<RegionMap,CreateParams<FeatureCalcParams>> map = new HashMap<>();
 	
 	public CreateParamsPairCache(Mark markSrc, Mark markDest, NRGStackWithParams raster) {
 		super();
@@ -52,9 +53,9 @@ class CreateParamsPairCache {
 		this.raster = raster;
 	}
 	
-	public CreateParams getOrCreate( RegionMap regionMap ) {
+	public CreateParams<FeatureCalcParams> getOrCreate( RegionMap regionMap ) {
 		
-		CreateParams params = map.get(regionMap);
+		CreateParams<FeatureCalcParams> params = map.get(regionMap);
 		
 		if (params!=null) {
 			return params;

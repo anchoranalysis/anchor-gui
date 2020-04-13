@@ -35,15 +35,16 @@ import org.anchoranalysis.core.params.KeyValueParams;
 import org.anchoranalysis.feature.calc.FeatureCalcException;
 import org.anchoranalysis.feature.nrg.NRGStackWithParams;
 import org.anchoranalysis.feature.shared.SharedFeatureSet;
+import org.anchoranalysis.image.feature.stack.FeatureStackParams;
 
 /** Adds key value params from the image-features of a NRGScheme */
 public class KeyValueParamsAugmenter {
 
 	private NRGScheme scheme;
-	private SharedFeatureSet sharedFeatures;
+	private SharedFeatureSet<FeatureStackParams> sharedFeatures;
 	private LogErrorReporter logger;
 	
-	public KeyValueParamsAugmenter(NRGScheme scheme, SharedFeatureSet sharedFeatures, LogErrorReporter logger) {
+	public KeyValueParamsAugmenter(NRGScheme scheme, SharedFeatureSet<FeatureStackParams> sharedFeatures, LogErrorReporter logger) {
 		super();
 		this.scheme = scheme;
 		this.sharedFeatures = sharedFeatures;

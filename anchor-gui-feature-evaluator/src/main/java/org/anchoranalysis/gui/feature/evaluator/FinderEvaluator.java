@@ -5,7 +5,7 @@ import org.anchoranalysis.anchor.mpp.bean.regionmap.RegionMembershipWithFlags;
 import org.anchoranalysis.anchor.mpp.cfg.Cfg;
 import org.anchoranalysis.anchor.mpp.feature.addcriteria.AddCriteriaPair;
 import org.anchoranalysis.anchor.mpp.feature.addcriteria.BBoxIntersection;
-import org.anchoranalysis.anchor.mpp.feature.session.FeatureSessionCreateParamsMPP;
+import org.anchoranalysis.anchor.mpp.feature.nrg.elem.NRGElemPairCalcParams;
 import org.anchoranalysis.anchor.mpp.mark.GlobalRegionIdentifiers;
 import org.anchoranalysis.anchor.mpp.mark.Mark;
 import org.anchoranalysis.anchor.mpp.overlay.OverlayCollectionMarkFactory;
@@ -44,19 +44,21 @@ import org.anchoranalysis.anchor.overlay.collection.OverlayCollection;
  */
 
 import org.anchoranalysis.core.error.CreateException;
-import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.log.LogErrorReporter;
 import org.anchoranalysis.feature.bean.list.FeatureList;
+import org.anchoranalysis.feature.calc.FeatureCalcException;
 import org.anchoranalysis.feature.init.FeatureInitParams;
 import org.anchoranalysis.feature.nrg.NRGStackWithParams;
+import org.anchoranalysis.feature.session.SessionFactory;
+import org.anchoranalysis.feature.session.calculator.FeatureCalculatorMulti;
 import org.anchoranalysis.feature.shared.SharedFeatureSet;
 
 class FinderEvaluator {
 
-	private SharedFeatureSet sharedFeatureList;
+	private SharedFeatureSet<NRGElemPairCalcParams> sharedFeatureList;
 	private LogErrorReporter logger;
 		
-	public FinderEvaluator(SharedFeatureSet sharedFeatureList, LogErrorReporter logger) {
+	public FinderEvaluator(SharedFeatureSet<NRGElemPairCalcParams> sharedFeatureList, LogErrorReporter logger) {
 		super();
 		this.sharedFeatureList = sharedFeatureList;
 		this.logger = logger;
@@ -111,7 +113,7 @@ class FinderEvaluator {
 	private static Pair<Overlay> findPairFromCurrentSelectionMark(
 		Cfg cfg,
 		NRGStackWithParams raster,
-		SharedFeatureSet sharedFeatureList,
+		SharedFeatureSet<NRGElemPairCalcParams> sharedFeatureList,
 		LogErrorReporter logger
 	) throws CreateException {
 		
@@ -166,27 +168,16 @@ class FinderEvaluator {
 		private RegionMap regionMap = new RegionMap(0);
 		
 		private NRGStackWithParams raster;
-		private FeatureSessionCreateParamsMPP session;
+		private FeatureCalculatorMulti<NRGElemPairCalcParams> session;
 		
 		public EdgeTester(
 			NRGStackWithParams raster,
-			SharedFeatureSet sharedFeatureList,
+			SharedFeatureSet<NRGElemPairCalcParams> sharedFeatureList,
 			LogErrorReporter logger
 		) throws CreateException {
 			
 			this.raster = raster;
-			
-			FeatureList relevantFeatures = addCriteria.orderedListOfFeatures();
-			if (relevantFeatures.size()>0) {
-				session = new FeatureSessionCreateParamsMPP( relevantFeatures, raster.getNrgStack(), raster.getParams() );
-				try {
-					session.start( new FeatureInitParams(null), sharedFeatureList, logger);
-				} catch (InitException e) {
-					throw new CreateException(e);
-				}
-			} else {
-				session = null;
-			}
+			this.session = createSession(sharedFeatureList, logger);
 		}
 		
 		public boolean canGenerateEdge( Mark m1, Mark m2 ) throws CreateException {
@@ -194,7 +185,28 @@ class FinderEvaluator {
 			PxlMarkMemo pmm2 = PxlMarkMemoFactory.create( m2, raster.getNrgStack(), regionMap );
 			return (addCriteria.generateEdge(pmm1, pmm2, raster, session, raster.getDimensions().getZ()>1 )!=null);
 		}
-	}
+		
+		private FeatureCalculatorMulti<NRGElemPairCalcParams> createSession(
+			SharedFeatureSet<NRGElemPairCalcParams> sharedFeatureList,
+			LogErrorReporter logger	
+		) throws CreateException {
+			FeatureList<NRGElemPairCalcParams> relevantFeatures = addCriteria.orderedListOfFeatures();
+			if (relevantFeatures.size()>0) {
+				
+				try {
+					return SessionFactory.createAndStart(
+						relevantFeatures,
+						new FeatureInitParams( raster.getParams() ),
+						sharedFeatureList,
+						logger
+					);
+				} catch (FeatureCalcException e) {
+					throw new CreateException(e);
+				}
 
-	
+			} else {
+				return null;
+			}
+		}		
+	}
 }

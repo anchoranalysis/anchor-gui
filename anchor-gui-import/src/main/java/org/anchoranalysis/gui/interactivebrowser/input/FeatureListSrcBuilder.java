@@ -3,6 +3,8 @@ package org.anchoranalysis.gui.interactivebrowser.input;
 import org.anchoranalysis.anchor.mpp.bean.regionmap.RegionMap;
 import org.anchoranalysis.anchor.mpp.feature.bean.nrgscheme.NRGScheme;
 import org.anchoranalysis.anchor.mpp.feature.bean.nrgscheme.NRGSchemeCreator;
+import org.anchoranalysis.anchor.mpp.feature.nrg.elem.NRGElemIndCalcParams;
+import org.anchoranalysis.anchor.mpp.feature.nrg.elem.NRGElemPairCalcParams;
 import org.anchoranalysis.anchor.mpp.feature.nrg.scheme.NamedNRGSchemeSet;
 import org.anchoranalysis.anchor.mpp.regionmap.RegionMapSingleton;
 
@@ -40,6 +42,7 @@ import org.anchoranalysis.core.name.store.NamedProviderStore;
 import org.anchoranalysis.feature.bean.Feature;
 import org.anchoranalysis.feature.bean.list.FeatureList;
 import org.anchoranalysis.feature.calc.FeatureCalcException;
+import org.anchoranalysis.feature.calc.params.FeatureCalcParams;
 import org.anchoranalysis.feature.shared.SharedFeaturesInitParams;
 import org.anchoranalysis.gui.feature.evaluator.params.FeatureCalcParamsFactory;
 import org.anchoranalysis.gui.feature.evaluator.params.ParamsFactoryForFeature;
@@ -48,7 +51,7 @@ import org.anchoranalysis.gui.feature.evaluator.treetable.FeatureListSrc;
 import org.anchoranalysis.gui.feature.evaluator.treetable.KeyValueParamsAugmenter;
 import org.anchoranalysis.feature.shared.SharedFeatureSet;
 
-public class FeatureListSrcBuilder {
+public class FeatureListSrcBuilder<T extends FeatureCalcParams> {
 
 	private LogErrorReporter logErrorReporter;
 		
@@ -66,7 +69,9 @@ public class FeatureListSrcBuilder {
 	 */
 	public FeatureListSrc build( SharedFeaturesInitParams soFeature, NRGSchemeCreator nrgSchemeCreator ) throws CreateException {
 
-		NamedNRGSchemeSet nrgElemSet = new NamedNRGSchemeSet(soFeature.getSharedFeatureSet() );
+		NamedNRGSchemeSet nrgElemSet = new NamedNRGSchemeSet(
+			soFeature.getSharedFeatureSet().downcast()
+		);
 		
 		if (nrgSchemeCreator!=null) {
 			return buildWith( soFeature, nrgElemSet, nrgSchemeCreator );
@@ -101,14 +106,14 @@ public class FeatureListSrcBuilder {
 		//  and prevent any of the features being initialized prematurely
 		KeyValueParamsAugmenter augmenter = new KeyValueParamsAugmenter(
 			nrgScheme,
-			new SharedFeatureSet(),	// soFeature.getSharedFeatureSet(),
+			new SharedFeatureSet<>(),	// soFeature.getSharedFeatureSet(),
 			logErrorReporter
 		);
 		
 		return new ExtractFromNamedNRGSchemeSet(nrgElemSet, augmenter );
 	}
 	
-	private static NRGScheme createNRGScheme( NRGSchemeCreator nrgSchemeCreator, SharedFeaturesInitParams soFeature, LogErrorReporter logger ) throws CreateException {
+	private NRGScheme createNRGScheme( NRGSchemeCreator nrgSchemeCreator, SharedFeaturesInitParams soFeature, LogErrorReporter logger ) throws CreateException {
 		
 		try {
 			nrgSchemeCreator.initRecursive( soFeature, logger );
@@ -118,19 +123,19 @@ public class FeatureListSrcBuilder {
 		return nrgSchemeCreator.create();
 	}
 	
-	private void addFromStore( NamedNRGSchemeSet nrgElemSet, NamedProviderStore<FeatureList> store, RegionMap regionMap ) {
+	private void addFromStore( NamedNRGSchemeSet nrgElemSet, NamedProviderStore<FeatureList<FeatureCalcParams>> store, RegionMap regionMap ) {
 
 		// Add each feature-list to the scheme, separating into unary and pairwise terms
 		for (String key : store.keys()) {
 			try {
-				FeatureList fl = store.getException(key);
+				FeatureList<FeatureCalcParams> fl = store.getException(key);
 				
 				// Put this in there, to get rid of error. Unsure why. It should go in refactoring when FeatureSessions are properly implemented
 				//fl.init( new FeatureInitParams(soFeature.getSharedFeatureSet(), soFeature.getCachedCalculationList()) );
 				
 				// Determines which features belong in the Unary part of the NRGScheme, and which in the Pairwise part
-				FeatureList outUnary = new FeatureList();
-				FeatureList outPairwise = new FeatureList();
+				FeatureList<NRGElemIndCalcParams> outUnary = new FeatureList<>();
+				FeatureList<NRGElemPairCalcParams> outPairwise = new FeatureList<>();
 				determineUnaryPairwiseFeatures( fl, outUnary, outPairwise );
 				
 				nrgElemSet.add(key, new NRGScheme(outUnary, outPairwise, regionMap ) );
@@ -143,18 +148,18 @@ public class FeatureListSrcBuilder {
 		}
 	}
 	
-	private static void determineUnaryPairwiseFeatures( FeatureList in, FeatureList outUnary, FeatureList outPairwise ) throws FeatureCalcException {
+	private void determineUnaryPairwiseFeatures( FeatureList<FeatureCalcParams> in, FeatureList<NRGElemIndCalcParams> outUnary, FeatureList<NRGElemPairCalcParams> outPairwise ) throws FeatureCalcException {
 		
-		for( Feature f : in ) {
+		for( Feature<FeatureCalcParams> f : in ) {
 			
 			FeatureCalcParamsFactory factory = ParamsFactoryForFeature.factoryFor(f);
 			
 			if (factory.isUnarySupported()) {
-				outUnary.add(f);
+				outUnary.add( f.downcast() );
 			}
 			
 			if (factory.isPairwiseSupported()) {
-				outPairwise.add(f);
+				outPairwise.add( f.downcast() );
 			}
 
 		}

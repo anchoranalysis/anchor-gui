@@ -40,6 +40,7 @@ import org.anchoranalysis.core.log.LogErrorReporter;
 import org.anchoranalysis.core.name.store.SharedObjects;
 import org.anchoranalysis.core.progress.ProgressReporter;
 import org.anchoranalysis.feature.bean.list.FeatureListProvider;
+import org.anchoranalysis.feature.calc.params.FeatureCalcParams;
 import org.anchoranalysis.feature.shared.SharedFeaturesInitParams;
 import org.anchoranalysis.gui.feature.evaluator.treetable.FeatureListSrc;
 import org.anchoranalysis.gui.interactivebrowser.IOpenFile;
@@ -64,7 +65,7 @@ public class FileFeatureEvaluatorCreator extends FileCreator {
 	
 	// START BEAN PROPERTIES
 	@BeanField @NonEmpty
-	private List<NamedBean<FeatureListProvider>> listFeatures = new ArrayList<NamedBean<FeatureListProvider>>();
+	private List<NamedBean<FeatureListProvider<FeatureCalcParams>>> listFeatures = new ArrayList<>();
 	
 	@BeanField @Optional
 	private NRGSchemeCreator nrgSchemeCreator;
@@ -100,7 +101,7 @@ public class FileFeatureEvaluatorCreator extends FileCreator {
 	
 	private FeatureListSrc createSrc( LogErrorReporter logger ) throws CreateException {
 		
-		FeatureListSrcBuilder builder = new FeatureListSrcBuilder(logger); 
+		FeatureListSrcBuilder<FeatureCalcParams> builder = new FeatureListSrcBuilder<>(logger); 
 		
 		return builder.build(
 			createInitParams(logger),
@@ -113,18 +114,21 @@ public class FileFeatureEvaluatorCreator extends FileCreator {
 		SharedFeaturesInitParams soFeature = SharedFeaturesInitParams.create(so);
 		
 		try {
-			soFeature.addAll(listFeatures, logger);
+			soFeature.addAll(
+				listFeatures,
+				logger
+			);
 		} catch (OperationFailedException e) {
 			throw new CreateException(e);
 		}
 		return soFeature;
 	}
 
-	public List<NamedBean<FeatureListProvider>> getListFeatures() {
+	public List<NamedBean<FeatureListProvider<FeatureCalcParams>>> getListFeatures() {
 		return listFeatures;
 	}
 
-	public void setListFeatures(List<NamedBean<FeatureListProvider>> listFeatures) {
+	public void setListFeatures(List<NamedBean<FeatureListProvider<FeatureCalcParams>>> listFeatures) {
 		this.listFeatures = listFeatures;
 	}
 

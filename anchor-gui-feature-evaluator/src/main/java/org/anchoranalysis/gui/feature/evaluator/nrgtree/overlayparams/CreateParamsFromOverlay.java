@@ -34,6 +34,7 @@ import org.anchoranalysis.anchor.mpp.overlay.OverlayMark;
 import org.anchoranalysis.anchor.mpp.pair.Pair;
 import org.anchoranalysis.anchor.overlay.Overlay;
 import org.anchoranalysis.anchor.overlay.objmask.OverlayObjMask;
+import org.anchoranalysis.feature.calc.params.FeatureCalcParams;
 import org.anchoranalysis.feature.nrg.NRGStackWithParams;
 import org.anchoranalysis.feature.session.CreateParams;
 import org.anchoranalysis.gui.feature.FeatureListWithRegionMap;
@@ -47,8 +48,8 @@ public class CreateParamsFromOverlay {
 	public static void addForOverlay(
 		Overlay overlay,
 		NRGStackWithParams nrgStack,
-		FeatureListWithRegionMap featureList,
-		List<CreateParams> listOut
+		FeatureListWithRegionMap<?> featureList,
+		List<CreateParams<FeatureCalcParams>> listOut
 	) {
 		// TODO replace with object oriented-code
 		if (overlay instanceof OverlayMark) {
@@ -58,7 +59,7 @@ public class CreateParamsFromOverlay {
 			
 			// Create a pair for each region map
 			 
-			for( FeatureWithRegionMap f : featureList) {
+			for( FeatureWithRegionMap<?> f : featureList) {
 				listOut.add( cache.getOrCreate(f.getRegionMap()) );
 			}
 		} else if (overlay instanceof OverlayObjMask) {
@@ -81,8 +82,8 @@ public class CreateParamsFromOverlay {
 	public static void addForOverlayPair(
 		Pair<Overlay> pair,
 		NRGStackWithParams raster,
-		FeatureListWithRegionMap featureList,
-		List<CreateParams> listOut
+		FeatureListWithRegionMap<?> featureList,
+		List<CreateParams<FeatureCalcParams>> listOut
 	) {
 		if (pair.getSource() instanceof OverlayMark) {
 			assert(pair.getDestination() instanceof OverlayMark);
@@ -96,7 +97,7 @@ public class CreateParamsFromOverlay {
 				raster
 			);
 			
-			for( FeatureWithRegionMap f : featureList) {
+			for( FeatureWithRegionMap<?> f : featureList) {
 				listOut.add( cache.getOrCreate(f.getRegionMap()) );
 			}
 			

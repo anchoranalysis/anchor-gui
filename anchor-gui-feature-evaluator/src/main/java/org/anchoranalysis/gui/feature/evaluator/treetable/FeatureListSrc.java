@@ -1,5 +1,9 @@
 package org.anchoranalysis.gui.feature.evaluator.treetable;
 
+import org.anchoranalysis.anchor.mpp.feature.nrg.elem.NRGElemAllCalcParams;
+import org.anchoranalysis.anchor.mpp.feature.nrg.elem.NRGElemIndCalcParams;
+import org.anchoranalysis.anchor.mpp.feature.nrg.elem.NRGElemPairCalcParams;
+
 /*-
  * #%L
  * anchor-gui-feature-evaluator
@@ -27,19 +31,20 @@ package org.anchoranalysis.gui.feature.evaluator.treetable;
  */
 
 import org.anchoranalysis.core.error.OperationFailedException;
+import org.anchoranalysis.feature.calc.params.FeatureCalcParamsNRGStack;
 import org.anchoranalysis.feature.nrg.NRGStackWithParams;
 import org.anchoranalysis.feature.shared.SharedFeatureSet;
 import org.anchoranalysis.gui.feature.FeatureListWithRegionMap;
 
 public abstract class FeatureListSrc {
 
-	public abstract FeatureListWithRegionMap createInd();
+	public abstract FeatureListWithRegionMap<NRGElemIndCalcParams> createInd();
 	
-	public abstract FeatureListWithRegionMap createPair();
+	public abstract FeatureListWithRegionMap<NRGElemPairCalcParams> createPair();
 	
-	public abstract FeatureListWithRegionMap createAll();
+	public abstract FeatureListWithRegionMap<NRGElemAllCalcParams> createAll();
 	
-	public abstract SharedFeatureSet sharedFeatures();
+	public abstract SharedFeatureSet<FeatureCalcParamsNRGStack> sharedFeatures();
 	
 	/**
 	 * Maybe adds additional KeyValueParams to a stack

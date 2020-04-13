@@ -1,11 +1,11 @@
 package org.anchoranalysis.gui.feature;
 
-import java.util.List;
+import java.util.function.Function;
 
 import org.anchoranalysis.anchor.mpp.bean.regionmap.RegionMap;
 import org.anchoranalysis.anchor.mpp.feature.bean.nrgscheme.NRGScheme;
 import org.anchoranalysis.anchor.mpp.feature.nrg.scheme.NamedNRGSchemeSet;
-import org.anchoranalysis.anchor.mpp.mark.Mark;
+
 
 /*
  * #%L
@@ -34,16 +34,10 @@ import org.anchoranalysis.anchor.mpp.mark.Mark;
  */
 
 import org.anchoranalysis.bean.NamedBean;
-import org.anchoranalysis.core.error.OperationFailedException;
-import org.anchoranalysis.core.index.GetOperationFailedException;
-import org.anchoranalysis.core.index.container.IBoundedIndexContainer;
-import org.anchoranalysis.core.log.LogErrorReporter;
 import org.anchoranalysis.feature.bean.Feature;
 import org.anchoranalysis.feature.bean.list.FeatureList;
 import org.anchoranalysis.feature.bean.operator.Sum;
-import org.anchoranalysis.feature.calc.ResultsVector;
-import org.anchoranalysis.gui.feature.evaluator.params.FeatureCalcParamsFactorySession;
-import org.anchoranalysis.gui.serializedobjectset.MarkWithRaster;
+import org.anchoranalysis.feature.calc.params.FeatureCalcParams;
 
 public class FeatureListUtilities {
 
@@ -57,83 +51,56 @@ public class FeatureListUtilities {
 	 * @param includeLastExecution
 	 * @return
 	 */
-	public static FeatureListWithRegionMap createFeatureList( NamedNRGSchemeSet elemSet, int cliqueSize, boolean includeLastExecution ) {
+	public static <T extends FeatureCalcParams> FeatureListWithRegionMap<T> createFeatureList(
+		NamedNRGSchemeSet elemSet,
+		Function<NRGScheme,FeatureList<T>> funcExtractList,
+		boolean includeLastExecution
+	) {
 		
-		FeatureListWithRegionMap featureList = new FeatureListWithRegionMap(); 
+		FeatureListWithRegionMap<T> featureList = new FeatureListWithRegionMap<>(); 
 		
 		for( NamedBean<NRGScheme> nnec : elemSet ) {
 			
-			RegionMap regionMap = nnec.getValue().getRegionMap();
+			NRGScheme nrgScheme = nnec.getValue();
+			
+			RegionMap regionMap = nrgScheme.getRegionMap();
+			
+			FeatureList<T> extractedList = funcExtractList.apply(nrgScheme);
 			
 			// This is a bit hacky, but we convert beginning with lastExecution to be a separate collection
 			//  but anything else we treat as a top-level item
 			if (nnec.getName().startsWith("lastExecution")) {
 				
 				if (includeLastExecution) {
-					Sum rootFeature = new Sum();
-					rootFeature.setList( nnec.getValue().getElemByCliqueSize( cliqueSize) );
-					rootFeature.setCustomName(nnec.getName());
-					featureList.add( rootFeature, regionMap );
+					featureList.add(
+						sumFeatures(extractedList, nnec.getName()),
+						regionMap
+					);
 				}
+				
 			} else if (nnec.getName().equals("user_defined")) {
 				
-				for(Feature f : nnec.getValue().getElemByCliqueSize(cliqueSize) ) {
+				for(Feature<T> f : extractedList ) {
 					featureList.add(f, regionMap );
 				}
 				
-			} else {
-				
-				FeatureList fl = nnec.getValue().getElemByCliqueSize(cliqueSize);
-				
-				if (fl.size()>0) {
-					Sum rootFeature = new Sum();
-					rootFeature.setList( fl );
-					rootFeature.setCustomName(nnec.getName());
-					featureList.add(rootFeature, regionMap );
-				}
+			} else if (extractedList.size()>0) {
+
+				featureList.add(
+					sumFeatures(extractedList, nnec.getName()),
+					regionMap
+				);
+			
 			}
 		}
 		
 		return featureList;
 	}
-
-
-	// listMarks is an optional variable for writing out return values to the list
-	public static CalculatedFeatureValues calculateFeatureList(
-		FeatureListWithRegionMap featureList,
-		IBoundedIndexContainer<MarkWithRaster> cntr,
-		List<Mark> listMarks,
-		LogErrorReporter logger
-	) throws OperationFailedException {
-		
-		FeatureCalcParamsFactorySession session = new FeatureCalcParamsFactorySession(featureList,logger);
-		session.start();
-		
-		try {
-			int numMarks = cntr.getMaximumIndex() - cntr.getMinimumIndex() + 1;
-			
-			CalculatedFeatureValues featureValues = new CalculatedFeatureValues( numMarks, featureList.size() );
-			
-			// For each mark
-			for (int i = 0; i<numMarks; i++ ) { 
-				
-				MarkWithRaster markWithRaster = cntr.get( cntr.getMinimumIndex() + i );
-				
-				Mark mark = markWithRaster.getMark();
-				assert(mark!=null);
-				
-				if (listMarks!=null) {
-					listMarks.add(mark);
-				}
-				
-				ResultsVector rv = session.calc( mark, markWithRaster.getNRGStack() );
-					
-				featureValues.set(i, rv);
-			}
-			return featureValues;
-		} catch (GetOperationFailedException e) {
-			throw new OperationFailedException(e);
-		}
-	}
 	
+	private static <T extends FeatureCalcParams> Feature<T> sumFeatures( FeatureList<T> extractedList,	String name ) {
+		Sum<T> rootFeature = new Sum<>();
+		rootFeature.setList( extractedList );
+		rootFeature.setCustomName(name);
+		return rootFeature;
+	}
 }

@@ -36,8 +36,12 @@ import javax.swing.BorderFactory;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 
+import org.anchoranalysis.anchor.mpp.feature.nrg.elem.NRGElemAllCalcParams;
+import org.anchoranalysis.anchor.mpp.feature.nrg.elem.NRGElemIndCalcParams;
+import org.anchoranalysis.anchor.mpp.feature.nrg.elem.NRGElemPairCalcParams;
 import org.anchoranalysis.anchor.mpp.pair.Pair;
 import org.anchoranalysis.anchor.overlay.Overlay;
+import org.anchoranalysis.feature.calc.params.FeatureCalcParamsNRGStack;
 import org.anchoranalysis.feature.nrg.NRGStackWithParams;
 import org.anchoranalysis.feature.shared.SharedFeatureSet;
 import org.anchoranalysis.gui.feature.FeatureListWithRegionMap;
@@ -56,16 +60,16 @@ public class TreeTableWithModelMultiplex implements ITreeTableModel {
 	public TreeTableWithModelMultiplex( TreeTableProperties properties,	FeatureListSrc featureListExtracter ) {
 		super();
 		
-		FeatureListWithRegionMap featureListInd = featureListExtracter.createInd();
-		FeatureListWithRegionMap featureListPair = featureListExtracter.createPair();
-		FeatureListWithRegionMap featureListAll = featureListExtracter.createAll();
-		SharedFeatureSet sharedFeatures = featureListExtracter.sharedFeatures();
+		FeatureListWithRegionMap<NRGElemIndCalcParams>  featureListInd = featureListExtracter.createInd();
+		FeatureListWithRegionMap<NRGElemPairCalcParams>  featureListPair = featureListExtracter.createPair();
+		FeatureListWithRegionMap<NRGElemAllCalcParams> featureListAll = featureListExtracter.createAll();
+		SharedFeatureSet<FeatureCalcParamsNRGStack> sharedFeatures = featureListExtracter.sharedFeatures();
 		
 		// We use 4 models for NONE, IND, PAIR, ALL
-		list.add( new TreeTableWithModel(properties, new FeatureListWithRegionMap(), sharedFeatures) );
-		list.add( new TreeTableWithModel(properties, featureListInd, sharedFeatures) );
-		list.add( new TreeTableWithModel(properties, featureListPair, sharedFeatures) );
-		list.add( new TreeTableWithModel(properties, featureListAll, sharedFeatures) );
+		addModelToList( new FeatureListWithRegionMap<FeatureCalcParamsNRGStack>(), properties, sharedFeatures );
+		addModelToList( featureListInd, properties, sharedFeatures );
+		addModelToList( featureListPair, properties, sharedFeatures );
+		addModelToList( featureListAll, properties, sharedFeatures );
 		
 		panel.setLayout( cardLayout );
 		panel.setBorder( BorderFactory.createEmptyBorder(2, 0, 2, 0) );
@@ -74,9 +78,15 @@ public class TreeTableWithModelMultiplex implements ITreeTableModel {
 		for( TreeTableWithModel item : list ) {
 			panel.add( item.getComponent(), Integer.toString(i++) );
 		}
-		
 	}
 
+	private <T extends FeatureCalcParamsNRGStack> void addModelToList(
+		FeatureListWithRegionMap<T> features,
+		TreeTableProperties properties,
+		SharedFeatureSet<FeatureCalcParamsNRGStack> sharedFeatures
+	) {
+		list.add( new TreeTableWithModel(properties, features.upcast(), sharedFeatures.upcast()) );
+	}
 	
 	public void resizeColumns() {
 		

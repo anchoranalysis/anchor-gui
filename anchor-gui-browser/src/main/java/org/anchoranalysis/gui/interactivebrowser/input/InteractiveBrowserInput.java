@@ -43,6 +43,7 @@ import org.anchoranalysis.core.log.LogErrorReporter;
 import org.anchoranalysis.core.name.store.SharedObjects;
 import org.anchoranalysis.core.params.KeyValueParams;
 import org.anchoranalysis.feature.bean.list.FeatureListProvider;
+import org.anchoranalysis.feature.calc.params.FeatureCalcParams;
 import org.anchoranalysis.feature.shared.SharedFeaturesInitParams;
 import org.anchoranalysis.gui.bean.filecreator.FileCreator;
 import org.anchoranalysis.gui.feature.evaluator.treetable.FeatureListSrc;
@@ -57,7 +58,7 @@ public class InteractiveBrowserInput implements InputFromManager {
 	private RasterReader rasterReader;
 	private List<FileCreator> listFileCreators;
 	private NRGSchemeCreator nrgSchemeCreator;
-	private List<NamedBean<FeatureListProvider>> namedItemSharedFeatureList;
+	private List<NamedBean<FeatureListProvider<FeatureCalcParams>>> namedItemSharedFeatureList;
 	private List<NamedBean<MarkEvaluator>> namedItemMarkEvaluatorList;
 	private List<NamedBean<KeyValueParamsProvider>> namedItemKeyValueParamsProviderList;
 	private List<NamedBean<FilePathProvider>> namedItemFilePathProviderList;
@@ -84,7 +85,7 @@ public class InteractiveBrowserInput implements InputFromManager {
 			throw new CreateException(e2);
 		}
 		
-		return new FeatureListSrcBuilder(logErrorReporter).build(soFeature, nrgSchemeCreator);
+		return new FeatureListSrcBuilder<>(logErrorReporter).build(soFeature, nrgSchemeCreator);
 	}
 	
 	private void addKeyValueParams( KeyValueParamsInitParams soParams ) throws OperationFailedException {
@@ -140,7 +141,7 @@ public class InteractiveBrowserInput implements InputFromManager {
 	}
 
 	public void setNamedItemSharedFeatureList(
-			List<NamedBean<FeatureListProvider>> namedItemSharedFeatureList) {
+			List<NamedBean<FeatureListProvider<FeatureCalcParams>>> namedItemSharedFeatureList) {
 		this.namedItemSharedFeatureList = namedItemSharedFeatureList;
 	}
 

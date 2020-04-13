@@ -38,9 +38,10 @@ import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.reporter.ErrorReporter;
 import org.anchoranalysis.feature.bean.Feature;
 import org.anchoranalysis.feature.bean.list.FeatureList;
+import org.anchoranalysis.feature.cache.CacheableParams;
 import org.anchoranalysis.feature.calc.ResultsVector;
 import org.anchoranalysis.feature.calc.params.FeatureCalcParams;
-import org.anchoranalysis.feature.session.Subsession;
+
 
 //
 //  TODO  close
@@ -50,27 +51,24 @@ abstract class FeatureListNode extends Node {
 	/**
 	 * The child features of this particular node
 	 */
-	private FeatureList childFeatures;
+	private FeatureList<FeatureCalcParams> childFeatures;
 	
 	
 	private List<FeatureValueNode> calcList = null;
-	private List<FeatureCalcParams> paramsList;
+	private List<CacheableParams<FeatureCalcParams>> paramsList;
 	private ErrorReporter errorReporter;
-	
-	private Subsession subsession;
 	
 	public FeatureListNode( ErrorReporter errorReporter ) {
 		this.errorReporter = errorReporter;
 	}
 	
-	protected void initChildFeatures(FeatureList features,List<FeatureCalcParams> paramsList, Subsession subsession ) {
-		this.childFeatures = new FeatureList(features);
+	protected void initChildFeatures(FeatureList<FeatureCalcParams> features, List<CacheableParams<FeatureCalcParams>> paramsList ) {
+		this.childFeatures = new FeatureList<>(features);
 		
 		// Sort out features in alphabetical order
 		Collections.sort( childFeatures, (f1,f2)->f1.getFriendlyName().compareTo(f2.getFriendlyName() ));
 		
 		this.paramsList = paramsList;
-		this.subsession = subsession;
 	}
 
 	protected void resetCalcList() {
@@ -78,18 +76,18 @@ abstract class FeatureListNode extends Node {
 	}
 	
 
-	protected void updateValueSourceNoTransformParams(FeatureCalcParams params, Subsession subsession) {
-		this.subsession = subsession;
-		updateValueSourceNoTransformParams( listSize(params, childFeatures.size() ), subsession);
+	protected void updateValueSourceNoTransformParams(CacheableParams<FeatureCalcParams> params) {
+		updateValueSourceNoTransformParams(
+			listSize(params, childFeatures.size() )
+		);
 	}
 
 	
-	protected void updateValueSourceNoTransformParams(List<FeatureCalcParams> paramsList, Subsession subsession) {
+	protected void updateValueSourceNoTransformParams(List<CacheableParams<FeatureCalcParams>> paramsList) {
 		
 		//System.out.println("updateValueSource");
 		
 		this.paramsList = paramsList;
-		this.subsession = subsession;
 		assert( paramsList.size()==childFeatures.size() );
 		
 		if (calcList==null) {
@@ -102,8 +100,8 @@ abstract class FeatureListNode extends Node {
 	}
 
 	
-	protected static List<FeatureCalcParams> listSize( FeatureCalcParams params, int size ) {
-		List<FeatureCalcParams> list = new ArrayList<>();
+	private static <T> List<T> listSize( T params, int size ) {
+		List<T> list = new ArrayList<>();
 		for( int i=0; i<size; i++) {
 			list.add(params);
 		}
@@ -138,12 +136,16 @@ abstract class FeatureListNode extends Node {
 	private void createAndAddNodes( ResultsVector rv, List<FeatureValueNode> listNodes, TreeNode parent ) throws CreateException {
 		for (int i=0; i<rv.length(); i++) {
 			
-			Feature f = childFeatures.get(i);
-			FeatureCalcParams params = paramsList.get(i);
-			
+			Feature<FeatureCalcParams> f = childFeatures.get(i);
+			CacheableParams<FeatureCalcParams> params = paramsList.get(i);
 			assert(f!=null);
 			
-			FeatureValueNode node = new FeatureValueNode( f, parent, params, errorReporter, subsession );
+			FeatureValueNode node = new FeatureValueNode(
+				f,
+				parent,
+				params,
+				errorReporter
+			);
 			setNodeFromResultsVector( node, rv, i );
 			
 			listNodes.add( node );
@@ -152,23 +154,28 @@ abstract class FeatureListNode extends Node {
 	
 	
 	// We update the immediate children, and all their children
-	private void updateNodes( ResultsVector rv, FeatureList features, List<FeatureCalcParams> paramsList, List<FeatureValueNode> listNodes ) {
+	private void updateNodes(
+		ResultsVector rv,
+		FeatureList<FeatureCalcParams> features,
+		List<CacheableParams<FeatureCalcParams>> paramsList,
+		List<FeatureValueNode> listNodes
+	) {
 		assert(rv.length()==features.size());
 		// update our tree
 		for (int i=0; i<features.size(); i++) {
 			
-			FeatureCalcParams params = paramsList.get(i);			
+			CacheableParams<FeatureCalcParams> params = paramsList.get(i);			
 			
 			FeatureValueNode node = listNodes.get(i);
 			setNodeFromResultsVector( node, rv, i );
 			
 			// We make a new list with a single item
-			node.updateValueSource( params, subsession );
+			node.updateValueSource( params );
 		}
 	}
 	
 	private ResultsVector calcResults() {
-		return subsession.calcSubsetSuppressErrors(childFeatures,paramsList, errorReporter);
+		return calcSubsetSuppressErrors(childFeatures,paramsList, errorReporter);
 	}
 		
 	private void createCalcList() {
@@ -216,11 +223,39 @@ abstract class FeatureListNode extends Node {
 		return childFeatures.size()==0;
 	}
 
-	protected FeatureList getFeatures() {
+	protected FeatureList<FeatureCalcParams> getFeatures() {
 		return childFeatures;
 	}
 
 	protected ErrorReporter getErrorReporter() {
 		return errorReporter;
+	}
+	
+	
+	/** Calculates with different parameters for every feature. No cache invalidation is occuring here. TODO Fix */
+	private static <T extends FeatureCalcParams> ResultsVector calcSubsetSuppressErrors(
+		FeatureList<T> features,
+		List<CacheableParams<T>> listParams,
+		ErrorReporter errorReporter
+	) {
+		assert(features.size()==listParams.size());
+		
+		ResultsVector res = new ResultsVector( features.size() );
+
+		for( int i=0; i<features.size(); i++) {
+			Feature<T> f = features.get(i);
+			
+			try {
+				res.set(
+					i,
+					listParams.get(i).calc(f)
+				);
+			} catch (Exception e) {
+				res.setError(i,e);
+				errorReporter.recordError(FeatureListNode.class, e);
+			}
+			
+		}
+		return res;
 	}
 }
