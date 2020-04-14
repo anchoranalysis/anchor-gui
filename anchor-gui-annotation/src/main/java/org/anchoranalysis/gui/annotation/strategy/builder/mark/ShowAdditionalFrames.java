@@ -33,7 +33,7 @@ import org.anchoranalysis.gui.annotation.additional.ShowAdditionalRasters;
 import org.anchoranalysis.gui.annotation.additional.ShowComparers;
 import org.anchoranalysis.gui.annotation.additional.ShowRaster;
 import org.anchoranalysis.gui.annotation.builder.AdditionalFramesContext;
-import org.anchoranalysis.gui.annotation.strategy.MarkProposerStrategy;
+import org.anchoranalysis.plugin.annotation.bean.strategy.MarkProposerStrategy;
 
 class ShowAdditionalFrames {
 	

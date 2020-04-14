@@ -46,14 +46,15 @@ import org.anchoranalysis.gui.annotation.builder.AnnotationGuiBuilderWithDelegat
 import org.anchoranalysis.gui.annotation.builder.AnnotationGuiContext;
 import org.anchoranalysis.gui.annotation.export.ExportAnnotation;
 import org.anchoranalysis.gui.annotation.state.AnnotationSummary;
-import org.anchoranalysis.gui.annotation.strategy.ReadAnnotationFromFile;
-import org.anchoranalysis.gui.annotation.strategy.WholeImageLabelStrategy;
 import org.anchoranalysis.gui.videostats.internalframe.annotator.AnnotationFrameControllers;
 import org.anchoranalysis.gui.videostats.internalframe.annotator.AnnotationPanelParams;
 import org.anchoranalysis.gui.videostats.internalframe.annotator.AnnotationWriterGUI;
 import org.anchoranalysis.gui.videostats.internalframe.annotator.SaveMonitor;
 import org.anchoranalysis.gui.videostats.internalframe.annotator.navigation.PanelNavigation;
 import org.anchoranalysis.gui.videostats.internalframe.annotator.navigation.PanelWithLabel;
+import org.anchoranalysis.plugin.annotation.bean.strategy.ReadAnnotationFromFile;
+import org.anchoranalysis.plugin.annotation.bean.strategy.WholeImageLabelStrategy;
+
 import static org.anchoranalysis.gui.videostats.internalframe.annotator.FrameActionFactory.*;
 
 public class BuilderWholeImage extends AnnotationGuiBuilderWithDelegate<InitParamsWholeImage,WholeImageLabelStrategy> {

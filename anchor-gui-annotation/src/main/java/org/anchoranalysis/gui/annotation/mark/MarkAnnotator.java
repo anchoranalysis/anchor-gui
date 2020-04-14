@@ -39,13 +39,13 @@ import org.anchoranalysis.core.log.LogErrorReporter;
 import org.anchoranalysis.core.name.provider.NamedProviderGetException;
 import org.anchoranalysis.core.name.store.NamedProviderStore;
 import org.anchoranalysis.gui.annotation.AnnotatorModuleCreator;
-import org.anchoranalysis.gui.annotation.strategy.MarkProposerStrategy;
 import org.anchoranalysis.gui.interactivebrowser.MarkEvaluatorRslvd;
 import org.anchoranalysis.gui.interactivebrowser.MarkEvaluatorSetForImage;
 import org.anchoranalysis.gui.videostats.internalframe.annotator.tool.ToolErrorReporter;
 import org.anchoranalysis.gui.videostats.internalframe.evaluator.EvaluatorWithContext;
 import org.anchoranalysis.image.extent.ImageDim;
 import org.anchoranalysis.image.stack.Stack;
+import org.anchoranalysis.plugin.annotation.bean.strategy.MarkProposerStrategy;
 
 public class MarkAnnotator {
 

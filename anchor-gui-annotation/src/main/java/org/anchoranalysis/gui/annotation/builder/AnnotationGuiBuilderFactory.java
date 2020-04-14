@@ -29,11 +29,11 @@ package org.anchoranalysis.gui.annotation.builder;
 import org.anchoranalysis.annotation.io.bean.strategy.AnnotatorStrategy;
 import org.anchoranalysis.annotation.io.input.AnnotationWithStrategy;
 import org.anchoranalysis.core.error.CreateException;
-import org.anchoranalysis.gui.annotation.strategy.MarkProposerStrategy;
-import org.anchoranalysis.gui.annotation.strategy.WholeImageLabelStrategy;
 import org.anchoranalysis.gui.annotation.strategy.builder.mark.BuilderProposeMarks;
 import org.anchoranalysis.gui.annotation.strategy.builder.whole.BuilderWholeImage;
 import org.anchoranalysis.io.error.AnchorIOException;
+import org.anchoranalysis.plugin.annotation.bean.strategy.MarkProposerStrategy;
+import org.anchoranalysis.plugin.annotation.bean.strategy.WholeImageLabelStrategy;
 
 public class AnnotationGuiBuilderFactory {
 

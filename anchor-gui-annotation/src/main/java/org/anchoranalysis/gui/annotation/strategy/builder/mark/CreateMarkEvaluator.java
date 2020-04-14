@@ -37,12 +37,12 @@ import org.anchoranalysis.core.name.provider.INamedProvider;
 import org.anchoranalysis.core.params.KeyValueParams;
 import org.anchoranalysis.core.progress.OperationWithProgressReporter;
 import org.anchoranalysis.gui.annotation.mark.MarkAnnotator;
-import org.anchoranalysis.gui.annotation.strategy.GenerathorPathRslvr;
-import org.anchoranalysis.gui.annotation.strategy.MarkProposerStrategy;
 import org.anchoranalysis.gui.interactivebrowser.MarkEvaluatorManager;
 import org.anchoranalysis.gui.interactivebrowser.MarkEvaluatorSetForImage;
 import org.anchoranalysis.image.stack.Stack;
 import org.anchoranalysis.io.error.AnchorIOException;
+import org.anchoranalysis.plugin.annotation.bean.strategy.GeneratorPathRslvr;
+import org.anchoranalysis.plugin.annotation.bean.strategy.MarkProposerStrategy;
 
 class CreateMarkEvaluator {
 
@@ -85,7 +85,7 @@ class CreateMarkEvaluator {
 	}
 	
 	private static Operation<KeyValueParams> opLoadKeyValueParams( Path pathForBinding, MarkProposerStrategy strategy ) throws AnchorIOException {
-		Path kvpPath = new GenerathorPathRslvr( pathForBinding ).pathOrNull(
+		Path kvpPath = new GeneratorPathRslvr( pathForBinding ).pathOrNull(
 			strategy.getKeyValueParamsFilePathGenerator()
 		);
 		return () -> create(kvpPath);
