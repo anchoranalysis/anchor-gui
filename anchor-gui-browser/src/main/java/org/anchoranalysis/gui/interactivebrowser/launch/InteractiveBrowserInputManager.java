@@ -35,7 +35,7 @@ import org.anchoranalysis.anchor.mpp.feature.bean.nrgscheme.NRGSchemeCreator;
 import org.anchoranalysis.bean.NamedBean;
 import org.anchoranalysis.bean.annotation.BeanField;
 import org.anchoranalysis.bean.annotation.DefaultInstance;
-import org.anchoranalysis.bean.annotation.Optional;
+import org.anchoranalysis.bean.annotation.OptionalBean;
 import org.anchoranalysis.bean.shared.params.keyvalue.KeyValueParamsProvider;
 import org.anchoranalysis.feature.bean.list.FeatureListProvider;
 import org.anchoranalysis.feature.calc.params.FeatureCalcParams;
@@ -62,7 +62,7 @@ public class InteractiveBrowserInputManager extends InputManager<InteractiveBrow
 	@BeanField @DefaultInstance
 	private RasterReader rasterReader;
 	
-	@BeanField @Optional
+	@BeanField @OptionalBean
 	private NRGSchemeCreator nrgSchemeCreator;
 	
 	@BeanField
@@ -72,10 +72,10 @@ public class InteractiveBrowserInputManager extends InputManager<InteractiveBrow
 	@BeanField
 	private List<NamedBean<MarkEvaluator>> namedItemMarkEvaluatorList = new ArrayList<NamedBean<MarkEvaluator>>();
 	
-	@BeanField @Optional
+	@BeanField @OptionalBean
 	private List<NamedBean<KeyValueParamsProvider>> namedItemKeyValueParamsProviderList = new ArrayList<NamedBean<KeyValueParamsProvider>>();
 	
-	@BeanField @Optional
+	@BeanField @OptionalBean
 	private List<NamedBean<FilePathProvider>> namedItemFilePathProviderList = new ArrayList<NamedBean<FilePathProvider>>();
 	
 	@BeanField

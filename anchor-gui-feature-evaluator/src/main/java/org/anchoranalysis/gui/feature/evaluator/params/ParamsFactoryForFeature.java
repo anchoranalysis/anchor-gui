@@ -46,7 +46,6 @@ import org.anchoranalysis.image.feature.objmask.collection.FeatureObjMaskCollect
 import org.anchoranalysis.image.feature.objmask.pair.FeatureObjMaskPairParamsDescriptor;
 import org.anchoranalysis.image.feature.objmask.pair.merged.FeatureObjMaskPairMergedParamsDescriptor;
 import org.anchoranalysis.image.feature.objmask.shared.FeatureObjMaskSharedObjectsParamsDescriptor;
-import org.anchoranalysis.image.feature.pixelwise.score.PixelScoreFeatureCalcParamsDescriptor;
 import org.anchoranalysis.image.feature.stack.nrg.FeatureNRGStackParamsDescriptor;
 
 public class ParamsFactoryForFeature {
@@ -85,10 +84,6 @@ public class ParamsFactoryForFeature {
 		
 		if (paramType.equals(FeatureObjMaskCollectionDescriptor.instance)) {
 			return new FeatureObjMaskCollectionParamsFactory( RegionMapSingleton.instance().membershipWithFlagsForIndex(GlobalRegionIdentifiers.SUBMARK_INSIDE) );
-		}
-		
-		if (paramType.equals(PixelScoreFeatureCalcParamsDescriptor.instance)) {
-			return new UnsupportedFactory();
 		}
 		
 		if (paramType.equals(FeatureObjMaskPairParamsDescriptor.instance)) {

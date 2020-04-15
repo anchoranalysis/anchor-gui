@@ -33,7 +33,7 @@ import org.anchoranalysis.anchor.mpp.feature.bean.nrgscheme.NRGSchemeCreator;
 import org.anchoranalysis.bean.NamedBean;
 import org.anchoranalysis.bean.annotation.BeanField;
 import org.anchoranalysis.bean.annotation.NonEmpty;
-import org.anchoranalysis.bean.annotation.Optional;
+import org.anchoranalysis.bean.annotation.OptionalBean;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.log.LogErrorReporter;
@@ -67,7 +67,7 @@ public class FileFeatureEvaluatorCreator extends FileCreator {
 	@BeanField @NonEmpty
 	private List<NamedBean<FeatureListProvider<FeatureCalcParams>>> listFeatures = new ArrayList<>();
 	
-	@BeanField @Optional
+	@BeanField @OptionalBean
 	private NRGSchemeCreator nrgSchemeCreator;
 	// END BEAN PROPERTIES
 	
