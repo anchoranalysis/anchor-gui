@@ -33,7 +33,6 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.ProgressMonitor;
 
-import org.anchoranalysis.core.cache.CacheMonitor;
 import org.anchoranalysis.core.index.SetOperationFailedException;
 import org.anchoranalysis.io.generator.IterableGenerator;
 import org.anchoranalysis.io.generator.sequence.SequenceMemory;
@@ -109,7 +108,7 @@ public class ExportTaskGenerator<IterableType> implements IExportTask {
 	}
 
 	@Override
-	public void init(CacheMonitor cacheMonitor) {
+	public void init() {
 	}
 
 }

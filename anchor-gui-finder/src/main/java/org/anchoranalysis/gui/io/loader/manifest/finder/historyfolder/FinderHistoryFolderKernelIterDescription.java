@@ -27,7 +27,6 @@ package org.anchoranalysis.gui.io.loader.manifest.finder.historyfolder;
  */
 
 
-import org.anchoranalysis.core.cache.CacheMonitor;
 import org.anchoranalysis.io.bean.deserializer.Deserializer;
 import org.anchoranalysis.io.bean.deserializer.ObjectInputStreamDeserializer;
 import org.anchoranalysis.io.deserializer.DeserializationFailedException;
@@ -41,11 +40,8 @@ import org.anchoranalysis.mpp.sgmn.kernel.proposer.KernelIterDescription;
 
 public class FinderHistoryFolderKernelIterDescription extends FinderHistoryFolder<KernelIterDescription> {
 	
-	private CacheMonitor cacheMonitor;
-	
-	public FinderHistoryFolderKernelIterDescription(String manifestFunction, CacheMonitor cacheMonitor) {
+	public FinderHistoryFolderKernelIterDescription(String manifestFunction) {
 		super(manifestFunction);
-		this.cacheMonitor = cacheMonitor;
 	}
 
 	@Override
@@ -55,7 +51,7 @@ public class FinderHistoryFolderKernelIterDescription extends FinderHistoryFolde
 			new ObjectInputStreamDeserializer<Bundle<KernelIterDescription>>(),
 			new ObjectInputStreamDeserializer<BundleParameters>()
 		); 
-		return new DeserializeFromBundleKernelIterDescription(deserializers, folder, cacheMonitor).create();		
+		return new DeserializeFromBundleKernelIterDescription(deserializers, folder).create();		
 	}
 	
 	@Override

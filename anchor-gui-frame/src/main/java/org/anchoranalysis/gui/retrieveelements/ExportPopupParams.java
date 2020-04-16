@@ -29,7 +29,6 @@ package org.anchoranalysis.gui.retrieveelements;
 
 import javax.swing.JFrame;
 
-import org.anchoranalysis.core.cache.CacheMonitor;
 import org.anchoranalysis.core.error.reporter.ErrorReporter;
 import org.anchoranalysis.io.generator.sequence.SequenceMemory;
 import org.anchoranalysis.io.output.bound.BoundOutputManagerRouteErrors;
@@ -39,7 +38,6 @@ public class ExportPopupParams {
 	private BoundOutputManagerRouteErrors outputManager;
 	private ErrorReporter errorReporter;
 	private SequenceMemory sequenceMemory;
-	private CacheMonitor cacheMonitor;
 	
 	public ExportPopupParams(ErrorReporter errorReporter) {
 		super();
@@ -64,13 +62,6 @@ public class ExportPopupParams {
 	public void setSequenceMemory(SequenceMemory sequenceMemory) {
 		this.sequenceMemory = sequenceMemory;
 	}
-	public CacheMonitor getCacheMonitor() {
-		return cacheMonitor;
-	}
-	public void setCacheMonitor(CacheMonitor cacheMonitor) {
-		this.cacheMonitor = cacheMonitor;
-	}
-
 	public ErrorReporter getErrorReporter() {
 		return errorReporter;
 	}

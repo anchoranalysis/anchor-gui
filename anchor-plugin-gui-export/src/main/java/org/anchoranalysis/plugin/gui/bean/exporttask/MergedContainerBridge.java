@@ -38,7 +38,6 @@ import org.anchoranalysis.anchor.mpp.overlay.OverlayCollectionMarkFactory;
 import org.anchoranalysis.anchor.overlay.OverlayedInstantState;
 import org.anchoranalysis.core.bridge.BridgeElementException;
 import org.anchoranalysis.core.bridge.IObjectBridge;
-import org.anchoranalysis.core.cache.CacheMonitor;
 import org.anchoranalysis.core.color.ColorIndex;
 import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.index.GetOperationFailedException;
@@ -53,7 +52,6 @@ import org.anchoranalysis.gui.mergebridge.TransformToCfg;
 
 class MergedContainerBridge implements IObjectBridge<ExportTaskParams,IBoundedIndexContainer<CfgNRGInstantState>> {
 
-	private CacheMonitor cacheMonitor;
 	private Supplier<RegionMembershipWithFlags> regionMembership;
 	
 	public MergedContainerBridge( Supplier<RegionMembershipWithFlags> regionMembership ) {
@@ -78,7 +76,7 @@ class MergedContainerBridge implements IObjectBridge<ExportTaskParams,IBoundedIn
 					new TransformToCfg()
 				);
 				
-				dualHistory.init( cacheMonitor );
+				dualHistory.init();
 			} catch (InitException | GetOperationFailedException e) {
 				throw new BridgeElementException(e);
 			}
@@ -106,13 +104,5 @@ class MergedContainerBridge implements IObjectBridge<ExportTaskParams,IBoundedIn
 			);
 		}
 		return retBridge;
-	}
-
-	public CacheMonitor getCacheMonitor() {
-		return cacheMonitor;
-	}
-
-	public void setCacheMonitor(CacheMonitor cacheMonitor) {
-		this.cacheMonitor = cacheMonitor;
 	}
 }

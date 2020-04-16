@@ -81,7 +81,7 @@ public class MergedCfgNRGHistoryInternalFrame {
 			throw new InitException(e);
 		}
 		
-		dualHistory.init( mpg.getCacheMonitor() );
+		dualHistory.init();
 
 		
 		MergeCfgBridge mergeCfgBridge = new MergeCfgBridge(

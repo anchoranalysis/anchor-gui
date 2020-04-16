@@ -32,7 +32,6 @@ import org.anchoranalysis.anchor.mpp.feature.instantstate.CfgNRGInstantState;
  */
 
 
-import org.anchoranalysis.core.cache.CacheMonitor;
 import org.anchoranalysis.core.cache.LRUHashMapCache;
 import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.index.GetOperationFailedException;
@@ -72,16 +71,14 @@ public class DualCfgNRGContainer<T> implements IBoundedIndexContainer<IndexedDua
 	}
 
 	
-	public void init( CacheMonitor cacheMonitor ) throws InitException {
+	public void init() throws InitException {
 
-		this.recentAccessCache = LRUHashMapCache.createAndMonitor(
+		this.recentAccessCache = new LRUHashMapCache<>(
 			3,
 			index -> new IndexedDualState<T>(
 				index,
 				instanceStates(index)
-			),
-			cacheMonitor,
-			"DualCfgNRGContainer"
+			)
 		);
 		
 		this.incrementalSequenceType = new IncrementalSequenceType();

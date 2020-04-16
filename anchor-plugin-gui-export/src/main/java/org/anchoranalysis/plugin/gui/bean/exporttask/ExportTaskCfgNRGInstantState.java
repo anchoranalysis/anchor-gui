@@ -34,7 +34,6 @@ import org.anchoranalysis.core.bridge.BridgeElementException;
  */
 
 
-import org.anchoranalysis.core.cache.CacheMonitor;
 import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.index.container.IBoundedIndexContainer;
@@ -56,7 +55,7 @@ public class ExportTaskCfgNRGInstantState extends ExportTaskRasterGeneratorFromB
 	}
 	
 	@Override
-	public void init(CacheMonitor cacheMonitor) {
+	public void init() {
 		setBridge( s->convert(s) );
 	}
 
@@ -89,7 +88,7 @@ public class ExportTaskCfgNRGInstantState extends ExportTaskRasterGeneratorFromB
 		);
 		
 		try {
-			dualHistory.init( new CacheMonitor() );
+			dualHistory.init();
 		} catch (InitException e) {
 			throw new GetOperationFailedException(e);
 		}
@@ -110,7 +109,7 @@ public class ExportTaskCfgNRGInstantState extends ExportTaskRasterGeneratorFromB
 		DualCfgNRGContainer<CfgNRGInstantState> dualHistory = mergedHistory(sourceObject);
 		
 		try {
-			dualHistory.init( new CacheMonitor() );
+			dualHistory.init();
 		} catch (InitException e) {
 			throw new GetOperationFailedException(e);
 		}

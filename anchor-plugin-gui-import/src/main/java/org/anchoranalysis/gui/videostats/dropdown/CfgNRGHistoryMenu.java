@@ -34,7 +34,6 @@ import org.anchoranalysis.anchor.mpp.feature.instantstate.CfgNRGInstantState;
 import org.anchoranalysis.anchor.mpp.feature.nrg.cfg.CfgNRGPixelized;
 import org.anchoranalysis.anchor.mpp.graph.bean.GraphDefinitionBarNRGBreakdown;
 import org.anchoranalysis.bean.error.BeanDuplicateException;
-import org.anchoranalysis.core.cache.CacheMonitor;
 import org.anchoranalysis.core.cache.ExecuteException;
 import org.anchoranalysis.core.color.ColorIndex;
 import org.anchoranalysis.core.error.InitException;
@@ -145,7 +144,6 @@ public class CfgNRGHistoryMenu {
 			context.getMpg().getExportTaskList(),
 			context.getOutputManager(),
 			context.getParentFrame(),
-			context.getMpg().getExportPopupParams().getCacheMonitor(),
 			context.getMpg().getLogErrorReporter().getErrorReporter()
 		);
 	}
@@ -160,7 +158,6 @@ public class CfgNRGHistoryMenu {
 		ExportTaskList exportTaskList,
 		BoundOutputManagerRouteErrors outputManager,
 		JFrame parentFrame,
-		CacheMonitor cacheMonitor,
 		ErrorReporter errorReporter
 	)
 	{		
@@ -173,7 +170,6 @@ public class CfgNRGHistoryMenu {
 		exportTaskParams.setFinderCsvStatistics( finderCSVStats );
 		exportTaskParams.addFinderCfgNRGHistory( finderSecondaryHistory );
 		exportTaskParams.addFinderCfgNRGHistory( finderTertiaryHistory );
-		exportTaskParams.setCacheMonitor( cacheMonitor );
 		exportTaskParams.setOutputManager(outputManager);
 		
 		for (ExportTaskBean exportTask : exportTaskList) {

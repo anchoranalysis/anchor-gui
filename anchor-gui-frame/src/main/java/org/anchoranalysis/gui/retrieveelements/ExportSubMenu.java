@@ -77,7 +77,6 @@ public class ExportSubMenu implements IAddToExportSubMenu {
 
     	// No parameters available in this context
     	ExportTaskParams exportTaskParams = new ExportTaskParams();
-    	exportTaskParams.setCacheMonitor( params.getCacheMonitor() );
     	    	
     	ManifestFolderDescription mfd = new ManifestFolderDescription();
     	mfd.setFileDescription( md );

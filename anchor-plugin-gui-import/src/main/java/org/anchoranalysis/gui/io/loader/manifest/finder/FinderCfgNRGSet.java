@@ -132,8 +132,7 @@ public class FinderCfgNRGSet extends Finder implements ContainerGetter<CfgNRGIns
 		
 		// Configurations with NRG
 		finderCfgNRGHistory = new FinderHistoryFolderCfgNRGInstantState(
-			manifestNameCfgNRGHistory,
-			context.getMpg().getCacheMonitor()
+			manifestNameCfgNRGHistory
 		);
 		finderCfgNRGHistory.doFind(manifestRecorder);
 

@@ -30,9 +30,6 @@ import org.anchoranalysis.anchor.mpp.regionmap.RegionMapSingleton;
  * #L%
  */
 
-
-import org.anchoranalysis.core.cache.CacheMonitor;
-
 public class ExportTaskMergedCfgNRGInstantState extends ExportTaskRasterGeneratorFromBoundedIndexContainer<CfgNRGInstantState> {
 
 	/**
@@ -51,13 +48,12 @@ public class ExportTaskMergedCfgNRGInstantState extends ExportTaskRasterGenerato
 		super();
 	}
 	
-	public void init( CacheMonitor cacheMonitor ) {
+	public void init() {
 		containerBridge = new MergedContainerBridge(
 			() -> RegionMapSingleton.instance().membershipWithFlagsForIndex(
 				GlobalRegionIdentifiers.SUBMARK_INSIDE
 			)	
 		);
-		containerBridge.setCacheMonitor(cacheMonitor);
 		super.setBridge(containerBridge);
 	}
 }

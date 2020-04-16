@@ -30,7 +30,6 @@ import org.anchoranalysis.anchor.mpp.feature.nrg.cfg.CfgNRG;
  */
 
 
-import org.anchoranalysis.core.cache.CacheMonitor;
 import org.anchoranalysis.core.index.ITypedGetFromIndex;
 import org.anchoranalysis.core.index.ITypedGetFromIndexBridge;
 import org.anchoranalysis.io.manifest.deserializer.folder.DeserializeFromFolderBundle;
@@ -41,8 +40,8 @@ import org.anchoranalysis.io.manifest.folder.FolderWrite;
 class DeserializeFromBundleCfgNRG extends DeserializeFromFolderBundle<CfgNRGInstantState,CfgNRG> {
 
 	public DeserializeFromBundleCfgNRG(
-			BundleDeserializers<CfgNRG> deserializer, FolderWrite cfgNRGFolder, CacheMonitor cacheMonitor) {
-		super(deserializer, cfgNRGFolder, cacheMonitor);
+			BundleDeserializers<CfgNRG> deserializer, FolderWrite cfgNRGFolder) {
+		super(deserializer, cfgNRGFolder);
 	}
 
 	@Override

@@ -30,7 +30,6 @@ import org.anchoranalysis.core.bridge.IObjectBridge;
  */
 
 
-import org.anchoranalysis.core.cache.CacheMonitor;
 import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.index.container.IBoundedIndexContainer;
 import org.anchoranalysis.gui.bean.exporttask.ExportTaskParams;
@@ -61,7 +60,7 @@ public class ExportTaskCSVStatistic extends ExportTaskRasterGeneratorFromBounded
 	}
 	
 	@Override
-	public void init(CacheMonitor cacheMonitor) {
+	public void init() {
 		setBridge( new ExportTaskParamsCSVStatisticContainerBridge() );
 	}
 }

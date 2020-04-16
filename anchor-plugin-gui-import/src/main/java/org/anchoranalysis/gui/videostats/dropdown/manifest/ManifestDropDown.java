@@ -179,7 +179,7 @@ public class ManifestDropDown {
 	
 	private FinderHistoryFolderKernelIterDescription createFinderKernelIterDescription( VideoStatsModuleGlobalParams mpg ) throws InitException {
 		
-		final FinderHistoryFolderKernelIterDescription finderKernelIterDescription = new FinderHistoryFolderKernelIterDescription("kernelIterDescription", mpg.getCacheMonitor());
+		final FinderHistoryFolderKernelIterDescription finderKernelIterDescription = new FinderHistoryFolderKernelIterDescription("kernelIterDescription");
 		try {
 			finderKernelIterDescription.doFind(manifests.getFileManifest().doOperation());
 		} catch (ExecuteException e) {

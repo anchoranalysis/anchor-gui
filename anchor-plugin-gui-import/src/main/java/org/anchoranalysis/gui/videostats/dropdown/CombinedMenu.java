@@ -30,7 +30,6 @@ package org.anchoranalysis.gui.videostats.dropdown;
 import javax.swing.JFrame;
 
 import org.anchoranalysis.bean.error.BeanDuplicateException;
-import org.anchoranalysis.core.cache.CacheMonitor;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.error.reporter.ErrorReporter;
 import org.anchoranalysis.core.progress.OperationWithProgressReporter;
@@ -89,7 +88,6 @@ public class CombinedMenu {
 			context.getMpg().getExportTaskList(),
 			context.getOutputManager(),
 			context.getParentFrame(),
-			context.getMpg().getCacheMonitor(),
 			context.getMpg().getLogErrorReporter().getErrorReporter()
 		);
 	}
@@ -106,7 +104,6 @@ public class CombinedMenu {
 		ExportTaskList exportTaskList,
 		BoundOutputManagerRouteErrors outputManager,
 		JFrame parentFrame,
-		CacheMonitor cacheMonitor,
 		ErrorReporter errorReporter
 	)
 	{		
@@ -116,7 +113,6 @@ public class CombinedMenu {
 		exportTaskParams.addFinderCfgNRGHistory( finderFirst );
 		exportTaskParams.addFinderCfgNRGHistory(finderSecond);
 		exportTaskParams.setFinderImgStackCollection( finderImgStackCollection );
-		exportTaskParams.setCacheMonitor(cacheMonitor);
 		exportTaskParams.setOutputManager(outputManager);
 		
 		// TODO, HACK, as the RGB creator requires this
