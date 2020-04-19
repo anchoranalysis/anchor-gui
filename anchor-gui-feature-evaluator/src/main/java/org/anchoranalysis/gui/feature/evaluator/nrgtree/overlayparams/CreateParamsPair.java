@@ -39,14 +39,14 @@ import org.anchoranalysis.feature.nrg.NRGStackWithParams;
 import org.anchoranalysis.feature.session.CreateParams;
 import org.anchoranalysis.gui.feature.evaluator.nrgtree.createparams.CreateParamsPairFromRasterMark;
 
-class CreateParamsPairCache {
+class CreateParamsPair {
 	
 	private Mark markSrc;
 	private Mark markDest;
 	private NRGStackWithParams raster;
 	private Map<RegionMap,CreateParams<FeatureCalcParams>> map = new HashMap<>();
 	
-	public CreateParamsPairCache(Mark markSrc, Mark markDest, NRGStackWithParams raster) {
+	public CreateParamsPair(Mark markSrc, Mark markDest, NRGStackWithParams raster) {
 		super();
 		this.markSrc = markSrc;
 		this.markDest = markDest;

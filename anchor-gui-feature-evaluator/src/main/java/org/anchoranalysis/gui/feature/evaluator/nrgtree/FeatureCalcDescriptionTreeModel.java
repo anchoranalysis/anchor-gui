@@ -27,18 +27,13 @@ package org.anchoranalysis.gui.feature.evaluator.nrgtree;
  */
 
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreeNode;
 
 import org.anchoranalysis.anchor.mpp.pair.Pair;
 import org.anchoranalysis.anchor.overlay.Overlay;
-import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.log.LogErrorReporter;
-import org.anchoranalysis.feature.bean.Feature;
 import org.anchoranalysis.feature.bean.list.FeatureList;
 import org.anchoranalysis.feature.calc.FeatureCalcException;
 import org.anchoranalysis.feature.calc.params.FeatureCalcParams;
@@ -112,12 +107,15 @@ public class FeatureCalcDescriptionTreeModel extends DefaultTreeModel implements
 				return;
 			}
 			
-			List<CreateParams<FeatureCalcParams>> createParamsList = new ArrayList<>();
-			CreateParamsFromOverlay.addForOverlay( overlay, nrgStack, featureListWithRegions, createParamsList );
+			CreateParams<FeatureCalcParams> createParams = CreateParamsFromOverlay.addForOverlay(
+				overlay,
+				nrgStack,
+				featureListWithRegions
+			);
 			
 			updateOrReload(
 				featureList,
-				createParamsList,
+				createParams,
 				nrgStack
 			);
 
@@ -132,20 +130,20 @@ public class FeatureCalcDescriptionTreeModel extends DefaultTreeModel implements
 	public void updatePair(Pair<Overlay> pair, NRGStackWithParams nrgStack) {
 		
 		try {
-			
 			// If we have no mark matching the current id
 			if (pair==null || featureListWithRegions.size()==0) {
 				return;
 			}
 			
-			// Create a pair for each region map
-			List<CreateParams<FeatureCalcParams>> createParamsList = new ArrayList<>();
-			
-			CreateParamsFromOverlay.addForOverlayPair( pair, nrgStack, featureListWithRegions, createParamsList );
+			CreateParams<FeatureCalcParams> createParams = CreateParamsFromOverlay.addForOverlayPair(
+				pair,
+				nrgStack,
+				featureListWithRegions
+			);
 			
 			updateOrReload(
 				featureList,
-				createParamsList,
+				createParams,
 				nrgStack
 			);
 		
@@ -154,41 +152,13 @@ public class FeatureCalcDescriptionTreeModel extends DefaultTreeModel implements
 		}
 	}
 	
-	private List<FeatureCalcParams> createParamsList( List<CreateParams<FeatureCalcParams>> listCreate, FeatureList<?> features ) throws CreateException {
-		assert( listCreate.size()==features.size() );
-		
-		FeatureCalcParams paramsGlobal=null;
-		
-		List<FeatureCalcParams> listOut = new ArrayList<>();
-		
-		for( int i=0; i<features.size(); i++) {
-			CreateParams<FeatureCalcParams> cp = listCreate.get(i);
-			Feature<?> f = features.get(i);
-			
-			FeatureCalcParams params = cp.createForFeature(f);
-			
-			if (paramsGlobal==null) {
-				paramsGlobal=params;
-			}
-			
-			// OWENF: COMMENTED OUT AS IT WAS BEING VIOLATED, BUT AM SURE WHAT'S GOING ON
-			/*if (params!=paramsGlobal) {
-				assert false;
-			}*/
-			
-			listOut.add( params );
-		}
-		
-		return listOut;
-	}
-	
-	
-	private void updateOrReload( FeatureList<FeatureCalcParams> featureList, List<CreateParams<FeatureCalcParams>> createParamsList, NRGStackWithParams nrgStack ) throws OperationFailedException {
+	private void updateOrReload(
+		FeatureList<FeatureCalcParams> featureList,
+		CreateParams<FeatureCalcParams> createParams,
+		NRGStackWithParams nrgStack
+	) throws OperationFailedException {
 		
 		try {
-			// Create a list of params for each feature
-			List<FeatureCalcParams> paramsList = createParamsList(createParamsList, featureList);
-			
 			CustomRootNode root = (CustomRootNode) getRoot();
 			//root.setFeatureCalcParams(featureCalcParams);
 	
@@ -204,12 +174,9 @@ public class FeatureCalcDescriptionTreeModel extends DefaultTreeModel implements
 					logErrorReporter
 				);
 				
-				//log.info( String.format("first") );
-				assert( createParamsList.size()==featureList.size() );
-				
 				root.replaceFeatureList(
 					featureList,
-					session.createCacheable(paramsList)
+					new ParamsSource(createParams, session)
 				);
 				
 				nodeStructureChanged(root);
@@ -217,17 +184,15 @@ public class FeatureCalcDescriptionTreeModel extends DefaultTreeModel implements
 				first = false;
 				
 			} else {
-				//log.info( String.format("updateValueSource") );
-				assert( createParamsList.size()==featureList.size() );
 				
 				root.replaceCalcParams(
-					session.createCacheable(paramsList)
+					new ParamsSource(createParams, session)		
 				);
 
 				nodeChanged(root);
 			}
 			
-		} catch (CreateException | FeatureCalcException e) {
+		} catch (FeatureCalcException e) {
 			throw new OperationFailedException(e);
 		}
 	}

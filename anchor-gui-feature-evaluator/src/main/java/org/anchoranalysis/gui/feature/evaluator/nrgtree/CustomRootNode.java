@@ -27,15 +27,11 @@ package org.anchoranalysis.gui.feature.evaluator.nrgtree;
  */
 
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.swing.tree.TreeNode;
 
 import org.anchoranalysis.core.error.reporter.ErrorReporter;
 import org.anchoranalysis.feature.bean.Feature;
 import org.anchoranalysis.feature.bean.list.FeatureList;
-import org.anchoranalysis.feature.cache.CacheableParams;
 import org.anchoranalysis.feature.calc.params.FeatureCalcParams;
 
 
@@ -43,20 +39,20 @@ class CustomRootNode extends FeatureListNode {
 	
 	public CustomRootNode( ErrorReporter errorReporter ) {
 		super(errorReporter);
-		initChildFeatures( new FeatureList<>(), new ArrayList<>() );
+		initChildFeatures( new FeatureList<>(), null );
 	}
 	
 	public void replaceFeatureList(
 		FeatureList<FeatureCalcParams> featureList,
-		List<CacheableParams<FeatureCalcParams>> paramsList
+		ParamsSource params
 	) {
 		getFeatures().clear();
 		resetCalcList();
-		this.initChildFeatures(featureList, paramsList);
+		this.initChildFeatures(featureList, params);
 	}
 	
-	public void replaceCalcParams( List<CacheableParams<FeatureCalcParams>> paramsList ) {
-		updateValueSource( paramsList );
+	public void replaceCalcParams( ParamsSource params ) {
+		updateValueSource( params );
 	}
 
 	@Override
@@ -90,12 +86,5 @@ class CustomRootNode extends FeatureListNode {
 		return null;
 	}
 
-	@Override
-	protected void updateValueSource(List<CacheableParams<FeatureCalcParams>> paramsList) {
-	}
-
-	@Override
-	protected void updateValueSource(CacheableParams<FeatureCalcParams> params) {
-	}
 
 }

@@ -27,12 +27,9 @@ package org.anchoranalysis.gui.feature.evaluator.nrgtree;
  */
 
 
-import java.util.List;
-
 import javax.swing.tree.TreeNode;
 
 import org.anchoranalysis.feature.bean.Feature;
-import org.anchoranalysis.feature.cache.CacheableParams;
 import org.anchoranalysis.feature.calc.params.FeatureCalcParams;
 
 
@@ -42,11 +39,7 @@ public abstract class Node implements TreeNode {
 	
 	public abstract Feature<FeatureCalcParams> getFeature();
 	
-	// A list of different CreateParams for each feature
-	protected abstract void updateValueSource( List<CacheableParams<FeatureCalcParams>> paramsList );
-	
-	// A single CreateParams for all features
-	protected abstract void updateValueSource( CacheableParams<FeatureCalcParams> params );
+	protected abstract void updateValueSource( ParamsSource paramSource );
 	
 	public abstract boolean hasError();
 	

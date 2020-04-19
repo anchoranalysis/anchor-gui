@@ -27,8 +27,6 @@ package org.anchoranalysis.gui.feature.evaluator.nrgtree.overlayparams;
  */
 
 
-import java.util.List;
-
 import org.anchoranalysis.anchor.mpp.mark.Mark;
 import org.anchoranalysis.anchor.mpp.overlay.OverlayMark;
 import org.anchoranalysis.anchor.mpp.pair.Pair;
@@ -38,52 +36,46 @@ import org.anchoranalysis.feature.calc.params.FeatureCalcParams;
 import org.anchoranalysis.feature.nrg.NRGStackWithParams;
 import org.anchoranalysis.feature.session.CreateParams;
 import org.anchoranalysis.gui.feature.FeatureListWithRegionMap;
-import org.anchoranalysis.gui.feature.FeatureWithRegionMap;
 import org.anchoranalysis.gui.feature.evaluator.nrgtree.createparams.CreateParamsIndFromObjMask;
 import org.anchoranalysis.gui.feature.evaluator.nrgtree.createparams.CreateParamsPairFromObjMask;
 import org.anchoranalysis.image.objmask.ObjMask;
 
 public class CreateParamsFromOverlay {
 
-	public static void addForOverlay(
+	public static CreateParams<FeatureCalcParams> addForOverlay(
 		Overlay overlay,
 		NRGStackWithParams nrgStack,
-		FeatureListWithRegionMap<?> featureList,
-		List<CreateParams<FeatureCalcParams>> listOut
+		FeatureListWithRegionMap<?> featureList
 	) {
 		// TODO replace with object oriented-code
 		if (overlay instanceof OverlayMark) {
 			OverlayMark overlayCast = (OverlayMark) overlay;
 			
-			CreateParamsIndCache cache = new CreateParamsIndCache( overlayCast.getMark(), nrgStack );
-			
-			// Create a pair for each region map
-			 
-			for( FeatureWithRegionMap<?> f : featureList) {
-				listOut.add( cache.getOrCreate(f.getRegionMap()) );
-			}
+			CreateParamsInd cache = new CreateParamsInd( overlayCast.getMark(), nrgStack );
+			return cache.getOrCreate(
+				featureList.get(0).getRegionMap()
+			);
+
 		} else if (overlay instanceof OverlayObjMask) {
 			
 			OverlayObjMask overlayCast = (OverlayObjMask) overlay;
 			
-			CreateParamsIndFromObjMask createParams = new CreateParamsIndFromObjMask(overlayCast.getObjMask().getMask(), nrgStack);
-			
-			// We add the same createParams for each item in the feature list
-			for( int i=0; i<featureList.size(); i++) {
-				listOut.add( createParams );
-			}
+			return new CreateParamsIndFromObjMask(
+				overlayCast.getObjMask().getMask(),
+				nrgStack
+			);
 			
 		} else {
 			assert false;
+			return null;
 		}
 	}
 	
 	
-	public static void addForOverlayPair(
+	public static CreateParams<FeatureCalcParams> addForOverlayPair(
 		Pair<Overlay> pair,
 		NRGStackWithParams raster,
-		FeatureListWithRegionMap<?> featureList,
-		List<CreateParams<FeatureCalcParams>> listOut
+		FeatureListWithRegionMap<?> featureList
 	) {
 		if (pair.getSource() instanceof OverlayMark) {
 			assert(pair.getDestination() instanceof OverlayMark);
@@ -91,28 +83,25 @@ public class CreateParamsFromOverlay {
 			Mark source = ((OverlayMark) pair.getSource()).getMark();
 			Mark dest = ((OverlayMark) pair.getDestination()).getMark();
 			
-			CreateParamsPairCache cache = new CreateParamsPairCache(
+			CreateParamsPair cache = new CreateParamsPair(
 				source,
 				dest,
 				raster
 			);
-			
-			for( FeatureWithRegionMap<?> f : featureList) {
-				listOut.add( cache.getOrCreate(f.getRegionMap()) );
-			}
+			return cache.getOrCreate(featureList.get(0).getRegionMap());
 			
 		} else if (pair.getSource() instanceof OverlayObjMask ) {
 			
 			ObjMask source = ((OverlayObjMask) pair.getSource()).getObjMask().getMask();
 			ObjMask dest = ((OverlayObjMask) pair.getDestination()).getObjMask().getMask();
 			
-			CreateParamsPairFromObjMask createParams = new CreateParamsPairFromObjMask(source,dest,raster);
-			
-			for( int i=0; i<featureList.size(); i++) {
-				listOut.add( createParams );
-			}
-			
+			return new CreateParamsPairFromObjMask(
+				source,
+				dest,
+				raster
+			);
+		} else {
+			return null;
 		}
-		
 	}
 }
