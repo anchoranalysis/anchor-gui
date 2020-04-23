@@ -34,7 +34,7 @@ import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.reporter.ErrorReporter;
 import org.anchoranalysis.feature.bean.Feature;
 import org.anchoranalysis.feature.bean.list.FeatureList;
-import org.anchoranalysis.feature.calc.params.FeatureCalcParams;
+import org.anchoranalysis.feature.calc.params.FeatureInput;
 
 
 // FeatureValue
@@ -43,16 +43,16 @@ class FeatureValueNode extends FeatureListNode {
 	// The current value defining the feature (to be displayed to the user)
 	private String value;
 	
-	private Feature<FeatureCalcParams> parentFeature;
+	private Feature<FeatureInput> parentFeature;
 	private String errorText = "";
 	private Throwable error;
 	
 	private TreeNode parentNode;
 	
-	private FeatureList<FeatureCalcParams> childFeatures;
+	private FeatureList<FeatureInput> childFeatures;
 	
 	public FeatureValueNode(
-		Feature<FeatureCalcParams> parentFeature,
+		Feature<FeatureInput> parentFeature,
 		TreeNode parentNode,
 		ParamsSource params,
 		ErrorReporter errorReporter
@@ -80,9 +80,9 @@ class FeatureValueNode extends FeatureListNode {
 	}
 	
 	private static ParamsSource createChildParam(
-		Feature<FeatureCalcParams> parentFeature,
+		Feature<FeatureInput> parentFeature,
 		ParamsSource parentParams,
-		FeatureList<FeatureCalcParams> childFeatures
+		FeatureList<FeatureInput> childFeatures
 	) throws CreateException {
 		//try {
 			//return parentFeature.transformParams(parentParams, childFeature);
@@ -109,7 +109,7 @@ class FeatureValueNode extends FeatureListNode {
 	}
 	
 	@Override
-	public Feature<FeatureCalcParams> getFeature() {
+	public Feature<FeatureInput> getFeature() {
 		return parentFeature;
 	}
 

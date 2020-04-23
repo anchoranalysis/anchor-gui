@@ -31,12 +31,12 @@ import org.anchoranalysis.anchor.mpp.pxlmark.memo.PxlMarkMemo;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.feature.bean.Feature;
 import org.anchoranalysis.feature.calc.FeatureCalcException;
-import org.anchoranalysis.feature.calc.params.FeatureCalcParams;
+import org.anchoranalysis.feature.calc.params.FeatureInput;
 import org.anchoranalysis.feature.nrg.NRGStackWithParams;
 import org.anchoranalysis.feature.session.CreateParams;
 import org.anchoranalysis.gui.feature.evaluator.params.ParamsFactoryForFeature;
 
-public class CreateParamsIndFromRasterMark extends CreateParams<FeatureCalcParams> {
+public class CreateParamsIndFromRasterMark extends CreateParams<FeatureInput> {
 
 	private PxlMarkMemo pmm;
 	private NRGStackWithParams raster;
@@ -49,7 +49,7 @@ public class CreateParamsIndFromRasterMark extends CreateParams<FeatureCalcParam
 	}
 
 	@Override
-	public FeatureCalcParams createForFeature(Feature<?> feature) throws CreateException {
+	public FeatureInput createForFeature(Feature<?> feature) throws CreateException {
 		try {
 			return ParamsFactoryForFeature.factoryFor( feature ).create(pmm, raster);
 		} catch (FeatureCalcException e) {

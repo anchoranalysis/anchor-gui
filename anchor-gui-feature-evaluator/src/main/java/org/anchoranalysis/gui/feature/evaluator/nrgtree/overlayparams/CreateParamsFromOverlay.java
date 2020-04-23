@@ -32,7 +32,7 @@ import org.anchoranalysis.anchor.mpp.overlay.OverlayMark;
 import org.anchoranalysis.anchor.mpp.pair.Pair;
 import org.anchoranalysis.anchor.overlay.Overlay;
 import org.anchoranalysis.anchor.overlay.objmask.OverlayObjMask;
-import org.anchoranalysis.feature.calc.params.FeatureCalcParams;
+import org.anchoranalysis.feature.calc.params.FeatureInput;
 import org.anchoranalysis.feature.nrg.NRGStackWithParams;
 import org.anchoranalysis.feature.session.CreateParams;
 import org.anchoranalysis.gui.feature.FeatureListWithRegionMap;
@@ -42,7 +42,7 @@ import org.anchoranalysis.image.objmask.ObjMask;
 
 public class CreateParamsFromOverlay {
 
-	public static CreateParams<FeatureCalcParams> addForOverlay(
+	public static CreateParams<FeatureInput> addForOverlay(
 		Overlay overlay,
 		NRGStackWithParams nrgStack,
 		FeatureListWithRegionMap<?> featureList
@@ -72,7 +72,7 @@ public class CreateParamsFromOverlay {
 	}
 	
 	
-	public static CreateParams<FeatureCalcParams> addForOverlayPair(
+	public static CreateParams<FeatureInput> addForOverlayPair(
 		Pair<Overlay> pair,
 		NRGStackWithParams raster,
 		FeatureListWithRegionMap<?> featureList

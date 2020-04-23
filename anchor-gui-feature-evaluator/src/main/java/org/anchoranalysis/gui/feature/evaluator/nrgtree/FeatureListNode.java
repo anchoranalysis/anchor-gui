@@ -39,7 +39,7 @@ import org.anchoranalysis.core.error.reporter.ErrorReporter;
 import org.anchoranalysis.feature.bean.Feature;
 import org.anchoranalysis.feature.bean.list.FeatureList;
 import org.anchoranalysis.feature.calc.ResultsVector;
-import org.anchoranalysis.feature.calc.params.FeatureCalcParams;
+import org.anchoranalysis.feature.calc.params.FeatureInput;
 
 
 //
@@ -50,7 +50,7 @@ abstract class FeatureListNode extends Node {
 	/**
 	 * The child features of this particular node
 	 */
-	private FeatureList<FeatureCalcParams> childFeatures;
+	private FeatureList<FeatureInput> childFeatures;
 	
 	
 	private List<FeatureValueNode> calcList = null;
@@ -61,7 +61,7 @@ abstract class FeatureListNode extends Node {
 		this.errorReporter = errorReporter;
 	}
 	
-	protected void initChildFeatures(FeatureList<FeatureCalcParams> features, ParamsSource params ) {
+	protected void initChildFeatures(FeatureList<FeatureInput> features, ParamsSource params ) {
 		this.childFeatures = new FeatureList<>(features);
 		
 		// Sort out features in alphabetical order
@@ -121,7 +121,7 @@ abstract class FeatureListNode extends Node {
 	private void createAndAddNodes( ResultsVector rv, List<FeatureValueNode> listNodes, TreeNode parent ) throws CreateException {
 		for (int i=0; i<rv.length(); i++) {
 			
-			Feature<FeatureCalcParams> f = childFeatures.get(i);
+			Feature<FeatureInput> f = childFeatures.get(i);
 			assert(f!=null);
 			
 			FeatureValueNode node = new FeatureValueNode(
@@ -140,7 +140,7 @@ abstract class FeatureListNode extends Node {
 	// We update the immediate children, and all their children
 	private void updateNodes(
 		ResultsVector rv,
-		FeatureList<FeatureCalcParams> features,
+		FeatureList<FeatureInput> features,
 		List<FeatureValueNode> listNodes
 	) {
 		assert(rv.length()==features.size());
@@ -202,7 +202,7 @@ abstract class FeatureListNode extends Node {
 		return childFeatures.size()==0;
 	}
 
-	protected FeatureList<FeatureCalcParams> getFeatures() {
+	protected FeatureList<FeatureInput> getFeatures() {
 		return childFeatures;
 	}
 
@@ -213,14 +213,14 @@ abstract class FeatureListNode extends Node {
 	
 	/** Calculates with different parameters for every feature. No cache invalidation is occuring here. TODO Fix */
 	private static ResultsVector calcSubsetSuppressErrors(
-		FeatureList<FeatureCalcParams> features,
+		FeatureList<FeatureInput> features,
 		ParamsSource params,
 		ErrorReporter errorReporter
 	) {
 		ResultsVector res = new ResultsVector( features.size() );
 
 		for( int i=0; i<features.size(); i++) {
-			Feature<FeatureCalcParams> f = features.get(i);
+			Feature<FeatureInput> f = features.get(i);
 			
 			try {
 				res.set(

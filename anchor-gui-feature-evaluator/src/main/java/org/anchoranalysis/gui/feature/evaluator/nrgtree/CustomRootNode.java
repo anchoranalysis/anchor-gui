@@ -32,7 +32,7 @@ import javax.swing.tree.TreeNode;
 import org.anchoranalysis.core.error.reporter.ErrorReporter;
 import org.anchoranalysis.feature.bean.Feature;
 import org.anchoranalysis.feature.bean.list.FeatureList;
-import org.anchoranalysis.feature.calc.params.FeatureCalcParams;
+import org.anchoranalysis.feature.calc.params.FeatureInput;
 
 
 class CustomRootNode extends FeatureListNode {
@@ -43,7 +43,7 @@ class CustomRootNode extends FeatureListNode {
 	}
 	
 	public void replaceFeatureList(
-		FeatureList<FeatureCalcParams> featureList,
+		FeatureList<FeatureInput> featureList,
 		ParamsSource params
 	) {
 		getFeatures().clear();
@@ -66,7 +66,7 @@ class CustomRootNode extends FeatureListNode {
 	}
 
 	@Override
-	public Feature<FeatureCalcParams> getFeature() {
+	public Feature<FeatureInput> getFeature() {
 		return null;
 	}
 

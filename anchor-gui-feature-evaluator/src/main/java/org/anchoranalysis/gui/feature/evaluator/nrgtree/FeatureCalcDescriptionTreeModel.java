@@ -36,11 +36,11 @@ import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.log.LogErrorReporter;
 import org.anchoranalysis.feature.bean.list.FeatureList;
 import org.anchoranalysis.feature.calc.FeatureCalcException;
-import org.anchoranalysis.feature.calc.params.FeatureCalcParams;
+import org.anchoranalysis.feature.calc.params.FeatureInput;
 import org.anchoranalysis.feature.init.FeatureInitParams;
 import org.anchoranalysis.feature.nrg.NRGStackWithParams;
 import org.anchoranalysis.feature.session.CreateParams;
-import org.anchoranalysis.feature.session.SessionFactory;
+import org.anchoranalysis.feature.session.FeatureSession;
 import org.anchoranalysis.feature.session.calculator.FeatureCalculatorMulti;
 import org.anchoranalysis.feature.shared.SharedFeatureSet;
 import org.anchoranalysis.gui.feature.FeatureListWithRegionMap;
@@ -54,21 +54,21 @@ public class FeatureCalcDescriptionTreeModel extends DefaultTreeModel implements
 	 */
 	private static final long serialVersionUID = -5795973516009041187L;
 
-	private FeatureListWithRegionMap<FeatureCalcParams> featureListWithRegions;
-	private FeatureList<FeatureCalcParams> featureList;
+	private FeatureListWithRegionMap<FeatureInput> featureListWithRegions;
+	private FeatureList<FeatureInput> featureList;
 	
 	private LogErrorReporter logErrorReporter;
-	private SharedFeatureSet<FeatureCalcParams> sharedFeatures;
+	private SharedFeatureSet<FeatureInput> sharedFeatures;
 	
-	private FeatureCalculatorMulti<FeatureCalcParams> session = null;
+	private FeatureCalculatorMulti<FeatureInput> session = null;
 	
 	//private static Log log = LogFactory.getLog(FeatureCalcDescriptionTreeModel.class);
 	
 	private boolean first = true;
 	
 	public FeatureCalcDescriptionTreeModel(
-		FeatureListWithRegionMap<FeatureCalcParams> featureListWithRegions,
-		SharedFeatureSet<FeatureCalcParams> sharedFeatures,
+		FeatureListWithRegionMap<FeatureInput> featureListWithRegions,
+		SharedFeatureSet<FeatureInput> sharedFeatures,
 		LogErrorReporter logErrorReporter
 	) {
 		super( null );
@@ -107,7 +107,7 @@ public class FeatureCalcDescriptionTreeModel extends DefaultTreeModel implements
 				return;
 			}
 			
-			CreateParams<FeatureCalcParams> createParams = CreateParamsFromOverlay.addForOverlay(
+			CreateParams<FeatureInput> createParams = CreateParamsFromOverlay.addForOverlay(
 				overlay,
 				nrgStack,
 				featureListWithRegions
@@ -135,7 +135,7 @@ public class FeatureCalcDescriptionTreeModel extends DefaultTreeModel implements
 				return;
 			}
 			
-			CreateParams<FeatureCalcParams> createParams = CreateParamsFromOverlay.addForOverlayPair(
+			CreateParams<FeatureInput> createParams = CreateParamsFromOverlay.addForOverlayPair(
 				pair,
 				nrgStack,
 				featureListWithRegions
@@ -153,8 +153,8 @@ public class FeatureCalcDescriptionTreeModel extends DefaultTreeModel implements
 	}
 	
 	private void updateOrReload(
-		FeatureList<FeatureCalcParams> featureList,
-		CreateParams<FeatureCalcParams> createParams,
+		FeatureList<FeatureInput> featureList,
+		CreateParams<FeatureInput> createParams,
 		NRGStackWithParams nrgStack
 	) throws OperationFailedException {
 		
@@ -167,7 +167,7 @@ public class FeatureCalcDescriptionTreeModel extends DefaultTreeModel implements
 				// Later on, both the features in featureList and various dependent features will be called through Subsessions
 				//   so we rely on these dependent features being initialised through session.start() as the initialization
 				//   procedure is recursive
-				session = SessionFactory.createAndStart(
+				session = FeatureSession.with(
 					featureList,
 					paramsInit,
 					sharedFeatures,
@@ -199,11 +199,11 @@ public class FeatureCalcDescriptionTreeModel extends DefaultTreeModel implements
 
 	/** Removes features from shared, which also exist in the FeatureList, as they should
 	 *  not be in both */
-	private static SharedFeatureSet<FeatureCalcParams> removeFeaturesFromShared(
-		SharedFeatureSet<FeatureCalcParams> sharedFeatures,
-		FeatureList<FeatureCalcParams> featureList
+	private static SharedFeatureSet<FeatureInput> removeFeaturesFromShared(
+		SharedFeatureSet<FeatureInput> sharedFeatures,
+		FeatureList<FeatureInput> featureList
 	) {
-		SharedFeatureSet<FeatureCalcParams> dup = sharedFeatures.duplicate();
+		SharedFeatureSet<FeatureInput> dup = sharedFeatures.duplicate();
 		dup.removeIfExists(featureList);
 		return dup;
 	}

@@ -40,7 +40,7 @@ import org.anchoranalysis.core.log.LogErrorReporter;
 import org.anchoranalysis.core.name.store.SharedObjects;
 import org.anchoranalysis.core.progress.ProgressReporter;
 import org.anchoranalysis.feature.bean.list.FeatureListProvider;
-import org.anchoranalysis.feature.calc.params.FeatureCalcParams;
+import org.anchoranalysis.feature.calc.params.FeatureInput;
 import org.anchoranalysis.feature.shared.SharedFeaturesInitParams;
 import org.anchoranalysis.gui.feature.evaluator.treetable.FeatureListSrc;
 import org.anchoranalysis.gui.interactivebrowser.IOpenFile;
@@ -65,7 +65,7 @@ public class FileFeatureEvaluatorCreator extends FileCreator {
 	
 	// START BEAN PROPERTIES
 	@BeanField @NonEmpty
-	private List<NamedBean<FeatureListProvider<FeatureCalcParams>>> listFeatures = new ArrayList<>();
+	private List<NamedBean<FeatureListProvider<FeatureInput>>> listFeatures = new ArrayList<>();
 	
 	@BeanField @OptionalBean
 	private NRGSchemeCreator nrgSchemeCreator;
@@ -101,7 +101,7 @@ public class FileFeatureEvaluatorCreator extends FileCreator {
 	
 	private FeatureListSrc createSrc( LogErrorReporter logger ) throws CreateException {
 		
-		FeatureListSrcBuilder<FeatureCalcParams> builder = new FeatureListSrcBuilder<>(logger); 
+		FeatureListSrcBuilder<FeatureInput> builder = new FeatureListSrcBuilder<>(logger); 
 		
 		return builder.build(
 			createInitParams(logger),
@@ -124,11 +124,11 @@ public class FileFeatureEvaluatorCreator extends FileCreator {
 		return soFeature;
 	}
 
-	public List<NamedBean<FeatureListProvider<FeatureCalcParams>>> getListFeatures() {
+	public List<NamedBean<FeatureListProvider<FeatureInput>>> getListFeatures() {
 		return listFeatures;
 	}
 
-	public void setListFeatures(List<NamedBean<FeatureListProvider<FeatureCalcParams>>> listFeatures) {
+	public void setListFeatures(List<NamedBean<FeatureListProvider<FeatureInput>>> listFeatures) {
 		this.listFeatures = listFeatures;
 	}
 

@@ -3,8 +3,8 @@ package org.anchoranalysis.gui.interactivebrowser.input;
 import org.anchoranalysis.anchor.mpp.bean.regionmap.RegionMap;
 import org.anchoranalysis.anchor.mpp.feature.bean.nrgscheme.NRGScheme;
 import org.anchoranalysis.anchor.mpp.feature.bean.nrgscheme.NRGSchemeCreator;
-import org.anchoranalysis.anchor.mpp.feature.nrg.elem.NRGElemIndCalcParams;
-import org.anchoranalysis.anchor.mpp.feature.nrg.elem.NRGElemPairCalcParams;
+import org.anchoranalysis.anchor.mpp.feature.input.memo.FeatureInputPairMemo;
+import org.anchoranalysis.anchor.mpp.feature.input.memo.FeatureInputSingleMemo;
 import org.anchoranalysis.anchor.mpp.feature.nrg.scheme.NamedNRGSchemeSet;
 import org.anchoranalysis.anchor.mpp.regionmap.RegionMapSingleton;
 
@@ -42,7 +42,7 @@ import org.anchoranalysis.core.name.store.NamedProviderStore;
 import org.anchoranalysis.feature.bean.Feature;
 import org.anchoranalysis.feature.bean.list.FeatureList;
 import org.anchoranalysis.feature.calc.FeatureCalcException;
-import org.anchoranalysis.feature.calc.params.FeatureCalcParams;
+import org.anchoranalysis.feature.calc.params.FeatureInput;
 import org.anchoranalysis.feature.shared.SharedFeaturesInitParams;
 import org.anchoranalysis.gui.feature.evaluator.params.FeatureCalcParamsFactory;
 import org.anchoranalysis.gui.feature.evaluator.params.ParamsFactoryForFeature;
@@ -51,7 +51,7 @@ import org.anchoranalysis.gui.feature.evaluator.treetable.FeatureListSrc;
 import org.anchoranalysis.gui.feature.evaluator.treetable.KeyValueParamsAugmenter;
 import org.anchoranalysis.feature.shared.SharedFeatureSet;
 
-public class FeatureListSrcBuilder<T extends FeatureCalcParams> {
+public class FeatureListSrcBuilder<T extends FeatureInput> {
 
 	private LogErrorReporter logErrorReporter;
 		
@@ -123,19 +123,19 @@ public class FeatureListSrcBuilder<T extends FeatureCalcParams> {
 		return nrgSchemeCreator.create();
 	}
 	
-	private void addFromStore( NamedNRGSchemeSet nrgElemSet, NamedProviderStore<FeatureList<FeatureCalcParams>> store, RegionMap regionMap ) {
+	private void addFromStore( NamedNRGSchemeSet nrgElemSet, NamedProviderStore<FeatureList<FeatureInput>> store, RegionMap regionMap ) {
 
 		// Add each feature-list to the scheme, separating into unary and pairwise terms
 		for (String key : store.keys()) {
 			try {
-				FeatureList<FeatureCalcParams> fl = store.getException(key);
+				FeatureList<FeatureInput> fl = store.getException(key);
 				
 				// Put this in there, to get rid of error. Unsure why. It should go in refactoring when FeatureSessions are properly implemented
 				//fl.init( new FeatureInitParams(soFeature.getSharedFeatureSet(), soFeature.getCachedCalculationList()) );
 				
 				// Determines which features belong in the Unary part of the NRGScheme, and which in the Pairwise part
-				FeatureList<NRGElemIndCalcParams> outUnary = new FeatureList<>();
-				FeatureList<NRGElemPairCalcParams> outPairwise = new FeatureList<>();
+				FeatureList<FeatureInputSingleMemo> outUnary = new FeatureList<>();
+				FeatureList<FeatureInputPairMemo> outPairwise = new FeatureList<>();
 				determineUnaryPairwiseFeatures( fl, outUnary, outPairwise );
 				
 				nrgElemSet.add(key, new NRGScheme(outUnary, outPairwise, regionMap ) );
@@ -148,9 +148,9 @@ public class FeatureListSrcBuilder<T extends FeatureCalcParams> {
 		}
 	}
 	
-	private void determineUnaryPairwiseFeatures( FeatureList<FeatureCalcParams> in, FeatureList<NRGElemIndCalcParams> outUnary, FeatureList<NRGElemPairCalcParams> outPairwise ) throws FeatureCalcException {
+	private void determineUnaryPairwiseFeatures( FeatureList<FeatureInput> in, FeatureList<FeatureInputSingleMemo> outUnary, FeatureList<FeatureInputPairMemo> outPairwise ) throws FeatureCalcException {
 		
-		for( Feature<FeatureCalcParams> f : in ) {
+		for( Feature<FeatureInput> f : in ) {
 			
 			FeatureCalcParamsFactory factory = ParamsFactoryForFeature.factoryFor(f);
 			

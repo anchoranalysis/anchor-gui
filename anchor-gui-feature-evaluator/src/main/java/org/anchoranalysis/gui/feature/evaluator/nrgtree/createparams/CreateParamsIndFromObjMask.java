@@ -28,25 +28,25 @@ package org.anchoranalysis.gui.feature.evaluator.nrgtree.createparams;
 
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.feature.bean.Feature;
-import org.anchoranalysis.feature.calc.params.FeatureCalcParams;
+import org.anchoranalysis.feature.calc.params.FeatureInput;
 import org.anchoranalysis.feature.nrg.NRGStackWithParams;
 import org.anchoranalysis.feature.session.CreateParams;
-import org.anchoranalysis.image.feature.objmask.FeatureObjMaskParams;
+import org.anchoranalysis.image.feature.objmask.FeatureInputSingleObj;
 import org.anchoranalysis.image.objmask.ObjMask;
 
-public class CreateParamsIndFromObjMask extends CreateParams<FeatureCalcParams> {
+public class CreateParamsIndFromObjMask extends CreateParams<FeatureInput> {
 
-	private FeatureObjMaskParams params;
+	private FeatureInputSingleObj params;
 	
 	public CreateParamsIndFromObjMask(ObjMask objMask,
 			NRGStackWithParams nrgStack) {
 		super();
-		params = new FeatureObjMaskParams( objMask );
+		params = new FeatureInputSingleObj( objMask );
 		params.setNrgStack(nrgStack);
 	}
 
 	@Override
-	public FeatureCalcParams createForFeature(Feature<?> feature)
+	public FeatureInput createForFeature(Feature<?> feature)
 			throws CreateException {
 		return params;
 	}

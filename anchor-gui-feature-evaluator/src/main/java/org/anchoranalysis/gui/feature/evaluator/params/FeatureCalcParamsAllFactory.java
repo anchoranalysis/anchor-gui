@@ -29,19 +29,19 @@ import org.anchoranalysis.anchor.mpp.pxlmark.memo.PxlMarkMemo;
  */
 
 import org.anchoranalysis.core.error.CreateException;
-import org.anchoranalysis.feature.calc.params.FeatureCalcParams;
+import org.anchoranalysis.feature.calc.params.FeatureInput;
 import org.anchoranalysis.feature.nrg.NRGStackWithParams;
 
 public abstract class FeatureCalcParamsAllFactory extends FeatureCalcParamsFactory {
 
 	@Override
-	public FeatureCalcParams create(PxlMarkMemo pmm, NRGStackWithParams raster)
+	public FeatureInput create(PxlMarkMemo pmm, NRGStackWithParams raster)
 			throws CreateException {
 		throw new CreateException("unsupported");
 	}
 
 	@Override
-	public FeatureCalcParams create(PxlMarkMemo pmm1, PxlMarkMemo pmm2,	NRGStackWithParams raster) throws CreateException {
+	public FeatureInput create(PxlMarkMemo pmm1, PxlMarkMemo pmm2,	NRGStackWithParams raster) throws CreateException {
 		throw new CreateException("unsupported");
 	}
 

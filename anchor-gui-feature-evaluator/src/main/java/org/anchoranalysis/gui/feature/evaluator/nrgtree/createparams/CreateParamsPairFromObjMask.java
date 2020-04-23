@@ -28,15 +28,15 @@ package org.anchoranalysis.gui.feature.evaluator.nrgtree.createparams;
 
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.feature.bean.Feature;
-import org.anchoranalysis.feature.calc.params.FeatureCalcParams;
+import org.anchoranalysis.feature.calc.params.FeatureInput;
 import org.anchoranalysis.feature.nrg.NRGStackWithParams;
 import org.anchoranalysis.feature.session.CreateParams;
-import org.anchoranalysis.image.feature.objmask.pair.merged.FeatureObjMaskPairMergedParams;
+import org.anchoranalysis.image.feature.objmask.pair.merged.FeatureInputPairObjsMerged;
 import org.anchoranalysis.image.objmask.ObjMask;
 
-public class CreateParamsPairFromObjMask extends CreateParams<FeatureCalcParams> {
+public class CreateParamsPairFromObjMask extends CreateParams<FeatureInput> {
 	
-	private FeatureObjMaskPairMergedParams params;
+	private FeatureInputPairObjsMerged params;
 	
 	public CreateParamsPairFromObjMask(ObjMask om1, ObjMask om2,
 			NRGStackWithParams raster) {
@@ -45,12 +45,12 @@ public class CreateParamsPairFromObjMask extends CreateParams<FeatureCalcParams>
 		// We make the params here, so the same object is always returned. This avoids needless creation of params
 		//   and as FeatureObjMaskPairMergedParams does a lazy-evaluation of the merged-object. It also caches
 		//  this operation so it's not repeated needlessly for each feature
-		params = new FeatureObjMaskPairMergedParams( om1, om2 );
+		params = new FeatureInputPairObjsMerged( om1, om2 );
 		params.setNrgStack(raster);
 	}
 
 	@Override
-	public FeatureCalcParams createForFeature(Feature<?> feature) throws CreateException {
+	public FeatureInput createForFeature(Feature<?> feature) throws CreateException {
 		return params;
 	}
 }

@@ -1,8 +1,8 @@
 package org.anchoranalysis.gui.feature.evaluator.treetable;
 
-import org.anchoranalysis.anchor.mpp.feature.nrg.elem.NRGElemAllCalcParams;
-import org.anchoranalysis.anchor.mpp.feature.nrg.elem.NRGElemIndCalcParams;
-import org.anchoranalysis.anchor.mpp.feature.nrg.elem.NRGElemPairCalcParams;
+import org.anchoranalysis.anchor.mpp.feature.input.memo.FeatureInputAllMemo;
+import org.anchoranalysis.anchor.mpp.feature.input.memo.FeatureInputPairMemo;
+import org.anchoranalysis.anchor.mpp.feature.input.memo.FeatureInputSingleMemo;
 import org.anchoranalysis.anchor.mpp.feature.nrg.scheme.NamedNRGSchemeSet;
 
 /*-
@@ -32,7 +32,7 @@ import org.anchoranalysis.anchor.mpp.feature.nrg.scheme.NamedNRGSchemeSet;
  */
 
 import org.anchoranalysis.core.error.OperationFailedException;
-import org.anchoranalysis.feature.calc.params.FeatureCalcParamsNRGStack;
+import org.anchoranalysis.feature.calc.params.FeatureInputNRGStack;
 import org.anchoranalysis.feature.nrg.NRGStackWithParams;
 import org.anchoranalysis.feature.shared.SharedFeatureSet;
 import org.anchoranalysis.gui.feature.FeatureListUtilities;
@@ -59,7 +59,7 @@ public class ExtractFromNamedNRGSchemeSet extends FeatureListSrc {
 	}
 		
 	@Override
-	public FeatureListWithRegionMap<NRGElemIndCalcParams> createInd() {
+	public FeatureListWithRegionMap<FeatureInputSingleMemo> createInd() {
 		return FeatureListUtilities.createFeatureList(
 			src,
 			nrgScheme -> nrgScheme.getElemIndAsFeatureList(),
@@ -68,7 +68,7 @@ public class ExtractFromNamedNRGSchemeSet extends FeatureListSrc {
 	}
 
 	@Override
-	public FeatureListWithRegionMap<NRGElemPairCalcParams> createPair() {
+	public FeatureListWithRegionMap<FeatureInputPairMemo> createPair() {
 		return FeatureListUtilities.createFeatureList(
 			src,
 			nrgScheme -> nrgScheme.getElemPairAsFeatureList(),
@@ -77,7 +77,7 @@ public class ExtractFromNamedNRGSchemeSet extends FeatureListSrc {
 	}
 
 	@Override
-	public FeatureListWithRegionMap<NRGElemAllCalcParams> createAll() {
+	public FeatureListWithRegionMap<FeatureInputAllMemo> createAll() {
 		return FeatureListUtilities.createFeatureList(
 			src,
 			nrgScheme -> nrgScheme.getElemAllAsFeatureList(),
@@ -86,7 +86,7 @@ public class ExtractFromNamedNRGSchemeSet extends FeatureListSrc {
 	}
 
 	@Override
-	public SharedFeatureSet<FeatureCalcParamsNRGStack> sharedFeatures() {
+	public SharedFeatureSet<FeatureInputNRGStack> sharedFeatures() {
 		return src.getSharedFeatures();
 	}
 

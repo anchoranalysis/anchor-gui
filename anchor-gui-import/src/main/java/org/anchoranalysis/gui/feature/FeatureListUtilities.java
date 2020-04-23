@@ -37,7 +37,7 @@ import org.anchoranalysis.bean.NamedBean;
 import org.anchoranalysis.feature.bean.Feature;
 import org.anchoranalysis.feature.bean.list.FeatureList;
 import org.anchoranalysis.feature.bean.operator.Sum;
-import org.anchoranalysis.feature.calc.params.FeatureCalcParams;
+import org.anchoranalysis.feature.calc.params.FeatureInput;
 
 public class FeatureListUtilities {
 
@@ -51,7 +51,7 @@ public class FeatureListUtilities {
 	 * @param includeLastExecution
 	 * @return
 	 */
-	public static <T extends FeatureCalcParams> FeatureListWithRegionMap<T> createFeatureList(
+	public static <T extends FeatureInput> FeatureListWithRegionMap<T> createFeatureList(
 		NamedNRGSchemeSet elemSet,
 		Function<NRGScheme,FeatureList<T>> funcExtractList,
 		boolean includeLastExecution
@@ -97,7 +97,7 @@ public class FeatureListUtilities {
 		return featureList;
 	}
 	
-	private static <T extends FeatureCalcParams> Feature<T> sumFeatures( FeatureList<T> extractedList,	String name ) {
+	private static <T extends FeatureInput> Feature<T> sumFeatures( FeatureList<T> extractedList,	String name ) {
 		Sum<T> rootFeature = new Sum<>();
 		rootFeature.setList( extractedList );
 		rootFeature.setCustomName(name);

@@ -1,6 +1,6 @@
 package org.anchoranalysis.gui.feature.evaluator.params;
 
-import org.anchoranalysis.anchor.mpp.feature.mark.MemoMarks;
+import org.anchoranalysis.anchor.mpp.feature.mark.MemoCollection;
 import org.anchoranalysis.anchor.mpp.pxlmark.memo.PxlMarkMemo;
 
 /*-
@@ -30,16 +30,16 @@ import org.anchoranalysis.anchor.mpp.pxlmark.memo.PxlMarkMemo;
  */
 
 import org.anchoranalysis.core.error.CreateException;
-import org.anchoranalysis.feature.calc.params.FeatureCalcParams;
+import org.anchoranalysis.feature.calc.params.FeatureInput;
 import org.anchoranalysis.feature.nrg.NRGStackWithParams;
 
 public abstract class FeatureCalcParamsFactory {
 
-	public abstract FeatureCalcParams create( PxlMarkMemo pmm, NRGStackWithParams raster ) throws CreateException;
+	public abstract FeatureInput create( PxlMarkMemo pmm, NRGStackWithParams raster ) throws CreateException;
 
-	public abstract FeatureCalcParams create( PxlMarkMemo pmm1, PxlMarkMemo pmm2, NRGStackWithParams raster ) throws CreateException;
+	public abstract FeatureInput create( PxlMarkMemo pmm1, PxlMarkMemo pmm2, NRGStackWithParams raster ) throws CreateException;
 	
-	public abstract FeatureCalcParams create( MemoMarks pmmhList, NRGStackWithParams raster ) throws CreateException;
+	public abstract FeatureInput create( MemoCollection pmmhList, NRGStackWithParams raster ) throws CreateException;
 	
 	public abstract boolean isPairwiseSupported();
 	

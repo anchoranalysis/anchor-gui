@@ -4,24 +4,24 @@ import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.feature.bean.Feature;
 import org.anchoranalysis.feature.bean.list.FeatureList;
 import org.anchoranalysis.feature.calc.FeatureCalcException;
-import org.anchoranalysis.feature.calc.params.FeatureCalcParams;
+import org.anchoranalysis.feature.calc.params.FeatureInput;
 import org.anchoranalysis.feature.session.CreateParams;
 import org.anchoranalysis.feature.session.calculator.FeatureCalculatorMulti;
 
 public class ParamsSource {
 
-	private CreateParams<FeatureCalcParams> createParams;
-	private FeatureCalculatorMulti<FeatureCalcParams> featureCalculator;
+	private CreateParams<FeatureInput> createParams;
+	private FeatureCalculatorMulti<FeatureInput> featureCalculator;
 
-	public ParamsSource(CreateParams<FeatureCalcParams> createParams, FeatureCalculatorMulti<FeatureCalcParams> featureCalculator) {
+	public ParamsSource(CreateParams<FeatureInput> createParams, FeatureCalculatorMulti<FeatureInput> featureCalculator) {
 		super();
 		this.createParams = createParams;
 		this.featureCalculator = featureCalculator;
 	}
 
-	public double calc(Feature<FeatureCalcParams> feature) throws FeatureCalcException {
+	public double calc(Feature<FeatureInput> feature) throws FeatureCalcException {
 		try {
-			FeatureCalcParams params = createParams.createForFeature(feature);
+			FeatureInput params = createParams.createForFeature(feature);
 			return featureCalculator.calc(params, new FeatureList<>(feature)).get(0);
 			
 		} catch (CreateException e) {
