@@ -36,9 +36,9 @@ import org.anchoranalysis.anchor.mpp.regionmap.RegionMapSingleton;
 
 import org.anchoranalysis.feature.bean.Feature;
 import org.anchoranalysis.feature.calc.FeatureCalcException;
-import org.anchoranalysis.feature.calc.params.FeatureInputGenericDescriptor;
-import org.anchoranalysis.feature.calc.params.FeatureInputParamsDescriptor;
-import org.anchoranalysis.feature.params.FeatureInputDescriptor;
+import org.anchoranalysis.feature.input.descriptor.FeatureInputDescriptor;
+import org.anchoranalysis.feature.input.descriptor.FeatureInputGenericDescriptor;
+import org.anchoranalysis.feature.input.descriptor.FeatureInputParamsDescriptor;
 import org.anchoranalysis.feature.resultsvectorcollection.FeatureInputResultsDescriptor;
 import org.anchoranalysis.image.feature.histogram.FeatureInputHistogramDescriptor;
 import org.anchoranalysis.image.feature.objmask.FeatureInputSingleObjDescriptor;

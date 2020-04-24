@@ -40,7 +40,7 @@ import org.anchoranalysis.core.log.LogErrorReporter;
 import org.anchoranalysis.core.name.store.SharedObjects;
 import org.anchoranalysis.core.progress.ProgressReporter;
 import org.anchoranalysis.feature.bean.list.FeatureListProvider;
-import org.anchoranalysis.feature.calc.params.FeatureInput;
+import org.anchoranalysis.feature.input.FeatureInput;
 import org.anchoranalysis.feature.shared.SharedFeaturesInitParams;
 import org.anchoranalysis.gui.feature.evaluator.treetable.FeatureListSrc;
 import org.anchoranalysis.gui.interactivebrowser.IOpenFile;

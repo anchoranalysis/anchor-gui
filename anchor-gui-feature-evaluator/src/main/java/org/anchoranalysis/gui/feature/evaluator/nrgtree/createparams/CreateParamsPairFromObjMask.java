@@ -28,7 +28,7 @@ package org.anchoranalysis.gui.feature.evaluator.nrgtree.createparams;
 
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.feature.bean.Feature;
-import org.anchoranalysis.feature.calc.params.FeatureInput;
+import org.anchoranalysis.feature.input.FeatureInput;
 import org.anchoranalysis.feature.nrg.NRGStackWithParams;
 import org.anchoranalysis.feature.session.CreateParams;
 import org.anchoranalysis.image.feature.objmask.pair.merged.FeatureInputPairObjsMerged;

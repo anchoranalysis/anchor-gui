@@ -30,8 +30,8 @@ import org.anchoranalysis.anchor.mpp.pxlmark.memo.PxlMarkMemo;
  */
 
 import org.anchoranalysis.core.error.CreateException;
-import org.anchoranalysis.feature.calc.params.FeatureInput;
-import org.anchoranalysis.feature.calc.params.FeatureInputNull;
+import org.anchoranalysis.feature.input.FeatureInput;
+import org.anchoranalysis.feature.input.FeatureInputNull;
 import org.anchoranalysis.feature.nrg.NRGStackWithParams;
 
 public class NullParamsFactory extends FeatureCalcParamsFactory {

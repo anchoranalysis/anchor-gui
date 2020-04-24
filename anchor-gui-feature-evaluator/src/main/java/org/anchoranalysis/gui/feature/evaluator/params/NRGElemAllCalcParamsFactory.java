@@ -30,7 +30,7 @@ import org.anchoranalysis.anchor.mpp.feature.mark.MemoCollection;
  */
 
 import org.anchoranalysis.core.error.CreateException;
-import org.anchoranalysis.feature.calc.params.FeatureInput;
+import org.anchoranalysis.feature.input.FeatureInput;
 import org.anchoranalysis.feature.nrg.NRGStackWithParams;
 
 public class NRGElemAllCalcParamsFactory extends FeatureCalcParamsAllFactory {

@@ -34,7 +34,7 @@ import org.anchoranalysis.anchor.mpp.bean.regionmap.RegionMap;
 import org.anchoranalysis.anchor.mpp.mark.Mark;
 import org.anchoranalysis.anchor.mpp.pxlmark.memo.PxlMarkMemo;
 import org.anchoranalysis.anchor.mpp.pxlmark.memo.PxlMarkMemoFactory;
-import org.anchoranalysis.feature.calc.params.FeatureInput;
+import org.anchoranalysis.feature.input.FeatureInput;
 import org.anchoranalysis.feature.nrg.NRGStackWithParams;
 import org.anchoranalysis.feature.session.CreateParams;
 import org.anchoranalysis.gui.feature.evaluator.nrgtree.createparams.CreateParamsIndFromRasterMark;

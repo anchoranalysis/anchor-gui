@@ -30,7 +30,7 @@ package org.anchoranalysis.gui.feature.evaluator.nrgtree;
 import javax.swing.tree.TreeNode;
 
 import org.anchoranalysis.feature.bean.Feature;
-import org.anchoranalysis.feature.calc.params.FeatureInput;
+import org.anchoranalysis.feature.input.FeatureInput;
 
 
 public abstract class Node implements TreeNode {
