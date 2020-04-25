@@ -1,5 +1,7 @@
 package org.anchoranalysis.gui.feature.evaluator.params;
 
+import java.util.Optional;
+
 import org.anchoranalysis.anchor.mpp.feature.input.memo.FeatureInputSingleMemo;
 import org.anchoranalysis.anchor.mpp.pxlmark.memo.PxlMarkMemo;
 
@@ -38,6 +40,9 @@ public class NRGElemIndCalcParamsFactory extends FeatureCalcParamsUnaryFactory {
 	@Override
 	public FeatureInput create(PxlMarkMemo pmm, NRGStackWithParams raster)
 			throws CreateException {
-		return new FeatureInputSingleMemo(pmm, raster);
+		return new FeatureInputSingleMemo(
+			pmm,
+			Optional.of(raster)
+		);
 	}
 }

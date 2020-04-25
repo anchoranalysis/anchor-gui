@@ -38,7 +38,11 @@ public class FeatureMarkParamsFactory extends FeatureCalcParamsUnaryFactory {
 	@Override
 	public FeatureInput create(PxlMarkMemo pmm, NRGStackWithParams raster)
 			throws CreateException {
-		return new FeatureInputMark(pmm.getMark(), raster.getDimensions().getRes(),raster.getParams());
+		return new FeatureInputMark(
+			pmm.getMark(),
+			raster.getDimensions().getRes(),
+			raster.getParams()
+		);
 	}
 	
 }
