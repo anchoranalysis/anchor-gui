@@ -35,7 +35,6 @@ import java.util.Set;
 import java.util.TreeSet;
 
 import org.anchoranalysis.bean.shared.StringMap;
-import org.anchoranalysis.core.cache.ExecuteException;
 import org.anchoranalysis.core.error.reporter.ErrorReporter;
 import org.anchoranalysis.core.progress.OperationWithProgressReporter;
 import org.anchoranalysis.core.progress.ProgressReporterNull;
@@ -44,11 +43,15 @@ import org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.IGetNames;
 
 class NamesFromMap implements IGetNames {
 
-	private OperationWithProgressReporter<BackgroundSet> backgroundSet;
+	private OperationWithProgressReporter<BackgroundSet,? extends Throwable> backgroundSet;
 	private ErrorReporter errorReporter;
 	private StringMap map;
 	
-	public NamesFromMap(StringMap map, OperationWithProgressReporter<BackgroundSet> backgroundSet, ErrorReporter errorReporter) {
+	public NamesFromMap(
+		StringMap map,
+		OperationWithProgressReporter<BackgroundSet,? extends Throwable> backgroundSet,
+		ErrorReporter errorReporter
+	) {
 		super();
 		this.backgroundSet = backgroundSet;
 		this.errorReporter = errorReporter;
@@ -66,7 +69,7 @@ class NamesFromMap implements IGetNames {
 				createdSortedSet(mapping, backgroundNames)
 			);
 			
-		} catch (ExecuteException e) {
+		} catch (Throwable e) {
 			errorReporter.recordError(NamesFromMap.class, e);
 			return new ArrayList<>();
 		}

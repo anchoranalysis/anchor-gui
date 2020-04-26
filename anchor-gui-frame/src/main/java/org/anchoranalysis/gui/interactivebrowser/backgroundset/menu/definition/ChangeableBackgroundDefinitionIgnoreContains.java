@@ -30,6 +30,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.anchoranalysis.core.error.reporter.ErrorReporter;
+import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.progress.OperationWithProgressReporter;
 import org.anchoranalysis.gui.backgroundset.BackgroundSet;
 import org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.IGetNames;
@@ -46,7 +47,7 @@ public class ChangeableBackgroundDefinitionIgnoreContains extends ChangeableBack
 	}
 
 	@Override
-	public void update(OperationWithProgressReporter<BackgroundSet> backgroundSet) {
+	public void update(OperationWithProgressReporter<BackgroundSet,GetOperationFailedException> backgroundSet) {
 		background.update(backgroundSet);
 	}
 

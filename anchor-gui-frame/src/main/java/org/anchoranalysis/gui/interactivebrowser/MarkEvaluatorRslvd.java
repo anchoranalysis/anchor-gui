@@ -30,7 +30,7 @@ import org.anchoranalysis.anchor.mpp.feature.bean.nrgscheme.NRGScheme;
  */
 
 
-import org.anchoranalysis.core.cache.ExecuteException;
+import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.params.KeyValueParams;
 import org.anchoranalysis.feature.nrg.NRGStackWithParams;
@@ -69,7 +69,7 @@ public class MarkEvaluatorRslvd {
 	public NRGStackWithParams getNRGStack() throws GetOperationFailedException {
 		try {
 			return operationCreateNrgStack.doOperation();
-		} catch (ExecuteException e) {
+		} catch (CreateException e) {
 			throw new GetOperationFailedException(e);
 		}
 	}

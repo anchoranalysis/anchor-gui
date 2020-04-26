@@ -29,7 +29,6 @@ package org.anchoranalysis.gui.annotation.additional;
 import java.nio.file.Path;
 import java.util.List;
 
-import org.anchoranalysis.core.cache.ExecuteException;
 import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.index.GetOperationFailedException;
@@ -63,7 +62,7 @@ public class ShowAdditionalRasters {
 				Path rasterPath = filePathGenerator.outFilePath(matchPath, false);
 				showRaster.openAndShow( name, rasterPath, rasterReader );
 			}
-		} catch (AnchorIOException | InitException | GetOperationFailedException | ExecuteException e) {
+		} catch (AnchorIOException | InitException | GetOperationFailedException e) {
 			throw new OperationFailedException(e);
 		}
 	}

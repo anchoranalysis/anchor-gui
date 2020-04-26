@@ -70,7 +70,9 @@ class BackgroundSetMenu {
 		public void actionPerformed(ActionEvent arg0) {
 			
 			try {
-				backgroundSetter.setImageStackCntr( stackCntrGetter.imageStackCntrFromName(backgroundSetName) );
+				backgroundSetter.setImageStackCntr(
+					stackCntrGetter.imageStackCntrFromName(backgroundSetName)
+				);
 			} catch (GetOperationFailedException e) {
 				errorReporter.recordError(BackgroundSetMenu.class, e);
 				JOptionPane.showMessageDialog(null, String.format("Background set '%s' failed",backgroundSetName));

@@ -33,5 +33,5 @@ import org.anchoranalysis.image.stack.DisplayStack;
 @FunctionalInterface
 public interface IImageStackCntrFromName {
 	
-	IObjectBridge<Integer,DisplayStack> imageStackCntrFromName( String name ) throws GetOperationFailedException;
+	IObjectBridge<Integer,DisplayStack,GetOperationFailedException> imageStackCntrFromName( String name ) throws GetOperationFailedException;
 }

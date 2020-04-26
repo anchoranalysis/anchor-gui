@@ -32,6 +32,7 @@ import javax.swing.ProgressMonitor;
 import org.anchoranalysis.bean.annotation.BeanField;
 import org.anchoranalysis.core.bridge.IObjectBridge;
 import org.anchoranalysis.core.error.CreateException;
+import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.index.container.IBoundedIndexContainer;
 import org.anchoranalysis.gui.bean.exporttask.ExportTaskFailedException;
 import org.anchoranalysis.gui.bean.exporttask.ExportTaskParams;
@@ -59,7 +60,7 @@ public abstract class ExportTaskRasterGeneratorFromBoundedIndexContainer<T> exte
 		delegate = new ExportTaskBoundedIndexContainerGeneratorSeries<>();
 	}
 
-	public void setBridge( IObjectBridge<ExportTaskParams,IBoundedIndexContainer<T>> containerBridge ) {
+	public void setBridge( IObjectBridge<ExportTaskParams,IBoundedIndexContainer<T>,OperationFailedException> containerBridge ) {
 		delegate.setContainerBridge(containerBridge);
 	}
 	

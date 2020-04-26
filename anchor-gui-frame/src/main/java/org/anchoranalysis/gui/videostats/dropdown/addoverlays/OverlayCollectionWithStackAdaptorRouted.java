@@ -61,7 +61,11 @@ class OverlayCollectionWithStackAdaptorRouted implements IRoutableReceivable<Pro
 			public void eventOccurred(
 					RoutableEvent<PropertyValueChangeEvent<OverlayCollection>> evt) {
 				
-				TriggerEvents triggerEvents = new TriggerEvents( evt, associatedRasterGetter, errorReporter );
+				TriggerEvents triggerEvents = new TriggerEvents(
+					evt,
+					associatedRasterGetter,
+					errorReporter
+				);
 				threadPool.submit(triggerEvents, "Trigger Events");
 			}
 		});
@@ -73,8 +77,11 @@ class OverlayCollectionWithStackAdaptorRouted implements IRoutableReceivable<Pro
 		private ErrorReporter errorReporter;
 		private RoutableEvent<PropertyValueChangeEvent<OverlayCollection>> evt;
 		
-		public TriggerEvents(RoutableEvent<PropertyValueChangeEvent<OverlayCollection>> evt, INRGStackGetter nrgStackGetter,
-				ErrorReporter errorReporter) {
+		public TriggerEvents(
+			RoutableEvent<PropertyValueChangeEvent<OverlayCollection>> evt,
+			INRGStackGetter nrgStackGetter,
+			ErrorReporter errorReporter
+		) {
 			super();
 			this.nrgStackGetter = nrgStackGetter;
 			this.errorReporter = errorReporter;

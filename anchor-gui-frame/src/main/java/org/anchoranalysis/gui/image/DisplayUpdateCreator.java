@@ -2,7 +2,6 @@ package org.anchoranalysis.gui.image;
 
 import org.anchoranalysis.anchor.overlay.Overlay;
 import org.anchoranalysis.anchor.overlay.writer.OverlayWriter;
-import org.anchoranalysis.core.bridge.BridgeElementException;
 import org.anchoranalysis.core.bridge.IObjectBridge;
 import org.anchoranalysis.core.error.CreateException;
 
@@ -35,6 +34,7 @@ import org.anchoranalysis.core.error.CreateException;
 
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.idgetter.IDGetter;
+import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.index.SetOperationFailedException;
 import org.anchoranalysis.gui.frame.display.BoundColoredOverlayCollection;
 import org.anchoranalysis.gui.frame.display.DisplayUpdate;
@@ -48,16 +48,16 @@ import org.anchoranalysis.image.stack.DisplayStack;
  * @author Owen Feehan
  *
  */
-public class DisplayUpdateCreator implements IObjectBridge<Integer, DisplayUpdate> {
+public class DisplayUpdateCreator implements IObjectBridge<Integer, DisplayUpdate,OperationFailedException> {
 
-	private IObjectBridge<Integer,OverlayedDisplayStackUpdate> src;
+	private IObjectBridge<Integer,OverlayedDisplayStackUpdate,GetOperationFailedException> src;
 	private OverlayWriter maskWriter;
 	private IDGetter<Overlay> idGetter;
 	
 	// This keeps track of the current over
 	private BoundColoredOverlayCollection boundOverlay = null;
 	
-	public DisplayUpdateCreator( IObjectBridge<Integer,OverlayedDisplayStackUpdate> src, IDGetter<Overlay> idGetter	) {
+	public DisplayUpdateCreator( IObjectBridge<Integer,OverlayedDisplayStackUpdate,GetOperationFailedException> src, IDGetter<Overlay> idGetter	) {
 		super();
 		this.src = src;
 		this.idGetter = idGetter;
@@ -72,8 +72,7 @@ public class DisplayUpdateCreator implements IObjectBridge<Integer, DisplayUpdat
 	}
 
 	@Override
-	public DisplayUpdate bridgeElement(Integer sourceObject)
-			throws BridgeElementException {
+	public DisplayUpdate bridgeElement(Integer sourceObject) throws OperationFailedException {
 		try {
 			OverlayedDisplayStackUpdate update = src.bridgeElement(sourceObject);
 			
@@ -93,8 +92,8 @@ public class DisplayUpdateCreator implements IObjectBridge<Integer, DisplayUpdat
 						
 			return update.applyAndCreateDisplayUpdate(boundOverlay);
 
-		} catch (CreateException | OperationFailedException e) {
-			throw new BridgeElementException(e);
+		} catch (CreateException | GetOperationFailedException e) {
+			throw new OperationFailedException(e);
 		}
 		
 	}

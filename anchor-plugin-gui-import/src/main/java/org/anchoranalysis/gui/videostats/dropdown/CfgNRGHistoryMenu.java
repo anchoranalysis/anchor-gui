@@ -1,5 +1,7 @@
 package org.anchoranalysis.gui.videostats.dropdown;
 
+import java.io.IOException;
+
 /*
  * #%L
  * anchor-gui
@@ -34,11 +36,10 @@ import org.anchoranalysis.anchor.mpp.feature.instantstate.CfgNRGInstantState;
 import org.anchoranalysis.anchor.mpp.feature.nrg.cfg.CfgNRGPixelized;
 import org.anchoranalysis.anchor.mpp.graph.bean.GraphDefinitionBarNRGBreakdown;
 import org.anchoranalysis.bean.error.BeanDuplicateException;
-import org.anchoranalysis.core.cache.ExecuteException;
 import org.anchoranalysis.core.color.ColorIndex;
 import org.anchoranalysis.core.error.InitException;
+import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.error.reporter.ErrorReporter;
-import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.gui.bean.exporttask.ExportTaskBean;
 import org.anchoranalysis.gui.bean.exporttask.ExportTaskParams;
 import org.anchoranalysis.gui.container.ContainerGetter;
@@ -215,7 +216,7 @@ public class CfgNRGHistoryMenu {
 			}
 			
 			@Override
-			public void execute() throws ExecuteException {
+			public void execute() throws OperationFailedException {
 				try {
 					adder.addModuleToMenu( graphSubMenu, new GraphDualFinderCreator<>( new BridgedGraphNRGCreator(), finderCfgNRGHistory, finderCSVStats, mpg.getGraphColorScheme() ), false, mpg);
 					adder.addModuleToMenu( graphSubMenu, new GraphDualFinderCreator<>( new BridgedGraphCfgSizeCreator(), finderCfgNRGHistory, finderCSVStats, mpg.getGraphColorScheme()), false, mpg );
@@ -227,7 +228,7 @@ public class CfgNRGHistoryMenu {
 					addCSVStatistic( graphSubMenu, new GraphDefinitionLineIterVsTime(mpg.getGraphColorScheme()), false );
 					addCSVStatistic( graphSubMenu, new GraphDefinitionLineIterVsTimePerIter(mpg.getGraphColorScheme()), false );
 				} catch (MenuAddException e) {
-					throw new ExecuteException(e);
+					throw new OperationFailedException(e);
 				}
 				
 				if (finderKernelProposer.exists() && finderCSVStats.exists()) {
@@ -243,18 +244,16 @@ public class CfgNRGHistoryMenu {
 						kernelNames = kp.createKernelFactoryNames();
 						addCSVStatistic( acceptedSubMenu, new GraphDefinitionLineIterVsKernelAccptProb("multiple series", kernelNames, new AllKernelAccptCSVStatistic(), mpg.getGraphColorScheme() ), true );
 						acceptedSubMenu.addSeparator();
-					} catch (MenuAddException | GetOperationFailedException | InitException e) {
-						throw new ExecuteException(e);
+					} catch (MenuAddException | InitException | IOException e) {
+						throw new OperationFailedException(e);
 					}
 					
 					try {
 						for (int i=0; i<finderKernelProposer.get().getNumKernel(); i++ ) {
 							addCSVStatistic(acceptedSubMenu,  new GraphDefinitionLineIterVsKernelAccptProb(finderKernelProposer.get(), i, mpg.getGraphColorScheme()), true );
 						}
-					} catch (MenuAddException e) {
-						throw new ExecuteException(e);
-					} catch (GetOperationFailedException e) {
-						throw new ExecuteException(e);
+					} catch (MenuAddException | IOException e) {
+						throw new OperationFailedException(e);
 					}
 				}
 				
@@ -265,10 +264,8 @@ public class CfgNRGHistoryMenu {
 						for (int i=0; i<finderKernelProposer.get().getNumKernel(); i++ ) {
 							addCSVStatistic(propSubMenu, new GraphDefinitionLineIterVsKernelProp(finderKernelProposer.get(), i, mpg.getGraphColorScheme()), true );
 						}
-					} catch (MenuAddException e) {
-						throw new ExecuteException(e);
-					} catch (GetOperationFailedException e) {
-						throw new ExecuteException(e);
+					} catch (MenuAddException | IOException e) {
+						throw new OperationFailedException(e);
 					}
 				}
 			}

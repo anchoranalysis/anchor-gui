@@ -1,5 +1,7 @@
 package org.anchoranalysis.gui.finder.imgstackcollection;
 
+import org.anchoranalysis.core.error.OperationFailedException;
+
 /*-
  * #%L
  * anchor-gui-common
@@ -36,5 +38,5 @@ public abstract class FinderImgStackCollection extends Finder {
 
 	public abstract INamedProvider<Stack> getImgStackCollection() throws GetOperationFailedException;
 	
-	public abstract OperationWithProgressReporter<INamedProvider<Stack>> getImgStackCollectionAsOperationWithProgressReporter();
+	public abstract OperationWithProgressReporter<INamedProvider<Stack>,OperationFailedException> getImgStackCollectionAsOperationWithProgressReporter();
 }

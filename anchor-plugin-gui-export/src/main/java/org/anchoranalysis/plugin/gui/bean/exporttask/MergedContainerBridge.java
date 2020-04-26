@@ -36,10 +36,10 @@ import org.anchoranalysis.anchor.mpp.feature.nrg.cfg.CfgNRG;
 import org.anchoranalysis.anchor.mpp.feature.nrg.cfg.CfgWithNrgTotal;
 import org.anchoranalysis.anchor.mpp.overlay.OverlayCollectionMarkFactory;
 import org.anchoranalysis.anchor.overlay.OverlayedInstantState;
-import org.anchoranalysis.core.bridge.BridgeElementException;
 import org.anchoranalysis.core.bridge.IObjectBridge;
 import org.anchoranalysis.core.color.ColorIndex;
 import org.anchoranalysis.core.error.InitException;
+import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.index.container.IBoundedIndexContainer;
 import org.anchoranalysis.core.index.container.bridge.BoundedIndexContainerBridgeWithoutIndex;
@@ -50,7 +50,7 @@ import org.anchoranalysis.gui.mergebridge.MergeCfgBridge;
 import org.anchoranalysis.gui.mergebridge.MergedColorIndex;
 import org.anchoranalysis.gui.mergebridge.TransformToCfg;
 
-class MergedContainerBridge implements IObjectBridge<ExportTaskParams,IBoundedIndexContainer<CfgNRGInstantState>> {
+class MergedContainerBridge implements IObjectBridge<ExportTaskParams,IBoundedIndexContainer<CfgNRGInstantState>,OperationFailedException> {
 
 	private Supplier<RegionMembershipWithFlags> regionMembership;
 	
@@ -62,8 +62,7 @@ class MergedContainerBridge implements IObjectBridge<ExportTaskParams,IBoundedIn
 	private BoundedIndexContainerBridgeWithoutIndex<OverlayedInstantState,CfgNRGInstantState> retBridge = null;
 	
 	@Override
-	public IBoundedIndexContainer<CfgNRGInstantState> bridgeElement(
-			ExportTaskParams sourceObject) throws BridgeElementException {
+	public IBoundedIndexContainer<CfgNRGInstantState> bridgeElement(ExportTaskParams sourceObject) throws OperationFailedException {
 
 		// TODO fix
 		if (retBridge==null) {
@@ -78,7 +77,7 @@ class MergedContainerBridge implements IObjectBridge<ExportTaskParams,IBoundedIn
 				
 				dualHistory.init();
 			} catch (InitException | GetOperationFailedException e) {
-				throw new BridgeElementException(e);
+				throw new OperationFailedException(e);
 			}
 			
 			MergeCfgBridge mergeCfgBridge = new MergeCfgBridge(regionMembership);

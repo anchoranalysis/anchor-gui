@@ -32,7 +32,6 @@ import javax.swing.JInternalFrame;
 import org.anchoranalysis.annotation.io.input.AnnotationWithStrategy;
 import org.anchoranalysis.annotation.io.wholeimage.WholeImageLabelAnnotationWriter;
 import org.anchoranalysis.annotation.wholeimage.WholeImageLabelAnnotation;
-import org.anchoranalysis.core.cache.ExecuteException;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.log.LogErrorReporter;
@@ -77,20 +76,15 @@ public class BuilderWholeImage extends AnnotationGuiBuilderWithDelegate<InitPara
 		boolean useDefaultCfg
 	) throws CreateException {
 		
-		try {
-			AnnotationBackground background = createBackground(
-				prm,
-				stacks().doOperation( ProgressReporterNull.get() )
-			);
-			
-			return new InitParamsWholeImage(
-				background,
-				context.getAnnotationRefresher()
-			);
-			
-		} catch (ExecuteException e) {
-			throw new CreateException(e);
-		}
+		AnnotationBackground background = createBackground(
+			prm,
+			stacks().doOperation( ProgressReporterNull.get() )
+		);
+		
+		return new InitParamsWholeImage(
+			background,
+			context.getAnnotationRefresher()
+		);
 	}
 	
 	@Override

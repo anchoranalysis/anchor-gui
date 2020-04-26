@@ -27,13 +27,12 @@ package org.anchoranalysis.gui.bean.filecreator;
  */
 
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Iterator;
 import java.util.List;
 
 import org.anchoranalysis.bean.annotation.BeanField;
-import org.anchoranalysis.core.error.CreateException;
+import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.progress.ProgressReporter;
 import org.anchoranalysis.gui.file.interactive.FileStackCollection;
 import org.anchoranalysis.gui.file.interactive.InteractiveFile;
@@ -55,11 +54,9 @@ public class StackCollectionCreator extends FileCreatorGeneralList {
 	private InputManager<StackSequenceInput> input;
 	// END BEAN PROPERTIES
 	
-	//private static Log log = LogFactory.getLog(NamedChnlCollectionCreator.class);
-
 	@Override
 	public void addFilesToList(List<InteractiveFile> listFiles,
-			FileCreatorParams params, ProgressReporter progressReporter) throws CreateException {
+			FileCreatorParams params, ProgressReporter progressReporter) throws OperationFailedException {
 		
 		try {
 			Iterator<StackSequenceInput> itr = input.inputObjects(
@@ -81,13 +78,9 @@ public class StackCollectionCreator extends FileCreatorGeneralList {
 				listFiles.add(file);
 			}
 			
-		} catch (FileNotFoundException e) {
-			throw new CreateException(e);
-		} catch (IOException e) {
-			throw new CreateException(e);
-		} catch (AnchorIOException e) {
-			throw new CreateException(e);
-		} 
+		} catch (IOException | AnchorIOException e) {
+			throw new OperationFailedException(e);
+		}
 	}
 
 	@Override

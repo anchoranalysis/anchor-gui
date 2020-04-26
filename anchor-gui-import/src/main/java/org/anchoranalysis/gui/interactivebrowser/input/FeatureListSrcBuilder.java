@@ -123,7 +123,11 @@ public class FeatureListSrcBuilder<T extends FeatureInput> {
 		return nrgSchemeCreator.create();
 	}
 	
-	private void addFromStore( NamedNRGSchemeSet nrgElemSet, NamedProviderStore<FeatureList<FeatureInput>> store, RegionMap regionMap ) {
+	private void addFromStore(
+		NamedNRGSchemeSet nrgElemSet,
+		NamedProviderStore<FeatureList<FeatureInput>> store,
+		RegionMap regionMap
+	) {
 
 		// Add each feature-list to the scheme, separating into unary and pairwise terms
 		for (String key : store.keys()) {

@@ -31,9 +31,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import org.anchoranalysis.core.cache.ExecuteException;
-import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.InitException;
+import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.progress.OperationWithProgressReporter;
 import org.anchoranalysis.core.progress.ProgressReporter;
 import org.anchoranalysis.gui.file.interactive.InteractiveFile;
@@ -54,29 +53,21 @@ public abstract class FileCreatorGeneralList extends FileCreator {
 	
 	public abstract void addFilesToList(
 		List<InteractiveFile> listFiles,
-		FileCreatorParams params, ProgressReporter progressReporter
-	) throws CreateException;
+		FileCreatorParams params,
+		ProgressReporter progressReporter
+	) throws OperationFailedException;
 	
 	public VideoStatsModule createModule( String name, final FileCreatorParams params, VideoStatsModuleGlobalParams mpg, IAddVideoStatsModule adder, IOpenFile fileOpenManager, final ProgressReporter progressReporter ) throws VideoStatsModuleCreateException {
 		
 		// Operation to retrieve files
-		OperationWithProgressReporter<List<InteractiveFile>> op = new OperationWithProgressReporter<List<InteractiveFile>>() {
-
-			@Override
-			public List<InteractiveFile> doOperation( ProgressReporter progressReporter ) throws ExecuteException {
+		OperationWithProgressReporter<List<InteractiveFile>,OperationFailedException> op = pr -> {
 				
-				List<InteractiveFile> listFiles = new ArrayList<>(); 
-				try {
-					addFilesToList(listFiles, params, progressReporter);
-				} catch (CreateException e) {
-					throw new ExecuteException(e);
-				}
-				
-				// Let's sort out list before we display them
-				Collections.sort(listFiles);
-				return listFiles;
-			}
+			List<InteractiveFile> listFiles = new ArrayList<>(); 
+			addFilesToList(listFiles, params, pr);
 			
+			// Let's sort out list before we display them
+			Collections.sort(listFiles);
+			return listFiles;
 		};
 				
 		SimpleInteractiveFileListInternalFrame manifestListSummary = new SimpleInteractiveFileListInternalFrame( name );

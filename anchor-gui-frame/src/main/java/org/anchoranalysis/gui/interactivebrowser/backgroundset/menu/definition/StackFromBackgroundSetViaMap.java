@@ -32,7 +32,6 @@ import org.anchoranalysis.core.bridge.IObjectBridge;
  */
 
 
-import org.anchoranalysis.core.cache.ExecuteException;
 import org.anchoranalysis.core.error.reporter.ErrorReporter;
 import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.progress.OperationWithProgressReporter;
@@ -42,11 +41,15 @@ import org.anchoranalysis.image.stack.DisplayStack;
 
 class StackFromBackgroundSetViaMap implements IImageStackCntrFromName {
 
-	private OperationWithProgressReporter<BackgroundSet> backgroundSet;
+	private OperationWithProgressReporter<BackgroundSet,? extends Throwable> backgroundSet;
 	private Map<String,String> map;
 	private ErrorReporter errorReporter;
 	
-	public StackFromBackgroundSetViaMap( StringMap map, OperationWithProgressReporter<BackgroundSet> backgroundSet, ErrorReporter errorReporter) {
+	public StackFromBackgroundSetViaMap(
+		StringMap map,
+		OperationWithProgressReporter<BackgroundSet,? extends Throwable> backgroundSet,
+		ErrorReporter errorReporter
+	) {
 		super();
 		this.backgroundSet = backgroundSet;
 		this.map = map.create();
@@ -54,12 +57,12 @@ class StackFromBackgroundSetViaMap implements IImageStackCntrFromName {
 	}
 
 	@Override
-	public IObjectBridge<Integer, DisplayStack> imageStackCntrFromName(String name) throws GetOperationFailedException {
+	public IObjectBridge<Integer, DisplayStack,GetOperationFailedException> imageStackCntrFromName(String name) throws GetOperationFailedException {
 		try {				
 			return backgroundSet.doOperation( ProgressReporterNull.get() ).stackCntr(
 				map.get(name)
 			);
-		} catch (ExecuteException e) {
+		} catch (Throwable e) {
 			errorReporter.recordError(NamesFromBackgroundSet.class, e);
 			return null;
 		}

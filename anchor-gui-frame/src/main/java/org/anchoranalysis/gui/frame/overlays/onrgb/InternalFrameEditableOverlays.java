@@ -3,9 +3,8 @@ package org.anchoranalysis.gui.frame.overlays.onrgb;
 import org.anchoranalysis.anchor.mpp.mark.IDGetterMarkID;
 import org.anchoranalysis.anchor.overlay.collection.ColoredOverlayCollection;
 import org.anchoranalysis.anchor.overlay.id.IDGetterOverlayID;
-import org.anchoranalysis.core.bridge.BridgeElementException;
 import org.anchoranalysis.core.error.InitException;
-
+import org.anchoranalysis.core.index.GetOperationFailedException;
 
 /*
  * #%L
@@ -69,7 +68,10 @@ public class InternalFrameEditableOverlays implements IColoredCfgUpdater {
 		
 		try {
 			ISliderState sliderState = this.delegate.init(
-				new OverlayedDisplayStack( new ColoredOverlayCollection(), defaultState.getLinkState().getBackground().bridgeElement(0)),
+				new OverlayedDisplayStack(
+					new ColoredOverlayCollection(),
+					defaultState.getLinkState().getBackground().bridgeElement(0)
+				),
 				new IDGetterOverlayID(),
 				new IDGetterMarkID(),
 				false,
@@ -81,7 +83,7 @@ public class InternalFrameEditableOverlays implements IColoredCfgUpdater {
 			this.delegate.setIndexSliderVisible(false);	
 			return sliderState;
 			
-		} catch (BridgeElementException e) {
+		} catch (GetOperationFailedException e) {
 			throw new InitException(e);
 		}
 	}

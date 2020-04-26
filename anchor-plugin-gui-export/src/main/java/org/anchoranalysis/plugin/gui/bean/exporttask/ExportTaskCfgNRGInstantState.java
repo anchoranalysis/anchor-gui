@@ -5,7 +5,7 @@ package org.anchoranalysis.plugin.gui.bean.exporttask;
 import java.util.List;
 
 import org.anchoranalysis.anchor.mpp.feature.instantstate.CfgNRGInstantState;
-import org.anchoranalysis.core.bridge.BridgeElementException;
+
 
 /*
  * #%L
@@ -35,6 +35,7 @@ import org.anchoranalysis.core.bridge.BridgeElementException;
 
 
 import org.anchoranalysis.core.error.InitException;
+import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.index.container.IBoundedIndexContainer;
 import org.anchoranalysis.core.index.container.bridge.BoundedIndexContainerBridgeWithoutIndex;
@@ -57,20 +58,6 @@ public class ExportTaskCfgNRGInstantState extends ExportTaskRasterGeneratorFromB
 	@Override
 	public void init() {
 		setBridge( s->convert(s) );
-	}
-
-	private IBoundedIndexContainer<DualStateWithoutIndex<CfgNRGInstantState>> convert( ExportTaskParams sourceObject ) throws BridgeElementException {
-		assert(sourceObject.numCfgNRGHistory()>0);
-		
-		try {
-			if (sourceObject.numCfgNRGHistory()==1) {
-				return createPrimaryOnly(sourceObject);
-			} else {
-				return createMergedBridge(sourceObject);
-			}
-		} catch (GetOperationFailedException e) {
-			throw new BridgeElementException(e);
-		}
 	}
 	
 	private IBoundedIndexContainer<DualStateWithoutIndex<CfgNRGInstantState>> createPrimaryOnly(ExportTaskParams sourceObject) throws GetOperationFailedException {
@@ -118,5 +105,19 @@ public class ExportTaskCfgNRGInstantState extends ExportTaskRasterGeneratorFromB
 			dualHistory,
 			s -> new DualStateWithoutIndex<>( s.getList() )
 		);
+	}
+	
+	private IBoundedIndexContainer<DualStateWithoutIndex<CfgNRGInstantState>> convert( ExportTaskParams sourceObject ) throws OperationFailedException {
+		assert(sourceObject.numCfgNRGHistory()>0);
+		
+		try {
+			if (sourceObject.numCfgNRGHistory()==1) {
+				return createPrimaryOnly(sourceObject);
+			} else {
+				return createMergedBridge(sourceObject);
+			}
+		} catch (GetOperationFailedException e) {
+			throw new OperationFailedException(e);
+		}
 	}
 }

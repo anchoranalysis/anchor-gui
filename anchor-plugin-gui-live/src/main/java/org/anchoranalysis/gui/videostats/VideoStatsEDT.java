@@ -267,7 +267,7 @@ public class VideoStatsEDT {
 
 		// The default background for our frames
 		{
-			IObjectBridge<Integer,DisplayStack> initialBackground = null;
+			IObjectBridge<Integer,DisplayStack,GetOperationFailedException> initialBackground = null;
 			try {
 				initialBackground = backgroundSet.stackCntr( ImgStackIdentifiers.INPUT_IMAGE_VISUAL );
 				

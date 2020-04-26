@@ -80,11 +80,20 @@ public class BoundVideoStatsModuleDropDown {
 		addModule( itemName, module.getCreator(), threadPool, logErrorReporter );
 	}
 	
-	public void addModule( OperationWithProgressReporter<IAddVideoStatsModule> adder, SingleContextualModuleCreator creator, String namePrefix, VideoStatsModuleGlobalParams mpg ) throws MenuAddException {
+	public void addModule(
+		OperationWithProgressReporter<IAddVideoStatsModule,? extends Throwable> adder,
+		SingleContextualModuleCreator creator,
+		String namePrefix,
+		VideoStatsModuleGlobalParams mpg
+	) throws MenuAddException {
 		addModule( creator.createSingle(namePrefix, adder, mpg), mpg.getThreadPool(), mpg.getLogErrorReporter() );
 	}
 	
-	public VideoStatsModuleCreatorAndAdder addModule( OperationWithProgressReporter<IAddVideoStatsModule> adder, ContextualModuleCreator creator, VideoStatsModuleGlobalParams mpg ) throws MenuAddException {
+	public VideoStatsModuleCreatorAndAdder addModule(
+		OperationWithProgressReporter<IAddVideoStatsModule,? extends Throwable> adder,
+		ContextualModuleCreator creator,
+		VideoStatsModuleGlobalParams mpg
+	) throws MenuAddException {
 		try {
 			NamedModule[] moduleToAdd = creator.create( getNameAsPrefix(), adder, mpg );
 			return delegate.addNamedModules( moduleToAdd, mpg.getThreadPool(), mpg.getLogErrorReporter() );
@@ -93,13 +102,13 @@ public class BoundVideoStatsModuleDropDown {
 		}			
 	}
 	
-	public void addModule( String itemName, OperationWithProgressReporter<IAddVideoStatsModule> adder, VideoStatsModuleCreator creator, InteractiveThreadPool threadPool, LogErrorReporter logErrorReporter ) throws MenuAddException {
+	public void addModule( String itemName, OperationWithProgressReporter<IAddVideoStatsModule,? extends Throwable> adder, VideoStatsModuleCreator creator, InteractiveThreadPool threadPool, LogErrorReporter logErrorReporter ) throws MenuAddException {
 		VideoStatsModuleCreatorAndAdder creatorAndAdder = new VideoStatsModuleCreatorAndAdder(adder, creator);
 		addModule(itemName, creatorAndAdder, threadPool, logErrorReporter);
 	}
 	
 	
-	public IAddModuleToMenu createAddModuleToMenu( final OperationWithProgressReporter<IAddVideoStatsModule> adder ) {
+	public IAddModuleToMenu createAddModuleToMenu( final OperationWithProgressReporter<IAddVideoStatsModule,? extends Throwable> adder ) {
 		return new IAddModuleToMenu() {
 			
 			@Override
@@ -113,9 +122,7 @@ public class BoundVideoStatsModuleDropDown {
 			}
 		};
 	}
-	
-
-	
+		
 	public JButton getButton() {
 		return delegate.getDropdownButton().getButton();
 	}
@@ -131,8 +138,6 @@ public class BoundVideoStatsModuleDropDown {
 	private String getNameAsPrefix() {
 		return name;
 	}
-	
-
 
 	public VideoStatsOperationMenu getRootMenu() {
 		return delegate.getRootMenu();

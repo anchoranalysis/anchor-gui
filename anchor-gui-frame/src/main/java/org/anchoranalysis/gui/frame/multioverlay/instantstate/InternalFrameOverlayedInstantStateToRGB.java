@@ -1,10 +1,10 @@
 package org.anchoranalysis.gui.frame.multioverlay.instantstate;
 
 import org.anchoranalysis.anchor.overlay.Overlay;
-import org.anchoranalysis.core.bridge.BridgeElementException;
 import org.anchoranalysis.core.bridge.IObjectBridge;
 import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.idgetter.IDGetter;
+import org.anchoranalysis.core.index.GetOperationFailedException;
 
 /*
  * #%L
@@ -116,13 +116,15 @@ class InternalFrameOverlayedInstantStateToRGB {
 			VideoStatsModule module = delegate.moduleCreator(sliderState).createVideoStatsModule(defaultFrameState);
 			
 			LinkModules link = new LinkModules(module);
-			link.getBackground().add( new BackgroundSendable(indexToRedrawUpdate, delegate.getRedrawable() ) );
+			link.getBackground().add(
+				new BackgroundSendable(indexToRedrawUpdate, delegate.getRedrawable() )
+			);
 			
 			return module;
 		};
 	}
 		
-	private static class BackgroundSendable implements IPropertyValueSendable<IObjectBridge<Integer,DisplayStack>> {
+	private static class BackgroundSendable implements IPropertyValueSendable<IObjectBridge<Integer,DisplayStack,GetOperationFailedException>> {
 		
 		private IndexToRedrawUpdate indexToRedrawUpdate;
 		private IRedrawable redrawable;
@@ -135,7 +137,7 @@ class InternalFrameOverlayedInstantStateToRGB {
 
 		@Override
 		public void setPropertyValue(
-				IObjectBridge<Integer,DisplayStack> value,
+				IObjectBridge<Integer,DisplayStack,GetOperationFailedException> value,
 				boolean adjusting) {
 			try {
 				indexToRedrawUpdate.setImageStackCntr(value);
@@ -203,7 +205,7 @@ class InternalFrameOverlayedInstantStateToRGB {
 					sliderState.getIndex()
 				);
 				delegate.getRedrawable().applyRedrawUpdate( OverlayedDisplayStackUpdate.assignBackground(backgroundNew) );
-			} catch (BridgeElementException e) {
+			} catch (GetOperationFailedException e) {
 				throw new SetOperationFailedException(e);
 			}
 		};

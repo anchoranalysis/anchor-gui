@@ -30,10 +30,10 @@ import org.anchoranalysis.bean.Provider;
 
 
 import org.anchoranalysis.core.cache.CachedOperation;
-import org.anchoranalysis.core.cache.ExecuteException;
 import org.anchoranalysis.core.error.CreateException;
+import org.anchoranalysis.core.error.OperationFailedException;
 
-class OperationCreateFromProvider<ProviderType> extends CachedOperation<ProviderType> {
+class OperationCreateFromProvider<ProviderType> extends CachedOperation<ProviderType,OperationFailedException> {
 
 	private Provider<ProviderType> provider;
 		
@@ -43,11 +43,11 @@ class OperationCreateFromProvider<ProviderType> extends CachedOperation<Provider
 	}
 
 	@Override
-	protected ProviderType execute() throws ExecuteException {
+	protected ProviderType execute() throws OperationFailedException {
 		try {
 			return provider.create();
 		} catch (CreateException e) {
-			throw new ExecuteException(e);
+			throw new OperationFailedException(e);
 		}
 	}
 

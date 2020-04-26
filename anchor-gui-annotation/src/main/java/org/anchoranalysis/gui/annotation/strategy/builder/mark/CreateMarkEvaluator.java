@@ -29,7 +29,6 @@ package org.anchoranalysis.gui.annotation.strategy.builder.mark;
 import java.io.IOException;
 import java.nio.file.Path;
 
-import org.anchoranalysis.core.cache.ExecuteException;
 import org.anchoranalysis.core.cache.Operation;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.log.LogErrorReporter;
@@ -50,7 +49,7 @@ class CreateMarkEvaluator {
 		MarkEvaluatorManager markEvaluatorManager,
 		Path pathForBinding,
 		MarkProposerStrategy strategy,
-		OperationWithProgressReporter<INamedProvider<Stack>> stacks,
+		OperationWithProgressReporter<INamedProvider<Stack>,CreateException> stacks,
 		LogErrorReporter logErrorReporter
 	) throws CreateException {
 		
@@ -72,7 +71,7 @@ class CreateMarkEvaluator {
 		MarkEvaluatorManager markEvaluatorManager,
 		Path pathForBinding,
 		MarkProposerStrategy strategy,
-		OperationWithProgressReporter<INamedProvider<Stack>> stacks
+		OperationWithProgressReporter<INamedProvider<Stack>,CreateException> stacks
 	) throws CreateException {
 		try {
 			return markEvaluatorManager.createSetForStackCollection(
@@ -84,22 +83,18 @@ class CreateMarkEvaluator {
 		}
 	}
 	
-	private static Operation<KeyValueParams> opLoadKeyValueParams( Path pathForBinding, MarkProposerStrategy strategy ) throws AnchorIOException {
+	private static Operation<KeyValueParams,IOException> opLoadKeyValueParams( Path pathForBinding, MarkProposerStrategy strategy ) throws AnchorIOException {
 		Path kvpPath = new GeneratorPathRslvr( pathForBinding ).pathOrNull(
 			strategy.getKeyValueParamsFilePathGenerator()
 		);
 		return () -> create(kvpPath);
 	}
 		
-	private static KeyValueParams create(Path kvpPath) throws ExecuteException {
+	private static KeyValueParams create(Path kvpPath) throws IOException {
 		if (kvpPath==null) {
 			return new KeyValueParams();
 		}
 		
-		try {
-			return KeyValueParams.readFromFile(kvpPath);
-		} catch (IOException e) {
-			throw new ExecuteException(e);
-		}
+		return KeyValueParams.readFromFile(kvpPath);
 	}
 }

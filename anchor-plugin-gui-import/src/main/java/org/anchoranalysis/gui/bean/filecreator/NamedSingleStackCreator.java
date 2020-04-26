@@ -32,7 +32,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.anchoranalysis.bean.annotation.BeanField;
-import org.anchoranalysis.core.error.CreateException;
+import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.progress.ProgressReporter;
 import org.anchoranalysis.gui.file.interactive.FileSingleStack;
 import org.anchoranalysis.gui.file.interactive.InteractiveFile;
@@ -56,7 +56,7 @@ public class NamedSingleStackCreator extends FileCreatorGeneralList {
 	
 	@Override
 	public void addFilesToList(List<InteractiveFile> listFiles,
-			FileCreatorParams params, ProgressReporter progressReporter) throws CreateException {
+			FileCreatorParams params, ProgressReporter progressReporter) throws OperationFailedException {
 
 		try {
 
@@ -81,7 +81,7 @@ public class NamedSingleStackCreator extends FileCreatorGeneralList {
 			}
 			
 		} catch (AnchorIOException | IOException e) {
-			throw new CreateException(e);
+			throw new OperationFailedException(e);
 		}
 	}
 

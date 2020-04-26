@@ -31,7 +31,6 @@ import java.util.List;
 
 import org.anchoranalysis.anchor.mpp.cfg.Cfg;
 import org.anchoranalysis.core.cache.CachedOperation;
-import org.anchoranalysis.core.cache.ExecuteException;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.log.LogErrorReporter;
@@ -80,12 +79,8 @@ public class FinderCfgFolder extends FinderSingleFolder {
 			return null;
 		}
 	}
-
-//	private IBoundedIndexContainer<Cfg> createCntr( FolderWrite folder ) {
-//		return new BoundsFromSequenceType<Cfg>( new SequencedFolderDeserializer<Cfg>(folder,deserializer), folder.getAssociatedSequence() );
-//	}
 	
-	private static class OperationCreateCfg extends CachedOperation<Cfg>  {
+	private static class OperationCreateCfg extends CachedOperation<Cfg,OperationFailedException>  {
 
 		private SequencedFolderDeserializer<Cfg> sfrr;
 		private int index;
@@ -97,11 +92,11 @@ public class FinderCfgFolder extends FinderSingleFolder {
 		}
 
 		@Override
-		protected Cfg execute() throws ExecuteException {
+		protected Cfg execute() throws OperationFailedException {
 			try {
 				return sfrr.get(index);
 			} catch (GetOperationFailedException e) {
-				throw new ExecuteException(e);
+				throw new OperationFailedException(e);
 			}
 		}
 		

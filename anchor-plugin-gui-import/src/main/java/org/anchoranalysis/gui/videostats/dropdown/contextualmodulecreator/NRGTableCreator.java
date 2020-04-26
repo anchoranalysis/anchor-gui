@@ -29,10 +29,11 @@ import org.anchoranalysis.anchor.mpp.feature.instantstate.CfgNRGInstantState;
  */
 
 
-import org.anchoranalysis.core.cache.ExecuteException;
 import org.anchoranalysis.core.cache.Operation;
 import org.anchoranalysis.core.color.ColorIndex;
 import org.anchoranalysis.core.error.InitException;
+import org.anchoranalysis.core.error.OperationFailedException;
+import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.feature.nrg.NRGStackWithParams;
 import org.anchoranalysis.gui.cfgnrg.StatePanelFrameHistoryCfgNRGInstantState;
 import org.anchoranalysis.gui.cfgnrgtable.CfgNRGTablePanel;
@@ -45,12 +46,15 @@ import org.anchoranalysis.io.manifest.deserializer.folder.LoadContainer;
 
 public class NRGTableCreator extends VideoStatsModuleCreatorContext {
 
-	private final Operation<LoadContainer<CfgNRGInstantState>> operation;
+	private final Operation<LoadContainer<CfgNRGInstantState>,GetOperationFailedException> operation;
 	private final ColorIndex colorIndex;
-	private final Operation<NRGStackWithParams> nrgStackWithParams;
+	private final Operation<NRGStackWithParams,OperationFailedException> nrgStackWithParams;
 	
-	public NRGTableCreator(Operation<LoadContainer<CfgNRGInstantState>> operation, Operation<NRGStackWithParams> nrgStackWithParams,
-			ColorIndex colorIndex) {
+	public NRGTableCreator(
+		Operation<LoadContainer<CfgNRGInstantState>,GetOperationFailedException> operation,
+		Operation<NRGStackWithParams,OperationFailedException> nrgStackWithParams,
+		ColorIndex colorIndex
+	) {
 		super();
 		this.operation = operation;
 		this.colorIndex = colorIndex;
@@ -79,7 +83,7 @@ public class NRGTableCreator extends VideoStatsModuleCreatorContext {
 			frame.controllerSize().configureSize(300,600, 300, 1000);
 			return frame.moduleCreator();
 			
-		} catch (IllegalArgumentException | InitException | ExecuteException e) {
+		} catch (IllegalArgumentException | InitException | GetOperationFailedException | OperationFailedException e) {
 			throw new VideoStatsModuleCreateException(e);
 		}
 	}

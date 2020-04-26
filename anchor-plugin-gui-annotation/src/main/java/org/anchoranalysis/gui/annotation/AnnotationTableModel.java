@@ -31,7 +31,6 @@ import javax.swing.event.TableModelListener;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableModel;
 
-import org.anchoranalysis.core.cache.ExecuteException;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.progress.OperationWithProgressReporter;
@@ -41,7 +40,7 @@ import org.anchoranalysis.gui.interactivebrowser.filelist.InteractiveFileListTab
 
 public class AnnotationTableModel extends InteractiveFileListTableModel {
 	
-	private OperationWithProgressReporter<AnnotationProject> opAnnotationProject;
+	private OperationWithProgressReporter<AnnotationProject,OperationFailedException> opAnnotationProject;
 	private AnnotationProject annotationProject;
 	
 	private AbstractTableModel tableModel = new AbstractTableModel() {
@@ -112,7 +111,7 @@ public class AnnotationTableModel extends InteractiveFileListTableModel {
 	    }
 	};
 	
-	public AnnotationTableModel( OperationWithProgressReporter<AnnotationProject> opAnnotationProject, ProgressReporter progressReporter ) throws CreateException {
+	public AnnotationTableModel( OperationWithProgressReporter<AnnotationProject,OperationFailedException> opAnnotationProject, ProgressReporter progressReporter ) throws CreateException {
 		this.opAnnotationProject = opAnnotationProject;
 		try {
 			refreshEntireTable( progressReporter );
@@ -129,18 +128,14 @@ public class AnnotationTableModel extends InteractiveFileListTableModel {
 
 	@Override
 	public void refreshEntireTable( ProgressReporter progressReporter ) throws OperationFailedException {
-		try {
-			this.annotationProject = opAnnotationProject.doOperation(progressReporter);
-			this.annotationProject.addAnnotationChangedListener( new AnnotationChangedListener() {
-				
-				@Override
-				public void annotationChanged(int index) {
-					tableModel.fireTableRowsUpdated(index, index);
-				}
-			});	
-		} catch (ExecuteException e) {
-			throw new OperationFailedException(e);
-		}
+		this.annotationProject = opAnnotationProject.doOperation(progressReporter);
+		this.annotationProject.addAnnotationChangedListener( new AnnotationChangedListener() {
+			
+			@Override
+			public void annotationChanged(int index) {
+				tableModel.fireTableRowsUpdated(index, index);
+			}
+		});	
 	}
 
 	@Override

@@ -28,7 +28,6 @@ package org.anchoranalysis.gui.io.loader.manifest.finder;
 
 import java.io.File;
 import java.nio.file.Path;
-import org.anchoranalysis.core.cache.IdentityOperation;
 import org.anchoranalysis.core.cache.Operation;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.log.LogErrorReporter;
@@ -52,7 +51,10 @@ class CreateObjStoreFromDirectory {
 		return out;
 	}
 	
-	private void addHdf5Files( LazyEvaluationStore<ObjMaskCollection> out, Path pathFolder ) throws OperationFailedException {
+	private void addHdf5Files(
+		LazyEvaluationStore<ObjMaskCollection> out,
+		Path pathFolder
+	) throws OperationFailedException {
 		
 		for( File file : hd5fFilesFor(pathFolder) ) {
 			String nameWithoutExt = FilenameUtils.removeExtension(file.getName());
@@ -64,7 +66,10 @@ class CreateObjStoreFromDirectory {
 		}		
 	}
 	
-	private void addSubdirectories( LazyEvaluationStore<ObjMaskCollection> out, Path pathFolder ) throws OperationFailedException {
+	private void addSubdirectories(
+		LazyEvaluationStore<ObjMaskCollection> out,
+		Path pathFolder
+	) throws OperationFailedException {
 		
 		for( File dir : subdirectoriesFor(pathFolder) ) {
 			addPath(
@@ -75,8 +80,15 @@ class CreateObjStoreFromDirectory {
 		}
 	}
 	
-	private void addPath( LazyEvaluationStore<ObjMaskCollection> out, String name, Path path ) throws OperationFailedException {
-		Operation<Path> pathOp = new IdentityOperation<>(path); 
+	private void addPath(
+		LazyEvaluationStore<ObjMaskCollection> out,
+		String name,
+		Path path
+	) throws OperationFailedException {
+		
+		Operation<Path,OperationFailedException> pathOp = () -> {
+			return path;
+		};
 		
 		out.add(
 			name,

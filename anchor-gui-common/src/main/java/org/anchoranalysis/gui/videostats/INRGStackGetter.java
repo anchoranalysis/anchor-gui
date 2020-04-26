@@ -1,5 +1,7 @@
 package org.anchoranalysis.gui.videostats;
 
+import org.anchoranalysis.core.error.OperationFailedException;
+
 /*-
  * #%L
  * anchor-gui-common
@@ -26,7 +28,6 @@ package org.anchoranalysis.gui.videostats;
  * #L%
  */
 
-import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.feature.nrg.NRGStackWithParams;
 
 
@@ -34,5 +35,5 @@ import org.anchoranalysis.feature.nrg.NRGStackWithParams;
 @FunctionalInterface
 public interface INRGStackGetter {
 
-	NRGStackWithParams getAssociatedNrgStack() throws GetOperationFailedException;
+	NRGStackWithParams getAssociatedNrgStack() throws OperationFailedException;
 }

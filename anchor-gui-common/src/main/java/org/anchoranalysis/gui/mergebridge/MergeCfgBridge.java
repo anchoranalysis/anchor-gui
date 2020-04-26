@@ -38,10 +38,10 @@ import org.anchoranalysis.anchor.mpp.mark.Mark;
 import org.anchoranalysis.anchor.mpp.overlay.OverlayCollectionMarkFactory;
 import org.anchoranalysis.anchor.overlay.OverlayedInstantState;
 import org.anchoranalysis.anchor.overlay.collection.OverlayCollection;
-import org.anchoranalysis.core.bridge.BridgeElementException;
 import org.anchoranalysis.core.bridge.IObjectBridge;
+import org.anchoranalysis.core.error.AnchorNeverOccursException;
 
-public class MergeCfgBridge implements IObjectBridge<IndexedDualState<Cfg>, OverlayedInstantState> {
+public class MergeCfgBridge implements IObjectBridge<IndexedDualState<Cfg>, OverlayedInstantState,AnchorNeverOccursException> {
 	
 	private Supplier<RegionMembershipWithFlags> regionMembership;
 	private ArrayList<ProposalState> lastProposalState;
@@ -127,8 +127,7 @@ public class MergeCfgBridge implements IObjectBridge<IndexedDualState<Cfg>, Over
 	
 	@Override
 	// We combine both cfg into one
-	public OverlayedInstantState bridgeElement(IndexedDualState<Cfg> sourceObject)
-			throws BridgeElementException {
+	public OverlayedInstantState bridgeElement(IndexedDualState<Cfg> sourceObject) {
 		
 		Cfg mergedCfg = new Cfg();
 

@@ -29,7 +29,6 @@ package org.anchoranalysis.gui.annotation.builder;
 import java.io.File;
 import java.nio.file.Path;
 import org.anchoranalysis.core.cache.CachedOperation;
-import org.anchoranalysis.core.cache.ExecuteException;
 import org.anchoranalysis.core.cache.wrap.CachedOperationWrap;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.OperationFailedException;
@@ -50,7 +49,7 @@ import org.anchoranalysis.image.stack.Stack;
 /** Builds the GUI components to support a strategy */
 public abstract class AnnotationGuiBuilder<T extends AnnotationInitParams> {
 		
-	private CachedOperation<AnnotationSummary> queryAnnotationStatus;
+	private CachedOperation<AnnotationSummary,CreateException> queryAnnotationStatus;
 	
 	public AnnotationGuiBuilder() {
 		super();
@@ -90,7 +89,7 @@ public abstract class AnnotationGuiBuilder<T extends AnnotationInitParams> {
 	 * 
 	 * The cache should be reset of the annotation is changed by the user
 	 **/
-	public CachedOperation<AnnotationSummary> queryAnnotationSummary() {
+	public CachedOperation<AnnotationSummary,CreateException> queryAnnotationSummary() {
 		return queryAnnotationStatus;
 	}
 	
@@ -100,7 +99,10 @@ public abstract class AnnotationGuiBuilder<T extends AnnotationInitParams> {
 	public abstract Path deletePath();
 		
 	// Cached-operation
-	public abstract OperationWithProgressReporter<INamedProvider<Stack>> stacks();
+	public abstract OperationWithProgressReporter<
+		INamedProvider<Stack>,
+		CreateException
+	> stacks();
 	
 	public abstract String descriptiveName();
 	
@@ -113,15 +115,9 @@ public abstract class AnnotationGuiBuilder<T extends AnnotationInitParams> {
 	protected abstract AnnotationSummary createSummary() throws CreateException;
 	
 	/** Creates a cached version of the createSummary() method */
-	private CachedOperation<AnnotationSummary> createCachedSummary() {
-		return new CachedOperationWrap<AnnotationSummary>(
-			() -> {
-				try {
-					return createSummary();
-				} catch (CreateException e) {
-					throw new ExecuteException(e);
-				}
-			}
+	private CachedOperation<AnnotationSummary,CreateException> createCachedSummary() {
+		return new CachedOperationWrap<>(
+			() -> createSummary()
 		);
 	}
 }

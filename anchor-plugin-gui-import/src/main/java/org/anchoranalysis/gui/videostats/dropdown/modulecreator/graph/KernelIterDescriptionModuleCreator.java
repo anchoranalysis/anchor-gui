@@ -1,5 +1,7 @@
 package org.anchoranalysis.gui.videostats.dropdown.modulecreator.graph;
 
+import java.io.IOException;
+
 import org.anchoranalysis.anchor.mpp.feature.nrg.cfg.CfgNRGPixelized;
 import org.anchoranalysis.core.error.InitException;
 
@@ -98,9 +100,7 @@ public class KernelIterDescriptionModuleCreator extends VideoStatsModuleCreatorC
 			
 			return frame.moduleCreator();
 			
-		} catch (GetOperationFailedException e) {
-			throw new VideoStatsModuleCreateException(e);
-		} catch (InitException e) {
+		} catch (GetOperationFailedException | InitException | IOException e) {
 			throw new VideoStatsModuleCreateException(e);
 		}
 	}

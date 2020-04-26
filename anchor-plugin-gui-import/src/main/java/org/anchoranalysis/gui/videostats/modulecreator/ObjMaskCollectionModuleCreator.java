@@ -31,9 +31,9 @@ import org.anchoranalysis.anchor.overlay.collection.OverlayCollectionObjMaskFact
  */
 
 
-import org.anchoranalysis.core.cache.ExecuteException;
 import org.anchoranalysis.core.cache.Operation;
 import org.anchoranalysis.core.error.InitException;
+import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.idgetter.IDGetterIter;
 import org.anchoranalysis.gui.image.frame.ISliderState;
 import org.anchoranalysis.gui.videostats.dropdown.IAddVideoStatsModule;
@@ -50,7 +50,7 @@ public class ObjMaskCollectionModuleCreator extends VideoStatsModuleCreator {
 
 	private String fileIdentifier;
 	private String name;
-	private Operation<ObjMaskCollection> opObjs;
+	private Operation<ObjMaskCollection,OperationFailedException> opObjs;
 	private NRGBackground nrgBackground;
 	
 	private VideoStatsModuleGlobalParams mpg;
@@ -58,7 +58,7 @@ public class ObjMaskCollectionModuleCreator extends VideoStatsModuleCreator {
 	public ObjMaskCollectionModuleCreator(
 		String fileIdentifier,
 		String name,
-		Operation<ObjMaskCollection> op,
+		Operation<ObjMaskCollection,OperationFailedException> op,
 		NRGBackground nrgBackground,
 		VideoStatsModuleGlobalParams mpg
 	) {
@@ -93,9 +93,7 @@ public class ObjMaskCollectionModuleCreator extends VideoStatsModuleCreator {
 			);
 			ModuleAddUtilities.add(adder, imageFrame.moduleCreator(sliderState) );
 
-		} catch (InitException e) {
-			throw new VideoStatsModuleCreateException(e);
-		} catch (ExecuteException e) {
+		} catch (InitException | OperationFailedException e) {
 			throw new VideoStatsModuleCreateException(e);
 		}
 	}
@@ -107,7 +105,7 @@ public class ObjMaskCollectionModuleCreator extends VideoStatsModuleCreator {
 		return new IVideoStatsOperationCombine() {
 			
 			@Override
-			public Operation<Cfg> getCfg() {
+			public Operation<Cfg,OperationFailedException> getCfg() {
 				return null;
 			}
 	
@@ -118,7 +116,7 @@ public class ObjMaskCollectionModuleCreator extends VideoStatsModuleCreator {
 			}
 
 			@Override
-			public Operation<ObjMaskCollection> getObjMaskCollection() {
+			public Operation<ObjMaskCollection,OperationFailedException> getObjMaskCollection() {
 				return opObjs;
 			}
 

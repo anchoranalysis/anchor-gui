@@ -32,7 +32,6 @@ import java.io.File;
 import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.name.store.EagerEvaluationStore;
-import org.anchoranalysis.core.params.KeyValueParams;
 import org.anchoranalysis.gui.bean.filecreator.MarkCreatorParams;
 import org.anchoranalysis.gui.file.opened.OpenedFile;
 import org.anchoranalysis.gui.file.opened.OpenedFileGUI;
@@ -58,7 +57,7 @@ public class FileSingleStack extends InteractiveFile {
 
 	@Override
 	public String identifier() {
-		return inputObject.descriptiveName(); // FilenameUtils.removeExtension( new File(ncc.descriptiveName()).getName() );
+		return inputObject.descriptiveName();
 	}
 	
 	@Override
@@ -81,7 +80,7 @@ public class FileSingleStack extends InteractiveFile {
 			new OperationCreateTimeSequence(inputObject, 0),
 			null,
 			null,
-			new EagerEvaluationStore<KeyValueParams>(),
+			new EagerEvaluationStore<>(),
 			identifier(),
 			true
 		);

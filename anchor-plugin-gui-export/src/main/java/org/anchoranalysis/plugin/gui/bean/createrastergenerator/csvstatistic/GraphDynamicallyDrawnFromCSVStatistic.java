@@ -51,10 +51,9 @@ public class GraphDynamicallyDrawnFromCSVStatistic<T> extends CreateRasterGraph<
 	 * 
 	 */
 	private static final long serialVersionUID = 5206843186184053732L;
-	private IObjectBridge<CSVStatistic, T> elementBridge;
+	private IObjectBridge<CSVStatistic,T,CreateException> elementBridge;
 	
-	public GraphDynamicallyDrawnFromCSVStatistic(
-			IObjectBridge<CSVStatistic, T> elementBridge) {
+	public GraphDynamicallyDrawnFromCSVStatistic(IObjectBridge<CSVStatistic, T,CreateException> elementBridge) {
 		super();
 		this.elementBridge = elementBridge;
 	}
@@ -66,7 +65,7 @@ public class GraphDynamicallyDrawnFromCSVStatistic<T> extends CreateRasterGraph<
 		assert( getGraphDefinition()!=null );
 		
 		try {
-			IObjectBridge<MappedFrom<CSVStatistic>,GraphInstance> bridge = new GraphInstanceBridge<T>(
+			IObjectBridge<MappedFrom<CSVStatistic>,GraphInstance,CreateException> bridge = new GraphInstanceBridge<T>(
 				getGraphDefinition(),
 				params.getFinderCsvStatistics().get(),
 				elementBridge

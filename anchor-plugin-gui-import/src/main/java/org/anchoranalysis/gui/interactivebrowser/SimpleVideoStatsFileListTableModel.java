@@ -32,8 +32,6 @@ import java.util.List;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.AbstractTableModel;
 
-import org.anchoranalysis.core.cache.ExecuteException;
-import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.progress.OperationWithProgressReporter;
 import org.anchoranalysis.core.progress.ProgressReporter;
@@ -43,7 +41,7 @@ import org.anchoranalysis.gui.interactivebrowser.filelist.InteractiveFileListTab
 public class SimpleVideoStatsFileListTableModel extends InteractiveFileListTableModel {
 
 	private List<InteractiveFile> fileInputList;
-	private OperationWithProgressReporter<List<InteractiveFile>> opFileInputList;
+	private OperationWithProgressReporter<List<InteractiveFile>,OperationFailedException> opFileInputList;
 	
 	private AbstractTableModel tableModel = new AbstractTableModel() {
 			
@@ -100,14 +98,10 @@ public class SimpleVideoStatsFileListTableModel extends InteractiveFileListTable
 	    }	
 	};
 		
-	public SimpleVideoStatsFileListTableModel( OperationWithProgressReporter<List<InteractiveFile>> opFileInputList, ProgressReporter progressReporter ) throws CreateException {
+	public SimpleVideoStatsFileListTableModel( OperationWithProgressReporter<List<InteractiveFile>,OperationFailedException> opFileInputList, ProgressReporter progressReporter ) throws OperationFailedException {
 		this.opFileInputList = opFileInputList;
-		try {
-			refreshEntireTable(progressReporter);
-			tableModel.fireTableDataChanged();
-		} catch (OperationFailedException e) {
-			throw new CreateException(e);
-		}
+		refreshEntireTable(progressReporter);
+		tableModel.fireTableDataChanged();
 	}
 	
 	@Override
@@ -119,11 +113,7 @@ public class SimpleVideoStatsFileListTableModel extends InteractiveFileListTable
 	//   from a SwingWorker
 	@Override
 	public void refreshEntireTable( ProgressReporter progressReporter ) throws OperationFailedException {
-		try {
-			this.fileInputList = opFileInputList.doOperation(progressReporter);
-		} catch (ExecuteException e) {
-			throw new OperationFailedException(e);
-		}
+		this.fileInputList = opFileInputList.doOperation(progressReporter);
 	}
 
 	@Override

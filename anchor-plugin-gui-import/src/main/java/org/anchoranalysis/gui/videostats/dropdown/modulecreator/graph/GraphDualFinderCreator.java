@@ -62,8 +62,11 @@ public class GraphDualFinderCreator<ItemType> extends ContextualModuleCreator {
 	}
 
 	@Override
-	public NamedModule[] create(String namePrefix, OperationWithProgressReporter<IAddVideoStatsModule> adder, VideoStatsModuleGlobalParams mpg )
-			throws CreateException {
+	public NamedModule[] create(
+		String namePrefix,
+		OperationWithProgressReporter<IAddVideoStatsModule,? extends Throwable> adder,
+		VideoStatsModuleGlobalParams mpg
+	) throws CreateException {
 		
 		ArrayList<NamedModule> outList = new ArrayList<>();
 		

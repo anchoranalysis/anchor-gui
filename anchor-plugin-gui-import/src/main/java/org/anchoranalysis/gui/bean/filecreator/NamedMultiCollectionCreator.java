@@ -27,13 +27,12 @@ package org.anchoranalysis.gui.bean.filecreator;
  */
 
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Iterator;
 import java.util.List;
 
 import org.anchoranalysis.bean.annotation.BeanField;
-import org.anchoranalysis.core.error.CreateException;
+import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.progress.ProgressReporter;
 import org.anchoranalysis.gui.file.interactive.FileMultiCollection;
 import org.anchoranalysis.gui.file.interactive.InteractiveFile;
@@ -56,7 +55,7 @@ public class NamedMultiCollectionCreator extends FileCreatorGeneralList {
 	
 	@Override
 	public void addFilesToList(List<InteractiveFile> listFiles,
-			FileCreatorParams params, ProgressReporter progressReporter) throws CreateException {
+			FileCreatorParams params, ProgressReporter progressReporter) throws OperationFailedException {
 		
 		try {
 			Iterator<MultiInput> itr = input.inputObjects(
@@ -78,13 +77,9 @@ public class NamedMultiCollectionCreator extends FileCreatorGeneralList {
 				listFiles.add(file);
 			}
 			
-		} catch (FileNotFoundException e) {
-			throw new CreateException(e);
-		} catch (IOException e) {
-			throw new CreateException(e);
-		} catch (AnchorIOException e) {
-			throw new CreateException(e);
-		} 
+		} catch (IOException | AnchorIOException e) {
+			throw new OperationFailedException(e);
+		}
 	}
 
 	@Override

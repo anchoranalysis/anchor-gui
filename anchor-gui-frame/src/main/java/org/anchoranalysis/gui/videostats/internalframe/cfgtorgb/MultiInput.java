@@ -28,18 +28,25 @@ package org.anchoranalysis.gui.videostats.internalframe.cfgtorgb;
 
 
 import org.anchoranalysis.core.cache.Operation;
+import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.gui.videostats.dropdown.common.NRGBackground;
 
-public class MultiInput<ObjectType> {
+/**
+ * 
+ * @author Owen Feehan
+ *
+ * @param <T> object-type
+ */
+public class MultiInput<T> {
 
 	private String name;
 	private NRGBackground nrgBackground;
-	private Operation<ObjectType> associatedObjects;
+	private Operation<T,OperationFailedException> associatedObjects;
 
 	public MultiInput(
 		String name,
 		NRGBackground nrgBackground,
-		Operation<ObjectType> associatedObjects
+		Operation<T,OperationFailedException> associatedObjects
 	) {
 		this.name = name;
 		this.nrgBackground = nrgBackground;
@@ -54,7 +61,7 @@ public class MultiInput<ObjectType> {
 		this.name = name;
 	}
 	
-	public Operation<ObjectType> getAssociatedObjects() {
+	public Operation<T,OperationFailedException> getAssociatedObjects() {
 		return associatedObjects;
 	}
 

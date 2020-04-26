@@ -29,12 +29,12 @@ package org.anchoranalysis.gui.videostats.dropdown.common;
 import org.anchoranalysis.core.progress.OperationWithProgressReporter;
 import org.anchoranalysis.gui.videostats.dropdown.IAddVideoStatsModule;
 
-public class NRGBackgroundAdder {
+public class NRGBackgroundAdder<E extends Throwable> {
 
 	private NRGBackground delegate;
-	private OperationWithProgressReporter<IAddVideoStatsModule> adder;
+	private OperationWithProgressReporter<IAddVideoStatsModule,E> adder;
 
-	public NRGBackgroundAdder(NRGBackground delegate, OperationWithProgressReporter<IAddVideoStatsModule> adder) {
+	public NRGBackgroundAdder(NRGBackground delegate, OperationWithProgressReporter<IAddVideoStatsModule,E> adder) {
 		super();
 		this.delegate = delegate;
 		this.adder = adder;
@@ -44,7 +44,7 @@ public class NRGBackgroundAdder {
 		return delegate;
 	}
 
-	public OperationWithProgressReporter<IAddVideoStatsModule> getAdder() {
+	public OperationWithProgressReporter<IAddVideoStatsModule,E> getAdder() {
 		return adder;
 	}
 }

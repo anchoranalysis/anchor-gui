@@ -32,6 +32,7 @@ import javax.swing.JFrame;
 import org.anchoranalysis.bean.error.BeanDuplicateException;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.error.reporter.ErrorReporter;
+import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.progress.OperationWithProgressReporter;
 import org.anchoranalysis.gui.backgroundset.BackgroundSet;
 import org.anchoranalysis.gui.bean.exporttask.ExportTaskBean;
@@ -59,7 +60,7 @@ public class CombinedMenu {
 	public void addCombination(
 		FinderCfgNRGSet finderFirst,
 		FinderCfgNRGSet finderSecond,
-		OperationWithProgressReporter<BackgroundSet> backgroundSet,
+		OperationWithProgressReporter<BackgroundSet,GetOperationFailedException> backgroundSet,
 		CfgNRGFinderContext context
 	) throws MenuAddException {
 		

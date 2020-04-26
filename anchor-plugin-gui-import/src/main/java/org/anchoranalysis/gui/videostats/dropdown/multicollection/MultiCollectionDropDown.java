@@ -32,6 +32,7 @@ import org.anchoranalysis.core.cache.IdentityOperation;
 import org.anchoranalysis.core.cache.Operation;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.InitException;
+import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.name.provider.INamedProvider;
 import org.anchoranalysis.core.name.store.NamedProviderStore;
 import org.anchoranalysis.core.params.KeyValueParams;
@@ -65,7 +66,7 @@ public class MultiCollectionDropDown {
 	
 	private BoundVideoStatsModuleDropDown delegate;
 
-	private OperationWithProgressReporter<TimeSequenceProvider> rasterProvider;
+	private OperationWithProgressReporter<TimeSequenceProvider,CreateException> rasterProvider;
 	private INamedProvider<Cfg> cfgCollection;
 	private INamedProvider<ObjMaskCollection> objCollection;
 	private NamedProviderStore<KeyValueParams> paramsCollection;
@@ -73,7 +74,7 @@ public class MultiCollectionDropDown {
 	
 	// A dropdown menu representing a particular manifest
 	public MultiCollectionDropDown(
-		OperationWithProgressReporter<TimeSequenceProvider> rasterProvider,
+		OperationWithProgressReporter<TimeSequenceProvider,CreateException> rasterProvider,
 		INamedProvider<Cfg> cfgCollection,
 		INamedProvider<ObjMaskCollection> objCollection,
 		NamedProviderStore<KeyValueParams> paramsCollection,

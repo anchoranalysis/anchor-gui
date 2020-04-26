@@ -43,10 +43,10 @@ class CombinationCreator extends VideoStatsModuleCreatorContext {
 	private FinderCfgNRGSet finderFirst;
 	private FinderCfgNRGSet finderSecond;
 	private String combinationName;
-	private OperationWithProgressReporter<BackgroundSet> backgroundSet;
+	private OperationWithProgressReporter<BackgroundSet,GetOperationFailedException> backgroundSet;
 	
 	public CombinationCreator(FinderCfgNRGSet finderFirst, FinderCfgNRGSet finderSecond, String combinationName,
-			OperationWithProgressReporter<BackgroundSet> backgroundSet) {
+			OperationWithProgressReporter<BackgroundSet,GetOperationFailedException> backgroundSet) {
 		super();
 		this.finderFirst = finderFirst;
 		this.finderSecond = finderSecond;

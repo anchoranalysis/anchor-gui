@@ -2,6 +2,7 @@ package org.anchoranalysis.gui.frame.multiraster;
 
 import org.anchoranalysis.core.bridge.IObjectBridge;
 import org.anchoranalysis.core.error.InitException;
+import org.anchoranalysis.core.error.OperationFailedException;
 
 /*
  * #%L
@@ -30,6 +31,7 @@ import org.anchoranalysis.core.error.InitException;
  */
 
 import org.anchoranalysis.core.error.reporter.ErrorReporter;
+import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.index.IIndexGettableSettable;
 import org.anchoranalysis.gui.displayupdate.IDisplayUpdateRememberStack;
 import org.anchoranalysis.gui.frame.display.DisplayUpdate;
@@ -50,7 +52,7 @@ public class ThreadedIndexedDisplayStackSetter implements IBackgroundSetter, ITh
 	private IterableObjectGenerator<DisplayStack, DisplayStack> stackGenerator;
 	
 	public void init(
-		IObjectBridge<Integer,DisplayStack> cntrDisplayStack,
+		IObjectBridge<Integer,DisplayStack,? extends Throwable> cntrDisplayStack,
 		InteractiveThreadPool threadPool,
 		ErrorReporter errorReporter
 	) throws InitException {
@@ -81,7 +83,7 @@ public class ThreadedIndexedDisplayStackSetter implements IBackgroundSetter, ITh
 	
 	
 	@Override
-	public void setImageStackCntr( IObjectBridge<Integer,DisplayStack> imageStackCntr ) {
+	public void setImageStackCntr( IObjectBridge<Integer,DisplayStack,GetOperationFailedException> imageStackCntr ) {
 		
 		delegate.setImageStackGenerator(
 			ensure8bit(imageStackCntr)
@@ -94,11 +96,11 @@ public class ThreadedIndexedDisplayStackSetter implements IBackgroundSetter, ITh
 		delegate.dispose();
 	}
 	
-	private IObjectBridge<Integer, DisplayUpdate> ensure8bit( IObjectBridge<Integer,DisplayStack> cntr ) {
+	private IObjectBridge<Integer, DisplayUpdate,OperationFailedException> ensure8bit( IObjectBridge<Integer,DisplayStack,? extends Throwable> cntr ) {
 		return new NoOverlayBridgeFromGenerator(
 			new IterableObjectGeneratorBridge<>(
 				stackGenerator,
-				new EnsureUnsigned8Bit(cntr)
+				new EnsureUnsigned8Bit<>(cntr)
 			)
 		);
 	}

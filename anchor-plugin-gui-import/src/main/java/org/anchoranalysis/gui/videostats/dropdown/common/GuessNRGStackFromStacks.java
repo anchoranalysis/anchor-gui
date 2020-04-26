@@ -26,7 +26,7 @@ package org.anchoranalysis.gui.videostats.dropdown.common;
  * #L%
  */
 
-import org.anchoranalysis.core.cache.ExecuteException;
+import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.name.provider.INamedProvider;
 import org.anchoranalysis.core.name.provider.NamedProviderGetException;
@@ -38,39 +38,34 @@ import org.anchoranalysis.gui.series.TimeSequenceProvider;
 import org.anchoranalysis.image.stack.Stack;
 import org.anchoranalysis.image.stack.TimeSequence;
 
-public class GuessNRGStackFromStacks implements OperationWithProgressReporter<NRGStackWithParams> {
+public class GuessNRGStackFromStacks implements OperationWithProgressReporter<NRGStackWithParams,OperationFailedException> {
 
-	private OperationWithProgressReporter<TimeSequenceProvider> opBackgroundSet;
+	private OperationWithProgressReporter<TimeSequenceProvider,CreateException> opBackgroundSet;
 	
-	public GuessNRGStackFromStacks(OperationWithProgressReporter<TimeSequenceProvider> opBackgroundSet) {
+	public GuessNRGStackFromStacks(OperationWithProgressReporter<TimeSequenceProvider,CreateException> opBackgroundSet) {
 		super();
 		this.opBackgroundSet = opBackgroundSet;
 	}
 	
 	@Override
-	public NRGStackWithParams doOperation(ProgressReporter progressReporter) throws ExecuteException {
-		try {
-			// If a time sequence, assume nrg stack is always t=0
-			Stack stack = selectArbitraryItem(opBackgroundSet).get(0);
-			
-			return new NRGStackWithParams(stack);
-			
-		} catch (OperationFailedException e) {
-			throw new ExecuteException(e);
-		}
+	public NRGStackWithParams doOperation(ProgressReporter progressReporter) throws OperationFailedException {
+		// If a time sequence, assume nrg stack is always t=0
+		Stack stack = selectArbitraryItem(opBackgroundSet).get(0);
+		
+		return new NRGStackWithParams(stack);
 	}
 	
-	private static TimeSequence selectArbitraryItem( OperationWithProgressReporter<TimeSequenceProvider> opBackgroundSet ) throws OperationFailedException {
+	private static TimeSequence selectArbitraryItem( OperationWithProgressReporter<TimeSequenceProvider,CreateException> opBackgroundSet ) throws OperationFailedException {
 		try {
 			INamedProvider<TimeSequence> stacks = opBackgroundSet.doOperation( ProgressReporterNull.get() ).sequence();
 			String arbitraryKey = stacks.keys().iterator().next();
 			
 			// If a time sequence, assume nrg stack is always t=0
 			return stacks.getException(arbitraryKey);
-		} catch (ExecuteException e) {
-			throw new OperationFailedException(e);
 		} catch (NamedProviderGetException e) {
 			throw new OperationFailedException(e.summarize());
+		} catch (CreateException e) {
+			throw new OperationFailedException(e);
 		}
 	}
 

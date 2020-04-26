@@ -35,7 +35,7 @@ import java.util.List;
 
 import org.anchoranalysis.anchor.mpp.feature.bean.nrgscheme.NRGScheme;
 import org.anchoranalysis.bean.annotation.BeanField;
-import org.anchoranalysis.core.error.CreateException;
+import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.progress.ProgressReporter;
 import org.anchoranalysis.gui.file.interactive.FileExecutedExperimentImageWithManifest;
 import org.anchoranalysis.gui.file.interactive.InteractiveFile;
@@ -72,7 +72,7 @@ public class ExecutedExperimentFileCreator extends FileCreatorGeneralList {
 	}
 
 	@Override
-	public void addFilesToList(List<InteractiveFile> listFiles, FileCreatorParams params, ProgressReporter progressReporter) throws CreateException {
+	public void addFilesToList(List<InteractiveFile> listFiles, FileCreatorParams params, ProgressReporter progressReporter) throws OperationFailedException {
 		
 		// TODO for now, we have no features from the NamedDefinitons added to the global feature list
 		
@@ -86,7 +86,7 @@ public class ExecutedExperimentFileCreator extends FileCreatorGeneralList {
 				)
 			);
 		} catch (DeserializationFailedException | IOException e) {
-			throw new CreateException(e);
+			throw new OperationFailedException(e);
 		}
 		
 		experimentNames = new ArrayList<>();

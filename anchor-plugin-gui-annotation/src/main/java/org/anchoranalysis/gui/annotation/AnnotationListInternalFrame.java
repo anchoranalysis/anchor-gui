@@ -41,9 +41,9 @@ import javax.swing.event.TableModelListener;
 import org.anchoranalysis.annotation.io.bean.input.AnnotationInputManager;
 import org.anchoranalysis.annotation.io.bean.strategy.AnnotatorStrategy;
 import org.anchoranalysis.annotation.io.input.AnnotationWithStrategy;
-import org.anchoranalysis.core.cache.ExecuteException;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.InitException;
+import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.progress.OperationWithProgressReporter;
 import org.anchoranalysis.core.progress.ProgressReporter;
 import org.anchoranalysis.core.progress.ProgressReporterNull;
@@ -79,43 +79,25 @@ public class AnnotationListInternalFrame {
 	 * @throws InitException
 	 */
 	public <T extends AnnotatorStrategy> void init(
-		final AnnotationInputManager<ProvidesStackInput,T> inputManager,
+		AnnotationInputManager<ProvidesStackInput,T> inputManager,
 		IAddVideoStatsModule adder,
 		IOpenFile fileOpenManager,
 		MarkCreatorParams params,
-		final ProgressReporter progressReporter,
+		ProgressReporter progressReporter,
 		int widthDescriptionColumn 
 	) throws InitException {
 		
-		OperationWithProgressReporter<AnnotationProject> opAnnotationProject = new OperationWithProgressReporter<AnnotationProject>() {
-			@Override
-			public AnnotationProject doOperation( ProgressReporter progressReporter ) throws ExecuteException {
-				try {
-					Collection<AnnotationWithStrategy<T>> inputObjs = inputManager.inputObjects(
-						new InputManagerParams(
-							params.getModuleParams().createInputContext(),
-							progressReporter,
-							params.getModuleParams().getLogErrorReporter()
-						)
-					); 
-					
-					AnnotationProject ap = new AnnotationProject(
-						inputObjs,
-						params.getMarkEvaluatorManager(),
-						params.getModuleParams(),
-						ProgressReporterNull.get()
-					);
-					
-					return ap;
-					
-				} catch (AnchorIOException | IOException | CreateException e) {
-					throw new ExecuteException(e);
-				}
-			}
-		};
+		OperationWithProgressReporter<AnnotationProject,OperationFailedException> opAnnotationProject = (pr) -> createProject(
+			inputManager,
+			params,
+			progressReporter
+		);
 		
 		try {
-			annotationTableModel = new AnnotationTableModel(opAnnotationProject, progressReporter);
+			annotationTableModel = new AnnotationTableModel(
+				opAnnotationProject,
+				progressReporter
+			);
 			delegate.init(
 				adder,
 				annotationTableModel,
@@ -127,10 +109,6 @@ public class AnnotationListInternalFrame {
 			progressBar = createProgressBar();
 			refreshProgressBar();
 			
-			//Dimension d = progressBar.getPreferredSize();
-			//progressBar.setPreferredSize( new Dimension(0, 60) );
-			
-			//progressBar.setT
 			delegate.addComponentTop( createPanelFor(progressBar,"Annotation Progress:  ") );
 			
 			AnnotationTableCellRenderer tableCellRenderer = new AnnotationTableCellRenderer(annotationTableModel);
@@ -188,4 +166,31 @@ public class AnnotationListInternalFrame {
 		return delegate.moduleCreator();
 	}
 
+	private <T extends AnnotatorStrategy> AnnotationProject createProject(
+		AnnotationInputManager<ProvidesStackInput,T> inputManager,
+		MarkCreatorParams params,
+		ProgressReporter progressReporter
+	) throws OperationFailedException {
+		try {
+			Collection<AnnotationWithStrategy<T>> inputObjs = inputManager.inputObjects(
+				new InputManagerParams(
+					params.getModuleParams().createInputContext(),
+					progressReporter,
+					params.getModuleParams().getLogErrorReporter()
+				)
+			); 
+			
+			AnnotationProject ap = new AnnotationProject(
+				inputObjs,
+				params.getMarkEvaluatorManager(),
+				params.getModuleParams(),
+				ProgressReporterNull.get()
+			);
+			
+			return ap;
+			
+		} catch (AnchorIOException | IOException | CreateException e) {
+			throw new OperationFailedException(e);
+		}
+	}
 }

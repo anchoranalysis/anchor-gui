@@ -31,6 +31,7 @@ import java.util.function.Function;
 import org.anchoranalysis.anchor.overlay.collection.OverlayCollection;
 import org.anchoranalysis.core.bridge.IObjectBridge;
 import org.anchoranalysis.core.event.IRoutableReceivable;
+import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.index.IntArray;
 import org.anchoranalysis.core.property.IPropertyValueReceivable;
 import org.anchoranalysis.core.property.IPropertyValueSendable;
@@ -55,7 +56,7 @@ public class LinkModules {
 	private Adder<Integer> frameIndex = new Adder<>(LinkFramesUniqueID.FRAME_INDEX);
 	private Adder<IntArray> markIndices = new Adder<>(LinkFramesUniqueID.MARK_INDICES);
 	private Adder<Integer> sliceNum = new Adder<>(LinkFramesUniqueID.SLICE_NUM);
-	private Adder<IObjectBridge<Integer,DisplayStack>> background = new Adder<>(LinkFramesUniqueID.BACKGROUND);
+	private Adder<IObjectBridge<Integer,DisplayStack,GetOperationFailedException>> background = new Adder<>(LinkFramesUniqueID.BACKGROUND);
 			
 	public class Adder<T> {
 		
@@ -148,7 +149,7 @@ public class LinkModules {
 		return overlaysWithStack;
 	}
 
-	public Adder<IObjectBridge<Integer, DisplayStack>> getBackground() {
+	public Adder<IObjectBridge<Integer, DisplayStack,GetOperationFailedException>> getBackground() {
 		return background;
 	}
 

@@ -27,8 +27,8 @@ package org.anchoranalysis.gui.finder;
  */
 
 
-import org.anchoranalysis.core.cache.ExecuteException;
 import org.anchoranalysis.core.cache.Operation;
+import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.error.reporter.ErrorReporter;
 import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.name.provider.INamedProvider;
@@ -81,7 +81,7 @@ public class FinderNrgStack extends Finder {
 	public NRGStackWithParams getNrgStack() throws GetOperationFailedException {
 		try {
 			return operationCombined.doOperation();
-		} catch (ExecuteException e) {
+		} catch (OperationFailedException e) {
 			throw new GetOperationFailedException(e);
 		}
 	}
@@ -89,16 +89,16 @@ public class FinderNrgStack extends Finder {
 	public INamedProvider<Stack> getNamedImgStackCollection() throws GetOperationFailedException {
 		try {
 			return operationCombined.getOperationStackCollection().doOperation( ProgressReporterNull.get() );
-		} catch (ExecuteException e) {
+		} catch (OperationFailedException e) {
 			throw new GetOperationFailedException(e);
 		}
 	}
 	
-	public Operation<NRGStackWithParams> operationNrgStack() {
+	public Operation<NRGStackWithParams,OperationFailedException> operationNrgStack() {
 		return operationCombined;
 	}
 	
-	public OperationWithProgressReporter<NRGStackWithParams> operationNrgStackWithProgressReporter() {
+	public OperationWithProgressReporter<NRGStackWithParams,OperationFailedException> operationNrgStackWithProgressReporter() {
 		return operationCombined;
 	}
 }

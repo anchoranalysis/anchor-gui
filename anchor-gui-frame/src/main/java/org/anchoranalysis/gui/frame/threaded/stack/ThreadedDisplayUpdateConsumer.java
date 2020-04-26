@@ -33,8 +33,8 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.EventListenerList;
 
-import org.anchoranalysis.core.bridge.BridgeElementException;
 import org.anchoranalysis.core.bridge.IObjectBridge;
+import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.error.reporter.ErrorReporter;
 import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.index.IIndexGettableSettable;
@@ -81,12 +81,9 @@ public class ThreadedDisplayUpdateConsumer implements IDisplayUpdateRememberStac
 	
 	private EventListenerList eventListenerList = new EventListenerList();
 	
-	//private static Log log = LogFactory.getLog(ThreadedIndexedImageStackProvider.class);
-	
 	private UpdateImage updateImage;
 	
-	private IObjectBridge<Integer, DisplayUpdate> displayUpdateBridge;
-	//private IterableObjectGenerator<Integer,OverlayedDisplayStack> imageStackGenerator;
+	private IObjectBridge<Integer,DisplayUpdate,OperationFailedException> displayUpdateBridge;
 
 	private ErrorReporter errorReporter;
 	
@@ -132,7 +129,7 @@ public class ThreadedDisplayUpdateConsumer implements IDisplayUpdateRememberStac
 					currentDisplayStack = currentUpdate.getDisplayStack();
 				}
 
-			} catch (BridgeElementException e) {
+			} catch (OperationFailedException e) {
 				currentUpdate = null;
 				errorReporter.recordError(ThreadedDisplayUpdateConsumer.class, e);
 			} finally {
@@ -154,7 +151,12 @@ public class ThreadedDisplayUpdateConsumer implements IDisplayUpdateRememberStac
 		
 	}
 	
-	public ThreadedDisplayUpdateConsumer( IObjectBridge<Integer,DisplayUpdate> displayUpdateBridge, int defaultIndex, InteractiveThreadPool threadPool, ErrorReporter errorReporter ) {
+	public ThreadedDisplayUpdateConsumer(
+		IObjectBridge<Integer,DisplayUpdate,OperationFailedException> displayUpdateBridge,
+		int defaultIndex,
+		InteractiveThreadPool threadPool,
+		ErrorReporter errorReporter
+	) {
 		super();
 		this.displayUpdateBridge = displayUpdateBridge;
 		this.index = defaultIndex;
@@ -167,7 +169,7 @@ public class ThreadedDisplayUpdateConsumer implements IDisplayUpdateRememberStac
 		threadPool.submit( updateImage, "Update image" );
 	}
 	
-	public synchronized void setImageStackGenerator( IObjectBridge<Integer, DisplayUpdate> displayUpdateBridge ) {
+	public synchronized void setImageStackGenerator( IObjectBridge<Integer, DisplayUpdate,OperationFailedException> displayUpdateBridge ) {
 		this.displayUpdateBridge = displayUpdateBridge;
 	}
 	

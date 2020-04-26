@@ -1,6 +1,6 @@
 package org.anchoranalysis.gui.frame.multioverlay.instantstate;
 
-import org.anchoranalysis.core.bridge.BridgeElementException;
+
 
 /*-
  * #%L
@@ -30,36 +30,39 @@ import org.anchoranalysis.core.bridge.BridgeElementException;
 
 import org.anchoranalysis.core.bridge.IObjectBridge;
 import org.anchoranalysis.core.index.BoundedIndexBridge;
+import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.index.SetOperationFailedException;
 import org.anchoranalysis.core.index.container.IBoundedIndexContainer;
 import org.anchoranalysis.gui.displayupdate.OverlayedDisplayStack;
 import org.anchoranalysis.gui.videostats.internalframe.cfgtorgb.ColoredOverlayedInstantState;
 import org.anchoranalysis.image.stack.DisplayStack;
 
-class IndexToRedrawUpdate implements IObjectBridge<Integer, OverlayedDisplayStack> {
+class IndexToRedrawUpdate implements IObjectBridge<Integer, OverlayedDisplayStack,GetOperationFailedException> {
 
 	private BoundedIndexBridge<ColoredOverlayedInstantState> delegate;
-	private IObjectBridge<Integer,DisplayStack> background;
+	private IObjectBridge<Integer,DisplayStack,GetOperationFailedException> background;
 	
 	public IndexToRedrawUpdate(
 		IBoundedIndexContainer<ColoredOverlayedInstantState> cntr,
-		IObjectBridge<Integer,DisplayStack> background
+		IObjectBridge<Integer,DisplayStack, GetOperationFailedException> background
 	) {
 		delegate = new BoundedIndexBridge<>(cntr);
 		this.background = background;
 	}
 	
 	@Override
-	public OverlayedDisplayStack bridgeElement(Integer sourceObject)
-			throws BridgeElementException {
+	public OverlayedDisplayStack bridgeElement(Integer sourceObject) throws GetOperationFailedException {
 		
 		ColoredOverlayedInstantState found = delegate.bridgeElement(sourceObject);
 		
-		return new OverlayedDisplayStack(found.getOverlayCollection(), background.bridgeElement(sourceObject) );
+		return new OverlayedDisplayStack(
+			found.getOverlayCollection(),
+			background.bridgeElement(sourceObject)
+		);
 	}
 
 	public void setImageStackCntr(
-			IObjectBridge<Integer, DisplayStack> imageStackCntr)
+			IObjectBridge<Integer, DisplayStack, GetOperationFailedException> imageStackCntr)
 			throws SetOperationFailedException {
 		this.background = imageStackCntr;
 	}

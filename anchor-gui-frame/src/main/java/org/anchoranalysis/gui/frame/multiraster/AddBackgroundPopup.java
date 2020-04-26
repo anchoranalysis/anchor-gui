@@ -30,9 +30,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import org.anchoranalysis.core.bridge.BridgeElementException;
-import org.anchoranalysis.core.cache.ExecuteException;
-import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.progress.ProgressReporterNull;
 import org.anchoranalysis.gui.frame.details.ControllerPopupMenu;
 import org.anchoranalysis.gui.image.frame.ISliderState;
@@ -64,14 +61,9 @@ class AddBackgroundPopup {
 		
 	private static IImageStackCntrFromName stackCntrFromName( List<NamedRasterSet> list ) {
 		return name -> sourceObject -> {
-
-			try {
-				return list.get(sourceObject).getBackgroundSet().doOperation( ProgressReporterNull.get() ).singleStack(name);
-			} catch (ExecuteException e) {
-				throw new BridgeElementException(e.getCause());
-			} catch (GetOperationFailedException e) {
-				throw new BridgeElementException(e);
-			}
+			return list.get(sourceObject).getBackgroundSet().doOperation(
+				ProgressReporterNull.get()
+			).singleStack(name);
 		};
 	}
 	
@@ -85,7 +77,7 @@ class AddBackgroundPopup {
 				).names();
 				return new ArrayList<>(names);
 				
-			} catch (ExecuteException e) {
+			} catch (Throwable e) {
 				mpg.getLogErrorReporter().getErrorReporter().recordError(InternalFrameMultiRaster.class, e);
 				return new ArrayList<>();
 			}

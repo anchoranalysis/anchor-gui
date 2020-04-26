@@ -27,8 +27,7 @@ package org.anchoranalysis.gui.videostats.dropdown;
  */
 
 
-import org.anchoranalysis.core.cache.ExecuteException;
-import org.anchoranalysis.core.error.CreateException;
+import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.name.provider.INamedProvider;
 import org.anchoranalysis.core.progress.CachedOperationWithProgressReporter;
 import org.anchoranalysis.core.progress.OperationWithProgressReporter;
@@ -41,9 +40,9 @@ import org.anchoranalysis.image.stack.Stack;
 import org.anchoranalysis.image.stack.TimeSequence;
 import org.anchoranalysis.image.stack.wrap.WrapStackAsTimeSequence;
 
-public class OperationCreateBackgroundSet extends CachedOperationWithProgressReporter<BackgroundSet> {
+public class OperationCreateBackgroundSet extends CachedOperationWithProgressReporter<BackgroundSet,GetOperationFailedException> {
 
-	private OperationWithProgressReporter<TimeSequenceProvider> namedImgStackCollection;
+	private OperationWithProgressReporter<TimeSequenceProvider,? extends Throwable> namedImgStackCollection;
 	
 	public OperationCreateBackgroundSet( INamedProvider<Stack> namedProvider ) {
 		this(
@@ -54,24 +53,24 @@ public class OperationCreateBackgroundSet extends CachedOperationWithProgressRep
 		);
 	}
 	
-	public OperationCreateBackgroundSet( OperationWithProgressReporter<TimeSequenceProvider> namedImgStackCollection ) {
+	public OperationCreateBackgroundSet( OperationWithProgressReporter<TimeSequenceProvider,? extends Throwable> namedImgStackCollection ) {
 		super();
 		this.namedImgStackCollection = namedImgStackCollection;
 	}
 
 	@Override
-	protected BackgroundSet execute( ProgressReporter progressReporter ) throws ExecuteException {
+	protected BackgroundSet execute( ProgressReporter progressReporter ) throws GetOperationFailedException {
 		try {
 			INamedProvider<TimeSequence> stacks = namedImgStackCollection.doOperation( progressReporter ).sequence();
-
+	
 			BackgroundSet backgroundSet = BackgroundSetFactory.createBackgroundSet(
 				stacks,
 				ProgressReporterNull.get()
 			);
 			
 			return backgroundSet;
-		} catch (CreateException e) {
-			throw new ExecuteException(e);
+		} catch (Throwable e) {
+			throw new GetOperationFailedException(e);
 		}
 	}
 }

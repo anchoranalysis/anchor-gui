@@ -29,7 +29,6 @@ import org.anchoranalysis.core.error.InitException;
  */
 
 
-import org.anchoranalysis.core.progress.IdentityOperationWithProgressReporter;
 import org.anchoranalysis.gui.image.frame.ISliderState;
 import org.anchoranalysis.gui.interactivebrowser.MarkEvaluatorSetForImage;
 import org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.IBackgroundUpdater;
@@ -88,7 +87,6 @@ class ProposerEvaluatorModuleCreator extends VideoStatsModuleCreator {
 			ISliderState sliderState = imageFrame.init(
 				markEvaluatorSet,
 				adder.getSubgroup().getDefaultModuleState().getState(),
-				new IdentityOperationWithProgressReporter<>(adder),
 				nrgBackground.getBackgroundSet(),
 				outputWriteSettings,
 				mpg

@@ -43,23 +43,31 @@ import org.anchoranalysis.gui.videostats.modulecreator.VideoStatsModuleCreator;
 import org.anchoranalysis.gui.videostats.threading.InteractiveThreadPool;
 import org.anchoranalysis.gui.videostats.threading.InteractiveWorker;
 
-// Responsible for creating a module and adding it somewhere
+/**
+ * Responsible for creating a module and adding it somewhere
+ * 
+ * @author Owen Feehan
+ *
+ */
 public class VideoStatsModuleCreatorAndAdder {
 
-	private OperationWithProgressReporter<IAddVideoStatsModule> adderOperation;
+	private OperationWithProgressReporter<IAddVideoStatsModule,? extends Throwable> adderOperation;
 	private VideoStatsModuleCreator creator;
 	
 	public VideoStatsModuleCreatorAndAdder(
-		OperationWithProgressReporter<IAddVideoStatsModule> adderOperation,
+		OperationWithProgressReporter<IAddVideoStatsModule,? extends Throwable> adderOperation,
 		VideoStatsModuleCreator creator
 	) {
 		this.adderOperation = adderOperation;
 		this.creator = creator;
 		
 	}
-
 	
-	public void createVideoStatsModuleForAdder( InteractiveThreadPool threadPool, Component parentComponent, LogErrorReporter logErrorReporter ) {
+	public void createVideoStatsModuleForAdder(
+		InteractiveThreadPool threadPool,
+		Component parentComponent,
+		LogErrorReporter logErrorReporter
+	) {
 		Worker worker = new Worker( logErrorReporter );
 		worker.beforeBackground(parentComponent);
 		threadPool.submitWithProgressMonitor(worker, "Create module");
@@ -67,7 +75,7 @@ public class VideoStatsModuleCreatorAndAdder {
 	
 	private class Worker extends InteractiveWorker<IAddVideoStatsModule, Void> {
 
-		private Exception exceptionRecorded;
+		private Throwable exceptionRecorded;
 		private LogErrorReporter logErrorReporter;
 		
 		public Worker(LogErrorReporter logErrorReporter) {
@@ -90,7 +98,9 @@ public class VideoStatsModuleCreatorAndAdder {
 				try (ProgressReporter progressReporter = new ProgressReporterInteractiveWorker(this)) {
 					
 					try (ProgressReporterMultiple prm = new ProgressReporterMultiple(progressReporter, 2)) {
-						IAddVideoStatsModule adder = adderOperation.doOperation( new ProgressReporterOneOfMany(prm) );
+						IAddVideoStatsModule adder = adderOperation.doOperation(
+							new ProgressReporterOneOfMany(prm)
+						);
 						prm.incrWorker();
 						
 						creator.doInBackground( new ProgressReporterOneOfMany(prm) );
@@ -98,7 +108,7 @@ public class VideoStatsModuleCreatorAndAdder {
 						return adder;
 					}
 				}
-			} catch (Exception e) {
+			} catch (Throwable e) {
 				exceptionRecorded = e;
 				return null;
 			}
@@ -120,7 +130,7 @@ public class VideoStatsModuleCreatorAndAdder {
 		}
 		
 		
-		private void displayErrorDialog( Exception e ) {
+		private void displayErrorDialog( Throwable e ) {
 			
 			logErrorReporter.getErrorReporter().recordError( VideoStatsModuleCreatorAndAdder.class, e);
 			

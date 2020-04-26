@@ -45,11 +45,11 @@ import org.anchoranalysis.gui.videostats.modulecreator.VideoStatsModuleCreatorCo
 public class ColoredOutlineCreator extends VideoStatsModuleCreatorContext {
 
 	private final FinderHistoryFolder<CfgNRGInstantState> finderCfgNRGHistory;
-	private final OperationWithProgressReporter<BackgroundSet> backgroundSet;
+	private final OperationWithProgressReporter<BackgroundSet,GetOperationFailedException> backgroundSet;
 	
 	public ColoredOutlineCreator(
 		FinderHistoryFolder<CfgNRGInstantState> finderCfgNRGHistory,
-		OperationWithProgressReporter<BackgroundSet> backgroundSet
+		OperationWithProgressReporter<BackgroundSet,GetOperationFailedException> backgroundSet
 	) {
 		super();
 		this.finderCfgNRGHistory = finderCfgNRGHistory;

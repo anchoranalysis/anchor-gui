@@ -2,6 +2,8 @@ package org.anchoranalysis.gui.interactivebrowser;
 
 
 
+import java.io.IOException;
+
 /*
  * #%L
  * anchor-gui
@@ -36,7 +38,6 @@ import java.util.Set;
 import org.anchoranalysis.anchor.mpp.bean.init.GeneralInitParams;
 import org.anchoranalysis.anchor.mpp.feature.bean.mark.MarkEvaluator;
 import org.anchoranalysis.core.cache.CachedOperation;
-import org.anchoranalysis.core.cache.ExecuteException;
 import org.anchoranalysis.core.cache.Operation;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.InitException;
@@ -50,15 +51,15 @@ import org.anchoranalysis.image.stack.Stack;
 
 public class MarkEvaluatorSetForImage {
 
-	private Map<String,Operation<MarkEvaluatorRslvd>> map = new HashMap<>(); 
+	private Map<String,Operation<MarkEvaluatorRslvd,OperationFailedException>> map = new HashMap<>(); 
 
-	private OperationWithProgressReporter<INamedProvider<Stack>> namedImgStackCollection;
-	private Operation<KeyValueParams> keyParams;
+	private OperationWithProgressReporter<INamedProvider<Stack>,? extends Throwable> namedImgStackCollection;
+	private Operation<KeyValueParams,IOException> keyParams;
 	private GeneralInitParams paramsGeneral;
 
 	public MarkEvaluatorSetForImage(
-		OperationWithProgressReporter<INamedProvider<Stack>> namedImgStackCollection,
-		Operation<KeyValueParams> keyParams,
+		OperationWithProgressReporter<INamedProvider<Stack>,? extends Throwable> namedImgStackCollection,
+		Operation<KeyValueParams,IOException> keyParams,
 		GeneralInitParams paramsGeneral
 	) {
 		super();
@@ -67,7 +68,7 @@ public class MarkEvaluatorSetForImage {
 		this.paramsGeneral = paramsGeneral;
 	}
 
-	private class Rslv extends CachedOperation<MarkEvaluatorRslvd> {
+	private class Rslv extends CachedOperation<MarkEvaluatorRslvd,OperationFailedException> {
 
 		private OperationCreateProposerSharedObjectsImageSpecific operationProposerSharedObjects;
 		private MarkEvaluator me;
@@ -90,14 +91,14 @@ public class MarkEvaluatorSetForImage {
 					operationProposerSharedObjects.doOperation().getFeature(),
 					paramsGeneral.getLogErrorReporter()
 				);
-			} catch (InitException | ExecuteException e) {
+			} catch (InitException e) {
 				throw new CreateException(e);
 			}
 			
 		}
 		
 		@Override
-		protected MarkEvaluatorRslvd execute() throws ExecuteException {
+		protected MarkEvaluatorRslvd execute() throws OperationFailedException {
 			try {
 				return new MarkEvaluatorRslvd(
 					operationProposerSharedObjects,
@@ -105,8 +106,8 @@ public class MarkEvaluatorSetForImage {
 					me.getNrgSchemeCreator().create(),
 					keyParams.doOperation()
 				);
-			} catch (CreateException e) {
-				throw new ExecuteException(e);
+			} catch (CreateException | IOException e) {
+				throw new OperationFailedException(e);
 			}
 		}
 		
@@ -126,14 +127,14 @@ public class MarkEvaluatorSetForImage {
 	
 	public MarkEvaluatorRslvd get(String key) throws GetOperationFailedException {
 		try {
-			Operation<MarkEvaluatorRslvd> op = map.get(key); 
+			Operation<MarkEvaluatorRslvd,OperationFailedException> op = map.get(key); 
 			
 			if (op==null) {
 				throw new GetOperationFailedException( String.format("Cannot find markEvaluator '%s'", key) );
 			}
 			
 			return op.doOperation(); 
-		} catch (ExecuteException e) {
+		} catch (OperationFailedException e) {
 			throw new GetOperationFailedException(e);
 		}
 	}

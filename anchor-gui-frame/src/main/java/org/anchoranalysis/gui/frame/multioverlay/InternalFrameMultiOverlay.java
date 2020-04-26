@@ -35,10 +35,9 @@ import java.util.Set;
 import org.anchoranalysis.anchor.overlay.Overlay;
 import org.anchoranalysis.anchor.overlay.OverlayedInstantState;
 import org.anchoranalysis.anchor.overlay.id.IDGetterOverlayID;
-import org.anchoranalysis.core.bridge.BridgeElementException;
 import org.anchoranalysis.core.bridge.IObjectBridgeIndex;
-import org.anchoranalysis.core.cache.ExecuteException;
 import org.anchoranalysis.core.error.InitException;
+import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.error.reporter.ErrorReporter;
 import org.anchoranalysis.core.idgetter.IDGetter;
 import org.anchoranalysis.core.index.GetOperationFailedException;
@@ -59,7 +58,14 @@ import org.anchoranalysis.gui.videostats.internalframe.cfgtorgb.MultiInput;
 import org.anchoranalysis.gui.videostats.module.DefaultModuleState;
 import org.anchoranalysis.gui.videostats.module.DefaultModuleStateManager;
 
-class InternalFrameMultiOverlay<InputType> {
+
+/**
+ * 
+ * @author Owen Feehan
+ *
+ * @param <T> input-type
+ */
+class InternalFrameMultiOverlay<T> {
 	private InternalFrameOverlayedInstantStateToRGBSelectable delegate;
 
 	public InternalFrameMultiOverlay( String frameName ) {
@@ -67,8 +73,8 @@ class InternalFrameMultiOverlay<InputType> {
 	}
 	
 	public SliderNRGState init(
-			final List<MultiInput<InputType>> list,
-			IObjectBridgeIndex<MultiInput<InputType>, OverlayedInstantState> bridge,
+			final List<MultiInput<T>> list,
+			IObjectBridgeIndex<MultiInput<T>, OverlayedInstantState,OperationFailedException> bridge,
 			IRetrieveElements elementRetriever,
 			DefaultModuleStateManager defaultState,
 			final VideoStatsModuleGlobalParams mpg
@@ -118,21 +124,15 @@ class InternalFrameMultiOverlay<InputType> {
 	
 	private static <T> IImageStackCntrFromName createImageStackCntr( final List<MultiInput<T>> list ) {
 		return name -> sourceObject -> {
-			try {
-				return list.get(sourceObject).getNrgBackground().getBackgroundSet().doOperation(
-					ProgressReporterNull.get()
-				).singleStack(name);
-			} catch (ExecuteException e) {
-				throw new BridgeElementException(e.getCause());
-			} catch (GetOperationFailedException e) {
-				throw new BridgeElementException(e);
-			}
+			return list.get(sourceObject).getNrgBackground().getBackgroundSet().doOperation(
+				ProgressReporterNull.get()
+			).singleStack(name);
 		};
 	}
 	
 	private static <T> IBoundedIndexContainer<OverlayedInstantState> bridgeList(
 		List<T> list,
-		IObjectBridgeIndex<T, OverlayedInstantState> bridge
+		IObjectBridgeIndex<T, OverlayedInstantState,OperationFailedException> bridge
 	) {
 		BoundedIndexContainerFromList<T> cntr = new BoundedIndexContainerFromList<>(list);
 		return new BoundedIndexContainerBridgeWithIndex<>(cntr, bridge );
@@ -158,7 +158,7 @@ class InternalFrameMultiOverlay<InputType> {
 		
 	
 	private void addBackgroundMenu(
-		List<MultiInput<InputType>> list,
+		List<MultiInput<T>> list,
 		ISliderState sliderState,
 		IImageStackCntrFromName imageStackCntrFromName,
 		VideoStatsModuleGlobalParams mpg
@@ -171,7 +171,7 @@ class InternalFrameMultiOverlay<InputType> {
 		);
 	}
 	
-	private IGetNames namesFromCurrentBackground( List<MultiInput<InputType>> list, ISliderState sliderState, ErrorReporter errorReporter ) {
+	private IGetNames namesFromCurrentBackground( List<MultiInput<T>> list, ISliderState sliderState, ErrorReporter errorReporter ) {
 		return () -> {
 			try {
 				Set<String> names = list.get(
@@ -179,14 +179,14 @@ class InternalFrameMultiOverlay<InputType> {
 				).getNrgBackground().getBackgroundSet().doOperation( ProgressReporterNull.get() ).names();
 				return new ArrayList<>(names);
 				
-			} catch (ExecuteException e) {
+			} catch (GetOperationFailedException e) {
 				errorReporter.recordError(InternalFrameMultiOverlay.class, e);
 				return new ArrayList<>();
 			}
 		};
 	}
 	
-	private void addExtraDetail( List<MultiInput<InputType>> list ) {
+	private void addExtraDetail( List<MultiInput<T>> list ) {
 		
 		delegate.addAdditionalDetails(index ->
 			String.format("id=%s", list.get(index).getName() )

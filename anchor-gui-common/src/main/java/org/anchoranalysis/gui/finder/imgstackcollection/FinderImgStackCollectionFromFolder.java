@@ -27,17 +27,16 @@ package org.anchoranalysis.gui.finder.imgstackcollection;
  */
 
 
-import org.anchoranalysis.core.cache.ExecuteException;
+import org.anchoranalysis.core.cache.WrapOperationWithProgressReporterAsCached;
 import org.anchoranalysis.core.error.CreateException;
+import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.name.provider.INamedProvider;
 import org.anchoranalysis.core.progress.CachedOperationWithProgressReporter;
 import org.anchoranalysis.core.progress.OperationWithProgressReporter;
-import org.anchoranalysis.core.progress.ProgressReporter;
 import org.anchoranalysis.core.progress.ProgressReporterNull;
 import org.anchoranalysis.gui.finder.FinderRasterFolder;
 import org.anchoranalysis.image.io.bean.rasterreader.RasterReader;
-import org.anchoranalysis.image.stack.NamedImgStackCollection;
 import org.anchoranalysis.image.stack.Stack;
 import org.anchoranalysis.io.manifest.ManifestRecorder;
 
@@ -46,19 +45,16 @@ public class FinderImgStackCollectionFromFolder extends FinderImgStackCollection
 
 	private FinderRasterFolder delegate;
 	
-	private CachedOperationWithProgressReporter<INamedProvider<Stack>> operationImgStackCollection = new OperationCreateCollection();
-
-	private class OperationCreateCollection extends CachedOperationWithProgressReporter<INamedProvider<Stack>> {
-		
-		@Override
-		protected NamedImgStackCollection execute( ProgressReporter progressReporter ) throws ExecuteException {
-			try {
-				return delegate.createStackCollection(false);
-			} catch (CreateException e) {
-				throw new ExecuteException(e);
+	private CachedOperationWithProgressReporter<INamedProvider<Stack>,OperationFailedException> operationImgStackCollection =
+		new WrapOperationWithProgressReporterAsCached<>(
+			pr -> {
+				try {
+					return delegate.createStackCollection(false);
+				} catch (CreateException e) {
+					throw new OperationFailedException(e);
+				}
 			}
-		}
-	};
+		);
 	
 	
 	public FinderImgStackCollectionFromFolder( RasterReader rasterReader, String folderName ) {
@@ -69,17 +65,17 @@ public class FinderImgStackCollectionFromFolder extends FinderImgStackCollection
 	public INamedProvider<Stack> getImgStackCollection() throws GetOperationFailedException {
 		try {
 			return operationImgStackCollection.doOperation( ProgressReporterNull.get() );
-		} catch (ExecuteException e) {
+		} catch (OperationFailedException e) {
 			throw new GetOperationFailedException(e);
 		}
 	}
 	
 	@Override
-	public OperationWithProgressReporter<INamedProvider<Stack>> getImgStackCollectionAsOperationWithProgressReporter() {
+	public OperationWithProgressReporter<INamedProvider<Stack>,OperationFailedException> getImgStackCollectionAsOperationWithProgressReporter() {
 		return operationImgStackCollection;
 	}
 	
-	public OperationWithProgressReporter<INamedProvider<Stack>> getImgStackCollectionAsOperation() {
+	public OperationWithProgressReporter<INamedProvider<Stack>,OperationFailedException> getImgStackCollectionAsOperation() {
 		return operationImgStackCollection;
 	}
 

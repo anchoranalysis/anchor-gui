@@ -77,8 +77,7 @@ public class AnnotationDropDown {
 			outputManager.getOutputWriteSettings(),
 			mpg
 		);
-		
-		
+				
 		// Add Channel Viewer
 		addChannelViewer( adder, mpg );
 				
