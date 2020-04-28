@@ -33,29 +33,27 @@ import org.anchoranalysis.feature.bean.Feature;
 import org.anchoranalysis.feature.calc.FeatureCalcException;
 import org.anchoranalysis.feature.input.FeatureInput;
 import org.anchoranalysis.feature.nrg.NRGStackWithParams;
-import org.anchoranalysis.feature.session.CreateParams;
+import org.anchoranalysis.feature.session.CreateFeatureInput;
 import org.anchoranalysis.gui.feature.evaluator.params.ParamsFactoryForFeature;
 
-public class CreateParamsPairFromRasterMark extends CreateParams<FeatureInput> {
+public class CreateIndFromMark extends CreateFeatureInput<FeatureInput> {
 
-	private PxlMarkMemo pmm1;
-	private PxlMarkMemo pmm2;
+	private PxlMarkMemo pmm;
 	private NRGStackWithParams raster;
 	
-	public CreateParamsPairFromRasterMark(PxlMarkMemo pmm1, PxlMarkMemo pmm2,
-			NRGStackWithParams raster ) {
+	public CreateIndFromMark(PxlMarkMemo pmm, NRGStackWithParams raster) {
 		super();
-		this.pmm1 = pmm1;
-		this.pmm2 = pmm2;
+		this.pmm = pmm;
 		this.raster = raster;
 	}
 
 	@Override
 	public FeatureInput createForFeature(Feature<?> feature) throws CreateException {
 		try {
-			return ParamsFactoryForFeature.factoryFor( feature ).create(pmm1, pmm2, raster);
+			return ParamsFactoryForFeature.factoryFor( feature ).create(pmm, raster);
 		} catch (FeatureCalcException e) {
 			throw new CreateException(e);
 		}
 	}
+
 }

@@ -36,14 +36,14 @@ import org.anchoranalysis.anchor.mpp.pxlmark.memo.PxlMarkMemo;
 import org.anchoranalysis.anchor.mpp.pxlmark.memo.PxlMarkMemoFactory;
 import org.anchoranalysis.feature.input.FeatureInput;
 import org.anchoranalysis.feature.nrg.NRGStackWithParams;
-import org.anchoranalysis.feature.session.CreateParams;
-import org.anchoranalysis.gui.feature.evaluator.nrgtree.createparams.CreateParamsIndFromRasterMark;
+import org.anchoranalysis.feature.session.CreateFeatureInput;
+import org.anchoranalysis.gui.feature.evaluator.nrgtree.createparams.CreateIndFromMark;
 
 class CreateParamsInd {
 	
 	private Mark mark;
 	private NRGStackWithParams raster;
-	private Map<RegionMap,CreateParams<FeatureInput>> map = new HashMap<>();
+	private Map<RegionMap,CreateFeatureInput<FeatureInput>> map = new HashMap<>();
 	
 	public CreateParamsInd(Mark mark, NRGStackWithParams raster) {
 		super();
@@ -51,9 +51,9 @@ class CreateParamsInd {
 		this.raster = raster;
 	}
 	
-	public CreateParams<FeatureInput> getOrCreate( RegionMap regionMap ) {
+	public CreateFeatureInput<FeatureInput> getOrCreate( RegionMap regionMap ) {
 		
-		CreateParams<FeatureInput> params = map.get(regionMap);
+		CreateFeatureInput<FeatureInput> params = map.get(regionMap);
 		
 		if (params!=null) {
 			return params;
@@ -61,6 +61,6 @@ class CreateParamsInd {
 		
 		PxlMarkMemo pmm = PxlMarkMemoFactory.create( mark, raster.getNrgStack(), regionMap );
 		assert(pmm!=null);
-		return new CreateParamsIndFromRasterMark(pmm,raster);
+		return new CreateIndFromMark(pmm,raster);
 	}
 }

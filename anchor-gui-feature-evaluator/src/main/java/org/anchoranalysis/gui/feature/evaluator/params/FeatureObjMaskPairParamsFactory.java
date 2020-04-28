@@ -1,5 +1,7 @@
 package org.anchoranalysis.gui.feature.evaluator.params;
 
+import java.util.Optional;
+
 import org.anchoranalysis.anchor.mpp.pxlmark.memo.PxlMarkMemo;
 
 /*
@@ -61,9 +63,11 @@ public class FeatureObjMaskPairParamsFactory extends FeatureCalcParamsPairwiseFa
 			BinaryValuesByte.getDefault()
 		).getMask();
 		
-		FeatureInputPairObjs params = new FeatureInputPairObjs(om1,om2);
-		params.setNrgStack(nrgStack);
-		return params;
+		return new FeatureInputPairObjs(
+			om1,
+			om2,
+			Optional.of(nrgStack)
+		);
 	}
 	
 }

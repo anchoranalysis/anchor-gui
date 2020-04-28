@@ -34,15 +34,15 @@ import org.anchoranalysis.anchor.overlay.Overlay;
 import org.anchoranalysis.anchor.overlay.objmask.OverlayObjMask;
 import org.anchoranalysis.feature.input.FeatureInput;
 import org.anchoranalysis.feature.nrg.NRGStackWithParams;
-import org.anchoranalysis.feature.session.CreateParams;
+import org.anchoranalysis.feature.session.CreateFeatureInput;
 import org.anchoranalysis.gui.feature.FeatureListWithRegionMap;
-import org.anchoranalysis.gui.feature.evaluator.nrgtree.createparams.CreateParamsIndFromObjMask;
-import org.anchoranalysis.gui.feature.evaluator.nrgtree.createparams.CreateParamsPairFromObjMask;
+import org.anchoranalysis.gui.feature.evaluator.nrgtree.createparams.CreateIndFromObj;
+import org.anchoranalysis.gui.feature.evaluator.nrgtree.createparams.CreatePairFromObj;
 import org.anchoranalysis.image.objmask.ObjMask;
 
 public class CreateParamsFromOverlay {
 
-	public static CreateParams<FeatureInput> addForOverlay(
+	public static CreateFeatureInput<FeatureInput> addForOverlay(
 		Overlay overlay,
 		NRGStackWithParams nrgStack,
 		FeatureListWithRegionMap<?> featureList
@@ -60,7 +60,7 @@ public class CreateParamsFromOverlay {
 			
 			OverlayObjMask overlayCast = (OverlayObjMask) overlay;
 			
-			return new CreateParamsIndFromObjMask(
+			return new CreateIndFromObj(
 				overlayCast.getObjMask().getMask(),
 				nrgStack
 			);
@@ -72,7 +72,7 @@ public class CreateParamsFromOverlay {
 	}
 	
 	
-	public static CreateParams<FeatureInput> addForOverlayPair(
+	public static CreateFeatureInput<FeatureInput> addForOverlayPair(
 		Pair<Overlay> pair,
 		NRGStackWithParams raster,
 		FeatureListWithRegionMap<?> featureList
@@ -95,7 +95,7 @@ public class CreateParamsFromOverlay {
 			ObjMask source = ((OverlayObjMask) pair.getSource()).getObjMask().getMask();
 			ObjMask dest = ((OverlayObjMask) pair.getDestination()).getObjMask().getMask();
 			
-			return new CreateParamsPairFromObjMask(
+			return new CreatePairFromObj(
 				source,
 				dest,
 				raster

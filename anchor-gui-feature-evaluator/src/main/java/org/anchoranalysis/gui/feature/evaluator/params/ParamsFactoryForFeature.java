@@ -44,7 +44,6 @@ import org.anchoranalysis.image.feature.histogram.FeatureInputHistogramDescripto
 import org.anchoranalysis.image.feature.objmask.FeatureInputSingleObjDescriptor;
 import org.anchoranalysis.image.feature.objmask.collection.FeatureInputObjsDescriptor;
 import org.anchoranalysis.image.feature.objmask.pair.FeatureInputPairObjsDescriptor;
-import org.anchoranalysis.image.feature.objmask.pair.merged.FeatureInputPairObjsMergedDescriptor;
 import org.anchoranalysis.image.feature.stack.nrg.FeatureInputNRGStackDescriptor;
 
 public class ParamsFactoryForFeature {
@@ -87,10 +86,6 @@ public class ParamsFactoryForFeature {
 		
 		if (paramType.equals(FeatureInputPairObjsDescriptor.instance)) {
 			return new FeatureObjMaskPairParamsFactory( GlobalRegionIdentifiers.SUBMARK_INSIDE );
-		}		
-		
-		if (paramType.equals(FeatureInputPairObjsMergedDescriptor.instance)) {
-			return new FeatureObjMaskPairMergedParamsFactory( GlobalRegionIdentifiers.SUBMARK_INSIDE );
 		}		
 		
 		if (paramType.equals(FeatureInputHistogramDescriptor.instance)) {

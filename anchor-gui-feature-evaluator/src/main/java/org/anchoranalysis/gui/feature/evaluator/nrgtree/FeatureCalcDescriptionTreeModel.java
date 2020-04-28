@@ -39,7 +39,7 @@ import org.anchoranalysis.feature.calc.FeatureCalcException;
 import org.anchoranalysis.feature.calc.FeatureInitParams;
 import org.anchoranalysis.feature.input.FeatureInput;
 import org.anchoranalysis.feature.nrg.NRGStackWithParams;
-import org.anchoranalysis.feature.session.CreateParams;
+import org.anchoranalysis.feature.session.CreateFeatureInput;
 import org.anchoranalysis.feature.session.FeatureSession;
 import org.anchoranalysis.feature.session.calculator.FeatureCalculatorMulti;
 import org.anchoranalysis.feature.shared.SharedFeatureSet;
@@ -107,7 +107,7 @@ public class FeatureCalcDescriptionTreeModel extends DefaultTreeModel implements
 				return;
 			}
 			
-			CreateParams<FeatureInput> createParams = CreateParamsFromOverlay.addForOverlay(
+			CreateFeatureInput<FeatureInput> createParams = CreateParamsFromOverlay.addForOverlay(
 				overlay,
 				nrgStack,
 				featureListWithRegions
@@ -135,7 +135,7 @@ public class FeatureCalcDescriptionTreeModel extends DefaultTreeModel implements
 				return;
 			}
 			
-			CreateParams<FeatureInput> createParams = CreateParamsFromOverlay.addForOverlayPair(
+			CreateFeatureInput<FeatureInput> createParams = CreateParamsFromOverlay.addForOverlayPair(
 				pair,
 				nrgStack,
 				featureListWithRegions
@@ -154,7 +154,7 @@ public class FeatureCalcDescriptionTreeModel extends DefaultTreeModel implements
 	
 	private void updateOrReload(
 		FeatureList<FeatureInput> featureList,
-		CreateParams<FeatureInput> createParams,
+		CreateFeatureInput<FeatureInput> createParams,
 		NRGStackWithParams nrgStack
 	) throws OperationFailedException {
 		
