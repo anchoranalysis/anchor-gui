@@ -90,13 +90,6 @@ public class FeatureCalcDescriptionTreeModel extends DefaultTreeModel implements
 		this.sharedFeatures = removeFeaturesFromShared(sharedFeatures, featureList);
 	}
 
-	private FeatureInitParams createInitParams( NRGStackWithParams nrgStack ) {
-		FeatureInitParams params = new FeatureInitParams( nrgStack.getParams() );
-		params.setNrgStack(nrgStack.getNrgStack());
-		return params;
-	}
-	
-
 	@Override
 	public void updateSingle(Overlay overlay, NRGStackWithParams nrgStack) {
 		
@@ -162,7 +155,7 @@ public class FeatureCalcDescriptionTreeModel extends DefaultTreeModel implements
 			CustomRootNode root = (CustomRootNode) getRoot();
 			//root.setFeatureCalcParams(featureCalcParams);
 	
-			FeatureInitParams paramsInit = createInitParams(nrgStack); 
+			FeatureInitParams paramsInit = new FeatureInitParams( nrgStack ); 
 			if (first) {
 				// Later on, both the features in featureList and various dependent features will be called through Subsessions
 				//   so we rely on these dependent features being initialised through session.start() as the initialization
