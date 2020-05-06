@@ -40,8 +40,8 @@ import org.anchoranalysis.anchor.overlay.bean.objmask.writer.ObjMaskWriter;
 import org.anchoranalysis.anchor.overlay.collection.ColoredOverlayCollection;
 import org.anchoranalysis.anchor.overlay.id.IDGetterOverlayID;
 import org.anchoranalysis.bean.annotation.BeanField;
-import org.anchoranalysis.core.bridge.BridgeElementException;
 import org.anchoranalysis.core.error.CreateException;
+import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.idgetter.IDGetter;
 import org.anchoranalysis.core.idgetter.IDGetterIter;
 import org.anchoranalysis.core.index.GetOperationFailedException;
@@ -128,7 +128,7 @@ public class ObjMaskWriterFromCfgNRGInstantState extends CreateRasterGenerator<C
 		);
 	}
 	
-	private OverlayedDisplayStackUpdate bridgeElement( MappedFrom<CfgNRGInstantState> sourceObject, ExportTaskParams params ) throws BridgeElementException {
+	private OverlayedDisplayStackUpdate bridgeElement( MappedFrom<CfgNRGInstantState> sourceObject, ExportTaskParams params ) throws OperationFailedException {
 		try {
 			Stack backgroundStackSrc = params.getFinderImgStackCollection().getImgStackCollection().getException(backgroundStackName);
 						
@@ -153,9 +153,9 @@ public class ObjMaskWriterFromCfgNRGInstantState extends CreateRasterGenerator<C
 			return OverlayedDisplayStackUpdate.assignOverlaysAndBackground(oc,backgroundStack);
 			
 		} catch (CreateException | GetOperationFailedException e) {
-			throw new BridgeElementException(e);
+			throw new OperationFailedException(e);
 		} catch (NamedProviderGetException e) {
-			throw new BridgeElementException(e.summarize());
+			throw new OperationFailedException(e.summarize());
 		}
 	}
 

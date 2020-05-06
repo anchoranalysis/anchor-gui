@@ -1,6 +1,5 @@
 package org.anchoranalysis.gui.videostats.dropdown;
 
-import org.anchoranalysis.core.bridge.BridgeElementException;
 import org.anchoranalysis.core.bridge.IObjectBridge;
 
 /*
@@ -30,7 +29,7 @@ import org.anchoranalysis.core.bridge.IObjectBridge;
  */
 
 
-import org.anchoranalysis.core.cache.ExecuteException;
+import org.anchoranalysis.core.cache.WrapOperationWithProgressReporterAsCached;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.error.reporter.ErrorReporter;
 import org.anchoranalysis.core.index.GetOperationFailedException;
@@ -46,7 +45,7 @@ import org.anchoranalysis.gui.videostats.threading.InteractiveThreadPool;
 import org.anchoranalysis.image.experiment.identifiers.ImgStackIdentifiers;
 import org.anchoranalysis.image.stack.DisplayStack;
 
-public class OperationCreateBackgroundSetWithAdder extends CachedOperationWithProgressReporter<BackgroundSetWithAdder> {
+public class OperationCreateBackgroundSetWithAdder extends CachedOperationWithProgressReporter<BackgroundSetWithAdder,OperationFailedException> {
 
 	private IAddVideoStatsModule parentAdder;
 	private InteractiveThreadPool threadPool;
@@ -54,26 +53,25 @@ public class OperationCreateBackgroundSetWithAdder extends CachedOperationWithPr
 	
 	
 	private NRGBackground nrgBackground;
-	private NRGBackgroundAdder nrgBackgroundNew;
+	private NRGBackgroundAdder<OperationFailedException> nrgBackgroundNew;
 	
-	private CachedOperationWithProgressReporter<IAddVideoStatsModule> operationIAddVideoStatsModule = new CachedOperationWithProgressReporter<IAddVideoStatsModule>() {
-
-		@Override
-		protected IAddVideoStatsModule execute( ProgressReporter progressReporter ) throws ExecuteException {
-			// We call the parent doOperation
+	private CachedOperationWithProgressReporter<IAddVideoStatsModule,OperationFailedException> operationIAddVideoStatsModule = new WrapOperationWithProgressReporterAsCached<>(
+		progressReporter -> {
 			BackgroundSetWithAdder bwsa = OperationCreateBackgroundSetWithAdder.this.doOperation( progressReporter );
-			return bwsa.getAdder();
+			return bwsa.getAdder();	
 		}
-		
-	};
+	);
 	
-	private CachedOperationWithProgressReporter<BackgroundSet> operationBackgroundSet = new CachedOperationWithProgressReporter<BackgroundSet>() {
-		@Override
-		protected BackgroundSet execute( ProgressReporter progressReporter ) throws ExecuteException {
-			BackgroundSetWithAdder bwsa = OperationCreateBackgroundSetWithAdder.this.doOperation( progressReporter );
-			return bwsa.getBackgroundSet();
+	private CachedOperationWithProgressReporter<BackgroundSet,GetOperationFailedException> operationBackgroundSet = new WrapOperationWithProgressReporterAsCached<>(
+		progressReporter -> {
+			try {
+				BackgroundSetWithAdder bwsa = OperationCreateBackgroundSetWithAdder.this.doOperation( progressReporter );
+				return bwsa.getBackgroundSet();
+			} catch (OperationFailedException e) {
+				throw new GetOperationFailedException(e);
+			}
 		}
-	};
+	);
 	
 	public OperationCreateBackgroundSetWithAdder(
 		NRGBackground nrgBackground,
@@ -88,13 +86,13 @@ public class OperationCreateBackgroundSetWithAdder extends CachedOperationWithPr
 		this.errorReporter = errorReporter;
 		
 		// A new nrgBackground that includes the changed operation for the background
-		this.nrgBackgroundNew = new NRGBackgroundAdder(
+		this.nrgBackgroundNew = new NRGBackgroundAdder<>(
 			nrgBackground.copyChangeOp(operationBackgroundSet),
 			operationIAddVideoStatsModule
 		);
 	}
 	
-	private static IObjectBridge<Integer,DisplayStack> initialBackground( BackgroundSet backgroundSet ) throws GetOperationFailedException {
+	private static IObjectBridge<Integer,DisplayStack,GetOperationFailedException> initialBackground( BackgroundSet backgroundSet ) throws GetOperationFailedException {
 		
 		if (backgroundSet.names().contains(ImgStackIdentifiers.INPUT_IMAGE)) {
 			return backgroundSet.stackCntr( ImgStackIdentifiers.INPUT_IMAGE );
@@ -113,10 +111,15 @@ public class OperationCreateBackgroundSetWithAdder extends CachedOperationWithPr
 	}
 	
 	@Override
-	protected BackgroundSetWithAdder execute( ProgressReporter progressReporter ) throws ExecuteException {
+	protected BackgroundSetWithAdder execute( ProgressReporter progressReporter ) throws OperationFailedException {
 		BackgroundSetWithAdder bwsa = new BackgroundSetWithAdder();
 		
-		BackgroundSet backgroundSet = nrgBackground.getBackgroundSet().doOperation(progressReporter);
+		BackgroundSet backgroundSet;
+		try {
+			backgroundSet = nrgBackground.getBackgroundSet().doOperation(progressReporter);
+		} catch (GetOperationFailedException e1) {
+			throw new OperationFailedException(e1);
+		}
 		
 		bwsa.setBackgroundSet(backgroundSet);
 		
@@ -125,19 +128,19 @@ public class OperationCreateBackgroundSetWithAdder extends CachedOperationWithPr
 		
 		childAdder = nrgBackground.addNrgStackToAdder(childAdder);
 		
-		IObjectBridge<Integer,DisplayStack> initialBackground;
+		IObjectBridge<Integer,DisplayStack,GetOperationFailedException> initialBackground;
 		try {
 			initialBackground = initialBackground(backgroundSet);
 		} catch (GetOperationFailedException e) {
-			throw new ExecuteException( new OperationFailedException("Cannot set defaultModuleState background: " + e) );
+			throw new OperationFailedException("Cannot set defaultModuleState background: " + e);
 		}
 		
 		// TODO For now we assume there is always an index 0 available as a minimum
 		DisplayStack initialStack;
 		try {
 			initialStack = initialBackground.bridgeElement(0);
-		} catch (BridgeElementException e) {
-			throw new ExecuteException( new OperationFailedException("Cannot set defaultModuleState background: " + e) );
+		} catch (GetOperationFailedException e) {
+			throw new OperationFailedException("Cannot set defaultModuleState background: " + e);
 		}
 		
 		// TODO is this the right place?
@@ -146,20 +149,16 @@ public class OperationCreateBackgroundSetWithAdder extends CachedOperationWithPr
 		
 		bwsa.setAdder(childAdder);
 		
-		
 		childAdder.getSubgroup().getDefaultModuleState().getLinkStateManager().setBackground( initialBackground );
-		
 
 		return bwsa;
 	}
-
-
 			
-	public OperationWithProgressReporter<IAddVideoStatsModule> operationAdder() {
+	public OperationWithProgressReporter<IAddVideoStatsModule,OperationFailedException> operationAdder() {
 		return operationIAddVideoStatsModule;
 	}
 	
-	public NRGBackgroundAdder nrgBackground() {
+	public NRGBackgroundAdder<OperationFailedException> nrgBackground() {
 		return nrgBackgroundNew;
 	}
 }

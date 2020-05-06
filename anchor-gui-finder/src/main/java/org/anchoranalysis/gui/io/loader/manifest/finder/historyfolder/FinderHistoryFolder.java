@@ -29,7 +29,6 @@ package org.anchoranalysis.gui.io.loader.manifest.finder.historyfolder;
 
 import java.util.List;
 
-import org.anchoranalysis.core.cache.ExecuteException;
 import org.anchoranalysis.core.cache.Operation;
 import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.index.container.IBoundedIndexContainer;
@@ -56,7 +55,7 @@ public abstract class FinderHistoryFolder<T> extends FinderSingleFolder implemen
 	// We remember what type from when we found the file, so
 	//   that we can use it again when deserializing
 	private StorageType foundStorage;
-
+	
 	public FinderHistoryFolder(String manifestFunction) {
 		super();
 		this.manifestFunction = manifestFunction;
@@ -91,24 +90,11 @@ public abstract class FinderHistoryFolder<T> extends FinderSingleFolder implemen
 	protected abstract LoadContainer<T> createFromBundle( FolderWrite folder ) throws DeserializationFailedException;
 	
 	protected abstract LoadContainer<T> createFromSerialized( FolderWrite folder ) throws DeserializationFailedException;
-	
-	
-	private Operation<LoadContainer<T>> operation = new Operation<LoadContainer<T>>() {
-		@Override
-		public LoadContainer<T> doOperation() throws ExecuteException {
-			try {
-				return get();
-			} catch (GetOperationFailedException e) {
-				throw new ExecuteException(e);
-			}
-		}
-	};
-	
-	public Operation<LoadContainer<T>> getAsOperation() {
-		return operation;
-	}
-	
 		
+	public Operation<LoadContainer<T>,GetOperationFailedException> getAsOperation() {
+		return () -> get();
+	}
+
 	public LoadContainer<T> get() throws GetOperationFailedException {
 		
 		try {

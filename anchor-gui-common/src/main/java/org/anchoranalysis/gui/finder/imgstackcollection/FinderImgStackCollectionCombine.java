@@ -30,12 +30,12 @@ package org.anchoranalysis.gui.finder.imgstackcollection;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.anchoranalysis.core.cache.ExecuteException;
+import org.anchoranalysis.core.cache.WrapOperationWithProgressReporterAsCached;
+import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.name.provider.INamedProvider;
 import org.anchoranalysis.core.progress.CachedOperationWithProgressReporter;
 import org.anchoranalysis.core.progress.OperationWithProgressReporter;
-import org.anchoranalysis.core.progress.ProgressReporter;
 import org.anchoranalysis.core.progress.ProgressReporterNull;
 import org.anchoranalysis.image.stack.NamedImgStackCollection;
 import org.anchoranalysis.image.stack.Stack;
@@ -46,41 +46,35 @@ public class FinderImgStackCollectionCombine extends FinderImgStackCollection {
 
 	private List<FinderImgStackCollection> list = new ArrayList<>(); 
 	
-	private class OperationCombine extends CachedOperationWithProgressReporter<INamedProvider<Stack>> {
-
-		@Override
-		protected NamedImgStackCollection execute( ProgressReporter progressReporter )
-				throws ExecuteException {
-			
-			NamedImgStackCollection out = new NamedImgStackCollection();
-			
-			for( FinderImgStackCollection finder : list) {
-				try {
-					out.addFrom( finder.getImgStackCollection() );
-				} catch (GetOperationFailedException e) {
-					throw new ExecuteException(e);
+	private CachedOperationWithProgressReporter<INamedProvider<Stack>,OperationFailedException> operation =
+		new WrapOperationWithProgressReporterAsCached<>(
+			pr -> {
+				NamedImgStackCollection out = new NamedImgStackCollection();
+				
+				for( FinderImgStackCollection finder : list) {
+					try {
+						out.addFrom( finder.getImgStackCollection() );
+					} catch (GetOperationFailedException e) {
+						throw new OperationFailedException(e);
+					}
 				}
+				
+				return out;
 			}
-			
-			return out;
-		}
-		
-	}
-	
-	private OperationWithProgressReporter<INamedProvider<Stack>> operation = new OperationCombine();
+		);
 	
 	@Override
 	public INamedProvider<Stack> getImgStackCollection()
 			throws GetOperationFailedException {
 		try {
 			return operation.doOperation( ProgressReporterNull.get() );
-		} catch (ExecuteException e) {
+		} catch (OperationFailedException e) {
 			throw new GetOperationFailedException(e);
 		}
 	}
 
 	@Override
-	public OperationWithProgressReporter<INamedProvider<Stack>> getImgStackCollectionAsOperationWithProgressReporter() {
+	public OperationWithProgressReporter<INamedProvider<Stack>,OperationFailedException> getImgStackCollectionAsOperationWithProgressReporter() {
 		return operation;
 	}
 

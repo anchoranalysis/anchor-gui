@@ -1,5 +1,7 @@
 package org.anchoranalysis.gui.feature.evaluator.nrgtree.createparams;
 
+import org.anchoranalysis.anchor.mpp.pxlmark.memo.PxlMarkMemo;
+
 /*-
  * #%L
  * anchor-gui-feature-evaluator
@@ -28,29 +30,32 @@ package org.anchoranalysis.gui.feature.evaluator.nrgtree.createparams;
 
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.feature.bean.Feature;
-import org.anchoranalysis.feature.calc.params.FeatureCalcParams;
+import org.anchoranalysis.feature.calc.FeatureCalcException;
+import org.anchoranalysis.feature.input.FeatureInput;
 import org.anchoranalysis.feature.nrg.NRGStackWithParams;
-import org.anchoranalysis.feature.session.CreateParams;
-import org.anchoranalysis.image.feature.objmask.pair.merged.FeatureObjMaskPairMergedParams;
-import org.anchoranalysis.image.objmask.ObjMask;
+import org.anchoranalysis.feature.session.CreateFeatureInput;
+import org.anchoranalysis.gui.feature.evaluator.params.ParamsFactoryForFeature;
 
-public class CreateParamsPairFromObjMask extends CreateParams<FeatureCalcParams> {
+public class CreatePairFromMark extends CreateFeatureInput<FeatureInput> {
+
+	private PxlMarkMemo pmm1;
+	private PxlMarkMemo pmm2;
+	private NRGStackWithParams raster;
 	
-	private FeatureObjMaskPairMergedParams params;
-	
-	public CreateParamsPairFromObjMask(ObjMask om1, ObjMask om2,
-			NRGStackWithParams raster) {
+	public CreatePairFromMark(PxlMarkMemo pmm1, PxlMarkMemo pmm2,
+			NRGStackWithParams raster ) {
 		super();
-
-		// We make the params here, so the same object is always returned. This avoids needless creation of params
-		//   and as FeatureObjMaskPairMergedParams does a lazy-evaluation of the merged-object. It also caches
-		//  this operation so it's not repeated needlessly for each feature
-		params = new FeatureObjMaskPairMergedParams( om1, om2 );
-		params.setNrgStack(raster);
+		this.pmm1 = pmm1;
+		this.pmm2 = pmm2;
+		this.raster = raster;
 	}
 
 	@Override
-	public FeatureCalcParams createForFeature(Feature<?> feature) throws CreateException {
-		return params;
+	public FeatureInput createForFeature(Feature<?> feature) throws CreateException {
+		try {
+			return ParamsFactoryForFeature.factoryFor( feature ).create(pmm1, pmm2, raster);
+		} catch (FeatureCalcException e) {
+			throw new CreateException(e);
+		}
 	}
 }

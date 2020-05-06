@@ -30,9 +30,9 @@ import org.anchoranalysis.anchor.mpp.cfg.Cfg;
 
 import org.anchoranalysis.anchor.mpp.overlay.OverlayCollectionMarkFactory;
 import org.anchoranalysis.anchor.overlay.collection.OverlayCollection;
-import org.anchoranalysis.core.cache.ExecuteException;
 import org.anchoranalysis.core.cache.Operation;
 import org.anchoranalysis.core.error.InitException;
+import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.gui.image.frame.ISliderState;
 import org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.definition.ChangeableBackgroundDefinitionSimple;
 import org.anchoranalysis.gui.mark.MarkDisplaySettings;
@@ -49,7 +49,7 @@ public class CfgModuleCreator extends VideoStatsModuleCreator {
 
 	private String fileIdentifier;
 	private String name;
-	private Operation<Cfg> opCfg;
+	private Operation<Cfg,OperationFailedException> opCfg;
 	private NRGBackground nrgBackground;
 	private VideoStatsModuleGlobalParams mpg;
 	private MarkDisplaySettings markDisplaySettings;
@@ -57,7 +57,7 @@ public class CfgModuleCreator extends VideoStatsModuleCreator {
 	public CfgModuleCreator(
 		String fileIdentifier,
 		String name,
-		Operation<Cfg> opCfg,
+		Operation<Cfg,OperationFailedException> opCfg,
 		NRGBackground nrgBackground,
 		VideoStatsModuleGlobalParams mpg,
 		MarkDisplaySettings markDisplaySettings
@@ -96,9 +96,7 @@ public class CfgModuleCreator extends VideoStatsModuleCreator {
 			);
 			ModuleAddUtilities.add(adder, imageFrame.moduleCreator(sliderState) );
 			
-		} catch (InitException e) {
-			throw new VideoStatsModuleCreateException(e);
-		} catch (ExecuteException e) {
+		} catch (InitException | OperationFailedException e) {
 			throw new VideoStatsModuleCreateException(e);
 		}
 	}
@@ -110,7 +108,7 @@ public class CfgModuleCreator extends VideoStatsModuleCreator {
 		return new IVideoStatsOperationCombine() {
 			
 			@Override
-			public Operation<Cfg> getCfg() {
+			public Operation<Cfg,OperationFailedException> getCfg() {
 				return opCfg;
 			}
 	
@@ -120,7 +118,7 @@ public class CfgModuleCreator extends VideoStatsModuleCreator {
 			}
 
 			@Override
-			public Operation<ObjMaskCollection> getObjMaskCollection() {
+			public Operation<ObjMaskCollection,OperationFailedException> getObjMaskCollection() {
 				return null;
 			}
 

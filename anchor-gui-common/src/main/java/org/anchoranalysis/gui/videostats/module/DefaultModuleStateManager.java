@@ -27,6 +27,7 @@ package org.anchoranalysis.gui.videostats.module;
  */
 
 import org.anchoranalysis.core.bridge.IObjectBridge;
+import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.gui.mark.MarkDisplaySettings;
 import org.anchoranalysis.gui.videostats.link.DefaultLinkState;
 import org.anchoranalysis.gui.videostats.link.DefaultLinkStateManager;
@@ -61,7 +62,7 @@ public class DefaultModuleStateManager {
 	}
 	
 	/** Provides a copy of the default module state with a changed background */
-	public DefaultModuleState copyChangeBackground( IObjectBridge<Integer,DisplayStack> background ) {
+	public DefaultModuleState copyChangeBackground( IObjectBridge<Integer,DisplayStack,GetOperationFailedException> background ) {
 		return new DefaultModuleState( linkStateManager.copyChangeBackground(background), markDisplaySettings );
 	}
 	

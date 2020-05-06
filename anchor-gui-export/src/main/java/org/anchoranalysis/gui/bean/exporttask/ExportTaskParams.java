@@ -32,7 +32,6 @@ import org.anchoranalysis.anchor.mpp.feature.instantstate.CfgNRGInstantState;
  */
 
 
-import org.anchoranalysis.core.cache.CacheMonitor;
 import org.anchoranalysis.core.color.ColorIndex;
 import org.anchoranalysis.gui.container.ContainerGetter;
 import org.anchoranalysis.gui.finder.imgstackcollection.FinderImgStackCollection;
@@ -47,7 +46,6 @@ public class ExportTaskParams {
 	private FinderImgStackCollection finderImgStackCollection;
 	private FinderCSVStats finderCsvStatistics;
 	private List<ContainerGetter<CfgNRGInstantState>> listFinderCfgNRGHistory = new ArrayList<>();
-	private CacheMonitor cacheMonitor;
 	private BoundOutputManagerRouteErrors outputManager;
 
 	public ColorIndex getColorIndexMarks() {
@@ -90,13 +88,6 @@ public class ExportTaskParams {
 		if (finderCfgNRGHistory!=null) {
 			this.listFinderCfgNRGHistory.add( finderCfgNRGHistory );
 		}
-	}
-
-	public CacheMonitor getCacheMonitor() {
-		return cacheMonitor;
-	}
-	public void setCacheMonitor(CacheMonitor cacheMonitor) {
-		this.cacheMonitor = cacheMonitor;
 	}
 	public BoundOutputManagerRouteErrors getOutputManager() {
 		return outputManager;

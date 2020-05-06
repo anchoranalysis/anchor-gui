@@ -28,8 +28,8 @@ package org.anchoranalysis.gui.finder;
 
 
 import org.anchoranalysis.core.cache.CachedOperation;
-import org.anchoranalysis.core.cache.ExecuteException;
 import org.anchoranalysis.core.error.CreateException;
+import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.name.provider.INamedProvider;
 import org.anchoranalysis.core.name.provider.NamedProviderGetException;
 import org.anchoranalysis.core.progress.OperationWithProgressReporter;
@@ -40,59 +40,51 @@ import org.anchoranalysis.image.chnl.Chnl;
 import org.anchoranalysis.image.extent.IncorrectImageSizeException;
 import org.anchoranalysis.image.stack.Stack;
 
-public class OperationFindNrgStackFromStackCollection extends CachedOperation<NRGStackWithParams> implements OperationWithProgressReporter<NRGStackWithParams> {
+public class OperationFindNrgStackFromStackCollection extends CachedOperation<NRGStackWithParams,OperationFailedException> implements OperationWithProgressReporter<NRGStackWithParams,OperationFailedException> {
 
 	// We first retrieve a namedimgcollection which we use to contstruct our real NrgStack for purposes
 	//   of good caching
-	private OperationWithProgressReporter<INamedProvider<Stack>> operationStackCollection;
+	private OperationWithProgressReporter<INamedProvider<Stack>,OperationFailedException> operationStackCollection;
 	
 	// An operation to retrieve a stackCollection
 	//
-	public OperationFindNrgStackFromStackCollection( OperationWithProgressReporter<INamedProvider<Stack>> operationStackCollection ) {
+	public OperationFindNrgStackFromStackCollection(
+		OperationWithProgressReporter<INamedProvider<Stack>,OperationFailedException> operationStackCollection
+	) {
 		super();
 		this.operationStackCollection = operationStackCollection;
 	}
 	
-	public OperationWithProgressReporter<INamedProvider<Stack>> getOperationStackCollection() {
+	public OperationWithProgressReporter<INamedProvider<Stack>,OperationFailedException> getOperationStackCollection() {
 		return operationStackCollection;
 	}
 
 	@Override
-	public NRGStackWithParams doOperation(ProgressReporter progressReporter)
-			throws ExecuteException {
+	public NRGStackWithParams doOperation(ProgressReporter progressReporter) throws OperationFailedException {
 		return doOperation();
 	}
 
 	@Override
-	protected NRGStackWithParams execute() throws ExecuteException {
-		try {
-			return createNRGStack();
-		} catch (CreateException e) {
-			throw new ExecuteException(e);
-		}
+	protected NRGStackWithParams execute() throws OperationFailedException {
+		return createNRGStack();
 	}
 	
 	// NB Note assumption about namedImgStackCollection ordering
-	private NRGStackWithParams createNRGStack() throws CreateException {
+	private NRGStackWithParams createNRGStack() throws OperationFailedException {
 		
-		try {
-			INamedProvider<Stack> nic = operationStackCollection.doOperation( ProgressReporterNull.get() );
-			
-			// We expects the keys to be the indexes
-			Stack stack = populateStack(nic);
-			
-			if (stack.getNumChnl()>0) {
-				return new NRGStackWithParams(stack);
-			} else {
-				return null;
-			}
-			
-		} catch (ExecuteException e) {
-			throw new CreateException(e);
+		INamedProvider<Stack> nic = operationStackCollection.doOperation( ProgressReporterNull.get() );
+		
+		// We expects the keys to be the indexes
+		Stack stack = populateStack(nic);
+		
+		if (stack.getNumChnl()>0) {
+			return new NRGStackWithParams(stack);
+		} else {
+			return null;
 		}
 	}
 	
-	private static Stack populateStack( INamedProvider<Stack> nic ) throws CreateException {
+	private static Stack populateStack( INamedProvider<Stack> nic ) throws OperationFailedException {
 		
 		Stack stack = new Stack();
 		
@@ -104,7 +96,7 @@ public class OperationFindNrgStackFromStackCollection extends CachedOperation<NR
 					chnlFromStack(nic,c)
 				);
 			} catch (IncorrectImageSizeException e) {
-				throw new CreateException(e);
+				throw new OperationFailedException(e);
 			}
 		}
 		
@@ -121,18 +113,18 @@ public class OperationFindNrgStackFromStackCollection extends CachedOperation<NR
 	 * @return
 	 * @throws CreateException 
 	 */
-	private static Chnl chnlFromStack( INamedProvider<Stack> stackProvider, int c ) throws CreateException {
+	private static Chnl chnlFromStack( INamedProvider<Stack> stackProvider, int c ) throws OperationFailedException {
 		
 		try {
 			Stack chnlStack = stackProvider.getException( Integer.toString(c) );
 			
 			if (chnlStack.getNumChnl()!=1) {
-				throw new CreateException("Stack should have only a single channel");
+				throw new OperationFailedException("Stack should have only a single channel");
 			}
 			
 			return chnlStack.getChnl(0);
 		} catch (NamedProviderGetException e) {
-			throw new CreateException(e);
+			throw new OperationFailedException(e);
 		}
 	}
 }

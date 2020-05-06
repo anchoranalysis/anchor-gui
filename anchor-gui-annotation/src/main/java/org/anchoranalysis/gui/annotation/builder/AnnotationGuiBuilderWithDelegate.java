@@ -31,6 +31,7 @@ import java.nio.file.Path;
 import org.anchoranalysis.annotation.io.bean.strategy.AnnotatorStrategy;
 import org.anchoranalysis.annotation.io.input.AnnotationWithStrategy;
 import org.anchoranalysis.core.error.CreateException;
+import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.name.provider.INamedProvider;
 import org.anchoranalysis.core.progress.OperationWithProgressReporter;
 import org.anchoranalysis.core.progress.ProgressReporterMultiple;
@@ -65,7 +66,7 @@ public abstract class AnnotationGuiBuilderWithDelegate<T extends AnnotationInitP
 		
 	// Cached-operation
 	@Override
-	public OperationWithProgressReporter<INamedProvider<Stack>> stacks() {
+	public OperationWithProgressReporter<INamedProvider<Stack>,CreateException> stacks() {
 		return delegate.stacks();
 	}
 	
@@ -92,10 +93,14 @@ public abstract class AnnotationGuiBuilderWithDelegate<T extends AnnotationInitP
 	}
 
 	protected AnnotationBackground createBackground(ProgressReporterMultiple prm, INamedProvider<Stack> backgroundStacks ) throws CreateException {
-		return new AnnotationBackground(
-			prm,
-			backgroundStacks,
-			getStrategy().getBackground().getStackNameVisualOriginal()
-		);
+		try {
+			return new AnnotationBackground(
+				prm,
+				backgroundStacks,
+				getStrategy().getBackground().getStackNameVisualOriginal()
+			);
+		} catch (GetOperationFailedException e) {
+			throw new CreateException(e);
+		}
 	}
 }

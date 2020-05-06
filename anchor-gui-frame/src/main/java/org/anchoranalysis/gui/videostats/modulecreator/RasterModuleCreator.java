@@ -51,7 +51,7 @@ public class RasterModuleCreator extends VideoStatsModuleCreator {
 	private IVideoStatsOperationCombine combiner = new IVideoStatsOperationCombine() {
 
 		@Override
-		public Operation<Cfg> getCfg() {
+		public Operation<Cfg,OperationFailedException> getCfg() {
 			return null;
 		}
 
@@ -61,7 +61,7 @@ public class RasterModuleCreator extends VideoStatsModuleCreator {
 		}
 
 		@Override
-		public Operation<ObjMaskCollection> getObjMaskCollection() {
+		public Operation<ObjMaskCollection,OperationFailedException> getObjMaskCollection() {
 			return null;
 		}
 

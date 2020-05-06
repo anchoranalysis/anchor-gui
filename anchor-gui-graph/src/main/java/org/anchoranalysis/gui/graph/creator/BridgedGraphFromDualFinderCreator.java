@@ -38,14 +38,20 @@ import org.anchoranalysis.gui.io.loader.manifest.finder.FinderCSVStats;
 import org.anchoranalysis.gui.io.loader.manifest.finder.csvstatistic.CSVStatistic;
 import org.anchoranalysis.gui.io.loader.manifest.finder.historyfolder.FinderHistoryFolder;
 
-public abstract class BridgedGraphFromDualFinderCreator<DestType> extends GraphFromDualFinderCreator<DestType> {
+/**
+ * 
+ * @author Owen Feehan
+ *
+ * @param <T> destination-type
+ */
+public abstract class BridgedGraphFromDualFinderCreator<T> extends GraphFromDualFinderCreator<T> {
 	
 	public BridgedGraphFromDualFinderCreator() {
 		super();
 	}
 
 	@Override
-	public IBoundedIndexContainer<DestType> createCntr( FinderCSVStats finderCSVStats ) throws CreateException {
+	public IBoundedIndexContainer<T> createCntr( FinderCSVStats finderCSVStats ) throws CreateException {
 		
 		try {
 			return new BoundedIndexContainerBridgeWithoutIndex<>(
@@ -58,7 +64,7 @@ public abstract class BridgedGraphFromDualFinderCreator<DestType> extends GraphF
 	}
 	
 	@Override
-	public IBoundedIndexContainer<DestType> createCntr(FinderHistoryFolder<CfgNRGInstantState> finderCfgNRGHistory ) throws CreateException {
+	public IBoundedIndexContainer<T> createCntr(FinderHistoryFolder<CfgNRGInstantState> finderCfgNRGHistory ) throws CreateException {
 
 		try {
 			return new BoundedIndexContainerBridgeWithoutIndex<>(
@@ -71,6 +77,6 @@ public abstract class BridgedGraphFromDualFinderCreator<DestType> extends GraphF
 
 	}
 	
-	public abstract IObjectBridge<CSVStatistic, DestType> createCSVStatisticBridge();
-	public abstract IObjectBridge<CfgNRGInstantState, DestType> createCfgNRGInstantStateBridge();
+	public abstract IObjectBridge<CSVStatistic,T,CreateException> createCSVStatisticBridge();
+	public abstract IObjectBridge<CfgNRGInstantState,T,CreateException> createCfgNRGInstantStateBridge();
 }

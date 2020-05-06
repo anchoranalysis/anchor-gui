@@ -39,7 +39,6 @@ import javax.swing.event.EventListenerList;
 import org.anchoranalysis.anchor.mpp.bean.cfg.CfgGen;
 import org.anchoranalysis.anchor.mpp.bean.init.MPPInitParams;
 import org.anchoranalysis.anchor.mpp.bean.regionmap.RegionMap;
-import org.anchoranalysis.core.cache.ExecuteException;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.reporter.ErrorReporter;
 import org.anchoranalysis.core.index.GetOperationFailedException;
@@ -189,7 +188,7 @@ public class EvaluatorChooser {
 			try {
 				MPPInitParams so = markEvaluatorSelected.getProposerSharedObjectsOperation().doOperation();
 				item.init( so );
-			} catch (ExecuteException e) {
+			} catch (CreateException e) {
 				errorReporter.recordError(EvaluatorChooser.class, e);
 			}
 		}

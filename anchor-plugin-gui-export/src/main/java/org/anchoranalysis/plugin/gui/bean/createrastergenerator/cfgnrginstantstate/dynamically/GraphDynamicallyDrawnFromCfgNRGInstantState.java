@@ -59,9 +59,9 @@ public abstract class GraphDynamicallyDrawnFromCfgNRGInstantState<T> extends Cre
 	// Delayed instantiation of delegate so parameters are already filled
 	private GraphDynamicallyDrawnFromCSVStatistic<T> delegate;
 	
-	private IObjectBridge<CSVStatistic, T> elementBridge;
+	private IObjectBridge<CSVStatistic,T,CreateException> elementBridge;
 	
-	public GraphDynamicallyDrawnFromCfgNRGInstantState( IObjectBridge<CSVStatistic, T> elementBridge) {
+	public GraphDynamicallyDrawnFromCfgNRGInstantState( IObjectBridge<CSVStatistic,T,CreateException> elementBridge) {
 		super();
 		this.elementBridge = elementBridge;
 	}

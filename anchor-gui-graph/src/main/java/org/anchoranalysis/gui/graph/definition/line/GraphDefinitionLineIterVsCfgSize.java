@@ -87,9 +87,6 @@ public class GraphDefinitionLineIterVsCfgSize extends GraphDefinition<GraphDefin
 		}
 		
 	}
-	
-	public GraphDefinitionLineIterVsCfgSize() {
-	}
 
 	@Override
 	public GraphInstance create(Iterator<GraphDefinitionLineIterVsCfgSize.Item> items, AxisLimits domainLimits, AxisLimits rangeLimits ) throws CreateException {

@@ -51,13 +51,13 @@ public class BridgedGraphNRGCreator extends BridgedGraphFromDualFinderCreator<Gr
 	}
 
 	@Override
-	public IObjectBridge<CSVStatistic, Item> createCSVStatisticBridge() {
+	public IObjectBridge<CSVStatistic,Item,CreateException> createCSVStatisticBridge() {
 		return sourceObject ->
 			new GraphDefinitionLineIterVsNRG.Item( sourceObject.getIter(), sourceObject.getNrg() );
 	}
 
 	@Override
-	public IObjectBridge<CfgNRGInstantState, Item> createCfgNRGInstantStateBridge() {
+	public IObjectBridge<CfgNRGInstantState,Item,CreateException> createCfgNRGInstantStateBridge() {
 		return sourceObject -> {
 			if ( sourceObject.getCfgNRG() != null) {
 				return new Item( sourceObject.getIndex(), sourceObject.getCfgNRG().getNrgTotal() );

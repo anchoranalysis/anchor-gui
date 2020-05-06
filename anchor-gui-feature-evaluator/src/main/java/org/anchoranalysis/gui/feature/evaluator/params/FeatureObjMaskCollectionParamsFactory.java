@@ -31,10 +31,10 @@ import org.anchoranalysis.anchor.mpp.pxlmark.memo.PxlMarkMemo;
 
 
 import org.anchoranalysis.core.error.CreateException;
-import org.anchoranalysis.feature.calc.params.FeatureCalcParams;
+import org.anchoranalysis.feature.input.FeatureInput;
 import org.anchoranalysis.feature.nrg.NRGStackWithParams;
 import org.anchoranalysis.image.binary.values.BinaryValuesByte;
-import org.anchoranalysis.image.feature.objmask.collection.FeatureObjMaskCollectionParams;
+import org.anchoranalysis.image.feature.objmask.collection.FeatureInputObjs;
 import org.anchoranalysis.image.objmask.ObjMask;
 import org.anchoranalysis.image.objmask.ObjMaskCollection;
 
@@ -48,10 +48,10 @@ public class FeatureObjMaskCollectionParamsFactory extends FeatureCalcParamsUnar
 	}
 
 	@Override
-	public FeatureCalcParams create(PxlMarkMemo pmm, NRGStackWithParams nrgStack)
+	public FeatureInput create(PxlMarkMemo pmm, NRGStackWithParams nrgStack)
 			throws CreateException {
 		ObjMask om = pmm.getMark().calcMask(nrgStack.getDimensions(), rm, BinaryValuesByte.getDefault() ).getMask();
-		FeatureObjMaskCollectionParams params = new FeatureObjMaskCollectionParams( new ObjMaskCollection(om) );
+		FeatureInputObjs params = new FeatureInputObjs( new ObjMaskCollection(om) );
 		params.setNrgStack(nrgStack);
 		return params;
 	}

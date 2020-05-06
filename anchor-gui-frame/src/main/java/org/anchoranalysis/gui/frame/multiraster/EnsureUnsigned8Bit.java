@@ -1,6 +1,6 @@
 package org.anchoranalysis.gui.frame.multiraster;
 
-import org.anchoranalysis.core.bridge.BridgeElementException;
+
 
 /*-
  * #%L
@@ -32,18 +32,17 @@ import org.anchoranalysis.core.bridge.IObjectBridge;
 import org.anchoranalysis.image.stack.DisplayStack;
 
 // Ensure unsigned 8-bit
-class EnsureUnsigned8Bit implements IObjectBridge<Integer,DisplayStack> {
+class EnsureUnsigned8Bit<E extends Throwable> implements IObjectBridge<Integer,DisplayStack,E> {
 
-	private IObjectBridge<Integer,DisplayStack> bridge;
+	private IObjectBridge<Integer,DisplayStack,E> bridge;
 	
-	public EnsureUnsigned8Bit(IObjectBridge<Integer,DisplayStack> bridge) {
+	public EnsureUnsigned8Bit(IObjectBridge<Integer,DisplayStack,E> bridge) {
 		super();
 		this.bridge = bridge;
 	}
 
 	@Override
-	public DisplayStack bridgeElement(Integer sourceObject)
-			throws BridgeElementException {
+	public DisplayStack bridgeElement(Integer sourceObject)	throws E {
 		return bridge.bridgeElement(sourceObject);
 	}
 	

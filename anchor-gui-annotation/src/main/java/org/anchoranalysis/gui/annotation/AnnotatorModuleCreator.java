@@ -33,7 +33,6 @@ import javax.swing.JOptionPane;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.error.OperationFailedException;
-import org.anchoranalysis.core.progress.IdentityOperationWithProgressReporter;
 import org.anchoranalysis.core.progress.ProgressReporter;
 import org.anchoranalysis.core.progress.ProgressReporterMultiple;
 import org.anchoranalysis.gui.annotation.builder.AdditionalFramesContext;
@@ -154,7 +153,6 @@ public class AnnotatorModuleCreator<T extends AnnotationInitParams> extends Vide
 			annotation,
 			paramsInit,
 			adder.getSubgroup().getDefaultModuleState().getState(),
-			new IdentityOperationWithProgressReporter<>(adder),
 			outputWriteSettings,
 			mpg
 		);

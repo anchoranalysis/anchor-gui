@@ -29,10 +29,7 @@ package org.anchoranalysis.gui.backgroundset;
 
 import java.util.Set;
 
-import org.anchoranalysis.core.bridge.BridgeElementException;
-import org.anchoranalysis.core.bridge.IObjectBridge;
 import org.anchoranalysis.core.cache.CachedOperation;
-import org.anchoranalysis.core.cache.ExecuteException;
 import org.anchoranalysis.core.cache.Operation;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.OperationFailedException;
@@ -115,26 +112,20 @@ public class BackgroundSetFactory {
 	private static IBoundedIndexContainer<DisplayStack> rasterBridge( final LoadContainer<MarkWithRaster> cntr, final String name ) {
 		
 		assert(cntr!=null);
-		return new BoundedIndexContainerBridgeWithoutIndex<>(cntr.getCntr(),
-			new IObjectBridge<MarkWithRaster, DisplayStack>() {
-
-				@Override
-				public DisplayStack bridgeElement(
-						MarkWithRaster sourceObject) throws BridgeElementException {
-					assert(sourceObject!=null);
-					try {
-						return sourceObject.getBackgroundSet().singleStack(name);
-					} catch (GetOperationFailedException e) {
-						throw new BridgeElementException(e);
-					}
+		return new BoundedIndexContainerBridgeWithoutIndex<>(
+			cntr.getCntr(),
+			sourceObject -> {
+				assert(sourceObject!=null);
+				try {
+					return sourceObject.getBackgroundSet().singleStack(name);
+				} catch (GetOperationFailedException e) {
+					throw new OperationFailedException(e);
 				}
 			}
 		);		
 	}
-	
-	
-	
-	private static class AddBackgroundSetItem extends CachedOperation<BackgroundStackCntr> {
+		
+	private static class AddBackgroundSetItem extends CachedOperation<BackgroundStackCntr, OperationFailedException> {
 
 		private INamedProvider<TimeSequence> imageStackCollection;
 		private String id;
@@ -148,7 +139,7 @@ public class BackgroundSetFactory {
 		}
 
 		@Override
-		protected BackgroundStackCntr execute() throws ExecuteException {
+		protected BackgroundStackCntr execute() throws OperationFailedException {
 
 			try {
 				TimeSequence seq = imageStackCollection.getException(id);
@@ -161,8 +152,8 @@ public class BackgroundSetFactory {
 					);
 				}
 
-			} catch (OperationFailedException | NamedProviderGetException e) {
-				throw new ExecuteException(e);
+			} catch (NamedProviderGetException e) {
+				throw new OperationFailedException(e);
 			}
 		}
 	}
@@ -188,13 +179,9 @@ public class BackgroundSetFactory {
 		backgroundSet.addItem(
 			"blank (all black)",
 			() -> {
-				try {
-					ImageDim sd = guessDimensions(imageStackCollection);
-					Stack stack = createEmptyStack(sd);
-					return BackgroundStackCntrFactory.singleSavedStack(stack);
-				} catch (OperationFailedException e) {
-					throw new ExecuteException(e);
-				}
+				ImageDim sd = guessDimensions(imageStackCollection);
+				Stack stack = createEmptyStack(sd);
+				return BackgroundStackCntrFactory.singleSavedStack(stack);
 			}
 		);
 	}
@@ -233,7 +220,7 @@ public class BackgroundSetFactory {
 			
 			// The way we handle this means we cannot add the (only first three) brackets on the name, as the image has not yet been evaluated
 			for (String id : keys) {
-				Operation<BackgroundStackCntr> operation = new AddBackgroundSetItem(imageStackCollection, id);
+				Operation<BackgroundStackCntr, OperationFailedException> operation = new AddBackgroundSetItem(imageStackCollection, id);
 				backgroundSet.addItem(id, operation );
 				pri.update();
 			}

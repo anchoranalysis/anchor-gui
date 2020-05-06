@@ -31,7 +31,7 @@ import java.nio.file.Path;
 
 import java.util.List;
 
-import org.anchoranalysis.core.cache.ExecuteException;
+import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.progress.CachedOperationWithProgressReporter;
 import org.anchoranalysis.core.progress.ProgressReporter;
 import org.anchoranalysis.image.io.RasterIOException;
@@ -98,7 +98,7 @@ public class FinderRasterFilesByManifestDescriptionFunction extends Finder {
 	}
 	
 	
-	private static class CachedOpenStackOp extends CachedOperationWithProgressReporter<Stack> {
+	private static class CachedOpenStackOp extends CachedOperationWithProgressReporter<Stack,OperationFailedException> {
 
 		private Path filePath;
 		private RasterReader rasterReader;
@@ -110,12 +110,12 @@ public class FinderRasterFilesByManifestDescriptionFunction extends Finder {
 		}
 
 		@Override
-		protected Stack execute(ProgressReporter progressReporter) throws ExecuteException {
+		protected Stack execute(ProgressReporter progressReporter) throws OperationFailedException {
 			try (OpenedRaster openedRaster = rasterReader.openFile(filePath)) {
 				return openedRaster.open(0, progressReporter).get(0);
 				
 			} catch (RasterIOException e) {
-				throw new ExecuteException(e);
+				throw new OperationFailedException(e);
 			}
 		}
 		

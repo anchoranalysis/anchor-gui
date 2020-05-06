@@ -31,6 +31,7 @@ import org.anchoranalysis.anchor.overlay.Overlay;
 import org.anchoranalysis.core.bridge.IObjectBridge;
 import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.idgetter.IDGetter;
+import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.index.IIndexGettableSettable;
 import org.anchoranalysis.core.index.container.IBoundedRangeIncompleteDynamic;
 import org.anchoranalysis.gui.displayupdate.OverlayedDisplayStack;
@@ -62,9 +63,13 @@ public class InternalFrameThreadedOverlayProvider {
 		delegate = new InternalFrameThreadedProvider(title, indexesAreFrames);
 	}
 
-	public void beforeInit(IObjectBridge<Integer, OverlayedDisplayStack> bridge, IDGetter<Overlay> idGetter,
-			int defaultIndex, MarkDisplaySettingsWrapper markDisplaySettingsWrapper, VideoStatsModuleGlobalParams mpg)
-			throws InitException {
+	public void beforeInit(
+		IObjectBridge<Integer, OverlayedDisplayStack,GetOperationFailedException> bridge,
+		IDGetter<Overlay> idGetter,
+		int defaultIndex,
+		MarkDisplaySettingsWrapper markDisplaySettingsWrapper,
+		VideoStatsModuleGlobalParams mpg
+	) throws InitException {
 		
 		this.markDisplaySettingsWrapper = markDisplaySettingsWrapper;
 				
@@ -78,9 +83,13 @@ public class InternalFrameThreadedOverlayProvider {
 		);
 	}
 
-	public ISliderState init(IBoundedRangeIncompleteDynamic indexBounds, boolean includeFrameAdjusting,
-			DefaultModuleState initialState, IRetrieveElements elementRetriever, VideoStatsModuleGlobalParams mpg)
-			throws InitException {
+	public ISliderState init(
+		IBoundedRangeIncompleteDynamic indexBounds,
+		boolean includeFrameAdjusting,
+		DefaultModuleState initialState,
+		IRetrieveElements elementRetriever,
+		VideoStatsModuleGlobalParams mpg
+	) throws InitException {
 		return delegate.init(
 			threadedImageStackProvider,
 			indexBounds,

@@ -30,7 +30,7 @@ package org.anchoranalysis.gui.feature;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.anchoranalysis.feature.calc.ResultsVector;
+import org.anchoranalysis.feature.calc.results.ResultsVector;
 
 import cern.colt.matrix.DoubleFactory2D;
 import cern.colt.matrix.DoubleMatrix1D;

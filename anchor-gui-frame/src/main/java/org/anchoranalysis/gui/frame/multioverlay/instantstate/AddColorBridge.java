@@ -34,10 +34,11 @@ import org.anchoranalysis.anchor.overlay.collection.OverlayCollection;
 import org.anchoranalysis.core.bridge.IObjectBridge;
 import org.anchoranalysis.core.color.ColorIndex;
 import org.anchoranalysis.core.color.ColorList;
+import org.anchoranalysis.core.error.AnchorNeverOccursException;
 import org.anchoranalysis.core.idgetter.IDGetter;
 import org.anchoranalysis.gui.videostats.internalframe.cfgtorgb.ColoredOverlayedInstantState;
 
-class AddColorBridge implements IObjectBridge<OverlayedInstantState, ColoredOverlayedInstantState> {
+class AddColorBridge implements IObjectBridge<OverlayedInstantState, ColoredOverlayedInstantState, AnchorNeverOccursException> {
 
 	private ColorIndex colorIndex;
 	private IDGetter<Overlay> colorIDGetter;

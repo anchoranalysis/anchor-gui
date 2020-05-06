@@ -33,6 +33,7 @@ import org.anchoranalysis.anchor.overlay.collection.ColoredOverlayCollection;
 import org.anchoranalysis.core.bridge.IObjectBridge;
 import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.idgetter.IDGetter;
+import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.index.IIndexGettableSettable;
 import org.anchoranalysis.core.index.container.SingleContainer;
 import org.anchoranalysis.gui.displayupdate.OverlayedDisplayStack;
@@ -88,7 +89,7 @@ class InternalFrameOverlaysOnRGB {
 		//assert( coloredCfg.getCfg().getCfg().size()==coloredCfg.getCfg().getColorList().size() );
 		cntr.setItem( overlayedDisplayStack , 0);
 		
-		IObjectBridge<Integer,OverlayedDisplayStack> bridge = new CfgCntrBridge(cntr);
+		IObjectBridge<Integer,OverlayedDisplayStack,GetOperationFailedException> bridge = new CfgCntrBridge(cntr);
 		
 		delegate.beforeInit(
 			bridge,

@@ -39,6 +39,7 @@ import org.anchoranalysis.anchor.mpp.cfg.Cfg;
 import org.anchoranalysis.anchor.mpp.overlay.OverlayCollectionMarkFactory;
 import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.error.reporter.ErrorReporter;
+import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.name.provider.INamedProvider;
 import org.anchoranalysis.core.progress.OperationWithProgressReporter;
 import org.anchoranalysis.gui.backgroundset.BackgroundSet;
@@ -55,7 +56,6 @@ import org.anchoranalysis.gui.interactivebrowser.MarkEvaluatorSetForImage;
 import org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.ControllerPopupMenuWithBackground;
 import org.anchoranalysis.gui.kernel.ProposerFailureDescriptionPanel;
 import org.anchoranalysis.gui.videostats.IModuleCreatorDefaultStateSliderState;
-import org.anchoranalysis.gui.videostats.dropdown.IAddVideoStatsModule;
 import org.anchoranalysis.gui.videostats.dropdown.VideoStatsModuleGlobalParams;
 import org.anchoranalysis.gui.videostats.internalframe.OutputPanel;
 import org.anchoranalysis.gui.videostats.internalframe.ProposeLoopPanel;
@@ -107,8 +107,7 @@ public class InternalFrameMarkProposerEvaluator {
 	public ISliderState init(
 		MarkEvaluatorSetForImage markEvaluatorSet,
 		DefaultModuleState defaultState,
-		OperationWithProgressReporter<IAddVideoStatsModule> adder,
-		OperationWithProgressReporter<BackgroundSet> operationBackgroundSet,
+		OperationWithProgressReporter<BackgroundSet,GetOperationFailedException> operationBackgroundSet,
 		OutputWriteSettings outputWriteSettings,
 		VideoStatsModuleGlobalParams mpg
 	) throws InitException {
@@ -117,7 +116,7 @@ public class InternalFrameMarkProposerEvaluator {
 				
 		outputPanel.init(mpg.getDefaultColorIndexForMarks(), mpg.getExportPopupParams().getOutputManager());
 		
-		ISliderState sliderState = delegate.init(defaultState, adder, operationBackgroundSet, outputWriteSettings, mpg );
+		ISliderState sliderState = delegate.init(defaultState, operationBackgroundSet, outputWriteSettings, mpg );
 
 		setupHistoryNavigator(sliderState);
 		

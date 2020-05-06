@@ -5,7 +5,7 @@ import org.anchoranalysis.anchor.mpp.bean.regionmap.RegionMembershipWithFlags;
 import org.anchoranalysis.anchor.mpp.cfg.Cfg;
 import org.anchoranalysis.anchor.mpp.feature.addcriteria.AddCriteriaPair;
 import org.anchoranalysis.anchor.mpp.feature.addcriteria.BBoxIntersection;
-import org.anchoranalysis.anchor.mpp.feature.nrg.elem.NRGElemPairCalcParams;
+import org.anchoranalysis.anchor.mpp.feature.input.memo.FeatureInputPairMemo;
 import org.anchoranalysis.anchor.mpp.mark.GlobalRegionIdentifiers;
 import org.anchoranalysis.anchor.mpp.mark.Mark;
 import org.anchoranalysis.anchor.mpp.overlay.OverlayCollectionMarkFactory;
@@ -47,18 +47,18 @@ import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.log.LogErrorReporter;
 import org.anchoranalysis.feature.bean.list.FeatureList;
 import org.anchoranalysis.feature.calc.FeatureCalcException;
-import org.anchoranalysis.feature.init.FeatureInitParams;
+import org.anchoranalysis.feature.calc.FeatureInitParams;
 import org.anchoranalysis.feature.nrg.NRGStackWithParams;
-import org.anchoranalysis.feature.session.SessionFactory;
+import org.anchoranalysis.feature.session.FeatureSession;
 import org.anchoranalysis.feature.session.calculator.FeatureCalculatorMulti;
 import org.anchoranalysis.feature.shared.SharedFeatureSet;
 
 class FinderEvaluator {
 
-	private SharedFeatureSet<NRGElemPairCalcParams> sharedFeatureList;
+	private SharedFeatureSet<FeatureInputPairMemo> sharedFeatureList;
 	private LogErrorReporter logger;
 		
-	public FinderEvaluator(SharedFeatureSet<NRGElemPairCalcParams> sharedFeatureList, LogErrorReporter logger) {
+	public FinderEvaluator(SharedFeatureSet<FeatureInputPairMemo> sharedFeatureList, LogErrorReporter logger) {
 		super();
 		this.sharedFeatureList = sharedFeatureList;
 		this.logger = logger;
@@ -113,7 +113,7 @@ class FinderEvaluator {
 	private static Pair<Overlay> findPairFromCurrentSelectionMark(
 		Cfg cfg,
 		NRGStackWithParams raster,
-		SharedFeatureSet<NRGElemPairCalcParams> sharedFeatureList,
+		SharedFeatureSet<FeatureInputPairMemo> sharedFeatureList,
 		LogErrorReporter logger
 	) throws CreateException {
 		
@@ -168,11 +168,11 @@ class FinderEvaluator {
 		private RegionMap regionMap = new RegionMap(0);
 		
 		private NRGStackWithParams raster;
-		private FeatureCalculatorMulti<NRGElemPairCalcParams> session;
+		private FeatureCalculatorMulti<FeatureInputPairMemo> session;
 		
 		public EdgeTester(
 			NRGStackWithParams raster,
-			SharedFeatureSet<NRGElemPairCalcParams> sharedFeatureList,
+			SharedFeatureSet<FeatureInputPairMemo> sharedFeatureList,
 			LogErrorReporter logger
 		) throws CreateException {
 			
@@ -186,15 +186,15 @@ class FinderEvaluator {
 			return (addCriteria.generateEdge(pmm1, pmm2, raster, session, raster.getDimensions().getZ()>1 )!=null);
 		}
 		
-		private FeatureCalculatorMulti<NRGElemPairCalcParams> createSession(
-			SharedFeatureSet<NRGElemPairCalcParams> sharedFeatureList,
+		private FeatureCalculatorMulti<FeatureInputPairMemo> createSession(
+			SharedFeatureSet<FeatureInputPairMemo> sharedFeatureList,
 			LogErrorReporter logger	
 		) throws CreateException {
-			FeatureList<NRGElemPairCalcParams> relevantFeatures = addCriteria.orderedListOfFeatures();
+			FeatureList<FeatureInputPairMemo> relevantFeatures = addCriteria.orderedListOfFeatures();
 			if (relevantFeatures.size()>0) {
 				
 				try {
-					return SessionFactory.createAndStart(
+					return FeatureSession.with(
 						relevantFeatures,
 						new FeatureInitParams( raster.getParams() ),
 						sharedFeatureList,

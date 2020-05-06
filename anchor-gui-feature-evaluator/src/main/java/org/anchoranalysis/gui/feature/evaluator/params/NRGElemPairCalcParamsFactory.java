@@ -1,6 +1,6 @@
 package org.anchoranalysis.gui.feature.evaluator.params;
 
-import org.anchoranalysis.anchor.mpp.feature.nrg.elem.NRGElemPairCalcParams;
+import org.anchoranalysis.anchor.mpp.feature.input.memo.FeatureInputPairMemo;
 import org.anchoranalysis.anchor.mpp.pxlmark.memo.PxlMarkMemo;
 
 /*-
@@ -30,14 +30,14 @@ import org.anchoranalysis.anchor.mpp.pxlmark.memo.PxlMarkMemo;
  */
 
 import org.anchoranalysis.core.error.CreateException;
-import org.anchoranalysis.feature.calc.params.FeatureCalcParams;
+import org.anchoranalysis.feature.input.FeatureInput;
 import org.anchoranalysis.feature.nrg.NRGStackWithParams;
 
 public class NRGElemPairCalcParamsFactory extends FeatureCalcParamsPairwiseFactory {
 
 	@Override
-	public FeatureCalcParams create(PxlMarkMemo pmm1, PxlMarkMemo pmm2, NRGStackWithParams raster) throws CreateException {
-		return new NRGElemPairCalcParams(pmm1, pmm2, raster);
+	public FeatureInput create(PxlMarkMemo pmm1, PxlMarkMemo pmm2, NRGStackWithParams raster) throws CreateException {
+		return new FeatureInputPairMemo(pmm1, pmm2, raster);
 	}
 
 }

@@ -27,17 +27,16 @@ package org.anchoranalysis.gui.finder.imgstackcollection;
  */
 
 
-import org.anchoranalysis.core.cache.ExecuteException;
+import org.anchoranalysis.core.cache.WrapOperationWithProgressReporterAsCached;
+import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.name.provider.INamedProvider;
 import org.anchoranalysis.core.progress.CachedOperationWithProgressReporter;
 import org.anchoranalysis.core.progress.OperationWithProgressReporter;
-import org.anchoranalysis.core.progress.ProgressReporter;
 import org.anchoranalysis.core.progress.ProgressReporterNull;
 import org.anchoranalysis.gui.finder.FinderRasterFilesByManifestDescriptionFunction;
 import org.anchoranalysis.image.io.RasterIOException;
 import org.anchoranalysis.image.io.bean.rasterreader.RasterReader;
-import org.anchoranalysis.image.stack.NamedImgStackCollection;
 import org.anchoranalysis.image.stack.Stack;
 import org.anchoranalysis.io.manifest.ManifestRecorder;
 
@@ -46,20 +45,16 @@ public class FinderImgStackCollectionFromRootFiles extends FinderImgStackCollect
 
 	private FinderRasterFilesByManifestDescriptionFunction delegate;
 	
-	private CachedOperationWithProgressReporter<INamedProvider<Stack>> operationImgStackCollection = new OperationCreateCollection();
-
-	private class OperationCreateCollection extends CachedOperationWithProgressReporter<INamedProvider<Stack>> {
-		
-		@Override
-		protected NamedImgStackCollection execute( ProgressReporter progressReporter ) throws ExecuteException {
-			try {
-				return delegate.createStackCollection();
-			} catch (RasterIOException e) {
-				throw new ExecuteException(e);
+	private CachedOperationWithProgressReporter<INamedProvider<Stack>,OperationFailedException> operationImgStackCollection =
+		new WrapOperationWithProgressReporterAsCached<>(
+			pr -> {
+				try {
+					return delegate.createStackCollection();
+				} catch (RasterIOException e) {
+					throw new OperationFailedException(e);
+				}
 			}
-		}
-	};
-	
+		);
 	
 	public FinderImgStackCollectionFromRootFiles( RasterReader rasterReader, String function ) {
 		delegate = new FinderRasterFilesByManifestDescriptionFunction(rasterReader, function );
@@ -69,13 +64,13 @@ public class FinderImgStackCollectionFromRootFiles extends FinderImgStackCollect
 	public INamedProvider<Stack> getImgStackCollection() throws GetOperationFailedException {
 		try {
 			return operationImgStackCollection.doOperation( ProgressReporterNull.get() );
-		} catch (ExecuteException e) {
+		} catch (OperationFailedException e) {
 			throw new GetOperationFailedException(e);
 		}
 	}
 	
 	@Override
-	public OperationWithProgressReporter<INamedProvider<Stack>> getImgStackCollectionAsOperationWithProgressReporter() {
+	public OperationWithProgressReporter<INamedProvider<Stack>,OperationFailedException> getImgStackCollectionAsOperationWithProgressReporter() {
 		return operationImgStackCollection;
 	}
 
@@ -88,5 +83,4 @@ public class FinderImgStackCollectionFromRootFiles extends FinderImgStackCollect
 	public boolean exists() {
 		return delegate.exists();
 	}
-
 }

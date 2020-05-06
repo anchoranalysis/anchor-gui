@@ -32,6 +32,7 @@ import java.util.List;
 import org.anchoranalysis.anchor.overlay.OverlayedInstantState;
 import org.anchoranalysis.core.bridge.IObjectBridgeIndex;
 import org.anchoranalysis.core.error.InitException;
+import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.gui.videostats.dropdown.IAddVideoStatsModule;
 import org.anchoranalysis.gui.videostats.dropdown.ModuleAddUtilities;
 import org.anchoranalysis.gui.videostats.dropdown.VideoStatsModuleGlobalParams;
@@ -45,13 +46,13 @@ public class RasterMultiCreator<InputType> extends VideoStatsModuleCreator {
 	private final List<MultiInput<InputType>> list;
 	private final String frameName;
 	private final VideoStatsModuleGlobalParams moduleParamsGlobal;
-	private final IObjectBridgeIndex<MultiInput<InputType>, OverlayedInstantState> bridge;
+	private final IObjectBridgeIndex<MultiInput<InputType>, OverlayedInstantState,OperationFailedException> bridge;
 			
 	public RasterMultiCreator(
 			List<MultiInput<InputType>> list,
 			String frameName,
 			VideoStatsModuleGlobalParams moduleParamsGlobal,
-			IObjectBridgeIndex<MultiInput<InputType>, OverlayedInstantState> bridge
+			IObjectBridgeIndex<MultiInput<InputType>, OverlayedInstantState,OperationFailedException> bridge
 		) {
 		super();
 		this.list = list;

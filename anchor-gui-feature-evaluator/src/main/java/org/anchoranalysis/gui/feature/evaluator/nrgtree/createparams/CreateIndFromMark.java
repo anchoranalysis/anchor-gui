@@ -1,5 +1,7 @@
 package org.anchoranalysis.gui.feature.evaluator.nrgtree.createparams;
 
+import org.anchoranalysis.anchor.mpp.pxlmark.memo.PxlMarkMemo;
+
 /*-
  * #%L
  * anchor-gui-feature-evaluator
@@ -28,26 +30,30 @@ package org.anchoranalysis.gui.feature.evaluator.nrgtree.createparams;
 
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.feature.bean.Feature;
-import org.anchoranalysis.feature.calc.params.FeatureCalcParams;
+import org.anchoranalysis.feature.calc.FeatureCalcException;
+import org.anchoranalysis.feature.input.FeatureInput;
 import org.anchoranalysis.feature.nrg.NRGStackWithParams;
-import org.anchoranalysis.feature.session.CreateParams;
-import org.anchoranalysis.image.feature.objmask.FeatureObjMaskParams;
-import org.anchoranalysis.image.objmask.ObjMask;
+import org.anchoranalysis.feature.session.CreateFeatureInput;
+import org.anchoranalysis.gui.feature.evaluator.params.ParamsFactoryForFeature;
 
-public class CreateParamsIndFromObjMask extends CreateParams<FeatureCalcParams> {
+public class CreateIndFromMark extends CreateFeatureInput<FeatureInput> {
 
-	private FeatureObjMaskParams params;
+	private PxlMarkMemo pmm;
+	private NRGStackWithParams raster;
 	
-	public CreateParamsIndFromObjMask(ObjMask objMask,
-			NRGStackWithParams nrgStack) {
+	public CreateIndFromMark(PxlMarkMemo pmm, NRGStackWithParams raster) {
 		super();
-		params = new FeatureObjMaskParams( objMask );
-		params.setNrgStack(nrgStack);
+		this.pmm = pmm;
+		this.raster = raster;
 	}
 
 	@Override
-	public FeatureCalcParams createForFeature(Feature<?> feature)
-			throws CreateException {
-		return params;
+	public FeatureInput createForFeature(Feature<?> feature) throws CreateException {
+		try {
+			return ParamsFactoryForFeature.factoryFor( feature ).create(pmm, raster);
+		} catch (FeatureCalcException e) {
+			throw new CreateException(e);
+		}
 	}
+
 }

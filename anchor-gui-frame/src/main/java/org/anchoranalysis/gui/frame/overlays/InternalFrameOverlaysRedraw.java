@@ -1,8 +1,8 @@
 package org.anchoranalysis.gui.frame.overlays;
 
 import org.anchoranalysis.anchor.overlay.collection.OverlayCollection;
-import org.anchoranalysis.core.bridge.BridgeElementException;
 import org.anchoranalysis.core.error.InitException;
+import org.anchoranalysis.core.index.GetOperationFailedException;
 
 /*
  * #%L
@@ -42,7 +42,6 @@ import org.anchoranalysis.gui.image.frame.ISliderState;
 import org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.ControllerPopupMenuWithBackground;
 import org.anchoranalysis.gui.propertyvalue.PropertyValueChangeListenerList;
 import org.anchoranalysis.gui.videostats.IModuleCreatorDefaultStateSliderState;
-import org.anchoranalysis.gui.videostats.dropdown.IAddVideoStatsModule;
 import org.anchoranalysis.gui.videostats.dropdown.VideoStatsModuleGlobalParams;
 import org.anchoranalysis.gui.videostats.link.LinkModules;
 import org.anchoranalysis.gui.videostats.module.DefaultModuleState;
@@ -69,8 +68,7 @@ public class InternalFrameOverlaysRedraw {
 		
 	public ISliderState init(
 		DefaultModuleState defaultState,
-		OperationWithProgressReporter<IAddVideoStatsModule> adder,
-		OperationWithProgressReporter<BackgroundSet> operationBackgroundSet,
+		OperationWithProgressReporter<BackgroundSet,GetOperationFailedException> operationBackgroundSet,
 		OutputWriteSettings outputWriteSettings,
 		VideoStatsModuleGlobalParams mpg
 	) throws InitException {
@@ -81,7 +79,7 @@ public class InternalFrameOverlaysRedraw {
 		// For now we keep background as it is
 		try {
 			background = defaultState.getLinkState().getBackground().bridgeElement(0) ;
-		} catch (BridgeElementException e) {
+		} catch (GetOperationFailedException e) {
 			throw new InitException(e);
 		}
 		

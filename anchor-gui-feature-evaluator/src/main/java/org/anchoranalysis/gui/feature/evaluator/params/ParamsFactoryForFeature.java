@@ -1,10 +1,10 @@
 package org.anchoranalysis.gui.feature.evaluator.params;
 
-import org.anchoranalysis.anchor.mpp.feature.bean.cfg.FeatureCfgParamsDescriptor;
-import org.anchoranalysis.anchor.mpp.feature.bean.mark.FeatureMarkParamsDescriptor;
-import org.anchoranalysis.anchor.mpp.feature.nrg.elem.NRGElemAllCalcParamsDescriptor;
-import org.anchoranalysis.anchor.mpp.feature.nrg.elem.NRGElemIndCalcParamsDescriptor;
-import org.anchoranalysis.anchor.mpp.feature.nrg.elem.NRGElemPairCalcParamsDescriptor;
+import org.anchoranalysis.anchor.mpp.feature.bean.cfg.FeatureInputCfgDescriptor;
+import org.anchoranalysis.anchor.mpp.feature.bean.mark.FeatureInputMarkDescriptor;
+import org.anchoranalysis.anchor.mpp.feature.input.memo.FeatureInputPairMemoDescriptor;
+import org.anchoranalysis.anchor.mpp.feature.input.memo.FeatureInputSingleMemoDescriptor;
+import org.anchoranalysis.anchor.mpp.feature.input.memo.FeatureInputAllMemoDescriptor;
 import org.anchoranalysis.anchor.mpp.mark.GlobalRegionIdentifiers;
 import org.anchoranalysis.anchor.mpp.regionmap.RegionMapSingleton;
 
@@ -36,86 +36,71 @@ import org.anchoranalysis.anchor.mpp.regionmap.RegionMapSingleton;
 
 import org.anchoranalysis.feature.bean.Feature;
 import org.anchoranalysis.feature.calc.FeatureCalcException;
-import org.anchoranalysis.feature.calc.params.FeatureCalcParamsDescriptor;
-import org.anchoranalysis.feature.calc.params.FeatureCalcParamsWithImageParamsDescriptor;
-import org.anchoranalysis.feature.params.FeatureParamsDescriptor;
-import org.anchoranalysis.feature.resultsvectorcollection.FeatureResultsVectorCollectionParamsDescriptor;
-import org.anchoranalysis.image.feature.histogram.FeatureHistogramParamsDescriptor;
-import org.anchoranalysis.image.feature.objmask.FeatureObjMaskParamsDescriptor;
-import org.anchoranalysis.image.feature.objmask.collection.FeatureObjMaskCollectionDescriptor;
-import org.anchoranalysis.image.feature.objmask.pair.FeatureObjMaskPairParamsDescriptor;
-import org.anchoranalysis.image.feature.objmask.pair.merged.FeatureObjMaskPairMergedParamsDescriptor;
-import org.anchoranalysis.image.feature.objmask.shared.FeatureObjMaskSharedObjectsParamsDescriptor;
-import org.anchoranalysis.image.feature.pixelwise.score.PixelScoreFeatureCalcParamsDescriptor;
-import org.anchoranalysis.image.feature.stack.nrg.FeatureNRGStackParamsDescriptor;
+import org.anchoranalysis.feature.input.descriptor.FeatureInputDescriptor;
+import org.anchoranalysis.feature.input.descriptor.FeatureInputGenericDescriptor;
+import org.anchoranalysis.feature.input.descriptor.FeatureInputParamsDescriptor;
+import org.anchoranalysis.feature.resultsvectorcollection.FeatureInputResultsDescriptor;
+import org.anchoranalysis.image.feature.histogram.FeatureInputHistogramDescriptor;
+import org.anchoranalysis.image.feature.objmask.FeatureInputSingleObjDescriptor;
+import org.anchoranalysis.image.feature.objmask.collection.FeatureInputObjsDescriptor;
+import org.anchoranalysis.image.feature.objmask.pair.FeatureInputPairObjsDescriptor;
+import org.anchoranalysis.image.feature.stack.nrg.FeatureInputNRGStackDescriptor;
 
 public class ParamsFactoryForFeature {
 
 	public static FeatureCalcParamsFactory factoryFor( Feature<?> f ) throws FeatureCalcException {
 		
-		FeatureParamsDescriptor paramType = f.paramType();
+		FeatureInputDescriptor paramType = f.paramType();
 		
-		if (paramType.equals(FeatureCalcParamsDescriptor.instance)) {
+		if (paramType.equals(FeatureInputGenericDescriptor.instance)) {
 			return new NullParamsFactory();
 		}
 		
-		if (paramType.equals(FeatureMarkParamsDescriptor.instance)) {
+		if (paramType.equals(FeatureInputMarkDescriptor.instance)) {
 			return new FeatureMarkParamsFactory();
 		}
 
-		if (paramType.equals(FeatureObjMaskParamsDescriptor.instance)) {
+		if (paramType.equals(FeatureInputSingleObjDescriptor.instance)) {
 			return new FeatureObjMaskParamsFactory( GlobalRegionIdentifiers.SUBMARK_INSIDE );
 		}
 		
-		if (paramType.equals(NRGElemIndCalcParamsDescriptor.instance)) {
+		if (paramType.equals(FeatureInputSingleMemoDescriptor.instance)) {
 			return new NRGElemIndCalcParamsFactory();
 		}
 		
-		if (paramType.equals(NRGElemPairCalcParamsDescriptor.instance)) {
+		if (paramType.equals(FeatureInputPairMemoDescriptor.instance)) {
 			return new NRGElemPairCalcParamsFactory();
 		}
 		
-		if (paramType.equals(NRGElemAllCalcParamsDescriptor.instance)) {
+		if (paramType.equals(FeatureInputAllMemoDescriptor.instance)) {
 			return new NRGElemAllCalcParamsFactory();
 		}
 		
-		if (paramType.equals(FeatureCfgParamsDescriptor.instance)) {
+		if (paramType.equals(FeatureInputCfgDescriptor.instance)) {
 			return new UnsupportedFactory();
 		}
 		
-		if (paramType.equals(FeatureObjMaskCollectionDescriptor.instance)) {
+		if (paramType.equals(FeatureInputObjsDescriptor.instance)) {
 			return new FeatureObjMaskCollectionParamsFactory( RegionMapSingleton.instance().membershipWithFlagsForIndex(GlobalRegionIdentifiers.SUBMARK_INSIDE) );
 		}
 		
-		if (paramType.equals(PixelScoreFeatureCalcParamsDescriptor.instance)) {
-			return new UnsupportedFactory();
-		}
-		
-		if (paramType.equals(FeatureObjMaskPairParamsDescriptor.instance)) {
+		if (paramType.equals(FeatureInputPairObjsDescriptor.instance)) {
 			return new FeatureObjMaskPairParamsFactory( GlobalRegionIdentifiers.SUBMARK_INSIDE );
 		}		
 		
-		if (paramType.equals(FeatureObjMaskPairMergedParamsDescriptor.instance)) {
-			return new FeatureObjMaskPairMergedParamsFactory( GlobalRegionIdentifiers.SUBMARK_INSIDE );
-		}		
-		
-		if (paramType.equals(FeatureHistogramParamsDescriptor.instance)) {
+		if (paramType.equals(FeatureInputHistogramDescriptor.instance)) {
 			return new UnsupportedFactory();
 		}
 		
-		if (paramType.equals(FeatureResultsVectorCollectionParamsDescriptor.instance)) {
+		if (paramType.equals(FeatureInputResultsDescriptor.instance)) {
 			return new UnsupportedFactory();
 		}
 		
-		if (paramType.equals(FeatureNRGStackParamsDescriptor.instance)) {
+		if (paramType.equals(FeatureInputNRGStackDescriptor.instance)) {
 			return new FeatureObjMaskParamsFactory( GlobalRegionIdentifiers.SUBMARK_INSIDE );
 		}
 		
-		if (paramType.equals(FeatureCalcParamsWithImageParamsDescriptor.instance)) {
-			return new FeatureObjMaskParamsFactory( GlobalRegionIdentifiers.SUBMARK_INSIDE );
-		}
-
-		if (paramType.equals(FeatureObjMaskSharedObjectsParamsDescriptor.instance)) {
+		if (paramType.equals(FeatureInputParamsDescriptor.instance)) {
 			return new FeatureObjMaskParamsFactory( GlobalRegionIdentifiers.SUBMARK_INSIDE );
 		}
 		

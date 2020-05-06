@@ -26,18 +26,22 @@ package org.anchoranalysis.gui.videostats.dropdown.manifest;
  * #L%
  */
 
-import org.anchoranalysis.core.cache.ExecuteException;
 import org.anchoranalysis.core.progress.OperationWithProgressReporter;
 import org.anchoranalysis.core.progress.ProgressReporter;
 import org.anchoranalysis.core.progress.ProgressReporterNull;
 
-/** Performs the first operation. If it returns a null, performs the second-operation */
-public class OperationReplaceNull<T> implements OperationWithProgressReporter<T> {
+/** 
+ * Performs the first operation. If it returns a null, performs the second-operation
+ * 
+ * @param <T> return-type of operation
+ * @param <E> exception-type if something goes wrong during operation
+ **/
+class OperationReplaceNull<T, E extends Throwable> implements OperationWithProgressReporter<T,E> {
 
-	private OperationWithProgressReporter<T> opFirst;
-	private OperationWithProgressReporter<T> opSecond;
+	private OperationWithProgressReporter<T,E> opFirst;
+	private OperationWithProgressReporter<T,E> opSecond;
 		
-	public OperationReplaceNull(OperationWithProgressReporter<T> opFirst, OperationWithProgressReporter<T> opSecond) {
+	public OperationReplaceNull(OperationWithProgressReporter<T,E> opFirst, OperationWithProgressReporter<T,E> opSecond) {
 		super();
 		this.opFirst = opFirst;
 		this.opSecond = opSecond;
@@ -46,7 +50,7 @@ public class OperationReplaceNull<T> implements OperationWithProgressReporter<T>
 	}
 
 	@Override
-	public T doOperation(ProgressReporter progressReporter) throws ExecuteException {
+	public T doOperation(ProgressReporter progressReporter) throws E {
 		
 		T first = opFirst.doOperation(progressReporter);
 		
@@ -56,5 +60,4 @@ public class OperationReplaceNull<T> implements OperationWithProgressReporter<T>
 		
 		return first;
 	}
-
 }

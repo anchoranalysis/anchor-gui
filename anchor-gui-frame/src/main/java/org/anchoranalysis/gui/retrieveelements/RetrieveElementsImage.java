@@ -28,12 +28,12 @@ package org.anchoranalysis.gui.retrieveelements;
 
 
 import org.anchoranalysis.core.cache.CachedOperation;
-import org.anchoranalysis.core.cache.ExecuteException;
+import org.anchoranalysis.core.cache.WrapOperationAsCached;
+import org.anchoranalysis.core.error.AnchorNeverOccursException;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.image.io.generator.raster.MIPGenerator;
 import org.anchoranalysis.image.stack.DisplayStack;
 import org.anchoranalysis.image.stack.Stack;
-import org.anchoranalysis.io.generator.OperationGenerator;
 
 // An interface that allows receiving elements from a module
 // When a function returns NULL, that element doesn't exist
@@ -68,16 +68,15 @@ public class RetrieveElementsImage extends RetrieveElements {
     	if (getStack()!=null) {
     		
     		final DisplayStack currentStack = getStack();
-    		CachedOperation<Stack> opCreateStack = new CachedOperation<Stack>() {
-
-				@Override
-				protected Stack execute() throws ExecuteException {
-					return currentStack.createImgStack(false);
-				}
-			};
+        	
+    		CachedOperation<Stack,AnchorNeverOccursException> opCreateStack = cachedOpFromDisplayStack( currentStack );
     		
     		try {
-				popUp.addExportItemStackGenerator( "selectedStack", "Stack", opCreateStack );
+				popUp.addExportItemStackGenerator(
+					"selectedStack",
+					"Stack",
+					opCreateStack
+				);
 			} catch (OperationFailedException e) {
 				assert false;
 			}
@@ -86,26 +85,36 @@ public class RetrieveElementsImage extends RetrieveElements {
     			MIPGenerator generatorMIP =  new MIPGenerator(true, "selectedStackMIP");
     			
     			OperationGenerator<Stack,Stack> generator = new OperationGenerator<Stack,Stack>( generatorMIP );
-    			popUp.addExportItem(generator, opCreateStack, "selectedStackMIP", "MIP", generator.createManifestDescription(), 1 );
+    			popUp.addExportItem(
+    				generator,
+    				opCreateStack,
+    				"selectedStackMIP",
+    				"MIP",
+    				generator.createManifestDescription(),
+    				1
+    			);
     		}
     	}
         
     	if (getSlice()!=null) {
     		
-    		final DisplayStack currentSlice = getStack();
-    		CachedOperation<Stack> opCreateStack = new CachedOperation<Stack>() {
-
-				@Override
-				protected Stack execute() throws ExecuteException {
-					return currentSlice.createImgStack(false);
-				}
-			}; 
+    		final DisplayStack currentSlice = getSlice();
 
     		try {
-				popUp.addExportItemStackGenerator( "selectedSlice", "Slice", opCreateStack );
+				popUp.addExportItemStackGenerator(
+					"selectedSlice",
+					"Slice",
+					cachedOpFromDisplayStack(currentSlice)
+				);
 			} catch (OperationFailedException e) {
 				assert false;
 			}
     	}
+	}
+	
+	private CachedOperation<Stack,AnchorNeverOccursException> cachedOpFromDisplayStack( DisplayStack stack ) {
+		return new WrapOperationAsCached<>(
+			() -> stack.createImgStack(false)
+		);
 	}
 }

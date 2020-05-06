@@ -1,6 +1,6 @@
 package org.anchoranalysis.gui.feature.evaluator.nrgtree.createparams;
 
-import org.anchoranalysis.anchor.mpp.pxlmark.memo.PxlMarkMemo;
+import java.util.Optional;
 
 /*-
  * #%L
@@ -30,31 +30,30 @@ import org.anchoranalysis.anchor.mpp.pxlmark.memo.PxlMarkMemo;
 
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.feature.bean.Feature;
-import org.anchoranalysis.feature.calc.FeatureCalcException;
-import org.anchoranalysis.feature.calc.params.FeatureCalcParams;
+import org.anchoranalysis.feature.input.FeatureInput;
 import org.anchoranalysis.feature.nrg.NRGStackWithParams;
-import org.anchoranalysis.feature.session.CreateParams;
-import org.anchoranalysis.gui.feature.evaluator.params.ParamsFactoryForFeature;
+import org.anchoranalysis.feature.session.CreateFeatureInput;
+import org.anchoranalysis.image.feature.objmask.pair.FeatureInputPairObjs;
+import org.anchoranalysis.image.objmask.ObjMask;
 
-public class CreateParamsIndFromRasterMark extends CreateParams<FeatureCalcParams> {
-
-	private PxlMarkMemo pmm;
-	private NRGStackWithParams raster;
+public class CreatePairFromObj extends CreateFeatureInput<FeatureInput> {
 	
-	public CreateParamsIndFromRasterMark(PxlMarkMemo pmm,
-			NRGStackWithParams raster) {
-		super();
-		this.pmm = pmm;
-		this.raster = raster;
+	private FeatureInputPairObjs input;
+	
+	public CreatePairFromObj(ObjMask om1, ObjMask om2, NRGStackWithParams raster) {
+
+		// We make the params here, so the same object is always returned. This avoids needless creation of params
+		//   and as FeatureObjMaskPairMergedParams does a lazy-evaluation of the merged-object. It also caches
+		//  this operation so it's not repeated needlessly for each feature
+		input = new FeatureInputPairObjs(
+			om1,
+			om2,
+			Optional.of(raster)
+		);
 	}
 
 	@Override
-	public FeatureCalcParams createForFeature(Feature<?> feature) throws CreateException {
-		try {
-			return ParamsFactoryForFeature.factoryFor( feature ).create(pmm, raster);
-		} catch (FeatureCalcException e) {
-			throw new CreateException(e);
-		}
+	public FeatureInput createForFeature(Feature<?> feature) throws CreateException {
+		return input;
 	}
-
 }

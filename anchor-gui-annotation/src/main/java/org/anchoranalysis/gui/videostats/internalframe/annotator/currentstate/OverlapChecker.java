@@ -33,7 +33,6 @@ import org.anchoranalysis.anchor.mpp.pxlmark.memo.PxlMarkMemo;
  */
 
 
-import org.anchoranalysis.core.cache.ExecuteException;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.feature.calc.FeatureCalcException;
 import org.anchoranalysis.feature.nrg.NRGStack;
@@ -65,7 +64,7 @@ class OverlapChecker {
 			double overlap = OverlapUtilities.overlapWith(pmProp1,pmProp2,0);
 			double overlapRatio = calcOverlapRatio(pmProp1, pmProp2, overlap, 0);
 			return (overlapRatio>largeOverlapThreshold);
-		} catch (FeatureCalcException | ExecuteException e) {
+		} catch (FeatureCalcException e) {
 			throw new OperationFailedException(e);
 		}
 		
@@ -87,7 +86,7 @@ class OverlapChecker {
 							return true;
 						}
 					}
-				} catch( OperationFailedException | ExecuteException e) {
+				} catch( OperationFailedException e) {
 					errorReporter.showError(OverlapChecker.class, "Cannot calculate overlap", e.toString() );
 				}
 			}

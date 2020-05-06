@@ -35,7 +35,6 @@ import org.anchoranalysis.core.bridge.IObjectBridge;
  */
 
 
-import org.anchoranalysis.core.cache.CacheMonitor;
 import org.anchoranalysis.core.color.ColorIndex;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.InitException;
@@ -117,14 +116,11 @@ public class VideoStatsEDT {
 	
 	private BoundOutputManagerRouteErrors outputManager;
 	
-	private CacheMonitor cacheMonitor;
 	private BackgroundSet backgroundSet;
 	private LogErrorReporter logErrorReporter;
 
 	public void init(ImageInitParams so, LogErrorReporter logger)
 			throws InitException {
-		
-		this.cacheMonitor = new CacheMonitor();
 		
 		try {
 			backgroundSet = BackgroundSetFactory.createBackgroundSet(
@@ -253,7 +249,6 @@ public class VideoStatsEDT {
 		popUpParams.setOutputManager( outputManager );
 		popUpParams.setParentFrame( videoStatsFrame );
 		popUpParams.setSequenceMemory( sequenceMemory );
-		popUpParams.setCacheMonitor( cacheMonitor );
 
 
 		VideoStatsModuleGlobalParams mpg = new VideoStatsModuleGlobalParams();
@@ -272,7 +267,7 @@ public class VideoStatsEDT {
 
 		// The default background for our frames
 		{
-			IObjectBridge<Integer,DisplayStack> initialBackground = null;
+			IObjectBridge<Integer,DisplayStack,GetOperationFailedException> initialBackground = null;
 			try {
 				initialBackground = backgroundSet.stackCntr( ImgStackIdentifiers.INPUT_IMAGE_VISUAL );
 				

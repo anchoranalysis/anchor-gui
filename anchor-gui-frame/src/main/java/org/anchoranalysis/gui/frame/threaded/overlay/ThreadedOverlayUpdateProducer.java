@@ -5,6 +5,7 @@ import org.anchoranalysis.anchor.overlay.writer.OverlayWriter;
 import org.anchoranalysis.core.bridge.IObjectBridge;
 import org.anchoranalysis.core.error.InitException;
 
+
 /*
  * #%L
  * anchor-gui
@@ -33,6 +34,7 @@ import org.anchoranalysis.core.error.InitException;
 
 import org.anchoranalysis.core.error.reporter.ErrorReporter;
 import org.anchoranalysis.core.idgetter.IDGetter;
+import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.index.IIndexGettableSettable;
 import org.anchoranalysis.core.index.SetOperationFailedException;
 import org.anchoranalysis.core.log.LogErrorReporter;
@@ -102,7 +104,7 @@ class ThreadedOverlayUpdateProducer implements IRedrawable, IThreadedProducer, I
 	}
 	
 	public void init(
-		final IObjectBridge<Integer,OverlayedDisplayStack> integerToCfgBridge,
+		final IObjectBridge<Integer,OverlayedDisplayStack,GetOperationFailedException> integerToCfgBridge,
 		final MarkDisplaySettingsWrapper markDisplaySettingsWrapper,
 		int defaultIndex,
 		InteractiveThreadPool threadPool,
@@ -116,7 +118,7 @@ class ThreadedOverlayUpdateProducer implements IRedrawable, IThreadedProducer, I
 		// When our Mark display settings change
 		markDisplaySettingsWrapper.addChangeListener( propertyValueChange );		
 		
-		IObjectBridge<Integer,OverlayedDisplayStackUpdate> findCorrectUpdate = new FindCorrectUpdate(
+		IObjectBridge<Integer,OverlayedDisplayStackUpdate,GetOperationFailedException> findCorrectUpdate = new FindCorrectUpdate(
 			integerToCfgBridge,
 			() -> consumer!=null,
 			this
@@ -130,7 +132,12 @@ class ThreadedOverlayUpdateProducer implements IRedrawable, IThreadedProducer, I
 			markDisplaySettingsWrapper.createObjMaskWriter()
 		);
 		
-		consumer = new ThreadedDisplayUpdateConsumer(displayStackCreator, defaultIndex, threadPool, errorReporter);
+		consumer = new ThreadedDisplayUpdateConsumer(
+			displayStackCreator,
+			defaultIndex,
+			threadPool,
+			errorReporter
+		);
 	}
 	
 	public OverlayRetriever getOverlayRetriever() {
@@ -191,7 +198,7 @@ class ThreadedOverlayUpdateProducer implements IRedrawable, IThreadedProducer, I
 	
 	
 	private static DisplayUpdateCreator setupDisplayUpdateCreator(
-		IObjectBridge<Integer,OverlayedDisplayStackUpdate> findCorrectUpdate,
+		IObjectBridge<Integer,OverlayedDisplayStackUpdate,GetOperationFailedException> findCorrectUpdate,
 		IDGetter<Overlay> idGetter,
 		OverlayWriter maskWriter
 	) throws InitException {

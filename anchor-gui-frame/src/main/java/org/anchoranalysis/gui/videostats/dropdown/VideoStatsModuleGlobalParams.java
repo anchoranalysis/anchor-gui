@@ -34,7 +34,6 @@ import org.anchoranalysis.anchor.mpp.regionmap.RegionMapSingleton;
  */
 
 
-import org.anchoranalysis.core.cache.CacheMonitor;
 import org.anchoranalysis.core.color.ColorIndex;
 import org.anchoranalysis.core.log.LogErrorReporter;
 import org.anchoranalysis.core.random.RandomNumberGenerator;
@@ -78,9 +77,6 @@ public class VideoStatsModuleGlobalParams {
 	}
 	public void setThreadPool(InteractiveThreadPool threadPool) {
 		this.threadPool = threadPool;
-	}
-	public CacheMonitor getCacheMonitor() {
-		return exportPopupParams.getCacheMonitor();
 	}
 	public RandomNumberGenerator getRandomNumberGenerator() {
 		return randomNumberGenerator;

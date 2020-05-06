@@ -33,6 +33,7 @@ import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 
 import org.anchoranalysis.core.cache.Operation;
+import org.anchoranalysis.core.error.AnchorNeverOccursException;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.error.reporter.ErrorReporter;
 import org.anchoranalysis.gui.bean.exporttask.ExportTaskActionAsThread;
@@ -43,7 +44,6 @@ import org.anchoranalysis.gui.bean.exporttask.ExportTaskActionAsThread.ExportTas
 import org.anchoranalysis.image.io.generator.raster.StackGenerator;
 import org.anchoranalysis.image.stack.Stack;
 import org.anchoranalysis.io.generator.IterableGenerator;
-import org.anchoranalysis.io.generator.OperationGenerator;
 import org.anchoranalysis.io.manifest.ManifestDescription;
 import org.anchoranalysis.io.manifest.ManifestFolderDescription;
 import org.anchoranalysis.io.manifest.sequencetype.IncrementalSequenceType;
@@ -65,7 +65,7 @@ public class ExportSubMenu implements IAddToExportSubMenu {
 	}
 	
 	@Override
-	public void addExportItemStackGenerator( String outputName, String label, Operation<Stack> stack ) throws OperationFailedException {
+	public void addExportItemStackGenerator( String outputName, String label, Operation<Stack,AnchorNeverOccursException> stack ) throws OperationFailedException {
     	
 		StackGenerator stackGenerator = new StackGenerator(true, outputName);
 		OperationGenerator<Stack,Stack> generator = new OperationGenerator<Stack,Stack>( stackGenerator );
@@ -77,7 +77,6 @@ public class ExportSubMenu implements IAddToExportSubMenu {
 
     	// No parameters available in this context
     	ExportTaskParams exportTaskParams = new ExportTaskParams();
-    	exportTaskParams.setCacheMonitor( params.getCacheMonitor() );
     	    	
     	ManifestFolderDescription mfd = new ManifestFolderDescription();
     	mfd.setFileDescription( md );

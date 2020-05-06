@@ -45,10 +45,8 @@ import org.anchoranalysis.io.manifest.ManifestRecorder;
 import org.anchoranalysis.io.manifest.deserializer.folder.LoadContainer;
 import org.anchoranalysis.io.manifest.finder.Finder;
 
-// Looks for the essential items of a CfgNRGSet and creates a CfgNRGHistoryDropDown
+/** Looks for the essential items of a CfgNRGSet and creates a CfgNRGHistoryDropDown */
 public class FinderCfgNRGSet extends Finder implements ContainerGetter<CfgNRGInstantState> {
-
-	//private static Log log = LogFactory.getLog(FinderCfgNRGSet.class);
 	
 	// Constructor fields
 	private String setName;
@@ -64,12 +62,12 @@ public class FinderCfgNRGSet extends Finder implements ContainerGetter<CfgNRGIns
 	
 	public static class Context {
 		
-		private NRGBackgroundAdder nrgBackground;
+		private NRGBackgroundAdder<?> nrgBackground;
 		private BoundVideoStatsModuleDropDown boundVideoStats;
 		private VideoStatsOperationMenu parentMenu;
 		private CfgNRGFinderContext context;
 		
-		public Context(NRGBackgroundAdder nrgBackground, BoundVideoStatsModuleDropDown boundVideoStats,
+		public Context(NRGBackgroundAdder<?> nrgBackground, BoundVideoStatsModuleDropDown boundVideoStats,
 				VideoStatsOperationMenu parentMenu, CfgNRGFinderContext context) {
 			super();
 			this.nrgBackground = nrgBackground;
@@ -78,7 +76,7 @@ public class FinderCfgNRGSet extends Finder implements ContainerGetter<CfgNRGIns
 			this.context = context;
 		}
 
-		public NRGBackgroundAdder getNrgBackground() {
+		public NRGBackgroundAdder<?> getNrgBackground() {
 			return nrgBackground;
 		}
 
@@ -132,8 +130,7 @@ public class FinderCfgNRGSet extends Finder implements ContainerGetter<CfgNRGIns
 		
 		// Configurations with NRG
 		finderCfgNRGHistory = new FinderHistoryFolderCfgNRGInstantState(
-			manifestNameCfgNRGHistory,
-			context.getMpg().getCacheMonitor()
+			manifestNameCfgNRGHistory
 		);
 		finderCfgNRGHistory.doFind(manifestRecorder);
 
@@ -194,9 +191,7 @@ public class FinderCfgNRGSet extends Finder implements ContainerGetter<CfgNRGIns
 	}
 	
 	public void createDefaultModules() {
-		/*if (dropDown.getCreatorNRGTable()!=null) {
-			dropDown.getCreatorNRGTable().doCreate();
-		}*/
+
 		if (dropDown.getCreatorColoredOutline()!=null) {
 			dropDown.getCreatorColoredOutline().createVideoStatsModuleForAdder(
 				context.getMpg().getThreadPool(),

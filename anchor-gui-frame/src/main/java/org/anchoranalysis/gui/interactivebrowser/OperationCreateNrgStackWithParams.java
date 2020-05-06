@@ -30,11 +30,9 @@ import org.anchoranalysis.anchor.mpp.bean.init.MPPInitParams;
 
 
 import org.anchoranalysis.core.cache.CachedOperation;
-import org.anchoranalysis.core.cache.ExecuteException;
 import org.anchoranalysis.core.cache.Operation;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.name.provider.INamedProvider;
-import org.anchoranalysis.core.name.provider.NamedProviderGetException;
 import org.anchoranalysis.core.params.KeyValueParams;
 import org.anchoranalysis.core.progress.OperationWithProgressReporter;
 import org.anchoranalysis.core.progress.ProgressReporter;
@@ -43,16 +41,16 @@ import org.anchoranalysis.feature.nrg.NRGStackWithParams;
 import org.anchoranalysis.image.experiment.identifiers.ImgStackIdentifiers;
 import org.anchoranalysis.image.stack.Stack;
 
-class OperationCreateNrgStackWithParams extends CachedOperation<NRGStackWithParams> implements OperationWithProgressReporter<NRGStackWithParams> {
+class OperationCreateNrgStackWithParams extends CachedOperation<NRGStackWithParams,CreateException> implements OperationWithProgressReporter<NRGStackWithParams,CreateException> {
 
 	// We first retrieve a NamedImgCollection which we use to construct our real NrgStack for purposes
 	//   of good caching
-	private Operation<MPPInitParams> operationProposerSharedObjects;
+	private Operation<MPPInitParams, ? extends Throwable> operationProposerSharedObjects;
 	private KeyValueParams params;
 	// An operation to retrieve a stackCollection
 	//
 	public OperationCreateNrgStackWithParams(
-		Operation<MPPInitParams> operationProposerSharedObjects,
+		Operation<MPPInitParams, ? extends Throwable> operationProposerSharedObjects,
 		KeyValueParams params
 	) {
 		super();
@@ -61,12 +59,8 @@ class OperationCreateNrgStackWithParams extends CachedOperation<NRGStackWithPara
 	}
 
 	@Override
-	protected NRGStackWithParams execute() throws ExecuteException {
-		try {
-			return createNRGStack();
-		} catch (CreateException e) {
-			throw new ExecuteException(e);
-		}
+	protected NRGStackWithParams execute() throws CreateException {
+		return createNRGStack();
 	}
 	
 	// NB Note assumption about namedImgStackCollection ordering
@@ -100,18 +94,13 @@ class OperationCreateNrgStackWithParams extends CachedOperation<NRGStackWithPara
 				return null;
 			}
 			
-		} catch (ExecuteException e) {
-			throw new CreateException(e.getCause());
-		} catch( NamedProviderGetException e) {
+		} catch( Throwable e) {
 			throw new CreateException(e);
 		}
 	}
 
-	
-
 	@Override
-	public NRGStackWithParams doOperation(ProgressReporter progressReporter)
-			throws ExecuteException {
+	public NRGStackWithParams doOperation(ProgressReporter progressReporter) throws CreateException {
 		return doOperation();
 	}
 }

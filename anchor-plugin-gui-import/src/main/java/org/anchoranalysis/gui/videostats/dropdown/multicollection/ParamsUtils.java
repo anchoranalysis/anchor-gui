@@ -33,6 +33,8 @@ import org.anchoranalysis.core.name.store.NamedProviderStore;
 import org.anchoranalysis.core.params.KeyValueParams;
 
 class ParamsUtils {
+	
+	private ParamsUtils() {}
 
 	public static KeyValueParams apply( NamedProviderStore<KeyValueParams> paramsCollection, ErrorReporter errorReporter ) {
 		if (paramsCollection.keys().size()>1) {

@@ -1,12 +1,10 @@
-package org.anchoranalysis.gui.videostats.internalframe.annotator;
+package org.anchoranalysis.gui.videostats.dropdown.manifest;
 
-import org.anchoranalysis.core.index.GetOperationFailedException;
-
-/*-
+/*
  * #%L
- * anchor-gui-annotation
+ * anchor-image
  * %%
- * Copyright (C) 2010 - 2019 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann la Roche
+ * Copyright (C) 2016 ETH Zurich, University of Zurich, Owen Feehan
  * %%
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -28,15 +26,39 @@ import org.anchoranalysis.core.index.GetOperationFailedException;
  * #L%
  */
 
-import org.anchoranalysis.core.progress.OperationWithProgressReporter;
-import org.anchoranalysis.gui.annotation.AnnotationBackground;
-import org.anchoranalysis.gui.backgroundset.BackgroundSet;
 
-public abstract class AnnotationInitParams {
+import org.anchoranalysis.core.error.OperationFailedException;
+import org.anchoranalysis.core.name.provider.INamedProvider;
+import org.anchoranalysis.core.name.provider.NamedProviderGetException;
+import org.anchoranalysis.core.progress.CachedOperationWithProgressReporter;
+import org.anchoranalysis.core.progress.ProgressReporter;
 
-	public OperationWithProgressReporter<BackgroundSet,GetOperationFailedException> getBackgroundSetOp() {
-		return getBackground().getBackgroundSetOp();
+/**
+ * 
+ * @author Owen Feehan
+ *
+ * @param <T> provider-type
+ */
+class OperationFromNamedProvider<T> extends CachedOperationWithProgressReporter<T,OperationFailedException> {
+
+	private INamedProvider<T> provider;
+	private String name;
+	
+	public OperationFromNamedProvider(
+			INamedProvider<T> provider,
+			String name) {
+		super();
+		this.provider = provider;
+		this.name = name;
+	}
+
+	@Override
+	protected T execute( ProgressReporter progressReporter ) throws OperationFailedException {
+		try {
+			return provider.getException(name);
+		} catch (NamedProviderGetException e) {
+			throw new OperationFailedException(e);
+		}
 	}
 	
-	public abstract AnnotationBackground getBackground();
 }

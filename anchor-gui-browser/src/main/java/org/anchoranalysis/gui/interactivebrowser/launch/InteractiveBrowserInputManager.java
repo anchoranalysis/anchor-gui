@@ -35,10 +35,10 @@ import org.anchoranalysis.anchor.mpp.feature.bean.nrgscheme.NRGSchemeCreator;
 import org.anchoranalysis.bean.NamedBean;
 import org.anchoranalysis.bean.annotation.BeanField;
 import org.anchoranalysis.bean.annotation.DefaultInstance;
-import org.anchoranalysis.bean.annotation.Optional;
+import org.anchoranalysis.bean.annotation.OptionalBean;
 import org.anchoranalysis.bean.shared.params.keyvalue.KeyValueParamsProvider;
 import org.anchoranalysis.feature.bean.list.FeatureListProvider;
-import org.anchoranalysis.feature.calc.params.FeatureCalcParams;
+import org.anchoranalysis.feature.input.FeatureInput;
 import org.anchoranalysis.gui.bean.filecreator.FileCreator;
 import org.anchoranalysis.gui.interactivebrowser.input.InteractiveBrowserInput;
 import org.anchoranalysis.gui.interactivebrowser.openfile.importer.ImporterSettings;
@@ -62,20 +62,20 @@ public class InteractiveBrowserInputManager extends InputManager<InteractiveBrow
 	@BeanField @DefaultInstance
 	private RasterReader rasterReader;
 	
-	@BeanField @Optional
+	@BeanField @OptionalBean
 	private NRGSchemeCreator nrgSchemeCreator;
 	
 	@BeanField
-	private List<NamedBean<FeatureListProvider<FeatureCalcParams>>> namedItemSharedFeatureList
-		= new ArrayList<NamedBean<FeatureListProvider<FeatureCalcParams>>>();
+	private List<NamedBean<FeatureListProvider<FeatureInput>>> namedItemSharedFeatureList
+		= new ArrayList<NamedBean<FeatureListProvider<FeatureInput>>>();
 	
 	@BeanField
 	private List<NamedBean<MarkEvaluator>> namedItemMarkEvaluatorList = new ArrayList<NamedBean<MarkEvaluator>>();
 	
-	@BeanField @Optional
+	@BeanField @OptionalBean
 	private List<NamedBean<KeyValueParamsProvider>> namedItemKeyValueParamsProviderList = new ArrayList<NamedBean<KeyValueParamsProvider>>();
 	
-	@BeanField @Optional
+	@BeanField @OptionalBean
 	private List<NamedBean<FilePathProvider>> namedItemFilePathProviderList = new ArrayList<NamedBean<FilePathProvider>>();
 	
 	@BeanField
@@ -123,12 +123,12 @@ public class InteractiveBrowserInputManager extends InputManager<InteractiveBrow
 		this.nrgSchemeCreator = nrgSchemeCreator;
 	}
 
-	public List<NamedBean<FeatureListProvider<FeatureCalcParams>>> getNamedItemSharedFeatureList() {
+	public List<NamedBean<FeatureListProvider<FeatureInput>>> getNamedItemSharedFeatureList() {
 		return namedItemSharedFeatureList;
 	}
 
 	public void setNamedItemSharedFeatureList(
-			List<NamedBean<FeatureListProvider<FeatureCalcParams>>> namedItemSharedFeatureList) {
+			List<NamedBean<FeatureListProvider<FeatureInput>>> namedItemSharedFeatureList) {
 		this.namedItemSharedFeatureList = namedItemSharedFeatureList;
 	}
 

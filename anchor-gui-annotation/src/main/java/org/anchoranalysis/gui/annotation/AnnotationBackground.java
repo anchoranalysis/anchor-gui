@@ -1,6 +1,6 @@
 package org.anchoranalysis.gui.annotation;
 
-import org.anchoranalysis.core.bridge.BridgeElementException;
+
 
 /*-
  * #%L
@@ -29,8 +29,6 @@ import org.anchoranalysis.core.bridge.BridgeElementException;
  */
 
 import org.anchoranalysis.core.bridge.IObjectBridge;
-import org.anchoranalysis.core.cache.ExecuteException;
-import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.name.provider.INamedProvider;
 import org.anchoranalysis.core.progress.OperationWithProgressReporter;
@@ -46,33 +44,28 @@ import org.anchoranalysis.image.stack.Stack;
 /** The rasters which form the background to the annotations */
 public class AnnotationBackground {
 
-	private OperationWithProgressReporter<BackgroundSet> backgroundSetOp;
-	private IObjectBridge<Integer,DisplayStack> defaultBackground;
+	private OperationWithProgressReporter<BackgroundSet,GetOperationFailedException> backgroundSetOp;
+	private IObjectBridge<Integer,DisplayStack,GetOperationFailedException> defaultBackground;
 	private ImageDim dimViewer;
 	
 	public AnnotationBackground(
 		ProgressReporterMultiple prm,
 		INamedProvider<Stack> backgroundStacks,
 		String stackNameVisualOriginal
-	) throws CreateException {
+	) throws GetOperationFailedException {
 		backgroundSetOp = new OperationCreateBackgroundSet(backgroundStacks);
 		{
-			try {
-				defaultBackground = backgroundSetOp.doOperation(
-					new ProgressReporterOneOfMany(prm)
-				).stackCntr(stackNameVisualOriginal);
-				
-				if (defaultBackground==null) {
-					throw new CreateException(
-						String.format("Cannot find stackName '%s'", stackNameVisualOriginal )
-					);
-				}
-				
-				dimViewer = new ImageDim(defaultBackground.bridgeElement(0).getDimensions());
-				
-			} catch (BridgeElementException | ExecuteException | GetOperationFailedException e) {
-				throw new CreateException(e);
+			defaultBackground = backgroundSetOp.doOperation(
+				new ProgressReporterOneOfMany(prm)
+			).stackCntr(stackNameVisualOriginal);
+			
+			if (defaultBackground==null) {
+				throw new GetOperationFailedException(
+					String.format("Cannot find stackName '%s'", stackNameVisualOriginal )
+				);
 			}
+			
+			dimViewer = new ImageDim(defaultBackground.bridgeElement(0).getDimensions());
 		}		
 	}
 		
@@ -85,11 +78,11 @@ public class AnnotationBackground {
 		return dimViewer;
 	}
 
-	public IObjectBridge<Integer, DisplayStack> getDefaultBackground() {
+	public IObjectBridge<Integer,DisplayStack,GetOperationFailedException> getDefaultBackground() {
 		return defaultBackground;
 	}
 
-	public OperationWithProgressReporter<BackgroundSet> getBackgroundSetOp() {
+	public OperationWithProgressReporter<BackgroundSet,GetOperationFailedException> getBackgroundSetOp() {
 		return backgroundSetOp;
 	}
 }

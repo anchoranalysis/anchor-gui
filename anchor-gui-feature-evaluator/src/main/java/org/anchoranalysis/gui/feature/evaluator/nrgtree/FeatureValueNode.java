@@ -27,8 +27,6 @@ package org.anchoranalysis.gui.feature.evaluator.nrgtree;
  */
 
 
-import java.util.ArrayList;
-import java.util.List;
 import javax.swing.tree.TreeNode;
 
 import org.anchoranalysis.bean.error.BeanMisconfiguredException;
@@ -36,9 +34,7 @@ import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.reporter.ErrorReporter;
 import org.anchoranalysis.feature.bean.Feature;
 import org.anchoranalysis.feature.bean.list.FeatureList;
-import org.anchoranalysis.feature.cache.CacheableParams;
-import org.anchoranalysis.feature.calc.FeatureCalcException;
-import org.anchoranalysis.feature.calc.params.FeatureCalcParams;
+import org.anchoranalysis.feature.input.FeatureInput;
 
 
 // FeatureValue
@@ -47,18 +43,18 @@ class FeatureValueNode extends FeatureListNode {
 	// The current value defining the feature (to be displayed to the user)
 	private String value;
 	
-	private Feature<FeatureCalcParams> parentFeature;
+	private Feature<FeatureInput> parentFeature;
 	private String errorText = "";
 	private Throwable error;
 	
 	private TreeNode parentNode;
 	
-	private FeatureList<FeatureCalcParams> childFeatures;
+	private FeatureList<FeatureInput> childFeatures;
 	
 	public FeatureValueNode(
-		Feature<FeatureCalcParams> parentFeature,
+		Feature<FeatureInput> parentFeature,
 		TreeNode parentNode,
-		CacheableParams<FeatureCalcParams> params,
+		ParamsSource params,
 		ErrorReporter errorReporter
 	) throws CreateException {
 		super(errorReporter);
@@ -79,77 +75,41 @@ class FeatureValueNode extends FeatureListNode {
 		
 		initChildFeatures(
 			childFeatures,
-			createAllChildParams(parentFeature,params,childFeatures)
+			createChildParam(parentFeature,params,childFeatures)
 		);
 	}
 	
-	private static CacheableParams<FeatureCalcParams> createChildParam( Feature<FeatureCalcParams> parentFeature, CacheableParams<FeatureCalcParams> parentParams, Feature<FeatureCalcParams> childFeature ) throws CreateException {
-		try {
-			return parentFeature.transformParams(parentParams, childFeature);
-		} catch (FeatureCalcException e) {
-			throw new CreateException(e);
-		}
+	private static ParamsSource createChildParam(
+		Feature<FeatureInput> parentFeature,
+		ParamsSource parentParams,
+		FeatureList<FeatureInput> childFeatures
+	) throws CreateException {
+		//try {
+			//return parentFeature.transformParams(parentParams, childFeature);
+	//	} catch (FeatureCalcException e) {
+//			throw new CreateException(e);
+		//
+		return parentParams;
 	}
 	
-	private static List<CacheableParams<FeatureCalcParams>> createAllChildParams( Feature<FeatureCalcParams> parentFeature, CacheableParams<FeatureCalcParams> parentParams, FeatureList<FeatureCalcParams> childFeatures ) throws CreateException {
-		
-		List<CacheableParams<FeatureCalcParams>> list = new ArrayList<>();
-		
-		for( Feature<FeatureCalcParams> f : childFeatures ) {
-			list.add(
-				createChildParam(parentFeature, parentParams, f)
-			);
-		}
-		
-		return list;
-	}
 	
-	// TODO merge with createAllChildParams, very similar names, what's the necessary difference/
-	private static List<CacheableParams<FeatureCalcParams>> creatAllChildParams( Feature<FeatureCalcParams> parentFeature, List<CacheableParams<FeatureCalcParams>> parentParams, FeatureList<FeatureCalcParams> childFeatures ) throws CreateException {
-		
-		assert(parentParams.size()==childFeatures.size());
-		
-		List<CacheableParams<FeatureCalcParams>> list = new ArrayList<>();
-		
-		for( int i=0; i<childFeatures.size(); i++ ) {
-			Feature<FeatureCalcParams> f = childFeatures.get(i);
-			CacheableParams<FeatureCalcParams> params = parentParams.get(i);
-			
-			list.add(
-				createChildParam(parentFeature, params, f)
-			);
-		}
-		
-		return list;
-	}
 
 	@Override
-	protected void updateValueSource(CacheableParams<FeatureCalcParams> params) {
+	protected void updateValueSource(ParamsSource paramsSource) {
 		try {
-			CacheableParams<FeatureCalcParams> childParams = createChildParam(
+			ParamsSource childParams = createChildParam(
 				parentFeature,
-				params,
-				null
+				paramsSource,
+				childFeatures
 			);
-			super.updateValueSourceNoTransformParams(childParams);
+			super.updateValueSource(childParams);
 		} catch (CreateException e) {
 			getErrorReporter().recordError(FeatureValueNode.class, e);
 		}
-	}
-
-	@Override
-	protected void updateValueSource(List<CacheableParams<FeatureCalcParams>> createParamsList) {
-		try {
-			List<CacheableParams<FeatureCalcParams>> childParams = creatAllChildParams(parentFeature, createParamsList, childFeatures);
-			super.updateValueSourceNoTransformParams(childParams);
-		} catch (CreateException e) {
-			getErrorReporter().recordError(FeatureValueNode.class, e);
-		}
-		
 	}
 	
 	@Override
-	public Feature<FeatureCalcParams> getFeature() {
+	public Feature<FeatureInput> getFeature() {
 		return parentFeature;
 	}
 

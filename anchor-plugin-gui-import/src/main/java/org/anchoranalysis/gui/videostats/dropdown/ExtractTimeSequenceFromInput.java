@@ -27,8 +27,8 @@ package org.anchoranalysis.gui.videostats.dropdown;
  */
 
 
-import org.anchoranalysis.core.cache.ExecuteException;
 import org.anchoranalysis.core.cache.IdentityOperation;
+import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.log.LogUtilities;
 import org.anchoranalysis.core.name.store.LazyEvaluationStore;
@@ -39,7 +39,7 @@ import org.anchoranalysis.image.io.RasterIOException;
 import org.anchoranalysis.image.stack.TimeSequence;
 import org.anchoranalysis.plugin.io.bean.input.stack.StackSequenceInput;
 
-public class ExtractTimeSequenceFromInput extends CachedOperationWithProgressReporter<TimeSequenceProvider> {
+public class ExtractTimeSequenceFromInput extends CachedOperationWithProgressReporter<TimeSequenceProvider,CreateException> {
 
 	private StackSequenceInput inputObject;
 	private int seriesNum;
@@ -54,34 +54,34 @@ public class ExtractTimeSequenceFromInput extends CachedOperationWithProgressRep
 		this.seriesNum = seriesNum;
 	}
 	
-	private TimeSequenceProvider doOperationWithException( ProgressReporter progressReporter ) throws RasterIOException {
-		
-		TimeSequence timeSeries;
-		try {
-			timeSeries = inputObject.createStackSequenceForSeries(seriesNum).doOperation(progressReporter);
-		} catch (ExecuteException e) {
-			throw new RasterIOException(e);
-		}
-		
-		LazyEvaluationStore<TimeSequence> store = new LazyEvaluationStore<>(
-			LogUtilities.createNullErrorReporter(),
-			"extractTimeSequence"
-		);
+	private TimeSequenceProvider doOperationWithException( ProgressReporter progressReporter ) throws CreateException {
 		
 		try {
-			store.add("input_stack", new IdentityOperation<>(timeSeries) );
-			return new TimeSequenceProvider( store, inputObject.numFrames() );
-		} catch (OperationFailedException e) {
-			throw new RasterIOException(e);
+			TimeSequence timeSeries = inputObject
+				.createStackSequenceForSeries(seriesNum)
+				.doOperation(progressReporter);
+			
+			LazyEvaluationStore<TimeSequence> store = new LazyEvaluationStore<>(
+				LogUtilities.createNullErrorReporter(),
+				"extractTimeSequence"
+			);
+			
+			store.add(
+				"input_stack",
+				new IdentityOperation<>(timeSeries)
+			);
+			
+			return new TimeSequenceProvider(
+				store,
+				inputObject.numFrames()
+			);
+		} catch (RasterIOException | OperationFailedException e) {
+			throw new CreateException(e);
 		}
 	}
 
 	@Override
-	protected TimeSequenceProvider execute( ProgressReporter progressReporter ) throws ExecuteException {
-		try {
-			return doOperationWithException( progressReporter );
-		} catch (RasterIOException e) {
-			throw new ExecuteException(e);
-		}
+	protected TimeSequenceProvider execute( ProgressReporter progressReporter ) throws CreateException {
+		return doOperationWithException( progressReporter );
 	}
 }

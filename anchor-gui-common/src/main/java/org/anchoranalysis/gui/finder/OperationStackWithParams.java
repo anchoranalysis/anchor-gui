@@ -1,5 +1,7 @@
 package org.anchoranalysis.gui.finder;
 
+import java.io.IOException;
+
 /*-
  * #%L
  * anchor-gui-common
@@ -26,7 +28,7 @@ package org.anchoranalysis.gui.finder;
  * #L%
  */
 
-import org.anchoranalysis.core.cache.ExecuteException;
+import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.name.provider.INamedProvider;
 import org.anchoranalysis.core.progress.CachedOperationWithProgressReporter;
@@ -44,7 +46,7 @@ import org.anchoranalysis.io.manifest.finder.FinderSerializedObject;
  * @author FEEHANO
  *
  */
-class OperationStackWithParams extends CachedOperationWithProgressReporter<NRGStackWithParams> {
+class OperationStackWithParams extends CachedOperationWithProgressReporter<NRGStackWithParams,OperationFailedException> {
 
 	private OperationFindNrgStackFromStackCollection nrgStackOperation;
 	private FinderKeyValueParams finderImageParams;
@@ -62,7 +64,7 @@ class OperationStackWithParams extends CachedOperationWithProgressReporter<NRGSt
 
 	@Override
 	protected NRGStackWithParams execute(ProgressReporter progressReporter)
-			throws ExecuteException {
+			throws OperationFailedException {
 		
 		try {
 			NRGStackWithParams nrgStackWithParams = nrgStackOperation.doOperation();
@@ -76,12 +78,12 @@ class OperationStackWithParams extends CachedOperationWithProgressReporter<NRGSt
 			
 			return nrgStackWithParams;
 			
-		} catch (GetOperationFailedException e) {
-			throw new ExecuteException(e);
+		} catch (GetOperationFailedException | IOException e) {
+			throw new OperationFailedException(e);
 		}
 	}
 
-	public OperationWithProgressReporter<INamedProvider<Stack>> getOperationStackCollection() {
+	public OperationWithProgressReporter<INamedProvider<Stack>,OperationFailedException> getOperationStackCollection() {
 		return nrgStackOperation.getOperationStackCollection();
 	}
 }

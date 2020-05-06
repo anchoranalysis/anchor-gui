@@ -31,7 +31,6 @@ import java.util.Iterator;
 import org.anchoranalysis.anchor.graph.AxisLimits;
 import org.anchoranalysis.anchor.graph.GraphInstance;
 import org.anchoranalysis.anchor.graph.bean.GraphDefinition;
-import org.anchoranalysis.core.bridge.BridgeElementException;
 import org.anchoranalysis.core.bridge.IObjectBridge;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.index.container.IBoundedIndexContainer;
@@ -46,19 +45,19 @@ import org.anchoranalysis.plugin.gui.bean.exporttask.MappedFrom;
  *
  * @param <T> graph-item type
  */
-class GraphInstanceBridge<T> implements IObjectBridge<MappedFrom<CSVStatistic>,GraphInstance> {
+class GraphInstanceBridge<T> implements IObjectBridge<MappedFrom<CSVStatistic>,GraphInstance,CreateException> {
 	
 	// START: PARAMETERS IN
 	private GraphDefinition<T> graphDefinition;
 	private IBoundedIndexContainer<CSVStatistic> cntr;
-	private IObjectBridge<CSVStatistic, T> elementBridge;
+	private IObjectBridge<CSVStatistic,T,? extends Exception> elementBridge;
 	// END: PARAMETERS IN
 	
 	private AxisLimits rangeLimits;
 
 	public GraphInstanceBridge(GraphDefinition<T> graphDefinition,
 			IBoundedIndexContainer<CSVStatistic> cntr,
-			IObjectBridge<CSVStatistic, T> elementBridge
+			IObjectBridge<CSVStatistic,T,? extends Exception> elementBridge
 		) {
 		super();
 		this.graphDefinition = graphDefinition;
@@ -67,8 +66,7 @@ class GraphInstanceBridge<T> implements IObjectBridge<MappedFrom<CSVStatistic>,G
 	}
 	
 	@Override
-	public GraphInstance bridgeElement(MappedFrom<CSVStatistic> sourceObject)
-			throws BridgeElementException {
+	public GraphInstance bridgeElement(MappedFrom<CSVStatistic> sourceObject) throws CreateException {
 		
 		assert(graphDefinition!=null);
 		
@@ -81,23 +79,19 @@ class GraphInstanceBridge<T> implements IObjectBridge<MappedFrom<CSVStatistic>,G
 		BoundedIndexContainerBridgeWithoutIndex<CSVStatistic, T> boundBridge
 			= new BoundedIndexContainerBridgeWithoutIndex<>(cntr, elementBridge);
 		
-		try {
-			AxisLimits domainLimits = createLimitsFromCntr(cntr);
-			
-			// We create a graph of all index points, so we can calculate range limits that are static
-			//   only the first time we execute the function
-			if (rangeLimits==null) {
-				rangeLimits = guessRangeLimits(boundBridge, domainLimits);
-			}
-			
-			return graphDefinition.create(
-				new BoundedIndexContainerIterator<>(boundBridge, 1000, currentIndex),
-				domainLimits,
-				rangeLimits
-			);
-		} catch (CreateException e) {
-			throw new BridgeElementException(e);
+		AxisLimits domainLimits = createLimitsFromCntr(cntr);
+		
+		// We create a graph of all index points, so we can calculate range limits that are static
+		//   only the first time we execute the function
+		if (rangeLimits==null) {
+			rangeLimits = guessRangeLimits(boundBridge, domainLimits);
 		}
+		
+		return graphDefinition.create(
+			new BoundedIndexContainerIterator<>(boundBridge, 1000, currentIndex),
+			domainLimits,
+			rangeLimits
+		);
 	}
 	
 	private static AxisLimits createLimitsFromCntr(IBoundedIndexContainer<CSVStatistic> cntr) {

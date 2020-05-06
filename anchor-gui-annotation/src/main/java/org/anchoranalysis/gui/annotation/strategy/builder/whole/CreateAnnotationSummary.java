@@ -33,7 +33,7 @@ import java.nio.file.Path;
 import org.anchoranalysis.annotation.wholeimage.WholeImageLabelAnnotation;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.gui.annotation.state.AnnotationSummary;
-import org.anchoranalysis.gui.annotation.strategy.ReadAnnotationFromFile;
+import org.anchoranalysis.plugin.annotation.bean.strategy.ReadAnnotationFromFile;
 
 class CreateAnnotationSummary {
 

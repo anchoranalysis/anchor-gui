@@ -36,10 +36,10 @@ import java.util.List;
 import org.anchoranalysis.anchor.mpp.bean.regionmap.RegionMap;
 import org.anchoranalysis.feature.bean.Feature;
 import org.anchoranalysis.feature.bean.list.FeatureList;
-import org.anchoranalysis.feature.calc.params.FeatureCalcParams;
+import org.anchoranalysis.feature.input.FeatureInput;
 
 // Associates a RegionMap with each feature
-public class FeatureListWithRegionMap<T extends FeatureCalcParams> implements Iterable<FeatureWithRegionMap<T>>{
+public class FeatureListWithRegionMap<T extends FeatureInput> implements Iterable<FeatureWithRegionMap<T>>{
 
 	private List<FeatureWithRegionMap<T>> list = new ArrayList<>();
 	
@@ -60,8 +60,8 @@ public class FeatureListWithRegionMap<T extends FeatureCalcParams> implements It
 	}
 	
 	@SuppressWarnings("unchecked")
-	public FeatureListWithRegionMap<FeatureCalcParams> upcast() {
-		return (FeatureListWithRegionMap<FeatureCalcParams>) this;
+	public FeatureListWithRegionMap<FeatureInput> upcast() {
+		return (FeatureListWithRegionMap<FeatureInput>) this;
 	}
 	
 	public void sortAlphaAscend() {

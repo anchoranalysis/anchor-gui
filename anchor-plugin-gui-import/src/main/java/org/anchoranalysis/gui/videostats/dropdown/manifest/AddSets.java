@@ -26,7 +26,6 @@ package org.anchoranalysis.gui.videostats.dropdown.manifest;
  * #L%
  */
 
-import org.anchoranalysis.core.cache.ExecuteException;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.gui.finder.FinderNrgStack;
 import org.anchoranalysis.gui.io.loader.manifest.finder.CfgNRGFinderContext;
@@ -113,14 +112,10 @@ class AddSets {
 			finderProposed,
 			finderProposedSecondary
 		};
-				
-		try {
-			for( FinderCfgNRGSet finder : allFinderCfgNRG) {
-				if (finder.doFind(manifests.getFileManifest().doOperation())) {
-				}	
-			}
-		} catch (ExecuteException e) {
-			throw new OperationFailedException(e);
+	
+		for( FinderCfgNRGSet finder : allFinderCfgNRG) {
+			if (finder.doFind(manifests.getFileManifest().doOperation())) {
+			}	
 		}
 	}
 	

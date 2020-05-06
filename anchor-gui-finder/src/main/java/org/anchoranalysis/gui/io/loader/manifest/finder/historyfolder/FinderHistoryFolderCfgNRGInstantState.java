@@ -30,7 +30,6 @@ import org.anchoranalysis.anchor.mpp.feature.nrg.cfg.CfgNRG;
  */
 
 
-import org.anchoranalysis.core.cache.CacheMonitor;
 import org.anchoranalysis.io.bean.deserializer.Deserializer;
 import org.anchoranalysis.io.bean.deserializer.ObjectInputStreamDeserializer;
 import org.anchoranalysis.io.deserializer.DeserializationFailedException;
@@ -43,12 +42,8 @@ import org.anchoranalysis.io.manifest.folder.FolderWrite;
 
 public class FinderHistoryFolderCfgNRGInstantState extends FinderHistoryFolder<CfgNRGInstantState> {
 	
-	private CacheMonitor cacheMonitor;
-	
-	public FinderHistoryFolderCfgNRGInstantState(String manifestFunction, CacheMonitor cacheMonitor) {
+	public FinderHistoryFolderCfgNRGInstantState(String manifestFunction) {
 		super(manifestFunction);
-		assert( cacheMonitor!= null );
-		this.cacheMonitor = cacheMonitor;
 	}
 
 	@Override
@@ -58,7 +53,7 @@ public class FinderHistoryFolderCfgNRGInstantState extends FinderHistoryFolder<C
 			new ObjectInputStreamDeserializer<Bundle<CfgNRG>>(),
 			new ObjectInputStreamDeserializer<BundleParameters>()
 		); 
-		HistoryCreator<CfgNRGInstantState> cfgNRGHistory = new DeserializeFromBundleCfgNRG(deserializers, folder, cacheMonitor);
+		HistoryCreator<CfgNRGInstantState> cfgNRGHistory = new DeserializeFromBundleCfgNRG(deserializers, folder);
 		return cfgNRGHistory.create();		
 	}
 	

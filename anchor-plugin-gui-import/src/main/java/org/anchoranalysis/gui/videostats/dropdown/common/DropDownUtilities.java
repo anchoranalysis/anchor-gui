@@ -30,13 +30,14 @@ import org.anchoranalysis.anchor.mpp.cfg.Cfg;
  * #L%
  */
 
-import org.anchoranalysis.core.cache.ExecuteException;
 import org.anchoranalysis.core.cache.Operation;
+import org.anchoranalysis.core.cache.WrapOperationWithProgressReporterAsCached;
+import org.anchoranalysis.core.error.OperationFailedException;
+import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.name.provider.INamedProvider;
 import org.anchoranalysis.core.name.provider.NamedProviderGetException;
 import org.anchoranalysis.core.progress.CachedOperationWithProgressReporter;
 import org.anchoranalysis.core.progress.OperationWithProgressReporter;
-import org.anchoranalysis.core.progress.ProgressReporter;
 import org.anchoranalysis.gui.backgroundset.BackgroundSet;
 import org.anchoranalysis.gui.interactivebrowser.MarkEvaluatorSetForImage;
 import org.anchoranalysis.gui.mark.MarkDisplaySettings;
@@ -59,35 +60,33 @@ import org.anchoranalysis.io.output.bound.BoundOutputManagerRouteErrors;
 public class DropDownUtilities {
 	
 	public static void addAllProposerEvaluator(
-		final BoundVideoStatsModuleDropDown dropDown,
-		final OperationWithProgressReporter<IAddVideoStatsModule> adderOpWithoutNRG,
-		final OperationWithProgressReporter<BackgroundSet> backgroundSet,
-		final MarkEvaluatorSetForImage markEvaluatorSet,
-		final OutputWriteSettings outputWriteSettings,
-		final boolean addNRGAdder,
-		final VideoStatsModuleGlobalParams mpg
+		BoundVideoStatsModuleDropDown dropDown,
+		OperationWithProgressReporter<IAddVideoStatsModule,? extends Throwable> adderOpWithoutNRG,
+		OperationWithProgressReporter<BackgroundSet,GetOperationFailedException> backgroundSet,
+		MarkEvaluatorSetForImage markEvaluatorSet,
+		OutputWriteSettings outputWriteSettings,
+		boolean addNRGAdder,
+		VideoStatsModuleGlobalParams mpg
 	) {
 		// Generating a NRGStackWithParams from the markEvaluatorSet
-		final OperationNRGStackFromMarkEvaluatorSet operationGetNRGStack = new OperationNRGStackFromMarkEvaluatorSet(markEvaluatorSet);
+		OperationNRGStackFromMarkEvaluatorSet operationGetNRGStack = new OperationNRGStackFromMarkEvaluatorSet(markEvaluatorSet);
 		
 		NRGBackground nrgBackground = NRGBackground.createFromBackground(
 			backgroundSet,
 			operationGetNRGStack
 		);
 		
-		final CachedOperationWithProgressReporter<IAddVideoStatsModule> adderOp = new CachedOperationWithProgressReporter<IAddVideoStatsModule>() {
-
-			@Override
-			protected IAddVideoStatsModule execute( ProgressReporter progressReporter ) throws ExecuteException {
-				
-				IAddVideoStatsModule adder = adderOpWithoutNRG.doOperation(progressReporter);
-				
-				if (addNRGAdder) {
-					nrgBackground.addNrgStackToAdder(adder);
+		CachedOperationWithProgressReporter<IAddVideoStatsModule, ? extends Throwable> adderOp =
+			new WrapOperationWithProgressReporterAsCached<>(
+				pr -> {
+					IAddVideoStatsModule adder = adderOpWithoutNRG.doOperation(pr);
+					
+					if (addNRGAdder) {
+						nrgBackground.addNrgStackToAdder(adder);
+					}
+					return adder;
 				}
-				return adder;
-			}
-		};
+			);
 		
 		VideoStatsModuleCreator moduleCreator = new ProposerEvaluatorModuleCreator(
 			markEvaluatorSet,
@@ -101,13 +100,12 @@ public class DropDownUtilities {
 		dropDown.getRootMenu().add( new VideoStatsOperationFromCreatorAndAdder("Proposer Evaluator", creatorAndAdder, mpg.getThreadPool(), mpg.getLogErrorReporter() ) );
 	}
 	
-
 	public static void addCfg(
 		VideoStatsOperationMenu menu,
 		BoundVideoStatsModuleDropDown delegate,
-		Operation<Cfg> op,
+		Operation<Cfg,OperationFailedException> op,
 		String name,
-		NRGBackgroundAdder nrgBackground,
+		NRGBackgroundAdder<?> nrgBackground,
 		VideoStatsModuleGlobalParams mpg,
 		MarkDisplaySettings markDisplaySettings,
 		boolean addAsDefault
@@ -121,53 +119,48 @@ public class DropDownUtilities {
 			mpg,
 			markDisplaySettings
 		);
-		addModule(module, menu, nrgBackground.getAdder(), name, mpg, addAsDefault );
+		addModule(
+			module,
+			menu,
+			nrgBackground.getAdder(),
+			name,
+			mpg,
+			addAsDefault
+		);
 	}
 	
 	
 	public static void addObjMaskCollection(
-			VideoStatsOperationMenu menu,
-			BoundVideoStatsModuleDropDown delegate,
-			Operation<ObjMaskCollection> op,
-			String name,
-			NRGBackgroundAdder nrgBackground,
-			VideoStatsModuleGlobalParams mpg,
-			boolean addAsDefault
-		) {
-			
-			VideoStatsModuleCreator module = new ObjMaskCollectionModuleCreator(delegate.getName(), name, op, nrgBackground.getNRGBackground(), mpg );
-			addModule(module, menu, nrgBackground.getAdder(), name, mpg, addAsDefault );
-		}
-	
-	
-	
-	
-	private static void addModule(
-		VideoStatsModuleCreator module,
 		VideoStatsOperationMenu menu,
-		OperationWithProgressReporter<IAddVideoStatsModule> opAdder,
+		BoundVideoStatsModuleDropDown delegate,
+		Operation<ObjMaskCollection,OperationFailedException> op,
 		String name,
+		NRGBackgroundAdder<?> nrgBackground,
 		VideoStatsModuleGlobalParams mpg,
 		boolean addAsDefault
-	)
-	{
-		VideoStatsModuleCreatorAndAdder creatorAndAdder = new VideoStatsModuleCreatorAndAdder(opAdder,module);
-		
-		if (addAsDefault) {
-			menu.add( new VideoStatsOperationFromCreatorAndAdder(name,creatorAndAdder, mpg.getThreadPool(), mpg.getLogErrorReporter() ) );
-		} else {
-			menu.addAsDefault( new VideoStatsOperationFromCreatorAndAdder(name,creatorAndAdder, mpg.getThreadPool(), mpg.getLogErrorReporter() ) );
-		}
+	) {
+		VideoStatsModuleCreator module = new ObjMaskCollectionModuleCreator(
+			delegate.getName(),
+			name,
+			op,
+			nrgBackground.getNRGBackground(),
+			mpg
+		);
+		addModule(
+			module,
+			menu,
+			nrgBackground.getAdder(),
+			name,
+			mpg,
+			addAsDefault
+		);
 	}
-	
-
-	
 	
 	public static void addCfgSubmenu(
 		VideoStatsOperationMenu menu,
 		BoundVideoStatsModuleDropDown delegate,
-		final INamedProvider<Cfg> cfgProvider,
-		NRGBackgroundAdder nrgBackground,
+		INamedProvider<Cfg> cfgProvider,
+		NRGBackgroundAdder<?> nrgBackground,
 		VideoStatsModuleGlobalParams mpg,
 		MarkDisplaySettings markDisplaySettings,
 		boolean addAsDefault
@@ -178,20 +171,12 @@ public class DropDownUtilities {
 		
 		VideoStatsOperationMenu subMenu = menu.createSubMenu("Cfg", true);
 		
-		for( final String providerName : cfgProvider.keys() ) {
-			
-			Operation<Cfg> opCfg = () -> {
-				try {
-					return cfgProvider.getException(providerName);
-				} catch (NamedProviderGetException e) {
-					throw new ExecuteException(e.summarize());
-				}
-			};
+		for( String providerName : cfgProvider.keys() ) {
 			
 			addCfg(
 				subMenu,
 				delegate.createChild(providerName),
-				opCfg,
+				() -> getFromProvider(cfgProvider, providerName),
 				providerName,
 				nrgBackground,
 				mpg,
@@ -200,50 +185,34 @@ public class DropDownUtilities {
 			);
 		}
 	}
-	
-	
+		
 	public static void addObjSubmenu(
-			VideoStatsOperationMenu menu,
-			BoundVideoStatsModuleDropDown delegate,
-			final INamedProvider<ObjMaskCollection> provider,
-			NRGBackgroundAdder nrgBackground,
-			VideoStatsModuleGlobalParams mpg,
-			boolean addAsDefault
-		)
-		{
-			if (provider.keys().size()==0) {
-				return;
-			}
-			
-			VideoStatsOperationMenu subMenu = menu.createSubMenu("Objs", true);
-			
-			for( final String providerName : provider.keys() ) {
-				
-				Operation<ObjMaskCollection> op = new Operation<ObjMaskCollection>() {
-
-					@Override
-					public ObjMaskCollection doOperation() throws ExecuteException {
-						try {
-							return provider.getException(providerName);
-						} catch (NamedProviderGetException e) {
-							throw new ExecuteException(e.summarize());
-						}
-					}
-					
-				};
-				
-				addObjMaskCollection(
-					subMenu,
-					delegate.createChild(providerName),
-					op,
-					providerName,
-					nrgBackground,
-					mpg,
-					addAsDefault
-				);
-			}
+		VideoStatsOperationMenu menu,
+		BoundVideoStatsModuleDropDown delegate,
+		final INamedProvider<ObjMaskCollection> provider,
+		NRGBackgroundAdder<?> nrgBackground,
+		VideoStatsModuleGlobalParams mpg,
+		boolean addAsDefault
+	) {
+		if (provider.keys().size()==0) {
+			return;
 		}
-	
+		
+		VideoStatsOperationMenu subMenu = menu.createSubMenu("Objs", true);
+		
+		for( final String providerName : provider.keys() ) {
+			
+			addObjMaskCollection(
+				subMenu,
+				delegate.createChild(providerName),
+				() -> getFromProvider(provider,providerName),
+				providerName,
+				nrgBackground,
+				mpg,
+				addAsDefault
+			);
+		}
+	}
 	
 	public static BoundOutputManagerRouteErrors createOutputManagerForSubfolder( BoundOutputManagerRouteErrors parentOutputManager, String subFolderName ) {
 		ManifestDescription manifestDescription = new ManifestDescription("interactiveOutput", "manifestInteractiveOutput");
@@ -253,5 +222,30 @@ public class DropDownUtilities {
     	
     	// NB: As bindAsSubFolder can now return nulls, maybe some knock-on bugs are introduced here
 		return parentOutputManager.getWriterAlwaysAllowed().bindAsSubFolder(subFolderName, mfd, null);
+	}
+	
+	private static void addModule(
+		VideoStatsModuleCreator module,
+		VideoStatsOperationMenu menu,
+		OperationWithProgressReporter<IAddVideoStatsModule,? extends Throwable> opAdder,
+		String name,
+		VideoStatsModuleGlobalParams mpg,
+		boolean addAsDefault
+	) {
+		VideoStatsModuleCreatorAndAdder creatorAndAdder = new VideoStatsModuleCreatorAndAdder(opAdder,module);
+		
+		if (addAsDefault) {
+			menu.add( new VideoStatsOperationFromCreatorAndAdder(name,creatorAndAdder, mpg.getThreadPool(), mpg.getLogErrorReporter() ) );
+		} else {
+			menu.addAsDefault( new VideoStatsOperationFromCreatorAndAdder(name,creatorAndAdder, mpg.getThreadPool(), mpg.getLogErrorReporter() ) );
+		}
+	}
+	
+	private static <T> T getFromProvider(INamedProvider<T> provider, String name) throws OperationFailedException {
+		try {
+			return provider.getException(name);
+		} catch (NamedProviderGetException e) {
+			throw new OperationFailedException(e.summarize());
+		}
 	}
 }

@@ -27,13 +27,12 @@ package org.anchoranalysis.gui.finder.imgstackcollection;
  */
 
 
-import org.anchoranalysis.core.cache.ExecuteException;
-import org.anchoranalysis.core.error.CreateException;
+import org.anchoranalysis.core.cache.WrapOperationWithProgressReporterAsCached;
+import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.name.provider.INamedProvider;
 import org.anchoranalysis.core.progress.CachedOperationWithProgressReporter;
 import org.anchoranalysis.core.progress.OperationWithProgressReporter;
-import org.anchoranalysis.core.progress.ProgressReporter;
 import org.anchoranalysis.core.progress.ProgressReporterNull;
 import org.anchoranalysis.feature.nrg.NRGStackWithParams;
 import org.anchoranalysis.gui.finder.FinderNrgStack;
@@ -41,28 +40,22 @@ import org.anchoranalysis.image.stack.NamedImgStackCollection;
 import org.anchoranalysis.image.stack.Stack;
 import org.anchoranalysis.io.manifest.ManifestRecorder;
 
-// Finds an image stack collection
+/** Finds an image stack collection */
 public class FinderImgStackCollectionFromNrgStack extends FinderImgStackCollection {
 	
 	private FinderNrgStack delegate = null;
-	
-	private CachedOperationWithProgressReporter<INamedProvider<Stack>> operationImgStackCollection = new OperationCreateCollection();
 
-	private OperationWithProgressReporter<Stack> operationExtractUntilThreeChnls = new CachedOperationWithProgressReporter<Stack>() {
-
-		@Override
-		protected Stack execute( ProgressReporter progressReporter ) throws ExecuteException {
-			NRGStackWithParams nrgStackWithParams = delegate.operationNrgStackWithProgressReporter().doOperation(progressReporter); 
-			return nrgStackWithParams.getNrgStack().asStack().extractUpToThreeChnls();
-		}
-		
-	};
+	private OperationWithProgressReporter<Stack,OperationFailedException> operationExtractUntilThreeChnls = 
+			new WrapOperationWithProgressReporterAsCached<>(
+				pr -> {
+					NRGStackWithParams nrgStackWithParams = delegate.operationNrgStackWithProgressReporter().doOperation(pr); 
+					return nrgStackWithParams.getNrgStack().asStack().extractUpToThreeChnls();
+				}
+			);
 	
-	private class OperationCreateCollection extends CachedOperationWithProgressReporter<INamedProvider<Stack>> {
-		
-		@Override
-		protected NamedImgStackCollection execute( ProgressReporter progressReporter ) throws ExecuteException {
-			try {
+	private CachedOperationWithProgressReporter<INamedProvider<Stack>,OperationFailedException> operationImgStackCollection =
+		new WrapOperationWithProgressReporterAsCached<>(
+			pr -> {
 				NamedImgStackCollection stackCollection = new NamedImgStackCollection(); 
 				
 				// finder NRG stack
@@ -74,18 +67,13 @@ public class FinderImgStackCollectionFromNrgStack extends FinderImgStackCollecti
 					try {
 						stackCollection.addFromWithPrefix( delegate.getNamedImgStackCollection(), "nrgChnl-" );
 					} catch (GetOperationFailedException e) {
-						throw new CreateException(e);
+						throw new OperationFailedException(e);
 					}
 
 				}
 				return stackCollection;
-				
-			} catch (CreateException e) {
-				throw new ExecuteException(e);
 			}
-		}
-	};
-	
+		);
 	
 	public FinderImgStackCollectionFromNrgStack( FinderNrgStack finderNrgStack ) {
 		this.delegate = finderNrgStack;
@@ -95,13 +83,13 @@ public class FinderImgStackCollectionFromNrgStack extends FinderImgStackCollecti
 	public INamedProvider<Stack> getImgStackCollection() throws GetOperationFailedException {
 		try {
 			return operationImgStackCollection.doOperation( ProgressReporterNull.get() );
-		} catch (ExecuteException e) {
+		} catch (OperationFailedException e) {
 			throw new GetOperationFailedException(e);
 		}
 	}
 	
 	@Override
-	public OperationWithProgressReporter<INamedProvider<Stack>> getImgStackCollectionAsOperationWithProgressReporter() {
+	public OperationWithProgressReporter<INamedProvider<Stack>,OperationFailedException> getImgStackCollectionAsOperationWithProgressReporter() {
 		return operationImgStackCollection;
 	}
 
@@ -114,5 +102,4 @@ public class FinderImgStackCollectionFromNrgStack extends FinderImgStackCollecti
 	public boolean exists() {
 		return delegate.exists();
 	}
-
 }

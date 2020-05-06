@@ -30,7 +30,7 @@ package org.anchoranalysis.gui.file.interactive;
 import java.io.File;
 
 import org.anchoranalysis.anchor.mpp.cfg.Cfg;
-import org.anchoranalysis.core.cache.ExecuteException;
+import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.log.LogErrorReporter;
@@ -129,12 +129,11 @@ public class FileMultiCollection extends InteractiveFile {
 		return new OpenedFileGUI(this, dropDown.openedFileGUI() );
 	}
 	
-	private TimeSequenceProvider createTimeSequenceProvider( LazyEvaluationStore<TimeSequence> stacks ) throws ExecuteException {
+	private TimeSequenceProvider createTimeSequenceProvider( LazyEvaluationStore<TimeSequence> stacks ) throws CreateException {
 		try {
 			return new TimeSequenceProvider(stacks, inputObject.numFrames());
 		} catch (OperationFailedException e) {
-			throw new ExecuteException(e);
+			throw new CreateException(e);
 		}
 	}
-
 }

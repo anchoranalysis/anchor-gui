@@ -68,7 +68,7 @@ public class ExportTaskActionAsThread extends AbstractAction {
 			
 			try {
 				
-				exportTask.init( exportTaskParams.getCacheMonitor() );
+				exportTask.init( );
 				
 				int min = exportTask.getMinProgress(exportTaskParams);
 				

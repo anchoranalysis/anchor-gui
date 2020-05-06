@@ -1,7 +1,7 @@
 package org.anchoranalysis.plugin.gui.bean.createrastergenerator.cfgnrginstantstate.dynamically;
 
 import org.anchoranalysis.anchor.mpp.feature.instantstate.CfgNRGInstantState;
-import org.anchoranalysis.core.bridge.BridgeElementException;
+
 
 /*-
  * #%L
@@ -30,6 +30,7 @@ import org.anchoranalysis.core.bridge.BridgeElementException;
  */
 
 import org.anchoranalysis.core.bridge.IObjectBridge;
+import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.index.container.IBoundedIndexContainer;
 import org.anchoranalysis.gui.io.loader.manifest.finder.csvstatistic.CSVStatistic;
@@ -42,7 +43,7 @@ import org.anchoranalysis.plugin.gui.bean.exporttask.MappedFrom;
  * @author feehano
  *
  */
-class FindNearestStatisticBridge implements IObjectBridge<MappedFrom<CfgNRGInstantState>, MappedFrom<CSVStatistic>> {
+class FindNearestStatisticBridge implements IObjectBridge<MappedFrom<CfgNRGInstantState>, MappedFrom<CSVStatistic>,OperationFailedException> {
 	
 	private IBoundedIndexContainer<CSVStatistic> cntr;
 		
@@ -53,7 +54,7 @@ class FindNearestStatisticBridge implements IObjectBridge<MappedFrom<CfgNRGInsta
 
 	@Override
 	public MappedFrom<CSVStatistic> bridgeElement(MappedFrom<CfgNRGInstantState> sourceObject)
-			throws BridgeElementException {
+			throws OperationFailedException {
 		int indexAdj = cntr.previousEqualIndex(sourceObject.getOriginalIter());
 		
 		try {
@@ -64,7 +65,7 @@ class FindNearestStatisticBridge implements IObjectBridge<MappedFrom<CfgNRGInsta
 				maybeDuplicate(stats, sourceObject.getOriginalIter())
 			);
 		} catch (GetOperationFailedException e) {
-			throw new BridgeElementException(e);
+			throw new OperationFailedException(e);
 		}
 	}
 	

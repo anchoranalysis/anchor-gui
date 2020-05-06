@@ -44,7 +44,11 @@ public class SingleContextualModuleCreator extends ContextualModuleCreator {
 	}
 	
 	@Override
-	public NamedModule[] create(String namePrefix, OperationWithProgressReporter<IAddVideoStatsModule> adder, VideoStatsModuleGlobalParams mpg )
+	public NamedModule[] create(
+		String namePrefix,
+		OperationWithProgressReporter<IAddVideoStatsModule,? extends Throwable> adder,
+		VideoStatsModuleGlobalParams mpg
+	)
 			throws CreateException {
 
 		NamedModule namedModuleSingle = createSingle(namePrefix, adder, mpg );
@@ -58,7 +62,7 @@ public class SingleContextualModuleCreator extends ContextualModuleCreator {
 		};
 	}
 	
-	public NamedModule createSingle(String namePrefix, OperationWithProgressReporter<IAddVideoStatsModule> adder,
+	public NamedModule createSingle(String namePrefix, OperationWithProgressReporter<IAddVideoStatsModule,? extends Throwable> adder,
 			VideoStatsModuleGlobalParams mpg) {
 
 		if (!moduleCreator.precondition()) {

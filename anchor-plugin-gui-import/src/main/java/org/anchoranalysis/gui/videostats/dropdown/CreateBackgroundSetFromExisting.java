@@ -29,8 +29,8 @@ import org.anchoranalysis.anchor.mpp.bean.init.MPPInitParams;
  */
 
 
-import org.anchoranalysis.core.cache.ExecuteException;
 import org.anchoranalysis.core.error.CreateException;
+import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.progress.CachedOperationWithProgressReporter;
 import org.anchoranalysis.core.progress.OperationWithProgressReporter;
 import org.anchoranalysis.core.progress.ProgressReporter;
@@ -41,14 +41,14 @@ import org.anchoranalysis.image.init.ImageInitParams;
 import org.anchoranalysis.image.stack.wrap.WrapStackAsTimeSequence;
 import org.anchoranalysis.io.output.bean.OutputWriteSettings;
 
-public class CreateBackgroundSetFromExisting extends CachedOperationWithProgressReporter<BackgroundSet> {
+public class CreateBackgroundSetFromExisting extends CachedOperationWithProgressReporter<BackgroundSet,GetOperationFailedException> {
 
-	private final OperationWithProgressReporter<BackgroundSet> existingBackgroundSet;
+	private final OperationWithProgressReporter<BackgroundSet,GetOperationFailedException> existingBackgroundSet;
 	private OperationCreateProposerSharedObjectsImageSpecific pso;
 	private OutputWriteSettings ows;
 	
 	public CreateBackgroundSetFromExisting(
-			OperationWithProgressReporter<BackgroundSet> backgroundSet,
+			OperationWithProgressReporter<BackgroundSet,GetOperationFailedException> backgroundSet,
 			OperationCreateProposerSharedObjectsImageSpecific pso,
 			OutputWriteSettings ows
 		) {
@@ -59,7 +59,7 @@ public class CreateBackgroundSetFromExisting extends CachedOperationWithProgress
 	}
 
 	@Override
-	protected BackgroundSet execute( ProgressReporter progressReporter ) throws ExecuteException {
+	protected BackgroundSet execute( ProgressReporter progressReporter ) throws GetOperationFailedException {
 
 		BackgroundSet bsExisting = existingBackgroundSet.doOperation(progressReporter);
 		try {
@@ -74,7 +74,7 @@ public class CreateBackgroundSetFromExisting extends CachedOperationWithProgress
 			);
 			
 		} catch (CreateException e) {
-			throw new ExecuteException(e);
+			throw new GetOperationFailedException(e);
 		}
 	}
 	

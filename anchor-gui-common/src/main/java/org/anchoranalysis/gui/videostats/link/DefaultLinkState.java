@@ -29,6 +29,7 @@ import org.anchoranalysis.anchor.overlay.collection.OverlayCollection;
  */
 
 import org.anchoranalysis.core.bridge.IObjectBridge;
+import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.gui.image.OverlayCollectionWithImgStack;
 import org.anchoranalysis.image.stack.DisplayStack;
 import org.apache.commons.lang.ArrayUtils;
@@ -41,7 +42,7 @@ public class DefaultLinkState {
 	private int[] objectIDs = new int[]{};
 	private OverlayCollection overlayCollection;
 	private OverlayCollectionWithImgStack cfgWithStack;
-	private IObjectBridge<Integer,DisplayStack> background;
+	private IObjectBridge<Integer,DisplayStack,GetOperationFailedException> background;
 	
 	DefaultLinkState duplicate() {
 		DefaultLinkState dms = new DefaultLinkState();
@@ -73,12 +74,12 @@ public class DefaultLinkState {
 	void setFrameIndex(int frameIndex) {
 		this.frameIndex = frameIndex;
 	}
-	public IObjectBridge<Integer,DisplayStack> getBackground() {
+	public IObjectBridge<Integer,DisplayStack,GetOperationFailedException> getBackground() {
 		return background;
 	}
 	
 	void setBackground(
-			IObjectBridge<Integer,DisplayStack> background) {
+			IObjectBridge<Integer,DisplayStack,GetOperationFailedException> background) {
 		this.background = background;
 	}
 	

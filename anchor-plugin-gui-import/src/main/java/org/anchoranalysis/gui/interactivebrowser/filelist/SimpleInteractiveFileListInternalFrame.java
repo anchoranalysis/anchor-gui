@@ -29,8 +29,8 @@ package org.anchoranalysis.gui.interactivebrowser.filelist;
 
 import java.util.List;
 
-import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.InitException;
+import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.progress.OperationWithProgressReporter;
 import org.anchoranalysis.core.progress.ProgressReporter;
 import org.anchoranalysis.gui.file.interactive.InteractiveFile;
@@ -51,8 +51,14 @@ public class SimpleInteractiveFileListInternalFrame {
 		delegate = new InteractiveFileListInternalFrame(name);
 	}
 
-	public void init(IAddVideoStatsModule adder, OperationWithProgressReporter<List<InteractiveFile>> opListFile,
-			IOpenFile fileOpenManager, VideoStatsModuleGlobalParams mpg, MarkDisplaySettings markDisplaySettings, ProgressReporter progressReporter) throws InitException {
+	public void init(
+		IAddVideoStatsModule adder,
+		OperationWithProgressReporter<List<InteractiveFile>,OperationFailedException> opListFile,
+		IOpenFile fileOpenManager,
+		VideoStatsModuleGlobalParams mpg,
+		MarkDisplaySettings markDisplaySettings,
+		ProgressReporter progressReporter
+	) throws InitException {
 		
 		try {
 			delegate.init(
@@ -62,7 +68,7 @@ public class SimpleInteractiveFileListInternalFrame {
 				mpg,
 				markDisplaySettings
 			);
-		} catch (CreateException e) {
+		} catch (OperationFailedException e) {
 			throw new InitException(e);
 		}
 	}

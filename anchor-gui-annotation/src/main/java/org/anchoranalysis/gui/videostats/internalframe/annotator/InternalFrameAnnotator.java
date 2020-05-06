@@ -34,7 +34,6 @@ import javax.swing.JFrame;
 
 import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.error.reporter.ErrorReporter;
-import org.anchoranalysis.core.progress.OperationWithProgressReporter;
 import org.anchoranalysis.gui.annotation.builder.AnnotationGuiBuilder;
 import org.anchoranalysis.gui.frame.details.canvas.ControllerFrame;
 import org.anchoranalysis.gui.frame.details.canvas.controller.imageview.ControllerImageView;
@@ -42,7 +41,6 @@ import org.anchoranalysis.gui.frame.overlays.InternalFrameOverlaysRedraw;
 import org.anchoranalysis.gui.image.frame.ISliderState;
 import org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.ControllerPopupMenuWithBackground;
 import org.anchoranalysis.gui.videostats.IModuleCreatorDefaultStateSliderState;
-import org.anchoranalysis.gui.videostats.dropdown.IAddVideoStatsModule;
 import org.anchoranalysis.gui.videostats.dropdown.VideoStatsModuleGlobalParams;
 import org.anchoranalysis.gui.videostats.internalframe.annotator.navigation.PanelNavigation;
 import org.anchoranalysis.gui.videostats.internalframe.annotator.tool.ToolErrorReporter;
@@ -62,7 +60,6 @@ public class InternalFrameAnnotator {
 		AnnotationGuiBuilder<T> annotation,
 		T paramsInit,
 		DefaultModuleState defaultState,
-		OperationWithProgressReporter<IAddVideoStatsModule> adder,
 		OutputWriteSettings outputWriteSettings,
 		VideoStatsModuleGlobalParams mpg
 	) throws InitException {
@@ -79,7 +76,6 @@ public class InternalFrameAnnotator {
 		
 		ISliderState sliderState = delegate.init(
 			defaultState,
-			adder,
 			paramsInit.getBackgroundSetOp(),
 			outputWriteSettings,
 			mpg

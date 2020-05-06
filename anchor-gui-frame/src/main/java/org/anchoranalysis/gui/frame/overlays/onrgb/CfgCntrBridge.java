@@ -1,6 +1,6 @@
 package org.anchoranalysis.gui.frame.overlays.onrgb;
 
-import org.anchoranalysis.core.bridge.BridgeElementException;
+
 
 /*-
  * #%L
@@ -33,7 +33,7 @@ import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.index.container.SingleContainer;
 import org.anchoranalysis.gui.displayupdate.OverlayedDisplayStack;
 
-class CfgCntrBridge implements IObjectBridge<Integer,OverlayedDisplayStack> {
+class CfgCntrBridge implements IObjectBridge<Integer,OverlayedDisplayStack, GetOperationFailedException> {
 	
 	private SingleContainer<OverlayedDisplayStack> cfgCntr;
 	
@@ -43,12 +43,7 @@ class CfgCntrBridge implements IObjectBridge<Integer,OverlayedDisplayStack> {
 	}
 
 	@Override
-	public OverlayedDisplayStack bridgeElement(Integer sourceObject)
-			throws BridgeElementException {
-		try {
-			return cfgCntr.get(0);
-		} catch (GetOperationFailedException e) {
-			throw new BridgeElementException(e);
-		}
+	public OverlayedDisplayStack bridgeElement(Integer sourceObject) throws GetOperationFailedException {
+		return cfgCntr.get(0);
 	}
 }

@@ -36,12 +36,12 @@ import javax.swing.BorderFactory;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 
-import org.anchoranalysis.anchor.mpp.feature.nrg.elem.NRGElemAllCalcParams;
-import org.anchoranalysis.anchor.mpp.feature.nrg.elem.NRGElemIndCalcParams;
-import org.anchoranalysis.anchor.mpp.feature.nrg.elem.NRGElemPairCalcParams;
+import org.anchoranalysis.anchor.mpp.feature.input.memo.FeatureInputAllMemo;
+import org.anchoranalysis.anchor.mpp.feature.input.memo.FeatureInputPairMemo;
+import org.anchoranalysis.anchor.mpp.feature.input.memo.FeatureInputSingleMemo;
 import org.anchoranalysis.anchor.mpp.pair.Pair;
 import org.anchoranalysis.anchor.overlay.Overlay;
-import org.anchoranalysis.feature.calc.params.FeatureCalcParamsNRGStack;
+import org.anchoranalysis.feature.input.FeatureInputNRGStack;
 import org.anchoranalysis.feature.nrg.NRGStackWithParams;
 import org.anchoranalysis.feature.shared.SharedFeatureSet;
 import org.anchoranalysis.gui.feature.FeatureListWithRegionMap;
@@ -60,13 +60,13 @@ public class TreeTableWithModelMultiplex implements ITreeTableModel {
 	public TreeTableWithModelMultiplex( TreeTableProperties properties,	FeatureListSrc featureListExtracter ) {
 		super();
 		
-		FeatureListWithRegionMap<NRGElemIndCalcParams>  featureListInd = featureListExtracter.createInd();
-		FeatureListWithRegionMap<NRGElemPairCalcParams>  featureListPair = featureListExtracter.createPair();
-		FeatureListWithRegionMap<NRGElemAllCalcParams> featureListAll = featureListExtracter.createAll();
-		SharedFeatureSet<FeatureCalcParamsNRGStack> sharedFeatures = featureListExtracter.sharedFeatures();
+		FeatureListWithRegionMap<FeatureInputSingleMemo>  featureListInd = featureListExtracter.createInd();
+		FeatureListWithRegionMap<FeatureInputPairMemo>  featureListPair = featureListExtracter.createPair();
+		FeatureListWithRegionMap<FeatureInputAllMemo> featureListAll = featureListExtracter.createAll();
+		SharedFeatureSet<FeatureInputNRGStack> sharedFeatures = featureListExtracter.sharedFeatures();
 		
 		// We use 4 models for NONE, IND, PAIR, ALL
-		addModelToList( new FeatureListWithRegionMap<FeatureCalcParamsNRGStack>(), properties, sharedFeatures );
+		addModelToList( new FeatureListWithRegionMap<FeatureInputNRGStack>(), properties, sharedFeatures );
 		addModelToList( featureListInd, properties, sharedFeatures );
 		addModelToList( featureListPair, properties, sharedFeatures );
 		addModelToList( featureListAll, properties, sharedFeatures );
@@ -80,10 +80,10 @@ public class TreeTableWithModelMultiplex implements ITreeTableModel {
 		}
 	}
 
-	private <T extends FeatureCalcParamsNRGStack> void addModelToList(
+	private <T extends FeatureInputNRGStack> void addModelToList(
 		FeatureListWithRegionMap<T> features,
 		TreeTableProperties properties,
-		SharedFeatureSet<FeatureCalcParamsNRGStack> sharedFeatures
+		SharedFeatureSet<FeatureInputNRGStack> sharedFeatures
 	) {
 		list.add( new TreeTableWithModel(properties, features.upcast(), sharedFeatures.upcast()) );
 	}

@@ -26,7 +26,6 @@ package org.anchoranalysis.gui.interactivebrowser.browser;
  * #L%
  */
 
-import org.anchoranalysis.core.cache.CacheMonitor;
 import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.gui.bean.filecreator.FileCreatorParams;
 import org.anchoranalysis.gui.bean.filecreator.MarkCreatorParams;
@@ -66,13 +65,11 @@ class AdderWithNrg {
 			RasterReader rasterReader,
 			FileOpenManager fileOpenManager,
 			MarkEvaluatorManager markEvaluatorManager,
-			CacheMonitor cacheMonitor,
 			ImporterSettings importerSettings,
 			MarkDisplaySettings markDisplaySettings
 	) {
 		
 		FileCreatorParams params = new FileCreatorParams();
-		params.setCacheMonitor(cacheMonitor);
 		params.setMarkCreatorParams( new MarkCreatorParams(
 			moduleParams,
 			markDisplaySettings,

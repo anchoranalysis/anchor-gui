@@ -30,9 +30,9 @@ package org.anchoranalysis.gui.videostats.dropdown;
 import javax.swing.JFrame;
 
 import org.anchoranalysis.bean.error.BeanDuplicateException;
-import org.anchoranalysis.core.cache.CacheMonitor;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.error.reporter.ErrorReporter;
+import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.progress.OperationWithProgressReporter;
 import org.anchoranalysis.gui.backgroundset.BackgroundSet;
 import org.anchoranalysis.gui.bean.exporttask.ExportTaskBean;
@@ -60,7 +60,7 @@ public class CombinedMenu {
 	public void addCombination(
 		FinderCfgNRGSet finderFirst,
 		FinderCfgNRGSet finderSecond,
-		OperationWithProgressReporter<BackgroundSet> backgroundSet,
+		OperationWithProgressReporter<BackgroundSet,GetOperationFailedException> backgroundSet,
 		CfgNRGFinderContext context
 	) throws MenuAddException {
 		
@@ -89,7 +89,6 @@ public class CombinedMenu {
 			context.getMpg().getExportTaskList(),
 			context.getOutputManager(),
 			context.getParentFrame(),
-			context.getMpg().getCacheMonitor(),
 			context.getMpg().getLogErrorReporter().getErrorReporter()
 		);
 	}
@@ -106,7 +105,6 @@ public class CombinedMenu {
 		ExportTaskList exportTaskList,
 		BoundOutputManagerRouteErrors outputManager,
 		JFrame parentFrame,
-		CacheMonitor cacheMonitor,
 		ErrorReporter errorReporter
 	)
 	{		
@@ -116,7 +114,6 @@ public class CombinedMenu {
 		exportTaskParams.addFinderCfgNRGHistory( finderFirst );
 		exportTaskParams.addFinderCfgNRGHistory(finderSecond);
 		exportTaskParams.setFinderImgStackCollection( finderImgStackCollection );
-		exportTaskParams.setCacheMonitor(cacheMonitor);
 		exportTaskParams.setOutputManager(outputManager);
 		
 		// TODO, HACK, as the RGB creator requires this

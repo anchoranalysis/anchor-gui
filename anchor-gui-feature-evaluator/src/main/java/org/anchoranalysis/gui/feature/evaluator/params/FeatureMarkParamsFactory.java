@@ -1,6 +1,6 @@
 package org.anchoranalysis.gui.feature.evaluator.params;
 
-import org.anchoranalysis.anchor.mpp.feature.bean.mark.FeatureMarkParams;
+import org.anchoranalysis.anchor.mpp.feature.bean.mark.FeatureInputMark;
 import org.anchoranalysis.anchor.mpp.pxlmark.memo.PxlMarkMemo;
 
 /*-
@@ -30,15 +30,19 @@ import org.anchoranalysis.anchor.mpp.pxlmark.memo.PxlMarkMemo;
  */
 
 import org.anchoranalysis.core.error.CreateException;
-import org.anchoranalysis.feature.calc.params.FeatureCalcParams;
+import org.anchoranalysis.feature.input.FeatureInput;
 import org.anchoranalysis.feature.nrg.NRGStackWithParams;
 
 public class FeatureMarkParamsFactory extends FeatureCalcParamsUnaryFactory {
 
 	@Override
-	public FeatureCalcParams create(PxlMarkMemo pmm, NRGStackWithParams raster)
+	public FeatureInput create(PxlMarkMemo pmm, NRGStackWithParams raster)
 			throws CreateException {
-		return new FeatureMarkParams(pmm.getMark(), raster.getDimensions().getRes(),raster.getParams());
+		return new FeatureInputMark(
+			pmm.getMark(),
+			raster.getDimensions().getRes(),
+			raster.getParams()
+		);
 	}
 	
 }

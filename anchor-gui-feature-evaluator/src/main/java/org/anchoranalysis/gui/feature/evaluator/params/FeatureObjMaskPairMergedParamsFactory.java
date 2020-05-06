@@ -1,5 +1,7 @@
 package org.anchoranalysis.gui.feature.evaluator.params;
 
+import java.util.Optional;
+
 import org.anchoranalysis.anchor.mpp.pxlmark.memo.PxlMarkMemo;
 
 /*
@@ -30,10 +32,10 @@ import org.anchoranalysis.anchor.mpp.pxlmark.memo.PxlMarkMemo;
 
 
 import org.anchoranalysis.core.error.CreateException;
-import org.anchoranalysis.feature.calc.params.FeatureCalcParams;
+import org.anchoranalysis.feature.input.FeatureInput;
 import org.anchoranalysis.feature.nrg.NRGStackWithParams;
 import org.anchoranalysis.image.binary.values.BinaryValuesByte;
-import org.anchoranalysis.image.feature.objmask.pair.merged.FeatureObjMaskPairMergedParams;
+import org.anchoranalysis.image.feature.objmask.pair.FeatureInputPairObjs;
 import org.anchoranalysis.image.objmask.ObjMask;
 
 public class FeatureObjMaskPairMergedParamsFactory extends FeatureCalcParamsPairwiseFactory {
@@ -46,7 +48,7 @@ public class FeatureObjMaskPairMergedParamsFactory extends FeatureCalcParamsPair
 	}
 
 	@Override
-	public FeatureCalcParams create(PxlMarkMemo pmm1, PxlMarkMemo pmm2,
+	public FeatureInput create(PxlMarkMemo pmm1, PxlMarkMemo pmm2,
 			NRGStackWithParams nrgStack) throws CreateException {
 		
 		ObjMask om1 = pmm1.getMark().calcMask(
@@ -61,9 +63,11 @@ public class FeatureObjMaskPairMergedParamsFactory extends FeatureCalcParamsPair
 			BinaryValuesByte.getDefault()
 		).getMask();
 		
-		FeatureObjMaskPairMergedParams params = new FeatureObjMaskPairMergedParams(om1,om2);
-		params.setNrgStack(nrgStack);
-		return params;
+		return new FeatureInputPairObjs(
+			om1,
+			om2,
+			Optional.of(nrgStack)
+		);
 	}
 	
 }

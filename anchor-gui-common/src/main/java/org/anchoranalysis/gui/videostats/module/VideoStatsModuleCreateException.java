@@ -39,7 +39,7 @@ public class VideoStatsModuleCreateException extends AnchorCheckedException {
 		super(string);
 	}
 
-	public VideoStatsModuleCreateException( Exception exc ) {
+	public VideoStatsModuleCreateException(Throwable exc) {
 		super( exc );
 	}
 }

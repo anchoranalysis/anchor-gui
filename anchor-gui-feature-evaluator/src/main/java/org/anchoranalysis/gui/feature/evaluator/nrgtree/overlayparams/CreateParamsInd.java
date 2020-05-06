@@ -34,36 +34,33 @@ import org.anchoranalysis.anchor.mpp.bean.regionmap.RegionMap;
 import org.anchoranalysis.anchor.mpp.mark.Mark;
 import org.anchoranalysis.anchor.mpp.pxlmark.memo.PxlMarkMemo;
 import org.anchoranalysis.anchor.mpp.pxlmark.memo.PxlMarkMemoFactory;
-import org.anchoranalysis.feature.calc.params.FeatureCalcParams;
+import org.anchoranalysis.feature.input.FeatureInput;
 import org.anchoranalysis.feature.nrg.NRGStackWithParams;
-import org.anchoranalysis.feature.session.CreateParams;
-import org.anchoranalysis.gui.feature.evaluator.nrgtree.createparams.CreateParamsPairFromRasterMark;
+import org.anchoranalysis.feature.session.CreateFeatureInput;
+import org.anchoranalysis.gui.feature.evaluator.nrgtree.createparams.CreateIndFromMark;
 
-class CreateParamsPairCache {
+class CreateParamsInd {
 	
-	private Mark markSrc;
-	private Mark markDest;
+	private Mark mark;
 	private NRGStackWithParams raster;
-	private Map<RegionMap,CreateParams<FeatureCalcParams>> map = new HashMap<>();
+	private Map<RegionMap,CreateFeatureInput<FeatureInput>> map = new HashMap<>();
 	
-	public CreateParamsPairCache(Mark markSrc, Mark markDest, NRGStackWithParams raster) {
+	public CreateParamsInd(Mark mark, NRGStackWithParams raster) {
 		super();
-		this.markSrc = markSrc;
-		this.markDest = markDest;
+		this.mark = mark;
 		this.raster = raster;
 	}
 	
-	public CreateParams<FeatureCalcParams> getOrCreate( RegionMap regionMap ) {
+	public CreateFeatureInput<FeatureInput> getOrCreate( RegionMap regionMap ) {
 		
-		CreateParams<FeatureCalcParams> params = map.get(regionMap);
+		CreateFeatureInput<FeatureInput> params = map.get(regionMap);
 		
 		if (params!=null) {
 			return params;
 		}
 		
-		PxlMarkMemo pmmSrc = PxlMarkMemoFactory.create( markSrc, raster.getNrgStack(), regionMap );
-		PxlMarkMemo pmmDest = PxlMarkMemoFactory.create( markDest, raster.getNrgStack(), regionMap );
-		params = new CreateParamsPairFromRasterMark( pmmSrc, pmmDest, raster);
-		return params;
+		PxlMarkMemo pmm = PxlMarkMemoFactory.create( mark, raster.getNrgStack(), regionMap );
+		assert(pmm!=null);
+		return new CreateIndFromMark(pmm,raster);
 	}
 }

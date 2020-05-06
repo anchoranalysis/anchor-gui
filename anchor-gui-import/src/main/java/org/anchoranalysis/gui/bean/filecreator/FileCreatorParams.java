@@ -29,7 +29,6 @@ import java.io.IOException;
  */
 
 
-import org.anchoranalysis.core.cache.CacheMonitor;
 import org.anchoranalysis.core.log.LogErrorReporter;
 import org.anchoranalysis.gui.interactivebrowser.openfile.importer.ImporterSettings;
 import org.anchoranalysis.image.io.bean.rasterreader.RasterReader;
@@ -42,20 +41,13 @@ public class FileCreatorParams {
 	
 	// Params from General Environment
 	private MarkCreatorParams markCreatorParams;
+
+	private ImporterSettings importerSettings;
 	
 	public InputContextParams createInputContext() throws IOException {
 		return markCreatorParams.getModuleParams().createInputContext();
 	}
-	
-	private CacheMonitor cacheMonitor;
-	private ImporterSettings importerSettings;
 
-	public CacheMonitor getCacheMonitor() {
-		return cacheMonitor;
-	}
-	public void setCacheMonitor(CacheMonitor cacheMonitor) {
-		this.cacheMonitor = cacheMonitor;
-	}
 	public RasterReader getRasterReader() {
 		return rasterReader;
 	}

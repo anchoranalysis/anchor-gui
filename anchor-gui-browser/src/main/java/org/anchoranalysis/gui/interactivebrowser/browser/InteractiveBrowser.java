@@ -33,7 +33,6 @@ import java.util.List;
 import org.anchoranalysis.anchor.mpp.bean.init.GeneralInitParams;
 import org.anchoranalysis.anchor.mpp.feature.bean.mark.MarkEvaluator;
 import org.anchoranalysis.bean.NamedBean;
-import org.anchoranalysis.core.cache.CacheMonitor;
 import org.anchoranalysis.core.color.ColorIndex;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.InitException;
@@ -73,8 +72,6 @@ public class InteractiveBrowser {
 	
 	// How long the splash screen displays for
 	private int SplashScreenTime = 2000;
-	
-	private CacheMonitor cacheMonitor = new CacheMonitor();
 	
 	// Manages the available mark evaluators
 	private MarkEvaluatorManager markEvaluatorManager;
@@ -200,7 +197,6 @@ public class InteractiveBrowser {
 			rasterReader,
 			fileOpenManager,
 			markEvaluatorManager,
-			cacheMonitor,
 			importerSettings,
 			videoStatsFrame.getLastMarkDisplaySettings()
 		);
@@ -251,7 +247,6 @@ public class InteractiveBrowser {
 		popUpParams.setOutputManager( outputManager );
 		popUpParams.setParentFrame( videoStatsFrame );
 		popUpParams.setSequenceMemory( sequenceMemory );
-		popUpParams.setCacheMonitor(cacheMonitor);
 		return popUpParams;
 	}
 

@@ -29,8 +29,8 @@ package org.anchoranalysis.gui.finder;
 
 import java.util.List;
 
-import org.anchoranalysis.core.cache.ExecuteException;
 import org.anchoranalysis.core.error.CreateException;
+import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.index.container.IBoundedIndexContainer;
 import org.anchoranalysis.core.progress.CachedOperationWithProgressReporter;
@@ -93,7 +93,7 @@ public class FinderRasterFolder extends FinderSingleFolder {
 		return result;
 	}
 	
-	private static class OperationCreateStack extends CachedOperationWithProgressReporter<Stack>  {
+	private static class OperationCreateStack extends CachedOperationWithProgressReporter<Stack,OperationFailedException>  {
 
 		private SequencedFolderRasterReader sfrr;
 		private int index;
@@ -105,11 +105,11 @@ public class FinderRasterFolder extends FinderSingleFolder {
 		}
 
 		@Override
-		protected Stack execute( ProgressReporter progressReporter ) throws ExecuteException {
+		protected Stack execute( ProgressReporter progressReporter ) throws OperationFailedException {
 			try {
 				return sfrr.get(index);
 			} catch (GetOperationFailedException e) {
-				throw new ExecuteException(e);
+				throw new OperationFailedException(e);
 			}
 		}
 		
@@ -135,10 +135,7 @@ public class FinderRasterFolder extends FinderSingleFolder {
 			if (nisc==null) {
 				nisc = new NamedImgStackCollection();
 			}
-			
-			/*nisc.addImageStack(name + "1", new ImgStack<ImgChnlFloat>( stack.getChnl(0).toFloat() )  );
-			nisc.addImageStack(name + "2", new ImgStack<ImgChnlFloat>( stack.getChnl(1).toFloat() )  );
-			nisc.addImageStack(name + "3", new ImgStack<ImgChnlFloat>( stack.getChnl(2).toFloat() )  );*/
+
 			if (namesAsIndexes) {
 				nisc.addImageStack( String.valueOf(i), new OperationCreateStack(sfrr, i) );
 			} else {

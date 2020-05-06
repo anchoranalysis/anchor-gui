@@ -2,6 +2,8 @@ package org.anchoranalysis.gui.interactivebrowser;
 
 
 
+import java.io.IOException;
+
 /*
  * #%L
  * anchor-gui
@@ -60,8 +62,8 @@ public class MarkEvaluatorManager {
 	}
 	
 	public MarkEvaluatorSetForImage createSetForStackCollection(
-		OperationWithProgressReporter<INamedProvider<Stack>> namedImgStackCollection,
-		Operation<KeyValueParams> keyParams
+		OperationWithProgressReporter<INamedProvider<Stack>,? extends Throwable> namedImgStackCollection,
+		Operation<KeyValueParams,IOException> keyParams
 	) throws CreateException {
 		
 		try {

@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.anchoranalysis.anchor.mpp.feature.instantstate.CfgNRGInstantState;
+import org.anchoranalysis.core.cache.LRUCache;
+import org.anchoranalysis.core.cache.LRUCache.CacheRetrievalFailed;
 
 /*
  * #%L
@@ -32,8 +34,6 @@ import org.anchoranalysis.anchor.mpp.feature.instantstate.CfgNRGInstantState;
  */
 
 
-import org.anchoranalysis.core.cache.CacheMonitor;
-import org.anchoranalysis.core.cache.LRUHashMapCache;
 import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.index.container.BoundChangeListener;
@@ -48,7 +48,7 @@ public class DualCfgNRGContainer<T> implements IBoundedIndexContainer<IndexedDua
 	
 	private IncrementalSequenceType incrementalSequenceType;
 	
-	private LRUHashMapCache<IndexedDualState<T>,Integer> recentAccessCache;
+	private LRUCache<Integer,IndexedDualState<T>> recentAccessCache;
 	
 	@FunctionalInterface
 	public interface TransformInstanteState<T> {
@@ -72,16 +72,14 @@ public class DualCfgNRGContainer<T> implements IBoundedIndexContainer<IndexedDua
 	}
 
 	
-	public void init( CacheMonitor cacheMonitor ) throws InitException {
+	public void init() throws InitException {
 
-		this.recentAccessCache = LRUHashMapCache.createAndMonitor(
+		this.recentAccessCache = new LRUCache<>(
 			3,
 			index -> new IndexedDualState<T>(
 				index,
 				instanceStates(index)
-			),
-			cacheMonitor,
-			"DualCfgNRGContainer"
+			)
 		);
 		
 		this.incrementalSequenceType = new IncrementalSequenceType();
@@ -155,7 +153,7 @@ public class DualCfgNRGContainer<T> implements IBoundedIndexContainer<IndexedDua
 	}
 	
 
-	private List<T> instanceStates(int index) throws GetOperationFailedException {
+	private List<T> instanceStates(int index) throws CacheRetrievalFailed {
 		
 		List<T> out = new ArrayList<T>();
 		
@@ -169,8 +167,12 @@ public class DualCfgNRGContainer<T> implements IBoundedIndexContainer<IndexedDua
 		return out;
 	}
 	
-	private static CfgNRGInstantState createNearestState( IBoundedIndexContainer<CfgNRGInstantState> cntr, int index ) throws GetOperationFailedException {
+	private static CfgNRGInstantState createNearestState( IBoundedIndexContainer<CfgNRGInstantState> cntr, int index ) throws CacheRetrievalFailed {
 		int selectedIndex = cntr.previousEqualIndex(index);
-		return cntr.get(selectedIndex);
+		try {
+			return cntr.get(selectedIndex);
+		} catch (GetOperationFailedException e) {
+			throw new CacheRetrievalFailed(e);
+		}
 	}
 }

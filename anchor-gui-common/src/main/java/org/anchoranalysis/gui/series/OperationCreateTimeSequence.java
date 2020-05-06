@@ -27,7 +27,7 @@ package org.anchoranalysis.gui.series;
  */
 
 
-import org.anchoranalysis.core.cache.ExecuteException;
+import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.log.LogUtilities;
 import org.anchoranalysis.core.name.store.LazyEvaluationStore;
@@ -36,7 +36,7 @@ import org.anchoranalysis.core.progress.ProgressReporter;
 import org.anchoranalysis.image.io.input.ProvidesStackInput;
 import org.anchoranalysis.image.stack.TimeSequence;
 
-public class OperationCreateTimeSequence extends CachedOperationWithProgressReporter<TimeSequenceProvider> {
+public class OperationCreateTimeSequence extends CachedOperationWithProgressReporter<TimeSequenceProvider,CreateException> {
 
 	private ProvidesStackInput inputObject;
 	private int seriesNum;
@@ -48,11 +48,11 @@ public class OperationCreateTimeSequence extends CachedOperationWithProgressRepo
 	}
 
 	@Override
-	protected TimeSequenceProvider execute( ProgressReporter progressReporter ) throws ExecuteException {
+	protected TimeSequenceProvider execute( ProgressReporter progressReporter ) throws CreateException {
 		try {
 			return doOperationWithException( progressReporter );
 		} catch (OperationFailedException e) {
-			throw new ExecuteException(e);
+			throw new CreateException(e);
 		}
 	}
 	

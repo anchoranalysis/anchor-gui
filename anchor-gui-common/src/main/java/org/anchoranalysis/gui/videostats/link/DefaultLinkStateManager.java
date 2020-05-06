@@ -31,6 +31,7 @@ import java.util.HashMap;
 
 import org.anchoranalysis.anchor.overlay.collection.OverlayCollection;
 import org.anchoranalysis.core.bridge.IObjectBridge;
+import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.index.IntArray;
 import org.anchoranalysis.core.property.IPropertyValueSendable;
 import org.anchoranalysis.gui.image.OverlayCollectionWithImgStack;
@@ -93,7 +94,7 @@ public class DefaultLinkStateManager {
 		return delegate;
 	}
 	
-	public void setBackground( IObjectBridge<Integer,DisplayStack> background ) {
+	public void setBackground( IObjectBridge<Integer,DisplayStack,GetOperationFailedException> background ) {
 		getState().setBackground(background);
 	}
 	
@@ -107,7 +108,7 @@ public class DefaultLinkStateManager {
 	}
 	
 	/** Provides a copy of the default module state with a changed background */
-	public DefaultLinkState copyChangeBackground( IObjectBridge<Integer,DisplayStack> background ) {
+	public DefaultLinkState copyChangeBackground( IObjectBridge<Integer,DisplayStack,GetOperationFailedException> background ) {
 		DefaultLinkState dup = delegate.duplicate();
 		dup.setBackground(background);
 		return dup;

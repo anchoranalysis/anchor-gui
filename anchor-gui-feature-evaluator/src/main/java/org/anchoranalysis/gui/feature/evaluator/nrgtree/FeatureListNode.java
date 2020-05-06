@@ -38,9 +38,8 @@ import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.reporter.ErrorReporter;
 import org.anchoranalysis.feature.bean.Feature;
 import org.anchoranalysis.feature.bean.list.FeatureList;
-import org.anchoranalysis.feature.cache.CacheableParams;
-import org.anchoranalysis.feature.calc.ResultsVector;
-import org.anchoranalysis.feature.calc.params.FeatureCalcParams;
+import org.anchoranalysis.feature.calc.results.ResultsVector;
+import org.anchoranalysis.feature.input.FeatureInput;
 
 
 //
@@ -51,24 +50,29 @@ abstract class FeatureListNode extends Node {
 	/**
 	 * The child features of this particular node
 	 */
-	private FeatureList<FeatureCalcParams> childFeatures;
+	private FeatureList<FeatureInput> childFeatures;
 	
 	
 	private List<FeatureValueNode> calcList = null;
-	private List<CacheableParams<FeatureCalcParams>> paramsList;
+	private ParamsSource params;
 	private ErrorReporter errorReporter;
 	
 	public FeatureListNode( ErrorReporter errorReporter ) {
 		this.errorReporter = errorReporter;
 	}
 	
-	protected void initChildFeatures(FeatureList<FeatureCalcParams> features, List<CacheableParams<FeatureCalcParams>> paramsList ) {
+	protected void initChildFeatures(FeatureList<FeatureInput> features, ParamsSource params ) {
 		this.childFeatures = new FeatureList<>(features);
 		
 		// Sort out features in alphabetical order
-		Collections.sort( childFeatures, (f1,f2)->f1.getFriendlyName().compareTo(f2.getFriendlyName() ));
+		Collections.sort(
+			childFeatures,
+			(f1,f2)->f1.getFriendlyName().compareTo(
+				f2.getFriendlyName()
+			)
+		);
 		
-		this.paramsList = paramsList;
+		this.params = params;
 	}
 
 	protected void resetCalcList() {
@@ -76,42 +80,23 @@ abstract class FeatureListNode extends Node {
 	}
 	
 
-	protected void updateValueSourceNoTransformParams(CacheableParams<FeatureCalcParams> params) {
-		updateValueSourceNoTransformParams(
-			listSize(params, childFeatures.size() )
-		);
-	}
-
-	
-	protected void updateValueSourceNoTransformParams(List<CacheableParams<FeatureCalcParams>> paramsList) {
+	@Override
+	protected void updateValueSource(ParamsSource params) {
 		
-		//System.out.println("updateValueSource");
-		
-		this.paramsList = paramsList;
-		assert( paramsList.size()==childFeatures.size() );
+		this.params = params;
 		
 		if (calcList==null) {
 			// We skip the update, if it's never been calculated, as there is no need to update
 			//createCalcList();
 		} else {
 			ResultsVector rv = calcResults();
-			updateNodes( rv, childFeatures, paramsList, calcList );
+			updateNodes( rv, childFeatures, calcList );
 		}
-	}
-
-	
-	private static <T> List<T> listSize( T params, int size ) {
-		List<T> list = new ArrayList<>();
-		for( int i=0; i<size; i++) {
-			list.add(params);
-		}
-		return list;
 	}
 		
 	@Override
 	public Enumeration<? extends TreeNode> children() {
 		
-		System.out.println("Children called");
 		if (calcList==null) {
 			createCalcList();
 		}
@@ -136,8 +121,7 @@ abstract class FeatureListNode extends Node {
 	private void createAndAddNodes( ResultsVector rv, List<FeatureValueNode> listNodes, TreeNode parent ) throws CreateException {
 		for (int i=0; i<rv.length(); i++) {
 			
-			Feature<FeatureCalcParams> f = childFeatures.get(i);
-			CacheableParams<FeatureCalcParams> params = paramsList.get(i);
+			Feature<FeatureInput> f = childFeatures.get(i);
 			assert(f!=null);
 			
 			FeatureValueNode node = new FeatureValueNode(
@@ -156,15 +140,12 @@ abstract class FeatureListNode extends Node {
 	// We update the immediate children, and all their children
 	private void updateNodes(
 		ResultsVector rv,
-		FeatureList<FeatureCalcParams> features,
-		List<CacheableParams<FeatureCalcParams>> paramsList,
+		FeatureList<FeatureInput> features,
 		List<FeatureValueNode> listNodes
 	) {
 		assert(rv.length()==features.size());
 		// update our tree
 		for (int i=0; i<features.size(); i++) {
-			
-			CacheableParams<FeatureCalcParams> params = paramsList.get(i);			
 			
 			FeatureValueNode node = listNodes.get(i);
 			setNodeFromResultsVector( node, rv, i );
@@ -175,14 +156,12 @@ abstract class FeatureListNode extends Node {
 	}
 	
 	private ResultsVector calcResults() {
-		return calcSubsetSuppressErrors(childFeatures,paramsList, errorReporter);
+		return calcSubsetSuppressErrors(childFeatures,params, errorReporter);
 	}
 		
 	private void createCalcList() {
 		try {
 			calcList = new ArrayList<>();
-			
-			assert( paramsList.size()==childFeatures.size() );
 	
 			ResultsVector rv = calcResults();
 			createAndAddNodes( rv, calcList, this );
@@ -223,7 +202,7 @@ abstract class FeatureListNode extends Node {
 		return childFeatures.size()==0;
 	}
 
-	protected FeatureList<FeatureCalcParams> getFeatures() {
+	protected FeatureList<FeatureInput> getFeatures() {
 		return childFeatures;
 	}
 
@@ -233,22 +212,20 @@ abstract class FeatureListNode extends Node {
 	
 	
 	/** Calculates with different parameters for every feature. No cache invalidation is occuring here. TODO Fix */
-	private static <T extends FeatureCalcParams> ResultsVector calcSubsetSuppressErrors(
-		FeatureList<T> features,
-		List<CacheableParams<T>> listParams,
+	private static ResultsVector calcSubsetSuppressErrors(
+		FeatureList<FeatureInput> features,
+		ParamsSource params,
 		ErrorReporter errorReporter
 	) {
-		assert(features.size()==listParams.size());
-		
 		ResultsVector res = new ResultsVector( features.size() );
 
 		for( int i=0; i<features.size(); i++) {
-			Feature<T> f = features.get(i);
+			Feature<FeatureInput> f = features.get(i);
 			
 			try {
 				res.set(
 					i,
-					listParams.get(i).calc(f)
+					params.calc(f)
 				);
 			} catch (Exception e) {
 				res.setError(i,e);

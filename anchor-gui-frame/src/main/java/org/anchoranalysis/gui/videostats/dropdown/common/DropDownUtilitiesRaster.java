@@ -40,7 +40,7 @@ public class DropDownUtilitiesRaster {
 	public static void addRaster(
 		VideoStatsOperationMenu menu,
 		BoundVideoStatsModuleDropDown delegate,
-		NRGBackgroundAdder nrgBackground,
+		NRGBackgroundAdder<?> nrgBackground,
 		String name,
 		VideoStatsModuleGlobalParams mpg,
 		boolean addAsDefault

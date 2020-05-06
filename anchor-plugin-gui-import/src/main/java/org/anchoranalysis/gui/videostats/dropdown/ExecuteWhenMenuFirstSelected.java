@@ -30,7 +30,7 @@ package org.anchoranalysis.gui.videostats.dropdown;
 import javax.swing.event.MenuEvent;
 import javax.swing.event.MenuListener;
 
-import org.anchoranalysis.core.cache.ExecuteException;
+import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.error.reporter.ErrorReporter;
 
 public abstract class ExecuteWhenMenuFirstSelected implements MenuListener {
@@ -50,7 +50,7 @@ public abstract class ExecuteWhenMenuFirstSelected implements MenuListener {
 		if (first) {
 			try {
 				execute();
-			} catch (ExecuteException e) {
+			} catch (OperationFailedException e) {
 				errorReporter.recordError(ExecuteWhenMenuFirstSelected.class, e);
 			}
 			first = false;
@@ -67,5 +67,5 @@ public abstract class ExecuteWhenMenuFirstSelected implements MenuListener {
 		
 	}
 	
-	public abstract void execute() throws ExecuteException;
+	public abstract void execute() throws OperationFailedException;
 }

@@ -2,6 +2,8 @@ package org.anchoranalysis.gui.videostats.dropdown;
 
 
 
+import java.io.IOException;
+
 /*
  * #%L
  * anchor-gui
@@ -39,10 +41,8 @@ import org.anchoranalysis.bean.AnchorBean;
 import org.anchoranalysis.bean.NamedBean;
 import org.anchoranalysis.bean.define.Define;
 import org.anchoranalysis.core.cache.CachedOperation;
-import org.anchoranalysis.core.cache.ExecuteException;
 import org.anchoranalysis.core.cache.Operation;
 import org.anchoranalysis.core.error.CreateException;
-import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.name.provider.INamedProvider;
 import org.anchoranalysis.core.name.store.SharedObjects;
 import org.anchoranalysis.core.params.KeyValueParams;
@@ -52,18 +52,18 @@ import org.anchoranalysis.image.bean.provider.stack.StackProvider;
 import org.anchoranalysis.image.init.ImageInitParams;
 import org.anchoranalysis.image.stack.Stack;
 
-public class OperationCreateProposerSharedObjectsImageSpecific extends CachedOperation<MPPInitParams> {
+public class OperationCreateProposerSharedObjectsImageSpecific extends CachedOperation<MPPInitParams,CreateException> {
 
-	private OperationWithProgressReporter<INamedProvider<Stack>> namedImgStackCollection;
-	private Operation<KeyValueParams> keyParams;
+	private OperationWithProgressReporter<INamedProvider<Stack>,? extends Throwable> namedImgStackCollection;
+	private Operation<KeyValueParams,IOException> keyParams;
 	
 	private Define namedDefinitions;
 	
 	private GeneralInitParams paramsGeneral;
 	
 	public OperationCreateProposerSharedObjectsImageSpecific(
-			OperationWithProgressReporter<INamedProvider<Stack>> namedImgStackCollection,
-			Operation<KeyValueParams> keyParams,
+			OperationWithProgressReporter<INamedProvider<Stack>,? extends Throwable> namedImgStackCollection,
+			Operation<KeyValueParams,IOException> keyParams,
 			Define namedDefinitions,
 			GeneralInitParams paramsGeneral
 			) {
@@ -85,16 +85,21 @@ public class OperationCreateProposerSharedObjectsImageSpecific extends CachedOpe
 			out.addAll( namesFromListNamedItems( namedDefinitions.getList(StackProvider.class) ));
 			
 			try {
-				out.addAll( namedImgStackCollection.doOperation( ProgressReporterNull.get() ).keys() );
-			} catch (ExecuteException e) {
-				paramsGeneral.getLogErrorReporter().getErrorReporter().recordError(OperationCreateProposerSharedObjectsImageSpecific.class, e);
+				out.addAll(
+					namedImgStackCollection.doOperation( ProgressReporterNull.get() ).keys()
+				);
+			} catch (Throwable e) {
+				paramsGeneral.getLogErrorReporter().getErrorReporter().recordError(
+					OperationCreateProposerSharedObjectsImageSpecific.class,
+					e
+				);
 			}
 			return out;
 		}
 	}
 	
 	@Override
-	protected MPPInitParams execute() throws ExecuteException {
+	protected MPPInitParams execute() throws CreateException {
 
 		// We initialise the markEvaluator
 		try {
@@ -107,13 +112,15 @@ public class OperationCreateProposerSharedObjectsImageSpecific extends CachedOpe
 			);
 			ImageInitParams soImage = soMPP.getImage();
 			
-			soImage.copyStackCollectionFrom( namedImgStackCollection.doOperation( ProgressReporterNull.get() ) );
+			soImage.copyStackCollectionFrom(
+				namedImgStackCollection.doOperation( ProgressReporterNull.get() )
+			);
 			soImage.addToKeyValueParamsCollection("input_params", keyParams.doOperation());
 			
 			return soMPP;
 
-		} catch (OperationFailedException | CreateException e) {
-			throw new ExecuteException(e);
+		} catch (Throwable e) {
+			throw new CreateException(e);
 		}
 	}
 

@@ -99,30 +99,4 @@ public class FileExecutedExperimentImageWithManifest extends InteractiveFile {
 	public String type() {
 		return "experiment results for image";
 	}
-
-	
-	
-	
-//	
-//
-//	
-//	@SuppressWarnings("unused")
-//	private void addNamedDefinitions( NamedDefinitions parentNamedDefinitions, Iterator<ManifestRecorder> iterator ) {
-//		assert(parentNamedDefinitions!=null);
-//		while ( iterator.hasNext() ) {
-//			ManifestRecorder manifestRecorder = iterator.next();
-//			
-//			try {
-//				FinderSerializedObject<NamedDefinitions> ndFinder = new FinderSerializedObject<NamedDefinitions>("namedDefinitions", logErrorReporter.getErrorReporter());
-//				if (ndFinder.doFind(manifestRecorder)) {
-//					NamedDefinitions nd = ndFinder.get();
-//					assert(nd!=null);
-//					parentNamedDefinitions.add(nd);
-//				}
-//			} catch (GetOperationFailedException e) {
-//				logErrorReporter.getErrorReporter().recordError(InteractiveBrowser.class, e);
-//			}
-//		}
-//		 	
-//	}
 }

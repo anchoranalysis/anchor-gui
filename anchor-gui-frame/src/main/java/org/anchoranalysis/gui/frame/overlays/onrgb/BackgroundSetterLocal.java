@@ -1,6 +1,6 @@
 package org.anchoranalysis.gui.frame.overlays.onrgb;
 
-import org.anchoranalysis.core.bridge.BridgeElementException;
+
 
 /*-
  * #%L
@@ -29,6 +29,7 @@ import org.anchoranalysis.core.bridge.BridgeElementException;
  */
 
 import org.anchoranalysis.core.bridge.IObjectBridge;
+import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.index.SetOperationFailedException;
 import org.anchoranalysis.gui.frame.display.IRedrawable;
 import org.anchoranalysis.gui.frame.display.OverlayedDisplayStackUpdate;
@@ -46,14 +47,14 @@ class BackgroundSetterLocal implements IBackgroundSetter {
 
 	@Override
 	public void setImageStackCntr(
-			IObjectBridge<Integer, DisplayStack> imageStackCntr)
-			throws SetOperationFailedException {
+		IObjectBridge<Integer, DisplayStack,GetOperationFailedException> imageStackCntr
+	) throws SetOperationFailedException {
 		
 		
 		DisplayStack stack;
 		try {
 			stack = imageStackCntr.bridgeElement(0);
-		} catch (BridgeElementException e) {
+		} catch (GetOperationFailedException e) {
 			throw new SetOperationFailedException(e);
 		}
 		

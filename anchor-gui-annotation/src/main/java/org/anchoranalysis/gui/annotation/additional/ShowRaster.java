@@ -28,12 +28,10 @@ package org.anchoranalysis.gui.annotation.additional;
 
 import java.nio.file.Path;
 
-import org.anchoranalysis.core.cache.ExecuteException;
 import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.progress.OperationWithProgressReporter;
-import org.anchoranalysis.core.progress.ProgressReporter;
 import org.anchoranalysis.core.progress.ProgressReporterNull;
 import org.anchoranalysis.gui.annotation.AnnotatorModuleCreator;
 import org.anchoranalysis.gui.backgroundset.BackgroundSet;
@@ -65,36 +63,28 @@ public class ShowRaster {
 		String rasterName,
 		final Path rasterPath,
 		RasterReader rasterReader
-	) throws InitException, GetOperationFailedException, ExecuteException {
+	) throws InitException, GetOperationFailedException {
 		
-		OperationWithProgressReporter<BackgroundSet> opCreateBackgroundSet
-			= new OperationWithProgressReporter<BackgroundSet>() {
-
-			@Override
-			public BackgroundSet doOperation(ProgressReporter progressReporter)
-					throws ExecuteException {
+		OperationWithProgressReporter<BackgroundSet,GetOperationFailedException> opCreateBackgroundSet = pr -> {
+			try (OpenedRaster or = rasterReader.openFile(rasterPath)){
+				TimeSequence ts = or.open(0, pr );
 				
-				try (OpenedRaster or = rasterReader.openFile(rasterPath)){
-					TimeSequence ts = or.open(0, progressReporter );
-					
-					Stack stack = ts.get(0);
-					
-					BackgroundSet backgroundSet = new BackgroundSet();
-					backgroundSet.addItem("Associated Raster", stack);
-					
-					return backgroundSet;
-					
-				} catch (OperationFailedException | RasterIOException e) {
-					throw new ExecuteException(e);
-				}
-
+				Stack stack = ts.get(0);
+				
+				BackgroundSet backgroundSet = new BackgroundSet();
+				backgroundSet.addItem("Associated Raster", stack);
+				
+				return backgroundSet;
+				
+			} catch (RasterIOException | OperationFailedException e) {
+				throw new GetOperationFailedException(e);
 			}
 		};
 		show( opCreateBackgroundSet, rasterName );
 	}
 	
 	public void show(
-		OperationWithProgressReporter<BackgroundSet> opCreateBackgroundSet,
+		OperationWithProgressReporter<BackgroundSet,GetOperationFailedException> opCreateBackgroundSet,
 		String rasterName
 	) {
 		try {
@@ -114,7 +104,7 @@ public class ShowRaster {
 				imageFrame.moduleCreator(sliderState).createVideoStatsModule( adder.getSubgroup().getDefaultModuleState().getState() )
 			);
 			
-		} catch (InitException | GetOperationFailedException | ExecuteException | VideoStatsModuleCreateException e) {
+		} catch (InitException | GetOperationFailedException | VideoStatsModuleCreateException e) {
 			mpg.getLogErrorReporter().getErrorReporter().recordError(AnnotatorModuleCreator.class, e);
 		}
 	}

@@ -31,7 +31,6 @@ import java.util.HashMap;
 import java.util.Set;
 
 import org.anchoranalysis.core.bridge.IObjectBridge;
-import org.anchoranalysis.core.cache.ExecuteException;
 import org.anchoranalysis.core.cache.IdentityOperation;
 import org.anchoranalysis.core.cache.Operation;
 import org.anchoranalysis.core.error.InitException;
@@ -43,11 +42,16 @@ import org.anchoranalysis.gui.container.background.CombineRGBBackgroundStackCntr
 import org.anchoranalysis.image.stack.DisplayStack;
 import org.anchoranalysis.image.stack.Stack;
 
-// A related set of backgrounds available to modules
-// Assunes they all have the same size
-public class BackgroundSet {
+/**
+ * A related set of backgrounds available to modules
+ * Assumes they all have the same size.
+ */
+ public class BackgroundSet {
 
-	private HashMap<String,Operation<BackgroundStackCntr>> map = new HashMap<>();
+	private HashMap<
+		String,
+		Operation<BackgroundStackCntr,OperationFailedException>
+	> map = new HashMap<>();
 	
 	public BackgroundSet() {
 		
@@ -60,25 +64,24 @@ public class BackgroundSet {
 	}
 
 	public void addItem( String name, BackgroundStackCntr rasterBackground ) {
-		addItem(name, new IdentityOperation<>(rasterBackground)  ); 
+		addItem(
+			name,
+			new IdentityOperation<>(rasterBackground) 
+		); 
 	}
 	
 	public void addItem( String name, final Stack stack) throws OperationFailedException {
 		addItem( name, BackgroundStackCntrFactory.singleSavedStack(stack) );
 	}
-	
 
-	
-	
-	
-	public void addItem( String name, Operation<BackgroundStackCntr> rasterBackground ) {
+	public void addItem( String name, Operation<BackgroundStackCntr,OperationFailedException> rasterBackground ) {
 		map.put(name, rasterBackground );
 	}
 	
 	public BackgroundStackCntr getItem( String name ) {
 		try {
 			return map.get(name).doOperation();
-		} catch (ExecuteException e) {
+		} catch (OperationFailedException e) {
 			assert false;
 			return null;
 		}
@@ -95,21 +98,17 @@ public class BackgroundSet {
 			}
 			
 			return finderRaster.backgroundStackCntr().get(0);
-		} catch (ExecuteException e) {
+		} catch (OperationFailedException e) {
 			throw new GetOperationFailedException(e);
 		}
 	}
 	
-	//public ImgStack<FloatBuffer> singleStackAsFloat( String name ) throws GetOperationFailedException {
-	//	return singleStack(name).toFloat();
-	//}
-	
 	// Gives us a stack container for a particular name, or NULL if none exists
 	// NOTE: There is only a mapping between 0 and a single image
-	public IObjectBridge<Integer,DisplayStack> stackCntr( String name ) throws GetOperationFailedException {
+	public IObjectBridge<Integer,DisplayStack,GetOperationFailedException> stackCntr( String name ) throws GetOperationFailedException {
 		try {
 			
-			Operation<BackgroundStackCntr> op = map.get(name);
+			Operation<BackgroundStackCntr,OperationFailedException> op = map.get(name);
 			
 			if (op==null) {
 				return null;
@@ -121,8 +120,10 @@ public class BackgroundSet {
 				return null;
 			}
 			
-			return new BoundedIndexBridge<>( backgroundStackCntr.backgroundStackCntr() );
-		} catch (ExecuteException e) {
+			return new BoundedIndexBridge<>(
+				backgroundStackCntr.backgroundStackCntr()
+			);
+		} catch (OperationFailedException e) {
 			throw new GetOperationFailedException(e);
 		}
 	}
@@ -143,7 +144,4 @@ public class BackgroundSet {
 		combined.setGreen( green );
 		addItem(top + " on " + bottom, combined.create() );
 	}
-
-
-
 }

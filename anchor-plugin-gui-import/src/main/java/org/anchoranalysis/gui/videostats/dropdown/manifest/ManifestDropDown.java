@@ -1,5 +1,7 @@
 package org.anchoranalysis.gui.videostats.dropdown.manifest;
 
+import java.io.IOException;
+
 import org.anchoranalysis.anchor.mpp.cfg.Cfg;
 import org.anchoranalysis.anchor.mpp.feature.instantstate.CfgNRGInstantState;
 import org.anchoranalysis.anchor.mpp.feature.instantstate.CfgNRGNonHandleInstantState;
@@ -34,7 +36,8 @@ import org.anchoranalysis.anchor.mpp.feature.nrg.cfg.CfgNRGPixelized;
 
 
 import org.anchoranalysis.core.cache.CachedOperation;
-import org.anchoranalysis.core.cache.ExecuteException;
+import org.anchoranalysis.core.cache.Operation;
+import org.anchoranalysis.core.cache.WrapOperationAsCached;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.error.OperationFailedException;
@@ -100,18 +103,13 @@ public class ManifestDropDown {
 		VideoStatsModuleGlobalParams mpg
 	) {
 		
-		OperationWithProgressReporter<INamedProvider<Stack>> opStacks = finderImgStackCollection.getImgStackCollectionAsOperationWithProgressReporter();  
+		OperationWithProgressReporter<INamedProvider<Stack>,OperationFailedException> opStacks = finderImgStackCollection.getImgStackCollectionAsOperationWithProgressReporter();  
 		
 		// We try to read a nrgStack from the manifest. If none exists, we guess instead from the image-stacks.
-		OperationWithProgressReporter<NRGStackWithParams> opNrg = new OperationReplaceNull<>(
+		OperationWithProgressReporter<NRGStackWithParams,OperationFailedException> opNrg = new OperationReplaceNull<>(
 			finderNrgStack.operationNrgStackWithProgressReporter(),
 			new GuessNRGStackFromStacks(
-				progressReporter -> new TimeSequenceProvider(
-					new WrapStackAsTimeSequence(
-						opStacks.doOperation(progressReporter)
-					),
-					1
-				)
+				asSequence(opStacks)
 			)
 		); 
 		
@@ -126,6 +124,21 @@ public class ManifestDropDown {
 			mpg.getThreadPool(),
 			mpg.getLogErrorReporter().getErrorReporter()
 		);
+	}
+	
+	private OperationWithProgressReporter<TimeSequenceProvider,CreateException> asSequence( OperationWithProgressReporter<INamedProvider<Stack>,OperationFailedException> opStacks ) {
+		return pr -> {
+			try {
+				return new TimeSequenceProvider(
+					new WrapStackAsTimeSequence(
+						opStacks.doOperation(pr)
+					),
+					1
+				);
+			} catch (OperationFailedException e) {
+				throw new CreateException(e);
+			}
+		};
 	}
 	
 	private FinderImgStackCollectionCombine createFinderImgStack( FinderNrgStack finderNrgStack, RasterReader rasterReader ) throws InitException {
@@ -143,8 +156,8 @@ public class ManifestDropDown {
 			if (!finderImgStackCollection.doFind(manifests.getFileManifest().doOperation())) {
 				throw new InitException("cannot find image stack collection");
 			}
-		} catch (ExecuteException e1) {
-			throw new InitException(e1);
+		} catch (OperationFailedException e) {
+			throw new InitException(e);
 		}
 		
 		return finderImgStackCollection;
@@ -154,8 +167,8 @@ public class ManifestDropDown {
 		FinderNrgStack finderNrgStack = new FinderNrgStack(	rasterReader, mpg.getLogErrorReporter().getErrorReporter() );
 		try {
 			finderNrgStack.doFind(manifests.getFileManifest().doOperation());
-		} catch (ExecuteException e1) {
-			throw new InitException(e1);
+		} catch (OperationFailedException e) {
+			throw new InitException(e);
 		}
 		return finderNrgStack;
 	}
@@ -171,7 +184,7 @@ public class ManifestDropDown {
 				new FinderSerializedObject<>("groupParams", mpg.getLogErrorReporter().getErrorReporter() );
 			try {
 				finderGroupParams.doFind(manifests.getFileManifest().doOperation());
-			} catch (ExecuteException e) {
+			} catch (OperationFailedException e) {
 				throw new InitException(e);
 			}
 		return finderGroupParams;
@@ -179,10 +192,10 @@ public class ManifestDropDown {
 	
 	private FinderHistoryFolderKernelIterDescription createFinderKernelIterDescription( VideoStatsModuleGlobalParams mpg ) throws InitException {
 		
-		final FinderHistoryFolderKernelIterDescription finderKernelIterDescription = new FinderHistoryFolderKernelIterDescription("kernelIterDescription", mpg.getCacheMonitor());
+		final FinderHistoryFolderKernelIterDescription finderKernelIterDescription = new FinderHistoryFolderKernelIterDescription("kernelIterDescription");
 		try {
 			finderKernelIterDescription.doFind(manifests.getFileManifest().doOperation());
-		} catch (ExecuteException e) {
+		} catch (OperationFailedException e) {
 			throw new InitException(e);
 		}
 		return finderKernelIterDescription;
@@ -364,7 +377,7 @@ public class ManifestDropDown {
 				DropDownUtilities.addCfg(
 					delegate.getRootMenu(),
 					delegate,
-					finderFinalCfg.operation(),
+					getCfgChangeException(finderFinalCfg),
 					"Final Cfg",
 					operationBwsaWithNRG.nrgBackground(),
 					mpg,
@@ -373,7 +386,7 @@ public class ManifestDropDown {
 				);
 				defaultAdded = true;
 			}
-		} catch (ExecuteException e) {
+		} catch (OperationFailedException e) {
 			mpg.getLogErrorReporter().getErrorReporter().recordError(ManifestDropDown.class, e);
 		}
 
@@ -386,7 +399,15 @@ public class ManifestDropDown {
 		return defaultAdded;
 	}
 	
-	
+	private Operation<Cfg, OperationFailedException> getCfgChangeException(FinderSerializedObject<Cfg> finderFinalCfg) {
+		return () -> {
+			try {
+				return finderFinalCfg.operation().doOperation();
+			} catch (IOException e) {
+				throw new OperationFailedException(e);
+			}
+		};
+	}
 	
 	private boolean addNRGTable( OperationCreateBackgroundSetWithAdder operationBwsaWithNRG, FinderNrgStack finderNrgStack, VideoStatsModuleGlobalParams mpg ) {
 		try	{
@@ -395,25 +416,22 @@ public class ManifestDropDown {
 			
 			if (finderFinalCfgNRG.exists()) {
 				
-				CachedOperation<LoadContainer<CfgNRGInstantState>> op = new CachedOperation<LoadContainer<CfgNRGInstantState>>() {
-
-					@Override
-					protected LoadContainer<CfgNRGInstantState> execute()
-							throws ExecuteException {
-						
-						CfgNRGInstantState instantState;
-						try {
-							instantState = new CfgNRGNonHandleInstantState(0, finderFinalCfgNRG.get() );
-						} catch (GetOperationFailedException e) {
-							throw new ExecuteException(e);
+				CachedOperation<LoadContainer<CfgNRGInstantState>,GetOperationFailedException> op =
+					new WrapOperationAsCached<>(
+						() -> {
+							CfgNRGInstantState instantState;
+							try {
+								instantState = new CfgNRGNonHandleInstantState(0, finderFinalCfgNRG.get() );
+							} catch (IOException e) {
+								throw new GetOperationFailedException(e);
+							}
+							
+							LoadContainer<CfgNRGInstantState> lc = new LoadContainer<CfgNRGInstantState>();
+							lc.setExpensiveLoad(false);
+							lc.setCntr( new SingleContainer<CfgNRGInstantState>(instantState, 0, false));
+							return lc;
 						}
-						
-						LoadContainer<CfgNRGInstantState> lc = new LoadContainer<CfgNRGInstantState>();
-						lc.setExpensiveLoad(false);
-						lc.setCntr( new SingleContainer<CfgNRGInstantState>(instantState, 0, false));
-						return lc;
-					}
-				};
+					);
 				
 				if (finderNrgStack.exists()) {
 					// NRG Table
@@ -434,7 +452,7 @@ public class ManifestDropDown {
 								
 				return true;
 			}
-		} catch (ExecuteException | MenuAddException e) {
+		} catch (MenuAddException | OperationFailedException e) {
 			 mpg.getLogErrorReporter().getErrorReporter().recordError(ManifestDropDown.class, e);
 		}
 		 return false;
@@ -456,9 +474,6 @@ public class ManifestDropDown {
 				markDisplaySettings,
 				false
 			);
-			
-		} catch (ExecuteException e) {
-			mpg.getLogErrorReporter().getErrorReporter().recordError(ManifestDropDown.class, e);
 		} catch (OperationFailedException e) {
 			mpg.getLogErrorReporter().getErrorReporter().recordError(ManifestDropDown.class, e);
 		}

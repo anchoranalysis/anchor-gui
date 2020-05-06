@@ -43,14 +43,14 @@ import org.anchoranalysis.gui.annotation.export.ExportScaledMarks;
 import org.anchoranalysis.gui.annotation.mark.MarkAnnotator;
 import org.anchoranalysis.gui.annotation.opener.OpenAnnotationMPP;
 import org.anchoranalysis.gui.annotation.state.AnnotationSummary;
-import org.anchoranalysis.gui.annotation.strategy.GenerathorPathRslvr;
-import org.anchoranalysis.gui.annotation.strategy.MarkProposerStrategy;
 import org.anchoranalysis.gui.annotation.strategy.builder.mark.panel.CreateNavigationPanel;
 import org.anchoranalysis.gui.videostats.internalframe.annotator.AnnotationFrameControllers;
 import org.anchoranalysis.gui.videostats.internalframe.annotator.AnnotationPanelParams;
 import org.anchoranalysis.gui.videostats.internalframe.annotator.navigation.PanelNavigation;
 import org.anchoranalysis.gui.videostats.module.VideoStatsModuleCreateException;
 import org.anchoranalysis.io.error.AnchorIOException;
+import org.anchoranalysis.plugin.annotation.bean.strategy.GeneratorPathRslvr;
+import org.anchoranalysis.plugin.annotation.bean.strategy.MarkProposerStrategy;
 
 public class BuilderProposeMarks extends AnnotationGuiBuilderWithDelegate<InitParamsProposeMarks,MarkProposerStrategy> {
 
@@ -64,7 +64,7 @@ public class BuilderProposeMarks extends AnnotationGuiBuilderWithDelegate<InitPa
 	}
 	
 	private OpenAnnotationMPP createOpenAnnotation() throws AnchorIOException {
-		Path cfgPath = new GenerathorPathRslvr(pathForBinding()).pathOrNull(
+		Path cfgPath = new GeneratorPathRslvr(pathForBinding()).pathOrNull(
 			getStrategy().getDefaultCfgFilePathGenerator()
 		); 
 		return new OpenAnnotationMPP(

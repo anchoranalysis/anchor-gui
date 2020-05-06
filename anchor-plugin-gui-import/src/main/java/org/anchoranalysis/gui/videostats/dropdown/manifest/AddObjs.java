@@ -1,5 +1,7 @@
 package org.anchoranalysis.gui.videostats.dropdown.manifest;
 
+import java.io.IOException;
+
 import org.anchoranalysis.anchor.mpp.cfg.Cfg;
 import org.anchoranalysis.anchor.mpp.feature.instantstate.CfgNRGInstantState;
 import org.anchoranalysis.anchor.mpp.feature.instantstate.CfgNRGNonHandleInstantState;
@@ -32,12 +34,11 @@ import org.anchoranalysis.anchor.mpp.feature.nrg.cfg.CfgNRG;
  */
 
 import org.anchoranalysis.core.cache.CachedOperation;
-import org.anchoranalysis.core.cache.ExecuteException;
+import org.anchoranalysis.core.cache.WrapOperationAsCached;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.index.container.SingleContainer;
 import org.anchoranalysis.core.name.provider.INamedProvider;
-import org.anchoranalysis.core.name.provider.OperationFromNamedProvider;
 import org.anchoranalysis.gui.finder.FinderNrgStack;
 import org.anchoranalysis.gui.io.loader.manifest.finder.FinderCfgFolder;
 import org.anchoranalysis.gui.io.loader.manifest.finder.FinderObjMaskCollectionFolder;
@@ -118,7 +119,7 @@ class AddObjs {
 				return true;
 			} 
 		
-		} catch (ExecuteException | OperationFailedException e) {
+		} catch (OperationFailedException e) {
 			mpg.getLogErrorReporter().getErrorReporter().recordError(ManifestDropDown.class, e);
 		}
 		
@@ -133,25 +134,22 @@ class AddObjs {
 			
 			if (finderFinalCfgNRG.exists()) {
 				
-				CachedOperation<LoadContainer<CfgNRGInstantState>> op = new CachedOperation<LoadContainer<CfgNRGInstantState>>() {
-
-					@Override
-					protected LoadContainer<CfgNRGInstantState> execute()
-							throws ExecuteException {
-						
-						CfgNRGInstantState instantState;
-						try {
-							instantState = new CfgNRGNonHandleInstantState(0, finderFinalCfgNRG.get() );
-						} catch (GetOperationFailedException e) {
-							throw new ExecuteException(e);
+				CachedOperation<LoadContainer<CfgNRGInstantState>,GetOperationFailedException> op =
+					new WrapOperationAsCached<>(
+						() -> {
+							CfgNRGInstantState instantState;
+							try {
+								instantState = new CfgNRGNonHandleInstantState(0, finderFinalCfgNRG.get() );
+							} catch (IOException e) {
+								throw new GetOperationFailedException(e);
+							}
+							
+							LoadContainer<CfgNRGInstantState> lc = new LoadContainer<CfgNRGInstantState>();
+							lc.setExpensiveLoad(false);
+							lc.setCntr( new SingleContainer<CfgNRGInstantState>(instantState, 0, false));
+							return lc;
 						}
-						
-						LoadContainer<CfgNRGInstantState> lc = new LoadContainer<CfgNRGInstantState>();
-						lc.setExpensiveLoad(false);
-						lc.setCntr( new SingleContainer<CfgNRGInstantState>(instantState, 0, false));
-						return lc;
-					}
-				};
+					);
 				
 				if (finderNrgStack.exists()) {
 					// NRG Table
@@ -167,7 +165,7 @@ class AddObjs {
 								
 				return true;
 			}
-		} catch (ExecuteException | MenuAddException e) {
+		} catch (MenuAddException | OperationFailedException e) {
 			 mpg.getLogErrorReporter().getErrorReporter().recordError(ManifestDropDown.class, e);
 		}
 		return false;
@@ -190,8 +188,6 @@ class AddObjs {
 				false
 			);
 			
-		} catch (ExecuteException e) {
-			mpg.getLogErrorReporter().getErrorReporter().recordError(ManifestDropDown.class, e);
 		} catch (OperationFailedException e) {
 			mpg.getLogErrorReporter().getErrorReporter().recordError(ManifestDropDown.class, e);
 		}
