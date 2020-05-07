@@ -41,7 +41,7 @@ import org.anchoranalysis.feature.nrg.NRGStackWithParams;
 import org.anchoranalysis.image.experiment.identifiers.ImgStackIdentifiers;
 import org.anchoranalysis.image.stack.Stack;
 
-class OperationCreateNrgStackWithParams extends CachedOperation<NRGStackWithParams,CreateException> implements OperationWithProgressReporter<NRGStackWithParams,CreateException> {
+class OperationNrgStack extends CachedOperation<NRGStackWithParams,CreateException> implements OperationWithProgressReporter<NRGStackWithParams,CreateException> {
 
 	// We first retrieve a NamedImgCollection which we use to construct our real NrgStack for purposes
 	//   of good caching
@@ -49,7 +49,7 @@ class OperationCreateNrgStackWithParams extends CachedOperation<NRGStackWithPara
 	private KeyValueParams params;
 	// An operation to retrieve a stackCollection
 	//
-	public OperationCreateNrgStackWithParams(
+	public OperationNrgStack(
 		Operation<MPPInitParams, ? extends Throwable> operationProposerSharedObjects,
 		KeyValueParams params
 	) {
@@ -60,11 +60,11 @@ class OperationCreateNrgStackWithParams extends CachedOperation<NRGStackWithPara
 
 	@Override
 	protected NRGStackWithParams execute() throws CreateException {
-		return createNRGStack();
+		return creatergStack();
 	}
 	
 	// NB Note assumption about namedImgStackCollection ordering
-	private NRGStackWithParams createNRGStack() throws CreateException {
+	private NRGStackWithParams creatergStack() throws CreateException {
 		
 		//System.out.println("Start Creating NRG Stack");
 		try {

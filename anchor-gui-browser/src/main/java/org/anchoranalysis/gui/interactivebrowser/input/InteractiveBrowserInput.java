@@ -51,7 +51,6 @@ import org.anchoranalysis.gui.interactivebrowser.openfile.importer.ImporterSetti
 import org.anchoranalysis.image.io.bean.rasterreader.RasterReader;
 import org.anchoranalysis.io.bean.filepath.provider.FilePathProvider;
 import org.anchoranalysis.io.input.InputFromManager;
-import org.anchoranalysis.io.output.bound.BoundOutputManagerRouteErrors;
 
 public class InteractiveBrowserInput implements InputFromManager {
 	
@@ -64,18 +63,15 @@ public class InteractiveBrowserInput implements InputFromManager {
 	private List<NamedBean<FilePathProvider>> namedItemFilePathProviderList;
 	private ImporterSettings importerSettings;
 	
-	public FeatureListSrc createFeatureListSrc(
-		BoundOutputManagerRouteErrors outputManager,
-		LogErrorReporter logErrorReporter
-	) throws CreateException {
+	public FeatureListSrc createFeatureListSrc(LogErrorReporter logger) throws CreateException {
 		
-		SharedObjects so = new SharedObjects( logErrorReporter );
+		SharedObjects so = new SharedObjects(logger);
 		KeyValueParamsInitParams soParams = KeyValueParamsInitParams.create(so);
 		SharedFeaturesInitParams soFeature = SharedFeaturesInitParams.create(so);
 		
 		try {
 			// Adds the feature-lists to the shared-objects
-			soFeature.addAll(namedItemSharedFeatureList, logErrorReporter);
+			soFeature.addAll(namedItemSharedFeatureList, logger);
 			
 			addKeyValueParams( soParams );
 			addFilePaths( soParams );
@@ -85,7 +81,7 @@ public class InteractiveBrowserInput implements InputFromManager {
 			throw new CreateException(e2);
 		}
 		
-		return new FeatureListSrcBuilder<>(logErrorReporter).build(soFeature, nrgSchemeCreator);
+		return new FeatureListSrcBuilder<>(logger).build(soFeature, nrgSchemeCreator);
 	}
 	
 	private void addKeyValueParams( KeyValueParamsInitParams soParams ) throws OperationFailedException {

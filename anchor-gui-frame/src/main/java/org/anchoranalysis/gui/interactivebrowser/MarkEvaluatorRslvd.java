@@ -34,19 +34,18 @@ import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.params.KeyValueParams;
 import org.anchoranalysis.feature.nrg.NRGStackWithParams;
-import org.anchoranalysis.gui.videostats.dropdown.OperationCreateProposerSharedObjectsImageSpecific;
 
 // A MarkEvaluator after it has been resolved for usage by converting
 //  it into a ProposerSharedObjectsImageSpecific and other necessary components
 public class MarkEvaluatorRslvd {
 
-	private OperationCreateProposerSharedObjectsImageSpecific operationCreateProposerSharedObjects;
-	private OperationCreateNrgStackWithParams operationCreateNrgStack;
+	private OperationInitParams operationCreateProposerSharedObjects;
+	private OperationNrgStack operationCreateNrgStack;
 	private CfgGen cfgGen;
 	private NRGScheme nrgScheme;
 	
 	public MarkEvaluatorRslvd(
-			OperationCreateProposerSharedObjectsImageSpecific proposerSharedObjects,
+			OperationInitParams proposerSharedObjects,
 			CfgGen cfgGen,
 			NRGScheme nrgScheme,
 			KeyValueParams params
@@ -56,13 +55,13 @@ public class MarkEvaluatorRslvd {
 		this.cfgGen = cfgGen;
 		this.nrgScheme = nrgScheme;
 		
-		this.operationCreateNrgStack = new OperationCreateNrgStackWithParams(
+		this.operationCreateNrgStack = new OperationNrgStack(
 			operationCreateProposerSharedObjects,
 			params
 		);
 	}
 
-	public OperationCreateProposerSharedObjectsImageSpecific getProposerSharedObjectsOperation() {
+	public OperationInitParams getProposerSharedObjectsOperation() {
 		return operationCreateProposerSharedObjects;
 	}
 	

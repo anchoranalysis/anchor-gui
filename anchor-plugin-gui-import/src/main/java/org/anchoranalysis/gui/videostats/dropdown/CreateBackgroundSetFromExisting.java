@@ -36,6 +36,7 @@ import org.anchoranalysis.core.progress.OperationWithProgressReporter;
 import org.anchoranalysis.core.progress.ProgressReporter;
 import org.anchoranalysis.gui.backgroundset.BackgroundSet;
 import org.anchoranalysis.gui.backgroundset.BackgroundSetFactory;
+import org.anchoranalysis.gui.interactivebrowser.OperationInitParams;
 import org.anchoranalysis.image.init.CreateCombinedStack;
 import org.anchoranalysis.image.init.ImageInitParams;
 import org.anchoranalysis.image.stack.wrap.WrapStackAsTimeSequence;
@@ -44,12 +45,12 @@ import org.anchoranalysis.io.output.bean.OutputWriteSettings;
 public class CreateBackgroundSetFromExisting extends CachedOperationWithProgressReporter<BackgroundSet,GetOperationFailedException> {
 
 	private final OperationWithProgressReporter<BackgroundSet,GetOperationFailedException> existingBackgroundSet;
-	private OperationCreateProposerSharedObjectsImageSpecific pso;
+	private OperationInitParams pso;
 	private OutputWriteSettings ows;
 	
 	public CreateBackgroundSetFromExisting(
 			OperationWithProgressReporter<BackgroundSet,GetOperationFailedException> backgroundSet,
-			OperationCreateProposerSharedObjectsImageSpecific pso,
+			OperationInitParams pso,
 			OutputWriteSettings ows
 		) {
 		super();
