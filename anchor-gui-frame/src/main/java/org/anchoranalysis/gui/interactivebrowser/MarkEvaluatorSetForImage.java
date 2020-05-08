@@ -79,7 +79,7 @@ public class MarkEvaluatorSetForImage {
 					namedImgStackCollection,
 					keyParams,
 					/// TODO Do we need this duplication?
-					me.getNamedDefinitions().duplicateBean(),
+					me.getDefine().duplicateBean(),
 					context
 				);
 			
