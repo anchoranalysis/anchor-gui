@@ -35,12 +35,6 @@ import org.anchoranalysis.gui.io.loader.manifest.finder.csvstatistic.CSVStatisti
 
 public class GraphDefinitionLineIterVsAccptProbRand extends GraphDefinitionLineIterVsCSVStatistic {
 	
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -8230113698786597013L;
-
-
 	public GraphDefinitionLineIterVsAccptProbRand( GraphColorScheme graphColorScheme ) {
 		
 		super(

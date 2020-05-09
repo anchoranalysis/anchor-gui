@@ -34,11 +34,6 @@ import org.anchoranalysis.gui.interactivebrowser.openfile.type.OpenFileType;
 
 public class ImporterSettings extends AnchorBean<ImporterSettings> {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-	
 	// START BEAN FIELDS
 	@BeanField
 	private List<ImporterFromBean> beanImporters;

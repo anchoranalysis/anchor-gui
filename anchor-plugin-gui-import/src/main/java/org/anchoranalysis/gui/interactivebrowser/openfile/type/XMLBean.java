@@ -40,11 +40,6 @@ import org.anchoranalysis.gui.interactivebrowser.openfile.importer.ImporterSetti
 
 public class XMLBean extends OpenFileTypeSingle {
 	
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-
 	@Override
 	public String[] getExtensions() {
 		return new String[] { "xml" };

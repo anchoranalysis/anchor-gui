@@ -46,11 +46,6 @@ import org.anchoranalysis.gui.videostats.module.VideoStatsModuleCreateException;
 
 public abstract class FileCreatorGeneralList extends FileCreator {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-	
 	public abstract void addFilesToList(
 		List<InteractiveFile> listFiles,
 		FileCreatorParams params,

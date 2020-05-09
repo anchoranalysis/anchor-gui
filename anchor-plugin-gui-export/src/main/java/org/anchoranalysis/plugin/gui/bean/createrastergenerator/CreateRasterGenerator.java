@@ -44,11 +44,6 @@ import org.anchoranalysis.plugin.gui.bean.exporttask.MappedFrom;
  */
 public abstract class CreateRasterGenerator<T> extends AnchorBean<CreateRasterGenerator<T>> {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-
 	public abstract IterableObjectGenerator<MappedFrom<T>,Stack> createGenerator( ExportTaskParams params ) throws CreateException;
 	
 	public abstract boolean hasNecessaryParams(ExportTaskParams params);

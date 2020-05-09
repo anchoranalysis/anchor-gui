@@ -33,11 +33,6 @@ import org.anchoranalysis.plugin.io.bean.groupfiles.GroupFiles;
 
 public class ImporterGroup extends ImporterFromBean {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-
 	@Override
 	public boolean isApplicable(Object bean) {
 		return bean instanceof GroupFiles;

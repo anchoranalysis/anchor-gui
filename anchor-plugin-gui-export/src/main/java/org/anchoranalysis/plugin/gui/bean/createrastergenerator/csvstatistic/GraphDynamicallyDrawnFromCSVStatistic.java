@@ -47,10 +47,6 @@ import org.anchoranalysis.plugin.gui.bean.exporttask.MappedFrom;
  */
 public class GraphDynamicallyDrawnFromCSVStatistic<T> extends CreateRasterGraph<T,CSVStatistic> {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 5206843186184053732L;
 	private IObjectBridge<CSVStatistic,T,CreateException> elementBridge;
 	
 	public GraphDynamicallyDrawnFromCSVStatistic(IObjectBridge<CSVStatistic, T,CreateException> elementBridge) {

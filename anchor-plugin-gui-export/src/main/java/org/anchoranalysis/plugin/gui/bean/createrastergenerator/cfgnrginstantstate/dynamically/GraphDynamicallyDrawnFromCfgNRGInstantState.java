@@ -50,12 +50,6 @@ import org.anchoranalysis.plugin.gui.bean.exporttask.MappedFrom;
  */
 public abstract class GraphDynamicallyDrawnFromCfgNRGInstantState<T> extends CreateRasterGraph<T,CfgNRGInstantState> {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 2382612182020399304L;
-
-
 	// Delayed instantiation of delegate so parameters are already filled
 	private GraphDynamicallyDrawnFromCSVStatistic<T> delegate;
 	

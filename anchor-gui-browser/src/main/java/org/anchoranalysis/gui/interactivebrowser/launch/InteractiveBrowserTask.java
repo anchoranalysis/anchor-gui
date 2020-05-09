@@ -43,11 +43,6 @@ import org.anchoranalysis.plugin.gui.bean.exporttask.ExportTaskList;
 
 public class InteractiveBrowserTask extends TaskWithoutSharedState<InteractiveBrowserInput> {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 8461975683895621229L;
-	
 	// START BEAN PROPERTIES
 	@BeanField
 	private ExportTaskList exportTaskList;

@@ -35,11 +35,6 @@ import org.anchoranalysis.plugin.io.bean.input.chnl.NamedChnlsBase;
 
 public class ImporterFromNamedChnls extends ImporterFromBean {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-
 	@Override
 	public boolean isApplicable(Object bean) {
 		return bean instanceof NamedChnlsBase;

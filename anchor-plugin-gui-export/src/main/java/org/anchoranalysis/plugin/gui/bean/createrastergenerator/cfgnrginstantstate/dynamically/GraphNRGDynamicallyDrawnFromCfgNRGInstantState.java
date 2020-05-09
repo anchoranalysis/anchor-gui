@@ -31,11 +31,6 @@ import org.anchoranalysis.gui.graph.definition.line.GraphDefinitionLineIterVsNRG
 
 public class GraphNRGDynamicallyDrawnFromCfgNRGInstantState extends GraphDynamicallyDrawnFromCfgNRGInstantState<GraphDefinitionLineIterVsNRG.Item> {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -7937191394082586750L;
-
 	public GraphNRGDynamicallyDrawnFromCfgNRGInstantState() {
 		super(new BridgedGraphNRGCreator().createCSVStatisticBridge());
 	}

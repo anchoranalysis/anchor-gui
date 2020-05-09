@@ -34,11 +34,6 @@ import org.anchoranalysis.gui.bean.filecreator.FileCreator;
 
 public class ImporterFileCreatorList extends ImporterFromBean {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-
 	@Override
 	public boolean isApplicable(Object bean) {
 		return bean instanceof List;

@@ -41,12 +41,6 @@ import org.anchoranalysis.gui.graph.creator.IterAndExecutionTime;
 
 public class GraphDefinitionLineIterVsKernelExecutionTime extends GraphDefinition<IterAndExecutionTime> {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 4565406459795440753L;
-	
-	
 	// START BEAN PROPERITES
 	@BeanField
 	private GraphColorScheme graphColorScheme = new GraphColorScheme();

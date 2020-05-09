@@ -36,11 +36,6 @@ import org.anchoranalysis.gui.interactivebrowser.openfile.type.NrgSchemeCreatorS
 
 public class ImporterNRGSchemeCreator extends ImporterFromBean {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-
 	@Override
 	public boolean isApplicable(Object bean) {
 		return bean instanceof NRGSchemeCreator;

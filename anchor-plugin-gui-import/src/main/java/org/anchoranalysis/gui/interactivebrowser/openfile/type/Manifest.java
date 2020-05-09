@@ -43,12 +43,6 @@ import org.apache.commons.io.FilenameUtils;
 
 public class Manifest extends OpenFileType {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-
-
 	@Override
 	public String[] getExtensions() {
 		return new String[] { "ser" };

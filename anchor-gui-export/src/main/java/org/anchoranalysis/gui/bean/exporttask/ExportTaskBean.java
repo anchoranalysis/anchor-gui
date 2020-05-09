@@ -30,11 +30,6 @@ import org.anchoranalysis.bean.AnchorBean;
 
 public abstract class ExportTaskBean extends AnchorBean<ExportTaskBean> implements IExportTask {
 
-/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-
 	// START BEAN PROPERTIES
 	
 	// END BEAN PROPERTIES

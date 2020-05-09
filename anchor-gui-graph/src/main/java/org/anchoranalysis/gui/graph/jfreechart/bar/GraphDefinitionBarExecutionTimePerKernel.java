@@ -32,11 +32,6 @@ import org.anchoranalysis.core.error.InitException;
 
 public class GraphDefinitionBarExecutionTimePerKernel extends GraphDefinitionBarKernelExecutionTime {
 	
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 2914054355983506098L;
-
 	public GraphDefinitionBarExecutionTimePerKernel( final String title ) throws InitException {
 		
 		super(

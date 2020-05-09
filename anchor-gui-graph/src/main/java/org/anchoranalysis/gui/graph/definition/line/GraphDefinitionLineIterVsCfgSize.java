@@ -40,11 +40,6 @@ import org.anchoranalysis.core.index.IIndexGetter;
 
 public class GraphDefinitionLineIterVsCfgSize extends GraphDefinition<GraphDefinitionLineIterVsCfgSize.Item> {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 2400724971400766705L;
-	
 	// START BEAN PROPERITES
 	@BeanField
 	private GraphColorScheme graphColorScheme = new GraphColorScheme();

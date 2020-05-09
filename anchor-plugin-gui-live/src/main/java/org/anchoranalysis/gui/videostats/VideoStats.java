@@ -46,10 +46,6 @@ public class VideoStats extends ReporterAgg<CfgNRGPixelized> {
 
 	//private static Log log = LogFactory.getLog(VideoStats.class);
 	
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 7724193349791945504L;
 	private VideoStatsEDT edtImpl = new VideoStatsEDT();
 	
 	public VideoStats() {

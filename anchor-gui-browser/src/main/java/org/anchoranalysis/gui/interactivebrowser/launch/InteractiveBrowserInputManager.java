@@ -50,11 +50,6 @@ import org.anchoranalysis.io.error.AnchorIOException;
 
 public class InteractiveBrowserInputManager extends InputManager<InteractiveBrowserInput>  {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-	
 	// START BEAN PROPERTIES
 	@BeanField
 	private List<FileCreator> listFileCreators = new ArrayList<>();

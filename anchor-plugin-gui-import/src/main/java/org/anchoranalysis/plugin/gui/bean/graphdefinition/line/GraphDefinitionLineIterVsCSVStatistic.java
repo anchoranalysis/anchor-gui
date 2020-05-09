@@ -40,11 +40,6 @@ import org.anchoranalysis.gui.io.loader.manifest.finder.csvstatistic.CSVStatisti
 
 public abstract class GraphDefinitionLineIterVsCSVStatistic extends GraphDefinition<CSVStatistic> {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 3743951780177196441L;
-
 	private LinePlot<CSVStatistic> delegate;
 	
 	private String title;

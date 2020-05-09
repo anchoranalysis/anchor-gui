@@ -32,9 +32,4 @@ import org.anchoranalysis.plugin.gui.bean.createrastergenerator.Combined;
 
 public class CombinedFromCfgNRGInstantState extends Combined<CfgNRGInstantState> {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 3036779958435835794L;
-
 }

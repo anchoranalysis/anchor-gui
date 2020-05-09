@@ -42,10 +42,6 @@ import org.anchoranalysis.gui.graph.definition.line.GraphDefinitionLineIterVsKer
 
 public abstract class GraphDefinitionBarKernelExecutionTime extends GraphDefinition<KernelExecutionTime> {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 7871592334601253469L;
 	private BarChart<KernelExecutionTime> delegate;
 	private String title;
 	private String[] seriesNames;

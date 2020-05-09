@@ -44,11 +44,6 @@ import org.anchoranalysis.plugin.io.bean.input.file.Files;
 
 public class RasterAsChnlCollection extends OpenFileType {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-
 	@Override
 	public String[] getExtensions() {
 		return new String[]{ "lsm", "zvi", "czi", "ics" };

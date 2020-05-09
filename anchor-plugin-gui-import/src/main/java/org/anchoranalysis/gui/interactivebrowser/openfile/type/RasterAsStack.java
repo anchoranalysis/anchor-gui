@@ -43,11 +43,6 @@ import org.anchoranalysis.plugin.io.bean.input.stack.Stacks;
 
 public class RasterAsStack extends OpenFileType {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-
 	@Override
 	public String[] getExtensions() {
 		return new String[]{ "tif", "tiff", "jpeg", "jpg", "png", "gif", "bmp" };

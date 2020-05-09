@@ -37,11 +37,6 @@ import org.anchoranalysis.gui.interactivebrowser.openfile.importer.ImporterSetti
 
 public abstract class OpenFileTypeSingle extends OpenFileType {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-
 	@Override
 	public List<FileCreator> creatorForFile(
 		List<File> files,

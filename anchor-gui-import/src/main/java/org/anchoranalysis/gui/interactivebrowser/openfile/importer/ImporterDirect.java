@@ -33,11 +33,6 @@ import org.anchoranalysis.gui.bean.filecreator.FileCreator;
 /** When a FileCreator is loaded, no further action needs to be taken */
 public class ImporterDirect extends ImporterFromBean {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-
 	@Override
 	public boolean isApplicable(Object bean) {
 		return bean instanceof FileCreator;

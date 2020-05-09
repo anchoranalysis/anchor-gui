@@ -34,10 +34,6 @@ import org.anchoranalysis.gui.graph.creator.IterAndExecutionTime;
 
 public class GraphDefinitionLineIterVsKernelExecutionTimeByState extends GraphDefinitionLineIterVsKernelExecutionTime {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -7833731602124657197L;
 	private final GetForSeries<KernelExecutionTime,Double> ketGetter;
 	
 	// -1 as a kernelID indicates a summation of them all

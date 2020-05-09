@@ -36,11 +36,6 @@ import org.anchoranalysis.mpp.io.input.MultiInput;
 
 public class ImporterMulti extends ImporterFromBean {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-
 	@Override
 	public boolean isApplicable(Object bean) {
 		return bean instanceof MultiInputManagerBase;
