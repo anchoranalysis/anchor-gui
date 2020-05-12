@@ -49,7 +49,6 @@ import org.anchoranalysis.gui.feature.evaluator.params.ParamsFactoryForFeature;
 import org.anchoranalysis.gui.feature.evaluator.treetable.ExtractFromNamedNRGSchemeSet;
 import org.anchoranalysis.gui.feature.evaluator.treetable.FeatureListSrc;
 import org.anchoranalysis.gui.feature.evaluator.treetable.KeyValueParamsAugmenter;
-import org.anchoranalysis.feature.shared.SharedFeatureSet;
 
 public class FeatureListSrcBuilder<T extends FeatureInput> {
 
@@ -70,7 +69,7 @@ public class FeatureListSrcBuilder<T extends FeatureInput> {
 	public FeatureListSrc build( SharedFeaturesInitParams soFeature, NRGSchemeCreator nrgSchemeCreator ) throws CreateException {
 
 		NamedNRGSchemeSet nrgElemSet = new NamedNRGSchemeSet(
-			soFeature.getSharedFeatureSet().downcast()
+			soFeature.getSharedFeatureSet()
 		);
 		
 		if (nrgSchemeCreator!=null) {
@@ -106,7 +105,7 @@ public class FeatureListSrcBuilder<T extends FeatureInput> {
 		//  and prevent any of the features being initialized prematurely
 		KeyValueParamsAugmenter augmenter = new KeyValueParamsAugmenter(
 			nrgScheme,
-			new SharedFeatureSet<>(),	// soFeature.getSharedFeatureSet(),
+			soFeature.getSharedFeatureSet(),
 			logErrorReporter
 		);
 		

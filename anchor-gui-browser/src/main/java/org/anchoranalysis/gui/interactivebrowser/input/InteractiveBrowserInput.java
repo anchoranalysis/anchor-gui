@@ -38,7 +38,6 @@ import org.anchoranalysis.bean.shared.params.keyvalue.KeyValueParamsInitParams;
 import org.anchoranalysis.bean.shared.params.keyvalue.KeyValueParamsProvider;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.OperationFailedException;
-import org.anchoranalysis.core.error.reporter.ErrorReporter;
 import org.anchoranalysis.core.log.LogErrorReporter;
 import org.anchoranalysis.core.name.store.SharedObjects;
 import org.anchoranalysis.core.params.KeyValueParams;
@@ -150,12 +149,6 @@ public class InteractiveBrowserInput implements InputFromManager {
 		this.namedItemMarkEvaluatorList = namedItemMarkEvaluatorList;
 	}
 
-	@Override
-	public void close(ErrorReporter errorReporter) {
-
-	}
-
-
 	public List<NamedBean<KeyValueParamsProvider>> getNamedItemKeyValueParamsProviderList() {
 		return namedItemKeyValueParamsProviderList;
 	}
@@ -183,8 +176,4 @@ public class InteractiveBrowserInput implements InputFromManager {
 	public void setImporterSettings(ImporterSettings importerSettings) {
 		this.importerSettings = importerSettings;
 	}
-
-
-
-
 }

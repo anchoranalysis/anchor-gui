@@ -35,7 +35,7 @@ import org.anchoranalysis.anchor.mpp.pair.Pair;
 import org.anchoranalysis.anchor.overlay.Overlay;
 import org.anchoranalysis.feature.input.FeatureInput;
 import org.anchoranalysis.feature.nrg.NRGStackWithParams;
-import org.anchoranalysis.feature.shared.SharedFeatureSet;
+import org.anchoranalysis.feature.shared.SharedFeatureMulti;
 import org.anchoranalysis.gui.feature.FeatureListWithRegionMap;
 import org.anchoranalysis.gui.feature.evaluator.nrgtree.FeatureCalcDescriptionTreeModel;
 import org.netbeans.swing.outline.Outline;
@@ -50,7 +50,7 @@ public class TreeTableWithModel implements ITreeTableModel {
 	public TreeTableWithModel(
 		TreeTableProperties properties,
 		FeatureListWithRegionMap<FeatureInput> featureList,
-		SharedFeatureSet<FeatureInput> sharedFeatures
+		SharedFeatureMulti sharedFeatures
 	) {
 		super();
 		this.featureTree = new FeatureCalcDescriptionTreeModel(

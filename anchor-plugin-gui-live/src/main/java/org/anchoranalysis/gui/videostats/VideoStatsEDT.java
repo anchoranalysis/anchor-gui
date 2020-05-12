@@ -394,7 +394,7 @@ public class VideoStatsEDT {
 	private static NamedNRGSchemeSet createNamedNRGSchemeFromFeatures( NRGSchemeWithSharedFeatures nrgScheme ) {
 		
 		NamedNRGSchemeSet nrgElemSet = new NamedNRGSchemeSet(
-			nrgScheme.getSharedFeatures().downcast()
+			nrgScheme.getSharedFeatures()
 		); 
 		nrgElemSet.add("lastExecution", nrgScheme.getNrgScheme() );
 		return nrgElemSet;

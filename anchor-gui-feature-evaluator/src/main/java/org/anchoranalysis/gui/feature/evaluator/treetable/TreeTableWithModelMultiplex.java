@@ -43,7 +43,7 @@ import org.anchoranalysis.anchor.mpp.pair.Pair;
 import org.anchoranalysis.anchor.overlay.Overlay;
 import org.anchoranalysis.feature.input.FeatureInputNRGStack;
 import org.anchoranalysis.feature.nrg.NRGStackWithParams;
-import org.anchoranalysis.feature.shared.SharedFeatureSet;
+import org.anchoranalysis.feature.shared.SharedFeatureMulti;
 import org.anchoranalysis.gui.feature.FeatureListWithRegionMap;
 import org.netbeans.swing.outline.Outline;
 
@@ -63,7 +63,7 @@ public class TreeTableWithModelMultiplex implements ITreeTableModel {
 		FeatureListWithRegionMap<FeatureInputSingleMemo>  featureListInd = featureListExtracter.createInd();
 		FeatureListWithRegionMap<FeatureInputPairMemo>  featureListPair = featureListExtracter.createPair();
 		FeatureListWithRegionMap<FeatureInputAllMemo> featureListAll = featureListExtracter.createAll();
-		SharedFeatureSet<FeatureInputNRGStack> sharedFeatures = featureListExtracter.sharedFeatures();
+		SharedFeatureMulti sharedFeatures = featureListExtracter.sharedFeatures();
 		
 		// We use 4 models for NONE, IND, PAIR, ALL
 		addModelToList( new FeatureListWithRegionMap<FeatureInputNRGStack>(), properties, sharedFeatures );
@@ -83,9 +83,9 @@ public class TreeTableWithModelMultiplex implements ITreeTableModel {
 	private <T extends FeatureInputNRGStack> void addModelToList(
 		FeatureListWithRegionMap<T> features,
 		TreeTableProperties properties,
-		SharedFeatureSet<FeatureInputNRGStack> sharedFeatures
+		SharedFeatureMulti sharedFeatures
 	) {
-		list.add( new TreeTableWithModel(properties, features.upcast(), sharedFeatures.upcast()) );
+		list.add( new TreeTableWithModel(properties, features.upcast(), sharedFeatures) );
 	}
 	
 	public void resizeColumns() {
