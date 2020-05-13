@@ -28,7 +28,7 @@ import org.anchoranalysis.anchor.mpp.graph.execution.KernelExecutionTime;
  * #L%
  */
 
-import org.anchoranalysis.core.arithmetic.DivideUtilities;
+import org.anchoranalysis.core.arithmetic.DoubleUtilities;
 import org.anchoranalysis.core.error.InitException;
 
 public class GraphDefinitionBarStateRatioPerKernel extends GraphDefinitionBarKernelExecutionTime {
@@ -46,11 +46,11 @@ public class GraphDefinitionBarStateRatioPerKernel extends GraphDefinitionBarKer
 					
 				switch(seriesNum) {
 				case 0:
-					return DivideUtilities.divideByZeroReplace( item.getRejectedCnt(), item.getExecutionCnt(), 0 );
+					return DoubleUtilities.divideByZeroReplace( item.getRejectedCnt(), item.getExecutionCnt(), 0 );
 				case 1:
-					return DivideUtilities.divideByZeroReplace( item.getNotProposedCnt(), item.getExecutionCnt(), 0 );
+					return DoubleUtilities.divideByZeroReplace( item.getNotProposedCnt(), item.getExecutionCnt(), 0 );
 				case 2:
-					return DivideUtilities.divideByZeroReplace( item.getAcceptedCnt(), item.getExecutionCnt(), 0 );
+					return DoubleUtilities.divideByZeroReplace( item.getAcceptedCnt(), item.getExecutionCnt(), 0 );
 				default:
 					assert false;
 					return 0.0;
