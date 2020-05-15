@@ -35,11 +35,6 @@ import org.anchoranalysis.gui.io.loader.manifest.finder.csvstatistic.CSVStatisti
 
 public class GraphDefinitionLineIterVsTemperature extends GraphDefinitionLineIterVsCSVStatistic {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 4539857657014079124L;
-
 	public GraphDefinitionLineIterVsTemperature( GraphColorScheme graphColorScheme ) {
 		
 		super(

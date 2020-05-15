@@ -50,11 +50,6 @@ import org.anchoranalysis.io.output.error.OutputWriteFailedException;
  */
 public class ExportTaskBoundedIndexContainerGeneratorSeries<T> extends AnchorBean<ExportTaskBoundedIndexContainerGeneratorSeries<T>> {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-
 	// START BEAN PARAMETERS
 	@BeanField
 	private int incrementSize = 1000;

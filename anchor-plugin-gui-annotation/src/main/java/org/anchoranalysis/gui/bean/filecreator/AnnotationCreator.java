@@ -44,11 +44,6 @@ import org.anchoranalysis.image.io.input.ProvidesStackInput;
 // A named channel collection derived from a file
 public class AnnotationCreator extends FileCreator {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-
 	private int weightWidthDescription;
 
 	public AnnotationCreator(int weightWidthDescription) {

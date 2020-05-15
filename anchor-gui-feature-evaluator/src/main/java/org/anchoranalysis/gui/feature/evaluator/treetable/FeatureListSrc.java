@@ -31,9 +31,8 @@ import org.anchoranalysis.anchor.mpp.feature.input.memo.FeatureInputSingleMemo;
  */
 
 import org.anchoranalysis.core.error.OperationFailedException;
-import org.anchoranalysis.feature.input.FeatureInputNRGStack;
 import org.anchoranalysis.feature.nrg.NRGStackWithParams;
-import org.anchoranalysis.feature.shared.SharedFeatureSet;
+import org.anchoranalysis.feature.shared.SharedFeatureMulti;
 import org.anchoranalysis.gui.feature.FeatureListWithRegionMap;
 
 public abstract class FeatureListSrc {
@@ -44,7 +43,7 @@ public abstract class FeatureListSrc {
 	
 	public abstract FeatureListWithRegionMap<FeatureInputAllMemo> createAll();
 	
-	public abstract SharedFeatureSet<FeatureInputNRGStack> sharedFeatures();
+	public abstract SharedFeatureMulti sharedFeatures();
 	
 	/**
 	 * Maybe adds additional KeyValueParams to a stack

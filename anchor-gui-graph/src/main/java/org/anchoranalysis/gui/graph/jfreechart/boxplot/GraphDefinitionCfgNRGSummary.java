@@ -45,10 +45,6 @@ public class GraphDefinitionCfgNRGSummary extends GraphDefinition<Integer> {
 
 	// Integer is the index of the feature
 	
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 3959076945014352761L;
 	private BoxPlot<Integer> delegate;
 	
 	@SuppressWarnings("rawtypes")

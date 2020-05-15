@@ -60,11 +60,6 @@ import org.anchoranalysis.plugin.gui.bean.exporttask.MappedFrom;
 
 public class ObjMaskWriterFromCfgNRGInstantState extends CreateRasterGenerator<CfgNRGInstantState> {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -8570118352758888882L;
-
 	// END BEAN PROPERTIES
 	@BeanField
 	private ObjMaskWriter objMaskWriter;

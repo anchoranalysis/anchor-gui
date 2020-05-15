@@ -1,6 +1,5 @@
 package org.anchoranalysis.gui.interactivebrowser.launch;
 
-import org.anchoranalysis.anchor.mpp.bean.init.GeneralInitParams;
 
 /*
  * #%L
@@ -36,7 +35,7 @@ import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.experiment.JobExecutionException;
 import org.anchoranalysis.experiment.bean.task.TaskWithoutSharedState;
 import org.anchoranalysis.experiment.task.InputTypesExpected;
-import org.anchoranalysis.experiment.task.ParametersBound;
+import org.anchoranalysis.experiment.task.InputBound;
 import org.anchoranalysis.gui.interactivebrowser.browser.InteractiveBrowser;
 import org.anchoranalysis.gui.interactivebrowser.input.InteractiveBrowserInput;
 import org.anchoranalysis.plugin.gui.bean.exporttask.ExportTaskList;
@@ -44,11 +43,6 @@ import org.anchoranalysis.plugin.gui.bean.exporttask.ExportTaskList;
 
 public class InteractiveBrowserTask extends TaskWithoutSharedState<InteractiveBrowserInput> {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 8461975683895621229L;
-	
 	// START BEAN PROPERTIES
 	@BeanField
 	private ExportTaskList exportTaskList;
@@ -60,15 +54,11 @@ public class InteractiveBrowserTask extends TaskWithoutSharedState<InteractiveBr
 	}
 		
 	@Override
-	public void doJobOnInputObject(ParametersBound<InteractiveBrowserInput,Object> params)	throws JobExecutionException {
+	public void doJobOnInputObject(InputBound<InteractiveBrowserInput,Object> params)	throws JobExecutionException {
 		
 		try {
 			InteractiveBrowser browser = new InteractiveBrowser(
-				params.getOutputManager(),
-				new GeneralInitParams(
-					params.getExperimentArguments().getModelDirectory(),
-					params.getLogErrorReporter()
-				),
+				params.context(),
 				getExportTaskList()
 			);
 			browser.init( params.getInputObject() );

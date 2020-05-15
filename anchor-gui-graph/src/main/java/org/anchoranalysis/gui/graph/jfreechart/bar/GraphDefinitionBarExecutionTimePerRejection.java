@@ -28,16 +28,11 @@ import org.anchoranalysis.anchor.mpp.graph.execution.KernelExecutionTime;
  * #L%
  */
 
-import org.anchoranalysis.core.arithmetic.DivideUtilities;
+import org.anchoranalysis.core.arithmetic.DoubleUtilities;
 import org.anchoranalysis.core.error.InitException;
 
 public class GraphDefinitionBarExecutionTimePerRejection extends GraphDefinitionBarKernelExecutionTime {
 	
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -3692216153589302962L;
-
 	public GraphDefinitionBarExecutionTimePerRejection( final String title ) throws InitException {
 
 		super(
@@ -52,13 +47,13 @@ public class GraphDefinitionBarExecutionTimePerRejection extends GraphDefinition
 					
 				switch(seriesNum) {
 				case 0:
-					return DivideUtilities.divideByZeroReplace(item.getRejectedTime(),item.getRejectedCnt(),0);
+					return DoubleUtilities.divideByZeroReplace(item.getRejectedTime(),item.getRejectedCnt(),0);
 				case 1:
-					return DivideUtilities.divideByZeroReplace(item.getNotProposedTime(),item.getRejectedCnt(),0);
+					return DoubleUtilities.divideByZeroReplace(item.getNotProposedTime(),item.getRejectedCnt(),0);
 				case 2:
-					return DivideUtilities.divideByZeroReplace(item.getAcceptedTime(),item.getRejectedCnt(),0);
+					return DoubleUtilities.divideByZeroReplace(item.getAcceptedTime(),item.getRejectedCnt(),0);
 				case 3:
-					return DivideUtilities.divideByZeroReplace(item.getExecutionTime(),item.getRejectedCnt(),0);
+					return DoubleUtilities.divideByZeroReplace(item.getExecutionTime(),item.getRejectedCnt(),0);
 				default:
 					assert false;
 					return 0.0;

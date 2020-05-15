@@ -37,11 +37,6 @@ import org.anchoranalysis.gui.io.loader.manifest.finder.csvstatistic.CSVStatisti
 
 public class ExportTaskCSVStatistic extends ExportTaskRasterGeneratorFromBoundedIndexContainer<CSVStatistic> {
 		
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 7447378088000119013L;
-
 	private static class ExportTaskParamsCSVStatisticContainerBridge implements IObjectBridge<
 		ExportTaskParams,
 		IBoundedIndexContainer<CSVStatistic>,

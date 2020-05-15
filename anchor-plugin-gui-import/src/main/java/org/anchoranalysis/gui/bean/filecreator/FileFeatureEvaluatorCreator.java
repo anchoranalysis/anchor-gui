@@ -58,11 +58,6 @@ import org.anchoranalysis.gui.videostats.modulecreator.FeatureEvaluatorCreator;
  */
 public class FileFeatureEvaluatorCreator extends FileCreator {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-	
 	// START BEAN PROPERTIES
 	@BeanField @NonEmpty
 	private List<NamedBean<FeatureListProvider<FeatureInput>>> listFeatures = new ArrayList<>();

@@ -37,10 +37,6 @@ import org.anchoranalysis.mpp.sgmn.bean.kernel.proposer.KernelProposer;
 
 public class GraphDefinitionLineIterVsKernelExecutionTimeByKernel extends GraphDefinitionLineIterVsKernelExecutionTime {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -334028849354281043L;
 	private final GetForSeries<KernelExecutionTime,Double> ketGetter;
 	
 	

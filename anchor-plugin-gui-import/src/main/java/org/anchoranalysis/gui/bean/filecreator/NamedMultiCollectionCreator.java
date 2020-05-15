@@ -43,11 +43,6 @@ import org.anchoranalysis.mpp.io.input.MultiInput;
 
 public class NamedMultiCollectionCreator extends FileCreatorGeneralList {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-
 	// START BEAN PROPERTIES
 	@BeanField
 	private InputManager<MultiInput> input;

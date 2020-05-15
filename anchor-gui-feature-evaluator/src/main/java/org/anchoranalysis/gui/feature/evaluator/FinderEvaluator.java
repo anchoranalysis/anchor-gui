@@ -51,14 +51,14 @@ import org.anchoranalysis.feature.calc.FeatureInitParams;
 import org.anchoranalysis.feature.nrg.NRGStackWithParams;
 import org.anchoranalysis.feature.session.FeatureSession;
 import org.anchoranalysis.feature.session.calculator.FeatureCalculatorMulti;
-import org.anchoranalysis.feature.shared.SharedFeatureSet;
+import org.anchoranalysis.feature.shared.SharedFeatureMulti;
 
 class FinderEvaluator {
 
-	private SharedFeatureSet<FeatureInputPairMemo> sharedFeatureList;
+	private SharedFeatureMulti sharedFeatureList;
 	private LogErrorReporter logger;
 		
-	public FinderEvaluator(SharedFeatureSet<FeatureInputPairMemo> sharedFeatureList, LogErrorReporter logger) {
+	public FinderEvaluator(SharedFeatureMulti sharedFeatureList, LogErrorReporter logger) {
 		super();
 		this.sharedFeatureList = sharedFeatureList;
 		this.logger = logger;
@@ -113,7 +113,7 @@ class FinderEvaluator {
 	private static Pair<Overlay> findPairFromCurrentSelectionMark(
 		Cfg cfg,
 		NRGStackWithParams raster,
-		SharedFeatureSet<FeatureInputPairMemo> sharedFeatureList,
+		SharedFeatureMulti sharedFeatureList,
 		LogErrorReporter logger
 	) throws CreateException {
 		
@@ -172,7 +172,7 @@ class FinderEvaluator {
 		
 		public EdgeTester(
 			NRGStackWithParams raster,
-			SharedFeatureSet<FeatureInputPairMemo> sharedFeatureList,
+			SharedFeatureMulti sharedFeatureList,
 			LogErrorReporter logger
 		) throws CreateException {
 			
@@ -187,7 +187,7 @@ class FinderEvaluator {
 		}
 		
 		private FeatureCalculatorMulti<FeatureInputPairMemo> createSession(
-			SharedFeatureSet<FeatureInputPairMemo> sharedFeatureList,
+			SharedFeatureMulti sharedFeatureList,
 			LogErrorReporter logger	
 		) throws CreateException {
 			FeatureList<FeatureInputPairMemo> relevantFeatures = addCriteria.orderedListOfFeatures();

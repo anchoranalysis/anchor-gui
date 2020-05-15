@@ -37,11 +37,6 @@ import org.anchoranalysis.gui.bean.exporttask.ExportTaskBean;
 
 public class ExportTaskList extends AnchorBean<ExportTaskList> implements Iterable<ExportTaskBean> {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -4455432257116909204L;
-	
 	// START BEAN PROPERTIES
 	@BeanField
 	private List<ExportTaskBean> list = new ArrayList<>();

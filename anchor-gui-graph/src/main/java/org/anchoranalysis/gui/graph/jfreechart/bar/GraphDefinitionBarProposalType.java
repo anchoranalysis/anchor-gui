@@ -32,11 +32,6 @@ import org.anchoranalysis.core.error.InitException;
 
 public class GraphDefinitionBarProposalType extends GraphDefinitionBarKernelExecutionTime {
 	
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 7661597839785738806L;
-
 	public static enum ProposalType {
 		REJECTED,
 		NOT_PROPOSED,

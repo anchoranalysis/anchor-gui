@@ -35,7 +35,7 @@ import org.anchoranalysis.core.bridge.IObjectBridge;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.log.LogErrorReporter;
-import org.anchoranalysis.core.name.value.INameValue;
+import org.anchoranalysis.core.name.value.NameValue;
 import org.anchoranalysis.gui.annotation.AnnotatorModuleCreator;
 import org.anchoranalysis.gui.backgroundset.BackgroundSet;
 import org.anchoranalysis.image.stack.DisplayStack;
@@ -74,7 +74,7 @@ public class ShowComparers {
 	
 	private void showMultipleComparers( AnnotationWithCfg annotationExst ) {
 				
-		List<INameValue<Stack>> rasters;
+		List<NameValue<Stack>> rasters;
 		try {
 			DisplayStack background = defaultBackground.bridgeElement(0);  // createBackgroundFromSet( operationBackgroundSet );
 			rasters = multipleComparer.createRasters(
@@ -90,7 +90,7 @@ public class ShowComparers {
 			return;
 		}
 		
-		for( final INameValue<Stack> ni : rasters ) {
+		for( final NameValue<Stack> ni : rasters ) {
 				
 			showRaster.show(
 				progressReporter -> createBackgroundSet(ni.getValue()),

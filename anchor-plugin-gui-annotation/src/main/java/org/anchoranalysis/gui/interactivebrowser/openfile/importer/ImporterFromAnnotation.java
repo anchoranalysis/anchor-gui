@@ -36,11 +36,6 @@ import org.anchoranalysis.image.io.input.ProvidesStackInput;
 
 public class ImporterFromAnnotation extends ImporterFromBean {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-
 	@Override
 	public boolean isApplicable(Object bean) {
 		return bean instanceof AnnotationInputManager;

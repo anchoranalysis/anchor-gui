@@ -32,11 +32,6 @@ import org.anchoranalysis.bean.annotation.BeanField;
 
 public class ConstantStringRasterGenerator extends CreateStringRasterGenerator {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-	
 	// START BEAN PROPERTIES
 	@BeanField
 	private String text;

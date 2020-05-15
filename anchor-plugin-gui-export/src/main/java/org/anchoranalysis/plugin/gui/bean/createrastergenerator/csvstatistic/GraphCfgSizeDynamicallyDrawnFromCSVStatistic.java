@@ -31,11 +31,6 @@ import org.anchoranalysis.gui.graph.definition.line.GraphDefinitionLineIterVsCfg
 
 public class GraphCfgSizeDynamicallyDrawnFromCSVStatistic extends GraphDynamicallyDrawnFromCSVStatistic<GraphDefinitionLineIterVsCfgSize.Item> {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 799975254641645695L;
-
 	public GraphCfgSizeDynamicallyDrawnFromCSVStatistic() {
 		super(new BridgedGraphCfgSizeCreator().createCSVStatisticBridge());
 	}

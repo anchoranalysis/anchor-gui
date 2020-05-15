@@ -35,7 +35,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-import org.anchoranalysis.anchor.mpp.bean.init.GeneralInitParams;
 import org.anchoranalysis.anchor.mpp.feature.bean.mark.MarkEvaluator;
 import org.anchoranalysis.core.cache.Operation;
 import org.anchoranalysis.core.error.CreateException;
@@ -44,17 +43,18 @@ import org.anchoranalysis.core.name.provider.INamedProvider;
 import org.anchoranalysis.core.params.KeyValueParams;
 import org.anchoranalysis.core.progress.OperationWithProgressReporter;
 import org.anchoranalysis.image.stack.Stack;
+import org.anchoranalysis.io.output.bound.BoundIOContext;
 
 // Manages the various MarkEvaluators that are available in the application
 public class MarkEvaluatorManager {
 
 	private Map<String,MarkEvaluator> map = new HashMap<>(); 
 
-	private GeneralInitParams paramsGeneral;
+	private BoundIOContext context;
 	
-	public MarkEvaluatorManager( GeneralInitParams paramsGeneral ) {
+	public MarkEvaluatorManager( BoundIOContext context ) {
 		super();
-		this.paramsGeneral = paramsGeneral;
+		this.context = context;
 	}
 
 	public Set<String> keySet() {
@@ -70,7 +70,7 @@ public class MarkEvaluatorManager {
 			MarkEvaluatorSetForImage out = new MarkEvaluatorSetForImage(
 				namedImgStackCollection,
 				keyParams,
-				paramsGeneral
+				context
 			);
 			
 			for( String key : map.keySet()) {

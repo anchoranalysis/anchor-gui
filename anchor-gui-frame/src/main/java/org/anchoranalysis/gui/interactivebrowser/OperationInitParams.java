@@ -1,4 +1,4 @@
-package org.anchoranalysis.gui.videostats.dropdown;
+package org.anchoranalysis.gui.interactivebrowser;
 
 
 
@@ -33,9 +33,9 @@ import java.io.IOException;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
-import org.anchoranalysis.anchor.mpp.bean.init.GeneralInitParams;
 import org.anchoranalysis.anchor.mpp.bean.init.MPPInitParams;
 import org.anchoranalysis.bean.AnchorBean;
 import org.anchoranalysis.bean.NamedBean;
@@ -44,33 +44,33 @@ import org.anchoranalysis.core.cache.CachedOperation;
 import org.anchoranalysis.core.cache.Operation;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.name.provider.INamedProvider;
-import org.anchoranalysis.core.name.store.SharedObjects;
 import org.anchoranalysis.core.params.KeyValueParams;
 import org.anchoranalysis.core.progress.OperationWithProgressReporter;
 import org.anchoranalysis.core.progress.ProgressReporterNull;
 import org.anchoranalysis.image.bean.provider.stack.StackProvider;
-import org.anchoranalysis.image.init.ImageInitParams;
 import org.anchoranalysis.image.stack.Stack;
+import org.anchoranalysis.io.output.bound.BoundIOContext;
+import org.anchoranalysis.mpp.io.input.MPPInitParamsFactory;
 
-public class OperationCreateProposerSharedObjectsImageSpecific extends CachedOperation<MPPInitParams,CreateException> {
+public class OperationInitParams extends CachedOperation<MPPInitParams,CreateException> {
 
 	private OperationWithProgressReporter<INamedProvider<Stack>,? extends Throwable> namedImgStackCollection;
 	private Operation<KeyValueParams,IOException> keyParams;
 	
-	private Define namedDefinitions;
+	private Define define;
 	
-	private GeneralInitParams paramsGeneral;
+	private BoundIOContext context;
 	
-	public OperationCreateProposerSharedObjectsImageSpecific(
+	public OperationInitParams(
 			OperationWithProgressReporter<INamedProvider<Stack>,? extends Throwable> namedImgStackCollection,
 			Operation<KeyValueParams,IOException> keyParams,
-			Define namedDefinitions,
-			GeneralInitParams paramsGeneral
+			Define define,
+			BoundIOContext context
 			) {
 		super();
 		this.namedImgStackCollection = namedImgStackCollection;
-		this.paramsGeneral = paramsGeneral;
-		this.namedDefinitions = namedDefinitions;
+		this.context = context;
+		this.define = define;
 		this.keyParams = keyParams;
 	}
 
@@ -82,15 +82,15 @@ public class OperationCreateProposerSharedObjectsImageSpecific extends CachedOpe
 			return this.getResult().getImage().getStackCollection().keys();
 		} else {
 			Set<String> out = new HashSet<>();
-			out.addAll( namesFromListNamedItems( namedDefinitions.getList(StackProvider.class) ));
+			out.addAll( namesFromListNamedItems( define.getList(StackProvider.class) ));
 			
 			try {
 				out.addAll(
 					namedImgStackCollection.doOperation( ProgressReporterNull.get() ).keys()
 				);
 			} catch (Throwable e) {
-				paramsGeneral.getLogErrorReporter().getErrorReporter().recordError(
-					OperationCreateProposerSharedObjectsImageSpecific.class,
+				context.getErrorReporter().recordError(
+					OperationInitParams.class,
 					e
 				);
 			}
@@ -103,21 +103,17 @@ public class OperationCreateProposerSharedObjectsImageSpecific extends CachedOpe
 
 		// We initialise the markEvaluator
 		try {
-			SharedObjects so = new SharedObjects( paramsGeneral.getLogErrorReporter() );			
-			
-			MPPInitParams soMPP = MPPInitParams.create(
-				so,
-				namedDefinitions,
-				paramsGeneral
+			return MPPInitParamsFactory.createFromExistingCollections(
+				context,
+				Optional.ofNullable(define),
+				Optional.of(
+					namedImgStackCollection.doOperation( ProgressReporterNull.get() )
+				),
+				Optional.empty(),
+				Optional.of(
+					keyParams.doOperation()
+				)
 			);
-			ImageInitParams soImage = soMPP.getImage();
-			
-			soImage.copyStackCollectionFrom(
-				namedImgStackCollection.doOperation( ProgressReporterNull.get() )
-			);
-			soImage.addToKeyValueParamsCollection("input_params", keyParams.doOperation());
-			
-			return soMPP;
 
 		} catch (Throwable e) {
 			throw new CreateException(e);

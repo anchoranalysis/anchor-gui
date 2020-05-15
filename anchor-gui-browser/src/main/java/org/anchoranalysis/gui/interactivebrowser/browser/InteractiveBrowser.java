@@ -30,13 +30,14 @@ package org.anchoranalysis.gui.interactivebrowser.browser;
 
 import java.util.List;
 
-import org.anchoranalysis.anchor.mpp.bean.init.GeneralInitParams;
 import org.anchoranalysis.anchor.mpp.feature.bean.mark.MarkEvaluator;
 import org.anchoranalysis.bean.NamedBean;
 import org.anchoranalysis.core.color.ColorIndex;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.error.OperationFailedException;
+import org.anchoranalysis.core.random.RandomNumberGenerator;
+import org.anchoranalysis.core.random.RandomNumberGeneratorMersenne;
 import org.anchoranalysis.gui.bean.filecreator.FileCreator;
 import org.anchoranalysis.gui.feature.evaluator.treetable.FeatureListSrc;
 import org.anchoranalysis.gui.interactivebrowser.FileOpenManager;
@@ -56,7 +57,7 @@ import org.anchoranalysis.io.bean.color.generator.HSBColorSetGenerator;
 import org.anchoranalysis.io.bean.color.generator.ShuffleColorSetGenerator;
 import org.anchoranalysis.io.color.HashedColorSet;
 import org.anchoranalysis.io.generator.sequence.SequenceMemory;
-import org.anchoranalysis.io.output.bound.BoundOutputManagerRouteErrors;
+import org.anchoranalysis.io.output.bound.BoundIOContext;
 import org.anchoranalysis.plugin.gui.bean.exporttask.ExportTaskList;
 
 
@@ -65,8 +66,6 @@ public class InteractiveBrowser {
 	private VideoStatsFrame videoStatsFrame;
 	
 	private int numColors = 20;
-	
-	private BoundOutputManagerRouteErrors outputManager;
 	
 	private ExportTaskList exportTaskList;
 	
@@ -80,13 +79,12 @@ public class InteractiveBrowser {
 	
 	private OpenFileTypeFactory openFileTypeFactory;
 	
-	private GeneralInitParams paramsGeneral;
+	private BoundIOContext context;
 	
-	public InteractiveBrowser(BoundOutputManagerRouteErrors outputManager, GeneralInitParams paramsGeneral, ExportTaskList exportTaskList ) {
+	public InteractiveBrowser(BoundIOContext context, ExportTaskList exportTaskList ) {
 		super();
-		this.outputManager = outputManager;
 		this.exportTaskList = exportTaskList;
-		this.paramsGeneral = paramsGeneral;
+		this.context = context;
 	}
 	
 	public void init(
@@ -113,7 +111,8 @@ public class InteractiveBrowser {
 		
 		VideoStatsModuleGlobalParams moduleParams = createModuleParams(
 			createExportPopupParams(),
-			createColorIndex()
+			createColorIndex(),
+			new RandomNumberGeneratorMersenne(false)
 		);
 		
 		initMarkEvaluatorManager(interactiveBrowserInput);
@@ -130,12 +129,12 @@ public class InteractiveBrowser {
 		return new FileOpenManager(
 			globalSubgroupAdder,
 			videoStatsFrame,
-			outputManager
+			context.getOutputManager()
 		);
 	}
 	
 	private void initMarkEvaluatorManager( InteractiveBrowserInput interactiveBrowserInput ) {
-		markEvaluatorManager = new MarkEvaluatorManager(paramsGeneral);
+		markEvaluatorManager = new MarkEvaluatorManager(context);
 		
 		if (interactiveBrowserInput.getNamedItemMarkEvaluatorList()!=null) {
 			for( NamedBean<MarkEvaluator> ni : interactiveBrowserInput.getNamedItemMarkEvaluatorList()) {
@@ -154,8 +153,7 @@ public class InteractiveBrowser {
 		FeatureListSrc featureListSrc;
 		try {
 			featureListSrc = interactiveBrowserInput.createFeatureListSrc(
-				outputManager,
-				paramsGeneral.getLogErrorReporter()
+				context.getLogger()
 			);
 		} catch (CreateException e) {
 			throw new InitException(e);
@@ -178,7 +176,7 @@ public class InteractiveBrowser {
 			videoStatsFrame,
 			fileCreatorLoader,
 			openFileTypeFactory,
-			paramsGeneral.getLogErrorReporter()
+			context.getLogger()
 		);
 		videoStatsFrame.getListFileActions().add( openFileCreator );
 					
@@ -207,7 +205,7 @@ public class InteractiveBrowser {
 		videoStatsFrame.getToolbar().add( openFileCreator);
 		videoStatsFrame.getToolbar().addSeparator();
 		
-		videoStatsFrame.initBeforeAddingFrames( paramsGeneral.getErrorReporter() );
+		videoStatsFrame.initBeforeAddingFrames( context.getErrorReporter() );
 		
 		videoStatsFrame.getToolbar().addSeparator();
 		
@@ -232,7 +230,7 @@ public class InteractiveBrowser {
 				openFileCreator,
 				videoStatsFrame,
 				fileCreatorLoader.getImporterSettings(),
-				paramsGeneral.getErrorReporter()
+				context.getErrorReporter()
 			)
 		);
 		
@@ -241,21 +239,21 @@ public class InteractiveBrowser {
 	private ExportPopupParams createExportPopupParams() {
 		SequenceMemory sequenceMemory = new SequenceMemory();
 		ExportPopupParams popUpParams = new ExportPopupParams(
-			paramsGeneral.getErrorReporter()
+			context.getErrorReporter()
 		);
-		assert( outputManager!= null );
-		popUpParams.setOutputManager( outputManager );
+		assert( context.getOutputManager()!= null );
+		popUpParams.setOutputManager( context.getOutputManager() );
 		popUpParams.setParentFrame( videoStatsFrame );
 		popUpParams.setSequenceMemory( sequenceMemory );
 		return popUpParams;
 	}
 
-	private VideoStatsModuleGlobalParams createModuleParams( ExportPopupParams popUpParams, ColorIndex colorIndex ) {
+	private VideoStatsModuleGlobalParams createModuleParams( ExportPopupParams popUpParams, ColorIndex colorIndex, RandomNumberGenerator re ) {
 		VideoStatsModuleGlobalParams moduleParams = new VideoStatsModuleGlobalParams();
 		moduleParams.setExportPopupParams(popUpParams);
-		moduleParams.setLogErrorReporter( paramsGeneral.getLogErrorReporter() );
+		moduleParams.setLogErrorReporter( context.getLogger() );
 		moduleParams.setThreadPool(videoStatsFrame.getThreadPool());
-		moduleParams.setRandomNumberGenerator( paramsGeneral.getRe() );
+		moduleParams.setRandomNumberGenerator(re);
 		moduleParams.setExportTaskList(exportTaskList);
 		moduleParams.setDefaultColorIndexForMarks(colorIndex);
 		moduleParams.setGraphicsCurrentScreen( videoStatsFrame.getGraphicsConfiguration() );
@@ -276,7 +274,7 @@ public class InteractiveBrowser {
 			"/appSplash/anchor_splash.png",
 			videoStatsFrame,
 			SplashScreenTime,
-			paramsGeneral.getErrorReporter()
+			context.getErrorReporter()
 		);
 	}
 }

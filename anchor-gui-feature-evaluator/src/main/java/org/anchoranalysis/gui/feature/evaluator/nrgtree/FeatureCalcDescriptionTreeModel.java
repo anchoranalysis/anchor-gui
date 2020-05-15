@@ -42,7 +42,7 @@ import org.anchoranalysis.feature.nrg.NRGStackWithParams;
 import org.anchoranalysis.feature.session.CreateFeatureInput;
 import org.anchoranalysis.feature.session.FeatureSession;
 import org.anchoranalysis.feature.session.calculator.FeatureCalculatorMulti;
-import org.anchoranalysis.feature.shared.SharedFeatureSet;
+import org.anchoranalysis.feature.shared.SharedFeatureMulti;
 import org.anchoranalysis.gui.feature.FeatureListWithRegionMap;
 import org.anchoranalysis.gui.feature.evaluator.nrgtree.overlayparams.CreateParamsFromOverlay;
 import org.anchoranalysis.gui.feature.evaluator.singlepair.IUpdatableSinglePair;
@@ -58,7 +58,7 @@ public class FeatureCalcDescriptionTreeModel extends DefaultTreeModel implements
 	private FeatureList<FeatureInput> featureList;
 	
 	private LogErrorReporter logErrorReporter;
-	private SharedFeatureSet<FeatureInput> sharedFeatures;
+	private SharedFeatureMulti sharedFeatures;
 	
 	private FeatureCalculatorMulti<FeatureInput> session = null;
 	
@@ -68,7 +68,7 @@ public class FeatureCalcDescriptionTreeModel extends DefaultTreeModel implements
 	
 	public FeatureCalcDescriptionTreeModel(
 		FeatureListWithRegionMap<FeatureInput> featureListWithRegions,
-		SharedFeatureSet<FeatureInput> sharedFeatures,
+		SharedFeatureMulti sharedFeatures,
 		LogErrorReporter logErrorReporter
 	) {
 		super( null );
@@ -192,11 +192,11 @@ public class FeatureCalcDescriptionTreeModel extends DefaultTreeModel implements
 
 	/** Removes features from shared, which also exist in the FeatureList, as they should
 	 *  not be in both */
-	private static SharedFeatureSet<FeatureInput> removeFeaturesFromShared(
-		SharedFeatureSet<FeatureInput> sharedFeatures,
+	private static SharedFeatureMulti removeFeaturesFromShared(
+		SharedFeatureMulti sharedFeatures,
 		FeatureList<FeatureInput> featureList
 	) {
-		SharedFeatureSet<FeatureInput> dup = sharedFeatures.duplicate();
+		SharedFeatureMulti dup = sharedFeatures.duplicate();
 		dup.removeIfExists(featureList);
 		return dup;
 	}

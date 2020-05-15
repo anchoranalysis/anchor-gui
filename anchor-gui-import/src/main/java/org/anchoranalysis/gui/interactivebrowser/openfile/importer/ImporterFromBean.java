@@ -35,11 +35,6 @@ import org.anchoranalysis.gui.bean.filecreator.FileCreator;
 /** Tries to make a FileCreator from a bean, maybe succeeding, maybe failing */
 public abstract class ImporterFromBean extends AnchorBean<ImporterFromBean> {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-
 	/** Returns TRUE iff a creator can be made from the bean */
 	public abstract boolean isApplicable( Object bean );
 	

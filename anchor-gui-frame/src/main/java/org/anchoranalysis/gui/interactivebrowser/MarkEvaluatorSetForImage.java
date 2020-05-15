@@ -35,7 +35,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-import org.anchoranalysis.anchor.mpp.bean.init.GeneralInitParams;
 import org.anchoranalysis.anchor.mpp.feature.bean.mark.MarkEvaluator;
 import org.anchoranalysis.core.cache.CachedOperation;
 import org.anchoranalysis.core.cache.Operation;
@@ -46,8 +45,8 @@ import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.name.provider.INamedProvider;
 import org.anchoranalysis.core.params.KeyValueParams;
 import org.anchoranalysis.core.progress.OperationWithProgressReporter;
-import org.anchoranalysis.gui.videostats.dropdown.OperationCreateProposerSharedObjectsImageSpecific;
 import org.anchoranalysis.image.stack.Stack;
+import org.anchoranalysis.io.output.bound.BoundIOContext;
 
 public class MarkEvaluatorSetForImage {
 
@@ -55,33 +54,33 @@ public class MarkEvaluatorSetForImage {
 
 	private OperationWithProgressReporter<INamedProvider<Stack>,? extends Throwable> namedImgStackCollection;
 	private Operation<KeyValueParams,IOException> keyParams;
-	private GeneralInitParams paramsGeneral;
+	private BoundIOContext context;
 
 	public MarkEvaluatorSetForImage(
 		OperationWithProgressReporter<INamedProvider<Stack>,? extends Throwable> namedImgStackCollection,
 		Operation<KeyValueParams,IOException> keyParams,
-		GeneralInitParams paramsGeneral
+		BoundIOContext context
 	) {
 		super();
 		this.keyParams = keyParams;
 		this.namedImgStackCollection = namedImgStackCollection;
-		this.paramsGeneral = paramsGeneral;
+		this.context = context;
 	}
 
 	private class Rslv extends CachedOperation<MarkEvaluatorRslvd,OperationFailedException> {
 
-		private OperationCreateProposerSharedObjectsImageSpecific operationProposerSharedObjects;
+		private OperationInitParams operationProposerSharedObjects;
 		private MarkEvaluator me;
 		
 		public Rslv( MarkEvaluator me ) throws CreateException {
 			this.me = me;
 			operationProposerSharedObjects =
-				new OperationCreateProposerSharedObjectsImageSpecific(
+				new OperationInitParams(
 					namedImgStackCollection,
 					keyParams,
 					/// TODO Do we need this duplication?
-					me.getNamedDefinitions().duplicateBean(),
-					paramsGeneral
+					me.getDefine().duplicateBean(),
+					context
 				);
 			
 			try {
@@ -89,7 +88,7 @@ public class MarkEvaluatorSetForImage {
 				//  i.e. where they are being passed around
 				me.initRecursive(
 					operationProposerSharedObjects.doOperation().getFeature(),
-					paramsGeneral.getLogErrorReporter()
+					context.getLogger()
 				);
 			} catch (InitException e) {
 				throw new CreateException(e);

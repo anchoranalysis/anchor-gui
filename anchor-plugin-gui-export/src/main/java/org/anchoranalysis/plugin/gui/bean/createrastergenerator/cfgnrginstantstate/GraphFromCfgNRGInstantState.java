@@ -43,11 +43,6 @@ import org.anchoranalysis.plugin.gui.bean.exporttask.MappedFrom;
 
 public class GraphFromCfgNRGInstantState extends CreateRasterGraph<NRGGraphItem,CfgNRGInstantState> {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 7808671504168446373L;
-
 	@Override
 	public IterableObjectGenerator<MappedFrom<CfgNRGInstantState>, Stack> createGenerator( ExportTaskParams params ) throws CreateException {
 		

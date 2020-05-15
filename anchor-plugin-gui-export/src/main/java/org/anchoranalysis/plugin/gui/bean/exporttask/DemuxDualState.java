@@ -36,11 +36,6 @@ import org.anchoranalysis.plugin.gui.bean.createrastergenerator.CreateRasterGene
 
 public class DemuxDualState<T> extends CreateRasterGenerator<DualStateWithoutIndex<T>> {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-	
 	// START BEAN PROPERTIES
 	@BeanField
 	private int index = 0;

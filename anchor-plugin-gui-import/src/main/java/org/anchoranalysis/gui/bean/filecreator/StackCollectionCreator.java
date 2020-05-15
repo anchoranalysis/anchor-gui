@@ -44,11 +44,6 @@ import org.anchoranalysis.plugin.io.bean.input.stack.StackSequenceInput;
 // A named channel collection derived from a file
 public class StackCollectionCreator extends FileCreatorGeneralList {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-
 	// START BEAN PROPERTIES
 	@BeanField
 	private InputManager<StackSequenceInput> input;

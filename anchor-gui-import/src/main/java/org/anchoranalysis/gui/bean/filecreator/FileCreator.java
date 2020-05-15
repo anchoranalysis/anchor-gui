@@ -39,11 +39,6 @@ import org.anchoranalysis.gui.videostats.module.VideoStatsModuleCreateException;
 
 public abstract class FileCreator extends AnchorBean<FileCreator> {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-
 	// START BEANS
 	@BeanField
 	private String customName = "";

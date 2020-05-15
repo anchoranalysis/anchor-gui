@@ -33,11 +33,6 @@ import org.anchoranalysis.plugin.gui.bean.createrastergenerator.CreateStringRast
 
 public class CfgSizeStringFromCfgNRGInstantState extends CreateStringRasterGenerator {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 153327858028426724L;
-	
 	// START BEAN PROPERTIES
 	@BeanField @AllowEmpty
 	private String prefix = "";

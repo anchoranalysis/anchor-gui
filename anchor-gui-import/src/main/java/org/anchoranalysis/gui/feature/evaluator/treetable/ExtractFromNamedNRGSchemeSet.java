@@ -32,9 +32,8 @@ import org.anchoranalysis.anchor.mpp.feature.nrg.scheme.NamedNRGSchemeSet;
  */
 
 import org.anchoranalysis.core.error.OperationFailedException;
-import org.anchoranalysis.feature.input.FeatureInputNRGStack;
 import org.anchoranalysis.feature.nrg.NRGStackWithParams;
-import org.anchoranalysis.feature.shared.SharedFeatureSet;
+import org.anchoranalysis.feature.shared.SharedFeatureMulti;
 import org.anchoranalysis.gui.feature.FeatureListUtilities;
 import org.anchoranalysis.gui.feature.FeatureListWithRegionMap;
 
@@ -86,7 +85,7 @@ public class ExtractFromNamedNRGSchemeSet extends FeatureListSrc {
 	}
 
 	@Override
-	public SharedFeatureSet<FeatureInputNRGStack> sharedFeatures() {
+	public SharedFeatureMulti sharedFeatures() {
 		return src.getSharedFeatures();
 	}
 

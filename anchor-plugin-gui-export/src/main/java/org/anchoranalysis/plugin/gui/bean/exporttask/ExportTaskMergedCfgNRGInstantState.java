@@ -32,10 +32,7 @@ import org.anchoranalysis.anchor.mpp.regionmap.RegionMapSingleton;
 
 public class ExportTaskMergedCfgNRGInstantState extends ExportTaskRasterGeneratorFromBoundedIndexContainer<CfgNRGInstantState> {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -8647428281002579676L;
+	
 	
 	// START BEAN PROPERTIES
 	

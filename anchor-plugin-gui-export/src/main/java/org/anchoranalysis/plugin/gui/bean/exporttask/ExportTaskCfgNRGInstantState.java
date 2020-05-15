@@ -46,11 +46,6 @@ import org.anchoranalysis.gui.mergebridge.DualCfgNRGContainer;
 
 public class ExportTaskCfgNRGInstantState extends ExportTaskRasterGeneratorFromBoundedIndexContainer<DualStateWithoutIndex<CfgNRGInstantState>> {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1690065325734941465L;
-	
 	public ExportTaskCfgNRGInstantState() {
 		super();
 	}

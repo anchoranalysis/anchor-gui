@@ -50,11 +50,6 @@ import org.anchoranalysis.plugin.io.manifest.ManifestCouplingDefinition;
 // TODO duplication not right
 public class ExecutedExperimentFileCreator extends FileCreatorGeneralList {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-
 	// START BEANS
 	@BeanField
 	private CoupledManifestsInputManager coupledManifestsInputManager;

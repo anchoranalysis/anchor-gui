@@ -41,11 +41,6 @@ import org.apache.commons.io.FilenameUtils;
 // Describes what type of file we are opening
 public abstract class OpenFileType extends AnchorBean<OpenFileType> {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-
 	public abstract String[] getExtensions();
 	
 	public abstract String getDescription();

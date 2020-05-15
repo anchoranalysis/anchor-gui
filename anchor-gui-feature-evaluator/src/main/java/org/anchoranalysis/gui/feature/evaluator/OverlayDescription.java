@@ -35,7 +35,7 @@ import org.anchoranalysis.anchor.mpp.pair.Pair;
 import org.anchoranalysis.anchor.overlay.Overlay;
 import org.anchoranalysis.anchor.overlay.OverlayProperties;
 import org.anchoranalysis.core.name.value.ComparatorOrderByName;
-import org.anchoranalysis.core.name.value.INameValue;
+import org.anchoranalysis.core.name.value.NameValue;
 import org.anchoranalysis.feature.nrg.NRGStackWithParams;
 import org.anchoranalysis.gui.cfgnrgtable.TitleValueTableModel;
 import org.anchoranalysis.gui.feature.evaluator.singlepair.IUpdatableSinglePair;
@@ -91,14 +91,14 @@ class OverlayDescription extends TitleValueTableModel implements IUpdatableSingl
 
 		OverlayProperties op = overlay.generateProperties(sr);
 		
-		ArrayList<INameValue<String>> listToAdd = new ArrayList<>(); 
-		for (INameValue<String> nv : op) {
+		ArrayList<NameValue<String>> listToAdd = new ArrayList<>(); 
+		for (NameValue<String> nv : op) {
 			listToAdd.add(nv);
 		}
 		
 		Collections.sort(listToAdd, new ComparatorOrderByName<String>() );
 		
-		for (INameValue<String> nv : listToAdd) {
+		for (NameValue<String> nv : listToAdd) {
 			addEntry( new SimpleTitleValue( titlePrefix + nv.getName(), nv.getValue()) );
 		}
 	}

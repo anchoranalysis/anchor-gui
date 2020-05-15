@@ -44,11 +44,6 @@ import org.anchoranalysis.plugin.gui.bean.createrastergenerator.CreateRasterGene
  */
 public abstract class ExportTaskRasterGeneratorSequence<T> extends ExportTaskBean {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -2510704302146787730L;
-
 	// START BEAN PARAMETERS
 	@BeanField
 	private GeneratorSequenceFactory sequenceFactory = new SubfolderGeneratorSequenceFactory();

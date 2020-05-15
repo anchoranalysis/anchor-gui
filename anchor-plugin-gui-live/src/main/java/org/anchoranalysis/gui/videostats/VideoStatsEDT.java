@@ -47,7 +47,7 @@ import org.anchoranalysis.core.index.container.IBoundedRangeIncompleteDynamic;
 import org.anchoranalysis.core.index.container.BoundChangeEvent.BoundType;
 import org.anchoranalysis.core.log.LogErrorReporter;
 import org.anchoranalysis.core.progress.ProgressReporterNull;
-import org.anchoranalysis.core.random.RandomNumberGeneratorMersenneTime;
+import org.anchoranalysis.core.random.RandomNumberGeneratorMersenne;
 import org.anchoranalysis.feature.nrg.NRGStackWithParams;
 import org.anchoranalysis.gui.IconFactory;
 import org.anchoranalysis.gui.backgroundset.BackgroundSet;
@@ -255,7 +255,7 @@ public class VideoStatsEDT {
 		mpg.setExportPopupParams( popUpParams );
 		mpg.setLogErrorReporter( logErrorReporter );
 		mpg.setThreadPool( videoStatsFrame.getThreadPool() );
-		mpg.setRandomNumberGenerator( new RandomNumberGeneratorMersenneTime() );
+		mpg.setRandomNumberGenerator( new RandomNumberGeneratorMersenne(false) );
 		mpg.setExportTaskList( new ExportTaskList() );
 		mpg.setDefaultColorIndexForMarks(colorIndex);
 		mpg.setGraphicsCurrentScreen( videoStatsFrame.getGraphicsConfiguration() );
@@ -394,7 +394,7 @@ public class VideoStatsEDT {
 	private static NamedNRGSchemeSet createNamedNRGSchemeFromFeatures( NRGSchemeWithSharedFeatures nrgScheme ) {
 		
 		NamedNRGSchemeSet nrgElemSet = new NamedNRGSchemeSet(
-			nrgScheme.getSharedFeatures().downcast()
+			nrgScheme.getSharedFeatures()
 		); 
 		nrgElemSet.add("lastExecution", nrgScheme.getNrgScheme() );
 		return nrgElemSet;

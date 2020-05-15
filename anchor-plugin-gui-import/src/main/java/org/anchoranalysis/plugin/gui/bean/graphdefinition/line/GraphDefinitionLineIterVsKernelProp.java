@@ -37,11 +37,6 @@ import org.anchoranalysis.mpp.sgmn.bean.kernel.proposer.KernelProposer;
 
 public class GraphDefinitionLineIterVsKernelProp extends GraphDefinitionLineIterVsCSVStatistic {
 	
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 6417067503634967103L;
-
 	public GraphDefinitionLineIterVsKernelProp( KernelProposer<CfgNRGPixelized> kernelProposer, final int index, GraphColorScheme graphColorScheme ) {
 
 		super(

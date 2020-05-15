@@ -40,11 +40,6 @@ import org.anchoranalysis.plugin.gui.bean.exporttask.MappedFrom;
 
 public class Combined<T> extends CreateRasterGenerator<T> {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 5950906879646469500L;
-
 	// START BEAN PROPERTIES
 	@BeanField
 	private List<CreateRasterGenerator<T>> createRasterGeneratorList;

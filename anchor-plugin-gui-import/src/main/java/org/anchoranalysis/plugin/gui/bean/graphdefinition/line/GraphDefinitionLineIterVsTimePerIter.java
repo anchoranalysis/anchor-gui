@@ -35,11 +35,6 @@ import org.anchoranalysis.gui.io.loader.manifest.finder.csvstatistic.CSVStatisti
 
 public class GraphDefinitionLineIterVsTimePerIter extends GraphDefinitionLineIterVsCSVStatistic {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -1475320171530562684L;
-
 	public GraphDefinitionLineIterVsTimePerIter( GraphColorScheme graphColorScheme ) {
 		
 		super(

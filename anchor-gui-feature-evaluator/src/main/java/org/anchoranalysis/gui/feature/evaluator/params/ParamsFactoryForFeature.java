@@ -50,7 +50,7 @@ public class ParamsFactoryForFeature {
 
 	public static FeatureCalcParamsFactory factoryFor( Feature<?> f ) throws FeatureCalcException {
 		
-		FeatureInputDescriptor paramType = f.paramType();
+		FeatureInputDescriptor paramType = f.inputDescriptor();
 		
 		if (paramType.equals(FeatureInputGenericDescriptor.instance)) {
 			return new NullParamsFactory();

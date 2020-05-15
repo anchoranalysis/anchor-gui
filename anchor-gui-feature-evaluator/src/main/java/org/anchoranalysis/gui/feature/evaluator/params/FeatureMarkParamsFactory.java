@@ -40,7 +40,7 @@ public class FeatureMarkParamsFactory extends FeatureCalcParamsUnaryFactory {
 			throws CreateException {
 		return new FeatureInputMark(
 			pmm.getMark(),
-			raster.getDimensions().getRes(),
+			raster.getDimensions(),
 			raster.getParams()
 		);
 	}

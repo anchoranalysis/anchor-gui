@@ -36,11 +36,6 @@ import org.anchoranalysis.mpp.sgmn.bean.kernel.proposer.KernelProposer;
 
 public class GraphDefinitionLineIterVsKernelAccptProb extends GraphDefinitionLineIterVsCSVStatistic {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 3272354511174559236L;
-
 	public GraphDefinitionLineIterVsKernelAccptProb( KernelProposer<CfgNRGPixelized> kernelProposer, int index, GraphColorScheme graphColorScheme ) {
 		this( 	kernelProposer.getAllKernelFactories().get(index).getName(),
 				new String[]{ kernelProposer.getAllKernelFactories().get(index).getName() },

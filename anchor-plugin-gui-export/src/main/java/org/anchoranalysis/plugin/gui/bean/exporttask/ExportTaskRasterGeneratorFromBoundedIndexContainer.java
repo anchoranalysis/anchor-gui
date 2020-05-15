@@ -46,11 +46,6 @@ import org.anchoranalysis.gui.bean.exporttask.ExportTaskParams;
  */
 public abstract class ExportTaskRasterGeneratorFromBoundedIndexContainer<T> extends ExportTaskRasterGeneratorSequence<T> {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -3390633236350426185L;
-	
 	// START BEAN PROPERTIES
 	@BeanField
 	private ExportTaskBoundedIndexContainerGeneratorSeries<T> delegate;

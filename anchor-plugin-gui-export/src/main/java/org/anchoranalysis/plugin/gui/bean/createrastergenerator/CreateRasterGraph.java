@@ -48,11 +48,6 @@ import org.anchoranalysis.plugin.gui.graph.RasterGraph;
  */
 public abstract class CreateRasterGraph<T,S> extends CreateRasterGenerator<S> implements RasterGraph<T, S> {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 3423870085221865753L;
-
 	// START BEAN PARAMETERS
 	@BeanField
 	private GraphDefinition<T> graphDefinition;
