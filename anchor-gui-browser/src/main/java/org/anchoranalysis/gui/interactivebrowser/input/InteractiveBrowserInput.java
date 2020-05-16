@@ -70,7 +70,7 @@ public class InteractiveBrowserInput implements InputFromManager {
 		
 		try {
 			// Adds the feature-lists to the shared-objects
-			soFeature.addAll(namedItemSharedFeatureList, logger);
+			soFeature.populate(namedItemSharedFeatureList, logger);
 			
 			addKeyValueParams( soParams );
 			addFilePaths( soParams );
