@@ -36,7 +36,6 @@ import org.anchoranalysis.anchor.overlay.collection.OverlayCollection;
 import org.anchoranalysis.anchor.overlay.collection.OverlayCollectionObjMaskFactory;
 import org.anchoranalysis.image.io.objs.ObjMaskCollectionWriter;
 import org.anchoranalysis.image.objmask.ObjMaskCollection;
-import org.anchoranalysis.io.generator.IterableGenerator;
 import org.anchoranalysis.io.generator.collection.SubfolderGenerator;
 import org.anchoranalysis.io.generator.sequence.CollectionGenerator;
 import org.anchoranalysis.io.generator.serialized.ObjectOutputStreamGenerator;
@@ -69,9 +68,8 @@ public class RetrieveElementsOverlayCollection extends RetrieveElements {
 	
 	
 	private void addSelectedObjects( IAddToExportSubMenu popUp, ObjMaskCollection objs ) {
-		IterableGenerator<ObjMaskCollection> generator = ObjMaskCollectionWriter.generator();
 		popUp.addExportItem(
-			generator,
+			ObjMaskCollectionWriter.generator(),
 			objs,
 			"selectedObjects",
 			"Selected Objects",
