@@ -30,8 +30,8 @@ import org.anchoranalysis.anchor.mpp.bean.init.MPPInitParams;
 
 
 import org.anchoranalysis.core.cache.CachedOperation;
-import org.anchoranalysis.core.cache.Operation;
 import org.anchoranalysis.core.error.CreateException;
+import org.anchoranalysis.core.functional.Operation;
 import org.anchoranalysis.core.name.provider.INamedProvider;
 import org.anchoranalysis.core.params.KeyValueParams;
 import org.anchoranalysis.core.progress.OperationWithProgressReporter;

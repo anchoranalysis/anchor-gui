@@ -29,8 +29,8 @@ package org.anchoranalysis.gui.annotation.strategy.builder.mark;
 import java.io.IOException;
 import java.nio.file.Path;
 
-import org.anchoranalysis.core.cache.Operation;
 import org.anchoranalysis.core.error.CreateException;
+import org.anchoranalysis.core.functional.Operation;
 import org.anchoranalysis.core.log.LogErrorReporter;
 import org.anchoranalysis.core.name.provider.INamedProvider;
 import org.anchoranalysis.core.params.KeyValueParams;

@@ -32,10 +32,10 @@ package org.anchoranalysis.gui.retrieveelements;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 
-import org.anchoranalysis.core.cache.Operation;
 import org.anchoranalysis.core.error.AnchorNeverOccursException;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.error.reporter.ErrorReporter;
+import org.anchoranalysis.core.functional.Operation;
 import org.anchoranalysis.gui.bean.exporttask.ExportTaskActionAsThread;
 import org.anchoranalysis.gui.bean.exporttask.ExportTaskGenerator;
 import org.anchoranalysis.gui.bean.exporttask.ExportTaskParams;

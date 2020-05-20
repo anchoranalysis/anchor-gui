@@ -29,7 +29,7 @@ package org.anchoranalysis.gui.annotation.builder;
 import java.io.File;
 import java.nio.file.Path;
 import org.anchoranalysis.core.cache.CachedOperation;
-import org.anchoranalysis.core.cache.wrap.CachedOperationWrap;
+import org.anchoranalysis.core.cache.CachedOperationWrap;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.log.LogErrorReporter;
