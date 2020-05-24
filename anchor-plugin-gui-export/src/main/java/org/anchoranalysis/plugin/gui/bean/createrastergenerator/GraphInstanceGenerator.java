@@ -31,6 +31,7 @@ import java.awt.image.BufferedImage;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Path;
+import java.util.Optional;
 
 import org.anchoranalysis.anchor.graph.GraphInstance;
 import org.anchoranalysis.anchor.graph.io.GraphOutputter;
@@ -109,8 +110,10 @@ class GraphInstanceGenerator extends ObjectGenerator<Stack> implements IterableO
 	}
 
 	@Override
-	public ManifestDescription createManifestDescription() {
-		return new ManifestDescription("raster", manifestFunction);
+	public Optional<ManifestDescription> createManifestDescription() {
+		return Optional.of(
+			new ManifestDescription("raster", manifestFunction)
+		);
 	}
 
 	public String getManifestFunction() {

@@ -1,5 +1,7 @@
 package org.anchoranalysis.plugin.gui.bean.createrastergenerator.cfgnrginstantstate;
 
+import java.util.Optional;
+
 import org.anchoranalysis.anchor.overlay.writer.OverlayWriter;
 import org.anchoranalysis.gui.frame.display.IRedrawable;
 import org.anchoranalysis.gui.frame.display.OverlayedDisplayStackUpdate;
@@ -51,8 +53,10 @@ public abstract class CacheableCfgToRGBGenerator extends ObjectGenerator<Display
 	}
 
 	@Override
-	public ManifestDescription createManifestDescription() {
-		return new ManifestDescription("raster", "cfg");
+	public Optional<ManifestDescription> createManifestDescription() {
+		return Optional.of(
+			new ManifestDescription("raster", "cfg")
+		);
 	}
 
 	@Override

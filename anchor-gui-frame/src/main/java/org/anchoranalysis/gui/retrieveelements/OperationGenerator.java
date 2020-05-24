@@ -1,6 +1,7 @@
 package org.anchoranalysis.gui.retrieveelements;
 
 import java.nio.file.Path;
+import java.util.Optional;
 
 import org.anchoranalysis.core.error.AnchorNeverOccursException;
 import org.anchoranalysis.core.functional.Operation;
@@ -78,7 +79,7 @@ class OperationGenerator<S,T> extends ObjectGenerator<S> implements IterableObje
 	}
 
 	@Override
-	public ManifestDescription createManifestDescription() {
+	public Optional<ManifestDescription> createManifestDescription() {
 		return delegate.getGenerator().createManifestDescription();
 	}
 	

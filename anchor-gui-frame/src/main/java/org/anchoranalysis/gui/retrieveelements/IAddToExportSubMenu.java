@@ -1,5 +1,7 @@
 package org.anchoranalysis.gui.retrieveelements;
 
+import java.util.Optional;
+
 import org.anchoranalysis.core.error.AnchorNeverOccursException;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.functional.Operation;
@@ -12,7 +14,7 @@ public interface IAddToExportSubMenu {
 
 	void addExportItemStackGenerator( String outputName, String label, Operation<Stack,AnchorNeverOccursException> stack ) throws OperationFailedException;
 	
-	<T> void addExportItem( IterableGenerator<T> generator, T itemToGenerate, String outputName, String label, ManifestDescription md, int numItems );
+	<T> void addExportItem( IterableGenerator<T> generator, T itemToGenerate, String outputName, String label, Optional<ManifestDescription> md, int numItems );
 	
 	BoundOutputManagerRouteErrors getOutputManager();
 }

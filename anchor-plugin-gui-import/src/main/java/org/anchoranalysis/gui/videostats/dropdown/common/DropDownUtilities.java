@@ -2,8 +2,11 @@ package org.anchoranalysis.gui.videostats.dropdown.common;
 
 
 
+import java.util.Optional;
+
 import org.anchoranalysis.anchor.mpp.cfg.Cfg;
 import org.anchoranalysis.core.cache.WrapOperationWithProgressReporterAsCached;
+import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.functional.Operation;
 import org.anchoranalysis.core.index.GetOperationFailedException;
@@ -187,14 +190,16 @@ public class DropDownUtilities {
 		}
 	}
 	
-	public static BoundOutputManagerRouteErrors createOutputManagerForSubfolder( BoundOutputManagerRouteErrors parentOutputManager, String subFolderName ) {
+	public static BoundOutputManagerRouteErrors createOutputManagerForSubfolder( BoundOutputManagerRouteErrors parentOutputManager, String subFolderName ) throws InitException {
 		ManifestDescription manifestDescription = new ManifestDescription("interactiveOutput", "manifestInteractiveOutput");
 		
 		ManifestFolderDescription mfd = new ManifestFolderDescription();
     	mfd.setFileDescription( manifestDescription );
     	
     	// NB: As bindAsSubFolder can now return nulls, maybe some knock-on bugs are introduced here
-		return parentOutputManager.getWriterAlwaysAllowed().bindAsSubFolder(subFolderName, mfd, null);
+		return parentOutputManager.getWriterAlwaysAllowed().bindAsSubFolder(subFolderName, mfd, Optional.empty()).orElseThrow( ()->
+			new InitException("Cannot create a sub-folder for output")
+		);
 	}
 	
 	private static void addModule(
