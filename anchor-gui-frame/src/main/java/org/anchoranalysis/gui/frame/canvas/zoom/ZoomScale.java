@@ -140,11 +140,11 @@ public class ZoomScale {
 	}
 		
 	public Extent applyScale( Extent e ) {
-		Extent out = new Extent();
-		out.setX( applyScale( e.getX() ) );
-		out.setY( applyScale( e.getY() ) );
-		out.setZ( e.getZ() );
-		return out;
+		return new Extent(
+			applyScale( e.getX() ),
+			applyScale( e.getY() ),
+			e.getZ()
+		);
 	}
 	
 	
@@ -156,11 +156,11 @@ public class ZoomScale {
 	}
 	
 	public Extent removeScale( Extent e ) {
-		Extent out = new Extent();
-		out.setX( removeScale( e.getX() ) );
-		out.setY( removeScale( e.getY() ) );
-		out.setZ( e.getZ() );
-		return out;
+		return new Extent(
+			removeScale( e.getX() ),
+			removeScale( e.getY() ),
+			e.getZ()
+		);
 	}
 	
 	// Resolves a value expressed in scaled co-ordinates into image-ocordinates
