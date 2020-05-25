@@ -28,6 +28,7 @@ package org.anchoranalysis.gui.videostats.internalframe.evaluator;
 
 
 import java.awt.Color;
+import java.util.Optional;
 
 import org.anchoranalysis.anchor.mpp.bean.proposer.MarkProposer;
 import org.anchoranalysis.anchor.mpp.cfg.ColoredCfg;
@@ -65,11 +66,10 @@ public class MarkProposerEvaluatorUtilities {
 			addMaskAtMousePoint(position, cfg, m.numDims()==3); 
 		}
 	
-		ICreateProposalVisualization proposalVisualization = markProposer.proposalVisualization(detailedVisualization); 
-		if (proposalVisualization!=null) {
-			proposalVisualization.addToCfg( cfg );
-		}
-
+		Optional<ICreateProposalVisualization> proposalVisualization = markProposer.proposalVisualization(detailedVisualization);
+		proposalVisualization.ifPresent( pv ->
+			pv.addToCfg(cfg)
+		);
 		return cfg;
 	}
 	
