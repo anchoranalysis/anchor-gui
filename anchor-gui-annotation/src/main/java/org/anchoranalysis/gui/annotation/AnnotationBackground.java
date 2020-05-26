@@ -65,7 +65,7 @@ public class AnnotationBackground {
 				);
 			}
 			
-			dimViewer = new ImageDim(defaultBackground.bridgeElement(0).getDimensions());
+			dimViewer = defaultBackground.bridgeElement(0).getDimensions();
 		}		
 	}
 		
