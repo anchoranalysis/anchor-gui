@@ -135,7 +135,7 @@ public class BoundColoredOverlayCollection {
 		Point3i crnrMin = new Point3i( bbox.getCrnrMin() );
 		crnrMin.scaleXY(zoomFactor);
 		//System.out.printf("Zooming container %s with %f and %s to %s and %s\n", bbox, zoomFactor, stackExtnt, crnrMin, stackExtnt );
-		return new BoundingBox(crnrMin, new Extent(stackExtnt) );
+		return new BoundingBox(crnrMin, stackExtnt);
 	}
 	
 	// Note the overlay do not actually have to be contained in the OverlayCollection for this to work
