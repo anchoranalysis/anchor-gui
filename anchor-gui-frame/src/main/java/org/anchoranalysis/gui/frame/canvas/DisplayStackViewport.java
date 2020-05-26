@@ -136,9 +136,9 @@ class DisplayStackViewport {
 	
 	public Point2i calcNewCrnrPosAfterChangeInViewSize( Extent extntOld, Extent extntNew, Point2i scrollValImage )
 	{
-		Extent diff = new Extent( extntOld );
-		diff.subtract( extntNew );
-		diff.divide( 2 );
+		Extent diff = extntOld
+				.subtract(extntNew)
+				.divide(2);
 
 		addCond( scrollValImage, diff, extntOld );
 

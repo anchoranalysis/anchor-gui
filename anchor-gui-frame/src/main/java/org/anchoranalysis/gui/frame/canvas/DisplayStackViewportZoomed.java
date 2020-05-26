@@ -136,11 +136,9 @@ class DisplayStackViewportZoomed {
 	}
 	
 	public ImageDim createDimensionsEntireScaled() {
-		ImageDim sd = new ImageDim( getDimensionsEntire() );
-		sd.scaleXYBy(
+		return getDimensionsEntire().scaleXYBy(
 			new ScaleFactor(zoomScale.getScale())
 		);
-		return sd;
 	}
 
 	public ImageRes getRes() {

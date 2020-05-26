@@ -372,10 +372,8 @@ public class OverlayPrecalculatedCache implements OverlayRetriever {
 	
 	private ImageDim createDimensionsScaled( double zoomFactorNew ) {
 		// We create a scaled version of our dimensions
-		ImageDim dimScaled = new ImageDim(dimEntireImage);
-		dimScaled.scaleXYBy(
+		return dimEntireImage.scaleXYBy(
 			new ScaleFactor(zoomFactorNew)
 		);
-		return dimScaled;
 	}
 }
