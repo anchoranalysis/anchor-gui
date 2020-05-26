@@ -54,7 +54,6 @@ import org.anchoranalysis.image.stack.rgb.RGBStack;
  *
  */
 public class BoundColoredOverlayCollection {
-
 	
 	private OverlayWriter maskWriter;
 	
@@ -95,30 +94,12 @@ public class BoundColoredOverlayCollection {
 	}
 	
 	public void drawRGB( RGBStack stack, BoundingBox bbox, double zoomFactor ) throws OperationFailedException {
-
-		//System.out.printf("Draw on DS: %s with zoom %f%n", bbox.toString(), zoomFactor );
-		// Draw the coloredcfg
-		//CfgGenerator cfgGenerator = new CfgGenerator();
-		
 		
 		// Create a containing bounding box with the zoom
 		BoundingBox container = createZoomedContainer( bbox, zoomFactor, stack.getDimensions().getExtnt() );
 		
 		OverlayPrecalculatedCache marksWithinView = cache.subsetWithinView( bbox, container, zoomFactor );
 
-//		System.out.printf("Found %d marks within view for bbox %s with zoom %f %n", marksWithinView.size(), bbox, zoomFactor );
-		
-//		System.out.println("START: Listing all objects\n");
-//		for( int i=0; i< marksWithinView.getGeneratedObjectsZoomed().size(); i++ ) {
-//			CfgPrecalc cp = marksWithinView.getGeneratedObjects().get(i);
-//			CfgPrecalc cp2 = marksWithinView.getGeneratedObjectsZoomed().get(i);
-//			RGBColor col = marksWithinView.().getColorList().get(i);
-//			System.out.printf("OM First BBox=%s  Second BBox=%s   Color=%s\n", cp.getFirst().getBoundingBox(), cp2.getFirst().getBoundingBox(), col );
-//		}
-//		System.out.println("END: Listing all objects\n");
-		
-		
-		//maskWriter.writeMasks(masks, cfg, dim, background, idGetter, bboxContainer, zoomFactor);
 		maskWriter.writePrecalculatedOverlays(
 			marksWithinView.getGeneratedObjectsZoomed(),
 			marksWithinView.getOverlayCollection(),
@@ -128,13 +109,11 @@ public class BoundColoredOverlayCollection {
 			new IDGetterIter<ObjMaskWithProperties>(),
 			container
 		);
-		//TempBoundOutputManager.instance().getBoundOutputManager().getWriterAlwaysAllowed().write("test", new StackGenerator(stack.asStack(),true,"fdfd",new ChnlFactoryMulti()) );
 	}
 	
 	private static BoundingBox createZoomedContainer( BoundingBox bbox, double zoomFactor, Extent stackExtnt ) {
 		Point3i crnrMin = new Point3i( bbox.getCrnrMin() );
 		crnrMin.scaleXY(zoomFactor);
-		//System.out.printf("Zooming container %s with %f and %s to %s and %s\n", bbox, zoomFactor, stackExtnt, crnrMin, stackExtnt );
 		return new BoundingBox(crnrMin, stackExtnt);
 	}
 	
@@ -151,6 +130,4 @@ public class BoundColoredOverlayCollection {
 	public synchronized OverlayPrecalculatedCache getPrecalculatedCache() {
 		return cache;
 	}
-	
-	
 }
