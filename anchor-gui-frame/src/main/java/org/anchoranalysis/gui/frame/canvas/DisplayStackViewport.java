@@ -122,7 +122,7 @@ class DisplayStackViewport {
 	// Using global coord
 	public BufferedImage createPartOfCurrentView( BoundingBox bboxUpdate ) throws OperationFailedException {
 		assert(regionExtracter!=null);
-		assert( bboxViewport.contains(bboxUpdate) );
+		assert( bboxViewport.contains().box(bboxUpdate) );
 		
 		try {
 			DisplayStack ds = regionExtracter.extractRegionFrom( bboxUpdate, zoomScale.getScale() );
