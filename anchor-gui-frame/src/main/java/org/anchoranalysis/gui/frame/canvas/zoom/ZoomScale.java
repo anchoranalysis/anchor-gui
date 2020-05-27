@@ -134,9 +134,7 @@ public class ZoomScale {
 	}
 	
 	public BoundingBox applyScale( BoundingBox bbox ) {
-		BoundingBox out = new BoundingBox(bbox);
-		out.scaleXYPosAndExtnt( new ScaleFactor(scale) );
-		return out;
+		return bbox.scale( new ScaleFactor(scale) );
 	}
 		
 	public Extent applyScale( Extent e ) {

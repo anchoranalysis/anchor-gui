@@ -64,13 +64,12 @@ class DisplayStackViewportZoomed {
 	//   or null otherwise
 	// The bounding box should refer to the Scaled space
 	public BufferedImage updateView(BoundingBox bbox) throws OperationFailedException {
-		BoundingBox bboxScaled = new BoundingBox(bbox);
-		bboxScaled.scaleXYPosAndExtnt(
+		BoundingBox bboxScaled = bbox.scale(
 			new ScaleFactor(zoomScale.getScaleInv())
 		);
 		
 		// Scaling seemingly can produce a bbox that is slightly too-big
-		bboxScaled.clipTo( delegate.getDisplayStackEntireImage().getDimensions().getExtnt() );
+		bboxScaled = bboxScaled.clipTo( delegate.getDisplayStackEntireImage().getDimensions().getExtnt() );
 		assert( delegate.getDisplayStackEntireImage().getDimensions().contains(bboxScaled));
 		return delegate.updateView(bboxScaled, zoomScale);
 	}
@@ -80,10 +79,11 @@ class DisplayStackViewportZoomed {
 		Point2i shiftImg = zoomScale.removeScale(shift);
 		Extent canvasExtntImg = zoomScale.removeScale(canvasExtnt);
 		
-		BoundingBox shiftedBox = delegate.createBoxForShiftedView(shiftImg, canvasExtntImg);
-		shiftedBox.scaleXYPosAndExtnt(
-			new ScaleFactor(zoomScale.getScale())
-		);
+		BoundingBox shiftedBox = delegate
+			.createBoxForShiftedView(shiftImg, canvasExtntImg)
+			.scale(
+				new ScaleFactor(zoomScale.getScale())
+			);
 		
 		assert( shiftedBox.getCrnrMin().getX() >= 0 );
 		assert( shiftedBox.getCrnrMin().getY() >= 0 );

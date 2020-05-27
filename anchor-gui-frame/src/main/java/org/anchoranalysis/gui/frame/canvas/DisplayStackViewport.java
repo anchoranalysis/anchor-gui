@@ -33,6 +33,7 @@ import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.geometry.Point2i;
 import org.anchoranalysis.core.geometry.Point3i;
+import org.anchoranalysis.core.geometry.ReadableTuple3i;
 import org.anchoranalysis.core.index.SetOperationFailedException;
 import org.anchoranalysis.gui.frame.canvas.zoom.ZoomScale;
 import org.anchoranalysis.gui.frame.display.BoundOverlayedDisplayStack;
@@ -84,7 +85,7 @@ class DisplayStackViewport {
 	}
 	
 	public BoundingBox createBoxForShiftedView( Point2i shift, Extent canvasExtnt ) {
-		Point3i crnrMin = this.bboxViewport.getCrnrMin();
+		ReadableTuple3i crnrMin = this.bboxViewport.getCrnrMin();
 		
 		int xNew = crnrMin.getX() + shift.getX();
 		int yNew = crnrMin.getY() + shift.getY();
