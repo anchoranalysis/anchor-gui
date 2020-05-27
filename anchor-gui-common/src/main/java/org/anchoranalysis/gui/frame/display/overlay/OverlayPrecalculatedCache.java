@@ -156,7 +156,7 @@ public class OverlayPrecalculatedCache implements OverlayRetriever {
 		
 			BoundingBox bbox = overlayList.getBBox(i);
 			
-			if (bbox.hasIntersection(bboxView)) {
+			if (bbox.intersection().existsWith(bboxView)) {
 
 				overlayList.assertZoomedExists();
 				
@@ -363,7 +363,7 @@ public class OverlayPrecalculatedCache implements OverlayRetriever {
 		PrecalcOverlay scaled = getOrCreateScaledMask( zoomFactorNew, originalSize.getFirst(), ol, i, dimScaled );
 
 		// We check that our zoomed-version also has an intersection, as sometimes it doesn't
-		if (scaled!=null && scaled.getFirst().getMask().getBoundingBox().hasIntersection(bboxViewZoomed)) {
+		if (scaled!=null && scaled.getFirst().getMask().getBoundingBox().intersection().existsWith(bboxViewZoomed)) {
 			
 			// Previously, we duplicated color here, now we don't
 			addTo.add(ol, col, originalSize, bbox, scaled);

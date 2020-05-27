@@ -81,7 +81,7 @@ class OverlapChecker {
 				PxlMarkMemo pmExst = new PxlMarkMemo(exst,nrgStack,regionMap,null);
 				
 				try {
-					if( pmProp.doOperation().getBoundingBox(0).hasIntersection(pmExst.doOperation().getBoundingBox(0))) {
+					if( pmProp.doOperation().getBoundingBox(0).intersection().existsWith(pmExst.doOperation().getBoundingBox(0))) {
 						if (hasLargeOverlap(pmProp,pmExst)) {
 							return true;
 						}

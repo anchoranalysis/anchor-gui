@@ -174,7 +174,7 @@ public class ImageCanvas {
 				
 								
 				if (enforceMinimumSizeAfterGuessZoom) {
-					Extent e = displayStackViewport.getBBox().extnt();
+					Extent e = displayStackViewport.getBBox().extent();
 					panel.setMinimumSize( new Dimension(e.getX(),e.getY()) );
 				}
 				
@@ -255,7 +255,7 @@ public class ImageCanvas {
 		
 		extntScrollbars.setValue( new Point2i(shiftedBox.getCrnrMin().getX(), shiftedBox.getCrnrMin().getY()) );
 		
-		updateStackViewportForImageExtnt( shiftedBox.extnt() );
+		updateStackViewportForImageExtnt( shiftedBox.extent() );
 	}
 	
 
@@ -380,19 +380,12 @@ public class ImageCanvas {
 		try {
 			DisplayUpdate ds = imageProvider.get();
 			
-			//System.out.printf("Applying DisplayUpdate\n");
-			
-			
 			// If there's no update, just update the entire image
 			if (ds==null) {
 				System.out.println("Null so updating everything");
 				updateImage( zoomLevel );
 				return;
 			}
-			
-			//System.out.printf("DisplayStack=%s\n", ds.getDisplayStack()!=null ? "non-null" : "null" );
-			//System.out.printf("UpdateParts=%s\n",  ds.getRedrawParts()!=null ? ds.getRedrawParts().size() : -1 );
-			
 			
 			// If the diplayStack has changed, then update the entire image
 			if (ds.getDisplayStack()!=null) {
@@ -420,22 +413,21 @@ public class ImageCanvas {
 			}
 			
 			// If we get to here then we only update the region with redraw parts
-			//
-			//displayStackViewport.getUnzoomed().invalidateRegion(ds.getRedrawParts());
-			//updateImage( zoomLevel );
-			
 			BoundingBox bboxCurrentDisplayed = displayStackViewport.getUnzoomed().getBBox();
 			
 			// If we get to here, we don't change the viewport, but simply repaint some
 			//   of the canvas using a section of the viewport
 			for( BoundingBox bbox : ds.getRedrawParts() ) {
 				
-				//System.out.printf("Redraw box: %s%n", bbox.toString() );
-				
 				// If it intersects with our current viewport
-				if (bbox.hasIntersection(bboxCurrentDisplayed)) {
+				if (bbox.intersection().existsWith(bboxCurrentDisplayed)) {
 				
-					BoundingBox bboxIntersect = bbox.intersectCreateNew(bboxCurrentDisplayed, displayStackViewport.getUnzoomed().getDimensionsEntire().getExtnt() );
+					BoundingBox bboxIntersect = bbox.intersection().withInside(
+						bboxCurrentDisplayed,
+						displayStackViewport.getUnzoomed().getDimensionsEntire().getExtnt()
+					).orElseThrow( ()->
+						new OperationFailedException("The bounding-box does not intersect with the viewport")
+					);
 										
 					BufferedImage bi = displayStackViewport.getUnzoomed().createPartOfCurrentView( bboxIntersect );
 					
@@ -445,24 +437,10 @@ public class ImageCanvas {
 					
 					assert( xCanvas>=0 );
 					assert( yCanvas>=0 );
-					
-					//System.out.printf("Canvas coord: %d,%d+%d,%d%n", xCanvas, yCanvas, bi.getWidth(), bi.getHeight() );
-					
-//					if ( bbox.getCrnrMin().getX()<10 ) {
-//						// Displays a BufferedImage as a dialog box
-//						JLabel picLabel = new JLabel(new ImageIcon(bi));
-//						JOptionPane.showMessageDialog(null, picLabel, "About", JOptionPane.PLAIN_MESSAGE, null);
-//					}
-					
-					
-					
-					
+										
 					imageCanvas.updatePart(bi,xCanvas,yCanvas);
 				}
 			}
-
-			
-			
 		
 		} catch (GetOperationFailedException | SetOperationFailedException e) {
 			throw new OperationFailedException(e);
