@@ -33,7 +33,7 @@ import javax.swing.event.ChangeListener;
 import org.anchoranalysis.core.geometry.Point2i;
 import org.anchoranalysis.image.extent.Extent;
 
-// Two scroll bars mapping a 2d extnt
+// Two scroll bars mapping a 2d extent
 class ExtntScrollBars {
 	
 	// Our scrollbars
@@ -91,7 +91,7 @@ class ExtntScrollBars {
 			scrollVer.setVisible( (scrollVer.getVisibleAmount()>0) && (scrollVer.getVisibleAmount() < (scrollVer.getMaximum()-scrollVer.getMinimum()) ));
 		}
 		localChangeListener.enableEvents();
-		//System.out.printf("Testing if visible hor=%s ver=%s (vis=%d,%d) (extnt=%d,%d)\n", scrollHor.isVisible()?"true":"false", scrollVer.isVisible()?"true":"false", scrollHor.getVisibleAmount(), scrollVer.getVisibleAmount(), e.getX(), e.getY() );
+		//System.out.printf("Testing if visible hor=%s ver=%s (vis=%d,%d) (extent=%d,%d)\n", scrollHor.isVisible()?"true":"false", scrollVer.isVisible()?"true":"false", scrollHor.getVisibleAmount(), scrollVer.getVisibleAmount(), e.getX(), e.getY() );
 	}
 	
 	// Considers the width of the vertical scrollbar, and the height of the horizontal scrollbar and returns the maximum of the two
