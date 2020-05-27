@@ -27,6 +27,7 @@ package org.anchoranalysis.gui.annotation.strategy.builder.mark.panel;
  */
 
 import java.nio.file.Path;
+import java.util.Optional;
 
 import org.anchoranalysis.gui.annotation.InitAnnotation;
 import org.anchoranalysis.gui.annotation.AnnotationRefresher;
@@ -64,7 +65,7 @@ public class CreateNavigationPanel {
 			annotationPath,
 			currentStateDisplayer.queryAcceptReject(),
 			paramsInit.getAnnotationRefresher(),
-			params.getSaveMonitor()
+			Optional.of(params.getSaveMonitor())
 		);
 	
 		PanelNavigation panelNavigation = HelperPanelBuilder.createPanelNavigation(
@@ -88,7 +89,7 @@ public class CreateNavigationPanel {
 		Path annotationPath,
 		IQueryAcceptedRejected queryAcceptReject,
 		AnnotationRefresher annotationRefresher,
-		SaveMonitor saveMonitor
+		Optional<SaveMonitor> saveMonitor
 	) {
 		return new SaveActionListenerFactory<>(
 			new SaveAnnotationMPP(annotationPath),

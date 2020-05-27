@@ -56,6 +56,8 @@ import org.anchoranalysis.plugin.annotation.bean.strategy.WholeImageLabelStrateg
 
 import static org.anchoranalysis.gui.videostats.internalframe.annotator.FrameActionFactory.*;
 
+import java.util.Optional;
+
 public class BuilderWholeImage extends AnnotationGuiBuilderWithDelegate<InitParamsWholeImage,WholeImageLabelStrategy> {
 
 	private CreateAnnotationSummary createSummary;
@@ -98,7 +100,10 @@ public class BuilderWholeImage extends AnnotationGuiBuilderWithDelegate<InitPara
 			getStrategy().groupedLabels(),
 			label -> saveAnnotationClose(
 				label,
-				createWriter( paramsInit.getAnnotationRefresher(), params.getSaveMonitor()),
+				createWriter(
+					paramsInit.getAnnotationRefresher(),
+					Optional.of(params.getSaveMonitor())
+				),
 				controllers.action().frame().getFrame()
 			)
 		);
@@ -156,7 +161,7 @@ public class BuilderWholeImage extends AnnotationGuiBuilderWithDelegate<InitPara
 		return new WholeImageLabelAnnotation( label.getUniqueLabel() );
 	}
 	
-	private static AnnotationWriterGUI<WholeImageLabelAnnotation> createWriter(AnnotationRefresher annotationRefresher, SaveMonitor saveMonitor) {
+	private static AnnotationWriterGUI<WholeImageLabelAnnotation> createWriter(AnnotationRefresher annotationRefresher, Optional<SaveMonitor> saveMonitor) {
 		return new AnnotationWriterGUI<>(
 			new WholeImageLabelAnnotationWriter(),
 			annotationRefresher,

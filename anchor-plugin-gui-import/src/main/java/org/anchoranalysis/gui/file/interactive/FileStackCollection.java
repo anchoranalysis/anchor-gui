@@ -28,6 +28,8 @@ package org.anchoranalysis.gui.file.interactive;
 
 
 import java.io.File;
+import java.nio.file.Path;
+import java.util.Optional;
 
 import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.error.OperationFailedException;
@@ -63,8 +65,8 @@ public class FileStackCollection extends InteractiveFile {
 	}
 	
 	@Override
-	public File associatedFile() {
-		return inputObject.pathForBinding().toFile();
+	public Optional<File> associatedFile() {
+		return inputObject.pathForBinding().map(Path::toFile);
 	}
 
 	@Override

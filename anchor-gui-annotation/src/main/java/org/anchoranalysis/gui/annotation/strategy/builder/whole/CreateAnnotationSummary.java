@@ -29,6 +29,7 @@ package org.anchoranalysis.gui.annotation.strategy.builder.whole;
 import java.awt.Color;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Optional;
 
 import org.anchoranalysis.annotation.wholeimage.WholeImageLabelAnnotation;
 import org.anchoranalysis.core.error.CreateException;
@@ -54,15 +55,15 @@ class CreateAnnotationSummary {
 	
 	private AnnotationSummary createSummaryForExistingAnnotation( Path path ) throws CreateException {
 		
-		WholeImageLabelAnnotation ann = ReadAnnotationFromFile.readAssumeExists( path );
+		Optional<WholeImageLabelAnnotation> ann = ReadAnnotationFromFile.readAssumeExists( path );
 		
-		if (ann==null) {
+		if (!ann.isPresent()) {
 			throw new CreateException("Failed to read a label for the annotation");
 		}
 		
 		AnnotationSummary as = new AnnotationSummary();
-		as.setShortDescription( ann.getLabel() );
-		as.setColor( colors.get(ann.getLabel()) );
+		as.setShortDescription( ann.get().getLabel() );
+		as.setColor( colors.get(ann.get().getLabel()) );
 		as.setExistsFinished(true);
 		return as;
 	}

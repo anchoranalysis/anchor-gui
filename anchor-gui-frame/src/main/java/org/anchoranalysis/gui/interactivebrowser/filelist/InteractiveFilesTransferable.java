@@ -113,17 +113,14 @@ class InteractiveFilesTransferable implements Transferable, ClipboardOwner {
 	public synchronized Object getTransferData(DataFlavor flavor) throws UnsupportedFlavorException, IOException {
 
 		if (flavor.equals(InteractiveFilesTransferable.fileListFlavor)) {
-			
-			List<File> fileListOut = new ArrayList<>();
-			for( InteractiveFile f : interactiveFiles ) {
-				fileListOut.add( f.associatedFile() );
-			}
-			return fileListOut;
+			return buildListOfAssociatedFiles();
 			
 		} else if (flavor.equals(InteractiveFilesTransferable.plainTextFlavor)) {
 			return decideString( identiferStringFromMultiple(interactiveFiles) , flavor);
+			
 	    } else if (InteractiveFilesTransferable.localStringFlavor.equals(flavor)) {
 	    	return identiferStringFromMultiple(interactiveFiles);
+	    	
 	    } else {
 	      throw new UnsupportedFlavorException(flavor);
 	    }
@@ -131,7 +128,16 @@ class InteractiveFilesTransferable implements Transferable, ClipboardOwner {
 	
 	@Override
 	public void lostOwnership(Clipboard arg0, Transferable arg1) {
-
+		// NOTHING TO DO
 	}
 	
+	private List<File> buildListOfAssociatedFiles() {
+		List<File> fileListOut = new ArrayList<>();
+		for( InteractiveFile f : interactiveFiles ) {
+			f.associatedFile().ifPresent( associatedFile->
+				fileListOut.add(associatedFile)
+			);
+		}
+		return fileListOut;
+	}	
 }

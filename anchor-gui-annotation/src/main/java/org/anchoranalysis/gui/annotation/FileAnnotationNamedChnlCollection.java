@@ -28,6 +28,8 @@ package org.anchoranalysis.gui.annotation;
 
 
 import java.io.File;
+import java.util.Optional;
+
 import org.anchoranalysis.core.cache.CachedOperation;
 import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.error.OperationFailedException;
@@ -131,7 +133,7 @@ public class FileAnnotationNamedChnlCollection extends InteractiveFile {
 	}
 
 	@Override
-	public File associatedFile() {
+	public Optional<File> associatedFile() {
 		return annotation.associatedFile();
 	}
 }

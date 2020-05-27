@@ -30,6 +30,8 @@ package org.anchoranalysis.gui.videostats.internalframe.annotator;
 import java.awt.Component;
 import java.io.IOException;
 import java.nio.file.Path;
+import java.util.Optional;
+
 import javax.swing.JOptionPane;
 
 import org.anchoranalysis.annotation.Annotation;
@@ -40,11 +42,11 @@ import org.anchoranalysis.gui.annotation.AnnotationRefresher;
 public class AnnotationWriterGUI<T extends Annotation> {
 	
 	private AnnotationRefresher annotationRefresher;
-	private SaveMonitor saveMonitor;
+	private Optional<SaveMonitor> saveMonitor;
 	private AnnotationWriter<T> writer;
 	
 	// saveMonitor is optional
-	public AnnotationWriterGUI(AnnotationWriter<T> writer, AnnotationRefresher annotationRefresher, SaveMonitor saveMonitor ) {
+	public AnnotationWriterGUI(AnnotationWriter<T> writer, AnnotationRefresher annotationRefresher, Optional<SaveMonitor> saveMonitor ) {
 		super();
 		this.annotationRefresher = annotationRefresher;
 		this.saveMonitor = saveMonitor;
@@ -74,8 +76,8 @@ public class AnnotationWriterGUI<T extends Annotation> {
 		
 		annotationRefresher.refreshAnnotation();
 			
-		if (saveMonitor!=null) {
-			saveMonitor.markAsSaved();
+		if (saveMonitor.isPresent()) {
+			saveMonitor.get().markAsSaved();
 		}
 		
 		return true;
@@ -83,6 +85,6 @@ public class AnnotationWriterGUI<T extends Annotation> {
 		
 	public void dispose() {
 		annotationRefresher = null;
-		saveMonitor = null;
+		saveMonitor = Optional.empty();
 	}
 }

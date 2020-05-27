@@ -28,6 +28,8 @@ package org.anchoranalysis.gui.annotation.builder;
 
 import java.io.File;
 import java.nio.file.Path;
+import java.util.Optional;
+
 import org.anchoranalysis.annotation.io.bean.strategy.AnnotatorStrategy;
 import org.anchoranalysis.annotation.io.input.AnnotationWithStrategy;
 import org.anchoranalysis.core.error.CreateException;
@@ -39,6 +41,7 @@ import org.anchoranalysis.gui.annotation.AnnotationBackground;
 import org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.definition.ChangeableBackgroundDefinition;
 import org.anchoranalysis.gui.videostats.internalframe.annotator.AnnotationInitParams;
 import org.anchoranalysis.image.stack.Stack;
+import org.anchoranalysis.io.error.AnchorIOException;
 
 /** 
  * Convenience class for using a delegate to populate a lot of fields automatically
@@ -76,7 +79,7 @@ public abstract class AnnotationGuiBuilderWithDelegate<T extends AnnotationInitP
 	}
 	
 	@Override
-	public File associatedFile() {
+	public Optional<File> associatedFile() {
 		return delegate.associatedFile();
 	}
 	
@@ -84,8 +87,12 @@ public abstract class AnnotationGuiBuilderWithDelegate<T extends AnnotationInitP
 		return delegate.getStrategy();
 	}
 	
-	protected Path pathForBinding() {
+	protected Optional<Path> pathForBinding() {
 		return delegate.pathForBinding();
+	}
+	
+	protected Path pathForBindingRequired() throws AnchorIOException {
+		return delegate.pathForBindingRequired();
 	}
 	
 	protected Path annotationPath() {
@@ -103,4 +110,6 @@ public abstract class AnnotationGuiBuilderWithDelegate<T extends AnnotationInitP
 			throw new CreateException(e);
 		}
 	}
+
+
 }

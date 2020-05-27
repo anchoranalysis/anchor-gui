@@ -28,6 +28,8 @@ package org.anchoranalysis.gui.annotation.builder;
 
 import java.io.File;
 import java.nio.file.Path;
+import java.util.Optional;
+
 import org.anchoranalysis.core.cache.CachedOperation;
 import org.anchoranalysis.core.cache.CachedOperationWrap;
 import org.anchoranalysis.core.error.CreateException;
@@ -106,7 +108,7 @@ public abstract class AnnotationGuiBuilder<T extends AnnotationInitParams> {
 	
 	public abstract String descriptiveName();
 	
-	public abstract File associatedFile();
+	public abstract Optional<File> associatedFile();
 	
 	/** Height in pixels of the panel that isn't the 'image' section of the frame */
 	public abstract int heightNonImagePanel();

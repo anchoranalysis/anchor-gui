@@ -28,6 +28,7 @@ package org.anchoranalysis.gui.annotation.additional;
 
 import java.nio.file.Path;
 import java.util.List;
+import java.util.Optional;
 
 import org.anchoranalysis.annotation.AnnotationWithCfg;
 import org.anchoranalysis.annotation.io.bean.comparer.MultipleComparer;
@@ -65,10 +66,10 @@ public class ShowComparers {
 		this.logErrorReporter = logErrorReporter;
 	}	
 	
-	public void apply( AnnotationWithCfg annotationExst ) {
+	public void apply( Optional<AnnotationWithCfg> annotationExst ) {
 		// Any comparisons to be done
-		if (multipleComparer!=null && annotationExst!=null ) {
-			showMultipleComparers(annotationExst);
+		if (multipleComparer!=null && annotationExst.isPresent() ) {
+			showMultipleComparers(annotationExst.get());
 		}		
 	}
 	

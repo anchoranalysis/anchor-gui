@@ -28,6 +28,7 @@ package org.anchoranalysis.gui.file.interactive;
 
 
 import java.io.File;
+import java.util.Optional;
 
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.gui.file.opened.OpenedFile;
@@ -40,7 +41,7 @@ public abstract class InteractiveFile implements Comparable<InteractiveFile> {
 	public abstract String identifier();
 	
 	// A file associated with this item
-	public abstract File associatedFile();
+	public abstract Optional<File> associatedFile();
 	
 	public abstract String type();
 	

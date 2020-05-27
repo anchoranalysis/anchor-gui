@@ -31,6 +31,7 @@ import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.util.Collection;
+import java.util.Optional;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
@@ -48,10 +49,10 @@ class ChooseLabel extends PanelWithLabel {
 
 	private GroupedAnnotationLabels groupedLabels;
 	private Function<AnnotationLabel,Action> createAction;
-	private Supplier<WholeImageLabelAnnotation> readCurrentAnnotation;
+	private Supplier<Optional<WholeImageLabelAnnotation>> readCurrentAnnotation;
 	
 	public ChooseLabel(
-		Supplier<WholeImageLabelAnnotation> readCurrentAnnotation,
+		Supplier<Optional<WholeImageLabelAnnotation>> readCurrentAnnotation,
 		GroupedAnnotationLabels labelsIn,
 		Function<AnnotationLabel,Action> createAction
 	) {
@@ -68,7 +69,7 @@ class ChooseLabel extends PanelWithLabel {
 		panel.setLayout( new GridBagLayout() );
 		
 		// This will return NULL if no label exists
-		WholeImageLabelAnnotation existingLabel = readCurrentAnnotation.get();
+		Optional<WholeImageLabelAnnotation> existingLabel = readCurrentAnnotation.get();
 		
 		int row = 0;
 		for( String group : groupedLabels.keySet()) {
@@ -80,7 +81,7 @@ class ChooseLabel extends PanelWithLabel {
 		return panel;
 	}
 	
-	private JPanel createGroupPanel( Collection<AnnotationLabel> labels, WholeImageLabelAnnotation existingLabel ) {
+	private JPanel createGroupPanel( Collection<AnnotationLabel> labels, Optional<WholeImageLabelAnnotation> existingLabel ) {
 		JPanel groupPanel = new JPanel();
 		groupPanel.setLayout( new FlowLayout() );
 		
@@ -91,13 +92,13 @@ class ChooseLabel extends PanelWithLabel {
 		return groupPanel;
 	}
 	
-	private void addButton( JPanel panel, AnnotationLabel label, WholeImageLabelAnnotation existingLabel) {
+	private void addButton( JPanel panel, AnnotationLabel label, Optional<WholeImageLabelAnnotation> existingLabel) {
 		JButton button = new JButton(
 			createAction.apply(label) 
 		);
 		
 		// We always color the existing label to be black, otherwise we use the color associated with the label
-		if (existingLabel!=null && label.getUniqueLabel().equals(existingLabel.getLabel())) {
+		if (existingLabel.isPresent() && label.getUniqueLabel().equals(existingLabel.get().getLabel())) {
 			ColorUtilities.addColor(button, Color.BLACK );
 		} else {
 			ColorUtilities.maybeAddColor(button, label.getColor() );

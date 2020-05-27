@@ -27,6 +27,7 @@ package org.anchoranalysis.gui.videostats.internalframe.annotator;
  */
 
 import java.awt.event.ActionListener;
+import java.util.Optional;
 
 import javax.swing.JComponent;
 import javax.swing.JInternalFrame;
@@ -49,7 +50,7 @@ public class SaveActionListenerFactory<T extends Annotation> implements ISaveAct
 		ISaveAnnotation<MarkAnnotation> saveAnnotation,
 		IQueryAcceptedRejected queryAcceptReject,
 		AnnotationRefresher annotationRefresher,
-		SaveMonitor saveMonitor
+		Optional<SaveMonitor> saveMonitor
 	) {
 		super();
 		this.saveAnnotation = saveAnnotation;

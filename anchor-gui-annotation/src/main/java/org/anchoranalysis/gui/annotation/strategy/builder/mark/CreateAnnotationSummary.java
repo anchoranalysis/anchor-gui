@@ -54,7 +54,11 @@ class CreateAnnotationSummary {
 		if (aps==AnnotationProgressState.ANNOTATION_FINISHED) {
 			
 			try {
-				MarkAnnotation a = annotationReader.read( annotationPath );
+				MarkAnnotation a = annotationReader.read( annotationPath ).orElseThrow( ()->
+					new CreateException(
+						String.format("No annotation exists at the specified path: %s", annotationPath)
+					)
+				);
 				as.setShortDescription( shortDescription(a)	);
 				as.setColor( color(aps, a.isAccepted()) );
 				as.setExistsFinished(true);
