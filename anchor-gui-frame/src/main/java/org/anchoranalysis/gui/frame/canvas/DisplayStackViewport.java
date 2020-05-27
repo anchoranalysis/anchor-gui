@@ -135,13 +135,13 @@ class DisplayStackViewport {
 	}
 	
 	
-	public Point2i calcNewCrnrPosAfterChangeInViewSize( Extent extntOld, Extent extntNew, Point2i scrollValImage )
+	public Point2i calcNewCrnrPosAfterChangeInViewSize( Extent extentOld, Extent extntNew, Point2i scrollValImage )
 	{
-		Extent diff = extntOld
+		Extent diff = extentOld
 				.subtract(extntNew)
 				.divide(2);
 
-		addCond( scrollValImage, diff, extntOld );
+		addCond( scrollValImage, diff, extentOld );
 
 		return DisplayStackViewportUtilities.clipToImage(scrollValImage, extntNew, getDimensionsEntire() );
 	}
