@@ -28,6 +28,7 @@ package org.anchoranalysis.gui.frame.canvas;
 
 
 import java.awt.image.BufferedImage;
+import java.util.Optional;
 
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.geometry.Point2i;
@@ -195,8 +196,8 @@ class DisplayStackViewportZoomed {
 		return delegate.intensityStrAtAbs(x, y, z);
 	}
 	
-	// Null means it cannot be determined
-	public VoxelDataType associatedDataType() {
+	// empty() means it cannot be determined
+	public Optional<VoxelDataType> associatedDataType() {
 		return delegate.associatedDataType();
 	}
 

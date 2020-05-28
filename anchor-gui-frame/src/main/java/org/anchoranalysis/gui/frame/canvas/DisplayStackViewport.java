@@ -28,6 +28,7 @@ package org.anchoranalysis.gui.frame.canvas;
 
 
 import java.awt.image.BufferedImage;
+import java.util.Optional;
 
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.OperationFailedException;
@@ -181,8 +182,8 @@ class DisplayStackViewport {
 		return sb.toString();
 	}
 	
-	// Null means it cannot be determined
-	public VoxelDataType associatedDataType() {
+	// empty() means it cannot be determined
+	public Optional<VoxelDataType> associatedDataType() {
 		return displayStackEntireImage.unconvertedDataType();
 	}
 	

@@ -37,6 +37,7 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.event.MouseWheelListener;
 import java.awt.image.BufferedImage;
+import java.util.Optional;
 
 import javax.swing.ActionMap;
 import javax.swing.BorderFactory;
@@ -530,7 +531,7 @@ public class ImageCanvas {
 	}
 	
 	// Null means it cannot be determined
-	public VoxelDataType associatedDataType() {
+	public Optional<VoxelDataType> associatedDataType() {
 		return displayStackViewport.associatedDataType();
 	}
 
