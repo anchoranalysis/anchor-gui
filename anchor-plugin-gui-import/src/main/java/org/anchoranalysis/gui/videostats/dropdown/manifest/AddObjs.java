@@ -38,7 +38,7 @@ import org.anchoranalysis.core.cache.WrapOperationAsCached;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.index.container.SingleContainer;
-import org.anchoranalysis.core.name.provider.INamedProvider;
+import org.anchoranalysis.core.name.provider.NamedProvider;
 import org.anchoranalysis.gui.finder.FinderNrgStack;
 import org.anchoranalysis.gui.io.loader.manifest.finder.FinderCfgFolder;
 import org.anchoranalysis.gui.io.loader.manifest.finder.FinderObjMaskCollectionFolder;
@@ -103,7 +103,7 @@ class AddObjs {
 			
 			if (finderObjs.exists()) {
 				
-				INamedProvider<ObjMaskCollection> providers = finderObjs.createNamedProvider(false, mpg.getLogErrorReporter());
+				NamedProvider<ObjMaskCollection> providers = finderObjs.createNamedProvider(false, mpg.getLogErrorReporter());
 				
 				for( String key : providers.keys() ) {
 					DropDownUtilities.addObjMaskCollection(
@@ -177,7 +177,7 @@ class AddObjs {
 			FinderCfgFolder finder = new FinderCfgFolder("cfgCollection", "cfg");
 			finder.doFind(manifests.getFileManifest().doOperation());
 			
-			INamedProvider<Cfg> provider = finder.createNamedProvider(false, mpg.getLogErrorReporter());
+			NamedProvider<Cfg> provider = finder.createNamedProvider(false, mpg.getLogErrorReporter());
 			DropDownUtilities.addCfgSubmenu(
 				delegate.getRootMenu(),
 				delegate,

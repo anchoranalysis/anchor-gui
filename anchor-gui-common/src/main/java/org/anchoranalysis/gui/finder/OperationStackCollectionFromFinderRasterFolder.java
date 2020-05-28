@@ -29,12 +29,12 @@ package org.anchoranalysis.gui.finder;
 
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.OperationFailedException;
-import org.anchoranalysis.core.name.provider.INamedProvider;
+import org.anchoranalysis.core.name.provider.NamedProvider;
 import org.anchoranalysis.core.progress.CachedOperationWithProgressReporter;
 import org.anchoranalysis.core.progress.ProgressReporter;
 import org.anchoranalysis.image.stack.Stack;
 
-class OperationStackCollectionFromFinderRasterFolder extends CachedOperationWithProgressReporter<INamedProvider<Stack>,OperationFailedException> {
+class OperationStackCollectionFromFinderRasterFolder extends CachedOperationWithProgressReporter<NamedProvider<Stack>,OperationFailedException> {
 
 	private FinderRasterFolder finderRasterFolder;
 	
@@ -45,7 +45,7 @@ class OperationStackCollectionFromFinderRasterFolder extends CachedOperationWith
 	}
 
 	@Override
-	protected INamedProvider<Stack> execute( ProgressReporter progressReporter ) throws OperationFailedException {
+	protected NamedProvider<Stack> execute( ProgressReporter progressReporter ) throws OperationFailedException {
 		try {
 			return finderRasterFolder.createStackCollection(true);
 		} catch (CreateException e) {

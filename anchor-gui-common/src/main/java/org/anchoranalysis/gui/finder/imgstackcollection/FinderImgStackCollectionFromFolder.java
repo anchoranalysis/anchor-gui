@@ -31,7 +31,7 @@ import org.anchoranalysis.core.cache.WrapOperationWithProgressReporterAsCached;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.index.GetOperationFailedException;
-import org.anchoranalysis.core.name.provider.INamedProvider;
+import org.anchoranalysis.core.name.provider.NamedProvider;
 import org.anchoranalysis.core.progress.CachedOperationWithProgressReporter;
 import org.anchoranalysis.core.progress.OperationWithProgressReporter;
 import org.anchoranalysis.core.progress.ProgressReporterNull;
@@ -45,7 +45,7 @@ public class FinderImgStackCollectionFromFolder extends FinderImgStackCollection
 
 	private FinderRasterFolder delegate;
 	
-	private CachedOperationWithProgressReporter<INamedProvider<Stack>,OperationFailedException> operationImgStackCollection =
+	private CachedOperationWithProgressReporter<NamedProvider<Stack>,OperationFailedException> operationImgStackCollection =
 		new WrapOperationWithProgressReporterAsCached<>(
 			pr -> {
 				try {
@@ -62,7 +62,7 @@ public class FinderImgStackCollectionFromFolder extends FinderImgStackCollection
 	}
 
 	@Override
-	public INamedProvider<Stack> getImgStackCollection() throws GetOperationFailedException {
+	public NamedProvider<Stack> getImgStackCollection() throws GetOperationFailedException {
 		try {
 			return operationImgStackCollection.doOperation( ProgressReporterNull.get() );
 		} catch (OperationFailedException e) {
@@ -71,11 +71,11 @@ public class FinderImgStackCollectionFromFolder extends FinderImgStackCollection
 	}
 	
 	@Override
-	public OperationWithProgressReporter<INamedProvider<Stack>,OperationFailedException> getImgStackCollectionAsOperationWithProgressReporter() {
+	public OperationWithProgressReporter<NamedProvider<Stack>,OperationFailedException> getImgStackCollectionAsOperationWithProgressReporter() {
 		return operationImgStackCollection;
 	}
 	
-	public OperationWithProgressReporter<INamedProvider<Stack>,OperationFailedException> getImgStackCollectionAsOperation() {
+	public OperationWithProgressReporter<NamedProvider<Stack>,OperationFailedException> getImgStackCollectionAsOperation() {
 		return operationImgStackCollection;
 	}
 

@@ -68,7 +68,6 @@ public class DeleteTool extends AnnotationTool {
 			
 	@Override
 	public void leftMouseClickedAtPoint(Point3d pnt) {
-		//System.out.printf("Delete at %f,%f,%f\n",pnt.x,pnt.y,pnt.z);
 		
 		Cfg cfg = new Cfg();
 		cfg.addAll( queryAcceptReject.getCfgAccepted() );
@@ -81,7 +80,6 @@ public class DeleteTool extends AnnotationTool {
 		if (!marksToRemove.isEmpty() || !selectedPointsToRemove.isEmpty()) {
 			replaceRemove.removeAcceptedMarksAndSelectedPoints(marksToRemove,selectedPointsToRemove);
 		}
-		
 	}
 	
 
@@ -92,7 +90,6 @@ public class DeleteTool extends AnnotationTool {
 
 	@Override
 	public void confirm(boolean accepted) {
-		
 		switcher.switchToGuessOrSelectPoints();
 		
 		// We implement the same behaviour as the Guess tool as its not so clear what else it could mean

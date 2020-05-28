@@ -40,7 +40,7 @@ import org.anchoranalysis.anchor.mpp.overlay.OverlayCollectionMarkFactory;
 import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.error.reporter.ErrorReporter;
 import org.anchoranalysis.core.index.GetOperationFailedException;
-import org.anchoranalysis.core.name.provider.INamedProvider;
+import org.anchoranalysis.core.name.provider.NamedProvider;
 import org.anchoranalysis.core.progress.OperationWithProgressReporter;
 import org.anchoranalysis.gui.backgroundset.BackgroundSet;
 import org.anchoranalysis.gui.cfgnrg.StatePanelUpdateException;
@@ -226,7 +226,7 @@ public class InternalFrameMarkProposerEvaluator {
 			}
 
 			@Override
-			public INamedProvider<T> allProposers(MPPInitParams so) {
+			public NamedProvider<T> allProposers(MPPInitParams so) {
 				return creator.allProposers(so);
 			}
 

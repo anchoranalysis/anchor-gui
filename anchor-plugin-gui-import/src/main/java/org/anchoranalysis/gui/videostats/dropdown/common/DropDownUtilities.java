@@ -10,7 +10,7 @@ import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.functional.Operation;
 import org.anchoranalysis.core.index.GetOperationFailedException;
-import org.anchoranalysis.core.name.provider.INamedProvider;
+import org.anchoranalysis.core.name.provider.NamedProvider;
 import org.anchoranalysis.core.name.provider.NamedProviderGetException;
 import org.anchoranalysis.core.progress.CachedOperationWithProgressReporter;
 import org.anchoranalysis.core.progress.OperationWithProgressReporter;
@@ -135,7 +135,7 @@ public class DropDownUtilities {
 	public static void addCfgSubmenu(
 		VideoStatsOperationMenu menu,
 		BoundVideoStatsModuleDropDown delegate,
-		INamedProvider<Cfg> cfgProvider,
+		NamedProvider<Cfg> cfgProvider,
 		NRGBackgroundAdder<?> nrgBackground,
 		VideoStatsModuleGlobalParams mpg,
 		MarkDisplaySettings markDisplaySettings,
@@ -165,7 +165,7 @@ public class DropDownUtilities {
 	public static void addObjSubmenu(
 		VideoStatsOperationMenu menu,
 		BoundVideoStatsModuleDropDown delegate,
-		final INamedProvider<ObjMaskCollection> provider,
+		final NamedProvider<ObjMaskCollection> provider,
 		NRGBackgroundAdder<?> nrgBackground,
 		VideoStatsModuleGlobalParams mpg,
 		boolean addAsDefault
@@ -219,7 +219,7 @@ public class DropDownUtilities {
 		}
 	}
 	
-	private static <T> T getFromProvider(INamedProvider<T> provider, String name) throws OperationFailedException {
+	private static <T> T getFromProvider(NamedProvider<T> provider, String name) throws OperationFailedException {
 		try {
 			return provider.getException(name);
 		} catch (NamedProviderGetException e) {

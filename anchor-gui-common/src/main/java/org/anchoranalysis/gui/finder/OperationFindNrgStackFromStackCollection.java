@@ -30,7 +30,7 @@ package org.anchoranalysis.gui.finder;
 import org.anchoranalysis.core.cache.CachedOperation;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.OperationFailedException;
-import org.anchoranalysis.core.name.provider.INamedProvider;
+import org.anchoranalysis.core.name.provider.NamedProvider;
 import org.anchoranalysis.core.name.provider.NamedProviderGetException;
 import org.anchoranalysis.core.progress.OperationWithProgressReporter;
 import org.anchoranalysis.core.progress.ProgressReporter;
@@ -44,18 +44,18 @@ public class OperationFindNrgStackFromStackCollection extends CachedOperation<NR
 
 	// We first retrieve a namedimgcollection which we use to contstruct our real NrgStack for purposes
 	//   of good caching
-	private OperationWithProgressReporter<INamedProvider<Stack>,OperationFailedException> operationStackCollection;
+	private OperationWithProgressReporter<NamedProvider<Stack>,OperationFailedException> operationStackCollection;
 	
 	// An operation to retrieve a stackCollection
 	//
 	public OperationFindNrgStackFromStackCollection(
-		OperationWithProgressReporter<INamedProvider<Stack>,OperationFailedException> operationStackCollection
+		OperationWithProgressReporter<NamedProvider<Stack>,OperationFailedException> operationStackCollection
 	) {
 		super();
 		this.operationStackCollection = operationStackCollection;
 	}
 	
-	public OperationWithProgressReporter<INamedProvider<Stack>,OperationFailedException> getOperationStackCollection() {
+	public OperationWithProgressReporter<NamedProvider<Stack>,OperationFailedException> getOperationStackCollection() {
 		return operationStackCollection;
 	}
 
@@ -72,7 +72,7 @@ public class OperationFindNrgStackFromStackCollection extends CachedOperation<NR
 	// NB Note assumption about namedImgStackCollection ordering
 	private NRGStackWithParams createNRGStack() throws OperationFailedException {
 		
-		INamedProvider<Stack> nic = operationStackCollection.doOperation( ProgressReporterNull.get() );
+		NamedProvider<Stack> nic = operationStackCollection.doOperation( ProgressReporterNull.get() );
 		
 		// We expects the keys to be the indexes
 		Stack stack = populateStack(nic);
@@ -84,7 +84,7 @@ public class OperationFindNrgStackFromStackCollection extends CachedOperation<NR
 		}
 	}
 	
-	private static Stack populateStack( INamedProvider<Stack> nic ) throws OperationFailedException {
+	private static Stack populateStack( NamedProvider<Stack> nic ) throws OperationFailedException {
 		
 		Stack stack = new Stack();
 		
@@ -113,7 +113,7 @@ public class OperationFindNrgStackFromStackCollection extends CachedOperation<NR
 	 * @return
 	 * @throws CreateException 
 	 */
-	private static Chnl chnlFromStack( INamedProvider<Stack> stackProvider, int c ) throws OperationFailedException {
+	private static Chnl chnlFromStack( NamedProvider<Stack> stackProvider, int c ) throws OperationFailedException {
 		
 		try {
 			Stack chnlStack = stackProvider.getException( Integer.toString(c) );

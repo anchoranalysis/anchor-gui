@@ -26,22 +26,22 @@ package org.anchoranalysis.gui.series;
  * #L%
  */
 
-import org.anchoranalysis.core.name.provider.INamedProvider;
+import org.anchoranalysis.core.name.provider.NamedProvider;
 import org.anchoranalysis.image.stack.TimeSequence;
 
 /** A provider of time-sequences plus a maximum number of frames */
 public class TimeSequenceProvider {
 
-	private INamedProvider<TimeSequence> sequence;
+	private NamedProvider<TimeSequence> sequence;
 	private int numFrames;
 	
-	public TimeSequenceProvider( INamedProvider<TimeSequence> sequence, int numFrames ) {
+	public TimeSequenceProvider( NamedProvider<TimeSequence> sequence, int numFrames ) {
 		super();
 		this.sequence = sequence;
 		this.numFrames = numFrames;
 	}
 
-	public INamedProvider<TimeSequence> sequence() {
+	public NamedProvider<TimeSequence> sequence() {
 		return sequence;
 	}
 

@@ -36,7 +36,7 @@ import org.anchoranalysis.core.functional.Operation;
 import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.index.container.IBoundedIndexContainer;
 import org.anchoranalysis.core.index.container.bridge.BoundedIndexContainerBridgeWithoutIndex;
-import org.anchoranalysis.core.name.provider.INamedProvider;
+import org.anchoranalysis.core.name.provider.NamedProvider;
 import org.anchoranalysis.core.name.provider.NamedProviderGetException;
 import org.anchoranalysis.core.progress.ProgressReporter;
 import org.anchoranalysis.core.progress.ProgressReporterIncrement;
@@ -56,7 +56,7 @@ import org.anchoranalysis.io.output.bean.OutputWriteSettings;
 
 public class BackgroundSetFactory {
 
-	public static BackgroundSet createBackgroundSet( INamedProvider<TimeSequence> imageStackCollection, ProgressReporter progressReporter ) throws CreateException {
+	public static BackgroundSet createBackgroundSet( NamedProvider<TimeSequence> imageStackCollection, ProgressReporter progressReporter ) throws CreateException {
 		BackgroundSet backgroundSet = new BackgroundSet();
 		try {
 			addFromImgStackCollection(backgroundSet, imageStackCollection, progressReporter );
@@ -66,7 +66,7 @@ public class BackgroundSetFactory {
 		return backgroundSet;
 	}
 	
-	public static BackgroundSet createBackgroundSetFromExisting( BackgroundSet existing, INamedProvider<TimeSequence> imageStackCollection, OutputWriteSettings outputSettings, ProgressReporter progressReporter ) throws CreateException {
+	public static BackgroundSet createBackgroundSetFromExisting( BackgroundSet existing, NamedProvider<TimeSequence> imageStackCollection, OutputWriteSettings outputSettings, ProgressReporter progressReporter ) throws CreateException {
 		
 		BackgroundSet bsNew = new BackgroundSet();
 		bsNew.addAll( existing );
@@ -79,7 +79,7 @@ public class BackgroundSetFactory {
 		return bsNew;
 	}
 	
-	public static BackgroundSet createBackgroundSetFromExisting( BackgroundSet existing, INamedProvider<TimeSequence> imageStackCollection, Set<String> keys, OutputWriteSettings outputSettings, ProgressReporter progressReporter ) throws CreateException {
+	public static BackgroundSet createBackgroundSetFromExisting( BackgroundSet existing, NamedProvider<TimeSequence> imageStackCollection, Set<String> keys, OutputWriteSettings outputSettings, ProgressReporter progressReporter ) throws CreateException {
 		
 		BackgroundSet bsNew = new BackgroundSet();
 		bsNew.addAll( existing );
@@ -127,11 +127,11 @@ public class BackgroundSetFactory {
 		
 	private static class AddBackgroundSetItem extends CachedOperation<BackgroundStackCntr, OperationFailedException> {
 
-		private INamedProvider<TimeSequence> imageStackCollection;
+		private NamedProvider<TimeSequence> imageStackCollection;
 		private String id;
 		
 		public AddBackgroundSetItem(
-				INamedProvider<TimeSequence> imageStackCollection,
+				NamedProvider<TimeSequence> imageStackCollection,
 				String id) {
 			super();
 			this.imageStackCollection = imageStackCollection;
@@ -166,7 +166,7 @@ public class BackgroundSetFactory {
 		return BackgroundStackCntrFactory.singleSavedStack(img);
 	}
 	
-	private static void addFromImgStackCollection( BackgroundSet backgroundSet, INamedProvider<TimeSequence> imageStackCollection, ProgressReporter progressReporter ) throws OperationFailedException {
+	private static void addFromImgStackCollection( BackgroundSet backgroundSet, NamedProvider<TimeSequence> imageStackCollection, ProgressReporter progressReporter ) throws OperationFailedException {
 		addFromImgStackCollection(backgroundSet, imageStackCollection, imageStackCollection.keys(), progressReporter );
 		
 		addEmpty(backgroundSet, imageStackCollection);
@@ -174,7 +174,7 @@ public class BackgroundSetFactory {
 	
 	/** Adds an empty (all 0 pixels, raster) if at least one other image exists 
 	 * @throws OperationFailedException */
-	public static void addEmpty( BackgroundSet backgroundSet, INamedProvider<TimeSequence> imageStackCollection ) throws OperationFailedException {
+	public static void addEmpty( BackgroundSet backgroundSet, NamedProvider<TimeSequence> imageStackCollection ) throws OperationFailedException {
 		
 		backgroundSet.addItem(
 			"blank (all black)",
@@ -186,7 +186,7 @@ public class BackgroundSetFactory {
 		);
 	}
 	
-	private static ImageDim guessDimensions( INamedProvider<TimeSequence> imageStackCollection ) throws OperationFailedException {
+	private static ImageDim guessDimensions( NamedProvider<TimeSequence> imageStackCollection ) throws OperationFailedException {
 		try {
 			return imageStackCollection.getException( imageStackCollection.keys().iterator().next() ).getDimensions();
 		} catch (NamedProviderGetException e) {
@@ -206,7 +206,7 @@ public class BackgroundSetFactory {
 		}
 	}
 		
-	private static void addFromImgStackCollection( BackgroundSet backgroundSet, INamedProvider<TimeSequence> imageStackCollection, Set<String> keys, ProgressReporter progressReporter ) throws OperationFailedException {
+	private static void addFromImgStackCollection( BackgroundSet backgroundSet, NamedProvider<TimeSequence> imageStackCollection, Set<String> keys, ProgressReporter progressReporter ) throws OperationFailedException {
 	
 		boolean hasNrgStack = keys.contains(ImgStackIdentifiers.NRG_STACK);
 		

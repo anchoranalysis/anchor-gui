@@ -28,6 +28,7 @@ package org.anchoranalysis.gui.graph.definition.line;
 
 
 import java.util.Iterator;
+import java.util.Optional;
 
 import org.anchoranalysis.anchor.graph.AxisLimits;
 import org.anchoranalysis.anchor.graph.GraphInstance;
@@ -70,7 +71,7 @@ public class GraphDefinitionLineIterVsKernelExecutionTime extends GraphDefinitio
 	}
 
 	@Override
-	public GraphInstance create( Iterator<IterAndExecutionTime> itr, AxisLimits domainLimits, AxisLimits rangeLimits ) throws CreateException {
+	public GraphInstance create( Iterator<IterAndExecutionTime> itr, Optional<AxisLimits> domainLimits, Optional<AxisLimits> rangeLimits ) throws CreateException {
 		LinePlot<IterAndExecutionTime> delegate = new LinePlot<>(
 			getTitle(),
 			seriesTitles,

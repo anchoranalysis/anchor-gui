@@ -28,7 +28,7 @@ package org.anchoranalysis.gui.videostats.dropdown.common;
 
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.OperationFailedException;
-import org.anchoranalysis.core.name.provider.INamedProvider;
+import org.anchoranalysis.core.name.provider.NamedProvider;
 import org.anchoranalysis.core.name.provider.NamedProviderGetException;
 import org.anchoranalysis.core.progress.OperationWithProgressReporter;
 import org.anchoranalysis.core.progress.ProgressReporter;
@@ -57,7 +57,7 @@ public class GuessNRGStackFromStacks implements OperationWithProgressReporter<NR
 	
 	private static TimeSequence selectArbitraryItem( OperationWithProgressReporter<TimeSequenceProvider,CreateException> opBackgroundSet ) throws OperationFailedException {
 		try {
-			INamedProvider<TimeSequence> stacks = opBackgroundSet.doOperation( ProgressReporterNull.get() ).sequence();
+			NamedProvider<TimeSequence> stacks = opBackgroundSet.doOperation( ProgressReporterNull.get() ).sequence();
 			String arbitraryKey = stacks.keys().iterator().next();
 			
 			// If a time sequence, assume nrg stack is always t=0

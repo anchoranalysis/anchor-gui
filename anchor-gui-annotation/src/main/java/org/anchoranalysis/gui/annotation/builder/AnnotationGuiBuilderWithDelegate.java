@@ -34,7 +34,7 @@ import org.anchoranalysis.annotation.io.bean.strategy.AnnotatorStrategy;
 import org.anchoranalysis.annotation.io.input.AnnotationWithStrategy;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.index.GetOperationFailedException;
-import org.anchoranalysis.core.name.provider.INamedProvider;
+import org.anchoranalysis.core.name.provider.NamedProvider;
 import org.anchoranalysis.core.progress.OperationWithProgressReporter;
 import org.anchoranalysis.core.progress.ProgressReporterMultiple;
 import org.anchoranalysis.gui.annotation.AnnotationBackground;
@@ -69,7 +69,7 @@ public abstract class AnnotationGuiBuilderWithDelegate<T extends AnnotationInitP
 		
 	// Cached-operation
 	@Override
-	public OperationWithProgressReporter<INamedProvider<Stack>,CreateException> stacks() {
+	public OperationWithProgressReporter<NamedProvider<Stack>,CreateException> stacks() {
 		return delegate.stacks();
 	}
 	
@@ -99,7 +99,7 @@ public abstract class AnnotationGuiBuilderWithDelegate<T extends AnnotationInitP
 		return delegate.getAnnotationPath();
 	}
 
-	protected AnnotationBackground createBackground(ProgressReporterMultiple prm, INamedProvider<Stack> backgroundStacks ) throws CreateException {
+	protected AnnotationBackground createBackground(ProgressReporterMultiple prm, NamedProvider<Stack> backgroundStacks ) throws CreateException {
 		try {
 			return new AnnotationBackground(
 				prm,

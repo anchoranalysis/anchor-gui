@@ -4,7 +4,7 @@ import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.error.reporter.ErrorReporter;
 import org.anchoranalysis.core.functional.Operation;
 import org.anchoranalysis.core.index.GetOperationFailedException;
-import org.anchoranalysis.core.name.provider.INamedProvider;
+import org.anchoranalysis.core.name.provider.NamedProvider;
 import org.anchoranalysis.core.progress.OperationWithProgressReporter;
 import org.anchoranalysis.core.progress.ProgressReporterNull;
 import org.anchoranalysis.feature.nrg.NRGElemParamsFromImage;
@@ -59,7 +59,7 @@ public class FinderNrgStack extends Finder {
 		}
 	}
 
-	public INamedProvider<Stack> getNamedImgStackCollection() throws GetOperationFailedException {
+	public NamedProvider<Stack> getNamedImgStackCollection() throws GetOperationFailedException {
 		try {
 			return operationCombined.getOperationStackCollection().doOperation( ProgressReporterNull.get() );
 		} catch (OperationFailedException e) {

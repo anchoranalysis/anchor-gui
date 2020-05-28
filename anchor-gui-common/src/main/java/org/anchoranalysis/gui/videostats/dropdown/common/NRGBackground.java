@@ -4,7 +4,7 @@ import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.functional.Operation;
 import org.anchoranalysis.core.index.GetOperationFailedException;
-import org.anchoranalysis.core.name.provider.INamedProvider;
+import org.anchoranalysis.core.name.provider.NamedProvider;
 import org.anchoranalysis.core.progress.IdentityOperationWithProgressReporter;
 import org.anchoranalysis.core.progress.OperationWithProgressReporter;
 import org.anchoranalysis.core.progress.ProgressReporterNull;
@@ -67,7 +67,7 @@ public class NRGBackground {
 	}
 	
 	public static <E extends Throwable> NRGBackground createStack(
-		OperationWithProgressReporter<INamedProvider<Stack>,E> opBackgroundSet,
+		OperationWithProgressReporter<NamedProvider<Stack>,E> opBackgroundSet,
 		OperationWithProgressReporter<NRGStackWithParams,OperationFailedException> opNrgStack
 	) {
 		OperationWithProgressReporter<TimeSequenceProvider,E> opConvert = progressReporter -> { 

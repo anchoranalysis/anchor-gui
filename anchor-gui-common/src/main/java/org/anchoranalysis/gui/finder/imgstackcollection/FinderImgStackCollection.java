@@ -29,14 +29,14 @@ import org.anchoranalysis.core.error.OperationFailedException;
  */
 
 import org.anchoranalysis.core.index.GetOperationFailedException;
-import org.anchoranalysis.core.name.provider.INamedProvider;
+import org.anchoranalysis.core.name.provider.NamedProvider;
 import org.anchoranalysis.core.progress.OperationWithProgressReporter;
 import org.anchoranalysis.image.stack.Stack;
 import org.anchoranalysis.io.manifest.finder.Finder;
 
 public abstract class FinderImgStackCollection extends Finder {
 
-	public abstract INamedProvider<Stack> getImgStackCollection() throws GetOperationFailedException;
+	public abstract NamedProvider<Stack> getImgStackCollection() throws GetOperationFailedException;
 	
-	public abstract OperationWithProgressReporter<INamedProvider<Stack>,OperationFailedException> getImgStackCollectionAsOperationWithProgressReporter();
+	public abstract OperationWithProgressReporter<NamedProvider<Stack>,OperationFailedException> getImgStackCollectionAsOperationWithProgressReporter();
 }

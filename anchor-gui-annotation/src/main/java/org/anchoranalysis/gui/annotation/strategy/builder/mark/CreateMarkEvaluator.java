@@ -34,7 +34,7 @@ import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.functional.Operation;
 import org.anchoranalysis.core.functional.OptionalUtilities;
 import org.anchoranalysis.core.log.LogErrorReporter;
-import org.anchoranalysis.core.name.provider.INamedProvider;
+import org.anchoranalysis.core.name.provider.NamedProvider;
 import org.anchoranalysis.core.params.KeyValueParams;
 import org.anchoranalysis.core.progress.OperationWithProgressReporter;
 import org.anchoranalysis.gui.annotation.mark.MarkAnnotator;
@@ -52,7 +52,7 @@ class CreateMarkEvaluator {
 		MarkEvaluatorManager markEvaluatorManager,
 		Path pathForBinding,
 		MarkProposerStrategy strategy,
-		OperationWithProgressReporter<INamedProvider<Stack>,CreateException> stacks,
+		OperationWithProgressReporter<NamedProvider<Stack>,CreateException> stacks,
 		LogErrorReporter logErrorReporter
 	) throws CreateException {
 		
@@ -74,7 +74,7 @@ class CreateMarkEvaluator {
 		MarkEvaluatorManager markEvaluatorManager,
 		Path pathForBinding,
 		MarkProposerStrategy strategy,
-		OperationWithProgressReporter<INamedProvider<Stack>,CreateException> stacks
+		OperationWithProgressReporter<NamedProvider<Stack>,CreateException> stacks
 	) throws CreateException {
 		return markEvaluatorManager.createSetForStackCollection(
 			stacks,

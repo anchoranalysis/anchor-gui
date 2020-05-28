@@ -28,7 +28,7 @@ package org.anchoranalysis.gui.videostats.dropdown.manifest;
 
 
 import org.anchoranalysis.core.error.OperationFailedException;
-import org.anchoranalysis.core.name.provider.INamedProvider;
+import org.anchoranalysis.core.name.provider.NamedProvider;
 import org.anchoranalysis.core.name.provider.NamedProviderGetException;
 import org.anchoranalysis.core.progress.CachedOperationWithProgressReporter;
 import org.anchoranalysis.core.progress.ProgressReporter;
@@ -41,11 +41,11 @@ import org.anchoranalysis.core.progress.ProgressReporter;
  */
 class OperationFromNamedProvider<T> extends CachedOperationWithProgressReporter<T,OperationFailedException> {
 
-	private INamedProvider<T> provider;
+	private NamedProvider<T> provider;
 	private String name;
 	
 	public OperationFromNamedProvider(
-			INamedProvider<T> provider,
+			NamedProvider<T> provider,
 			String name) {
 		super();
 		this.provider = provider;
