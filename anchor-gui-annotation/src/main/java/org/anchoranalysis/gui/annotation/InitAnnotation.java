@@ -1,5 +1,7 @@
 package org.anchoranalysis.gui.annotation;
 
+import java.util.Optional;
+
 /*-
  * #%L
  * anchor-gui-annotation
@@ -32,19 +34,19 @@ import org.anchoranalysis.gui.videostats.internalframe.annotator.currentstate.Du
 /** An annotation for initialising the GUI dialog */
 public class InitAnnotation {
 
-	private AnnotationWithCfg annotation;
+	private Optional<AnnotationWithCfg> annotation;
 	private DualCfg initCfg;
 	private String initMsg;		// A message that loads at the start;
 	
-	public InitAnnotation(AnnotationWithCfg annotation) {
+	public InitAnnotation(Optional<AnnotationWithCfg> annotation) {
 		this(annotation, null, "");
 	}
 	
-	public InitAnnotation(AnnotationWithCfg annotation, DualCfg initCfg) {
+	public InitAnnotation(Optional<AnnotationWithCfg> annotation, DualCfg initCfg) {
 		this(annotation, initCfg, "");
 	}
 	
-	public InitAnnotation(AnnotationWithCfg annotation, DualCfg cfg, String initMsg) {
+	public InitAnnotation(Optional<AnnotationWithCfg> annotation, DualCfg cfg, String initMsg) {
 		super();
 		this.annotation = annotation;
 		this.initCfg = cfg;
@@ -59,7 +61,7 @@ public class InitAnnotation {
 		return initMsg;
 	}
 
-	public AnnotationWithCfg getAnnotation() {
+	public Optional<AnnotationWithCfg> getAnnotation() {
 		return annotation;
 	}	
 }

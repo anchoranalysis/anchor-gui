@@ -31,6 +31,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Enumeration;
 import java.util.List;
+import java.util.Optional;
 
 import javax.swing.tree.TreeNode;
 
@@ -106,11 +107,10 @@ abstract class FeatureListNode extends Node {
 	
 	private static void setNodeFromResultsVector( FeatureValueNode node, ResultsVector rv, int index ) {
 		
-		Double dbl = rv.getDoubleOrNull(index);
+		Optional<Double> dbl = rv.getDoubleOrNull(index);
 		
-		if (dbl!=null) {
-			//assert( !Double.isNaN(dbl) );
-			node.setNrgValue( dbl );
+		if (dbl.isPresent()) {
+			node.setNrgValue( dbl.get() );
 		} else {
 			Throwable e = rv.getException(index);
 			node.setErrorText( e.toString(), e );

@@ -28,11 +28,13 @@ package org.anchoranalysis.gui.frame.canvas;
 
 
 import java.awt.image.BufferedImage;
+import java.util.Optional;
 
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.geometry.Point2i;
 import org.anchoranalysis.core.geometry.Point3i;
+import org.anchoranalysis.core.geometry.ReadableTuple3i;
 import org.anchoranalysis.core.index.SetOperationFailedException;
 import org.anchoranalysis.gui.frame.canvas.zoom.ZoomScale;
 import org.anchoranalysis.gui.frame.display.BoundOverlayedDisplayStack;
@@ -84,13 +86,13 @@ class DisplayStackViewport {
 	}
 	
 	public BoundingBox createBoxForShiftedView( Point2i shift, Extent canvasExtnt ) {
-		Point3i crnrMin = this.bboxViewport.getCrnrMin();
+		ReadableTuple3i crnrMin = this.bboxViewport.getCrnrMin();
 		
 		int xNew = crnrMin.getX() + shift.getX();
 		int yNew = crnrMin.getY() + shift.getY();
 		
 		Point2i pnt = new Point2i(xNew,yNew);
-		pnt = DisplayStackViewportUtilities.clipToImage(pnt, bboxViewport.extnt(), getDimensionsEntire() );
+		pnt = DisplayStackViewportUtilities.clipToImage(pnt, bboxViewport.extent(), getDimensionsEntire() );
 		pnt = DisplayStackViewportUtilities.clipToImage(pnt, canvasExtnt, getDimensionsEntire());
 		assert(pnt.getX() >= 0);
 		assert(pnt.getY() >= 0);
@@ -101,7 +103,7 @@ class DisplayStackViewport {
 		assert( pnt3.getX() >= 0 );
 		assert( pnt3.getY() >= 0 );
 		
-		return new BoundingBox(pnt3, bboxViewport.extnt());
+		return new BoundingBox(pnt3, bboxViewport.extent());
 	}
 	
 	// Either updates the view and creates a new BufferedImage, or returns null if nothing changes
@@ -122,7 +124,7 @@ class DisplayStackViewport {
 	// Using global coord
 	public BufferedImage createPartOfCurrentView( BoundingBox bboxUpdate ) throws OperationFailedException {
 		assert(regionExtracter!=null);
-		assert( bboxViewport.contains(bboxUpdate) );
+		assert( bboxViewport.contains().box(bboxUpdate) );
 		
 		try {
 			DisplayStack ds = regionExtracter.extractRegionFrom( bboxUpdate, zoomScale.getScale() );
@@ -134,15 +136,15 @@ class DisplayStackViewport {
 	}
 	
 	
-	public Point2i calcNewCrnrPosAfterChangeInViewSize( Extent extntOld, Extent extntNew, Point2i scrollValImage )
+	public Point2i calcNewCrnrPosAfterChangeInViewSize( Extent extentOld, Extent extentNew, Point2i scrollValImage )
 	{
-		Extent diff = new Extent( extntOld );
-		diff.subtract( extntNew );
-		diff.divide( 2 );
+		Extent diff = extentOld
+				.subtract(extentNew)
+				.divide(2);
 
-		addCond( scrollValImage, diff, extntOld );
+		addCond( scrollValImage, diff, extentOld );
 
-		return DisplayStackViewportUtilities.clipToImage(scrollValImage, extntNew, getDimensionsEntire() );
+		return DisplayStackViewportUtilities.clipToImage(scrollValImage, extentNew, getDimensionsEntire() );
 	}
 
 		
@@ -180,8 +182,8 @@ class DisplayStackViewport {
 		return sb.toString();
 	}
 	
-	// Null means it cannot be determined
-	public VoxelDataType associatedDataType() {
+	// empty() means it cannot be determined
+	public Optional<VoxelDataType> associatedDataType() {
 		return displayStackEntireImage.unconvertedDataType();
 	}
 	

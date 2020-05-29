@@ -36,14 +36,14 @@ import org.anchoranalysis.anchor.mpp.feature.nrg.cfg.CfgNRGPixelized;
 
 
 import org.anchoranalysis.core.cache.CachedOperation;
-import org.anchoranalysis.core.cache.Operation;
 import org.anchoranalysis.core.cache.WrapOperationAsCached;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.error.OperationFailedException;
+import org.anchoranalysis.core.functional.Operation;
 import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.index.container.SingleContainer;
-import org.anchoranalysis.core.name.provider.INamedProvider;
+import org.anchoranalysis.core.name.provider.NamedProvider;
 import org.anchoranalysis.core.params.KeyValueParams;
 import org.anchoranalysis.core.progress.OperationWithProgressReporter;
 import org.anchoranalysis.feature.nrg.NRGStackWithParams;
@@ -103,7 +103,7 @@ public class ManifestDropDown {
 		VideoStatsModuleGlobalParams mpg
 	) {
 		
-		OperationWithProgressReporter<INamedProvider<Stack>,OperationFailedException> opStacks = finderImgStackCollection.getImgStackCollectionAsOperationWithProgressReporter();  
+		OperationWithProgressReporter<NamedProvider<Stack>,OperationFailedException> opStacks = finderImgStackCollection.getImgStackCollectionAsOperationWithProgressReporter();  
 		
 		// We try to read a nrgStack from the manifest. If none exists, we guess instead from the image-stacks.
 		OperationWithProgressReporter<NRGStackWithParams,OperationFailedException> opNrg = new OperationReplaceNull<>(
@@ -126,7 +126,7 @@ public class ManifestDropDown {
 		);
 	}
 	
-	private OperationWithProgressReporter<TimeSequenceProvider,CreateException> asSequence( OperationWithProgressReporter<INamedProvider<Stack>,OperationFailedException> opStacks ) {
+	private OperationWithProgressReporter<TimeSequenceProvider,CreateException> asSequence( OperationWithProgressReporter<NamedProvider<Stack>,OperationFailedException> opStacks ) {
 		return pr -> {
 			try {
 				return new TimeSequenceProvider(
@@ -464,7 +464,7 @@ public class ManifestDropDown {
 			FinderCfgFolder finder = new FinderCfgFolder("cfgCollection", "cfg");
 			finder.doFind(manifests.getFileManifest().doOperation());
 			
-			INamedProvider<Cfg> provider = finder.createNamedProvider(false, mpg.getLogErrorReporter());
+			NamedProvider<Cfg> provider = finder.createNamedProvider(false, mpg.getLogErrorReporter());
 			DropDownUtilities.addCfgSubmenu(
 				delegate.getRootMenu(),
 				delegate,

@@ -28,7 +28,7 @@ package org.anchoranalysis.gui.videostats.dropdown;
 
 
 import org.anchoranalysis.core.index.GetOperationFailedException;
-import org.anchoranalysis.core.name.provider.INamedProvider;
+import org.anchoranalysis.core.name.provider.NamedProvider;
 import org.anchoranalysis.core.progress.CachedOperationWithProgressReporter;
 import org.anchoranalysis.core.progress.OperationWithProgressReporter;
 import org.anchoranalysis.core.progress.ProgressReporter;
@@ -44,7 +44,7 @@ public class OperationCreateBackgroundSet extends CachedOperationWithProgressRep
 
 	private OperationWithProgressReporter<TimeSequenceProvider,? extends Throwable> namedImgStackCollection;
 	
-	public OperationCreateBackgroundSet( INamedProvider<Stack> namedProvider ) {
+	public OperationCreateBackgroundSet( NamedProvider<Stack> namedProvider ) {
 		this(
 			progressReporter -> new TimeSequenceProvider(
 				new WrapStackAsTimeSequence(namedProvider),
@@ -61,7 +61,7 @@ public class OperationCreateBackgroundSet extends CachedOperationWithProgressRep
 	@Override
 	protected BackgroundSet execute( ProgressReporter progressReporter ) throws GetOperationFailedException {
 		try {
-			INamedProvider<TimeSequence> stacks = namedImgStackCollection.doOperation( progressReporter ).sequence();
+			NamedProvider<TimeSequence> stacks = namedImgStackCollection.doOperation( progressReporter ).sequence();
 	
 			BackgroundSet backgroundSet = BackgroundSetFactory.createBackgroundSet(
 				stacks,

@@ -63,6 +63,8 @@ class ShowAdditionalFrames {
 			paramsInit.getBackground().getDefaultBackground(),
 			context.getMpg().getLogErrorReporter()
 		);
-		showComparers.apply(paramsInit.getInitAnnotation().getAnnotation());
+		showComparers.apply(
+			paramsInit.getInitAnnotation().getAnnotation()
+		);
 	}
 }

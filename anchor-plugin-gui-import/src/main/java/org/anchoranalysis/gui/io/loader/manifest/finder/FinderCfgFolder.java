@@ -34,7 +34,7 @@ import org.anchoranalysis.core.cache.CachedOperation;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.log.LogErrorReporter;
-import org.anchoranalysis.core.name.provider.INamedProvider;
+import org.anchoranalysis.core.name.provider.NamedProvider;
 import org.anchoranalysis.core.name.provider.NameValueSet;
 import org.anchoranalysis.core.name.store.LazyEvaluationStore;
 import org.anchoranalysis.io.bean.deserializer.Deserializer;
@@ -103,7 +103,7 @@ public class FinderCfgFolder extends FinderSingleFolder {
 	}
 	
 	// If namesAsIndexes is true, we use the indexes as names instead of the existing names
-	public INamedProvider<Cfg> createNamedProvider( boolean namesAsIndexes, LogErrorReporter logErrorReporter ) throws OperationFailedException {
+	public NamedProvider<Cfg> createNamedProvider( boolean namesAsIndexes, LogErrorReporter logErrorReporter ) throws OperationFailedException {
 		
 		if (getFoundFolder()==null) {
 			return new NameValueSet<>();

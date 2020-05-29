@@ -28,12 +28,14 @@ package org.anchoranalysis.gui.annotation.builder;
 
 import java.io.File;
 import java.nio.file.Path;
+import java.util.Optional;
+
 import org.anchoranalysis.core.cache.CachedOperation;
-import org.anchoranalysis.core.cache.wrap.CachedOperationWrap;
+import org.anchoranalysis.core.cache.CachedOperationWrap;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.log.LogErrorReporter;
-import org.anchoranalysis.core.name.provider.INamedProvider;
+import org.anchoranalysis.core.name.provider.NamedProvider;
 import org.anchoranalysis.core.progress.OperationWithProgressReporter;
 import org.anchoranalysis.core.progress.ProgressReporterMultiple;
 import org.anchoranalysis.gui.annotation.AnnotationBackground;
@@ -100,13 +102,13 @@ public abstract class AnnotationGuiBuilder<T extends AnnotationInitParams> {
 		
 	// Cached-operation
 	public abstract OperationWithProgressReporter<
-		INamedProvider<Stack>,
+		NamedProvider<Stack>,
 		CreateException
 	> stacks();
 	
 	public abstract String descriptiveName();
 	
-	public abstract File associatedFile();
+	public abstract Optional<File> associatedFile();
 	
 	/** Height in pixels of the panel that isn't the 'image' section of the frame */
 	public abstract int heightNonImagePanel();

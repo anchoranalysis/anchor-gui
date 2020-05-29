@@ -37,12 +37,12 @@ import java.util.Set;
 
 import org.anchoranalysis.anchor.mpp.feature.bean.mark.MarkEvaluator;
 import org.anchoranalysis.core.cache.CachedOperation;
-import org.anchoranalysis.core.cache.Operation;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.error.OperationFailedException;
+import org.anchoranalysis.core.functional.Operation;
 import org.anchoranalysis.core.index.GetOperationFailedException;
-import org.anchoranalysis.core.name.provider.INamedProvider;
+import org.anchoranalysis.core.name.provider.NamedProvider;
 import org.anchoranalysis.core.params.KeyValueParams;
 import org.anchoranalysis.core.progress.OperationWithProgressReporter;
 import org.anchoranalysis.image.stack.Stack;
@@ -52,12 +52,12 @@ public class MarkEvaluatorSetForImage {
 
 	private Map<String,Operation<MarkEvaluatorRslvd,OperationFailedException>> map = new HashMap<>(); 
 
-	private OperationWithProgressReporter<INamedProvider<Stack>,? extends Throwable> namedImgStackCollection;
+	private OperationWithProgressReporter<NamedProvider<Stack>,? extends Throwable> namedImgStackCollection;
 	private Operation<KeyValueParams,IOException> keyParams;
 	private BoundIOContext context;
 
 	public MarkEvaluatorSetForImage(
-		OperationWithProgressReporter<INamedProvider<Stack>,? extends Throwable> namedImgStackCollection,
+		OperationWithProgressReporter<NamedProvider<Stack>,? extends Throwable> namedImgStackCollection,
 		Operation<KeyValueParams,IOException> keyParams,
 		BoundIOContext context
 	) {

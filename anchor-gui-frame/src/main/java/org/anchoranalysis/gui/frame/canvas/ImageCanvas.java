@@ -37,6 +37,7 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.event.MouseWheelListener;
 import java.awt.image.BufferedImage;
+import java.util.Optional;
 
 import javax.swing.ActionMap;
 import javax.swing.BorderFactory;
@@ -78,7 +79,7 @@ public class ImageCanvas {
 	
 	private EventListenerList eventList = new EventListenerList();
 	
-	private ExtntScrollBars extntScrollbars;
+	private ExtntScrollBars extentScrollbars;
 	
 	private JPanel panel;
 	
@@ -154,13 +155,13 @@ public class ImageCanvas {
 		//eventList.add( MouseListener.class, mmlDragView );
 		//eventList.add( MouseMotionListener.class, mmlDragView );
 		
-		this.extntScrollbars = new ExtntScrollBars();
-		this.extntScrollbars.addChangeListener( new UpdateViewportOnlyListener() );
+		this.extentScrollbars = new ExtntScrollBars();
+		this.extentScrollbars.addChangeListener( new UpdateViewportOnlyListener() );
 		
 		
 		this.panel.add( imageCanvas, BorderLayout.CENTER );
-		this.panel.add( extntScrollbars.getScrollVer(), BorderLayout.EAST );
-		this.panel.add( extntScrollbars.getScrollHor(), BorderLayout.SOUTH );
+		this.panel.add( extentScrollbars.getScrollVer(), BorderLayout.EAST );
+		this.panel.add( extentScrollbars.getScrollHor(), BorderLayout.SOUTH );
 			
 		
 		
@@ -174,7 +175,7 @@ public class ImageCanvas {
 				
 								
 				if (enforceMinimumSizeAfterGuessZoom) {
-					Extent e = displayStackViewport.getBBox().extnt();
+					Extent e = displayStackViewport.getBBox().extent();
 					panel.setMinimumSize( new Dimension(e.getX(),e.getY()) );
 				}
 				
@@ -253,9 +254,9 @@ public class ImageCanvas {
 		
 		assert( displayStackViewport.createDimensionsEntireScaled().contains(shiftedBox) );
 		
-		extntScrollbars.setValue( new Point2i(shiftedBox.getCrnrMin().getX(), shiftedBox.getCrnrMin().getY()) );
+		extentScrollbars.setValue( new Point2i(shiftedBox.getCrnrMin().getX(), shiftedBox.getCrnrMin().getY()) );
 		
-		updateStackViewportForImageExtnt( shiftedBox.extnt() );
+		updateStackViewportForImageExtnt( shiftedBox.extent() );
 	}
 	
 
@@ -289,43 +290,43 @@ public class ImageCanvas {
 	private void updateViewportOnly( ZoomScale zoomScaleNew, Point2i mousePoint ) throws OperationFailedException {
 		
 		
-		Point2i scrollVal = displayStackViewport.removeScale( extntScrollbars.value() );
+		Point2i scrollVal = displayStackViewport.removeScale( extentScrollbars.value() );
 		ZoomScale zoomScaleOld = displayStackViewport.getZoomScale();
 		
 		displayStackViewport.setZoomScale(zoomScaleNew);
 	
 		{
 			// We interpolate a region from the image
-			Extent extntNew = calcExtntToRetrieveScaled( displayStackViewport.createDimensionsEntireScaled() );
+			Extent extentNew = calcExtntToRetrieveScaled( displayStackViewport.createDimensionsEntireScaled() );
 	
 			// We update the scrollbars as well
-			updateScollBarsWithNewExtnt( extntNew, zoomScaleOld, zoomScaleNew, scrollVal, mousePoint );
+			updateScollBarsWithNewExtnt( extentNew, zoomScaleOld, zoomScaleNew, scrollVal, mousePoint );
 				
-			updateStackViewportForImageExtnt(extntNew );
+			updateStackViewportForImageExtnt(extentNew );
 		}
 	
 	}
 
 
-	private void updateScollBarsWithNewExtnt( Extent extntNew, ZoomScale zoomScaleOld, ZoomScale zoomScaleNew, Point2i scrollVal, Point2i mousePoint ) {
+	private void updateScollBarsWithNewExtnt( Extent extentNew, ZoomScale zoomScaleOld, ZoomScale zoomScaleNew, Point2i scrollVal, Point2i mousePoint ) {
 		
 		Extent canvasExtntOld = imageCanvas.createExtnt();
 		
-		assert( displayStackViewport.createDimensionsEntireScaled().contains( new BoundingBox(extntNew)) );
+		assert( displayStackViewport.createDimensionsEntireScaled().contains( new BoundingBox(extentNew)) );
 		
 		Point2i scrollValNew;
-		// Only if we have a mouse point, and we are retrieving the same sized extnt as previously
-		if (mousePoint!=null && extntNew.getVolume()==canvasExtntOld.getVolume() && zoomScaleNew.equals(zoomScaleOld)) {
+		// Only if we have a mouse point, and we are retrieving the same sized extent as previously
+		if (mousePoint!=null && extentNew.getVolume()==canvasExtntOld.getVolume() && zoomScaleNew.equals(zoomScaleOld)) {
 			scrollValNew = displayStackViewport.calcNewCrnrPosToMaintainMousePoint( mousePoint, zoomScaleOld );
 		} else {
-			scrollValNew = displayStackViewport.calcNewCrnrPosAfterChangeInZoom( canvasExtntOld, zoomScaleOld, extntNew, scrollVal );
+			scrollValNew = displayStackViewport.calcNewCrnrPosAfterChangeInZoom( canvasExtntOld, zoomScaleOld, extentNew, scrollVal );
 			
 		}
 			
 		setScrollBarExtnt();
-		extntScrollbars.setValue( scrollValNew );
+		extentScrollbars.setValue( scrollValNew );
 
-		assert( displayStackViewport.createDimensionsEntireScaled().contains( new BoundingBox(extntNew)) );
+		assert( displayStackViewport.createDimensionsEntireScaled().contains( new BoundingBox(extentNew)) );
 	}
 
 
@@ -348,13 +349,13 @@ public class ImageCanvas {
 	}
 
 
-	private void updateStackViewportForImageExtnt( Extent extntImageSc ) throws OperationFailedException {
-		assert( displayStackViewport.createDimensionsEntireScaled().contains( new BoundingBox(extntImageSc)) );
+	private void updateStackViewportForImageExtnt( Extent extentImageSc ) throws OperationFailedException {
+		assert( displayStackViewport.createDimensionsEntireScaled().contains( new BoundingBox(extentImageSc)) );
 		
 		
-		Point2i scrollVal = extntScrollbars.value();
+		Point2i scrollVal = extentScrollbars.value();
 		Point3i crnrMin = new Point3i( scrollVal.getX(), scrollVal.getY(), slice );
-		BoundingBox bboxView = new BoundingBox(crnrMin, extntImageSc);
+		BoundingBox bboxView = new BoundingBox(crnrMin, extentImageSc);
 		
 		// We ignore nulls, as it means nothing has changed
 		BufferedImage biUpdate = displayStackViewport.updateView( bboxView );
@@ -365,7 +366,7 @@ public class ImageCanvas {
 		
 		{
 			ImageDim sd = displayStackViewport.createDimensionsEntireScaled();
-			panel.setPreferredSize( new Dimension( sd.getX() + extntScrollbars.getPreferredWidth(), sd.getY() + extntScrollbars.getPreferredHeight()) );
+			panel.setPreferredSize( new Dimension( sd.getX() + extentScrollbars.getPreferredWidth(), sd.getY() + extentScrollbars.getPreferredHeight()) );
 		}
 		
 		
@@ -380,19 +381,12 @@ public class ImageCanvas {
 		try {
 			DisplayUpdate ds = imageProvider.get();
 			
-			//System.out.printf("Applying DisplayUpdate\n");
-			
-			
 			// If there's no update, just update the entire image
 			if (ds==null) {
 				System.out.println("Null so updating everything");
 				updateImage( zoomLevel );
 				return;
 			}
-			
-			//System.out.printf("DisplayStack=%s\n", ds.getDisplayStack()!=null ? "non-null" : "null" );
-			//System.out.printf("UpdateParts=%s\n",  ds.getRedrawParts()!=null ? ds.getRedrawParts().size() : -1 );
-			
 			
 			// If the diplayStack has changed, then update the entire image
 			if (ds.getDisplayStack()!=null) {
@@ -420,22 +414,21 @@ public class ImageCanvas {
 			}
 			
 			// If we get to here then we only update the region with redraw parts
-			//
-			//displayStackViewport.getUnzoomed().invalidateRegion(ds.getRedrawParts());
-			//updateImage( zoomLevel );
-			
 			BoundingBox bboxCurrentDisplayed = displayStackViewport.getUnzoomed().getBBox();
 			
 			// If we get to here, we don't change the viewport, but simply repaint some
 			//   of the canvas using a section of the viewport
 			for( BoundingBox bbox : ds.getRedrawParts() ) {
 				
-				//System.out.printf("Redraw box: %s%n", bbox.toString() );
-				
 				// If it intersects with our current viewport
-				if (bbox.hasIntersection(bboxCurrentDisplayed)) {
+				if (bbox.intersection().existsWith(bboxCurrentDisplayed)) {
 				
-					BoundingBox bboxIntersect = bbox.intersectCreateNew(bboxCurrentDisplayed, displayStackViewport.getUnzoomed().getDimensionsEntire().getExtnt() );
+					BoundingBox bboxIntersect = bbox.intersection().withInside(
+						bboxCurrentDisplayed,
+						displayStackViewport.getUnzoomed().getDimensionsEntire().getExtnt()
+					).orElseThrow( ()->
+						new OperationFailedException("The bounding-box does not intersect with the viewport")
+					);
 										
 					BufferedImage bi = displayStackViewport.getUnzoomed().createPartOfCurrentView( bboxIntersect );
 					
@@ -445,24 +438,10 @@ public class ImageCanvas {
 					
 					assert( xCanvas>=0 );
 					assert( yCanvas>=0 );
-					
-					//System.out.printf("Canvas coord: %d,%d+%d,%d%n", xCanvas, yCanvas, bi.getWidth(), bi.getHeight() );
-					
-//					if ( bbox.getCrnrMin().getX()<10 ) {
-//						// Displays a BufferedImage as a dialog box
-//						JLabel picLabel = new JLabel(new ImageIcon(bi));
-//						JOptionPane.showMessageDialog(null, picLabel, "About", JOptionPane.PLAIN_MESSAGE, null);
-//					}
-					
-					
-					
-					
+										
 					imageCanvas.updatePart(bi,xCanvas,yCanvas);
 				}
 			}
-
-			
-			
 		
 		} catch (GetOperationFailedException | SetOperationFailedException e) {
 			throw new OperationFailedException(e);
@@ -525,7 +504,7 @@ public class ImageCanvas {
 		
 		Extent canvasExtnt = imageCanvas.createExtnt();
 		
-		extntScrollbars.setVisibleAmount( canvasExtnt );
+		extentScrollbars.setVisibleAmount( canvasExtnt );
 		
 		// If the viewport is much smaller than our canvas size, then we allow the scrollbars to disappear
 		// If we do this, when the size is similar, we can end up in endless loops of the scrollbars appearing
@@ -533,8 +512,8 @@ public class ImageCanvas {
 		
 		Extent entireImageExtnt = displayStackViewport.createDimensionsEntireScaled().getExtnt();
 		
-		boolean alwaysAllowChangeInVisibility = minSizeDifferenceXY( canvasExtnt, entireImageExtnt ) > (extntScrollbars.maxSizeOfScrollbar() + 1);
-		extntScrollbars.setMinMax( entireImageExtnt, alwaysAllowChangeInVisibility );
+		boolean alwaysAllowChangeInVisibility = minSizeDifferenceXY( canvasExtnt, entireImageExtnt ) > (extentScrollbars.maxSizeOfScrollbar() + 1);
+		extentScrollbars.setMinMax( entireImageExtnt, alwaysAllowChangeInVisibility );
 	}
 	
 	
@@ -552,7 +531,7 @@ public class ImageCanvas {
 	}
 	
 	// Null means it cannot be determined
-	public VoxelDataType associatedDataType() {
+	public Optional<VoxelDataType> associatedDataType() {
 		return displayStackViewport.associatedDataType();
 	}
 

@@ -27,6 +27,7 @@ package org.anchoranalysis.plugin.gui.bean.createrastergenerator.csvstatistic;
  */
 
 import java.util.Iterator;
+import java.util.Optional;
 
 import org.anchoranalysis.anchor.graph.AxisLimits;
 import org.anchoranalysis.anchor.graph.GraphInstance;
@@ -53,7 +54,7 @@ class GraphInstanceBridge<T> implements IObjectBridge<MappedFrom<CSVStatistic>,G
 	private IObjectBridge<CSVStatistic,T,? extends Exception> elementBridge;
 	// END: PARAMETERS IN
 	
-	private AxisLimits rangeLimits;
+	private Optional<AxisLimits> rangeLimits = Optional.empty();
 
 	public GraphInstanceBridge(GraphDefinition<T> graphDefinition,
 			IBoundedIndexContainer<CSVStatistic> cntr,
@@ -83,13 +84,13 @@ class GraphInstanceBridge<T> implements IObjectBridge<MappedFrom<CSVStatistic>,G
 		
 		// We create a graph of all index points, so we can calculate range limits that are static
 		//   only the first time we execute the function
-		if (rangeLimits==null) {
+		if (!rangeLimits.isPresent()) {
 			rangeLimits = guessRangeLimits(boundBridge, domainLimits);
 		}
 		
 		return graphDefinition.create(
 			new BoundedIndexContainerIterator<>(boundBridge, 1000, currentIndex),
-			domainLimits,
+			Optional.of(domainLimits),
 			rangeLimits
 		);
 	}
@@ -101,12 +102,16 @@ class GraphInstanceBridge<T> implements IObjectBridge<MappedFrom<CSVStatistic>,G
 		return limits;
 	}
 	
-	private AxisLimits guessRangeLimits(
+	private Optional<AxisLimits> guessRangeLimits(
 		BoundedIndexContainerBridgeWithoutIndex<CSVStatistic, T> boundBridge,
 		AxisLimits domainLimits
 	) throws CreateException {
 		Iterator<T> itrAll = new BoundedIndexContainerIterator<>(boundBridge, 1000);
-		GraphInstance instance = graphDefinition.create(itrAll, domainLimits, null);
+		GraphInstance instance = graphDefinition.create(
+			itrAll,
+			Optional.of(domainLimits),
+			Optional.empty()
+		);
 		return instance.getRangeAxisLimits();
 	}
 }

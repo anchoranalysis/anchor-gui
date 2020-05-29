@@ -31,13 +31,13 @@ import java.util.Set;
 
 import org.anchoranalysis.anchor.mpp.bean.init.MPPInitParams;
 import org.anchoranalysis.core.error.CreateException;
-import org.anchoranalysis.core.name.provider.INamedProvider;
+import org.anchoranalysis.core.name.provider.NamedProvider;
 import org.anchoranalysis.core.name.provider.NamedProviderGetException;
 import org.anchoranalysis.gui.videostats.internalframe.evaluator.ProposalOperationCreator;
 
 public abstract class ProposalOperationCreatorFromProposer<T> 
 {
-	private INamedProvider<T> set;
+	private NamedProvider<T> set;
 	
 	public ProposalOperationCreatorFromProposer() {
 		super();
@@ -66,7 +66,7 @@ public abstract class ProposalOperationCreatorFromProposer<T>
 	
 	public abstract ProposalOperationCreator creatorFromProposer( T proposer );
 	
-	public abstract INamedProvider<T> allProposers( MPPInitParams so );
+	public abstract NamedProvider<T> allProposers( MPPInitParams so );
 
 	public abstract String getEvaluatorName();
 }

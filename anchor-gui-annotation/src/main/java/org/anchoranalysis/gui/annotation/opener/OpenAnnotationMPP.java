@@ -27,9 +27,9 @@ package org.anchoranalysis.gui.annotation.opener;
  */
 
 import java.nio.file.Path;
+import java.util.Optional;
 
 import org.anchoranalysis.anchor.mpp.cfg.Cfg;
-import org.anchoranalysis.annotation.AnnotationWithCfg;
 import org.anchoranalysis.annotation.io.mark.MarkAnnotationReader;
 import org.anchoranalysis.annotation.mark.MarkAnnotation;
 import org.anchoranalysis.annotation.mark.RejectionReason;
@@ -45,9 +45,9 @@ public class OpenAnnotationMPP implements IOpenAnnotation {
 	
 	private MarkAnnotationReader annotationReader;
 	private Path annotationPath;
-	private Path defaultCfgPath;
+	private Optional<Path> defaultCfgPath;
 
-	public OpenAnnotationMPP(Path annotationPath, Path defaultCfgPath, MarkAnnotationReader annotationReader) {
+	public OpenAnnotationMPP(Path annotationPath, Optional<Path> defaultCfgPath, MarkAnnotationReader annotationReader) {
 		super();
 		this.annotationPath = annotationPath;
 		this.defaultCfgPath = defaultCfgPath;
@@ -57,21 +57,21 @@ public class OpenAnnotationMPP implements IOpenAnnotation {
 	@Override
 	public InitAnnotation open(
 		boolean useDefaultCfg,
-		LogErrorReporter logErrorReporter
+		LogErrorReporter logger
 	) throws VideoStatsModuleCreateException {
 		
 		// We try to read an existing annotation
-		MarkAnnotation annotationExst  = readAnnotation(annotationPath);
+		Optional<MarkAnnotation> annotationExst = readAnnotation(annotationPath);
 		
-		if (annotationExst!=null) {
-			return readCfgFromAnnotation(annotationExst);
+		if (annotationExst.isPresent()) {
+			return readCfgFromAnnotation(annotationExst.get());
 			
-		} else if (defaultCfgPath!=null && useDefaultCfg) {
-			return readDefaultCfg(annotationExst, defaultCfgPath, logErrorReporter );
+		} else if (defaultCfgPath.isPresent() && useDefaultCfg) {
+			return readDefaultCfg(defaultCfgPath.get(), logger);
 							
 		} else {
-			logErrorReporter.getLogReporter().logFormatted("No cfg to open for annotation");
-			return new InitAnnotation(annotationExst);
+			logger.getLogReporter().logFormatted("No cfg to open for annotation");
+			return new InitAnnotation(Optional.empty());
 		}
 	}
 
@@ -87,25 +87,31 @@ public class OpenAnnotationMPP implements IOpenAnnotation {
 		); 
 		
 		if (annotationExst.isAccepted()) {
-			return new InitAnnotation(annotationExst, initCfg);
+			return new InitAnnotation(
+				Optional.of(annotationExst),
+				initCfg
+			);
 		} else {
 			String initMsg = genErrorMsg(annotationExst.getRejectionReason());
-			return new InitAnnotation(annotationExst, initCfg, initMsg);
+			return new InitAnnotation(
+				Optional.of(annotationExst),
+				initCfg,
+				initMsg
+			);
 		}
-
 	}
 	
-	private InitAnnotation readDefaultCfg( AnnotationWithCfg annotationExst, Path defaultCfgPath, LogErrorReporter logErrorReporter ) {
+	private InitAnnotation readDefaultCfg(Path defaultCfgPath, LogErrorReporter logger ) {
 		try {
 			Cfg defaultCfg = annotationReader.readDefaultCfg(defaultCfgPath);
 			return new InitAnnotation(
-				annotationExst,
+				Optional.empty(),
 				new DualCfg( defaultCfg, new Cfg() )
 			);
 		} catch (DeserializationFailedException e) {
-			logErrorReporter.getLogReporter().logFormatted("Cannot open defaultCfg at %s", defaultCfgPath);
-			logErrorReporter.getErrorReporter().recordError(AnnotatorModuleCreator.class, e);
-			return new InitAnnotation(annotationExst);
+			logger.getLogReporter().logFormatted("Cannot open defaultCfg at %s", defaultCfgPath);
+			logger.getErrorReporter().recordError(AnnotatorModuleCreator.class, e);
+			return new InitAnnotation(Optional.empty());
 		}
 	}
 	
@@ -131,7 +137,7 @@ public class OpenAnnotationMPP implements IOpenAnnotation {
 		return sb.toString();
 	}
 	
-	private MarkAnnotation readAnnotation( Path annotationPath ) throws VideoStatsModuleCreateException {
+	private Optional<MarkAnnotation> readAnnotation( Path annotationPath ) throws VideoStatsModuleCreateException {
 		try	{
 			// We try to read an existing annotation
 			// If we can read an annotation let's do it

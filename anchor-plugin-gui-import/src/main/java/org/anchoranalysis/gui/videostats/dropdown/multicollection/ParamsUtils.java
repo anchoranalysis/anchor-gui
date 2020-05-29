@@ -1,5 +1,7 @@
 package org.anchoranalysis.gui.videostats.dropdown.multicollection;
 
+import java.util.Optional;
+
 /*-
  * #%L
  * anchor-plugin-gui-import
@@ -41,12 +43,13 @@ class ParamsUtils {
 			
 			// TODO change
 			// HARDCORE a default for when we have more than one
-			if (paramsCollection.keys().contains("input_params")) {
-				try {
-					return paramsCollection.getNull("input_params");
-				} catch (NamedProviderGetException e) {
-					errorReporter.recordError(ParamsUtils.class, e.summarize());
+			try {
+				Optional<KeyValueParams> params = paramsCollection.getOptional("input_params"); 
+				if (params.isPresent()) {
+					return params.get();
 				}
+			} catch (NamedProviderGetException e) {
+				errorReporter.recordError(ParamsUtils.class, e.summarize());
 			}
 			
 			errorReporter.recordError(ParamsUtils.class, new OperationFailedException("More than one params. Cannot choose between them.") );

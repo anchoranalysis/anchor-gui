@@ -1,5 +1,7 @@
 package org.anchoranalysis.gui.frame.display;
 
+import java.util.Optional;
+
 /*
  * #%L
  * anchor-mpp-io
@@ -74,7 +76,7 @@ public class BoundOverlayedDisplayStack {
 		return background.getNumChnl();
 	}
 
-	public VoxelDataType unconvertedDataType() {
+	public Optional<VoxelDataType> unconvertedDataType() {
 		return background.unconvertedDataType();
 	}
 

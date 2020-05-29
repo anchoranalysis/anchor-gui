@@ -2,39 +2,15 @@ package org.anchoranalysis.gui.videostats.dropdown.common;
 
 
 
+import java.util.Optional;
+
 import org.anchoranalysis.anchor.mpp.cfg.Cfg;
-
-/*-
- * #%L
- * anchor-plugin-gui-import
- * %%
- * Copyright (C) 2010 - 2019 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann la Roche
- * %%
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- * 
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- * 
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
- * #L%
- */
-
-import org.anchoranalysis.core.cache.Operation;
 import org.anchoranalysis.core.cache.WrapOperationWithProgressReporterAsCached;
+import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.error.OperationFailedException;
+import org.anchoranalysis.core.functional.Operation;
 import org.anchoranalysis.core.index.GetOperationFailedException;
-import org.anchoranalysis.core.name.provider.INamedProvider;
+import org.anchoranalysis.core.name.provider.NamedProvider;
 import org.anchoranalysis.core.name.provider.NamedProviderGetException;
 import org.anchoranalysis.core.progress.CachedOperationWithProgressReporter;
 import org.anchoranalysis.core.progress.OperationWithProgressReporter;
@@ -159,7 +135,7 @@ public class DropDownUtilities {
 	public static void addCfgSubmenu(
 		VideoStatsOperationMenu menu,
 		BoundVideoStatsModuleDropDown delegate,
-		INamedProvider<Cfg> cfgProvider,
+		NamedProvider<Cfg> cfgProvider,
 		NRGBackgroundAdder<?> nrgBackground,
 		VideoStatsModuleGlobalParams mpg,
 		MarkDisplaySettings markDisplaySettings,
@@ -189,7 +165,7 @@ public class DropDownUtilities {
 	public static void addObjSubmenu(
 		VideoStatsOperationMenu menu,
 		BoundVideoStatsModuleDropDown delegate,
-		final INamedProvider<ObjMaskCollection> provider,
+		final NamedProvider<ObjMaskCollection> provider,
 		NRGBackgroundAdder<?> nrgBackground,
 		VideoStatsModuleGlobalParams mpg,
 		boolean addAsDefault
@@ -214,14 +190,16 @@ public class DropDownUtilities {
 		}
 	}
 	
-	public static BoundOutputManagerRouteErrors createOutputManagerForSubfolder( BoundOutputManagerRouteErrors parentOutputManager, String subFolderName ) {
+	public static BoundOutputManagerRouteErrors createOutputManagerForSubfolder( BoundOutputManagerRouteErrors parentOutputManager, String subFolderName ) throws InitException {
 		ManifestDescription manifestDescription = new ManifestDescription("interactiveOutput", "manifestInteractiveOutput");
 		
 		ManifestFolderDescription mfd = new ManifestFolderDescription();
     	mfd.setFileDescription( manifestDescription );
     	
     	// NB: As bindAsSubFolder can now return nulls, maybe some knock-on bugs are introduced here
-		return parentOutputManager.getWriterAlwaysAllowed().bindAsSubFolder(subFolderName, mfd, null);
+		return parentOutputManager.getWriterAlwaysAllowed().bindAsSubFolder(subFolderName, mfd, Optional.empty()).orElseThrow( ()->
+			new InitException("Cannot create a sub-folder for output")
+		);
 	}
 	
 	private static void addModule(
@@ -241,7 +219,7 @@ public class DropDownUtilities {
 		}
 	}
 	
-	private static <T> T getFromProvider(INamedProvider<T> provider, String name) throws OperationFailedException {
+	private static <T> T getFromProvider(NamedProvider<T> provider, String name) throws OperationFailedException {
 		try {
 			return provider.getException(name);
 		} catch (NamedProviderGetException e) {

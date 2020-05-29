@@ -2,6 +2,8 @@ package org.anchoranalysis.gui.retrieveelements;
 
 
 
+import java.util.Optional;
+
 /*
  * #%L
  * anchor-gui
@@ -32,10 +34,11 @@ package org.anchoranalysis.gui.retrieveelements;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 
-import org.anchoranalysis.core.cache.Operation;
 import org.anchoranalysis.core.error.AnchorNeverOccursException;
 import org.anchoranalysis.core.error.OperationFailedException;
+import org.anchoranalysis.core.error.friendly.AnchorFriendlyRuntimeException;
 import org.anchoranalysis.core.error.reporter.ErrorReporter;
+import org.anchoranalysis.core.functional.Operation;
 import org.anchoranalysis.gui.bean.exporttask.ExportTaskActionAsThread;
 import org.anchoranalysis.gui.bean.exporttask.ExportTaskGenerator;
 import org.anchoranalysis.gui.bean.exporttask.ExportTaskParams;
@@ -73,18 +76,24 @@ public class ExportSubMenu implements IAddToExportSubMenu {
     }
     
 	@Override
-    public <T> void addExportItem( IterableGenerator<T> generator, T itemToGenerate, String outputName, String label, ManifestDescription md, int numItems ) {
+    public <T> void addExportItem( IterableGenerator<T> generator, T itemToGenerate, String outputName, String label, Optional<ManifestDescription> md, int numItems ) {
 
     	// No parameters available in this context
     	ExportTaskParams exportTaskParams = new ExportTaskParams();
     	    	
     	ManifestFolderDescription mfd = new ManifestFolderDescription();
-    	mfd.setFileDescription( md );
+    	mfd.setFileDescription(
+    		md.orElseThrow( ()->
+    			new AnchorFriendlyRuntimeException("A manifest-description is required for this operation")
+    		)
+    	);
     	mfd.setSequenceType( new IncrementalSequenceType() );
 
     	// NB: As bindAsSubFolder can now return nulls, maybe some knock-on bugs are introduced here
     	exportTaskParams.setOutputManager(
-    		params.getOutputManager().getWriterAlwaysAllowed().bindAsSubFolder(outputName, mfd, null)
+    		params.getOutputManager().getWriterAlwaysAllowed().bindAsSubFolder(outputName, mfd, Optional.empty()).orElseThrow( ()->
+    			new AnchorFriendlyRuntimeException("No subfolder can be created for output")	
+    		)
     	);
     	
     	IntegerSuffixOutputNameStyle ons = new IntegerSuffixOutputNameStyle(outputName, 6);

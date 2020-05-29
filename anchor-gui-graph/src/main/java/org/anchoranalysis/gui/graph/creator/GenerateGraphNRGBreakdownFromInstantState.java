@@ -31,6 +31,7 @@ import java.awt.Color;
 import java.awt.GradientPaint;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
+import java.util.Optional;
 
 import org.anchoranalysis.anchor.graph.AxisLimits;
 import org.anchoranalysis.anchor.graph.bean.GraphDefinition;
@@ -68,8 +69,10 @@ public class GenerateGraphNRGBreakdownFromInstantState implements IObjectBridge<
 				return ClickableGraphFactory.create(
 					definition,
 					list.iterator(),
-					null,
-					new AxisLimits(-0.5, 1)
+					Optional.empty(),
+					Optional.of(
+						new AxisLimits(-0.5, 1)
+					)
 				);
 			} catch (CreateException e) {
 				throw new OperationFailedException(e);

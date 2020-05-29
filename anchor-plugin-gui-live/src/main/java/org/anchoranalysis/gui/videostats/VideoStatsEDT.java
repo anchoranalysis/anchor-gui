@@ -1,5 +1,7 @@
 package org.anchoranalysis.gui.videostats;
 
+import java.util.Optional;
+
 import org.anchoranalysis.anchor.mpp.cfg.Cfg;
 import org.anchoranalysis.anchor.mpp.feature.instantstate.CfgWithNrgTotalInstantState;
 import org.anchoranalysis.anchor.mpp.feature.nrg.cfg.CfgNRGPixelized;
@@ -119,6 +121,31 @@ public class VideoStatsEDT {
 	private BackgroundSet backgroundSet;
 	private LogErrorReporter logErrorReporter;
 
+	private class FrameBoundsChanged implements BoundChangeListener {
+		
+		private IBoundedRangeIncompleteDynamic frameBounds;
+		private int prevBoundMax;
+		
+		public FrameBoundsChanged( IBoundedRangeIncompleteDynamic frameBounds ) {
+			this.prevBoundMax = frameBounds.getMaximumIndex();
+			this.frameBounds = frameBounds;
+		}
+		
+		@Override
+		public void boundChanged(BoundChangeEvent e) {
+			
+			if (e.getBoundType()==BoundType.MAXIMUM) {
+				
+				int maxIndex = frameBounds.getMaximumIndex();
+				
+				if (videoStatsFrame.getLastFrameIndex()==prevBoundMax) {
+					videoStatsFrame.setFrameIndex(maxIndex);
+				}
+				prevBoundMax = maxIndex; 
+			}
+		}
+	}
+	
 	public void init(ImageInitParams so, LogErrorReporter logger)
 			throws InitException {
 		
@@ -135,17 +162,15 @@ public class VideoStatsEDT {
 	
 	public void aggReport( Reporting<CfgNRGPixelized> reporting, Aggregator agg ) {
 		
-		//System.out.printf("Iter=%d  temp=%f\n", optStep.getIter(), agg.getTemp() );
+		Optional<CfgNRGPixelized> after = reporting.getCfgNRGAfterOptional();
 		
 		// This means that optStep has already been released, so we skip the final update... can happen due to threading delays
 		// We could fix it by doing reference-counting access to the OptimizationSteps, but easier just to skip
-		if (reporting.getCfgNRGAfter()==null) {
+		if (!after.isPresent()) {
 			return;
 		}
 		
-		CfgWithNrgTotal nrgTotal = reporting.getCfgNRGAfter().getCfgNRG().getCfgWithTotal();
-		
-		assert( reporting.getCfgNRGAfter() != null );
+		CfgWithNrgTotal nrgTotal = after.get().getCfgNRG().getCfgWithTotal();
 		assert( nrgTotal != null );
 		
 		CfgWithNrgTotal cfgWithTotal = nrgTotal.deepCopy();
@@ -163,15 +188,16 @@ public class VideoStatsEDT {
 	
 	public void reportNewBest( Reporting<CfgNRGPixelized> reporting ) {
 		
-		// There is no longer a CFGNRG After
-		if (reporting.getCfgNRGAfter()==null) {
+		Optional<CfgNRGPixelized> after = reporting.getCfgNRGAfterOptional();
+		
+		// There is no longer a CfgNRGAfter
+		if (!after.isPresent()) {
 			return;
 		}
+
+		assert( after.get().getCfgNRG().getCfgWithTotal() != null );
 		
-		assert( reporting.getCfgNRGAfter() != null );
-		assert( reporting.getCfgNRGAfter().getCfgNRG().getCfgWithTotal() != null );
-		
-		CfgWithNrgTotal afterCopy = reporting.getCfgNRGAfter().getCfgNRG().getCfgWithTotal().deepCopy();
+		CfgWithNrgTotal afterCopy = after.get().getCfgNRG().getCfgWithTotal().deepCopy();
 		
 		cfgNRGBest.add(
 			new CfgWithNrgTotalInstantState( reporting.getIter(), afterCopy  )
@@ -204,10 +230,7 @@ public class VideoStatsEDT {
 			videoStatsFrame = null;
 		}
 		
-		
 		NRGStackWithParams nrgStack = initParams.getInitContext().getDualStack().getNrgStack();
-
-		
 		
 		cfgNRGBest = new ArrayListContainer<>();
 		cfgNRGCurrent = new ArrayListContainer<>();
@@ -226,13 +249,9 @@ public class VideoStatsEDT {
 		Cfg cfgEmpty = new Cfg();
 		CfgWithNrgTotal cfgNRGEmpty = new CfgWithNrgTotal( cfgEmpty, initParams.getInitContext().getNrgScheme());
 		
-		//DefaultModuleState defaultState = videoStatsFrame.createCurrentFrameState();
-		//defaultState.setFrameIndex(0);
-		
 		CfgWithNrgTotalInstantState initialState = new CfgWithNrgTotalInstantState( 0, cfgNRGEmpty ); 
 		cfgNRGCurrent.add(initialState);
 		cfgNRGBest.add(initialState);
-		
 		
 		startTime = System.currentTimeMillis();
 		
@@ -259,11 +278,8 @@ public class VideoStatsEDT {
 		mpg.setExportTaskList( new ExportTaskList() );
 		mpg.setDefaultColorIndexForMarks(colorIndex);
 		mpg.setGraphicsCurrentScreen( videoStatsFrame.getGraphicsConfiguration() );
-			
-		//BackgroundSetUtilities.addFromImgStackCollection(backgroundSet, stackCollection);
 	
 		VideoStatsModuleSubgroup liveSubgroup = new VideoStatsModuleSubgroup( new DefaultModuleState() );
-		
 
 		// The default background for our frames
 		{
@@ -286,23 +302,16 @@ public class VideoStatsEDT {
 		if (nrgStack.getDimensions().getZ() > 1) {
 			liveSubgroup.getDefaultModuleState().getLinkStateManager().setSliceNum( nrgStack.getDimensions().getZ() / 2 );
 		}
-
-		
-		//IAddVideoStatsModule adder = new IAddVideoStatsModule();
 		
 		IAddVideoStatsModule adder = new SubgrouppedAdder(videoStatsFrame, liveSubgroup.getDefaultModuleState().getState() );
 		adder = new AdderAddOverlaysWithStack(adder, videoStatsFrame.getThreadPool(), logErrorReporter.getErrorReporter());
 		
 		{
-			//GetNrgStackOperation getImageOperation = new GetNrgStackOperation( nrgStack );
-				
 			adder = new AdderAppendNRGStack(
 				adder,
 				() -> nrgStack
 			);
 		}
-		
-		
 		
 		try {
 			ISliderState sliderState = imageFrameCurrent.init(
@@ -363,7 +372,9 @@ public class VideoStatsEDT {
 			logErrorReporter.getErrorReporter().recordError(VideoStatsEDT.class, e);
 		}
 		
-		cfgNRGCurrent.addBoundChangeListener( new FrameBoundsChanged( cfgNRGCurrent ) );
+		cfgNRGCurrent.addBoundChangeListener(
+			new FrameBoundsChanged( cfgNRGCurrent )
+		);
 		
 		videoStatsFrame.getToolbar().addSeparator();
 		
@@ -373,8 +384,6 @@ public class VideoStatsEDT {
 		);
 		
 		videoStatsFrame.showWithDefaultView();
-
-		//SwingUtilities.invokeLater(r);
 	}
 	
 	
@@ -423,35 +432,4 @@ public class VideoStatsEDT {
 	private long getCrntTime() {
 		return System.currentTimeMillis() - startTime;
 	}
-	
-	
-	private class FrameBoundsChanged implements BoundChangeListener {
-		
-		private IBoundedRangeIncompleteDynamic frameBounds;
-		private int prevBoundMax;
-		
-		public FrameBoundsChanged( IBoundedRangeIncompleteDynamic frameBounds ) {
-			this.prevBoundMax = frameBounds.getMaximumIndex();
-			this.frameBounds = frameBounds;
-		}
-		
-		@Override
-		public void boundChanged(BoundChangeEvent e) {
-			
-			if (e.getBoundType()==BoundType.MAXIMUM) {
-				
-				int maxIndex = frameBounds.getMaximumIndex();
-				
-				if (videoStatsFrame.getLastFrameIndex()==prevBoundMax) {
-					videoStatsFrame.setFrameIndex(maxIndex);
-				}
-				prevBoundMax = maxIndex; 
-			}
-			
-			
-		}
-	}
-
-
-
 }

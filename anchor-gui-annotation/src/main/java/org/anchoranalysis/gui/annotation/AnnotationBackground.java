@@ -30,7 +30,7 @@ package org.anchoranalysis.gui.annotation;
 
 import org.anchoranalysis.core.bridge.IObjectBridge;
 import org.anchoranalysis.core.index.GetOperationFailedException;
-import org.anchoranalysis.core.name.provider.INamedProvider;
+import org.anchoranalysis.core.name.provider.NamedProvider;
 import org.anchoranalysis.core.progress.OperationWithProgressReporter;
 import org.anchoranalysis.core.progress.ProgressReporterMultiple;
 import org.anchoranalysis.core.progress.ProgressReporterOneOfMany;
@@ -50,7 +50,7 @@ public class AnnotationBackground {
 	
 	public AnnotationBackground(
 		ProgressReporterMultiple prm,
-		INamedProvider<Stack> backgroundStacks,
+		NamedProvider<Stack> backgroundStacks,
 		String stackNameVisualOriginal
 	) throws GetOperationFailedException {
 		backgroundSetOp = new OperationCreateBackgroundSet(backgroundStacks);
@@ -65,7 +65,7 @@ public class AnnotationBackground {
 				);
 			}
 			
-			dimViewer = new ImageDim(defaultBackground.bridgeElement(0).getDimensions());
+			dimViewer = defaultBackground.bridgeElement(0).getDimensions();
 		}		
 	}
 		

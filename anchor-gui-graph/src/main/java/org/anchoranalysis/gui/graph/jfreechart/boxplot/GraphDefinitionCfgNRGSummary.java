@@ -30,6 +30,7 @@ package org.anchoranalysis.gui.graph.jfreechart.boxplot;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Optional;
 
 import org.anchoranalysis.anchor.graph.AxisLimits;
 import org.anchoranalysis.anchor.graph.GraphInstance;
@@ -76,7 +77,7 @@ public class GraphDefinitionCfgNRGSummary extends GraphDefinition<Integer> {
 	
 	@Override
 	public GraphInstance create(Iterator<Integer> items,
-			AxisLimits domainLimits, AxisLimits rangeLimits) throws CreateException {
+			Optional<AxisLimits> domainLimits, Optional<AxisLimits> rangeLimits) throws CreateException {
 		return delegate.create(items, domainLimits, rangeLimits);
 	}
 

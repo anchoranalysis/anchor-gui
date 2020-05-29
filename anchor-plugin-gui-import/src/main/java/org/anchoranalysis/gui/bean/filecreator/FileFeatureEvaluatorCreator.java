@@ -109,7 +109,7 @@ public class FileFeatureEvaluatorCreator extends FileCreator {
 		SharedFeaturesInitParams soFeature = SharedFeaturesInitParams.create(so);
 		
 		try {
-			soFeature.addAll(
+			soFeature.populate(
 				listFeatures,
 				logger
 			);

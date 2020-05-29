@@ -30,7 +30,7 @@ package org.anchoranalysis.gui.finder.imgstackcollection;
 import org.anchoranalysis.core.cache.WrapOperationWithProgressReporterAsCached;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.index.GetOperationFailedException;
-import org.anchoranalysis.core.name.provider.INamedProvider;
+import org.anchoranalysis.core.name.provider.NamedProvider;
 import org.anchoranalysis.core.progress.CachedOperationWithProgressReporter;
 import org.anchoranalysis.core.progress.OperationWithProgressReporter;
 import org.anchoranalysis.core.progress.ProgressReporterNull;
@@ -53,7 +53,7 @@ public class FinderImgStackCollectionFromNrgStack extends FinderImgStackCollecti
 				}
 			);
 	
-	private CachedOperationWithProgressReporter<INamedProvider<Stack>,OperationFailedException> operationImgStackCollection =
+	private CachedOperationWithProgressReporter<NamedProvider<Stack>,OperationFailedException> operationImgStackCollection =
 		new WrapOperationWithProgressReporterAsCached<>(
 			pr -> {
 				NamedImgStackCollection stackCollection = new NamedImgStackCollection(); 
@@ -80,7 +80,7 @@ public class FinderImgStackCollectionFromNrgStack extends FinderImgStackCollecti
 	}
 
 	@Override
-	public INamedProvider<Stack> getImgStackCollection() throws GetOperationFailedException {
+	public NamedProvider<Stack> getImgStackCollection() throws GetOperationFailedException {
 		try {
 			return operationImgStackCollection.doOperation( ProgressReporterNull.get() );
 		} catch (OperationFailedException e) {
@@ -89,7 +89,7 @@ public class FinderImgStackCollectionFromNrgStack extends FinderImgStackCollecti
 	}
 	
 	@Override
-	public OperationWithProgressReporter<INamedProvider<Stack>,OperationFailedException> getImgStackCollectionAsOperationWithProgressReporter() {
+	public OperationWithProgressReporter<NamedProvider<Stack>,OperationFailedException> getImgStackCollectionAsOperationWithProgressReporter() {
 		return operationImgStackCollection;
 	}
 

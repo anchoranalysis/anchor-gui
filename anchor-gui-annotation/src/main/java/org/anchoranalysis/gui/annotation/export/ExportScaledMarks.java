@@ -28,6 +28,7 @@ package org.anchoranalysis.gui.annotation.export;
 
 import java.io.File;
 import java.nio.file.Path;
+import java.util.Optional;
 
 import javax.swing.JFrame;
 
@@ -69,15 +70,15 @@ public class ExportScaledMarks extends ExportAnnotation {
 
 		try {
 			// Read file
-			MarkAnnotation ann = reader.read(path);
+			Optional<MarkAnnotation> ann = reader.read(path);
 			
-			if (ann==null) {
+			if (!ann.isPresent()) {
 				throw new OperationFailedException("There is no annotation to export");
 			}
 			
 			// Scale annotation
 			if (scaleFactor!=1.0) {
-				ann.scaleXY( scaleFactor );
+				ann.get().scaleXY( scaleFactor );
 			}
 
 			MarkAnnotationWriter writer = new MarkAnnotationWriter();
@@ -85,9 +86,9 @@ public class ExportScaledMarks extends ExportAnnotation {
 			AnnotationWriterGUI<MarkAnnotation> writerGUI = new AnnotationWriterGUI<>(
 				writer,
 				annotationRefresher,
-				null
+				Optional.empty()
 			);
-			writerGUI.saveAnnotation(ann, path, parentFrame);
+			writerGUI.saveAnnotation(ann.get(), path, parentFrame);
 		} catch (AnchorIOException | OptionalOperationUnsupportedException e) {
 			throw new OperationFailedException(e);
 		}

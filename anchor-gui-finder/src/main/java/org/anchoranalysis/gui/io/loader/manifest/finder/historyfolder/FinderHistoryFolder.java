@@ -29,7 +29,7 @@ package org.anchoranalysis.gui.io.loader.manifest.finder.historyfolder;
 
 import java.util.List;
 
-import org.anchoranalysis.core.cache.Operation;
+import org.anchoranalysis.core.functional.Operation;
 import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.index.container.IBoundedIndexContainer;
 import org.anchoranalysis.gui.container.ContainerGetter;

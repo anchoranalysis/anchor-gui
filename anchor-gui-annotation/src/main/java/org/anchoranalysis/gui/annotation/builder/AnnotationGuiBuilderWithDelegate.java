@@ -28,17 +28,20 @@ package org.anchoranalysis.gui.annotation.builder;
 
 import java.io.File;
 import java.nio.file.Path;
+import java.util.Optional;
+
 import org.anchoranalysis.annotation.io.bean.strategy.AnnotatorStrategy;
 import org.anchoranalysis.annotation.io.input.AnnotationWithStrategy;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.index.GetOperationFailedException;
-import org.anchoranalysis.core.name.provider.INamedProvider;
+import org.anchoranalysis.core.name.provider.NamedProvider;
 import org.anchoranalysis.core.progress.OperationWithProgressReporter;
 import org.anchoranalysis.core.progress.ProgressReporterMultiple;
 import org.anchoranalysis.gui.annotation.AnnotationBackground;
 import org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.definition.ChangeableBackgroundDefinition;
 import org.anchoranalysis.gui.videostats.internalframe.annotator.AnnotationInitParams;
 import org.anchoranalysis.image.stack.Stack;
+import org.anchoranalysis.io.error.AnchorIOException;
 
 /** 
  * Convenience class for using a delegate to populate a lot of fields automatically
@@ -66,7 +69,7 @@ public abstract class AnnotationGuiBuilderWithDelegate<T extends AnnotationInitP
 		
 	// Cached-operation
 	@Override
-	public OperationWithProgressReporter<INamedProvider<Stack>,CreateException> stacks() {
+	public OperationWithProgressReporter<NamedProvider<Stack>,CreateException> stacks() {
 		return delegate.stacks();
 	}
 	
@@ -76,7 +79,7 @@ public abstract class AnnotationGuiBuilderWithDelegate<T extends AnnotationInitP
 	}
 	
 	@Override
-	public File associatedFile() {
+	public Optional<File> associatedFile() {
 		return delegate.associatedFile();
 	}
 	
@@ -84,15 +87,19 @@ public abstract class AnnotationGuiBuilderWithDelegate<T extends AnnotationInitP
 		return delegate.getStrategy();
 	}
 	
-	protected Path pathForBinding() {
+	protected Optional<Path> pathForBinding() {
 		return delegate.pathForBinding();
+	}
+	
+	protected Path pathForBindingRequired() throws AnchorIOException {
+		return delegate.pathForBindingRequired();
 	}
 	
 	protected Path annotationPath() {
 		return delegate.getAnnotationPath();
 	}
 
-	protected AnnotationBackground createBackground(ProgressReporterMultiple prm, INamedProvider<Stack> backgroundStacks ) throws CreateException {
+	protected AnnotationBackground createBackground(ProgressReporterMultiple prm, NamedProvider<Stack> backgroundStacks ) throws CreateException {
 		try {
 			return new AnnotationBackground(
 				prm,
@@ -103,4 +110,6 @@ public abstract class AnnotationGuiBuilderWithDelegate<T extends AnnotationInitP
 			throw new CreateException(e);
 		}
 	}
+
+
 }

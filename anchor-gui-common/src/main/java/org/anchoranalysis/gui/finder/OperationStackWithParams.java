@@ -30,7 +30,7 @@ import java.io.IOException;
 
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.index.GetOperationFailedException;
-import org.anchoranalysis.core.name.provider.INamedProvider;
+import org.anchoranalysis.core.name.provider.NamedProvider;
 import org.anchoranalysis.core.progress.CachedOperationWithProgressReporter;
 import org.anchoranalysis.core.progress.OperationWithProgressReporter;
 import org.anchoranalysis.core.progress.ProgressReporter;
@@ -83,7 +83,7 @@ class OperationStackWithParams extends CachedOperationWithProgressReporter<NRGSt
 		}
 	}
 
-	public OperationWithProgressReporter<INamedProvider<Stack>,OperationFailedException> getOperationStackCollection() {
+	public OperationWithProgressReporter<NamedProvider<Stack>,OperationFailedException> getOperationStackCollection() {
 		return nrgStackOperation.getOperationStackCollection();
 	}
 }

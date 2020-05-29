@@ -32,6 +32,8 @@ import java.awt.Dimension;
 import java.awt.event.ComponentEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.util.Optional;
+
 import javax.swing.ActionMap;
 import javax.swing.BorderFactory;
 import javax.swing.InputMap;
@@ -310,8 +312,8 @@ public class InternalFrameCanvas {
 		return canvas.intensityStrAtAbs(x, y);
 	}
 	
-	// Null means it cannot be determined
-	public VoxelDataType associatedDataType() {
+	// empty() means it cannot be determined
+	public Optional<VoxelDataType> associatedDataType() {
 		return canvas.associatedDataType();
 	}
 

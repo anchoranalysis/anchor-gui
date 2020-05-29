@@ -41,9 +41,9 @@ import org.anchoranalysis.bean.AnchorBean;
 import org.anchoranalysis.bean.NamedBean;
 import org.anchoranalysis.bean.define.Define;
 import org.anchoranalysis.core.cache.CachedOperation;
-import org.anchoranalysis.core.cache.Operation;
 import org.anchoranalysis.core.error.CreateException;
-import org.anchoranalysis.core.name.provider.INamedProvider;
+import org.anchoranalysis.core.functional.Operation;
+import org.anchoranalysis.core.name.provider.NamedProvider;
 import org.anchoranalysis.core.params.KeyValueParams;
 import org.anchoranalysis.core.progress.OperationWithProgressReporter;
 import org.anchoranalysis.core.progress.ProgressReporterNull;
@@ -54,7 +54,7 @@ import org.anchoranalysis.mpp.io.input.MPPInitParamsFactory;
 
 public class OperationInitParams extends CachedOperation<MPPInitParams,CreateException> {
 
-	private OperationWithProgressReporter<INamedProvider<Stack>,? extends Throwable> namedImgStackCollection;
+	private OperationWithProgressReporter<NamedProvider<Stack>,? extends Throwable> namedImgStackCollection;
 	private Operation<KeyValueParams,IOException> keyParams;
 	
 	private Define define;
@@ -62,7 +62,7 @@ public class OperationInitParams extends CachedOperation<MPPInitParams,CreateExc
 	private BoundIOContext context;
 	
 	public OperationInitParams(
-			OperationWithProgressReporter<INamedProvider<Stack>,? extends Throwable> namedImgStackCollection,
+			OperationWithProgressReporter<NamedProvider<Stack>,? extends Throwable> namedImgStackCollection,
 			Operation<KeyValueParams,IOException> keyParams,
 			Define define,
 			BoundIOContext context

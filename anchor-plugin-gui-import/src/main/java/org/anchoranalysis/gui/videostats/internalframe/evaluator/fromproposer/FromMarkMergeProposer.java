@@ -2,7 +2,7 @@ package org.anchoranalysis.gui.videostats.internalframe.evaluator.fromproposer;
 
 import org.anchoranalysis.anchor.mpp.bean.init.MPPInitParams;
 import org.anchoranalysis.anchor.mpp.bean.proposer.MarkMergeProposer;
-import org.anchoranalysis.core.name.provider.INamedProvider;
+import org.anchoranalysis.core.name.provider.NamedProvider;
 
 /*
  * #%L
@@ -42,7 +42,7 @@ public class FromMarkMergeProposer extends ProposalOperationCreatorFromProposer<
 	}
 
 	@Override
-	public INamedProvider<MarkMergeProposer> allProposers(
+	public NamedProvider<MarkMergeProposer> allProposers(
 			MPPInitParams so) {
 		return so.getMarkMergeProposerSet();
 	}

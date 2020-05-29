@@ -30,6 +30,7 @@ import java.nio.file.Path;
 
 
 import java.util.List;
+import java.util.Optional;
 
 import org.anchoranalysis.anchor.mpp.feature.bean.mark.MarkEvaluator;
 import org.anchoranalysis.anchor.mpp.feature.bean.nrgscheme.NRGSchemeCreator;
@@ -70,7 +71,7 @@ public class InteractiveBrowserInput implements InputFromManager {
 		
 		try {
 			// Adds the feature-lists to the shared-objects
-			soFeature.addAll(namedItemSharedFeatureList, logger);
+			soFeature.populate(namedItemSharedFeatureList, logger);
 			
 			addKeyValueParams( soParams );
 			addFilePaths( soParams );
@@ -106,8 +107,8 @@ public class InteractiveBrowserInput implements InputFromManager {
 	}
 
 	@Override
-	public Path pathForBinding() {
-		return null;
+	public Optional<Path> pathForBinding() {
+		return Optional.empty();
 	}
 	public RasterReader getRasterReader() {
 		return rasterReader;

@@ -1,5 +1,7 @@
 package org.anchoranalysis.gui.annotation.strategy.builder.mark;
 
+
+
 /*-
  * #%L
  * anchor-gui-annotation
@@ -27,11 +29,13 @@ package org.anchoranalysis.gui.annotation.strategy.builder.mark;
  */
 
 import java.nio.file.Path;
+import java.util.Optional;
 
 import org.anchoranalysis.annotation.io.input.AnnotationWithStrategy;
 import org.anchoranalysis.annotation.io.mark.MarkAnnotationReader;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.OperationFailedException;
+import org.anchoranalysis.core.functional.OptionalUtilities;
 import org.anchoranalysis.core.log.LogErrorReporter;
 import org.anchoranalysis.core.progress.ProgressReporterMultiple;
 import org.anchoranalysis.gui.annotation.InitAnnotation;
@@ -49,7 +53,7 @@ import org.anchoranalysis.gui.videostats.internalframe.annotator.AnnotationPanel
 import org.anchoranalysis.gui.videostats.internalframe.annotator.navigation.PanelNavigation;
 import org.anchoranalysis.gui.videostats.module.VideoStatsModuleCreateException;
 import org.anchoranalysis.io.error.AnchorIOException;
-import org.anchoranalysis.plugin.annotation.bean.strategy.GeneratorPathRslvr;
+import org.anchoranalysis.plugin.annotation.bean.strategy.PathFromGenerator;
 import org.anchoranalysis.plugin.annotation.bean.strategy.MarkProposerStrategy;
 
 public class BuilderProposeMarks extends AnnotationGuiBuilderWithDelegate<InitParamsProposeMarks,MarkProposerStrategy> {
@@ -64,16 +68,20 @@ public class BuilderProposeMarks extends AnnotationGuiBuilderWithDelegate<InitPa
 	}
 	
 	private OpenAnnotationMPP createOpenAnnotation() throws AnchorIOException {
-		Path cfgPath = new GeneratorPathRslvr(pathForBinding()).pathOrNull(
-			getStrategy().getDefaultCfgFilePathGenerator()
-		); 
+		
+		Optional<Path> cfgPath = OptionalUtilities.mapBoth(
+			getStrategy().cfgFilePathGenerator(),
+			pathForBinding(),
+			PathFromGenerator::derivePath
+		);
+		
 		return new OpenAnnotationMPP(
 			annotationPath(),
 			cfgPath,
 			annotationReader
 		);
 	}
-
+	
 	@Override
 	public InitParamsProposeMarks createInitParams(
 		ProgressReporterMultiple prm,
@@ -85,7 +93,7 @@ public class BuilderProposeMarks extends AnnotationGuiBuilderWithDelegate<InitPa
 		try {
 			MarkAnnotator markAnnotator = CreateMarkEvaluator.apply(
 				context.getMarkEvaluatorManager(),
-				pathForBinding(),
+				pathForBindingRequired(),
 				getStrategy(),
 				stacks(),
 				logErrorReporter
@@ -104,7 +112,7 @@ public class BuilderProposeMarks extends AnnotationGuiBuilderWithDelegate<InitPa
 				annotationExst
 			);
 			
-		} catch (VideoStatsModuleCreateException e) {
+		} catch (VideoStatsModuleCreateException | AnchorIOException e) {
 			throw new CreateException(e);
 		}
 	}
@@ -131,12 +139,16 @@ public class BuilderProposeMarks extends AnnotationGuiBuilderWithDelegate<InitPa
 		AdditionalFramesContext context
 	) throws OperationFailedException {
 		
-		ShowAdditionalFrames.apply(
-			paramsInit,
-			context,
-			pathForBinding(),
-			getStrategy()
-		);
+		try {
+			ShowAdditionalFrames.apply(
+				paramsInit,
+				context,
+				pathForBindingRequired(),
+				getStrategy()
+			);
+		} catch (AnchorIOException e) {
+			throw new OperationFailedException(e);
+		}
 		
 	}
 	

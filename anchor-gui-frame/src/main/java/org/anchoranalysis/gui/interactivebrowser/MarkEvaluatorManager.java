@@ -36,10 +36,10 @@ import java.util.Map;
 import java.util.Set;
 
 import org.anchoranalysis.anchor.mpp.feature.bean.mark.MarkEvaluator;
-import org.anchoranalysis.core.cache.Operation;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.OperationFailedException;
-import org.anchoranalysis.core.name.provider.INamedProvider;
+import org.anchoranalysis.core.functional.Operation;
+import org.anchoranalysis.core.name.provider.NamedProvider;
 import org.anchoranalysis.core.params.KeyValueParams;
 import org.anchoranalysis.core.progress.OperationWithProgressReporter;
 import org.anchoranalysis.image.stack.Stack;
@@ -62,7 +62,7 @@ public class MarkEvaluatorManager {
 	}
 	
 	public MarkEvaluatorSetForImage createSetForStackCollection(
-		OperationWithProgressReporter<INamedProvider<Stack>,? extends Throwable> namedImgStackCollection,
+		OperationWithProgressReporter<NamedProvider<Stack>,? extends Throwable> namedImgStackCollection,
 		Operation<KeyValueParams,IOException> keyParams
 	) throws CreateException {
 		

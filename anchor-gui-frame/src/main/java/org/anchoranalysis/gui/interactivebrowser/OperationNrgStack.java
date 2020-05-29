@@ -30,9 +30,9 @@ import org.anchoranalysis.anchor.mpp.bean.init.MPPInitParams;
 
 
 import org.anchoranalysis.core.cache.CachedOperation;
-import org.anchoranalysis.core.cache.Operation;
 import org.anchoranalysis.core.error.CreateException;
-import org.anchoranalysis.core.name.provider.INamedProvider;
+import org.anchoranalysis.core.functional.Operation;
+import org.anchoranalysis.core.name.provider.NamedProvider;
 import org.anchoranalysis.core.params.KeyValueParams;
 import org.anchoranalysis.core.progress.OperationWithProgressReporter;
 import org.anchoranalysis.core.progress.ProgressReporter;
@@ -73,7 +73,7 @@ class OperationNrgStack extends CachedOperation<NRGStackWithParams,CreateExcepti
 			
 			MPPInitParams soMPP = operationProposerSharedObjects.doOperation();
 			
-			INamedProvider<Stack> nic = soMPP.getImage().getStackCollection();
+			NamedProvider<Stack> nic = soMPP.getImage().getStackCollection();
 			
 			// We expects the keys to be the indexes
 			{

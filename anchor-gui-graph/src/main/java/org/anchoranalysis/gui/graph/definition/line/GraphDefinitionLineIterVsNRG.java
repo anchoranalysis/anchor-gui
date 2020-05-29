@@ -28,6 +28,7 @@ package org.anchoranalysis.gui.graph.definition.line;
 
 
 import java.util.Iterator;
+import java.util.Optional;
 
 import org.anchoranalysis.anchor.graph.AxisLimits;
 import org.anchoranalysis.anchor.graph.GraphInstance;
@@ -87,7 +88,7 @@ public class GraphDefinitionLineIterVsNRG extends GraphDefinition<GraphDefinitio
 	}
 
 	@Override
-	public GraphInstance create( Iterator<GraphDefinitionLineIterVsNRG.Item> items, AxisLimits domainLimits, AxisLimits rangeLimits ) throws CreateException {
+	public GraphInstance create( Iterator<GraphDefinitionLineIterVsNRG.Item> items, Optional<AxisLimits> domainLimits, Optional<AxisLimits> rangeLimits ) throws CreateException {
 		LinePlot<GraphDefinitionLineIterVsNRG.Item> delegate = new LinePlot<>(
 			getTitle(),
 			new String[]{"NRG"},

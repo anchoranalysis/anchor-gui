@@ -88,12 +88,9 @@ class StringHelper {
 	}
 	
 	public String typeString() {
-		VoxelDataType dataType = internalFrameCanvas.associatedDataType();
-		if (dataType==null) {
-			return "indeterminable";
-		} else {
-			return dataType.toString();
-		}
+		return internalFrameCanvas.associatedDataType()
+				.map(VoxelDataType::toString)
+				.orElse("indeterminable");
 	}
 		
 	public String extraString() {

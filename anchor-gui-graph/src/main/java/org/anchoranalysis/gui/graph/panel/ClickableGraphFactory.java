@@ -27,6 +27,7 @@ package org.anchoranalysis.gui.graph.panel;
  */
 
 import java.util.Iterator;
+import java.util.Optional;
 
 import org.anchoranalysis.anchor.graph.AxisLimits;
 import org.anchoranalysis.anchor.graph.GraphInstance;
@@ -51,8 +52,8 @@ public class ClickableGraphFactory {
 	public static <T> ClickableGraphInstance create(
 		GraphDefinition<T> definition,
 		Iterator<T> items,
-		AxisLimits domainLimits,
-		AxisLimits rangeLimits
+		Optional<AxisLimits> domainLimits,
+		Optional<AxisLimits> rangeLimits
 	) throws CreateException {
 		GraphInstance instance = definition.create(items, domainLimits, rangeLimits);
 		return createWithXAxisIndex(instance, domainLimits);
@@ -60,15 +61,15 @@ public class ClickableGraphFactory {
 
 	private static <T,S extends Dataset> ClickableGraphInstance createWithXAxisIndex(
 		GraphInstance graphInstance,
-		AxisLimits domainLimits
+		Optional<AxisLimits> domainLimits
 	) throws CreateException {
         
         ClickableGraphInstance gl = new ClickableGraphInstance(graphInstance);
         
-        if (domainLimits!=null) {
+        if (domainLimits.isPresent()) {
 	        gl.addXAxisIndexListener(
-	        	minAxis(domainLimits),
-	        	maxAxis(domainLimits)
+	        	minAxis(domainLimits.get()),
+	        	maxAxis(domainLimits.get())
 	        );
         }
 		return gl;

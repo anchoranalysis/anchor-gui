@@ -37,7 +37,7 @@ import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.index.container.IBoundedIndexContainer;
 import org.anchoranalysis.gui.bean.exporttask.ExportTaskFailedException;
 import org.anchoranalysis.gui.bean.exporttask.ExportTaskParams;
-import org.anchoranalysis.io.generator.sequence.IGeneratorSequenceNonIncremental;
+import org.anchoranalysis.io.generator.sequence.GeneratorSequenceNonIncremental;
 import org.anchoranalysis.io.manifest.sequencetype.IncrementalSequenceType;
 import org.anchoranalysis.io.output.bound.BoundOutputManagerRouteErrors;
 import org.anchoranalysis.io.output.error.OutputWriteFailedException;
@@ -66,7 +66,7 @@ public class ExportTaskBoundedIndexContainerGeneratorSeries<T> extends AnchorBea
 	public ExportTaskBoundedIndexContainerGeneratorSeries() {
 	}	
 	
-	public boolean execute( ExportTaskParams params, ProgressMonitor progressMonitor, IGeneratorSequenceNonIncremental<MappedFrom<T>> generatorSequenceWriter, BoundOutputManagerRouteErrors outputManager, String outputName ) throws ExportTaskFailedException {
+	public boolean execute( ExportTaskParams params, ProgressMonitor progressMonitor, GeneratorSequenceNonIncremental<MappedFrom<T>> generatorSequenceWriter, BoundOutputManagerRouteErrors outputManager, String outputName ) throws ExportTaskFailedException {
 		try {
 			return execute(
 				containerBridge.bridgeElement(params),
@@ -105,7 +105,7 @@ public class ExportTaskBoundedIndexContainerGeneratorSeries<T> extends AnchorBea
 		return containerBridge;
 	}
 	
-	private boolean execute( IBoundedIndexContainer<T> cfgNRGCntr, ProgressMonitor progressMonitor, IGeneratorSequenceNonIncremental<MappedFrom<T>> generatorSequenceWriter, BoundOutputManagerRouteErrors outputManager, String outputName  ) throws OutputWriteFailedException, GetOperationFailedException {
+	private boolean execute( IBoundedIndexContainer<T> cfgNRGCntr, ProgressMonitor progressMonitor, GeneratorSequenceNonIncremental<MappedFrom<T>> generatorSequenceWriter, BoundOutputManagerRouteErrors outputManager, String outputName  ) throws OutputWriteFailedException, GetOperationFailedException {
 		
 		int min = cfgNRGCntr.getMinimumIndex();
 		int max = cfgNRGCntr.getMaximumIndex();
@@ -174,7 +174,7 @@ public class ExportTaskBoundedIndexContainerGeneratorSeries<T> extends AnchorBea
 		return (int) Math.floor( incr ) + 1;
 	}
 	
-	private void addToWriter( IBoundedIndexContainer<T> cntr, IGeneratorSequenceNonIncremental<MappedFrom<T>> generatorSequenceWriter, int i, int indexOut ) throws OutputWriteFailedException, GetOperationFailedException {
+	private void addToWriter( IBoundedIndexContainer<T> cntr, GeneratorSequenceNonIncremental<MappedFrom<T>> generatorSequenceWriter, int i, int indexOut ) throws OutputWriteFailedException, GetOperationFailedException {
 		int index = cntr.previousEqualIndex(i);
 		generatorSequenceWriter.add(
 			new MappedFrom<>( i, cntr.get(index) ),
