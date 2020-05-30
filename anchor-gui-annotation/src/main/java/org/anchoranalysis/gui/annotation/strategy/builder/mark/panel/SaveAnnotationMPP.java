@@ -28,6 +28,7 @@ package org.anchoranalysis.gui.annotation.strategy.builder.mark.panel;
 
 import java.awt.Component;
 import java.nio.file.Path;
+import java.util.Optional;
 import java.util.function.Consumer;
 
 import javax.swing.JComponent;
@@ -35,6 +36,7 @@ import javax.swing.JOptionPane;
 
 import org.anchoranalysis.annotation.mark.MarkAnnotation;
 import org.anchoranalysis.annotation.mark.RejectionReason;
+import org.anchoranalysis.core.error.friendly.AnchorImpossibleSituationException;
 import org.anchoranalysis.gui.annotation.save.ISaveAnnotation;
 import org.anchoranalysis.gui.videostats.internalframe.annotator.AnnotationWriterGUI;
 import org.anchoranalysis.gui.videostats.internalframe.annotator.currentstate.IQueryAcceptedRejected;
@@ -78,19 +80,16 @@ class SaveAnnotationMPP implements ISaveAnnotation<MarkAnnotation> {
 	@Override
 	public void skipAnnotation( IQueryAcceptedRejected query, AnnotationWriterGUI<MarkAnnotation> annotationWriter, JComponent dialogParent ) {
 		
-		RejectionReason rejectionReason = promptForRejectionReason();
-		if (rejectionReason==null) {
-			return;
-		}
-		
-		saveAnnotation(
-			annotationWriter,
-			annotation -> annotation.markRejected(
-				query.getCfgAccepted(),
-				query.getCfgRejected(),
-				rejectionReason
-			),
-			dialogParent
+		promptForRejectionReason().ifPresent( rejectionReason->
+			saveAnnotation(
+				annotationWriter,
+				annotation -> annotation.markRejected(
+					query.getCfgAccepted(),
+					query.getCfgRejected(),
+					rejectionReason
+				),
+				dialogParent
+			)
 		);
 	}
 
@@ -103,7 +102,7 @@ class SaveAnnotationMPP implements ISaveAnnotation<MarkAnnotation> {
 	
 
 	// Returns NULL if cancelled
-	private static RejectionReason promptForRejectionReason() {
+	private static Optional<RejectionReason> promptForRejectionReason() {
 		
 		String[] choices = {"Boundary is incorrect", "Image quality is too poor", "Incorrect image content", "Other", "Cancel"};
 		
@@ -120,19 +119,26 @@ class SaveAnnotationMPP implements ISaveAnnotation<MarkAnnotation> {
 
 		switch (response) {
 		  case 0: 
-		      return RejectionReason.INCORRECT_BOUNDARY;
+		      return Optional.of(
+		    	 RejectionReason.INCORRECT_BOUNDARY
+		      );
 		  case 1:
-			  return RejectionReason.POOR_IMAGE_QUALITY;
+			  return Optional.of(
+				 RejectionReason.POOR_IMAGE_QUALITY
+			  );
 		  case 2:
-		      return RejectionReason.INCORRECT_IMAGE_CONTENT;
+		      return Optional.of(
+		    	 RejectionReason.INCORRECT_IMAGE_CONTENT
+		    );
 		  case 3:
-		      return RejectionReason.OTHER;
+		      return Optional.of(
+		    	 RejectionReason.OTHER
+		    );
 		  case 4:
 		  case -1:
-		      return null;
+		      return Optional.empty();
 		  default:
+			  throw new AnchorImpossibleSituationException();
 		}
-        assert false;
-        return null;
 	}
 }

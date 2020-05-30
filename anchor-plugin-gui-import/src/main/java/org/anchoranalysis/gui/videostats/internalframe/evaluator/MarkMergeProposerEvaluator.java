@@ -29,6 +29,7 @@ package org.anchoranalysis.gui.videostats.internalframe.evaluator;
 
 import java.awt.Color;
 import java.util.List;
+import java.util.Optional;
 
 import org.anchoranalysis.anchor.mpp.bean.cfg.CfgGen;
 import org.anchoranalysis.anchor.mpp.bean.proposer.MarkMergeProposer;
@@ -76,18 +77,20 @@ public class MarkMergeProposerEvaluator implements ProposalOperationCreator {
 				PxlMarkMemo markMemo1 = context.create( mark1 );
 				PxlMarkMemo markMemo2 = context.create( mark2 );
 				
-				Mark proposedMark = markMergeProposer.propose( markMemo1, markMemo2, context.replaceError(errorNode) );
+				Optional<Mark> proposedMark = markMergeProposer.propose( markMemo1, markMemo2, context.replaceError(errorNode) );
 				
 				ProposedCfg er = new ProposedCfg();
 				er.setDimensions( context.getDimensions() );
 				
-				if (proposedMark!=null) {
+				if (proposedMark.isPresent()) {
 					er.setSuccess( true );
 					
 					ColoredCfg coloredCfg = cfgForMark(proposedMark);
 					er.setColoredCfg( coloredCfg );	
 					er.setCfgToRedraw( cfg.createMerged( coloredCfg.getCfg()) );
-					er.setCfgCore( new Cfg(proposedMark) );
+					er.setCfgCore(
+						new Cfg(proposedMark.get())
+					);
 				} else {
 					er.setCfgToRedraw( cfg );
 				}
@@ -98,12 +101,12 @@ public class MarkMergeProposerEvaluator implements ProposalOperationCreator {
 
 	}
 
-	private ColoredCfg cfgForMark( Mark mark) {
+	private ColoredCfg cfgForMark(Optional<Mark> mark) {
 		
 		ColoredCfg cfgOut = new ColoredCfg();
-		if (mark!=null) {
+		if (mark.isPresent()) {
 		
-			Mark markNew = mark.duplicate();
+			Mark markNew = mark.get().duplicate();
 			markNew.setId(0);
 			
 			cfgOut.addChangeID( markNew, new RGBColor( Color.BLUE)  );
@@ -111,22 +114,28 @@ public class MarkMergeProposerEvaluator implements ProposalOperationCreator {
 	
 		
 		// Allows us to associate a list of points with  the mark
-		{
-			List<Point3f> pts = markMergeProposer.getLastPnts1();
-			if (pts!=null) {
-				cfgOut.addChangeID( MarkPointListFactory.createMarkFromPoints3f(pts,false), new RGBColor( Color.GREEN) );	// 1 is just to give us a different color
-			}
-		}
+		addToOut(
+			markMergeProposer.getLastPnts1(),
+			Color.GREEN,
+			cfgOut
+		);
 		
 		// Allows us to associate a list of points with  the mark
-		{
-			List<Point3f> pts = markMergeProposer.getLastPnts2();
-			if (pts!=null) {
-				cfgOut.addChangeID( MarkPointListFactory.createMarkFromPoints3f(pts,false), new RGBColor( Color.YELLOW) );	// 1 is just to give us a different color
-			}
-		}
+		addToOut(
+			markMergeProposer.getLastPnts2(),
+			Color.YELLOW,
+			cfgOut
+		);
 		
 		return cfgOut;
 	}
-
+	
+	private static void addToOut( Optional<List<Point3f>> pts, Color color, ColoredCfg cfgOut ) {
+		if (pts.isPresent()) {
+			cfgOut.addChangeID(
+				MarkPointListFactory.createMarkFromPoints3f(pts.get(),false),
+				new RGBColor(color)
+			);	// 1 is just to give us a different color
+		}
+	}
 }

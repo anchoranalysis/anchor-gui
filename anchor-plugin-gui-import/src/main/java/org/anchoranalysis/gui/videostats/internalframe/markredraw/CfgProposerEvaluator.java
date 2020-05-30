@@ -1,13 +1,14 @@
 package org.anchoranalysis.gui.videostats.internalframe.markredraw;
 
 import java.awt.Color;
+import java.util.Optional;
 
 import org.anchoranalysis.anchor.mpp.bean.cfg.CfgGen;
 import org.anchoranalysis.anchor.mpp.bean.proposer.CfgProposer;
 import org.anchoranalysis.anchor.mpp.cfg.Cfg;
 import org.anchoranalysis.anchor.mpp.cfg.ColoredCfg;
 import org.anchoranalysis.anchor.mpp.mark.Mark;
-import org.anchoranalysis.anchor.mpp.proposer.ProposalAbnormalFailureException;
+
 
 /*-
  * #%L
@@ -36,7 +37,6 @@ import org.anchoranalysis.anchor.mpp.proposer.ProposalAbnormalFailureException;
  */
 
 import org.anchoranalysis.anchor.mpp.proposer.ProposerContext;
-import org.anchoranalysis.anchor.mpp.proposer.error.ErrorNode;
 import org.anchoranalysis.core.color.ColorList;
 import org.anchoranalysis.core.color.RGBColor;
 import org.anchoranalysis.core.geometry.Point3d;
@@ -54,13 +54,13 @@ public class CfgProposerEvaluator implements ProposalOperationCreator {
 		assert( proposer!=null );
 	}
 
-	private static ColoredCfg generateOutputCfg( Cfg cfg ) {
+	private static ColoredCfg generateOutputCfg( Optional<Cfg> cfg ) {
 		
-		if (cfg==null) {
+		if (!cfg.isPresent()) {
 			return new ColoredCfg();
 		}
 		
-		Cfg cfgNew = cfg.deepCopy();
+		Cfg cfgNew = cfg.get().deepCopy();
 		
 		// We replace all the IDs with 0
 		for (Mark m : cfgNew) {
@@ -77,37 +77,27 @@ public class CfgProposerEvaluator implements ProposalOperationCreator {
 		ProposerContext context,
 		final CfgGen cfgGen
 	) {
-		// We actually do the proposal
-		
-		// A holder
-		
-		// Do proposal
-		ProposalOperation doProposal = new ProposalOperation() {
-			
-			@Override
-			public ProposedCfg propose(ErrorNode errorNode) throws ProposalAbnormalFailureException {
-				
-				ProposedCfg er = new ProposedCfg();
+		return errorNode -> {
+			ProposedCfg er = new ProposedCfg();
 
-				// TODO replace proposer
-				Cfg cfg = proposer.propose( cfgGen, context.replaceError(errorNode) );
-				er.setSuccess(cfg!=null);
-				
-				ColoredCfg coloredCfg = generateOutputCfg( cfg );
+			// TODO replace proposer
+			Optional<Cfg> cfgProp = proposer.propose( cfgGen, context.replaceError(errorNode) );
+			er.setSuccess(cfgProp.isPresent());
+
+			
+			if (cfgProp.isPresent()) {
+								
+				ColoredCfg coloredCfg = generateOutputCfg( cfgProp );
 				er.setColoredCfg( coloredCfg );
-				er.setCfgToRedraw( cfg.createMerged(coloredCfg.getCfg()) );
-				er.setCfgCore(cfg);
+				er.setCfgToRedraw(
+					cfgProp.get().createMerged(coloredCfg.getCfg())
+				);
+				er.setCfgCore(cfgProp.get());
 				
-				if (cfg!=null) {
-					er.setSuggestedSliceNum( (int) cfg.get(0).centerPoint().getZ() );
-				}
-				return er;
+				er.setSuggestedSliceNum( (int) cfgProp.get().get(0).centerPoint().getZ() );
 			}
+			return er;
 		};
-	
-		
-		//lastMark = m;
-		return doProposal;
 	}
 	
 	private static ColorList createDefaultColorList() {
