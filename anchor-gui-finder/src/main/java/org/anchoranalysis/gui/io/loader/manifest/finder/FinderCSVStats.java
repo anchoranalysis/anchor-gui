@@ -27,7 +27,6 @@ package org.anchoranalysis.gui.io.loader.manifest.finder;
  */
 
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,6 +37,7 @@ import org.anchoranalysis.gui.io.loader.manifest.finder.csvstatistic.CSVStatisti
 import org.anchoranalysis.gui.io.loader.manifest.finder.csvstatistic.CSVStatisticLoader;
 import org.anchoranalysis.gui.io.loader.manifest.finder.csvstatistic.CSVStatisticLoaderEventAggregate;
 import org.anchoranalysis.gui.io.loader.manifest.finder.csvstatistic.CSVStatisticLoaderIntervalAggregate;
+import org.anchoranalysis.io.csv.reader.CSVReaderException;
 import org.anchoranalysis.io.manifest.ManifestRecorder;
 import org.anchoranalysis.io.manifest.file.FileWrite;
 import org.anchoranalysis.io.manifest.finder.FinderSingleFile;
@@ -97,7 +97,7 @@ public class FinderCSVStats extends FinderSingleFile {
 			}
 			return loader.createContainerFromCSV(fileWrite.calcPath() );
 			
-		} catch (IOException e) {
+		} catch (CSVReaderException e) {
 			throw new GetOperationFailedException(e);
 		}
 	}
