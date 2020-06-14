@@ -40,8 +40,7 @@ public class CreateIndFromObj extends CreateFeatureInput<FeatureInput> {
 	
 	public CreateIndFromObj(ObjMask objMask, NRGStackWithParams nrgStack) {
 		super();
-		input = new FeatureInputSingleObj( objMask );
-		input.setNrgStack(nrgStack);
+		input = new FeatureInputSingleObj(objMask, nrgStack);
 	}
 
 	@Override
