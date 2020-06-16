@@ -44,7 +44,7 @@ import org.anchoranalysis.gui.file.opened.OpenedFileGUI;
 import org.anchoranalysis.gui.series.TimeSequenceProvider;
 import org.anchoranalysis.gui.videostats.dropdown.IAddVideoStatsModule;
 import org.anchoranalysis.gui.videostats.dropdown.multicollection.MultiCollectionDropDown;
-import org.anchoranalysis.image.objmask.ObjMaskCollection;
+import org.anchoranalysis.image.objectmask.ObjectMaskCollection;
 import org.anchoranalysis.image.stack.TimeSequence;
 import org.anchoranalysis.io.output.bound.BoundOutputManagerRouteErrors;
 import org.anchoranalysis.mpp.io.input.MultiInput;
@@ -103,7 +103,7 @@ public class FileMultiCollection extends InteractiveFile {
 		);
 		inputObject.keyValueParams().addToStore(keyValueParams);
 		
-		LazyEvaluationStore<ObjMaskCollection> objs = new LazyEvaluationStore<>(
+		LazyEvaluationStore<ObjectMaskCollection> objs = new LazyEvaluationStore<>(
 			logErrorReporter,
 			"objMaskCollection"
 		);

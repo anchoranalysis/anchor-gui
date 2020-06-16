@@ -38,7 +38,7 @@ import org.anchoranalysis.feature.session.CreateFeatureInput;
 import org.anchoranalysis.gui.feature.FeatureListWithRegionMap;
 import org.anchoranalysis.gui.feature.evaluator.nrgtree.createparams.CreateIndFromObj;
 import org.anchoranalysis.gui.feature.evaluator.nrgtree.createparams.CreatePairFromObj;
-import org.anchoranalysis.image.objmask.ObjMask;
+import org.anchoranalysis.image.objectmask.ObjectMask;
 
 public class CreateParamsFromOverlay {
 
@@ -92,8 +92,8 @@ public class CreateParamsFromOverlay {
 			
 		} else if (pair.getSource() instanceof OverlayObjMask ) {
 			
-			ObjMask source = ((OverlayObjMask) pair.getSource()).getObjMask().getMask();
-			ObjMask dest = ((OverlayObjMask) pair.getDestination()).getObjMask().getMask();
+			ObjectMask source = ((OverlayObjMask) pair.getSource()).getObjMask().getMask();
+			ObjectMask dest = ((OverlayObjMask) pair.getDestination()).getObjMask().getMask();
 			
 			return new CreatePairFromObj(
 				source,

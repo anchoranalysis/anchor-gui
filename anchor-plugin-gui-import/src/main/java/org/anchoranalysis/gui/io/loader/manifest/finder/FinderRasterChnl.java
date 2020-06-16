@@ -34,7 +34,7 @@ import org.anchoranalysis.core.error.reporter.ErrorReporter;
 import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.progress.ProgressReporterNull;
 import org.anchoranalysis.gui.finder.FinderRasterSingleChnl;
-import org.anchoranalysis.image.chnl.Chnl;
+import org.anchoranalysis.image.channel.Channel;
 import org.anchoranalysis.image.io.RasterIOException;
 import org.anchoranalysis.image.io.bean.rasterreader.RasterReader;
 import org.anchoranalysis.image.io.rasterreader.OpenedRaster;
@@ -44,7 +44,7 @@ import org.anchoranalysis.io.manifest.finder.FinderSingleFile;
 
 public abstract class FinderRasterChnl extends FinderSingleFile implements FinderRasterSingleChnl {
 
-	private Chnl result;
+	private Channel result;
 	
 	private RasterReader rasterReader;
 
@@ -56,7 +56,7 @@ public abstract class FinderRasterChnl extends FinderSingleFile implements Finde
 		this.normalizeChnl = normalizeChnl;
 	}
 
-	private Chnl createChnl( FileWrite fileWrite ) throws RasterIOException, CreateException {
+	private Channel createChnl( FileWrite fileWrite ) throws RasterIOException, CreateException {
 		
 		if (fileWrite==null) {
 			return null;
@@ -84,7 +84,7 @@ public abstract class FinderRasterChnl extends FinderSingleFile implements Finde
 		}
 	}
 	
-	public Chnl get() throws GetOperationFailedException {
+	public Channel get() throws GetOperationFailedException {
 		assert(exists());
 		if (result==null) {
 			try {
@@ -97,7 +97,7 @@ public abstract class FinderRasterChnl extends FinderSingleFile implements Finde
 	}
 
 	@Override
-	public Chnl getFirstChnl() throws GetOperationFailedException {
+	public Channel getFirstChnl() throws GetOperationFailedException {
 		return get();
 	}
 	

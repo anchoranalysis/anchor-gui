@@ -26,7 +26,7 @@ import org.anchoranalysis.gui.videostats.dropdown.common.DropDownUtilities;
 import org.anchoranalysis.gui.videostats.dropdown.common.DropDownUtilitiesRaster;
 import org.anchoranalysis.gui.videostats.dropdown.common.GuessNRGStackFromStacks;
 import org.anchoranalysis.gui.videostats.dropdown.common.NRGBackground;
-import org.anchoranalysis.image.objmask.ObjMaskCollection;
+import org.anchoranalysis.image.objectmask.ObjectMaskCollection;
 import org.anchoranalysis.image.stack.Stack;
 import org.anchoranalysis.image.stack.TimeSequence;
 import org.anchoranalysis.image.stack.wrap.WrapStackAsTimeSequence;
@@ -41,7 +41,7 @@ public class MultiCollectionDropDown {
 
 	private OperationWithProgressReporter<TimeSequenceProvider,CreateException> rasterProvider;
 	private NamedProvider<Cfg> cfgCollection;
-	private NamedProvider<ObjMaskCollection> objCollection;
+	private NamedProvider<ObjectMaskCollection> objCollection;
 	private NamedProviderStore<KeyValueParams> paramsCollection;
 	private boolean addProposerEvaluator;
 	
@@ -49,7 +49,7 @@ public class MultiCollectionDropDown {
 	public MultiCollectionDropDown(
 		OperationWithProgressReporter<TimeSequenceProvider,CreateException> rasterProvider,
 		NamedProvider<Cfg> cfgCollection,
-		NamedProvider<ObjMaskCollection> objCollection,
+		NamedProvider<ObjectMaskCollection> objCollection,
 		NamedProviderStore<KeyValueParams> paramsCollection,
 		String name,
 		boolean addProposerEvaluator

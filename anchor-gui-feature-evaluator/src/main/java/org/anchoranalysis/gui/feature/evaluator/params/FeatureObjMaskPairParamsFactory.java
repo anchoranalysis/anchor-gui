@@ -36,7 +36,7 @@ import org.anchoranalysis.feature.input.FeatureInput;
 import org.anchoranalysis.feature.nrg.NRGStackWithParams;
 import org.anchoranalysis.image.binary.values.BinaryValuesByte;
 import org.anchoranalysis.image.feature.objmask.pair.FeatureInputPairObjs;
-import org.anchoranalysis.image.objmask.ObjMask;
+import org.anchoranalysis.image.objectmask.ObjectMask;
 
 public class FeatureObjMaskPairParamsFactory extends FeatureCalcParamsPairwiseFactory {
 
@@ -51,13 +51,13 @@ public class FeatureObjMaskPairParamsFactory extends FeatureCalcParamsPairwiseFa
 	public FeatureInput create(PxlMarkMemo pmm1, PxlMarkMemo pmm2,
 			NRGStackWithParams nrgStack) throws CreateException {
 		
-		ObjMask om1 = pmm1.getMark().calcMask(
+		ObjectMask om1 = pmm1.getMark().calcMask(
 			nrgStack.getDimensions(),
 			pmm1.getRegionMap().membershipWithFlagsForIndex(regionID),
 			BinaryValuesByte.getDefault()
 		).getMask();
 		
-		ObjMask om2 = pmm1.getMark().calcMask(
+		ObjectMask om2 = pmm1.getMark().calcMask(
 			nrgStack.getDimensions(),
 			pmm2.getRegionMap().membershipWithFlagsForIndex(regionID),
 			BinaryValuesByte.getDefault()

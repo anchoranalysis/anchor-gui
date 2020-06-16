@@ -36,7 +36,7 @@ import org.anchoranalysis.anchor.overlay.writer.OverlayWriter;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.idgetter.IDGetter;
 import org.anchoranalysis.gui.frame.display.OverlayedDisplayStackUpdate;
-import org.anchoranalysis.image.chnl.Chnl;
+import org.anchoranalysis.image.channel.Channel;
 import org.anchoranalysis.image.extent.BoundingBox;
 import org.anchoranalysis.image.io.stack.ConvertDisplayStackToRGB;
 import org.anchoranalysis.image.stack.DisplayStack;
@@ -166,7 +166,7 @@ class CachedRGB {
 			BoundingBox bboxClipped = bbox.clipTo(backgroundOrig.getDimensions().getExtnt());
 			
 			for (int c=0; c<3; c++) {
-				Chnl rgbTarget = rgb.getChnl(c);
+				Channel rgbTarget = rgb.getChnl(c);
 				
 				VoxelBox<ByteBuffer> vbTarget = rgbTarget.getVoxelBox().asByte();
 				

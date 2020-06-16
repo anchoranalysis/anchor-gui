@@ -15,14 +15,14 @@ import org.anchoranalysis.gui.videostats.dropdown.common.NRGBackground;
 import org.anchoranalysis.gui.videostats.internalframe.InternalFrameStaticOverlaySelectable;
 import org.anchoranalysis.gui.videostats.module.VideoStatsModuleCreateException;
 import org.anchoranalysis.gui.videostats.operation.combine.IVideoStatsOperationCombine;
-import org.anchoranalysis.image.objmask.ObjMask;
-import org.anchoranalysis.image.objmask.ObjMaskCollection;
+import org.anchoranalysis.image.objectmask.ObjectMask;
+import org.anchoranalysis.image.objectmask.ObjectMaskCollection;
 
 public class ObjMaskCollectionModuleCreator extends VideoStatsModuleCreator {
 
 	private String fileIdentifier;
 	private String name;
-	private Operation<ObjMaskCollection,OperationFailedException> opObjs;
+	private Operation<ObjectMaskCollection,OperationFailedException> opObjs;
 	private NRGBackground nrgBackground;
 	
 	private VideoStatsModuleGlobalParams mpg;
@@ -30,7 +30,7 @@ public class ObjMaskCollectionModuleCreator extends VideoStatsModuleCreator {
 	public ObjMaskCollectionModuleCreator(
 		String fileIdentifier,
 		String name,
-		Operation<ObjMaskCollection,OperationFailedException> op,
+		Operation<ObjectMaskCollection,OperationFailedException> op,
 		NRGBackground nrgBackground,
 		VideoStatsModuleGlobalParams mpg
 	) {
@@ -47,9 +47,9 @@ public class ObjMaskCollectionModuleCreator extends VideoStatsModuleCreator {
 	public void createAndAddVideoStatsModule(IAddVideoStatsModule adder)
 			throws VideoStatsModuleCreateException {
 		try {
-			ObjMaskCollection objs = opObjs.doOperation();
+			ObjectMaskCollection objs = opObjs.doOperation();
 
-			OverlayCollection oc = OverlayCollectionObjMaskFactory.createWithoutColor(objs, new IDGetterIter<ObjMask>() );
+			OverlayCollection oc = OverlayCollectionObjMaskFactory.createWithoutColor(objs, new IDGetterIter<ObjectMask>() );
 			
 			String frameName = String.format("%s: %s", fileIdentifier, name);
 			InternalFrameStaticOverlaySelectable imageFrame = new InternalFrameStaticOverlaySelectable( frameName, false );
@@ -88,7 +88,7 @@ public class ObjMaskCollectionModuleCreator extends VideoStatsModuleCreator {
 			}
 
 			@Override
-			public Operation<ObjMaskCollection,OperationFailedException> getObjMaskCollection() {
+			public Operation<ObjectMaskCollection,OperationFailedException> getObjMaskCollection() {
 				return opObjs;
 			}
 

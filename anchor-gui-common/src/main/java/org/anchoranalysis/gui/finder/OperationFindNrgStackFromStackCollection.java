@@ -36,7 +36,7 @@ import org.anchoranalysis.core.progress.OperationWithProgressReporter;
 import org.anchoranalysis.core.progress.ProgressReporter;
 import org.anchoranalysis.core.progress.ProgressReporterNull;
 import org.anchoranalysis.feature.nrg.NRGStackWithParams;
-import org.anchoranalysis.image.chnl.Chnl;
+import org.anchoranalysis.image.channel.Channel;
 import org.anchoranalysis.image.extent.IncorrectImageSizeException;
 import org.anchoranalysis.image.stack.Stack;
 
@@ -113,7 +113,7 @@ public class OperationFindNrgStackFromStackCollection extends CachedOperation<NR
 	 * @return
 	 * @throws CreateException 
 	 */
-	private static Chnl chnlFromStack( NamedProvider<Stack> stackProvider, int c ) throws OperationFailedException {
+	private static Channel chnlFromStack( NamedProvider<Stack> stackProvider, int c ) throws OperationFailedException {
 		
 		try {
 			Stack chnlStack = stackProvider.getException( Integer.toString(c) );

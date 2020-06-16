@@ -45,7 +45,7 @@ import org.anchoranalysis.image.binary.values.BinaryValuesByte;
 import org.anchoranalysis.image.extent.BoundingBox;
 import org.anchoranalysis.image.extent.ImageDim;
 import org.anchoranalysis.image.index.rtree.BBoxRTree;
-import org.anchoranalysis.image.objmask.properties.ObjMaskWithProperties;
+import org.anchoranalysis.image.objectmask.properties.ObjMaskWithProperties;
 import org.anchoranalysis.image.scale.ScaleFactor;
 
 /**

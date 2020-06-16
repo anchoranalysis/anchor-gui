@@ -34,13 +34,13 @@ import org.anchoranalysis.feature.input.FeatureInput;
 import org.anchoranalysis.feature.nrg.NRGStackWithParams;
 import org.anchoranalysis.feature.session.CreateFeatureInput;
 import org.anchoranalysis.image.feature.objmask.pair.FeatureInputPairObjs;
-import org.anchoranalysis.image.objmask.ObjMask;
+import org.anchoranalysis.image.objectmask.ObjectMask;
 
 public class CreatePairFromObj extends CreateFeatureInput<FeatureInput> {
 	
 	private FeatureInputPairObjs input;
 	
-	public CreatePairFromObj(ObjMask om1, ObjMask om2, NRGStackWithParams raster) {
+	public CreatePairFromObj(ObjectMask om1, ObjectMask om2, NRGStackWithParams raster) {
 
 		// We make the params here, so the same object is always returned. This avoids needless creation of params
 		//   and as FeatureObjMaskPairMergedParams does a lazy-evaluation of the merged-object. It also caches

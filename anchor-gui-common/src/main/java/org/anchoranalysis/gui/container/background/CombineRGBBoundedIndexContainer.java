@@ -31,8 +31,8 @@ import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.index.container.BoundChangeListener;
 import org.anchoranalysis.core.index.container.IBoundedIndexContainer;
-import org.anchoranalysis.image.chnl.Chnl;
-import org.anchoranalysis.image.chnl.factory.ChnlFactory;
+import org.anchoranalysis.image.channel.Channel;
+import org.anchoranalysis.image.channel.factory.ChannelFactory;
 import org.anchoranalysis.image.extent.ImageDim;
 import org.anchoranalysis.image.extent.IncorrectImageSizeException;
 import org.anchoranalysis.image.stack.DisplayStack;
@@ -217,7 +217,7 @@ public class CombineRGBBoundedIndexContainer implements IBoundedIndexContainer<D
 			} else {
 				// TODO, why do we create an empty initialised here
 				assert(dim!=null);
-				Chnl chnlNew = ChnlFactory.instance().createEmptyInitialised(dim, VoxelDataTypeUnsignedByte.instance);
+				Channel chnlNew = ChannelFactory.instance().createEmptyInitialised(dim, VoxelDataTypeUnsignedByte.instance);
 				stackNew.addChnl( chnlNew );
 			}
 		} catch (IncorrectImageSizeException e) {
