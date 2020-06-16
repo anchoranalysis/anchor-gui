@@ -1,8 +1,8 @@
 package org.anchoranalysis.gui.frame.multioverlay.instantstate;
 
 import org.anchoranalysis.anchor.overlay.Overlay;
-import org.anchoranalysis.core.bridge.IObjectBridge;
 import org.anchoranalysis.core.error.InitException;
+import org.anchoranalysis.core.functional.FunctionWithException;
 import org.anchoranalysis.core.idgetter.IDGetter;
 import org.anchoranalysis.core.index.GetOperationFailedException;
 
@@ -124,7 +124,7 @@ class InternalFrameOverlayedInstantStateToRGB {
 		};
 	}
 		
-	private static class BackgroundSendable implements IPropertyValueSendable<IObjectBridge<Integer,DisplayStack,GetOperationFailedException>> {
+	private static class BackgroundSendable implements IPropertyValueSendable<FunctionWithException<Integer,DisplayStack,GetOperationFailedException>> {
 		
 		private IndexToRedrawUpdate indexToRedrawUpdate;
 		private IRedrawable redrawable;
@@ -137,7 +137,7 @@ class InternalFrameOverlayedInstantStateToRGB {
 
 		@Override
 		public void setPropertyValue(
-				IObjectBridge<Integer,DisplayStack,GetOperationFailedException> value,
+				FunctionWithException<Integer,DisplayStack,GetOperationFailedException> value,
 				boolean adjusting) {
 			try {
 				indexToRedrawUpdate.setImageStackCntr(value);
@@ -201,7 +201,7 @@ class InternalFrameOverlayedInstantStateToRGB {
 			indexToRedrawUpdate.setImageStackCntr(imageStackCntr);
 			
 			try {
-				DisplayStack backgroundNew = imageStackCntr.bridgeElement(
+				DisplayStack backgroundNew = imageStackCntr.apply(
 					sliderState.getIndex()
 				);
 				delegate.getRedrawable().applyRedrawUpdate( OverlayedDisplayStackUpdate.assignBackground(backgroundNew) );

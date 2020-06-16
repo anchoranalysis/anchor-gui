@@ -33,9 +33,9 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.EventListenerList;
 
-import org.anchoranalysis.core.bridge.IObjectBridge;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.error.reporter.ErrorReporter;
+import org.anchoranalysis.core.functional.FunctionWithException;
 import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.index.IIndexGettableSettable;
 import org.anchoranalysis.gui.displayupdate.IDisplayUpdateRememberStack;
@@ -83,7 +83,7 @@ public class ThreadedDisplayUpdateConsumer implements IDisplayUpdateRememberStac
 	
 	private UpdateImage updateImage;
 	
-	private IObjectBridge<Integer,DisplayUpdate,OperationFailedException> displayUpdateBridge;
+	private FunctionWithException<Integer,DisplayUpdate,OperationFailedException> displayUpdateBridge;
 
 	private ErrorReporter errorReporter;
 	
@@ -119,7 +119,7 @@ public class ThreadedDisplayUpdateConsumer implements IDisplayUpdateRememberStac
 		// Updates the current stack and notifies listeners
 		public void updateImage() {
 			try {
-				currentUpdate = displayUpdateBridge.bridgeElement(index);
+				currentUpdate = displayUpdateBridge.apply(index);
 				
 				if (currentUpdate==null) {
 					return;
@@ -152,7 +152,7 @@ public class ThreadedDisplayUpdateConsumer implements IDisplayUpdateRememberStac
 	}
 	
 	public ThreadedDisplayUpdateConsumer(
-		IObjectBridge<Integer,DisplayUpdate,OperationFailedException> displayUpdateBridge,
+		FunctionWithException<Integer,DisplayUpdate,OperationFailedException> displayUpdateBridge,
 		int defaultIndex,
 		InteractiveThreadPool threadPool,
 		ErrorReporter errorReporter
@@ -169,7 +169,7 @@ public class ThreadedDisplayUpdateConsumer implements IDisplayUpdateRememberStac
 		threadPool.submit( updateImage, "Update image" );
 	}
 	
-	public synchronized void setImageStackGenerator( IObjectBridge<Integer, DisplayUpdate,OperationFailedException> displayUpdateBridge ) {
+	public synchronized void setImageStackGenerator( FunctionWithException<Integer, DisplayUpdate,OperationFailedException> displayUpdateBridge ) {
 		this.displayUpdateBridge = displayUpdateBridge;
 	}
 	

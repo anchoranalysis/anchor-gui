@@ -3,8 +3,8 @@ package org.anchoranalysis.gui.graph.creator;
 import org.anchoranalysis.anchor.graph.bean.GraphDefinition;
 import org.anchoranalysis.anchor.graph.bean.colorscheme.GraphColorScheme;
 import org.anchoranalysis.anchor.mpp.feature.instantstate.CfgNRGInstantState;
-import org.anchoranalysis.core.bridge.IObjectBridge;
 import org.anchoranalysis.core.error.CreateException;
+import org.anchoranalysis.core.functional.FunctionWithException;
 import org.anchoranalysis.gui.graph.definition.line.GraphDefinitionLineIterVsCfgSize;
 import org.anchoranalysis.gui.graph.definition.line.GraphDefinitionLineIterVsCfgSize.Item;
 
@@ -47,7 +47,7 @@ public class BridgedGraphCfgSizeCreator extends BridgedGraphFromDualFinderCreato
 	}
 
 	@Override
-	public IObjectBridge<CSVStatistic,Item,CreateException> createCSVStatisticBridge() {
+	public FunctionWithException<CSVStatistic,Item,CreateException> createCSVStatisticBridge() {
 		return statistic -> new GraphDefinitionLineIterVsCfgSize.Item(
 			statistic.getIter(),
 			statistic.getSize()
@@ -55,7 +55,7 @@ public class BridgedGraphCfgSizeCreator extends BridgedGraphFromDualFinderCreato
 	}
 
 	@Override
-	public IObjectBridge<CfgNRGInstantState,Item,CreateException> createCfgNRGInstantStateBridge() {
+	public FunctionWithException<CfgNRGInstantState,Item,CreateException> createCfgNRGInstantStateBridge() {
 		return sourceObject -> {
 			if (sourceObject.getCfgNRG()!=null) {
 				return new GraphDefinitionLineIterVsCfgSize.Item( sourceObject.getIndex(), sourceObject.getCfgNRG().getCfg().size() );

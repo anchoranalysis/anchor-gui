@@ -43,7 +43,7 @@ import org.anchoranalysis.gui.frame.display.overlay.OverlayPrecalculatedCache;
 import org.anchoranalysis.image.extent.BoundingBox;
 import org.anchoranalysis.image.extent.Extent;
 import org.anchoranalysis.image.extent.ImageDim;
-import org.anchoranalysis.image.objectmask.properties.ObjMaskWithProperties;
+import org.anchoranalysis.image.objectmask.properties.ObjectWithProperties;
 import org.anchoranalysis.image.stack.rgb.RGBStack;
 
 /**
@@ -106,7 +106,7 @@ public class BoundColoredOverlayCollection {
 			dimEntireImage,
 			stack,
 			idGetter,
-			new IDGetterIter<ObjMaskWithProperties>(),
+			new IDGetterIter<ObjectWithProperties>(),
 			container
 		);
 	}

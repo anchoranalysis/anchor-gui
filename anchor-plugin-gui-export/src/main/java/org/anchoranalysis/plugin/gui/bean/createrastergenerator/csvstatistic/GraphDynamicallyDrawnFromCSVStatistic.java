@@ -27,8 +27,8 @@ package org.anchoranalysis.plugin.gui.bean.createrastergenerator.csvstatistic;
  */
 
 import org.anchoranalysis.anchor.graph.GraphInstance;
-import org.anchoranalysis.core.bridge.IObjectBridge;
 import org.anchoranalysis.core.error.CreateException;
+import org.anchoranalysis.core.functional.FunctionWithException;
 import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.gui.bean.exporttask.ExportTaskParams;
 import org.anchoranalysis.gui.io.loader.manifest.finder.csvstatistic.CSVStatistic;
@@ -47,9 +47,9 @@ import org.anchoranalysis.plugin.gui.bean.exporttask.MappedFrom;
  */
 public class GraphDynamicallyDrawnFromCSVStatistic<T> extends CreateRasterGraph<T,CSVStatistic> {
 
-	private IObjectBridge<CSVStatistic,T,CreateException> elementBridge;
+	private FunctionWithException<CSVStatistic,T,CreateException> elementBridge;
 	
-	public GraphDynamicallyDrawnFromCSVStatistic(IObjectBridge<CSVStatistic, T,CreateException> elementBridge) {
+	public GraphDynamicallyDrawnFromCSVStatistic(FunctionWithException<CSVStatistic, T,CreateException> elementBridge) {
 		super();
 		this.elementBridge = elementBridge;
 	}
@@ -61,7 +61,7 @@ public class GraphDynamicallyDrawnFromCSVStatistic<T> extends CreateRasterGraph<
 		assert( getGraphDefinition()!=null );
 		
 		try {
-			IObjectBridge<MappedFrom<CSVStatistic>,GraphInstance,CreateException> bridge = new GraphInstanceBridge<T>(
+			FunctionWithException<MappedFrom<CSVStatistic>,GraphInstance,CreateException> bridge = new GraphInstanceBridge<T>(
 				getGraphDefinition(),
 				params.getFinderCsvStatistics().get(),
 				elementBridge

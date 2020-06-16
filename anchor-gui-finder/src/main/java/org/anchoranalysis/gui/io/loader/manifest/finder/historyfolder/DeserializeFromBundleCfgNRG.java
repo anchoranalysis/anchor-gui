@@ -31,7 +31,7 @@ import org.anchoranalysis.anchor.mpp.feature.nrg.cfg.CfgNRG;
 
 
 import org.anchoranalysis.core.index.ITypedGetFromIndex;
-import org.anchoranalysis.core.index.ITypedGetFromIndexBridge;
+import org.anchoranalysis.core.index.TypedGetFromIndexBridge;
 import org.anchoranalysis.io.manifest.deserializer.folder.DeserializeFromFolderBundle;
 import org.anchoranalysis.io.manifest.deserializer.folder.DeserializedObjectFromFolderBundle;
 import org.anchoranalysis.io.manifest.deserializer.folder.DeserializedObjectFromFolderBundle.BundleDeserializers;
@@ -46,6 +46,6 @@ class DeserializeFromBundleCfgNRG extends DeserializeFromFolderBundle<CfgNRGInst
 
 	@Override
 	protected ITypedGetFromIndex<CfgNRGInstantState> createCntr( DeserializedObjectFromFolderBundle<CfgNRG> deserializeFromBundle) {
-		return new ITypedGetFromIndexBridge<>(deserializeFromBundle, new CfgNRGInstantStateFromCfgNRGBridge() );
+		return new TypedGetFromIndexBridge<>(deserializeFromBundle, new CfgNRGInstantStateFromCfgNRGBridge() );
 	}
 }

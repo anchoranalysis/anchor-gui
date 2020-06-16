@@ -27,7 +27,7 @@ package org.anchoranalysis.gui.frame.multioverlay.instantstate;
  */
 
 import org.anchoranalysis.core.index.IndicesSelection;
-import org.anchoranalysis.image.objectmask.properties.ObjMaskWithProperties;
+import org.anchoranalysis.image.objectmask.properties.ObjectWithProperties;
 import org.anchoranalysis.image.stack.rgb.RGBStack;
 import org.anchoranalysis.io.bean.objmask.writer.IfElseWriter;
 
@@ -42,7 +42,7 @@ class IDMatchCondition extends IfElseWriter.Condition {
 	}
 
 	@Override
-	public boolean isTrue(ObjMaskWithProperties mask, RGBStack stack, int id) {
+	public boolean isTrue(ObjectWithProperties mask, RGBStack stack, int id) {
 		return currentSelection.contains(id);
 	}
 

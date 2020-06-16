@@ -8,7 +8,6 @@ import org.anchoranalysis.anchor.mpp.feature.nrg.cfg.CfgNRGPixelized;
 import org.anchoranalysis.anchor.mpp.feature.nrg.cfg.CfgWithNrgTotal;
 import org.anchoranalysis.anchor.mpp.feature.nrg.scheme.NRGSchemeWithSharedFeatures;
 import org.anchoranalysis.anchor.mpp.feature.nrg.scheme.NamedNRGSchemeSet;
-import org.anchoranalysis.core.bridge.IObjectBridge;
 
 /*
  * #%L
@@ -41,6 +40,7 @@ import org.anchoranalysis.core.color.ColorIndex;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.error.OperationFailedException;
+import org.anchoranalysis.core.functional.FunctionWithException;
 import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.index.container.ArrayListContainer;
 import org.anchoranalysis.core.index.container.BoundChangeEvent;
@@ -283,7 +283,7 @@ public class VideoStatsEDT {
 
 		// The default background for our frames
 		{
-			IObjectBridge<Integer,DisplayStack,GetOperationFailedException> initialBackground = null;
+			FunctionWithException<Integer,DisplayStack,GetOperationFailedException> initialBackground = null;
 			try {
 				initialBackground = backgroundSet.stackCntr( ImgStackIdentifiers.INPUT_IMAGE_VISUAL );
 				

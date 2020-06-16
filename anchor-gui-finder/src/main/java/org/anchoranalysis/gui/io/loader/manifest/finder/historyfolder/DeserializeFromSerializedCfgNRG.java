@@ -30,7 +30,7 @@ import org.anchoranalysis.anchor.mpp.feature.nrg.cfg.CfgNRG;
  */
 
 import org.anchoranalysis.core.index.ITypedGetFromIndex;
-import org.anchoranalysis.core.index.ITypedGetFromIndexBridge;
+import org.anchoranalysis.core.index.TypedGetFromIndexBridge;
 import org.anchoranalysis.io.bean.deserializer.Deserializer;
 import org.anchoranalysis.io.manifest.deserializer.folder.DeserializeFromFolder;
 import org.anchoranalysis.io.manifest.deserializer.folder.sequenced.SequencedFolderDeserializer;
@@ -47,7 +47,7 @@ class DeserializeFromSerializedCfgNRG extends DeserializeFromFolder<CfgNRGInstan
 	
 	@Override
 	protected ITypedGetFromIndex<CfgNRGInstantState> createCtnr( SequencedFolder folder ) {
-		return new ITypedGetFromIndexBridge<>(
+		return new TypedGetFromIndexBridge<>(
 			new SequencedFolderDeserializer<>(folder, deserializer),
 			new CfgNRGInstantStateFromCfgNRGBridge()
 		);

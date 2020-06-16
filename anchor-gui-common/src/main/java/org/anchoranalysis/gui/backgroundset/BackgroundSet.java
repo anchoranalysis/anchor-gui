@@ -30,9 +30,9 @@ package org.anchoranalysis.gui.backgroundset;
 import java.util.HashMap;
 import java.util.Set;
 
-import org.anchoranalysis.core.bridge.IObjectBridge;
 import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.error.OperationFailedException;
+import org.anchoranalysis.core.functional.FunctionWithException;
 import org.anchoranalysis.core.functional.IdentityOperation;
 import org.anchoranalysis.core.functional.Operation;
 import org.anchoranalysis.core.index.BoundedIndexBridge;
@@ -105,7 +105,7 @@ import org.anchoranalysis.image.stack.Stack;
 	
 	// Gives us a stack container for a particular name, or NULL if none exists
 	// NOTE: There is only a mapping between 0 and a single image
-	public IObjectBridge<Integer,DisplayStack,GetOperationFailedException> stackCntr( String name ) throws GetOperationFailedException {
+	public FunctionWithException<Integer,DisplayStack,GetOperationFailedException> stackCntr( String name ) throws GetOperationFailedException {
 		try {
 			
 			Operation<BackgroundStackCntr,OperationFailedException> op = map.get(name);

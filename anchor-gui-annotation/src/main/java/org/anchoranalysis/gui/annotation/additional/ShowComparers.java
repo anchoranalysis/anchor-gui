@@ -32,8 +32,8 @@ import java.util.Optional;
 
 import org.anchoranalysis.annotation.AnnotationWithCfg;
 import org.anchoranalysis.annotation.io.bean.comparer.MultipleComparer;
-import org.anchoranalysis.core.bridge.IObjectBridge;
 import org.anchoranalysis.core.error.OperationFailedException;
+import org.anchoranalysis.core.functional.FunctionWithException;
 import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.log.LogErrorReporter;
 import org.anchoranalysis.core.name.value.NameValue;
@@ -50,12 +50,12 @@ public class ShowComparers {
 	private ColorSetGenerator colorSetGenerator;
 	private Path matchPath;
 	private String name;
-	private IObjectBridge<Integer,DisplayStack,? extends Throwable> defaultBackground;
+	private FunctionWithException<Integer,DisplayStack,? extends Throwable> defaultBackground;
 	private LogErrorReporter logErrorReporter;
 
 	public ShowComparers(ShowRaster showRaster, MultipleComparer multipleComparer, ColorSetGenerator colorSetGenerator,
 			Path matchPath, String name,
-			IObjectBridge<Integer,DisplayStack,? extends Throwable> defaultBackground, LogErrorReporter logErrorReporter) {
+			FunctionWithException<Integer,DisplayStack,? extends Throwable> defaultBackground, LogErrorReporter logErrorReporter) {
 		super();
 		this.showRaster = showRaster;
 		this.multipleComparer = multipleComparer;
@@ -77,7 +77,7 @@ public class ShowComparers {
 				
 		List<NameValue<Stack>> rasters;
 		try {
-			DisplayStack background = defaultBackground.bridgeElement(0);  // createBackgroundFromSet( operationBackgroundSet );
+			DisplayStack background = defaultBackground.apply(0);  // createBackgroundFromSet( operationBackgroundSet );
 			rasters = multipleComparer.createRasters(
 				annotationExst,
 				background,

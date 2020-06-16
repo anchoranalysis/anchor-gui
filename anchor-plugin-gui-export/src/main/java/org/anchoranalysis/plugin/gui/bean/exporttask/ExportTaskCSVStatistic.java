@@ -1,7 +1,7 @@
 package org.anchoranalysis.plugin.gui.bean.exporttask;
 
-import org.anchoranalysis.core.bridge.IObjectBridge;
 import org.anchoranalysis.core.error.OperationFailedException;
+import org.anchoranalysis.core.functional.FunctionWithException;
 
 /*
  * #%L
@@ -37,14 +37,14 @@ import org.anchoranalysis.gui.io.loader.manifest.finder.csvstatistic.CSVStatisti
 
 public class ExportTaskCSVStatistic extends ExportTaskRasterGeneratorFromBoundedIndexContainer<CSVStatistic> {
 		
-	private static class ExportTaskParamsCSVStatisticContainerBridge implements IObjectBridge<
+	private static class ExportTaskParamsCSVStatisticContainerBridge implements FunctionWithException<
 		ExportTaskParams,
 		IBoundedIndexContainer<CSVStatistic>,
 		OperationFailedException
 	> {
 
 		@Override
-		public IBoundedIndexContainer<CSVStatistic> bridgeElement(
+		public IBoundedIndexContainer<CSVStatistic> apply(
 				ExportTaskParams sourceObject) throws OperationFailedException {
 			try {
 				return sourceObject.getFinderCsvStatistics().get();

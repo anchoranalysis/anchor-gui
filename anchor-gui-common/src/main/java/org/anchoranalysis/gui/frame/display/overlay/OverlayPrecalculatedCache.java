@@ -45,7 +45,7 @@ import org.anchoranalysis.image.binary.values.BinaryValuesByte;
 import org.anchoranalysis.image.extent.BoundingBox;
 import org.anchoranalysis.image.extent.ImageDim;
 import org.anchoranalysis.image.index.rtree.BBoxRTree;
-import org.anchoranalysis.image.objectmask.properties.ObjMaskWithProperties;
+import org.anchoranalysis.image.objectmask.properties.ObjectWithProperties;
 import org.anchoranalysis.image.scale.ScaleFactor;
 
 /**
@@ -191,7 +191,7 @@ public class OverlayPrecalculatedCache implements OverlayRetriever {
 				
 				Overlay ol = overlaysToAdd.get(i);
 								
-				ObjMaskWithProperties om = ol.createObjMask(overlayWriter, dimEntireImage, bvOut );
+				ObjectWithProperties om = ol.createObjMask(overlayWriter, dimEntireImage, bvOut );
 				PrecalcOverlay precalc = OverlayWriter.createPrecalc(overlayWriter, om, dimEntireImage);
 				
 				BoundingBox bbox = ol.bbox(overlayWriter, dimEntireImage);
@@ -301,7 +301,7 @@ public class OverlayPrecalculatedCache implements OverlayRetriever {
 	 * @return NULL if rejected
 	 * @throws OperationFailedException
 	 */
-	private PrecalcOverlay getOrCreateScaledMask( double zoomFactorNew, ObjMaskWithProperties om, Overlay ol, int i, ImageDim dimScaled ) throws OperationFailedException {
+	private PrecalcOverlay getOrCreateScaledMask( double zoomFactorNew, ObjectWithProperties om, Overlay ol, int i, ImageDim dimScaled ) throws OperationFailedException {
 		overlayList.assertZoomedExists();
 		if (zoomFactorNew==1) {
 			// We can steal from the main object
@@ -319,7 +319,7 @@ public class OverlayPrecalculatedCache implements OverlayRetriever {
 		assert(zoomFactorNew>0);
 		try {
 			
-			ObjMaskWithProperties omScaledProps = ol.createScaledMask(
+			ObjectWithProperties omScaledProps = ol.createScaledMask(
 				overlayWriter,
 				zoomFactorNew,
 				om,

@@ -78,7 +78,7 @@ public class InternalFrameOverlaysRedraw {
 		
 		// For now we keep background as it is
 		try {
-			background = defaultState.getLinkState().getBackground().bridgeElement(0) ;
+			background = defaultState.getLinkState().getBackground().apply(0) ;
 		} catch (GetOperationFailedException e) {
 			throw new InitException(e);
 		}

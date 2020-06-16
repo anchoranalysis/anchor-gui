@@ -1,6 +1,5 @@
 package org.anchoranalysis.gui.io.loader.manifest.finder.probmap;
 
-import org.anchoranalysis.core.bridge.IObjectBridge;
 import org.anchoranalysis.core.error.CreateException;
 
 /*
@@ -31,6 +30,7 @@ import org.anchoranalysis.core.error.CreateException;
 
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.error.reporter.ErrorReporter;
+import org.anchoranalysis.core.functional.FunctionWithException;
 import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.index.container.IBoundedIndexContainer;
 import org.anchoranalysis.core.index.container.SingleContainer;
@@ -140,10 +140,10 @@ public class FinderProbMap extends Finder implements BackgroundStackCntr, Finder
 		}
 	}
 		
-	private static class BackgroundStackBridge implements IObjectBridge<Stack, DisplayStack,CreateException> {
+	private static class BackgroundStackBridge implements FunctionWithException<Stack, DisplayStack,CreateException> {
 
 		@Override
-		public DisplayStack bridgeElement(Stack sourceObject) throws CreateException {
+		public DisplayStack apply(Stack sourceObject) throws CreateException {
 			return DisplayStack.create(sourceObject );
 		}
 	}

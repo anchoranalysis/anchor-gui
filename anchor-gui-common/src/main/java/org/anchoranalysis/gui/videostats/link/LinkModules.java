@@ -29,8 +29,8 @@ package org.anchoranalysis.gui.videostats.link;
 import java.util.function.Function;
 
 import org.anchoranalysis.anchor.overlay.collection.OverlayCollection;
-import org.anchoranalysis.core.bridge.IObjectBridge;
 import org.anchoranalysis.core.event.IRoutableReceivable;
+import org.anchoranalysis.core.functional.FunctionWithException;
 import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.index.IntArray;
 import org.anchoranalysis.core.property.IPropertyValueReceivable;
@@ -56,7 +56,7 @@ public class LinkModules {
 	private Adder<Integer> frameIndex = new Adder<>(LinkFramesUniqueID.FRAME_INDEX);
 	private Adder<IntArray> markIndices = new Adder<>(LinkFramesUniqueID.MARK_INDICES);
 	private Adder<Integer> sliceNum = new Adder<>(LinkFramesUniqueID.SLICE_NUM);
-	private Adder<IObjectBridge<Integer,DisplayStack,GetOperationFailedException>> background = new Adder<>(LinkFramesUniqueID.BACKGROUND);
+	private Adder<FunctionWithException<Integer,DisplayStack,GetOperationFailedException>> background = new Adder<>(LinkFramesUniqueID.BACKGROUND);
 			
 	public class Adder<T> {
 		
@@ -149,7 +149,7 @@ public class LinkModules {
 		return overlaysWithStack;
 	}
 
-	public Adder<IObjectBridge<Integer, DisplayStack,GetOperationFailedException>> getBackground() {
+	public Adder<FunctionWithException<Integer, DisplayStack,GetOperationFailedException>> getBackground() {
 		return background;
 	}
 

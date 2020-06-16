@@ -2,7 +2,6 @@ package org.anchoranalysis.gui.frame.threaded.overlay;
 
 import org.anchoranalysis.anchor.overlay.Overlay;
 import org.anchoranalysis.anchor.overlay.writer.OverlayWriter;
-import org.anchoranalysis.core.bridge.IObjectBridge;
 import org.anchoranalysis.core.error.InitException;
 
 
@@ -33,6 +32,7 @@ import org.anchoranalysis.core.error.InitException;
  */
 
 import org.anchoranalysis.core.error.reporter.ErrorReporter;
+import org.anchoranalysis.core.functional.FunctionWithException;
 import org.anchoranalysis.core.idgetter.IDGetter;
 import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.index.IIndexGettableSettable;
@@ -104,7 +104,7 @@ class ThreadedOverlayUpdateProducer implements IRedrawable, IThreadedProducer, I
 	}
 	
 	public void init(
-		final IObjectBridge<Integer,OverlayedDisplayStack,GetOperationFailedException> integerToCfgBridge,
+		final FunctionWithException<Integer,OverlayedDisplayStack,GetOperationFailedException> integerToCfgBridge,
 		final MarkDisplaySettingsWrapper markDisplaySettingsWrapper,
 		int defaultIndex,
 		InteractiveThreadPool threadPool,
@@ -118,7 +118,7 @@ class ThreadedOverlayUpdateProducer implements IRedrawable, IThreadedProducer, I
 		// When our Mark display settings change
 		markDisplaySettingsWrapper.addChangeListener( propertyValueChange );		
 		
-		IObjectBridge<Integer,OverlayedDisplayStackUpdate,GetOperationFailedException> findCorrectUpdate = new FindCorrectUpdate(
+		FunctionWithException<Integer,OverlayedDisplayStackUpdate,GetOperationFailedException> findCorrectUpdate = new FindCorrectUpdate(
 			integerToCfgBridge,
 			() -> consumer!=null,
 			this
@@ -198,7 +198,7 @@ class ThreadedOverlayUpdateProducer implements IRedrawable, IThreadedProducer, I
 	
 	
 	private static DisplayUpdateCreator setupDisplayUpdateCreator(
-		IObjectBridge<Integer,OverlayedDisplayStackUpdate,GetOperationFailedException> findCorrectUpdate,
+		FunctionWithException<Integer,OverlayedDisplayStackUpdate,GetOperationFailedException> findCorrectUpdate,
 		IDGetter<Overlay> idGetter,
 		OverlayWriter maskWriter
 	) throws InitException {

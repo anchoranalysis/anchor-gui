@@ -2,7 +2,6 @@ package org.anchoranalysis.gui.image;
 
 import org.anchoranalysis.anchor.overlay.Overlay;
 import org.anchoranalysis.anchor.overlay.writer.OverlayWriter;
-import org.anchoranalysis.core.bridge.IObjectBridge;
 import org.anchoranalysis.core.error.CreateException;
 
 /*
@@ -33,6 +32,7 @@ import org.anchoranalysis.core.error.CreateException;
 
 
 import org.anchoranalysis.core.error.OperationFailedException;
+import org.anchoranalysis.core.functional.FunctionWithException;
 import org.anchoranalysis.core.idgetter.IDGetter;
 import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.index.SetOperationFailedException;
@@ -48,16 +48,16 @@ import org.anchoranalysis.image.stack.DisplayStack;
  * @author Owen Feehan
  *
  */
-public class DisplayUpdateCreator implements IObjectBridge<Integer, DisplayUpdate,OperationFailedException> {
+public class DisplayUpdateCreator implements FunctionWithException<Integer, DisplayUpdate,OperationFailedException> {
 
-	private IObjectBridge<Integer,OverlayedDisplayStackUpdate,GetOperationFailedException> src;
+	private FunctionWithException<Integer,OverlayedDisplayStackUpdate,GetOperationFailedException> src;
 	private OverlayWriter maskWriter;
 	private IDGetter<Overlay> idGetter;
 	
 	// This keeps track of the current over
 	private BoundColoredOverlayCollection boundOverlay = null;
 	
-	public DisplayUpdateCreator( IObjectBridge<Integer,OverlayedDisplayStackUpdate,GetOperationFailedException> src, IDGetter<Overlay> idGetter	) {
+	public DisplayUpdateCreator( FunctionWithException<Integer,OverlayedDisplayStackUpdate,GetOperationFailedException> src, IDGetter<Overlay> idGetter	) {
 		super();
 		this.src = src;
 		this.idGetter = idGetter;
@@ -72,9 +72,9 @@ public class DisplayUpdateCreator implements IObjectBridge<Integer, DisplayUpdat
 	}
 
 	@Override
-	public DisplayUpdate bridgeElement(Integer sourceObject) throws OperationFailedException {
+	public DisplayUpdate apply(Integer sourceObject) throws OperationFailedException {
 		try {
-			OverlayedDisplayStackUpdate update = src.bridgeElement(sourceObject);
+			OverlayedDisplayStackUpdate update = src.apply(sourceObject);
 			
 			if (update==null) {
 				// No change so we return the existing stack
