@@ -58,7 +58,7 @@ public class ExportTaskCfgNRGInstantState extends ExportTaskRasterGeneratorFromB
 	private IBoundedIndexContainer<DualStateWithoutIndex<CfgNRGInstantState>> createPrimaryOnly(ExportTaskParams sourceObject) throws GetOperationFailedException {
 		return new BoundedIndexContainerBridgeWithoutIndex<>(
 			sourceObject.getFinderCfgNRGHistory().getCntr(),
-			s -> new DualStateWithoutIndex<>(s)
+			DualStateWithoutIndex::new
 		);
 	}
 	

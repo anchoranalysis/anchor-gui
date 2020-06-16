@@ -4,7 +4,7 @@ import org.anchoranalysis.anchor.mpp.cfg.Cfg;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.functional.Operation;
 import org.anchoranalysis.gui.videostats.dropdown.common.NRGBackground;
-import org.anchoranalysis.image.objectmask.ObjectMaskCollection;
+import org.anchoranalysis.image.objectmask.ObjectCollection;
 
 // 
 /**
@@ -19,7 +19,7 @@ public interface IVideoStatsOperationCombine {
 	
 	Operation<Cfg,OperationFailedException> getCfg();
 	
-	Operation<ObjectMaskCollection,OperationFailedException> getObjMaskCollection();
+	Operation<ObjectCollection,OperationFailedException> getObjMaskCollection();
 	
 	String generateName();
 }

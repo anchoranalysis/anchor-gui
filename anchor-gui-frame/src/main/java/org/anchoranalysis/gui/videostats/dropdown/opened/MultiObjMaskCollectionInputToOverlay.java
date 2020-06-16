@@ -35,17 +35,17 @@ import org.anchoranalysis.core.bridge.IObjectBridgeIndex;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.idgetter.IDGetterIter;
 import org.anchoranalysis.gui.videostats.internalframe.cfgtorgb.MultiInput;
-import org.anchoranalysis.image.objectmask.ObjectMaskCollection;
+import org.anchoranalysis.image.objectmask.ObjectCollection;
 
-class MultiObjMaskCollectionInputToOverlay implements IObjectBridgeIndex<MultiInput<ObjectMaskCollection>, OverlayedInstantState,OperationFailedException> {
+class MultiObjMaskCollectionInputToOverlay implements IObjectBridgeIndex<MultiInput<ObjectCollection>, OverlayedInstantState,OperationFailedException> {
 	
 	@Override
 	public OverlayedInstantState bridgeElement(
 		int index,
-		MultiInput<ObjectMaskCollection> sourceObject
+		MultiInput<ObjectCollection> sourceObject
 	) throws OperationFailedException {
 
-		ObjectMaskCollection objs = sourceObject.getAssociatedObjects().doOperation();
+		ObjectCollection objs = sourceObject.getAssociatedObjects().doOperation();
 		
 		OverlayCollection oc = OverlayCollectionObjMaskFactory.createWithoutColor(objs, new IDGetterIter<>() );
 		return new OverlayedInstantState(index, oc);

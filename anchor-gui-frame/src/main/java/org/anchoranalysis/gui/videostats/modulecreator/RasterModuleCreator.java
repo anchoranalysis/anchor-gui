@@ -11,7 +11,7 @@ import org.anchoranalysis.gui.videostats.dropdown.VideoStatsModuleGlobalParams;
 import org.anchoranalysis.gui.videostats.dropdown.common.NRGBackground;
 import org.anchoranalysis.gui.videostats.module.VideoStatsModuleCreateException;
 import org.anchoranalysis.gui.videostats.operation.combine.IVideoStatsOperationCombine;
-import org.anchoranalysis.image.objectmask.ObjectMaskCollection;
+import org.anchoranalysis.image.objectmask.ObjectCollection;
 
 public class RasterModuleCreator extends VideoStatsModuleCreator {
 	
@@ -33,7 +33,7 @@ public class RasterModuleCreator extends VideoStatsModuleCreator {
 		}
 
 		@Override
-		public Operation<ObjectMaskCollection,OperationFailedException> getObjMaskCollection() {
+		public Operation<ObjectCollection,OperationFailedException> getObjMaskCollection() {
 			return null;
 		}
 

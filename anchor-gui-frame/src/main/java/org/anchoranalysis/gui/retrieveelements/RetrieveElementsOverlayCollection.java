@@ -36,7 +36,7 @@ import org.anchoranalysis.anchor.mpp.overlay.OverlayCollectionMarkFactory;
 import org.anchoranalysis.anchor.overlay.collection.OverlayCollection;
 import org.anchoranalysis.anchor.overlay.collection.OverlayCollectionObjMaskFactory;
 import org.anchoranalysis.image.io.objs.ObjectMaskCollectionWriter;
-import org.anchoranalysis.image.objectmask.ObjectMaskCollection;
+import org.anchoranalysis.image.objectmask.ObjectCollection;
 import org.anchoranalysis.io.generator.collection.SubfolderGenerator;
 import org.anchoranalysis.io.generator.sequence.CollectionGenerator;
 import org.anchoranalysis.io.generator.serialized.ObjectOutputStreamGenerator;
@@ -58,7 +58,7 @@ public class RetrieveElementsOverlayCollection extends RetrieveElements {
 			
 			// Selected Marks as Configuration
 			Cfg cfg = OverlayCollectionMarkFactory.cfgFromOverlays( currentSelectedObjects );
-			ObjectMaskCollection objs = OverlayCollectionObjMaskFactory.objsFromOverlays( currentSelectedObjects );
+			ObjectCollection objs = OverlayCollectionObjMaskFactory.objsFromOverlays( currentSelectedObjects );
 			
 			// Selected Marks as Objects
 			addSelectedObjects( popUp, objs );
@@ -68,7 +68,7 @@ public class RetrieveElementsOverlayCollection extends RetrieveElements {
 	}
 	
 	
-	private void addSelectedObjects( IAddToExportSubMenu popUp, ObjectMaskCollection objs ) {
+	private void addSelectedObjects( IAddToExportSubMenu popUp, ObjectCollection objs ) {
 		popUp.addExportItem(
 			ObjectMaskCollectionWriter.generator(),
 			objs,

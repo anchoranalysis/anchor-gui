@@ -34,14 +34,14 @@ import org.anchoranalysis.core.functional.Operation;
 import org.anchoranalysis.core.log.LogErrorReporter;
 import org.anchoranalysis.core.name.store.LazyEvaluationStore;
 import org.anchoranalysis.image.io.objs.ObjectMaskCollectionReader;
-import org.anchoranalysis.image.objectmask.ObjectMaskCollection;
+import org.anchoranalysis.image.objectmask.ObjectCollection;
 import org.apache.commons.io.FilenameUtils;
 
 class CreateObjStoreFromDirectory { 
 
-	public LazyEvaluationStore<ObjectMaskCollection> apply( Path pathFolder, LogErrorReporter logErrorReporter ) throws OperationFailedException {
+	public LazyEvaluationStore<ObjectCollection> apply( Path pathFolder, LogErrorReporter logErrorReporter ) throws OperationFailedException {
 		
-		LazyEvaluationStore<ObjectMaskCollection> out = new LazyEvaluationStore<>(logErrorReporter, "finderObjMaskCollection");
+		LazyEvaluationStore<ObjectCollection> out = new LazyEvaluationStore<>(logErrorReporter, "finderObjMaskCollection");
 		
 		/** All the .h5 files in the directory */
 		addHdf5Files( out, pathFolder );
@@ -53,7 +53,7 @@ class CreateObjStoreFromDirectory {
 	}
 	
 	private void addHdf5Files(
-		LazyEvaluationStore<ObjectMaskCollection> out,
+		LazyEvaluationStore<ObjectCollection> out,
 		Path pathFolder
 	) throws OperationFailedException {
 		
@@ -68,7 +68,7 @@ class CreateObjStoreFromDirectory {
 	}
 	
 	private void addSubdirectories(
-		LazyEvaluationStore<ObjectMaskCollection> out,
+		LazyEvaluationStore<ObjectCollection> out,
 		Path pathFolder
 	) throws OperationFailedException {
 		
@@ -82,7 +82,7 @@ class CreateObjStoreFromDirectory {
 	}
 	
 	private void addPath(
-		LazyEvaluationStore<ObjectMaskCollection> out,
+		LazyEvaluationStore<ObjectCollection> out,
 		String name,
 		Path path
 	) throws OperationFailedException {
