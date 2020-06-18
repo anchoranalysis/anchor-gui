@@ -1,5 +1,7 @@
 package org.anchoranalysis.gui.feature.evaluator;
 
+import java.util.Optional;
+
 import org.anchoranalysis.anchor.mpp.bean.regionmap.RegionMap;
 import org.anchoranalysis.anchor.mpp.bean.regionmap.RegionMembershipWithFlags;
 import org.anchoranalysis.anchor.mpp.cfg.Cfg;
@@ -168,7 +170,7 @@ class FinderEvaluator {
 		private RegionMap regionMap = new RegionMap(0);
 		
 		private NRGStackWithParams raster;
-		private FeatureCalculatorMulti<FeatureInputPairMemo> session;
+		private Optional<FeatureCalculatorMulti<FeatureInputPairMemo>> session;
 		
 		public EdgeTester(
 			NRGStackWithParams raster,
@@ -186,26 +188,28 @@ class FinderEvaluator {
 			return (addCriteria.generateEdge(pmm1, pmm2, raster, session, raster.getDimensions().getZ()>1 )!=null);
 		}
 		
-		private FeatureCalculatorMulti<FeatureInputPairMemo> createSession(
+		private Optional<FeatureCalculatorMulti<FeatureInputPairMemo>> createSession(
 			SharedFeatureMulti sharedFeatureList,
 			LogErrorReporter logger	
 		) throws CreateException {
-			FeatureList<FeatureInputPairMemo> relevantFeatures = addCriteria.orderedListOfFeatures();
-			if (relevantFeatures.size()>0) {
+			Optional<FeatureList<FeatureInputPairMemo>> relevantFeatures = addCriteria.orderedListOfFeatures();
+			if (relevantFeatures.isPresent() && relevantFeatures.get().size()>0) {
 				
 				try {
-					return FeatureSession.with(
-						relevantFeatures,
-						new FeatureInitParams( raster.getParams() ),
-						sharedFeatureList,
-						logger
+					return Optional.of(
+						FeatureSession.with(
+							relevantFeatures.get(),
+							new FeatureInitParams( raster.getParams() ),
+							sharedFeatureList,
+							logger
+						)
 					);
 				} catch (FeatureCalcException e) {
 					throw new CreateException(e);
 				}
 
 			} else {
-				return null;
+				return Optional.empty();
 			}
 		}		
 	}

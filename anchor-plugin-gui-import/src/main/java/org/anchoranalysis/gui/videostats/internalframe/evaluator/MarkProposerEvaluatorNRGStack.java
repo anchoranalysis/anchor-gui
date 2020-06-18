@@ -63,7 +63,7 @@ public class MarkProposerEvaluatorNRGStack implements ProposalOperationCreator {
 		// Do proposal
 		ProposalOperation doProposal = new ProposalOperation() {
 			
-			final Mark m = MarkProposerEvaluatorUtilities.createMarkFromPosition( position, cfgGen.getTemplateMark().create(), context.getDimensions(), context.getRe() );
+			final Mark m = MarkProposerEvaluatorUtilities.createMarkFromPosition( position, cfgGen.getTemplateMark().create(), context.getDimensions(), context.getRandomNumberGenerator() );
 			
 			@Override
 			public ProposedCfg propose(ErrorNode errorNode) throws ProposalAbnormalFailureException {
