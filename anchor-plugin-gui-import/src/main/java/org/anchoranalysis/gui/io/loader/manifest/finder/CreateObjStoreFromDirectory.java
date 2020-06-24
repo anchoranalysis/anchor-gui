@@ -33,15 +33,15 @@ import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.functional.Operation;
 import org.anchoranalysis.core.log.LogErrorReporter;
 import org.anchoranalysis.core.name.store.LazyEvaluationStore;
-import org.anchoranalysis.image.io.objs.ObjMaskCollectionReader;
-import org.anchoranalysis.image.objmask.ObjMaskCollection;
+import org.anchoranalysis.image.io.objs.ObjectMaskCollectionReader;
+import org.anchoranalysis.image.objectmask.ObjectCollection;
 import org.apache.commons.io.FilenameUtils;
 
 class CreateObjStoreFromDirectory { 
 
-	public LazyEvaluationStore<ObjMaskCollection> apply( Path pathFolder, LogErrorReporter logErrorReporter ) throws OperationFailedException {
+	public LazyEvaluationStore<ObjectCollection> apply( Path pathFolder, LogErrorReporter logErrorReporter ) throws OperationFailedException {
 		
-		LazyEvaluationStore<ObjMaskCollection> out = new LazyEvaluationStore<>(logErrorReporter, "finderObjMaskCollection");
+		LazyEvaluationStore<ObjectCollection> out = new LazyEvaluationStore<>(logErrorReporter, "finderObjMaskCollection");
 		
 		/** All the .h5 files in the directory */
 		addHdf5Files( out, pathFolder );
@@ -53,7 +53,7 @@ class CreateObjStoreFromDirectory {
 	}
 	
 	private void addHdf5Files(
-		LazyEvaluationStore<ObjMaskCollection> out,
+		LazyEvaluationStore<ObjectCollection> out,
 		Path pathFolder
 	) throws OperationFailedException {
 		
@@ -68,7 +68,7 @@ class CreateObjStoreFromDirectory {
 	}
 	
 	private void addSubdirectories(
-		LazyEvaluationStore<ObjMaskCollection> out,
+		LazyEvaluationStore<ObjectCollection> out,
 		Path pathFolder
 	) throws OperationFailedException {
 		
@@ -82,7 +82,7 @@ class CreateObjStoreFromDirectory {
 	}
 	
 	private void addPath(
-		LazyEvaluationStore<ObjMaskCollection> out,
+		LazyEvaluationStore<ObjectCollection> out,
 		String name,
 		Path path
 	) throws OperationFailedException {
@@ -93,7 +93,7 @@ class CreateObjStoreFromDirectory {
 		
 		out.add(
 			name,
-			ObjMaskCollectionReader.createFromPathCached(pathOp)
+			ObjectMaskCollectionReader.createFromPathCached(pathOp)
 		);
 	}
 	
@@ -103,7 +103,7 @@ class CreateObjStoreFromDirectory {
 	
 	private static File[] hd5fFilesFor( Path pathFolder ) {
 		return pathFolder.toFile().listFiles(
-			f-> ObjMaskCollectionReader.hasHdf5Extension( f.toPath() )
+			f-> ObjectMaskCollectionReader.hasHdf5Extension( f.toPath() )
 		);
 	}
 }

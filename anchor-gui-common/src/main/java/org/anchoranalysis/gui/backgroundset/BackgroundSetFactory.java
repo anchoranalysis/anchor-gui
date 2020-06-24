@@ -43,7 +43,7 @@ import org.anchoranalysis.core.progress.ProgressReporterIncrement;
 import org.anchoranalysis.gui.container.background.BackgroundStackCntr;
 import org.anchoranalysis.gui.container.background.SingleBackgroundStackCntr;
 import org.anchoranalysis.gui.serializedobjectset.MarkWithRaster;
-import org.anchoranalysis.image.chnl.factory.ChnlFactory;
+import org.anchoranalysis.image.channel.factory.ChannelFactory;
 import org.anchoranalysis.image.experiment.identifiers.ImgStackIdentifiers;
 import org.anchoranalysis.image.extent.ImageDim;
 import org.anchoranalysis.image.extent.IncorrectImageSizeException;
@@ -198,7 +198,7 @@ public class BackgroundSetFactory {
 		try {
 			Stack stack = new Stack();
 			stack.addChnl(
-				ChnlFactory.instance().createEmptyInitialised(sd, VoxelDataTypeUnsignedByte.instance )
+				ChannelFactory.instance().createEmptyInitialised(sd, VoxelDataTypeUnsignedByte.instance )
 			);
 			return stack;
 		} catch (IncorrectImageSizeException e) {

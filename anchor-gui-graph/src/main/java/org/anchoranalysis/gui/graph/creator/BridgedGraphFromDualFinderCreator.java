@@ -1,8 +1,8 @@
 package org.anchoranalysis.gui.graph.creator;
 
 import org.anchoranalysis.anchor.mpp.feature.instantstate.CfgNRGInstantState;
-import org.anchoranalysis.core.bridge.IObjectBridge;
 import org.anchoranalysis.core.error.CreateException;
+import org.anchoranalysis.core.functional.FunctionWithException;
 import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.index.container.IBoundedIndexContainer;
 import org.anchoranalysis.core.index.container.bridge.BoundedIndexContainerBridgeWithoutIndex;
@@ -77,6 +77,6 @@ public abstract class BridgedGraphFromDualFinderCreator<T> extends GraphFromDual
 
 	}
 	
-	public abstract IObjectBridge<CSVStatistic,T,CreateException> createCSVStatisticBridge();
-	public abstract IObjectBridge<CfgNRGInstantState,T,CreateException> createCfgNRGInstantStateBridge();
+	public abstract FunctionWithException<CSVStatistic,T,CreateException> createCSVStatisticBridge();
+	public abstract FunctionWithException<CfgNRGInstantState,T,CreateException> createCfgNRGInstantStateBridge();
 }

@@ -34,7 +34,7 @@ import org.anchoranalysis.core.index.container.IBoundedIndexContainer;
 import org.anchoranalysis.core.index.container.SingleContainer;
 import org.anchoranalysis.gui.container.background.BackgroundStackCntr;
 import org.anchoranalysis.gui.finder.FinderRasterSingleChnl;
-import org.anchoranalysis.image.chnl.Chnl;
+import org.anchoranalysis.image.channel.Channel;
 import org.anchoranalysis.image.io.RasterIOException;
 import org.anchoranalysis.image.io.bean.rasterreader.RasterReader;
 import org.anchoranalysis.image.io.bean.rasterreader.RasterReaderUtilities;
@@ -81,7 +81,7 @@ public abstract class FinderRasterStack extends FinderSingleFile implements Find
 	
 
 	@Override
-	public Chnl getFirstChnl() throws GetOperationFailedException {
+	public Channel getFirstChnl() throws GetOperationFailedException {
 		return get().getChnl(0);
 	}
 	

@@ -3,7 +3,6 @@ package org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.definition;
 import java.util.Map;
 
 import org.anchoranalysis.bean.shared.StringMap;
-import org.anchoranalysis.core.bridge.IObjectBridge;
 
 /*
  * #%L
@@ -33,6 +32,7 @@ import org.anchoranalysis.core.bridge.IObjectBridge;
 
 
 import org.anchoranalysis.core.error.reporter.ErrorReporter;
+import org.anchoranalysis.core.functional.FunctionWithException;
 import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.progress.OperationWithProgressReporter;
 import org.anchoranalysis.core.progress.ProgressReporterNull;
@@ -57,7 +57,7 @@ class StackFromBackgroundSetViaMap implements IImageStackCntrFromName {
 	}
 
 	@Override
-	public IObjectBridge<Integer, DisplayStack,GetOperationFailedException> imageStackCntrFromName(String name) throws GetOperationFailedException {
+	public FunctionWithException<Integer, DisplayStack,GetOperationFailedException> imageStackCntrFromName(String name) throws GetOperationFailedException {
 		try {				
 			return backgroundSet.doOperation( ProgressReporterNull.get() ).stackCntr(
 				map.get(name)

@@ -27,7 +27,7 @@ import org.anchoranalysis.gui.videostats.modulecreator.ObjMaskCollectionModuleCr
 import org.anchoranalysis.gui.videostats.modulecreator.VideoStatsModuleCreator;
 import org.anchoranalysis.gui.videostats.operation.VideoStatsOperationFromCreatorAndAdder;
 import org.anchoranalysis.gui.videostats.operation.VideoStatsOperationMenu;
-import org.anchoranalysis.image.objmask.ObjMaskCollection;
+import org.anchoranalysis.image.objectmask.ObjectCollection;
 import org.anchoranalysis.io.manifest.ManifestDescription;
 import org.anchoranalysis.io.manifest.ManifestFolderDescription;
 import org.anchoranalysis.io.output.bean.OutputWriteSettings;
@@ -109,7 +109,7 @@ public class DropDownUtilities {
 	public static void addObjMaskCollection(
 		VideoStatsOperationMenu menu,
 		BoundVideoStatsModuleDropDown delegate,
-		Operation<ObjMaskCollection,OperationFailedException> op,
+		Operation<ObjectCollection,OperationFailedException> op,
 		String name,
 		NRGBackgroundAdder<?> nrgBackground,
 		VideoStatsModuleGlobalParams mpg,
@@ -165,7 +165,7 @@ public class DropDownUtilities {
 	public static void addObjSubmenu(
 		VideoStatsOperationMenu menu,
 		BoundVideoStatsModuleDropDown delegate,
-		final NamedProvider<ObjMaskCollection> provider,
+		final NamedProvider<ObjectCollection> provider,
 		NRGBackgroundAdder<?> nrgBackground,
 		VideoStatsModuleGlobalParams mpg,
 		boolean addAsDefault

@@ -70,7 +70,7 @@ public class InternalFrameEditableOverlays implements IColoredCfgUpdater {
 			ISliderState sliderState = this.delegate.init(
 				new OverlayedDisplayStack(
 					new ColoredOverlayCollection(),
-					defaultState.getLinkState().getBackground().bridgeElement(0)
+					defaultState.getLinkState().getBackground().apply(0)
 				),
 				new IDGetterOverlayID(),
 				new IDGetterMarkID(),

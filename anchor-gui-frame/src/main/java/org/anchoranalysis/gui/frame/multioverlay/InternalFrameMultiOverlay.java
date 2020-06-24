@@ -35,7 +35,7 @@ import java.util.Set;
 import org.anchoranalysis.anchor.overlay.Overlay;
 import org.anchoranalysis.anchor.overlay.OverlayedInstantState;
 import org.anchoranalysis.anchor.overlay.id.IDGetterOverlayID;
-import org.anchoranalysis.core.bridge.IObjectBridgeIndex;
+import org.anchoranalysis.core.bridge.BridgeElementWithIndex;
 import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.error.reporter.ErrorReporter;
@@ -74,7 +74,7 @@ class InternalFrameMultiOverlay<T> {
 	
 	public SliderNRGState init(
 			final List<MultiInput<T>> list,
-			IObjectBridgeIndex<MultiInput<T>, OverlayedInstantState,OperationFailedException> bridge,
+			BridgeElementWithIndex<MultiInput<T>, OverlayedInstantState,OperationFailedException> bridge,
 			IRetrieveElements elementRetriever,
 			DefaultModuleStateManager defaultState,
 			final VideoStatsModuleGlobalParams mpg
@@ -132,7 +132,7 @@ class InternalFrameMultiOverlay<T> {
 	
 	private static <T> IBoundedIndexContainer<OverlayedInstantState> bridgeList(
 		List<T> list,
-		IObjectBridgeIndex<T, OverlayedInstantState,OperationFailedException> bridge
+		BridgeElementWithIndex<T, OverlayedInstantState,OperationFailedException> bridge
 	) {
 		BoundedIndexContainerFromList<T> cntr = new BoundedIndexContainerFromList<>(list);
 		return new BoundedIndexContainerBridgeWithIndex<>(cntr, bridge );

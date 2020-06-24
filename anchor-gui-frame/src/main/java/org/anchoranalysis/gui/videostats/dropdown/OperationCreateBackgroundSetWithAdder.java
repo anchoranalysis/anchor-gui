@@ -1,7 +1,5 @@
 package org.anchoranalysis.gui.videostats.dropdown;
 
-import org.anchoranalysis.core.bridge.IObjectBridge;
-
 /*
  * #%L
  * anchor-gui
@@ -32,6 +30,7 @@ import org.anchoranalysis.core.bridge.IObjectBridge;
 import org.anchoranalysis.core.cache.WrapOperationWithProgressReporterAsCached;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.error.reporter.ErrorReporter;
+import org.anchoranalysis.core.functional.FunctionWithException;
 import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.progress.CachedOperationWithProgressReporter;
 import org.anchoranalysis.core.progress.OperationWithProgressReporter;
@@ -92,7 +91,7 @@ public class OperationCreateBackgroundSetWithAdder extends CachedOperationWithPr
 		);
 	}
 	
-	private static IObjectBridge<Integer,DisplayStack,GetOperationFailedException> initialBackground( BackgroundSet backgroundSet ) throws GetOperationFailedException {
+	private static FunctionWithException<Integer,DisplayStack,GetOperationFailedException> initialBackground( BackgroundSet backgroundSet ) throws GetOperationFailedException {
 		
 		if (backgroundSet.names().contains(ImgStackIdentifiers.INPUT_IMAGE)) {
 			return backgroundSet.stackCntr( ImgStackIdentifiers.INPUT_IMAGE );
@@ -128,7 +127,7 @@ public class OperationCreateBackgroundSetWithAdder extends CachedOperationWithPr
 		
 		childAdder = nrgBackground.addNrgStackToAdder(childAdder);
 		
-		IObjectBridge<Integer,DisplayStack,GetOperationFailedException> initialBackground;
+		FunctionWithException<Integer,DisplayStack,GetOperationFailedException> initialBackground;
 		try {
 			initialBackground = initialBackground(backgroundSet);
 		} catch (GetOperationFailedException e) {
@@ -138,7 +137,7 @@ public class OperationCreateBackgroundSetWithAdder extends CachedOperationWithPr
 		// TODO For now we assume there is always an index 0 available as a minimum
 		DisplayStack initialStack;
 		try {
-			initialStack = initialBackground.bridgeElement(0);
+			initialStack = initialBackground.apply(0);
 		} catch (GetOperationFailedException e) {
 			throw new OperationFailedException("Cannot set defaultModuleState background: " + e);
 		}

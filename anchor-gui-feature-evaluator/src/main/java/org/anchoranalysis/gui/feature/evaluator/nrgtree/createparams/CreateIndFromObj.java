@@ -32,16 +32,15 @@ import org.anchoranalysis.feature.input.FeatureInput;
 import org.anchoranalysis.feature.nrg.NRGStackWithParams;
 import org.anchoranalysis.feature.session.CreateFeatureInput;
 import org.anchoranalysis.image.feature.objmask.FeatureInputSingleObj;
-import org.anchoranalysis.image.objmask.ObjMask;
+import org.anchoranalysis.image.objectmask.ObjectMask;
 
 public class CreateIndFromObj extends CreateFeatureInput<FeatureInput> {
 
 	private FeatureInputSingleObj input;
 	
-	public CreateIndFromObj(ObjMask objMask, NRGStackWithParams nrgStack) {
+	public CreateIndFromObj(ObjectMask objMask, NRGStackWithParams nrgStack) {
 		super();
-		input = new FeatureInputSingleObj( objMask );
-		input.setNrgStack(nrgStack);
+		input = new FeatureInputSingleObj(objMask, nrgStack);
 	}
 
 	@Override

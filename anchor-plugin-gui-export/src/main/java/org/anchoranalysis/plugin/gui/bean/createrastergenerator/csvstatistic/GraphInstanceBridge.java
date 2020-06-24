@@ -32,8 +32,8 @@ import java.util.Optional;
 import org.anchoranalysis.anchor.graph.AxisLimits;
 import org.anchoranalysis.anchor.graph.GraphInstance;
 import org.anchoranalysis.anchor.graph.bean.GraphDefinition;
-import org.anchoranalysis.core.bridge.IObjectBridge;
 import org.anchoranalysis.core.error.CreateException;
+import org.anchoranalysis.core.functional.FunctionWithException;
 import org.anchoranalysis.core.index.container.IBoundedIndexContainer;
 import org.anchoranalysis.core.index.container.bridge.BoundedIndexContainerBridgeWithoutIndex;
 import org.anchoranalysis.gui.graph.BoundedIndexContainerIterator;
@@ -46,19 +46,19 @@ import org.anchoranalysis.plugin.gui.bean.exporttask.MappedFrom;
  *
  * @param <T> graph-item type
  */
-class GraphInstanceBridge<T> implements IObjectBridge<MappedFrom<CSVStatistic>,GraphInstance,CreateException> {
+class GraphInstanceBridge<T> implements FunctionWithException<MappedFrom<CSVStatistic>,GraphInstance,CreateException> {
 	
 	// START: PARAMETERS IN
 	private GraphDefinition<T> graphDefinition;
 	private IBoundedIndexContainer<CSVStatistic> cntr;
-	private IObjectBridge<CSVStatistic,T,? extends Exception> elementBridge;
+	private FunctionWithException<CSVStatistic,T,? extends Exception> elementBridge;
 	// END: PARAMETERS IN
 	
 	private Optional<AxisLimits> rangeLimits = Optional.empty();
 
 	public GraphInstanceBridge(GraphDefinition<T> graphDefinition,
 			IBoundedIndexContainer<CSVStatistic> cntr,
-			IObjectBridge<CSVStatistic,T,? extends Exception> elementBridge
+			FunctionWithException<CSVStatistic,T,? extends Exception> elementBridge
 		) {
 		super();
 		this.graphDefinition = graphDefinition;
@@ -67,7 +67,7 @@ class GraphInstanceBridge<T> implements IObjectBridge<MappedFrom<CSVStatistic>,G
 	}
 	
 	@Override
-	public GraphInstance bridgeElement(MappedFrom<CSVStatistic> sourceObject) throws CreateException {
+	public GraphInstance apply(MappedFrom<CSVStatistic> sourceObject) throws CreateException {
 		
 		assert(graphDefinition!=null);
 		

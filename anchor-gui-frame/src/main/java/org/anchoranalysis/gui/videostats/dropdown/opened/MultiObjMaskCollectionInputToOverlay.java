@@ -3,7 +3,7 @@ package org.anchoranalysis.gui.videostats.dropdown.opened;
 import org.anchoranalysis.anchor.overlay.OverlayedInstantState;
 import org.anchoranalysis.anchor.overlay.collection.OverlayCollection;
 import org.anchoranalysis.anchor.overlay.collection.OverlayCollectionObjMaskFactory;
-import org.anchoranalysis.core.bridge.IObjectBridgeIndex;
+import org.anchoranalysis.core.bridge.BridgeElementWithIndex;
 
 /*
  * #%L
@@ -35,17 +35,17 @@ import org.anchoranalysis.core.bridge.IObjectBridgeIndex;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.idgetter.IDGetterIter;
 import org.anchoranalysis.gui.videostats.internalframe.cfgtorgb.MultiInput;
-import org.anchoranalysis.image.objmask.ObjMaskCollection;
+import org.anchoranalysis.image.objectmask.ObjectCollection;
 
-class MultiObjMaskCollectionInputToOverlay implements IObjectBridgeIndex<MultiInput<ObjMaskCollection>, OverlayedInstantState,OperationFailedException> {
+class MultiObjMaskCollectionInputToOverlay implements BridgeElementWithIndex<MultiInput<ObjectCollection>, OverlayedInstantState,OperationFailedException> {
 	
 	@Override
 	public OverlayedInstantState bridgeElement(
 		int index,
-		MultiInput<ObjMaskCollection> sourceObject
+		MultiInput<ObjectCollection> sourceObject
 	) throws OperationFailedException {
 
-		ObjMaskCollection objs = sourceObject.getAssociatedObjects().doOperation();
+		ObjectCollection objs = sourceObject.getAssociatedObjects().doOperation();
 		
 		OverlayCollection oc = OverlayCollectionObjMaskFactory.createWithoutColor(objs, new IDGetterIter<>() );
 		return new OverlayedInstantState(index, oc);

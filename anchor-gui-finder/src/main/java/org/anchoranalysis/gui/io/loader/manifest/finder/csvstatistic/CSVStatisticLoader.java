@@ -27,12 +27,12 @@ package org.anchoranalysis.gui.io.loader.manifest.finder.csvstatistic;
  */
 
 
-import java.io.IOException;
 import java.nio.file.Path;
 
 import org.anchoranalysis.core.index.container.IBoundedIndexContainer;
+import org.anchoranalysis.io.csv.reader.CSVReaderException;
 
 public abstract class CSVStatisticLoader {
 
-	public abstract IBoundedIndexContainer<CSVStatistic> createContainerFromCSV( Path csvPath ) throws IOException;
+	public abstract IBoundedIndexContainer<CSVStatistic> createContainerFromCSV( Path csvPath ) throws CSVReaderException;
 }

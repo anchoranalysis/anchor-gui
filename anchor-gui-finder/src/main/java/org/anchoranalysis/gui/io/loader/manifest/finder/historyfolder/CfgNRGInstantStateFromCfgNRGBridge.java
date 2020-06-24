@@ -30,10 +30,10 @@ import org.anchoranalysis.anchor.mpp.feature.nrg.cfg.CfgNRG;
  * #L%
  */
 
-import org.anchoranalysis.core.bridge.IObjectBridgeIndex;
+import org.anchoranalysis.core.bridge.BridgeElementWithIndex;
 import org.anchoranalysis.core.error.AnchorNeverOccursException;
 
-class CfgNRGInstantStateFromCfgNRGBridge implements IObjectBridgeIndex<CfgNRG, CfgNRGInstantState, AnchorNeverOccursException> {
+class CfgNRGInstantStateFromCfgNRGBridge implements BridgeElementWithIndex<CfgNRG, CfgNRGInstantState, AnchorNeverOccursException> {
 	
 	@Override
 	public CfgNRGInstantState bridgeElement(int index, CfgNRG sourceObject) {

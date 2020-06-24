@@ -31,8 +31,8 @@ import javax.swing.ProgressMonitor;
 
 import org.anchoranalysis.bean.AnchorBean;
 import org.anchoranalysis.bean.annotation.BeanField;
-import org.anchoranalysis.core.bridge.IObjectBridge;
 import org.anchoranalysis.core.error.OperationFailedException;
+import org.anchoranalysis.core.functional.FunctionWithException;
 import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.index.container.IBoundedIndexContainer;
 import org.anchoranalysis.gui.bean.exporttask.ExportTaskFailedException;
@@ -61,7 +61,7 @@ public class ExportTaskBoundedIndexContainerGeneratorSeries<T> extends AnchorBea
 	private int limitIterations = -1;		// -1 disables
 	// END BEAN PARAMETERS
 	
-	private IObjectBridge<ExportTaskParams,IBoundedIndexContainer<T>,OperationFailedException> containerBridge;
+	private FunctionWithException<ExportTaskParams,IBoundedIndexContainer<T>,OperationFailedException> containerBridge;
 	
 	public ExportTaskBoundedIndexContainerGeneratorSeries() {
 	}	
@@ -69,7 +69,7 @@ public class ExportTaskBoundedIndexContainerGeneratorSeries<T> extends AnchorBea
 	public boolean execute( ExportTaskParams params, ProgressMonitor progressMonitor, GeneratorSequenceNonIncremental<MappedFrom<T>> generatorSequenceWriter, BoundOutputManagerRouteErrors outputManager, String outputName ) throws ExportTaskFailedException {
 		try {
 			return execute(
-				containerBridge.bridgeElement(params),
+				containerBridge.apply(params),
 				progressMonitor,
 				generatorSequenceWriter,
 				outputManager,
@@ -82,7 +82,7 @@ public class ExportTaskBoundedIndexContainerGeneratorSeries<T> extends AnchorBea
 	
 	public int getMinProgress( ExportTaskParams params ) throws ExportTaskFailedException {
 		try {
-			return containerBridge.bridgeElement(params).getMinimumIndex();
+			return containerBridge.apply(params).getMinimumIndex();
 		} catch (OperationFailedException e) {
 			throw new ExportTaskFailedException(e);
 		}
@@ -90,7 +90,7 @@ public class ExportTaskBoundedIndexContainerGeneratorSeries<T> extends AnchorBea
 	
 	public int getMaxProgress( ExportTaskParams params ) throws ExportTaskFailedException {
 		try {
-			return containerBridge.bridgeElement(params).getMaximumIndex();
+			return containerBridge.apply(params).getMaximumIndex();
 		} catch (OperationFailedException e) {
 			throw new ExportTaskFailedException(e);
 		}
@@ -101,7 +101,7 @@ public class ExportTaskBoundedIndexContainerGeneratorSeries<T> extends AnchorBea
 	}
 
 
-	public IObjectBridge<ExportTaskParams, IBoundedIndexContainer<T>,OperationFailedException> getContainerBridge() {
+	public FunctionWithException<ExportTaskParams, IBoundedIndexContainer<T>,OperationFailedException> getContainerBridge() {
 		return containerBridge;
 	}
 	
@@ -182,7 +182,7 @@ public class ExportTaskBoundedIndexContainerGeneratorSeries<T> extends AnchorBea
 		);
 	}
 
-	public void setContainerBridge(	IObjectBridge<ExportTaskParams, IBoundedIndexContainer<T>,OperationFailedException> containerBridge) {
+	public void setContainerBridge(	FunctionWithException<ExportTaskParams, IBoundedIndexContainer<T>,OperationFailedException> containerBridge) {
 		this.containerBridge = containerBridge;
 	}
 

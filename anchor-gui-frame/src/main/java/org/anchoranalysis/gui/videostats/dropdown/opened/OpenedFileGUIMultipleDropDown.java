@@ -33,7 +33,7 @@ import java.util.List;
 import javax.swing.JPopupMenu;
 
 import org.anchoranalysis.anchor.overlay.OverlayedInstantState;
-import org.anchoranalysis.core.bridge.IObjectBridgeIndex;
+import org.anchoranalysis.core.bridge.BridgeElementWithIndex;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.functional.Operation;
 import org.anchoranalysis.core.progress.IdentityOperationWithProgressReporter;
@@ -237,7 +237,7 @@ public class OpenedFileGUIMultipleDropDown {
 		VideoStatsOperationMenu outMenu,
 		VideoStatsOperation rootOperation,
 		String subMenuName,
-		IObjectBridgeIndex<MultiInput<T>, OverlayedInstantState, OperationFailedException> bridge,
+		BridgeElementWithIndex<MultiInput<T>, OverlayedInstantState, OperationFailedException> bridge,
 		GetObjFromOperationCombine<T> getObjFromOperationCombine
 	) {
 		

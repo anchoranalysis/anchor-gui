@@ -51,7 +51,7 @@ import org.anchoranalysis.gui.videostats.dropdown.common.DropDownUtilities;
 import org.anchoranalysis.gui.videostats.dropdown.contextualmodulecreator.NRGTableCreator;
 import org.anchoranalysis.gui.videostats.dropdown.contextualmodulecreator.SingleContextualModuleCreator;
 import org.anchoranalysis.gui.videostats.operation.VideoStatsOperationMenu;
-import org.anchoranalysis.image.objmask.ObjMaskCollection;
+import org.anchoranalysis.image.objectmask.ObjectCollection;
 import org.anchoranalysis.io.manifest.deserializer.folder.LoadContainer;
 import org.anchoranalysis.io.manifest.finder.FinderSerializedObject;
 import org.anchoranalysis.plugin.io.manifest.CoupledManifests;
@@ -103,13 +103,13 @@ class AddObjs {
 			
 			if (finderObjs.exists()) {
 				
-				NamedProvider<ObjMaskCollection> providers = finderObjs.createNamedProvider(false, mpg.getLogErrorReporter());
+				NamedProvider<ObjectCollection> providers = finderObjs.createNamedProvider(false, mpg.getLogErrorReporter());
 				
 				for( String key : providers.keys() ) {
 					DropDownUtilities.addObjMaskCollection(
 						subMenu,
 						delegate,
-						new OperationFromNamedProvider<ObjMaskCollection>(providers,key),
+						new OperationFromNamedProvider<ObjectCollection>(providers,key),
 						key,
 						operationBwsaWithNRG.nrgBackground(),
 						mpg,

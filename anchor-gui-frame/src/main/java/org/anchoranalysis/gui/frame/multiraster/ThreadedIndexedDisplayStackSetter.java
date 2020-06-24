@@ -1,6 +1,5 @@
 package org.anchoranalysis.gui.frame.multiraster;
 
-import org.anchoranalysis.core.bridge.IObjectBridge;
 import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.error.OperationFailedException;
 
@@ -31,6 +30,7 @@ import org.anchoranalysis.core.error.OperationFailedException;
  */
 
 import org.anchoranalysis.core.error.reporter.ErrorReporter;
+import org.anchoranalysis.core.functional.FunctionWithException;
 import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.index.IIndexGettableSettable;
 import org.anchoranalysis.gui.displayupdate.IDisplayUpdateRememberStack;
@@ -52,7 +52,7 @@ public class ThreadedIndexedDisplayStackSetter implements IBackgroundSetter, ITh
 	private IterableObjectGenerator<DisplayStack, DisplayStack> stackGenerator;
 	
 	public void init(
-		IObjectBridge<Integer,DisplayStack,? extends Throwable> cntrDisplayStack,
+		FunctionWithException<Integer,DisplayStack,? extends Throwable> cntrDisplayStack,
 		InteractiveThreadPool threadPool,
 		ErrorReporter errorReporter
 	) throws InitException {
@@ -83,7 +83,7 @@ public class ThreadedIndexedDisplayStackSetter implements IBackgroundSetter, ITh
 	
 	
 	@Override
-	public void setImageStackCntr( IObjectBridge<Integer,DisplayStack,GetOperationFailedException> imageStackCntr ) {
+	public void setImageStackCntr( FunctionWithException<Integer,DisplayStack,GetOperationFailedException> imageStackCntr ) {
 		
 		delegate.setImageStackGenerator(
 			ensure8bit(imageStackCntr)
@@ -96,7 +96,7 @@ public class ThreadedIndexedDisplayStackSetter implements IBackgroundSetter, ITh
 		delegate.dispose();
 	}
 	
-	private IObjectBridge<Integer, DisplayUpdate,OperationFailedException> ensure8bit( IObjectBridge<Integer,DisplayStack,? extends Throwable> cntr ) {
+	private FunctionWithException<Integer, DisplayUpdate,OperationFailedException> ensure8bit( FunctionWithException<Integer,DisplayStack,? extends Throwable> cntr ) {
 		return new NoOverlayBridgeFromGenerator(
 			new IterableObjectGeneratorBridge<>(
 				stackGenerator,

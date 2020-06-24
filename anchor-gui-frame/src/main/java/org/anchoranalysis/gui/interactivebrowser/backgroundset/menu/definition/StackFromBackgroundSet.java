@@ -1,7 +1,5 @@
 package org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.definition;
 
-import org.anchoranalysis.core.bridge.IObjectBridge;
-
 /*
  * #%L
  * anchor-gui
@@ -30,6 +28,7 @@ import org.anchoranalysis.core.bridge.IObjectBridge;
 
 
 import org.anchoranalysis.core.error.reporter.ErrorReporter;
+import org.anchoranalysis.core.functional.FunctionWithException;
 import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.progress.OperationWithProgressReporter;
 import org.anchoranalysis.core.progress.ProgressReporterNull;
@@ -51,7 +50,7 @@ class StackFromBackgroundSet implements IImageStackCntrFromName {
 	}
 
 	@Override
-	public IObjectBridge<Integer, DisplayStack,GetOperationFailedException> imageStackCntrFromName(String name) {
+	public FunctionWithException<Integer, DisplayStack,GetOperationFailedException> imageStackCntrFromName(String name) {
 		try {				
 			return backgroundSet.doOperation( ProgressReporterNull.get() ).stackCntr(name);
 		} catch (Throwable e) {

@@ -28,22 +28,22 @@ package org.anchoranalysis.gui.frame.threaded.overlay;
 
 import java.util.function.Supplier;
 
-import org.anchoranalysis.core.bridge.IObjectBridge;
+import org.anchoranalysis.core.functional.FunctionWithException;
 import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.gui.displayupdate.OverlayedDisplayStack;
 import org.anchoranalysis.gui.frame.display.OverlayedDisplayStackUpdate;
 
 // Finds ColoredCfgRedrawUpdate which implement changes to existing ColoredCfg
-class FindCorrectUpdate implements IObjectBridge<Integer,OverlayedDisplayStackUpdate,GetOperationFailedException> {
+class FindCorrectUpdate implements FunctionWithException<Integer,OverlayedDisplayStackUpdate,GetOperationFailedException> {
 	private int oldIndex = -1;
 	
-	private final IObjectBridge<Integer,OverlayedDisplayStack,GetOperationFailedException> integerToOverlayedBridge;
+	private final FunctionWithException<Integer,OverlayedDisplayStack,GetOperationFailedException> integerToOverlayedBridge;
 	
 	private Supplier<Boolean> funcHasBeenInit;
 	private IGetClearUpdate getClearUpdate;
 	
 	public FindCorrectUpdate(
-		IObjectBridge<Integer, OverlayedDisplayStack, GetOperationFailedException> integerToOverlayedBridge,
+		FunctionWithException<Integer, OverlayedDisplayStack, GetOperationFailedException> integerToOverlayedBridge,
 		Supplier<Boolean> funcHasBeenInit,
 		IGetClearUpdate getClearUpdate
 	) {
@@ -54,7 +54,7 @@ class FindCorrectUpdate implements IObjectBridge<Integer,OverlayedDisplayStackUp
 	}
 
 	@Override
-	public OverlayedDisplayStackUpdate bridgeElement(Integer sourceObject) throws GetOperationFailedException {
+	public OverlayedDisplayStackUpdate apply(Integer sourceObject) throws GetOperationFailedException {
 		
 		// If our index hasn't changed, then we just apply whatever local updates are queued for processing
 		if (funcHasBeenInit.get() && sourceObject.equals(oldIndex)) {
@@ -62,7 +62,7 @@ class FindCorrectUpdate implements IObjectBridge<Integer,OverlayedDisplayStackUp
 			OverlayedDisplayStackUpdate update = getClearUpdate.getAndClearWaitingUpdate();
 			return update;
 		} else {
-			OverlayedDisplayStack ods = integerToOverlayedBridge.bridgeElement(sourceObject);
+			OverlayedDisplayStack ods = integerToOverlayedBridge.apply(sourceObject);
 			oldIndex = sourceObject;
 			
 			OverlayedDisplayStackUpdate update = OverlayedDisplayStackUpdate.assignOverlaysAndBackground(

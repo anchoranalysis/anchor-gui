@@ -1,6 +1,5 @@
 package org.anchoranalysis.gui.io.loader.manifest.finder.probmap;
 
-import org.anchoranalysis.core.bridge.IObjectBridge;
 import org.anchoranalysis.core.error.CreateException;
 
 /*
@@ -31,13 +30,14 @@ import org.anchoranalysis.core.error.CreateException;
 
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.error.reporter.ErrorReporter;
+import org.anchoranalysis.core.functional.FunctionWithException;
 import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.index.container.IBoundedIndexContainer;
 import org.anchoranalysis.core.index.container.SingleContainer;
 import org.anchoranalysis.core.index.container.bridge.BoundedIndexContainerBridgeWithoutIndex;
 import org.anchoranalysis.gui.container.background.BackgroundStackCntr;
 import org.anchoranalysis.gui.finder.FinderRasterSingleChnl;
-import org.anchoranalysis.image.chnl.Chnl;
+import org.anchoranalysis.image.channel.Channel;
 import org.anchoranalysis.image.extent.IncorrectImageSizeException;
 import org.anchoranalysis.image.io.bean.rasterreader.RasterReader;
 import org.anchoranalysis.image.stack.DisplayStack;
@@ -96,7 +96,7 @@ public class FinderProbMap extends Finder implements BackgroundStackCntr, Finder
 	}
 	
 	// Returns a single channel the probMap, o series allowed
-	public Chnl singleChnl() throws GetOperationFailedException {
+	public Channel singleChnl() throws GetOperationFailedException {
 		if (singleRaster.exists()) {
 			return singleRaster.get();
 		}
@@ -115,7 +115,7 @@ public class FinderProbMap extends Finder implements BackgroundStackCntr, Finder
 		
 		try {
 			if (isSingle()) {
-				Chnl chnl = singleRaster.get();
+				Channel chnl = singleRaster.get();
 				
 				Stack stack = new Stack();
 				stack.addChnl(chnl);
@@ -140,10 +140,10 @@ public class FinderProbMap extends Finder implements BackgroundStackCntr, Finder
 		}
 	}
 		
-	private static class BackgroundStackBridge implements IObjectBridge<Stack, DisplayStack,CreateException> {
+	private static class BackgroundStackBridge implements FunctionWithException<Stack, DisplayStack,CreateException> {
 
 		@Override
-		public DisplayStack bridgeElement(Stack sourceObject) throws CreateException {
+		public DisplayStack apply(Stack sourceObject) throws CreateException {
 			return DisplayStack.create(sourceObject );
 		}
 	}
@@ -153,7 +153,7 @@ public class FinderProbMap extends Finder implements BackgroundStackCntr, Finder
 	}
 	
 	@Override
-	public Chnl getFirstChnl() throws GetOperationFailedException {
+	public Channel getFirstChnl() throws GetOperationFailedException {
 		return singleChnl();
 	}
 

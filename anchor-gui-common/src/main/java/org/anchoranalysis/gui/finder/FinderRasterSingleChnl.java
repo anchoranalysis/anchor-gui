@@ -27,13 +27,13 @@ package org.anchoranalysis.gui.finder;
  */
 
 import org.anchoranalysis.core.index.GetOperationFailedException;
-import org.anchoranalysis.image.chnl.Chnl;
+import org.anchoranalysis.image.channel.Channel;
 
 public interface FinderRasterSingleChnl {
 
 	boolean exists();
 	
-	Chnl getFirstChnl() throws GetOperationFailedException;
+	Channel getFirstChnl() throws GetOperationFailedException;
 	
 	int getNumChnl() throws GetOperationFailedException;
 }

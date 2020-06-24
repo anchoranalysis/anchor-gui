@@ -1,8 +1,8 @@
 package org.anchoranalysis.plugin.gui.bean.createrastergenerator.cfgnrginstantstate.dynamically;
 
 import org.anchoranalysis.anchor.mpp.feature.instantstate.CfgNRGInstantState;
-import org.anchoranalysis.core.bridge.IObjectBridge;
 import org.anchoranalysis.core.error.CreateException;
+import org.anchoranalysis.core.functional.FunctionWithException;
 import org.anchoranalysis.core.index.GetOperationFailedException;
 
 /*
@@ -53,9 +53,9 @@ public abstract class GraphDynamicallyDrawnFromCfgNRGInstantState<T> extends Cre
 	// Delayed instantiation of delegate so parameters are already filled
 	private GraphDynamicallyDrawnFromCSVStatistic<T> delegate;
 	
-	private IObjectBridge<CSVStatistic,T,CreateException> elementBridge;
+	private FunctionWithException<CSVStatistic,T,CreateException> elementBridge;
 	
-	public GraphDynamicallyDrawnFromCfgNRGInstantState( IObjectBridge<CSVStatistic,T,CreateException> elementBridge) {
+	public GraphDynamicallyDrawnFromCfgNRGInstantState( FunctionWithException<CSVStatistic,T,CreateException> elementBridge) {
 		super();
 		this.elementBridge = elementBridge;
 	}

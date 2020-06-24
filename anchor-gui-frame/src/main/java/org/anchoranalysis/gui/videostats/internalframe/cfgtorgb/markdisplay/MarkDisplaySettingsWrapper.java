@@ -35,7 +35,7 @@ import org.anchoranalysis.core.property.change.PropertyValueChangeListener;
 import org.anchoranalysis.gui.mark.MarkDisplaySettings;
 import org.anchoranalysis.gui.propertyvalue.PropertyValueChangeListenerList;
 import org.anchoranalysis.gui.videostats.action.changemarkdisplay.IChangeMarkDisplaySendable;
-import org.anchoranalysis.image.objmask.properties.ObjMaskWithProperties;
+import org.anchoranalysis.image.objectmask.properties.ObjectWithProperties;
 import org.anchoranalysis.image.stack.rgb.RGBStack;
 import org.anchoranalysis.io.bean.objmask.writer.IfElseWriter;
 
@@ -51,7 +51,7 @@ public class MarkDisplaySettingsWrapper implements IChangeMarkDisplaySendable {
 	private static class AlwaysFalseCondition extends IfElseWriter.Condition {
 
 		@Override
-		public boolean isTrue(ObjMaskWithProperties mask, RGBStack stack, int id) {
+		public boolean isTrue(ObjectWithProperties mask, RGBStack stack, int id) {
 			return false;
 		}
 		

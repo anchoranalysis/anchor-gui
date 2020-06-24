@@ -33,7 +33,7 @@ import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.index.container.IBoundedIndexContainer;
 import org.anchoranalysis.core.index.container.SingleContainer;
 import org.anchoranalysis.gui.container.background.BackgroundStackCntr;
-import org.anchoranalysis.image.chnl.Chnl;
+import org.anchoranalysis.image.channel.Channel;
 import org.anchoranalysis.image.io.bean.rasterreader.RasterReader;
 import org.anchoranalysis.image.stack.DisplayStack;
 
@@ -52,7 +52,7 @@ public abstract class FinderRasterChnlZeroOne extends FinderRasterChnl implement
 	
 	
 	public DisplayStack backgroundStack() throws GetOperationFailedException {
-		Chnl background = getFirstChnl();
+		Channel background = getFirstChnl();
 		try {
 			return DisplayStack.create( background );
 		} catch (CreateException e) {
