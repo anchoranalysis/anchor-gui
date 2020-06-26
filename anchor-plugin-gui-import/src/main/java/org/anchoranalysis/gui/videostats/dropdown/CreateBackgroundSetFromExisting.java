@@ -37,8 +37,8 @@ import org.anchoranalysis.core.progress.ProgressReporter;
 import org.anchoranalysis.gui.backgroundset.BackgroundSet;
 import org.anchoranalysis.gui.backgroundset.BackgroundSetFactory;
 import org.anchoranalysis.gui.interactivebrowser.OperationInitParams;
-import org.anchoranalysis.image.init.CreateCombinedStack;
-import org.anchoranalysis.image.init.ImageInitParams;
+import org.anchoranalysis.image.bean.nonbean.init.CreateCombinedStack;
+import org.anchoranalysis.image.bean.nonbean.init.ImageInitParams;
 import org.anchoranalysis.image.stack.wrap.WrapStackAsTimeSequence;
 import org.anchoranalysis.io.output.bean.OutputWriteSettings;
 
