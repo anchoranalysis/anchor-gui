@@ -34,6 +34,7 @@ import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.reporter.ErrorReporter;
 import org.anchoranalysis.feature.bean.Feature;
 import org.anchoranalysis.feature.bean.list.FeatureList;
+import org.anchoranalysis.feature.bean.list.FeatureListFactory;
 import org.anchoranalysis.feature.input.FeatureInput;
 
 
@@ -66,7 +67,7 @@ class FeatureValueNode extends FeatureListNode {
 			childFeatures = parentFeature.createListChildFeatures(true);
 		} catch (BeanMisconfiguredException e) {
 			errorReporter.recordError(FeatureValueNode.class, e);
-			childFeatures = new FeatureList<>();
+			childFeatures = FeatureListFactory.empty();
 		}
 		
 		// For the children, we embed the createParams that is used for the parent

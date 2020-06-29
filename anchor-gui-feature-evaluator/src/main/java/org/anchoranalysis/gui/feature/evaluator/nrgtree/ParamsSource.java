@@ -2,7 +2,7 @@ package org.anchoranalysis.gui.feature.evaluator.nrgtree;
 
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.feature.bean.Feature;
-import org.anchoranalysis.feature.bean.list.FeatureList;
+import org.anchoranalysis.feature.bean.list.FeatureListFactory;
 import org.anchoranalysis.feature.calc.FeatureCalcException;
 import org.anchoranalysis.feature.input.FeatureInput;
 import org.anchoranalysis.feature.session.CreateFeatureInput;
@@ -22,7 +22,10 @@ public class ParamsSource {
 	public double calc(Feature<FeatureInput> feature) throws FeatureCalcException {
 		try {
 			FeatureInput params = createParams.createForFeature(feature);
-			return featureCalculator.calc(params, new FeatureList<>(feature)).get(0);
+			return featureCalculator.calc(
+				params,
+				FeatureListFactory.from(feature)
+			).get(0);
 			
 		} catch (CreateException e) {
 			throw new FeatureCalcException(e);

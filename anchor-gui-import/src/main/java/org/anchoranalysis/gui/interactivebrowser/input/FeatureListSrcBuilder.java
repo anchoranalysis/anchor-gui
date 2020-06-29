@@ -42,6 +42,7 @@ import org.anchoranalysis.core.name.provider.NamedProviderGetException;
 import org.anchoranalysis.core.name.store.NamedProviderStore;
 import org.anchoranalysis.feature.bean.Feature;
 import org.anchoranalysis.feature.bean.list.FeatureList;
+import org.anchoranalysis.feature.bean.list.FeatureListFactory;
 import org.anchoranalysis.feature.calc.FeatureCalcException;
 import org.anchoranalysis.feature.input.FeatureInput;
 import org.anchoranalysis.feature.shared.SharedFeaturesInitParams;
@@ -135,11 +136,12 @@ public class FeatureListSrcBuilder<T extends FeatureInput> {
 				FeatureList<FeatureInput> fl = store.getException(key);
 				
 				// Put this in there, to get rid of error. Unsure why. It should go in refactoring when FeatureSessions are properly implemented
+				// TODO resolve this error
 				//fl.init( new FeatureInitParams(soFeature.getSharedFeatureSet(), soFeature.getCachedCalculationList()) );
 				
 				// Determines which features belong in the Unary part of the NRGScheme, and which in the Pairwise part
-				FeatureList<FeatureInputSingleMemo> outUnary = new FeatureList<>();
-				FeatureList<FeatureInputPairMemo> outPairwise = new FeatureList<>();
+				FeatureList<FeatureInputSingleMemo> outUnary = FeatureListFactory.empty();
+				FeatureList<FeatureInputPairMemo> outPairwise = FeatureListFactory.empty();
 				determineUnaryPairwiseFeatures( fl, outUnary, outPairwise );
 				
 				nrgElemSet.add(
@@ -147,7 +149,7 @@ public class FeatureListSrcBuilder<T extends FeatureInput> {
 					new NRGScheme(
 						outUnary,
 						outPairwise,
-						new FeatureList<>(),
+						FeatureListFactory.empty(),
 						regionMap,
 						new BBoxIntersection()		// Arbitrarily chosen
 					)

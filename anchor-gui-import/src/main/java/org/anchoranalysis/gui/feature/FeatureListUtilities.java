@@ -99,7 +99,7 @@ public class FeatureListUtilities {
 	
 	private static <T extends FeatureInput> Feature<T> sumFeatures( FeatureList<T> extractedList,	String name ) {
 		Sum<T> rootFeature = new Sum<>();
-		rootFeature.setList( extractedList.asList() );
+		rootFeature.setList(extractedList);
 		rootFeature.setCustomName(name);
 		return rootFeature;
 	}

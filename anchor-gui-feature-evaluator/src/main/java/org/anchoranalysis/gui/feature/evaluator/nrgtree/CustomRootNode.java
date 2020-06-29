@@ -32,6 +32,7 @@ import javax.swing.tree.TreeNode;
 import org.anchoranalysis.core.error.reporter.ErrorReporter;
 import org.anchoranalysis.feature.bean.Feature;
 import org.anchoranalysis.feature.bean.list.FeatureList;
+import org.anchoranalysis.feature.bean.list.FeatureListFactory;
 import org.anchoranalysis.feature.input.FeatureInput;
 
 
@@ -39,7 +40,7 @@ class CustomRootNode extends FeatureListNode {
 	
 	public CustomRootNode( ErrorReporter errorReporter ) {
 		super(errorReporter);
-		initChildFeatures( new FeatureList<>(), null );
+		initChildFeatures( FeatureListFactory.empty(), null );
 	}
 	
 	public void replaceFeatureList(
