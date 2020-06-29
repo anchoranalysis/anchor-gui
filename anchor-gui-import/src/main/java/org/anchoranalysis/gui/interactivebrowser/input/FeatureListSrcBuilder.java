@@ -1,10 +1,11 @@
 package org.anchoranalysis.gui.interactivebrowser.input;
 
 import org.anchoranalysis.anchor.mpp.bean.regionmap.RegionMap;
-import org.anchoranalysis.anchor.mpp.feature.bean.nrgscheme.NRGScheme;
+import org.anchoranalysis.anchor.mpp.feature.addcriteria.BBoxIntersection;
 import org.anchoranalysis.anchor.mpp.feature.bean.nrgscheme.NRGSchemeCreator;
 import org.anchoranalysis.anchor.mpp.feature.input.memo.FeatureInputPairMemo;
 import org.anchoranalysis.anchor.mpp.feature.input.memo.FeatureInputSingleMemo;
+import org.anchoranalysis.anchor.mpp.feature.nrg.scheme.NRGScheme;
 import org.anchoranalysis.anchor.mpp.feature.nrg.scheme.NamedNRGSchemeSet;
 import org.anchoranalysis.anchor.mpp.regionmap.RegionMapSingleton;
 
@@ -141,9 +142,18 @@ public class FeatureListSrcBuilder<T extends FeatureInput> {
 				FeatureList<FeatureInputPairMemo> outPairwise = new FeatureList<>();
 				determineUnaryPairwiseFeatures( fl, outUnary, outPairwise );
 				
-				nrgElemSet.add(key, new NRGScheme(outUnary, outPairwise, regionMap ) );
+				nrgElemSet.add(
+					key,
+					new NRGScheme(
+						outUnary,
+						outPairwise,
+						new FeatureList<>(),
+						regionMap,
+						new BBoxIntersection()		// Arbitrarily chosen
+					)
+				);
 				
-			} catch (FeatureCalcException  e) {
+			} catch (FeatureCalcException | CreateException e) {
 				logErrorReporter.getErrorReporter().recordError(FeatureListSrcBuilder.class, e);
 			} catch (NamedProviderGetException e) {
 				logErrorReporter.getErrorReporter().recordError(FeatureListSrcBuilder.class, e.summarize());
