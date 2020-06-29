@@ -67,7 +67,7 @@ abstract class FeatureListNode extends Node {
 		
 		// Sort out features in alphabetical order
 		Collections.sort(
-			childFeatures,
+			childFeatures.asList(),
 			(f1,f2)->f1.getFriendlyName().compareTo(
 				f2.getFriendlyName()
 			)
