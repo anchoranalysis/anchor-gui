@@ -41,9 +41,9 @@ import org.anchoranalysis.feature.input.descriptor.FeatureInputGenericDescriptor
 import org.anchoranalysis.feature.input.descriptor.FeatureInputParamsDescriptor;
 import org.anchoranalysis.feature.resultsvectorcollection.FeatureInputResultsDescriptor;
 import org.anchoranalysis.image.feature.histogram.FeatureInputHistogramDescriptor;
-import org.anchoranalysis.image.feature.objmask.FeatureInputSingleObjDescriptor;
-import org.anchoranalysis.image.feature.objmask.collection.FeatureInputObjsDescriptor;
-import org.anchoranalysis.image.feature.objmask.pair.FeatureInputPairObjsDescriptor;
+import org.anchoranalysis.image.feature.object.input.FeatureInputObjectCollectionDescriptor;
+import org.anchoranalysis.image.feature.object.input.FeatureInputPairObjectsDescriptor;
+import org.anchoranalysis.image.feature.object.input.FeatureInputSingleObjectDescriptor;
 import org.anchoranalysis.image.feature.stack.nrg.FeatureInputNRGStackDescriptor;
 
 public class ParamsFactoryForFeature {
@@ -60,7 +60,7 @@ public class ParamsFactoryForFeature {
 			return new FeatureMarkParamsFactory();
 		}
 
-		if (paramType.equals(FeatureInputSingleObjDescriptor.instance)) {
+		if (paramType.equals(FeatureInputSingleObjectDescriptor.instance)) {
 			return new FeatureObjMaskParamsFactory( GlobalRegionIdentifiers.SUBMARK_INSIDE );
 		}
 		
@@ -80,11 +80,11 @@ public class ParamsFactoryForFeature {
 			return new UnsupportedFactory();
 		}
 		
-		if (paramType.equals(FeatureInputObjsDescriptor.instance)) {
+		if (paramType.equals(FeatureInputObjectCollectionDescriptor.instance)) {
 			return new FeatureObjMaskCollectionParamsFactory( RegionMapSingleton.instance().membershipWithFlagsForIndex(GlobalRegionIdentifiers.SUBMARK_INSIDE) );
 		}
 		
-		if (paramType.equals(FeatureInputPairObjsDescriptor.instance)) {
+		if (paramType.equals(FeatureInputPairObjectsDescriptor.instance)) {
 			return new FeatureObjMaskPairParamsFactory( GlobalRegionIdentifiers.SUBMARK_INSIDE );
 		}		
 		

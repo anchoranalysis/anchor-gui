@@ -33,7 +33,7 @@ import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.feature.input.FeatureInput;
 import org.anchoranalysis.feature.nrg.NRGStackWithParams;
 import org.anchoranalysis.image.binary.values.BinaryValuesByte;
-import org.anchoranalysis.image.feature.objmask.FeatureInputSingleObj;
+import org.anchoranalysis.image.feature.object.input.FeatureInputSingleObject;
 import org.anchoranalysis.image.objectmask.ObjectMask;
 
 public class FeatureObjMaskParamsFactory extends FeatureCalcParamsUnaryFactory {
@@ -55,7 +55,7 @@ public class FeatureObjMaskParamsFactory extends FeatureCalcParamsUnaryFactory {
 			BinaryValuesByte.getDefault()
 		).getMask();
 		
-		FeatureInputSingleObj params = new FeatureInputSingleObj(om);
+		FeatureInputSingleObject params = new FeatureInputSingleObject(om);
 		params.setNrgStack(nrgStack);
 		return params;
 	}
