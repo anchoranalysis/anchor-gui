@@ -37,7 +37,7 @@ import org.anchoranalysis.gui.videostats.internalframe.annotator.currentstate.IA
 import org.anchoranalysis.gui.videostats.internalframe.annotator.currentstate.IChangeSelectedPoints;
 import org.anchoranalysis.gui.videostats.internalframe.annotator.currentstate.IQuerySelectedPoints;
 import org.anchoranalysis.gui.videostats.internalframe.evaluator.EvaluatorWithContext;
-import org.anchoranalysis.image.extent.ImageDim;
+import org.anchoranalysis.image.extent.ImageDimensions;
 
 public class SelectPointsTool extends AnnotationTool {
 
@@ -48,7 +48,7 @@ public class SelectPointsTool extends AnnotationTool {
 	private ToolErrorReporter errorReporter;
 	private IQuerySelectedPoints selectedPoints;
 	
-	private ImageDim dim;
+	private ImageDimensions dim;
 	
 	public SelectPointsTool(
 		EvaluatorWithContext evaluator,

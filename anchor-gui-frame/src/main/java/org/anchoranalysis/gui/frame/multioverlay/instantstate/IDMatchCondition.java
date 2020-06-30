@@ -27,7 +27,7 @@ package org.anchoranalysis.gui.frame.multioverlay.instantstate;
  */
 
 import org.anchoranalysis.core.index.IndicesSelection;
-import org.anchoranalysis.image.objectmask.properties.ObjectWithProperties;
+import org.anchoranalysis.image.object.properties.ObjectWithProperties;
 import org.anchoranalysis.image.stack.rgb.RGBStack;
 import org.anchoranalysis.io.bean.objmask.writer.IfElseWriter;
 

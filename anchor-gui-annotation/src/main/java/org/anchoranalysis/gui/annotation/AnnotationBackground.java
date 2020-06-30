@@ -11,7 +11,7 @@ import org.anchoranalysis.core.progress.ProgressReporterOneOfMany;
 import org.anchoranalysis.gui.backgroundset.BackgroundSet;
 import org.anchoranalysis.gui.videostats.dropdown.OperationCreateBackgroundSet;
 import org.anchoranalysis.gui.videostats.link.DefaultLinkStateManager;
-import org.anchoranalysis.image.extent.ImageDim;
+import org.anchoranalysis.image.extent.ImageDimensions;
 import org.anchoranalysis.image.stack.DisplayStack;
 import org.anchoranalysis.image.stack.Stack;
 
@@ -20,7 +20,7 @@ public class AnnotationBackground {
 
 	private OperationWithProgressReporter<BackgroundSet,GetOperationFailedException> backgroundSetOp;
 	private FunctionWithException<Integer,DisplayStack,GetOperationFailedException> defaultBackground;
-	private ImageDim dimViewer;
+	private ImageDimensions dimViewer;
 	
 	public AnnotationBackground(
 		ProgressReporterMultiple prm,
@@ -48,7 +48,7 @@ public class AnnotationBackground {
 		linkStateManager.setSliceNum( dimViewer.getZ()/2 );		
 	}
 
-	public ImageDim getDimensionsViewer() {
+	public ImageDimensions getDimensionsViewer() {
 		return dimViewer;
 	}
 

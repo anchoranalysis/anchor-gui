@@ -27,7 +27,7 @@ package org.anchoranalysis.gui.videostats.internalframe.annotator;
  */
 
 import org.anchoranalysis.gui.annotation.AnnotationBackground;
-import org.anchoranalysis.image.extent.ImageDim;
+import org.anchoranalysis.image.extent.ImageDimensions;
 
 public abstract class InitParamsWithBackground extends AnnotationInitParams {
 
@@ -38,7 +38,7 @@ public abstract class InitParamsWithBackground extends AnnotationInitParams {
 		this.annotationBackground = annotationBackground;
 	}
 	
-	public ImageDim getDimensionsViewer() {
+	public ImageDimensions getDimensionsViewer() {
 		return annotationBackground.getDimensionsViewer();
 	}
 

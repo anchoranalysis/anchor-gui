@@ -34,7 +34,7 @@ import org.anchoranalysis.gui.frame.canvas.zoom.DefaultZoomSuggestor;
 import org.anchoranalysis.gui.frame.details.canvas.ControllerZoom;
 import org.anchoranalysis.gui.image.frame.ControllerSize;
 import org.anchoranalysis.image.extent.Extent;
-import org.anchoranalysis.image.extent.ImageDim;
+import org.anchoranalysis.image.extent.ImageDimensions;
 
 /** Controls a widget that contains a zoomed-image */
 public class ControllerImageView {
@@ -68,7 +68,7 @@ public class ControllerImageView {
 		int zoomWidthSubtract,
 		int zoomHeightSubtract,
 		GraphicsConfiguration graphicsConfiguration,
-		ImageDim imageSize
+		ImageDimensions imageSize
 	) {
 		Extent imageSizeZoom = SizeOfZoomedImage.apply(widthFractionScreen, heightFractionScreen,
 			zoomWidthSubtract, zoomHeightSubtract, graphicsConfiguration, imageSize);

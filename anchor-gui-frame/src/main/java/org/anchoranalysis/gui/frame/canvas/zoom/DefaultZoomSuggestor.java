@@ -26,7 +26,7 @@ package org.anchoranalysis.gui.frame.canvas.zoom;
  * #L%
  */
 
-import org.anchoranalysis.image.extent.ImageDim;
+import org.anchoranalysis.image.extent.ImageDimensions;
 
 public class DefaultZoomSuggestor {
 
@@ -39,7 +39,7 @@ public class DefaultZoomSuggestor {
 		this.maxY = maxY;
 	}
 
-	public ZoomScale suggestDefaultZoomFor( ImageDim sd ) {
+	public ZoomScale suggestDefaultZoomFor( ImageDimensions sd ) {
 		int maxExpX = getMaxExpForDim( maxX, sd.getX() );
 		int maxExpY = getMaxExpForDim( maxY, sd.getY() );
 		int exp = Math.min( maxExpX, maxExpY );

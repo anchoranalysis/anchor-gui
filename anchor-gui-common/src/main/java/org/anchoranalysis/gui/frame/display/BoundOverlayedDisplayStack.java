@@ -31,7 +31,7 @@ import java.util.Optional;
 
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.image.extent.BoundingBox;
-import org.anchoranalysis.image.extent.ImageDim;
+import org.anchoranalysis.image.extent.ImageDimensions;
 import org.anchoranalysis.image.stack.DisplayStack;
 import org.anchoranalysis.image.stack.region.RegionExtracter;
 import org.anchoranalysis.image.voxel.datatype.VoxelDataType;
@@ -62,7 +62,7 @@ public class BoundOverlayedDisplayStack {
 		}
 	}
 
-	public ImageDim getDimensions() {
+	public ImageDimensions getDimensions() {
 		return background.getDimensions();
 	}
 	

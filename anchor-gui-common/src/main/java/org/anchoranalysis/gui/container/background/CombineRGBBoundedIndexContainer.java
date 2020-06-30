@@ -33,7 +33,7 @@ import org.anchoranalysis.core.index.container.BoundChangeListener;
 import org.anchoranalysis.core.index.container.IBoundedIndexContainer;
 import org.anchoranalysis.image.channel.Channel;
 import org.anchoranalysis.image.channel.factory.ChannelFactory;
-import org.anchoranalysis.image.extent.ImageDim;
+import org.anchoranalysis.image.extent.ImageDimensions;
 import org.anchoranalysis.image.extent.IncorrectImageSizeException;
 import org.anchoranalysis.image.stack.DisplayStack;
 import org.anchoranalysis.image.stack.Stack;
@@ -48,7 +48,7 @@ public class CombineRGBBoundedIndexContainer implements IBoundedIndexContainer<D
 	private int min;
 	private int max;
 	
-	private ImageDim dim;
+	private ImageDimensions dim;
 	
 	// We assume we will never have an index above this number
 	private static int MAX_NEVER_REACHED = 1000000;

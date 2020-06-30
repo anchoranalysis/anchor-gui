@@ -35,7 +35,7 @@ import org.anchoranalysis.core.bridge.BridgeElementWithIndex;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.idgetter.IDGetterIter;
 import org.anchoranalysis.gui.videostats.internalframe.cfgtorgb.MultiInput;
-import org.anchoranalysis.image.objectmask.ObjectCollection;
+import org.anchoranalysis.image.object.ObjectCollection;
 
 class MultiObjMaskCollectionInputToOverlay implements BridgeElementWithIndex<MultiInput<ObjectCollection>, OverlayedInstantState,OperationFailedException> {
 	

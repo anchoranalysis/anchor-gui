@@ -38,7 +38,7 @@ import org.anchoranalysis.gui.videostats.internalframe.annotator.navigation.Pane
 import org.anchoranalysis.gui.videostats.internalframe.annotator.navigation.PanelTool;
 import org.anchoranalysis.gui.videostats.internalframe.annotator.tool.ToolErrorReporter;
 import org.anchoranalysis.gui.videostats.internalframe.evaluator.EvaluatorWithContext;
-import org.anchoranalysis.image.extent.ImageDim;
+import org.anchoranalysis.image.extent.ImageDimensions;
 
 class HelperPanelBuilder {
 
@@ -91,7 +91,7 @@ class HelperPanelBuilder {
 	
 	private static PanelTool createPanelTool(
 		CurrentStateDisplayer currentStateDisplayer,
-		ImageDim dimViewer,
+		ImageDimensions dimViewer,
 		MarkAnnotator markAnnotator,
 		ToolErrorReporter errorReporter
 	) {

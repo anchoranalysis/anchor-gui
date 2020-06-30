@@ -39,11 +39,11 @@ import org.anchoranalysis.anchor.mpp.proposer.visualization.ICreateProposalVisua
 import org.anchoranalysis.core.color.RGBColor;
 import org.anchoranalysis.core.geometry.Point3d;
 import org.anchoranalysis.core.random.RandomNumberGenerator;
-import org.anchoranalysis.image.extent.ImageDim;
+import org.anchoranalysis.image.extent.ImageDimensions;
 
 public class MarkProposerEvaluatorUtilities {
 
-	public static Mark createMarkFromPosition( Point3d position, Mark templateMark, final ImageDim dim, final RandomNumberGenerator re ) {
+	public static Mark createMarkFromPosition( Point3d position, Mark templateMark, final ImageDimensions dim, final RandomNumberGenerator re ) {
 		
 		final Mark me = templateMark.duplicate();
 

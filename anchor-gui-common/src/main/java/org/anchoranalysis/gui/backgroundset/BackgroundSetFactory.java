@@ -45,7 +45,7 @@ import org.anchoranalysis.gui.container.background.SingleBackgroundStackCntr;
 import org.anchoranalysis.gui.serializedobjectset.MarkWithRaster;
 import org.anchoranalysis.image.channel.factory.ChannelFactory;
 import org.anchoranalysis.image.experiment.identifiers.ImgStackIdentifiers;
-import org.anchoranalysis.image.extent.ImageDim;
+import org.anchoranalysis.image.extent.ImageDimensions;
 import org.anchoranalysis.image.extent.IncorrectImageSizeException;
 import org.anchoranalysis.image.stack.DisplayStack;
 import org.anchoranalysis.image.stack.Stack;
@@ -179,14 +179,14 @@ public class BackgroundSetFactory {
 		backgroundSet.addItem(
 			"blank (all black)",
 			() -> {
-				ImageDim sd = guessDimensions(imageStackCollection);
+				ImageDimensions sd = guessDimensions(imageStackCollection);
 				Stack stack = createEmptyStack(sd);
 				return BackgroundStackCntrFactory.singleSavedStack(stack);
 			}
 		);
 	}
 	
-	private static ImageDim guessDimensions( NamedProvider<TimeSequence> imageStackCollection ) throws OperationFailedException {
+	private static ImageDimensions guessDimensions( NamedProvider<TimeSequence> imageStackCollection ) throws OperationFailedException {
 		try {
 			return imageStackCollection.getException( imageStackCollection.keys().iterator().next() ).getDimensions();
 		} catch (NamedProviderGetException e) {
@@ -194,7 +194,7 @@ public class BackgroundSetFactory {
 		}
 	}
 	
-	private static Stack createEmptyStack( ImageDim sd ) throws OperationFailedException {
+	private static Stack createEmptyStack( ImageDimensions sd ) throws OperationFailedException {
 		try {
 			Stack stack = new Stack();
 			stack.addChnl(

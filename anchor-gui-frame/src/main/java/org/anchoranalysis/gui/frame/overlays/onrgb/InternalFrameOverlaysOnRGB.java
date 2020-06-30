@@ -24,7 +24,7 @@ import org.anchoranalysis.gui.videostats.IModuleCreatorDefaultState;
 import org.anchoranalysis.gui.videostats.dropdown.VideoStatsModuleGlobalParams;
 import org.anchoranalysis.gui.videostats.internalframe.cfgtorgb.markdisplay.MarkDisplaySettingsWrapper;
 import org.anchoranalysis.gui.videostats.module.DefaultModuleState;
-import org.anchoranalysis.image.extent.ImageDim;
+import org.anchoranalysis.image.extent.ImageDimensions;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -101,7 +101,7 @@ class InternalFrameOverlaysOnRGB {
 		}
 		
 		@Override
-		public ImageDim getDimensions() {
+		public ImageDimensions getDimensions() {
 			return delegate.getDimensions();
 		}
 	}

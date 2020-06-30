@@ -31,7 +31,7 @@ import org.anchoranalysis.anchor.mpp.bean.bound.RslvdBound;
 import org.anchoranalysis.core.geometry.Point2i;
 import org.anchoranalysis.image.extent.BoundingBox;
 import org.anchoranalysis.image.extent.Extent;
-import org.anchoranalysis.image.extent.ImageDim;
+import org.anchoranalysis.image.extent.ImageDimensions;
 import org.anchoranalysis.image.scale.ScaleFactor;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 
@@ -83,7 +83,7 @@ public class ZoomScale {
 	}
 	
 	// Establishes an upper and lower limit for zooming
-	public void establishBounds( ImageDim dim ) {
+	public void establishBounds( ImageDimensions dim ) {
 		
 		
 		// The smallest zoom that keeps out size above 10, or 1

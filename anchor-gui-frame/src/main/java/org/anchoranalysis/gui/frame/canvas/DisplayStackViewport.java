@@ -40,7 +40,7 @@ import org.anchoranalysis.gui.frame.canvas.zoom.ZoomScale;
 import org.anchoranalysis.gui.frame.display.BoundOverlayedDisplayStack;
 import org.anchoranalysis.image.extent.BoundingBox;
 import org.anchoranalysis.image.extent.Extent;
-import org.anchoranalysis.image.extent.ImageDim;
+import org.anchoranalysis.image.extent.ImageDimensions;
 import org.anchoranalysis.image.stack.DisplayStack;
 import org.anchoranalysis.image.stack.region.RegionExtracter;
 import org.anchoranalysis.image.voxel.datatype.VoxelDataType;
@@ -73,7 +73,7 @@ class DisplayStackViewport {
 		regionExtracter = displayStack.createRegionExtracter();
 	}
 	
-	public ImageDim getDimensionsEntire() {
+	public ImageDimensions getDimensionsEntire() {
 		return displayStackEntireImage.getDimensions();
 	}
 	
@@ -86,7 +86,7 @@ class DisplayStackViewport {
 	}
 	
 	public BoundingBox createBoxForShiftedView( Point2i shift, Extent canvasExtnt ) {
-		ReadableTuple3i crnrMin = this.bboxViewport.getCrnrMin();
+		ReadableTuple3i crnrMin = this.bboxViewport.getCornerMin();
 		
 		int xNew = crnrMin.getX() + shift.getX();
 		int yNew = crnrMin.getY() + shift.getY();
@@ -98,7 +98,7 @@ class DisplayStackViewport {
 		assert(pnt.getY() >= 0);
 		// We need to clip
 		
-		Point3i pnt3 = new Point3i(pnt.getX(),pnt.getY(),this.bboxViewport.getCrnrMin().getZ());
+		Point3i pnt3 = new Point3i(pnt.getX(),pnt.getY(),this.bboxViewport.getCornerMin().getZ());
 		
 		assert( pnt3.getX() >= 0 );
 		assert( pnt3.getY() >= 0 );
@@ -191,7 +191,7 @@ class DisplayStackViewport {
 		return displayStackEntireImage;
 	}
 
-	public ImageDim dim() {
+	public ImageDimensions dim() {
 		return displayStackEntireImage.getDimensions();
 	}
 	

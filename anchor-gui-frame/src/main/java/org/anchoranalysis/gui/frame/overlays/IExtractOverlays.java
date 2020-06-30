@@ -28,9 +28,9 @@ import org.anchoranalysis.gui.frame.display.overlay.IGetOverlayCollection;
  * #L%
  */
 
-import org.anchoranalysis.image.extent.ImageDim;
+import org.anchoranalysis.image.extent.ImageDimensions;
 
 public interface IExtractOverlays extends IGetOverlayCollection {
 
-	ImageDim getDimensions();
+	ImageDimensions getDimensions();
 }
