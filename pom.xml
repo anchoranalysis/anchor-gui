@@ -28,7 +28,7 @@
 	   <module>anchor-gui-export</module>
 	   <module>anchor-gui-import</module>
 	   <module>anchor-gui-finder</module>
-	   <module>anchor-gui-graph</module>
+	   <module>anchor-gui-plot</module>
 	   <module>anchor-gui-mdi</module>
 	   <module>anchor-plugin-gui-annotation</module>
 	   <module>anchor-plugin-gui-export</module>

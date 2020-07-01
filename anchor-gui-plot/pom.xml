@@ -5,7 +5,7 @@
    	    <artifactId>anchor-parent-gui</artifactId>
 		<version>0.0.4-SNAPSHOT</version>
     </parent>
-  <artifactId>anchor-gui-graph</artifactId>
+  <artifactId>anchor-gui-plot</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <dependencies>
 
@@ -17,7 +17,7 @@
 	
 	<dependency>
 	  <groupId>${project.groupId}</groupId>
-	  <artifactId>anchor-graph</artifactId>
+	  <artifactId>anchor-plot</artifactId>
 	  <version>0.0.8-SNAPSHOT</version>
 	</dependency>
 	
@@ -29,7 +29,7 @@
 	
 	<dependency>
 	  <groupId>${project.groupId}</groupId>
-	  <artifactId>anchor-mpp-graph</artifactId>
+	  <artifactId>anchor-mpp-plot</artifactId>
 	  <version>0.0.8-SNAPSHOT</version>
 	</dependency>
 	
