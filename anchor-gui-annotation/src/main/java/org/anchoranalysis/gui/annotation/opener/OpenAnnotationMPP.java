@@ -76,7 +76,7 @@ public class OpenAnnotationMPP implements IOpenAnnotation {
 	}
 
 	public boolean isUseDefaultPromptNeeded() {
-		return !annotationReader.annotationExistsCorrespondTo(annotationPath) && defaultCfgPath!=null;
+		return !annotationReader.annotationExistsCorrespondTo(annotationPath) && defaultCfgPath.isPresent();
 	}
 		
 	private static InitAnnotation readCfgFromAnnotation( MarkAnnotation annotationExst ) {
