@@ -92,7 +92,7 @@ public class NRGBackground {
 		);
 	}
 	
-	public static <E extends Throwable> NRGBackground createStack(
+	public static <E extends Exception> NRGBackground createStack(
 		OperationWithProgressReporter<NamedProvider<Stack>,E> opBackgroundSet,
 		OperationWithProgressReporter<NRGStackWithParams,OperationFailedException> opNrgStack
 	) {

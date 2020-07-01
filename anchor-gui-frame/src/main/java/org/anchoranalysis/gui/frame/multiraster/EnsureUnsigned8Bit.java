@@ -32,7 +32,7 @@ import org.anchoranalysis.core.functional.FunctionWithException;
 import org.anchoranalysis.image.stack.DisplayStack;
 
 // Ensure unsigned 8-bit
-class EnsureUnsigned8Bit<E extends Throwable> implements FunctionWithException<Integer,DisplayStack,E> {
+class EnsureUnsigned8Bit<E extends Exception> implements FunctionWithException<Integer,DisplayStack,E> {
 
 	private FunctionWithException<Integer,DisplayStack,E> bridge;
 	
