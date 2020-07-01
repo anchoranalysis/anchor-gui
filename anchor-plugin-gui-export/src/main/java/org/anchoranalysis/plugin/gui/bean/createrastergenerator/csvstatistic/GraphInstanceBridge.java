@@ -29,15 +29,15 @@ package org.anchoranalysis.plugin.gui.bean.createrastergenerator.csvstatistic;
 import java.util.Iterator;
 import java.util.Optional;
 
-import org.anchoranalysis.anchor.graph.AxisLimits;
-import org.anchoranalysis.anchor.graph.GraphInstance;
-import org.anchoranalysis.anchor.graph.bean.GraphDefinition;
+import org.anchoranalysis.anchor.plot.AxisLimits;
+import org.anchoranalysis.anchor.plot.GraphInstance;
+import org.anchoranalysis.anchor.plot.bean.GraphDefinition;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.functional.FunctionWithException;
 import org.anchoranalysis.core.index.container.IBoundedIndexContainer;
 import org.anchoranalysis.core.index.container.bridge.BoundedIndexContainerBridgeWithoutIndex;
-import org.anchoranalysis.gui.graph.BoundedIndexContainerIterator;
 import org.anchoranalysis.gui.io.loader.manifest.finder.csvstatistic.CSVStatistic;
+import org.anchoranalysis.gui.plot.BoundedIndexContainerIterator;
 import org.anchoranalysis.plugin.gui.bean.exporttask.MappedFrom;
 
 /**

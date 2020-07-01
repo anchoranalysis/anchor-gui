@@ -31,10 +31,10 @@ import java.io.IOException;
 
 import javax.swing.JFrame;
 
-import org.anchoranalysis.anchor.graph.bean.GraphDefinition;
 import org.anchoranalysis.anchor.mpp.feature.instantstate.CfgNRGInstantState;
 import org.anchoranalysis.anchor.mpp.feature.nrg.cfg.CfgNRGPixelized;
-import org.anchoranalysis.anchor.mpp.graph.bean.GraphDefinitionBarNRGBreakdown;
+import org.anchoranalysis.anchor.mpp.plot.bean.GraphDefinitionBarNRGBreakdown;
+import org.anchoranalysis.anchor.plot.bean.GraphDefinition;
 import org.anchoranalysis.bean.error.BeanDuplicateException;
 import org.anchoranalysis.core.color.ColorIndex;
 import org.anchoranalysis.core.error.InitException;
@@ -44,12 +44,12 @@ import org.anchoranalysis.gui.bean.exporttask.ExportTaskBean;
 import org.anchoranalysis.gui.bean.exporttask.ExportTaskParams;
 import org.anchoranalysis.gui.container.ContainerGetter;
 import org.anchoranalysis.gui.finder.imgstackcollection.FinderImgStackCollection;
-import org.anchoranalysis.gui.graph.creator.BridgedGraphCfgSizeCreator;
-import org.anchoranalysis.gui.graph.creator.BridgedGraphNRGCreator;
 import org.anchoranalysis.gui.io.loader.manifest.finder.CfgNRGFinderContext;
 import org.anchoranalysis.gui.io.loader.manifest.finder.FinderCSVStats;
 import org.anchoranalysis.gui.io.loader.manifest.finder.csvstatistic.CSVStatistic;
 import org.anchoranalysis.gui.io.loader.manifest.finder.historyfolder.FinderHistoryFolder;
+import org.anchoranalysis.gui.plot.creator.BridgedGraphCfgSizeCreator;
+import org.anchoranalysis.gui.plot.creator.BridgedGraphNRGCreator;
 import org.anchoranalysis.gui.videostats.dropdown.common.NRGBackground;
 import org.anchoranalysis.gui.videostats.dropdown.contextualmodulecreator.NRGTableCreator;
 import org.anchoranalysis.gui.videostats.dropdown.contextualmodulecreator.SingleContextualModuleCreator;

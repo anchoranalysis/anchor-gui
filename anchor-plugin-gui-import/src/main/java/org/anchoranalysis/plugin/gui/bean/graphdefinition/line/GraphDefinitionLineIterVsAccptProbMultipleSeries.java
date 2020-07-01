@@ -1,6 +1,6 @@
 package org.anchoranalysis.plugin.gui.bean.graphdefinition.line;
 
-import org.anchoranalysis.anchor.graph.bean.colorscheme.GraphColorScheme;
+import org.anchoranalysis.anchor.plot.bean.colorscheme.GraphColorScheme;
 import org.anchoranalysis.core.index.GetOperationFailedException;
 
 /*

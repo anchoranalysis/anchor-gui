@@ -30,12 +30,12 @@ package org.anchoranalysis.plugin.gui.bean.graphdefinition.line;
 import java.util.Iterator;
 import java.util.Optional;
 
-import org.anchoranalysis.anchor.graph.AxisLimits;
-import org.anchoranalysis.anchor.graph.GraphInstance;
-import org.anchoranalysis.anchor.graph.bean.GraphDefinition;
-import org.anchoranalysis.anchor.graph.bean.colorscheme.GraphColorScheme;
-import org.anchoranalysis.anchor.graph.index.LinePlot;
-import org.anchoranalysis.anchor.graph.index.LinePlot.YValGetter;
+import org.anchoranalysis.anchor.plot.AxisLimits;
+import org.anchoranalysis.anchor.plot.GraphInstance;
+import org.anchoranalysis.anchor.plot.bean.GraphDefinition;
+import org.anchoranalysis.anchor.plot.bean.colorscheme.GraphColorScheme;
+import org.anchoranalysis.anchor.plot.index.LinePlot;
+import org.anchoranalysis.anchor.plot.index.LinePlot.YValGetter;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.gui.io.loader.manifest.finder.csvstatistic.CSVStatistic;
 

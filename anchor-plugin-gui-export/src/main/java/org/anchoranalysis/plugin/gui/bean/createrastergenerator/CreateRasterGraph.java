@@ -1,7 +1,7 @@
 package org.anchoranalysis.plugin.gui.bean.createrastergenerator;
 
-import org.anchoranalysis.anchor.graph.GraphInstance;
-import org.anchoranalysis.anchor.graph.bean.GraphDefinition;
+import org.anchoranalysis.anchor.plot.GraphInstance;
+import org.anchoranalysis.anchor.plot.bean.GraphDefinition;
 
 /*
  * #%L

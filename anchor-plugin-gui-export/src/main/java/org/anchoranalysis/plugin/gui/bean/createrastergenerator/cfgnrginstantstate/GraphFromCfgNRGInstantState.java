@@ -1,8 +1,8 @@
 package org.anchoranalysis.plugin.gui.bean.createrastergenerator.cfgnrginstantstate;
 
-import org.anchoranalysis.anchor.graph.GraphInstance;
+import org.anchoranalysis.anchor.plot.GraphInstance;
 import org.anchoranalysis.anchor.mpp.feature.instantstate.CfgNRGInstantState;
-import org.anchoranalysis.anchor.mpp.graph.NRGGraphItem;
+import org.anchoranalysis.anchor.mpp.plot.NRGGraphItem;
 import org.anchoranalysis.core.error.CreateException;
 
 /*
@@ -33,8 +33,8 @@ import org.anchoranalysis.core.error.CreateException;
 
 
 import org.anchoranalysis.gui.bean.exporttask.ExportTaskParams;
-import org.anchoranalysis.gui.graph.creator.GenerateGraphNRGBreakdownFromInstantState;
-import org.anchoranalysis.gui.graph.panel.ClickableGraphInstance;
+import org.anchoranalysis.gui.plot.creator.GenerateGraphNRGBreakdownFromInstantState;
+import org.anchoranalysis.gui.plot.panel.ClickableGraphInstance;
 import org.anchoranalysis.image.stack.Stack;
 import org.anchoranalysis.io.generator.IterableObjectGenerator;
 import org.anchoranalysis.io.generator.IterableObjectGeneratorBridge;

@@ -29,14 +29,14 @@ package org.anchoranalysis.gui.videostats.dropdown.modulecreator.graph;
 
 import java.util.ArrayList;
 
-import org.anchoranalysis.anchor.graph.bean.GraphDefinition;
-import org.anchoranalysis.anchor.graph.bean.colorscheme.GraphColorScheme;
 import org.anchoranalysis.anchor.mpp.feature.instantstate.CfgNRGInstantState;
+import org.anchoranalysis.anchor.plot.bean.GraphDefinition;
+import org.anchoranalysis.anchor.plot.bean.colorscheme.GraphColorScheme;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.progress.OperationWithProgressReporter;
-import org.anchoranalysis.gui.graph.creator.GraphFromDualFinderCreator;
 import org.anchoranalysis.gui.io.loader.manifest.finder.FinderCSVStats;
 import org.anchoranalysis.gui.io.loader.manifest.finder.historyfolder.FinderHistoryFolder;
+import org.anchoranalysis.gui.plot.creator.GraphFromDualFinderCreator;
 import org.anchoranalysis.gui.videostats.dropdown.IAddVideoStatsModule;
 import org.anchoranalysis.gui.videostats.dropdown.NamedModule;
 import org.anchoranalysis.gui.videostats.dropdown.VideoStatsModuleCreatorAndAdder;

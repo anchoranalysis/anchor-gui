@@ -3,9 +3,9 @@ package org.anchoranalysis.gui.videostats.dropdown;
 import java.awt.GraphicsConfiguration;
 import java.io.IOException;
 
-import org.anchoranalysis.anchor.graph.bean.colorscheme.GraphColorScheme;
 import org.anchoranalysis.anchor.mpp.bean.regionmap.RegionMap;
 import org.anchoranalysis.anchor.mpp.regionmap.RegionMapSingleton;
+import org.anchoranalysis.anchor.plot.bean.colorscheme.GraphColorScheme;
 
 /*
  * #%L

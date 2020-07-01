@@ -2,7 +2,7 @@ package org.anchoranalysis.plugin.gui.bean.createrastergenerator;
 
 /*
  * #%L
- * anchor-graph
+ * anchor-plot
  * %%
  * Copyright (C) 2016 ETH Zurich, University of Zurich, Owen Feehan
  * %%
@@ -33,8 +33,8 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.util.Optional;
 
-import org.anchoranalysis.anchor.graph.GraphInstance;
-import org.anchoranalysis.anchor.graph.io.GraphOutputter;
+import org.anchoranalysis.anchor.plot.GraphInstance;
+import org.anchoranalysis.anchor.plot.io.GraphOutputter;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.image.stack.Stack;
 import org.anchoranalysis.image.stack.bufferedimage.CreateStackFromBufferedImage;

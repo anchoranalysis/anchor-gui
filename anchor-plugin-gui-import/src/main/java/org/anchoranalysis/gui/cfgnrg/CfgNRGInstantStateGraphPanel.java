@@ -36,8 +36,8 @@ import org.anchoranalysis.core.functional.FunctionWithException;
 import org.anchoranalysis.core.index.IntArray;
 import org.anchoranalysis.core.property.IPropertyValueReceivable;
 import org.anchoranalysis.core.property.IPropertyValueSendable;
-import org.anchoranalysis.gui.graph.panel.ClickableGraphInstance;
-import org.anchoranalysis.gui.graph.panel.GraphPanel;
+import org.anchoranalysis.gui.plot.panel.ClickableGraphInstance;
+import org.anchoranalysis.gui.plot.panel.GraphPanel;
 
 public class CfgNRGInstantStateGraphPanel extends StatePanel<CfgNRGInstantState> {
 

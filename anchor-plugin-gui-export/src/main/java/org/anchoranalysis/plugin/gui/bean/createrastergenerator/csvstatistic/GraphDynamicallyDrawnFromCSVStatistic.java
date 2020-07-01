@@ -26,7 +26,7 @@ package org.anchoranalysis.plugin.gui.bean.createrastergenerator.csvstatistic;
  * #L%
  */
 
-import org.anchoranalysis.anchor.graph.GraphInstance;
+import org.anchoranalysis.anchor.plot.GraphInstance;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.functional.FunctionWithException;
 import org.anchoranalysis.core.index.GetOperationFailedException;

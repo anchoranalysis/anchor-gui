@@ -1,8 +1,8 @@
 package org.anchoranalysis.plugin.gui.bean.graphdefinition.line;
 
-import org.anchoranalysis.anchor.graph.bean.colorscheme.GraphColorScheme;
-import org.anchoranalysis.anchor.graph.index.LinePlot.YValGetter;
 import org.anchoranalysis.anchor.mpp.feature.nrg.cfg.CfgNRGPixelized;
+import org.anchoranalysis.anchor.plot.bean.colorscheme.GraphColorScheme;
+import org.anchoranalysis.anchor.plot.index.LinePlot.YValGetter;
 import org.anchoranalysis.core.index.GetOperationFailedException;
 
 /*

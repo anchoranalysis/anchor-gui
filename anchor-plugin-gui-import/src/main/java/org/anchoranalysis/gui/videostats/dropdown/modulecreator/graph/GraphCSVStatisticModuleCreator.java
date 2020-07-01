@@ -29,16 +29,16 @@ package org.anchoranalysis.gui.videostats.dropdown.modulecreator.graph;
 
 import java.util.Iterator;
 
-import org.anchoranalysis.anchor.graph.bean.GraphDefinition;
+import org.anchoranalysis.anchor.plot.bean.GraphDefinition;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.index.container.IBoundedIndexContainer;
-import org.anchoranalysis.gui.graph.BoundedIndexContainerIterator;
-import org.anchoranalysis.gui.graph.panel.ClickableGraphFactory;
-import org.anchoranalysis.gui.graph.panel.ClickableGraphInstance;
-import org.anchoranalysis.gui.graph.visualvm.InternalFrameGraphAsModule;
 import org.anchoranalysis.gui.io.loader.manifest.finder.FinderCSVStats;
 import org.anchoranalysis.gui.io.loader.manifest.finder.csvstatistic.CSVStatistic;
+import org.anchoranalysis.gui.plot.BoundedIndexContainerIterator;
+import org.anchoranalysis.gui.plot.panel.ClickableGraphFactory;
+import org.anchoranalysis.gui.plot.panel.ClickableGraphInstance;
+import org.anchoranalysis.gui.plot.visualvm.InternalFrameGraphAsModule;
 import org.anchoranalysis.gui.reassign.FrameTitleGenerator;
 import org.anchoranalysis.gui.videostats.IModuleCreatorDefaultState;
 import org.anchoranalysis.gui.videostats.dropdown.VideoStatsModuleGlobalParams;

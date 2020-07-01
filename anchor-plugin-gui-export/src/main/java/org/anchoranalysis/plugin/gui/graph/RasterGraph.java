@@ -26,7 +26,7 @@ package org.anchoranalysis.plugin.gui.graph;
  * #L%
  */
 
-import org.anchoranalysis.anchor.graph.bean.GraphDefinition;
+import org.anchoranalysis.anchor.plot.bean.GraphDefinition;
 
 public interface RasterGraph<GraphItem,SourceType> {
 
