@@ -41,7 +41,7 @@ import org.anchoranalysis.anchor.mpp.feature.input.memo.FeatureInputPairMemo;
 import org.anchoranalysis.anchor.mpp.feature.input.memo.FeatureInputSingleMemo;
 import org.anchoranalysis.anchor.mpp.pair.Pair;
 import org.anchoranalysis.anchor.overlay.Overlay;
-import org.anchoranalysis.feature.input.FeatureInputNRGStack;
+import org.anchoranalysis.feature.input.FeatureInputNRG;
 import org.anchoranalysis.feature.nrg.NRGStackWithParams;
 import org.anchoranalysis.feature.shared.SharedFeatureMulti;
 import org.anchoranalysis.gui.feature.FeatureListWithRegionMap;
@@ -66,7 +66,7 @@ public class TreeTableWithModelMultiplex implements ITreeTableModel {
 		SharedFeatureMulti sharedFeatures = featureListExtracter.sharedFeatures();
 		
 		// We use 4 models for NONE, IND, PAIR, ALL
-		addModelToList( new FeatureListWithRegionMap<FeatureInputNRGStack>(), properties, sharedFeatures );
+		addModelToList( new FeatureListWithRegionMap<FeatureInputNRG>(), properties, sharedFeatures );
 		addModelToList( featureListInd, properties, sharedFeatures );
 		addModelToList( featureListPair, properties, sharedFeatures );
 		addModelToList( featureListAll, properties, sharedFeatures );
@@ -80,7 +80,7 @@ public class TreeTableWithModelMultiplex implements ITreeTableModel {
 		}
 	}
 
-	private <T extends FeatureInputNRGStack> void addModelToList(
+	private <T extends FeatureInputNRG> void addModelToList(
 		FeatureListWithRegionMap<T> features,
 		TreeTableProperties properties,
 		SharedFeatureMulti sharedFeatures
