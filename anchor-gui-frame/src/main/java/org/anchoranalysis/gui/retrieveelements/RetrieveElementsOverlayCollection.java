@@ -34,7 +34,7 @@ import org.anchoranalysis.anchor.mpp.cfg.Cfg;
 import org.anchoranalysis.anchor.mpp.mark.Mark;
 import org.anchoranalysis.anchor.mpp.overlay.OverlayCollectionMarkFactory;
 import org.anchoranalysis.anchor.overlay.collection.OverlayCollection;
-import org.anchoranalysis.anchor.overlay.collection.OverlayCollectionObjMaskFactory;
+import org.anchoranalysis.anchor.overlay.collection.OverlayCollectionObjectFactory;
 import org.anchoranalysis.image.io.objs.ObjectMaskCollectionWriter;
 import org.anchoranalysis.image.object.ObjectCollection;
 import org.anchoranalysis.io.generator.collection.SubfolderGenerator;
@@ -58,7 +58,7 @@ public class RetrieveElementsOverlayCollection extends RetrieveElements {
 			
 			// Selected Marks as Configuration
 			Cfg cfg = OverlayCollectionMarkFactory.cfgFromOverlays( currentSelectedObjects );
-			ObjectCollection objs = OverlayCollectionObjMaskFactory.objsFromOverlays( currentSelectedObjects );
+			ObjectCollection objs = OverlayCollectionObjectFactory.objsFromOverlays( currentSelectedObjects );
 			
 			// Selected Marks as Objects
 			addSelectedObjects( popUp, objs );

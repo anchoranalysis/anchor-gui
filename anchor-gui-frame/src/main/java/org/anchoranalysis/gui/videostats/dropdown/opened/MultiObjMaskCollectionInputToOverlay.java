@@ -2,7 +2,7 @@ package org.anchoranalysis.gui.videostats.dropdown.opened;
 
 import org.anchoranalysis.anchor.overlay.OverlayedInstantState;
 import org.anchoranalysis.anchor.overlay.collection.OverlayCollection;
-import org.anchoranalysis.anchor.overlay.collection.OverlayCollectionObjMaskFactory;
+import org.anchoranalysis.anchor.overlay.collection.OverlayCollectionObjectFactory;
 import org.anchoranalysis.core.bridge.BridgeElementWithIndex;
 
 /*
@@ -47,7 +47,7 @@ class MultiObjMaskCollectionInputToOverlay implements BridgeElementWithIndex<Mul
 
 		ObjectCollection objs = sourceObject.getAssociatedObjects().doOperation();
 		
-		OverlayCollection oc = OverlayCollectionObjMaskFactory.createWithoutColor(objs, new IDGetterIter<>() );
+		OverlayCollection oc = OverlayCollectionObjectFactory.createWithoutColor(objs, new IDGetterIter<>() );
 		return new OverlayedInstantState(index, oc);
 	}
 }

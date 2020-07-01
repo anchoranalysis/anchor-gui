@@ -28,7 +28,7 @@ package org.anchoranalysis.gui.videostats.modulecreator;
 
 import org.anchoranalysis.anchor.mpp.cfg.Cfg;
 import org.anchoranalysis.anchor.overlay.collection.OverlayCollection;
-import org.anchoranalysis.anchor.overlay.collection.OverlayCollectionObjMaskFactory;
+import org.anchoranalysis.anchor.overlay.collection.OverlayCollectionObjectFactory;
 import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.functional.Operation;
@@ -75,7 +75,7 @@ public class ObjMaskCollectionModuleCreator extends VideoStatsModuleCreator {
 		try {
 			ObjectCollection objs = opObjs.doOperation();
 
-			OverlayCollection oc = OverlayCollectionObjMaskFactory.createWithoutColor(objs, new IDGetterIter<ObjectMask>() );
+			OverlayCollection oc = OverlayCollectionObjectFactory.createWithoutColor(objs, new IDGetterIter<ObjectMask>() );
 			
 			String frameName = String.format("%s: %s", fileIdentifier, name);
 			InternalFrameStaticOverlaySelectable imageFrame = new InternalFrameStaticOverlaySelectable( frameName, false );
