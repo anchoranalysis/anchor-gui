@@ -1,5 +1,7 @@
 package org.anchoranalysis.gui.videostats.modulecreator;
 
+import java.util.Optional;
+
 /*-
  * #%L
  * anchor-gui-frame
@@ -43,8 +45,8 @@ public abstract class VideoStatsModuleCreatorContext {
 	/** The title of the module. Must be defined. */
 	public abstract String title();
 	
-	/** The short-title of the module. It is allowed return NULL if it none is defined. */
-	public abstract String shortTitle();
+	/** The short-title of the module if it exists */
+	public abstract Optional<String> shortTitle();
 	
 	public VideoStatsModuleCreator resolve( String namePrefix, VideoStatsModuleGlobalParams mpg ) {
 		return new VideoStatsModuleCreator() {

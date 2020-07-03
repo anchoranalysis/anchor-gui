@@ -1,5 +1,7 @@
 package org.anchoranalysis.gui.cfgnrg;
 
+import java.util.Optional;
+
 /*
  * #%L
  * anchor-gui
@@ -40,11 +42,11 @@ public abstract class StatePanel<T> {
 	
 	public abstract void updateState( T state ) throws StatePanelUpdateException;
 	
-	public abstract IPropertyValueSendable<IntArray> getSelectMarksSendable();
+	public abstract Optional<IPropertyValueSendable<IntArray>> getSelectMarksSendable();
 	
-	public abstract IPropertyValueReceivable<IntArray> getSelectMarksReceivable();
+	public abstract Optional<IPropertyValueReceivable<IntArray>> getSelectMarksReceivable();
 	
-	public abstract IPropertyValueReceivable<OverlayCollection> getSelectOverlayCollectionReceivable();
+	public abstract Optional<IPropertyValueReceivable<OverlayCollection>> getSelectOverlayCollectionReceivable();
 	
-	public abstract IPropertyValueReceivable<Integer> getSelectIndexReceivable();
+	public abstract Optional<IPropertyValueReceivable<Integer>> getSelectIndexReceivable();
 }

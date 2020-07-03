@@ -1,5 +1,7 @@
 package org.anchoranalysis.gui.videostats.dropdown.contextualmodulecreator;
 
+import java.util.Optional;
+
 /*-
  * #%L
  * anchor-gui-frame
@@ -74,9 +76,9 @@ public class SingleContextualModuleCreator extends ContextualModuleCreator {
 			moduleCreator.resolve(namePrefix, mpg)
 		);
 		
-		String shortTitle = moduleCreator.shortTitle();
-		if (shortTitle!=null) {
-			return new NamedModule(moduleCreator.title(), creatorAndAdder, shortTitle);
+		Optional<String> shortTitle = moduleCreator.shortTitle();
+		if (shortTitle.isPresent()) {
+			return new NamedModule(moduleCreator.title(), creatorAndAdder, shortTitle.get());
 		} else {
 			return new NamedModule(moduleCreator.title(), creatorAndAdder);
 		}

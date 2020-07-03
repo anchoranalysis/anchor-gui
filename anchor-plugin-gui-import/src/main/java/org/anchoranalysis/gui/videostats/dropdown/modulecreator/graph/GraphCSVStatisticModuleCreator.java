@@ -28,6 +28,7 @@ package org.anchoranalysis.gui.videostats.dropdown.modulecreator.graph;
 
 
 import java.util.Iterator;
+import java.util.Optional;
 
 import org.anchoranalysis.anchor.plot.bean.GraphDefinition;
 import org.anchoranalysis.core.error.CreateException;
@@ -102,7 +103,9 @@ public class GraphCSVStatisticModuleCreator extends VideoStatsModuleCreatorConte
 	}
 
 	@Override
-	public String shortTitle() {
-		return definition.getShortTitle();
+	public Optional<String> shortTitle() {
+		return Optional.of(
+			definition.getShortTitle()
+		);
 	}
 }

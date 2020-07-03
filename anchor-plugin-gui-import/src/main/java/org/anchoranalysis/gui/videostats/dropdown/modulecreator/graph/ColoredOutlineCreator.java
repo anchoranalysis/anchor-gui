@@ -1,5 +1,7 @@
 package org.anchoranalysis.gui.videostats.dropdown.modulecreator.graph;
 
+import java.util.Optional;
+
 import org.anchoranalysis.anchor.mpp.feature.instantstate.CfgNRGInstantState;
 import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.index.GetOperationFailedException;
@@ -89,7 +91,7 @@ public class ColoredOutlineCreator extends VideoStatsModuleCreatorContext {
 	}
 
 	@Override
-	public String shortTitle() {
-		return null;
+	public Optional<String> shortTitle() {
+		return Optional.empty();
 	}
 }

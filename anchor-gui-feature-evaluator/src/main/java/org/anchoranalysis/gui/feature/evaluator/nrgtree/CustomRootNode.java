@@ -29,6 +29,7 @@ package org.anchoranalysis.gui.feature.evaluator.nrgtree;
 
 import javax.swing.tree.TreeNode;
 
+import org.anchoranalysis.core.error.friendly.AnchorImpossibleSituationException;
 import org.anchoranalysis.core.error.reporter.ErrorReporter;
 import org.anchoranalysis.feature.bean.Feature;
 import org.anchoranalysis.feature.bean.list.FeatureList;
@@ -83,9 +84,6 @@ class CustomRootNode extends FeatureListNode {
 
 	@Override
 	public Throwable getError() {
-		assert false;
-		return null;
+		throw new AnchorImpossibleSituationException();
 	}
-
-
 }

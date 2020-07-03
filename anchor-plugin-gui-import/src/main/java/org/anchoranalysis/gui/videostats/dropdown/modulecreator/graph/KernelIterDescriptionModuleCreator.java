@@ -1,6 +1,7 @@
 package org.anchoranalysis.gui.videostats.dropdown.modulecreator.graph;
 
 import java.io.IOException;
+import java.util.Optional;
 
 import org.anchoranalysis.anchor.mpp.feature.nrg.cfg.CfgNRGPixelized;
 import org.anchoranalysis.core.error.InitException;
@@ -111,7 +112,7 @@ public class KernelIterDescriptionModuleCreator extends VideoStatsModuleCreatorC
 	}
 
 	@Override
-	public String shortTitle() {
-		return null;
+	public Optional<String> shortTitle() {
+		return Optional.empty();
 	}
 }

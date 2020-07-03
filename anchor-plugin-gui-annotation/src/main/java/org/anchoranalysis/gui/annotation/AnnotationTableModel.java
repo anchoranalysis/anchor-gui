@@ -33,6 +33,7 @@ import javax.swing.table.TableModel;
 
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.OperationFailedException;
+import org.anchoranalysis.core.error.friendly.AnchorImpossibleSituationException;
 import org.anchoranalysis.core.progress.OperationWithProgressReporter;
 import org.anchoranalysis.core.progress.ProgressReporter;
 import org.anchoranalysis.gui.file.interactive.InteractiveFile;
@@ -105,8 +106,7 @@ public class AnnotationTableModel extends InteractiveFileListTableModel {
 			case 1:
 				return String.class;			
 			default:
-				assert false;
-				return null;
+				throw new AnchorImpossibleSituationException();
 			}
 	    }
 	};

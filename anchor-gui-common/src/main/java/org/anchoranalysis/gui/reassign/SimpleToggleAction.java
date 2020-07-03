@@ -57,7 +57,7 @@ public class SimpleToggleAction extends AbstractAction {
 		putValue(Action.SELECTED_KEY, toggleState);
 	}
 	
-	public boolean getToggleState() {
+	public boolean isToggleState() {
 		return (Boolean) getValue(Action.SELECTED_KEY);
 	}
 }

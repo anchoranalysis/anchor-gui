@@ -78,6 +78,6 @@ public class DescriptionTopPanel {
 	}
 
 	public boolean isFrozen() {
-		return toggleActionFreeze.getToggleState();
+		return toggleActionFreeze.isToggleState();
 	}
 }

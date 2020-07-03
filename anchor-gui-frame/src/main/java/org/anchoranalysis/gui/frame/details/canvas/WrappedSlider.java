@@ -1,5 +1,7 @@
 package org.anchoranalysis.gui.frame.details.canvas;
 
+import java.util.Optional;
+
 /*-
  * #%L
  * anchor-gui-frame
@@ -142,16 +144,16 @@ class WrappedSlider implements ISliderState {
 	@Override
 	public void addSliceTo(Adder<Integer> adder) {
 		adder.add(
-			delegate.getSelectSliceReceivable(),
-			sliceSendable
+			Optional.of(delegate.getSelectSliceReceivable()),
+			Optional.of(sliceSendable)
 		);
 	}
 
 	@Override
 	public void addIndexTo(Adder<Integer> adder) {
 		adder.add(
-			delegate.getSelectIndexReceivable(),
-			indexSendable
+			Optional.of(delegate.getSelectIndexReceivable()),
+			Optional.of(indexSendable)
 		);
 	}
 	

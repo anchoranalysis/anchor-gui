@@ -1,5 +1,7 @@
 package org.anchoranalysis.gui.videostats.dropdown.contextualmodulecreator;
 
+import java.util.Optional;
+
 /*-
  * #%L
  * anchor-plugin-gui-import
@@ -92,7 +94,7 @@ public class NRGTableCreator extends VideoStatsModuleCreatorContext {
 	}
 
 	@Override
-	public String shortTitle() {
-		return null;
+	public Optional<String> shortTitle() {
+		return Optional.empty();
 	}
 }

@@ -1,5 +1,7 @@
 package org.anchoranalysis.gui.frame.overlays;
 
+import java.util.Optional;
+
 import org.anchoranalysis.anchor.overlay.collection.OverlayCollection;
 import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.index.GetOperationFailedException;
@@ -108,8 +110,11 @@ public class InternalFrameOverlaysRedraw {
 			VideoStatsModule module = delegate.moduleCreator(sliderState).createVideoStatsModule(defaultFrameState);
 			
 			LinkModules link = new LinkModules(module);
-			link.getOverlays().add( eventListenerList.createPropertyValueReceivable() );
-			
+			link.getOverlays().add(
+				Optional.of(
+					eventListenerList.createPropertyValueReceivable()
+				)
+			);
 			return module;
 		};
 	}

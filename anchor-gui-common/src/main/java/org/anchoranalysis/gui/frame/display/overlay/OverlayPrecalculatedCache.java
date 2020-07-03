@@ -93,7 +93,7 @@ public class OverlayPrecalculatedCache implements OverlayRetriever {
 	/**
 	 * The binary values we use for making object masks
 	 */
-	private final static BinaryValuesByte bvOut = BinaryValues.getDefault().createByte();
+	private static final BinaryValuesByte bvOut = BinaryValues.getDefault().createByte();
 
 	
 	public OverlayPrecalculatedCache(ColoredOverlayCollection overlayCollection, ImageDimensions dimEntireImage, OverlayWriter maskWriter ) throws CreateException {

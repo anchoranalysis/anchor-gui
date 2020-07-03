@@ -1,5 +1,7 @@
 package org.anchoranalysis.gui.videostats.dropdown.modulecreator.graph;
 
+import java.util.Optional;
+
 import org.anchoranalysis.anchor.mpp.feature.instantstate.CfgNRGInstantState;
 import org.anchoranalysis.anchor.mpp.plot.NRGGraphItem;
 import org.anchoranalysis.anchor.plot.bean.GraphDefinition;
@@ -100,7 +102,9 @@ public class GraphNRGBreakdownModuleCreator extends VideoStatsModuleCreatorConte
 	}
 
 	@Override
-	public String shortTitle() {
-		return definition.getShortTitle();
+	public Optional<String> shortTitle() {
+		return Optional.of(
+			definition.getShortTitle()
+		);
 	}
 }

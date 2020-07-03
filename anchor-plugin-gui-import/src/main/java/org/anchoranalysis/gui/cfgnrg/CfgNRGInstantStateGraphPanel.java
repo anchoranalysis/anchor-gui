@@ -1,5 +1,7 @@
 package org.anchoranalysis.gui.cfgnrg;
 
+import java.util.Optional;
+
 /*
  * #%L
  * anchor-gui
@@ -73,27 +75,22 @@ public class CfgNRGInstantStateGraphPanel extends StatePanel<CfgNRGInstantState>
 	}
 
 	@Override
-	public IPropertyValueSendable<IntArray> getSelectMarksSendable() {
-		return null;
+	public Optional<IPropertyValueSendable<IntArray>> getSelectMarksSendable() {
+		return Optional.empty();
 	}
 
-	
-
-
 	@Override
-	public IPropertyValueReceivable<IntArray> getSelectMarksReceivable() {
-		return null;
+	public Optional<IPropertyValueReceivable<IntArray>> getSelectMarksReceivable() {
+		return Optional.empty();
 	}
 
-
 	@Override
-	public IPropertyValueReceivable<OverlayCollection> getSelectOverlayCollectionReceivable() {
-		return null;
+	public Optional<IPropertyValueReceivable<OverlayCollection>> getSelectOverlayCollectionReceivable() {
+		return Optional.empty();
 	}
 
-
 	@Override
-	public IPropertyValueReceivable<Integer> getSelectIndexReceivable() {
-		return null;
+	public Optional<IPropertyValueReceivable<Integer>> getSelectIndexReceivable() {
+		return Optional.empty();
 	}
 }

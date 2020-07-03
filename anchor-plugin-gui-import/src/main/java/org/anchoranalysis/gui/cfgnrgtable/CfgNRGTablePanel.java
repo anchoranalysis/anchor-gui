@@ -32,6 +32,7 @@ import java.awt.GridLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.util.Optional;
 
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
@@ -203,42 +204,34 @@ public class CfgNRGTablePanel extends StatePanel<CfgNRGInstantState> {
 	}
 	
 	@Override
-	public IPropertyValueSendable<IntArray> getSelectMarksSendable() {
-		return new IPropertyValueSendable<IntArray>() {
-
-			@Override
-			public void setPropertyValue(IntArray value, boolean adjusting) {
-				
+	public Optional<IPropertyValueSendable<IntArray>> getSelectMarksSendable() {
+		return Optional.of(
+			(IntArray value, boolean adjusting ) -> {
 				int[] ids = value.getArr();
-				
 				selectionIndices.setCurrentSelection(ids);
-				//System.out.println( "Setting current selection (IF)" + selectionIndices.toString() );
 				
 				individualPanel.getSelectMarksSendable().selectIndicesOnly( ids );
 				pairPanel.getSelectMarksSendable().selectIndicesOnly( ids );
-				
 			}
-		};
+		);
 	}
 	
 	@Override
-	public IPropertyValueReceivable<OverlayCollection> getSelectOverlayCollectionReceivable() {
-		return eventListenerListOverlayCollection.createPropertyValueReceivable();
+	public Optional<IPropertyValueReceivable<OverlayCollection>> getSelectOverlayCollectionReceivable() {
+		return Optional.of(
+			eventListenerListOverlayCollection.createPropertyValueReceivable()
+		);
 	}
 
 	@Override
-	public IPropertyValueReceivable<IntArray> getSelectMarksReceivable() {
-		return new PropertyValueReceivableFromIndicesSelection(selectionIndices.getLastExplicitSelection());
+	public Optional<IPropertyValueReceivable<IntArray>> getSelectMarksReceivable() {
+		return Optional.of(
+			new PropertyValueReceivableFromIndicesSelection(selectionIndices.getLastExplicitSelection())
+		);
 	}
-
 
 	@Override
-	public IPropertyValueReceivable<Integer> getSelectIndexReceivable() {
-		return null;
+	public Optional<IPropertyValueReceivable<Integer>> getSelectIndexReceivable() {
+		return Optional.empty();
 	}
-
-
-	
-	
-	
 }

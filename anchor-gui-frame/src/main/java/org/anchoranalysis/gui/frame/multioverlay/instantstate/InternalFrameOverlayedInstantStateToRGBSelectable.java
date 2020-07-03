@@ -1,5 +1,7 @@
 package org.anchoranalysis.gui.frame.multioverlay.instantstate;
 
+import java.util.Optional;
+
 import org.anchoranalysis.anchor.overlay.Overlay;
 import org.anchoranalysis.anchor.overlay.OverlayedInstantState;
 import org.anchoranalysis.anchor.overlay.collection.ColoredOverlayCollection;
@@ -186,14 +188,18 @@ public class InternalFrameOverlayedInstantStateToRGBSelectable {
 		
 		LinkModules link = new LinkModules(module);
 		link.getMarkIndices().add(
-			new PropertyValueReceivableFromIndicesSelection(selectionIndices.getLastExplicitSelection()),
-			(value, adjusting) -> {
-				// If the ids are the same as our current selection, we don't need to change
-				// anything
-				if (!selectionIndices.setCurrentSelection(value.getArr())) {
-					return;
+			Optional.of(
+				new PropertyValueReceivableFromIndicesSelection(selectionIndices.getLastExplicitSelection())
+			),
+			Optional.of(
+				(value, adjusting) -> {
+					// If the ids are the same as our current selection, we don't need to change
+					// anything
+					if (!selectionIndices.setCurrentSelection(value.getArr())) {
+						return;
+					}
 				}
-			}
+			)
 		);
 	}
 	
@@ -207,8 +213,11 @@ public class InternalFrameOverlayedInstantStateToRGBSelectable {
 			}
 			
 			LinkModules link = new LinkModules(module);
-			link.getOverlays().add( markClickAdapter.createSelectOverlayCollectionReceivable() );
-
+			link.getOverlays().add(
+				Optional.of(
+					markClickAdapter.createSelectOverlayCollectionReceivable()
+				)
+			);
 			return module;
 		};
 	}

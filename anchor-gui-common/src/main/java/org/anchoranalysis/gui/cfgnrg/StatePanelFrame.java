@@ -97,17 +97,15 @@ public class StatePanelFrame<T> {
 	}
 
 	public void addFrameChangeListener(PropertyValueChangeListener<Integer> changeListener) {
-		
-		if (tablePanel.getSelectIndexReceivable()!=null) {
-			tablePanel.getSelectIndexReceivable().addPropertyValueChangeListener(changeListener);
-		}
+		tablePanel.getSelectIndexReceivable().ifPresent( index->
+			index.addPropertyValueChangeListener(changeListener)
+		);
 	}
 
 	public void removeFrameChangeListener(PropertyValueChangeListener<Integer> changeListener) {
-		
-		if (tablePanel.getSelectIndexReceivable()!=null) {
-			tablePanel.getSelectIndexReceivable().removePropertyValueChangeListener(changeListener);
-		}
+		tablePanel.getSelectIndexReceivable().ifPresent( index->
+			index.removePropertyValueChangeListener(changeListener)	
+		);
 	}
 	
 	public void updateState( T state ) throws StatePanelUpdateException {
@@ -127,9 +125,13 @@ public class StatePanelFrame<T> {
 			module.setFixedSize(false);
 	
 			LinkModules link = new LinkModules(module);
-			link.getMarkIndices().add( tablePanel.getSelectMarksReceivable(), tablePanel.getSelectMarksSendable() );
-			link.getOverlays().add( tablePanel.getSelectOverlayCollectionReceivable() );
-			
+			link.getMarkIndices().add(
+				tablePanel.getSelectMarksReceivable(),
+				tablePanel.getSelectMarksSendable()
+			);
+			link.getOverlays().add(
+				tablePanel.getSelectOverlayCollectionReceivable()
+			);
 			return module;
 		};
 	}

@@ -1,5 +1,7 @@
 package org.anchoranalysis.gui.plot.visualvm;
 
+import java.util.Optional;
+
 /*
  * #%L
  * anchor-gui
@@ -73,20 +75,15 @@ public class InternalFrameGraphAsModule {
 		};
 	}
 	
-	private IPropertyValueSendable<Integer> maybeFrameSendable( int defaultIndex ) {
-		IPropertyValueSendable<Integer> send = graphInstance.getSelectFrameSendable(); 
-		if( send !=null ) {
-			send.setPropertyValue( defaultIndex, false);
-		}
+	private Optional<IPropertyValueSendable<Integer>> maybeFrameSendable( int defaultIndex ) {
+		Optional<IPropertyValueSendable<Integer>> send = graphInstance.getSelectFrameSendable();
+		send.ifPresent( s->
+			s.setPropertyValue( defaultIndex, false)
+		);
 		return send;
 	}
 	
-	private IPropertyValueReceivable<Integer> maybeFrameReceiver() {
-		if( graphInstance.getSelectFrameReceivable()!=null ) {
-			return graphInstance.getSelectFrameReceivable();
-		} else {
-			return null;
-		}
+	private Optional<IPropertyValueReceivable<Integer>> maybeFrameReceiver() {
+		return graphInstance.getSelectFrameReceivable();
 	}
-
 }

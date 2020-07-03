@@ -28,6 +28,8 @@ package org.anchoranalysis.gui.plot.panel;
 
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
+import java.util.Optional;
+
 import javax.swing.event.EventListenerList;
 
 import org.anchoranalysis.anchor.plot.GraphInstance;
@@ -46,28 +48,30 @@ public class ClickableGraphInstance {
 	
 	private GraphPanelMouseClickListener panelMouseClickListener;
 		
-	private IPropertyValueReceivable<Integer> selectFrameReceivable;
-	private IPropertyValueSendable<Integer> selectFrameSendable;
+	private Optional<IPropertyValueReceivable<Integer>> selectFrameReceivable = Optional.empty();
+	private Optional<IPropertyValueSendable<Integer>> selectFrameSendable = Optional.empty();
 	
 	ClickableGraphInstance(GraphInstance graphInstance) {
 		this.graphInstance = graphInstance;
 	}
 	
-	public IPropertyValueReceivable<Integer> getSelectFrameReceivable() {
+	public Optional<IPropertyValueReceivable<Integer>> getSelectFrameReceivable() {
 		return selectFrameReceivable;
 	}
 
 	public void setSelectFrameReceivable(
 			IPropertyValueReceivable<Integer> selectFrameReceivable) {
-		this.selectFrameReceivable = selectFrameReceivable;
+		this.selectFrameReceivable = Optional.of(selectFrameReceivable);
 	}
 
-	public IPropertyValueSendable<Integer> getSelectFrameSendable() {
+	public Optional<IPropertyValueSendable<Integer>> getSelectFrameSendable() {
 		return selectFrameSendable;
 	}
 
 	public void setSelectFrameSendable(IPropertyValueSendable<Integer> selectFrameSendable) {
-		this.selectFrameSendable = selectFrameSendable;
+		this.selectFrameSendable = Optional.of(
+			selectFrameSendable
+		);
 	}
 	
 	private static class XAxisClickListener implements GraphPanelMouseClickListener, IPropertyValueReceivable<Integer>{

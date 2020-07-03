@@ -1,5 +1,7 @@
 package org.anchoranalysis.gui.videostats.dropdown;
 
+import java.util.Optional;
+
 /*-
  * #%L
  * anchor-plugin-gui-import
@@ -97,7 +99,7 @@ class CombinationCreator extends VideoStatsModuleCreatorContext {
 	}
 
 	@Override
-	public String shortTitle() {
-		return null;
+	public Optional<String> shortTitle() {
+		return Optional.empty();
 	}
 }
