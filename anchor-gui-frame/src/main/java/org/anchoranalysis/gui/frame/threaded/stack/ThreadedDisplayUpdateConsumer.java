@@ -138,17 +138,12 @@ public class ThreadedDisplayUpdateConsumer implements IDisplayUpdateRememberStac
 			}
 		}
 		
+		@Override
 		protected void process(List<Integer> pairs) {
 			for (ChangeListener cl : eventListenerList.getListeners(ChangeListener.class)) {
 				cl.stateChanged( new ChangeEvent(this));
 			}
 		}
-
-		@Override
-		protected void done() {
-			super.done();
-		}
-		
 	}
 	
 	public ThreadedDisplayUpdateConsumer(
