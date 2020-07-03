@@ -62,7 +62,7 @@ class CombinationCreator extends VideoStatsModuleCreatorContext {
 	}
 
 	@Override
-	public IModuleCreatorDefaultState moduleCreator(DefaultModuleStateManager defaultStateManager, String namePrefix,
+	public Optional<IModuleCreatorDefaultState> moduleCreator(DefaultModuleStateManager defaultStateManager, String namePrefix,
 			VideoStatsModuleGlobalParams mpg) throws VideoStatsModuleCreateException {
 		
 		try {
@@ -82,7 +82,9 @@ class CombinationCreator extends VideoStatsModuleCreatorContext {
 					backgroundSet
 				);
 				
-				return imageFrame.moduleCreator(sliderState);
+				return Optional.of(
+					imageFrame.moduleCreator(sliderState)
+				);
 				
 			} catch (InitException e) {
 				throw new VideoStatsModuleCreateException(e);

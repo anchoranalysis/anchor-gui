@@ -82,14 +82,14 @@ class CreateMarkEvaluator {
 		);
 	}
 	
-	private static Operation<KeyValueParams,IOException> opLoadKeyValueParams( Path pathForBinding, MarkProposerStrategy strategy ) {
+	private static Operation<Optional<KeyValueParams>,IOException> opLoadKeyValueParams( Path pathForBinding, MarkProposerStrategy strategy ) {
 		return () -> paramsFromGenerator(
 			pathForBinding,
 			strategy.paramsFilePathGenerator()
 		);
 	}
 	
-	private static KeyValueParams paramsFromGenerator( Path pathForBinding, Optional<FilePathGenerator> generator ) throws IOException {
+	private static Optional<KeyValueParams> paramsFromGenerator( Path pathForBinding, Optional<FilePathGenerator> generator ) throws IOException {
 		return OptionalUtilities.map(
 			generator,
 			gen -> {
@@ -101,8 +101,6 @@ class CreateMarkEvaluator {
 					throw new IOException(e);
 				}
 			}
-		).orElse(
-			new KeyValueParams()
 		);
 	}
 }

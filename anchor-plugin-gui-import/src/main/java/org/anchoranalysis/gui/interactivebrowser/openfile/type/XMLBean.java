@@ -29,6 +29,7 @@ package org.anchoranalysis.gui.interactivebrowser.openfile.type;
 
 import java.io.File;
 import java.util.List;
+import java.util.Optional;
 
 import org.anchoranalysis.bean.xml.BeanXmlLoader;
 import org.anchoranalysis.bean.xml.error.BeanXmlException;
@@ -51,7 +52,7 @@ public class XMLBean extends OpenFileTypeSingle {
 	}
 
 	@Override
-	protected FileCreator creatorForSingleFile( File f, ImporterSettings importerSettings ) throws CreateException {
+	protected Optional<FileCreator> creatorForSingleFile( File f, ImporterSettings importerSettings ) throws CreateException {
 
 		try {
 			Object bean = BeanXmlLoader.loadBean( f.toPath() );
@@ -62,7 +63,7 @@ public class XMLBean extends OpenFileTypeSingle {
 		}		
 	}
 
-	private static FileCreator importBean( Object bean, File file, List<ImporterFromBean> creators ) throws CreateException {
+	private static Optional<FileCreator> importBean( Object bean, File file, List<ImporterFromBean> creators ) throws CreateException {
 		for( ImporterFromBean creator : creators ) {
 			if (creator.isApplicable(bean)) {
 				return creator.create(bean, file);

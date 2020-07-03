@@ -67,7 +67,7 @@ public class GraphNRGBreakdownModuleCreator extends VideoStatsModuleCreatorConte
 	}
 
 	@Override
-	public IModuleCreatorDefaultState moduleCreator(DefaultModuleStateManager defaultStateManager, String namePrefix,
+	public Optional<IModuleCreatorDefaultState> moduleCreator(DefaultModuleStateManager defaultStateManager, String namePrefix,
 			VideoStatsModuleGlobalParams mpg) throws VideoStatsModuleCreateException {
 
 		ErrorReporter errorReporter = mpg.getLogErrorReporter().getErrorReporter();
@@ -86,7 +86,9 @@ public class GraphNRGBreakdownModuleCreator extends VideoStatsModuleCreatorConte
 				errorReporter
 			);
 			
-			return frame.moduleCreator();
+			return Optional.of(
+				frame.moduleCreator()
+			);
 
 		} catch (GetOperationFailedException e) {
 			throw new VideoStatsModuleCreateException(e);

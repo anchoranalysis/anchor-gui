@@ -1,5 +1,7 @@
 package org.anchoranalysis.gui.videostats.internalframe.annotator.tool;
 
+import java.util.Optional;
+
 /*-
  * #%L
  * anchor-gui-annotation
@@ -33,28 +35,18 @@ import org.anchoranalysis.gui.videostats.internalframe.annotator.currentstate.IA
 import org.anchoranalysis.gui.videostats.internalframe.annotator.currentstate.IReplaceRemove;
 import org.anchoranalysis.gui.videostats.internalframe.evaluator.EvaluatorWithContext;
 
+import lombok.AllArgsConstructor;
+
+@AllArgsConstructor
 public class GuessTool extends AnnotationTool {
 
 	private IReplaceRemove replaceRemove;
 	private IAcceptProposal acceptProposal;
-	private EvaluatorWithContext evaluatorWithContext;
+	private Optional<EvaluatorWithContext> evaluatorWithContext;
 	private ToolErrorReporter toolErrorReporter;
 	
-	public GuessTool(
-		IReplaceRemove replaceRemove,
-		IAcceptProposal acceptProposal,
-		EvaluatorWithContext evaluatorWithContext,
-		ToolErrorReporter toolErrorReporter
-	) {
-		super();
-		this.replaceRemove = replaceRemove;
-		this.evaluatorWithContext = evaluatorWithContext;
-		this.toolErrorReporter = toolErrorReporter;
-		this.acceptProposal = acceptProposal;
-	}
-	
 	public boolean isEnabled() {
-		return evaluatorWithContext!=null;
+		return evaluatorWithContext.isPresent();
 	}
 
 	@Override
@@ -91,7 +83,7 @@ public class GuessTool extends AnnotationTool {
 	}
 
 	@Override
-	public EvaluatorWithContext evaluatorWithContextGetter() {
+	public Optional<EvaluatorWithContext> evaluatorWithContextGetter() {
 		return evaluatorWithContext;
 	}
 

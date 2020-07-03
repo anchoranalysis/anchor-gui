@@ -77,16 +77,6 @@ public class ProposerFailureDescriptionPanel extends StatePanel<ProposerFailureD
 	// If empty we expand all nodes
 	private String alwaysExpandNode = "";
 	
-	public ErrorNodeImpl getSelectedNode() {
-		if (tree.getSelectionPath()!=null) {
-			Object o = tree.getSelectionPath().getLastPathComponent();
-			ErrorNodeImpl node = (ErrorNodeImpl) o;
-			return node;	
-		} else {
-			return null;
-		}
-	}
-	
 	private class SetExpandAction extends AbstractAction {
 
 		/**

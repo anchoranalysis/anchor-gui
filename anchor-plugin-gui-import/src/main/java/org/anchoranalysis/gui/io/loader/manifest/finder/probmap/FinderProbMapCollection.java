@@ -66,17 +66,6 @@ class FinderProbMapCollection extends Finder implements Iterable<FinderProbMap> 
 		}
 	}
 	
-	public FinderProbMap get( String displayName ) {
-		
-		for (FinderProbMap fpm : map) {
-			if (fpm.getDisplayName().equals(displayName)) {
-				return fpm;
-			}
-		}
-		
-		return null;
-	}
-	
 	@Override
 	public Iterator<FinderProbMap> iterator() {
 		return map.iterator();

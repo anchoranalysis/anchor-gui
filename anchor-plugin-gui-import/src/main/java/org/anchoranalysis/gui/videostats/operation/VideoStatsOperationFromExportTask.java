@@ -28,6 +28,7 @@ package org.anchoranalysis.gui.videostats.operation;
 
 
 import java.awt.event.ActionListener;
+import java.util.Optional;
 
 import javax.swing.JFrame;
 
@@ -35,10 +36,10 @@ import org.anchoranalysis.core.error.reporter.ErrorReporter;
 import org.anchoranalysis.gui.bean.exporttask.ExportTaskActionAsThread;
 import org.anchoranalysis.gui.bean.exporttask.ExportTaskParams;
 import org.anchoranalysis.gui.bean.exporttask.IExportTask;
-import org.anchoranalysis.gui.bean.exporttask.ExportTaskActionAsThread.ExportTaskCommand;
 import org.anchoranalysis.gui.videostats.operation.combine.IVideoStatsOperationCombine;
+import org.anchoranalysis.gui.bean.exporttask.ExportTaskActionAsThread.ExportTaskCommand;
 
-public class VideoStatsOperationFromExportTask extends VideoStatsOperation {
+public class VideoStatsOperationFromExportTask implements VideoStatsOperation {
 
 	private ActionListener actionListenerWithMessages;
 	private IExportTask exportTask;
@@ -72,8 +73,7 @@ public class VideoStatsOperationFromExportTask extends VideoStatsOperation {
 	}
 
 	@Override
-	public IVideoStatsOperationCombine getCombiner() {
-		// TODO Auto-generated method stub
-		return null;
+	public Optional<IVideoStatsOperationCombine> getCombiner() {
+		return Optional.empty();
 	}
 }

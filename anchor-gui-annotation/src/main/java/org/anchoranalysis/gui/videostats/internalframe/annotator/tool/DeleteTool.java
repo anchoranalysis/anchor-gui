@@ -28,6 +28,7 @@ package org.anchoranalysis.gui.videostats.internalframe.annotator.tool;
 
 
 import java.util.List;
+import java.util.Optional;
 
 import org.anchoranalysis.anchor.mpp.bean.regionmap.RegionMap;
 import org.anchoranalysis.anchor.mpp.cfg.Cfg;
@@ -97,7 +98,7 @@ public class DeleteTool extends AnnotationTool {
 	}
 
 	@Override
-	public EvaluatorWithContext evaluatorWithContextGetter() {
-		return null;
+	public Optional<EvaluatorWithContext> evaluatorWithContextGetter() {
+		return Optional.empty();
 	}
 }

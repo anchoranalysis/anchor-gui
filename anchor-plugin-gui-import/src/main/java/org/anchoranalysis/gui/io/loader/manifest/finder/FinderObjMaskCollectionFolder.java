@@ -27,6 +27,7 @@ package org.anchoranalysis.gui.io.loader.manifest.finder;
  */
 
 import java.util.List;
+import java.util.Optional;
 
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.log.LogErrorReporter;
@@ -49,17 +50,17 @@ public class FinderObjMaskCollectionFolder extends FinderSingleFolder {
 	}
 
 	@Override
-	protected FolderWrite findFolder(ManifestRecorder manifestRecorder) {
+	protected Optional<FolderWrite> findFolder(ManifestRecorder manifestRecorder) {
 		
 		List<FolderWrite> list = FinderUtilities.findListFolder(
 			manifestRecorder,
 			new FolderWritePath(folderName)
 		);
 		
-		if (list.size()>0) {
-			return list.get(0);
+		if (!list.isEmpty()) {
+			return Optional.of( list.get(0) );
 		} else {
-			return null;
+			return Optional.empty();
 		}
 	}
 	

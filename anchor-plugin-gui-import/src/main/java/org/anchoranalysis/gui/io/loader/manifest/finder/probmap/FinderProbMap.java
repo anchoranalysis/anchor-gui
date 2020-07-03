@@ -29,6 +29,7 @@ import org.anchoranalysis.core.error.CreateException;
  */
 
 import org.anchoranalysis.core.error.OperationFailedException;
+import org.anchoranalysis.core.error.friendly.AnchorImpossibleSituationException;
 import org.anchoranalysis.core.error.reporter.ErrorReporter;
 import org.anchoranalysis.core.functional.FunctionWithException;
 import org.anchoranalysis.core.index.GetOperationFailedException;
@@ -103,8 +104,7 @@ public class FinderProbMap extends Finder implements BackgroundStackCntr, Finder
 		if (isRasterSeries()) {
 			return rasterSeries.get().get( rasterSeries.get().previousEqualIndex(0) ).getChnl(0);
 		}
-		assert false;
-		return null;
+		throw new AnchorImpossibleSituationException();
 	}
 	
 

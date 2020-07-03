@@ -1,5 +1,7 @@
 package org.anchoranalysis.gui.videostats.modulecreator;
 
+import java.util.Optional;
+
 import org.anchoranalysis.anchor.mpp.cfg.Cfg;
 
 /*-
@@ -77,6 +79,7 @@ public class CfgModuleCreator extends VideoStatsModuleCreator {
 		
 		try {
 			Cfg cfg = opCfg.doOperation();
+			
 			OverlayCollection oc = OverlayCollectionMarkFactory.createWithoutColor(
 				cfg,
 				markDisplaySettings.regionMembership()
@@ -104,36 +107,30 @@ public class CfgModuleCreator extends VideoStatsModuleCreator {
 
 
 	@Override
-	public IVideoStatsOperationCombine getCombiner() {
-		return new IVideoStatsOperationCombine() {
-			
-			@Override
-			public Operation<Cfg,OperationFailedException> getCfg() {
-				return opCfg;
-			}
+	public Optional<IVideoStatsOperationCombine> getCombiner() {
+		return Optional.of(
+			new IVideoStatsOperationCombine() {
+				
+				@Override
+				public Optional<Operation<Cfg,OperationFailedException>> getCfg() {
+					return Optional.of(opCfg);
+				}
+		
+				@Override
+				public String generateName() {
+					return fileIdentifier;
+				}
 	
-			@Override
-			public String generateName() {
-				return fileIdentifier;
-			}
-
-			@Override
-			public Operation<ObjectCollection,OperationFailedException> getObjMaskCollection() {
-				return null;
-			}
-
-			@Override
-			public NRGBackground getNrgBackground() {
-				return nrgBackground;
-			}
-		};
-	}
-
-
-
-	@Override
-	public boolean canCombineOperations() {
-		return true;
-	}
+				@Override
+				public Optional<Operation<ObjectCollection, OperationFailedException>> getObjMaskCollection() {
+					return Optional.empty();
+				}
 	
+				@Override
+				public NRGBackground getNrgBackground() {
+					return nrgBackground;
+				}
+			}
+		);
+	}
 }

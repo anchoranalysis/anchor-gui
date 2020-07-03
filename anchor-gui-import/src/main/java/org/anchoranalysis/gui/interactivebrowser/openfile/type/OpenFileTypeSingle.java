@@ -30,6 +30,7 @@ package org.anchoranalysis.gui.interactivebrowser.openfile.type;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.gui.bean.filecreator.FileCreator;
@@ -45,13 +46,12 @@ public abstract class OpenFileTypeSingle extends OpenFileType {
 
 		List<FileCreator> out = new ArrayList<>();
 		for( File f : files) {
-			FileCreator creator = creatorForSingleFile(f, importerSettings);
-			if (creator!=null) {
-				out.add( creator );
-			}
+			creatorForSingleFile(f, importerSettings).ifPresent(
+				out::add
+			);
 		}
 		return out;
 	}
 	
-	protected abstract FileCreator creatorForSingleFile( File f, ImporterSettings importerSettings ) throws CreateException;
+	protected abstract Optional<FileCreator> creatorForSingleFile( File f, ImporterSettings importerSettings ) throws CreateException;
 }

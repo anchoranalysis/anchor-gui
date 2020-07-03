@@ -35,6 +35,7 @@ import org.anchoranalysis.anchor.mpp.feature.nrg.saved.NRGSavedInd;
 import org.anchoranalysis.anchor.mpp.mark.Mark;
 import org.anchoranalysis.core.color.ColorIndex;
 import org.anchoranalysis.core.color.RGBColor;
+import org.anchoranalysis.core.error.friendly.AnchorImpossibleSituationException;
 
 public class IndividualTableModel extends AbstractTableModel implements IUpdateTableData {
 
@@ -94,8 +95,7 @@ public class IndividualTableModel extends AbstractTableModel implements IUpdateT
 		case 2:
 			return String.class;
 		default:
-			assert false;
-			return null;
+			throw new AnchorImpossibleSituationException();
 		}
     }
 	

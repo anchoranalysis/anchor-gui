@@ -27,6 +27,7 @@ package org.anchoranalysis.gui.interactivebrowser.openfile.importer;
  */
 
 import java.io.File;
+import java.util.Optional;
 
 import org.anchoranalysis.annotation.io.bean.input.AnnotationInputManager;
 import org.anchoranalysis.annotation.io.bean.strategy.AnnotatorStrategy;
@@ -43,8 +44,13 @@ public class ImporterFromAnnotation extends ImporterFromBean {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public FileCreator create(Object bean, File file) {
-		return createAnnotation( (AnnotationInputManager<ProvidesStackInput,AnnotatorStrategy>) bean, file);
+	public Optional<FileCreator> create(Object bean, File file) {
+		return Optional.of(
+			createAnnotation(
+				(AnnotationInputManager<ProvidesStackInput,AnnotatorStrategy>) bean,
+				file
+			)
+		);
 	}
 	
 

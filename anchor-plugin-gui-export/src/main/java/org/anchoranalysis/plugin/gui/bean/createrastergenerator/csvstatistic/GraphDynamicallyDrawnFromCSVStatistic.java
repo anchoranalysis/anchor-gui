@@ -61,7 +61,7 @@ public class GraphDynamicallyDrawnFromCSVStatistic<T> extends CreateRasterGraph<
 		assert( getGraphDefinition()!=null );
 		
 		try {
-			FunctionWithException<MappedFrom<CSVStatistic>,GraphInstance,CreateException> bridge = new GraphInstanceBridge<T>(
+			FunctionWithException<MappedFrom<CSVStatistic>,GraphInstance,CreateException> bridge = new GraphInstanceBridge<>(
 				getGraphDefinition(),
 				params.getFinderCsvStatistics().get(),
 				elementBridge

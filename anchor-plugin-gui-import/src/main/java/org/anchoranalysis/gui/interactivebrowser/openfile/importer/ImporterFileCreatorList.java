@@ -28,6 +28,7 @@ package org.anchoranalysis.gui.interactivebrowser.openfile.importer;
 
 import java.io.File;
 import java.util.List;
+import java.util.Optional;
 
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.gui.bean.filecreator.FileCreator;
@@ -40,10 +41,12 @@ public class ImporterFileCreatorList extends ImporterFromBean {
 	}
 
 	@Override
-	public FileCreator create(Object bean, File file) throws CreateException {
+	public Optional<FileCreator> create(Object bean, File file) throws CreateException {
 		@SuppressWarnings("unchecked")
 		List<Object> list = (List<Object>) bean;
-		return( XMLBeanListHelper.creatorForList(list, file) );
+		return Optional.of(
+			XMLBeanListHelper.creatorForList(list, file)
+		);
 	}
 
 }

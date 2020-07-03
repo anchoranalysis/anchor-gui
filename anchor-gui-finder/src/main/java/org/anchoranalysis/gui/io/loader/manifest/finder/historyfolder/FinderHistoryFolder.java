@@ -28,6 +28,7 @@ package org.anchoranalysis.gui.io.loader.manifest.finder.historyfolder;
 
 
 import java.util.List;
+import java.util.Optional;
 
 import org.anchoranalysis.core.functional.Operation;
 import org.anchoranalysis.core.index.GetOperationFailedException;
@@ -64,14 +65,16 @@ public abstract class FinderHistoryFolder<T> extends FinderSingleFolder implemen
 	
 	// A simple method to override in each finder that is based upon finding a single file
 	@Override
-	protected FolderWrite findFolder( ManifestRecorder manifestRecorder ) {
+	protected Optional<FolderWrite> findFolder( ManifestRecorder manifestRecorder ) {
 		
 		List<FolderWrite> incrementalListBundle = FinderUtilities.findListFolder(manifestRecorder, 
 			new FolderWriteFileFunctionType( this.manifestFunction, "serializedBundle" )
 		);
-		if (incrementalListBundle.size()>0) {
+		if (!incrementalListBundle.isEmpty()) {
 			foundStorage = StorageType.BUNDLE;
-			return incrementalListBundle.get(0);
+			return Optional.of(
+				incrementalListBundle.get(0)
+			);
 		}
 		
 		List<FolderWrite>  incrementalList = FinderUtilities.findListFolder(manifestRecorder, 
@@ -79,12 +82,14 @@ public abstract class FinderHistoryFolder<T> extends FinderSingleFolder implemen
 		);
 		
 		// We take the frame from the first one
-		if (incrementalList.size()>0) {
+		if (!incrementalList.isEmpty()) {
 			foundStorage = StorageType.NON_BUNDLE;
-			return incrementalList.get(0);
+			return Optional.of(
+				incrementalList.get(0)
+			);
 		}
 		
-		return null;
+		return Optional.empty();
 	}
 	
 	protected abstract LoadContainer<T> createFromBundle( FolderWrite folder ) throws DeserializationFailedException;

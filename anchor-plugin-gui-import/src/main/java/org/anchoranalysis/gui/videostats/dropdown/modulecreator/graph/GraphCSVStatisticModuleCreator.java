@@ -66,7 +66,7 @@ public class GraphCSVStatisticModuleCreator extends VideoStatsModuleCreatorConte
 	}
 
 	@Override
-	public IModuleCreatorDefaultState moduleCreator(DefaultModuleStateManager defaultStateManager, String namePrefix,
+	public Optional<IModuleCreatorDefaultState> moduleCreator(DefaultModuleStateManager defaultStateManager, String namePrefix,
 			VideoStatsModuleGlobalParams mpg) throws VideoStatsModuleCreateException {
 
 		try {
@@ -78,7 +78,7 @@ public class GraphCSVStatisticModuleCreator extends VideoStatsModuleCreatorConte
 			CSVStatistic stat = cntr.get(minIndex);
 			
 			if (!definition.isItemAccepted(stat) ) {
-				return null;
+				return Optional.empty();
 			}
 			
 			Iterator<CSVStatistic> itr = new BoundedIndexContainerIterator<>(cntr, 1000);
@@ -88,11 +88,11 @@ public class GraphCSVStatisticModuleCreator extends VideoStatsModuleCreatorConte
 			String graphFrameTitle = new FrameTitleGenerator().genFramePrefix( namePrefix, title() );
 			
 			InternalFrameGraphAsModule frame = new InternalFrameGraphAsModule( graphFrameTitle, graphInstance );
-			return frame.moduleCreator();
+			return Optional.of(
+				frame.moduleCreator()
+			);
 
-		} catch (GetOperationFailedException e) {
-			throw new VideoStatsModuleCreateException(e);
-		} catch (CreateException e) {
+		} catch (GetOperationFailedException | CreateException e) {
 			throw new VideoStatsModuleCreateException(e);
 		}
 	}

@@ -45,10 +45,6 @@ import org.anchoranalysis.gui.io.loader.manifest.finder.historyfolder.FinderHist
  * @param <T> destination-type
  */
 public abstract class BridgedGraphFromDualFinderCreator<T> extends GraphFromDualFinderCreator<T> {
-	
-	public BridgedGraphFromDualFinderCreator() {
-		super();
-	}
 
 	@Override
 	public IBoundedIndexContainer<T> createCntr( FinderCSVStats finderCSVStats ) throws CreateException {

@@ -1,5 +1,7 @@
 package org.anchoranalysis.gui.annotation.strategy.builder.mark.panel;
 
+import java.util.Optional;
+
 /*-
  * #%L
  * anchor-gui-annotation
@@ -95,9 +97,9 @@ class HelperPanelBuilder {
 		MarkAnnotator markAnnotator,
 		ToolErrorReporter errorReporter
 	) {
-		EvaluatorWithContext guessEvaluator = markAnnotator.createGuessEvaluator(errorReporter);
+		Optional<EvaluatorWithContext> guessEvaluator = markAnnotator.createGuessEvaluator(errorReporter);
 		
-		EvaluatorWithContext evaluatorSelectPoints = markAnnotator.createSelectPointsEvaluator(
+		Optional<EvaluatorWithContext> evaluatorSelectPoints = markAnnotator.createSelectPointsEvaluator(
 			dimViewer,
 			errorReporter
 		);

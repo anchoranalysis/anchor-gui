@@ -402,7 +402,7 @@ public class ManifestDropDown {
 	private Operation<Cfg, OperationFailedException> getCfgChangeException(FinderSerializedObject<Cfg> finderFinalCfg) {
 		return () -> {
 			try {
-				return finderFinalCfg.operation().doOperation();
+				return finderFinalCfg.operation().doOperation().get();
 			} catch (IOException e) {
 				throw new OperationFailedException(e);
 			}

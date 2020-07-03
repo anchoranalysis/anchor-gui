@@ -28,6 +28,7 @@ package org.anchoranalysis.gui.annotation.dropdown;
 
 import java.io.IOException;
 import java.nio.file.Path;
+import java.util.Optional;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -37,7 +38,7 @@ import org.anchoranalysis.gui.annotation.AnnotationRefresher;
 import org.anchoranalysis.gui.videostats.operation.VideoStatsOperation;
 import org.anchoranalysis.gui.videostats.operation.combine.IVideoStatsOperationCombine;
 
-class DeleteAnnotationOperation extends VideoStatsOperation {
+class DeleteAnnotationOperation implements VideoStatsOperation {
 
 	private JFrame parentFrame;
 	private Path pathToDelete;
@@ -72,8 +73,8 @@ class DeleteAnnotationOperation extends VideoStatsOperation {
 	}
 
 	@Override
-	public IVideoStatsOperationCombine getCombiner() {
-		return null;
+	public Optional<IVideoStatsOperationCombine> getCombiner() {
+		return Optional.empty();
 	}
 
 	

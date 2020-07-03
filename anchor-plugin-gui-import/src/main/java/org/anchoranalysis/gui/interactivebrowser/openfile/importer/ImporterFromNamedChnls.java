@@ -27,6 +27,7 @@ package org.anchoranalysis.gui.interactivebrowser.openfile.importer;
  */
 
 import java.io.File;
+import java.util.Optional;
 
 import org.anchoranalysis.gui.bean.filecreator.FileCreator;
 import org.anchoranalysis.image.io.input.ProvidesStackInput;
@@ -42,10 +43,12 @@ public class ImporterFromNamedChnls extends ImporterFromBean {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public FileCreator create(Object bean, File file) {
-		return XMLBeanListHelper.createSingleStack(
-			(InputManager<? extends ProvidesStackInput>) bean,
-			file
+	public Optional<FileCreator> create(Object bean, File file) {
+		return Optional.of(
+				XMLBeanListHelper.createSingleStack(
+				(InputManager<? extends ProvidesStackInput>) bean,
+				file
+			)
 		);
 	}
 

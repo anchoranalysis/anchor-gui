@@ -29,10 +29,11 @@ package org.anchoranalysis.gui.videostats.operation;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.anchoranalysis.gui.videostats.operation.combine.IVideoStatsOperationCombine;
 
-public class VideoStatsOperationSequence extends VideoStatsOperation {
+public class VideoStatsOperationSequence implements VideoStatsOperation {
 
 	private List<VideoStatsOperation> delegate = new ArrayList<>();
 	
@@ -69,7 +70,7 @@ public class VideoStatsOperationSequence extends VideoStatsOperation {
 	}
 
 	@Override
-	public IVideoStatsOperationCombine getCombiner() {
-		return null;
+	public Optional<IVideoStatsOperationCombine> getCombiner() {
+		return Optional.empty();
 	}
 }

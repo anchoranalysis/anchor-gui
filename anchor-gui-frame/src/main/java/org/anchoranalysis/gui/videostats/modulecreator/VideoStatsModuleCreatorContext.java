@@ -2,6 +2,8 @@ package org.anchoranalysis.gui.videostats.modulecreator;
 
 import java.util.Optional;
 
+import org.anchoranalysis.core.functional.OptionalUtilities;
+
 /*-
  * #%L
  * anchor-gui-frame
@@ -40,7 +42,7 @@ public abstract class VideoStatsModuleCreatorContext {
 	/** This must evaluate to TRUE before any module is created. Otherwise we abandon creating module */
 	public abstract boolean precondition();
 	
-	public abstract IModuleCreatorDefaultState moduleCreator(DefaultModuleStateManager defaultStateManager, String namePrefix, VideoStatsModuleGlobalParams mpg) throws VideoStatsModuleCreateException;
+	public abstract Optional<IModuleCreatorDefaultState> moduleCreator(DefaultModuleStateManager defaultStateManager, String namePrefix, VideoStatsModuleGlobalParams mpg) throws VideoStatsModuleCreateException;
 	
 	/** The title of the module. Must be defined. */
 	public abstract String title();
@@ -56,15 +58,14 @@ public abstract class VideoStatsModuleCreatorContext {
 				
 				DefaultModuleStateManager defaultStateManager = adder.getSubgroup().getDefaultModuleState();
 				
-				IModuleCreatorDefaultState creator = moduleCreator(
-					defaultStateManager,
-					namePrefix,
-					mpg
+				OptionalUtilities.ifPresent(
+					moduleCreator(
+						defaultStateManager,
+						namePrefix,
+						mpg
+					),
+					creator -> ModuleAddUtilities.add(adder, creator)
 				);
-				
-				if (creator!=null) {
-					ModuleAddUtilities.add(adder, creator );
-				}
 			}
 		};
 	}

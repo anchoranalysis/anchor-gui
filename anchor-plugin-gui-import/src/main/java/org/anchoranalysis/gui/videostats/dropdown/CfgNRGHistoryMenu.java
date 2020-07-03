@@ -250,7 +250,15 @@ public class CfgNRGHistoryMenu {
 					
 					try {
 						for (int i=0; i<finderKernelProposer.get().getNumKernel(); i++ ) {
-							addCSVStatistic(acceptedSubMenu,  new GraphDefinitionLineIterVsKernelAccptProb(finderKernelProposer.get(), i, mpg.getGraphColorScheme()), true );
+							addCSVStatistic(
+								acceptedSubMenu,
+								new GraphDefinitionLineIterVsKernelAccptProb(
+									finderKernelProposer.get(),
+									i,
+									mpg.getGraphColorScheme()
+								),
+								true
+							);
 						}
 					} catch (MenuAddException | IOException e) {
 						throw new OperationFailedException(e);

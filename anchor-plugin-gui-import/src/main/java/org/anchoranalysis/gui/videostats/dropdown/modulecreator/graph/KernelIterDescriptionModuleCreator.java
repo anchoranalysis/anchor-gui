@@ -77,7 +77,7 @@ public class KernelIterDescriptionModuleCreator extends VideoStatsModuleCreatorC
 	}
 
 	@Override
-	public IModuleCreatorDefaultState moduleCreator(DefaultModuleStateManager defaultStateManager, String namePrefix,
+	public Optional<IModuleCreatorDefaultState> moduleCreator(DefaultModuleStateManager defaultStateManager, String namePrefix,
 			VideoStatsModuleGlobalParams mpg) throws VideoStatsModuleCreateException {
 
 		ErrorReporter errorReporter = mpg.getLogErrorReporter().getErrorReporter();
@@ -99,7 +99,9 @@ public class KernelIterDescriptionModuleCreator extends VideoStatsModuleCreatorC
 			);
 			frame.controllerSize().configureSize(500, 500);
 			
-			return frame.moduleCreator();
+			return Optional.of(
+				frame.moduleCreator()
+			);
 			
 		} catch (GetOperationFailedException | InitException | IOException e) {
 			throw new VideoStatsModuleCreateException(e);

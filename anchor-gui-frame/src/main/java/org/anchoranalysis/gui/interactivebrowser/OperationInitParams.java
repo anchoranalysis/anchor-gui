@@ -55,7 +55,7 @@ import org.anchoranalysis.mpp.io.input.MPPInitParamsFactory;
 public class OperationInitParams extends CachedOperation<MPPInitParams,CreateException> {
 
 	private OperationWithProgressReporter<NamedProvider<Stack>,? extends Throwable> namedImgStackCollection;
-	private Operation<KeyValueParams,IOException> keyParams;
+	private Operation<Optional<KeyValueParams>,IOException> keyParams;
 	
 	private Define define;
 	
@@ -63,7 +63,7 @@ public class OperationInitParams extends CachedOperation<MPPInitParams,CreateExc
 	
 	public OperationInitParams(
 			OperationWithProgressReporter<NamedProvider<Stack>,? extends Throwable> namedImgStackCollection,
-			Operation<KeyValueParams,IOException> keyParams,
+			Operation<Optional<KeyValueParams>,IOException> keyParams,
 			Define define,
 			BoundIOContext context
 			) {
@@ -110,9 +110,7 @@ public class OperationInitParams extends CachedOperation<MPPInitParams,CreateExc
 					namedImgStackCollection.doOperation( ProgressReporterNull.get() )
 				),
 				Optional.empty(),
-				Optional.of(
-					keyParams.doOperation()
-				)
+				keyParams.doOperation()
 			);
 
 		} catch (Throwable e) {

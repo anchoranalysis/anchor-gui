@@ -1,5 +1,7 @@
 package org.anchoranalysis.gui.io.loader.manifest.finder;
 
+import java.util.Optional;
+
 import org.anchoranalysis.core.error.CreateException;
 
 /*
@@ -45,7 +47,7 @@ import org.anchoranalysis.io.manifest.finder.FinderSingleFile;
 
 public abstract class FinderRasterStack extends FinderSingleFile implements FinderRasterSingleChnl, BackgroundStackCntr {
 
-	private Stack result;
+	private Optional<Stack> result;
 	
 	private RasterReader rasterReader;
 
@@ -54,12 +56,7 @@ public abstract class FinderRasterStack extends FinderSingleFile implements Find
 		this.rasterReader = rasterReader;
 	}
 
-	private Stack createStack( FileWrite fileWrite ) throws GetOperationFailedException, RasterIOException {
-		
-		if (fileWrite==null) {
-			return null;
-		}
-		
+	private Stack createStack( FileWrite fileWrite ) throws RasterIOException {
 		// Assume single series, single channel
 		return RasterReaderUtilities.openStackFromPath(
 			rasterReader,
@@ -69,14 +66,16 @@ public abstract class FinderRasterStack extends FinderSingleFile implements Find
 	
 	public Stack get() throws GetOperationFailedException {
 		assert(exists());
-		if (result==null) {
+		if (!result.isPresent()) {
 			try {
-				result = createStack( getFoundFile() );
+				result = Optional.of(
+					createStack(getFoundFile())
+				);
 			} catch (RasterIOException e) {
 				throw new GetOperationFailedException(e);
 			}
 		}
-		return result;
+		return result.get();
 	}
 	
 
@@ -97,13 +96,8 @@ public abstract class FinderRasterStack extends FinderSingleFile implements Find
 		}
 	}
 	
-	
-	
-	
-	
 	@Override
 	public int getNumChnl() throws GetOperationFailedException {
 		return get().getNumChnl();
 	}
-
 }

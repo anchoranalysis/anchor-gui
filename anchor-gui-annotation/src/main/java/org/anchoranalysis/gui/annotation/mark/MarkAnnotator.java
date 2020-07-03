@@ -1,5 +1,7 @@
 package org.anchoranalysis.gui.annotation.mark;
 
+import java.util.Optional;
+
 import org.anchoranalysis.anchor.mpp.bean.init.MPPInitParams;
 import org.anchoranalysis.anchor.mpp.bean.points.fitter.PointsFitter;
 
@@ -80,7 +82,7 @@ public class MarkAnnotator {
 		return backgroundStacks;
 	}
 	
-	public EvaluatorWithContext createGuessEvaluator(ToolErrorReporter errorReporter) {
+	public Optional<EvaluatorWithContext> createGuessEvaluator(ToolErrorReporter errorReporter) {
 		return EvaluatorFactory.createGuessEvaluator(
 			markProposerGuess,
 			markEvaluatorRslvd,
@@ -89,7 +91,7 @@ public class MarkAnnotator {
 		);
 	}
 		
-	public EvaluatorWithContext createSelectPointsEvaluator(
+	public Optional<EvaluatorWithContext> createSelectPointsEvaluator(
 		ImageDimensions dimViewer,
 		ToolErrorReporter errorReporter
 	) {

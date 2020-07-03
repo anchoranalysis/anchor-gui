@@ -27,6 +27,7 @@ package org.anchoranalysis.gui.annotation.dropdown;
  */
 
 import java.io.File;
+import java.util.Optional;
 
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -38,7 +39,7 @@ import org.anchoranalysis.gui.annotation.export.ExportAnnotation;
 import org.anchoranalysis.gui.videostats.operation.VideoStatsOperation;
 import org.anchoranalysis.gui.videostats.operation.combine.IVideoStatsOperationCombine;
 
-class ExportAnnotationOperation extends VideoStatsOperation {
+class ExportAnnotationOperation implements VideoStatsOperation {
 
 	private JFrame parentFrame;
 	private ExportAnnotation exportAnnotation;
@@ -127,8 +128,8 @@ class ExportAnnotationOperation extends VideoStatsOperation {
 	
 
 	@Override
-	public IVideoStatsOperationCombine getCombiner() {
-		return null;
+	public Optional<IVideoStatsOperationCombine> getCombiner() {
+		return Optional.empty();
 	}
 	
 }

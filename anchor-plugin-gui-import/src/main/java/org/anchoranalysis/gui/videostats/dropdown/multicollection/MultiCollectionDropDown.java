@@ -1,5 +1,7 @@
 package org.anchoranalysis.gui.videostats.dropdown.multicollection;
 
+import java.util.Optional;
+
 /*-
  * #%L
  * anchor-plugin-gui-import
@@ -157,12 +159,14 @@ public class MultiCollectionDropDown {
 		
 		try {
 			MarkEvaluatorSetForImage markEvaluatorSet = markEvaluatorManager.createSetForStackCollection(
-					progressReporter -> new WrapTimeSequenceAsStack(
-						rasterProvider.doOperation(progressReporter).sequence()
-					),
-				() -> ParamsUtils.apply(
-					paramsCollection,
-					mpg.getLogErrorReporter().getErrorReporter()
+				progressReporter -> new WrapTimeSequenceAsStack(
+					rasterProvider.doOperation(progressReporter).sequence()
+				),
+				() -> Optional.of(
+					ParamsUtils.apply(
+						paramsCollection,
+						mpg.getLogErrorReporter().getErrorReporter()
+					)
 				)
 			);
 			

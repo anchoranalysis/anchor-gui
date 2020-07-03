@@ -67,7 +67,7 @@ public class NRGTableCreator extends VideoStatsModuleCreatorContext {
 	}
 
 	@Override
-	public IModuleCreatorDefaultState moduleCreator(DefaultModuleStateManager defaultStateManager, String namePrefix,
+	public Optional<IModuleCreatorDefaultState> moduleCreator(DefaultModuleStateManager defaultStateManager, String namePrefix,
 			VideoStatsModuleGlobalParams mpg) throws VideoStatsModuleCreateException {
 		
 		try {
@@ -81,7 +81,7 @@ public class NRGTableCreator extends VideoStatsModuleCreatorContext {
 				mpg.getLogErrorReporter().getErrorReporter()
 			);
 			frame.controllerSize().configureSize(300,600, 300, 1000);
-			return frame.moduleCreator();
+			return Optional.of( frame.moduleCreator() );
 			
 		} catch (IllegalArgumentException | InitException | GetOperationFailedException | OperationFailedException e) {
 			throw new VideoStatsModuleCreateException(e);

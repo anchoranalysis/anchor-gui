@@ -58,7 +58,7 @@ class FindNearestStatisticBridge implements FunctionWithException<MappedFrom<Cfg
 		try {
 			CSVStatistic stats = cntr.get(indexAdj);
 			
-			return new MappedFrom<CSVStatistic>(
+			return new MappedFrom<>(
 				sourceObject.getOriginalIter(),
 				maybeDuplicate(stats, sourceObject.getOriginalIter())
 			);
