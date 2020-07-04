@@ -88,7 +88,7 @@ public class FinderCSVStats extends FinderSingleFile {
 			throw new MultipleFilesException("Multiple matching manifest descriptions find");
 		}
 		
-		if (found.size()==0) {
+		if (found.isEmpty()) {
 			return Optional.empty();
 		}
 		return Optional.of(
@@ -97,7 +97,7 @@ public class FinderCSVStats extends FinderSingleFile {
 	}
 	
 
-	private static List<FileWrite> findIncrementalCSVStats( ManifestRecorder manifestRecorder, String type, String outputName ) throws MultipleFilesException {
+	private static List<FileWrite> findIncrementalCSVStats( ManifestRecorder manifestRecorder, String type, String outputName ) {
 		
 		FileWriteAnd match = new FileWriteAnd();
 		
@@ -122,16 +122,24 @@ public class FinderCSVStats extends FinderSingleFile {
 			throws GetOperationFailedException {
 				
 		try {
-			CSVStatisticLoader loader = null;
-			if (fileWrite.getManifestDescription().getFunction().equals("event_aggregate_stats")) {
-				loader = new CSVStatisticLoaderEventAggregate();
-			} else if (fileWrite.getManifestDescription().getFunction().equals("interval_aggregate_stats")) {
-				loader = new CSVStatisticLoaderIntervalAggregate();
-			}
+			CSVStatisticLoader loader = createStatisticLoader(
+				fileWrite.getManifestDescription().getFunction()
+			);
 			return loader.createContainerFromCSV(fileWrite.calcPath() );
 			
 		} catch (CSVReaderException e) {
 			throw new GetOperationFailedException(e);
 		}
 	}
+	
+	private CSVStatisticLoader createStatisticLoader(String function) throws GetOperationFailedException {
+		if (function.equals("event_aggregate_stats")) {
+			return new CSVStatisticLoaderEventAggregate();
+		} else if (function.equals("interval_aggregate_stats")) {
+			return new CSVStatisticLoaderIntervalAggregate();
+		} else {
+			throw new GetOperationFailedException("Cannot determine which CSVStatisticLoader to use");
+		}
+	}
+	
 }

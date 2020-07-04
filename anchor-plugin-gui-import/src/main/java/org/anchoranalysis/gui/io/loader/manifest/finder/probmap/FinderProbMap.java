@@ -46,13 +46,13 @@ import org.anchoranalysis.image.stack.Stack;
 import org.anchoranalysis.io.manifest.ManifestRecorder;
 import org.anchoranalysis.io.manifest.finder.Finder;
 
-public class FinderProbMap extends Finder implements BackgroundStackCntr, FinderRasterSingleChnl{
+public class FinderProbMap implements BackgroundStackCntr, FinderRasterSingleChnl, Finder{
 
-	private FinderProbMapSingleRaster singleRaster;
+	private final FinderProbMapSingleRaster singleRaster;
 
-	private FinderProbMapRasterSeries rasterSeries;
+	private final FinderProbMapRasterSeries rasterSeries;
 	
-	private String displayName;
+	private final String displayName;
 	
 	public FinderProbMap(RasterReader rasterReader, String singleRasterOutputName, ErrorReporter errorReporter ) {
 		singleRaster = new FinderProbMapSingleRaster(rasterReader, singleRasterOutputName, errorReporter );
@@ -131,11 +131,7 @@ public class FinderProbMap extends Finder implements BackgroundStackCntr, Finder
 					new BackgroundStackBridge()
 				);
 			}
-		} catch (OperationFailedException e) {
-			throw new GetOperationFailedException(e);
-		} catch (CreateException e) {
-			throw new GetOperationFailedException(e);
-		} catch (IncorrectImageSizeException e) {
+		} catch (OperationFailedException | CreateException | IncorrectImageSizeException e) {
 			throw new GetOperationFailedException(e);
 		}
 	}

@@ -217,7 +217,7 @@ public class CombineRGBBoundedIndexContainer implements IBoundedIndexContainer<D
 			} else {
 				// TODO, why do we create an empty initialised here
 				assert(dim!=null);
-				Channel chnlNew = ChannelFactory.instance().createEmptyInitialised(dim, VoxelDataTypeUnsignedByte.instance);
+				Channel chnlNew = ChannelFactory.instance().createEmptyInitialised(dim, VoxelDataTypeUnsignedByte.INSTANCE);
 				stackNew.addChnl( chnlNew );
 			}
 		} catch (IncorrectImageSizeException e) {

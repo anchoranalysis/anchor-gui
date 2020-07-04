@@ -35,25 +35,18 @@ import org.anchoranalysis.core.progress.CachedOperationWithProgressReporter;
 import org.anchoranalysis.core.progress.OperationWithProgressReporter;
 import org.anchoranalysis.core.progress.ProgressReporterNull;
 import org.anchoranalysis.gui.finder.FinderRasterFilesByManifestDescriptionFunction;
-import org.anchoranalysis.image.io.RasterIOException;
 import org.anchoranalysis.image.io.bean.rasterreader.RasterReader;
 import org.anchoranalysis.image.stack.Stack;
 import org.anchoranalysis.io.manifest.ManifestRecorder;
 
 // Finds an image stack collection from the files in the root directory
-public class FinderImgStackCollectionFromRootFiles extends FinderImgStackCollection {
+public class FinderImgStackCollectionFromRootFiles implements FinderImgStackCollection {
 
 	private FinderRasterFilesByManifestDescriptionFunction delegate;
 	
 	private CachedOperationWithProgressReporter<NamedProvider<Stack>,OperationFailedException> operationImgStackCollection =
 		new WrapOperationWithProgressReporterAsCached<>(
-			pr -> {
-				try {
-					return delegate.createStackCollection();
-				} catch (RasterIOException e) {
-					throw new OperationFailedException(e);
-				}
-			}
+			pr -> delegate.createStackCollection()
 		);
 	
 	public FinderImgStackCollectionFromRootFiles( RasterReader rasterReader, String function ) {

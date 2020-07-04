@@ -42,7 +42,7 @@ import org.anchoranalysis.io.manifest.finder.Finder;
 import org.anchoranalysis.io.manifest.finder.FinderKeyValueParams;
 import org.anchoranalysis.io.manifest.finder.FinderSerializedObject;
 
-public class FinderNrgStack extends Finder {
+public class FinderNrgStack implements Finder {
 
 	private FinderRasterFolder finderRasterFolder;
 	private OperationStackWithParams operationCombined;
@@ -56,7 +56,7 @@ public class FinderNrgStack extends Finder {
 			new OperationStackCollectionFromFinderRasterFolder(finderRasterFolder)
 		);
 		this.finderImageParams = new FinderKeyValueParams("nrgStackParams",errorReporter);
-		this.finderImageParamsLegacy = new FinderSerializedObject<NRGElemParamsFromImage>(
+		this.finderImageParamsLegacy = new FinderSerializedObject<>(
 				"nrgStackImageParams", errorReporter );
 		
 		operationCombined = new OperationStackWithParams(

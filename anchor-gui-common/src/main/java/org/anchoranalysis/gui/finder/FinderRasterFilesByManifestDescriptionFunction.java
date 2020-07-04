@@ -48,7 +48,7 @@ import org.anchoranalysis.io.manifest.match.ManifestDescriptionFunctionMatch;
 import org.anchoranalysis.io.manifest.match.ManifestDescriptionMatchAnd;
 import org.anchoranalysis.io.manifest.match.ManifestDescriptionTypeMatch;
 
-public class FinderRasterFilesByManifestDescriptionFunction extends Finder {
+public class FinderRasterFilesByManifestDescriptionFunction implements Finder {
 
 	private String function;
 	
@@ -71,16 +71,15 @@ public class FinderRasterFilesByManifestDescriptionFunction extends Finder {
 		matchManifest.addCondition( new ManifestDescriptionTypeMatch("raster"));
 		
 		list = FinderUtilities.findListFile(manifestRecorder,  new FileWriteManifestMatch(matchManifest) );
-		return list!=null && list.size()>0;
+		return exists();
 	}
 
 	@Override
 	public boolean exists() {
-		return list!=null && list.size()>0;
+		return list!=null && !list.isEmpty();
 	}
-
 	
-	public NamedImgStackCollection createStackCollection() throws RasterIOException {
+	public NamedImgStackCollection createStackCollection() {
 		
 		 NamedImgStackCollection out = new  NamedImgStackCollection();
 		 for( FileWrite fileWrite : list) {

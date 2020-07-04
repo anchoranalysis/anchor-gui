@@ -36,9 +36,9 @@ import org.anchoranalysis.core.index.container.IBoundedIndexContainer;
 
 /**
  * Iterates through the range of indexes in a container.
- * 
- * <p>The number of iteration points is determined by {@link numPoints}, which divides roughly
- * the range of the {@link container} into {@link numPoints} equal parts.</p>
+ * <p>
+ * The number of iteration points is determined by {@link numPoints}, which divides roughly
+ * the range of the {code container} into {code numPoints} equal parts.
  * 
  * @author FEEHANO
  *

@@ -52,7 +52,7 @@ public class ParamsFactoryForFeature {
 		
 		FeatureInputDescriptor paramType = f.inputDescriptor();
 		
-		if (paramType.equals(FeatureInputGenericDescriptor.instance)) {
+		if (paramType.equals(FeatureInputGenericDescriptor.INSTANCE)) {
 			return new NullParamsFactory();
 		}
 		
@@ -100,7 +100,7 @@ public class ParamsFactoryForFeature {
 			return new FeatureObjMaskParamsFactory( GlobalRegionIdentifiers.SUBMARK_INSIDE );
 		}
 		
-		if (paramType.equals(FeatureInputParamsDescriptor.instance)) {
+		if (paramType.equals(FeatureInputParamsDescriptor.INSTANCE)) {
 			return new FeatureObjMaskParamsFactory( GlobalRegionIdentifiers.SUBMARK_INSIDE );
 		}
 		

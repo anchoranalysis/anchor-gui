@@ -41,7 +41,7 @@ import org.anchoranalysis.image.stack.Stack;
 import org.anchoranalysis.io.manifest.ManifestRecorder;
 
 // Finds an image stack collection
-public class FinderImgStackCollectionFromFolder extends FinderImgStackCollection {
+public class FinderImgStackCollectionFromFolder implements FinderImgStackCollection {
 
 	private FinderRasterFolder delegate;
 	
@@ -72,10 +72,6 @@ public class FinderImgStackCollectionFromFolder extends FinderImgStackCollection
 	
 	@Override
 	public OperationWithProgressReporter<NamedProvider<Stack>,OperationFailedException> getImgStackCollectionAsOperationWithProgressReporter() {
-		return operationImgStackCollection;
-	}
-	
-	public OperationWithProgressReporter<NamedProvider<Stack>,OperationFailedException> getImgStackCollectionAsOperation() {
 		return operationImgStackCollection;
 	}
 

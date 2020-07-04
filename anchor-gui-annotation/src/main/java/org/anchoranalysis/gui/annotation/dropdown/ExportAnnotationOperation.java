@@ -107,7 +107,7 @@ class ExportAnnotationOperation implements VideoStatsOperation {
 		} catch (OperationFailedException | NumberFormatException e) {
 			//custom title, error icon
 			JOptionPane.showMessageDialog(parentFrame,
-			    String.format("Export of annotation at file '%s' failed\n\n%s",
+			    String.format("Export of annotation at file '%s' failed%n%n%s",
 			    outFile.toPath(),
 			    e.toString()),
 		    "Error deleting annotation",

@@ -42,7 +42,7 @@ import org.anchoranalysis.image.stack.Stack;
 import org.anchoranalysis.io.manifest.ManifestRecorder;
 
 // Combines a number of other FinderImgStackCollection
-public class FinderImgStackCollectionCombine extends FinderImgStackCollection {
+public class FinderImgStackCollectionCombine implements FinderImgStackCollection {
 
 	private List<FinderImgStackCollection> list = new ArrayList<>(); 
 	

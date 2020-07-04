@@ -42,6 +42,10 @@ import org.anchoranalysis.gui.videostats.internalframe.annotator.AnnotationPanel
 import org.anchoranalysis.gui.videostats.internalframe.annotator.navigation.PanelMark;
 import org.anchoranalysis.gui.videostats.internalframe.annotator.navigation.PanelTool;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+
+@NoArgsConstructor(access=AccessLevel.PRIVATE)
 class HelperAddActions {
 	
 	public static void apply(

@@ -28,7 +28,6 @@ package org.anchoranalysis.gui.plot.creator;
 
 
 import java.util.Iterator;
-import java.util.Optional;
 
 import org.anchoranalysis.anchor.mpp.feature.instantstate.CfgNRGInstantState;
 import org.anchoranalysis.anchor.plot.bean.GraphDefinition;
@@ -52,15 +51,15 @@ import org.anchoranalysis.gui.videostats.modulecreator.VideoStatsModuleCreator;
  *
  * @param <T> item-type
  */
-public abstract class GraphFromDualFinderCreator<T> {
+public interface GraphFromDualFinderCreator<T> {
 	
-	public abstract IBoundedIndexContainer<T> createCntr( final FinderCSVStats finderCSVStats ) throws CreateException;
-	public abstract IBoundedIndexContainer<T> createCntr( final FinderHistoryFolder<CfgNRGInstantState> finderCfgNRGHistory ) throws CreateException;
+	IBoundedIndexContainer<T> createCntr( final FinderCSVStats finderCSVStats ) throws CreateException;
+	IBoundedIndexContainer<T> createCntr( final FinderHistoryFolder<CfgNRGInstantState> finderCfgNRGHistory ) throws CreateException;
 	
-	public abstract GraphDefinition<T> createGraphDefinition( GraphColorScheme graphColorScheme ) throws CreateException;
+	GraphDefinition<T> createGraphDefinition( GraphColorScheme graphColorScheme ) throws CreateException;
 	
 	// useCSV is a flag indicating which of the two to use
-	public VideoStatsModuleCreator createGraphModule( final String windowTitlePrefix, final GraphDefinition<T> definition, final FinderHistoryFolder<CfgNRGInstantState> finderCfgNRGHistory, final FinderCSVStats finderCSVStats, final boolean useCSV ) {
+	public default VideoStatsModuleCreator createGraphModule( final String windowTitlePrefix, final GraphDefinition<T> definition, final FinderHistoryFolder<CfgNRGInstantState> finderCfgNRGHistory, final FinderCSVStats finderCSVStats, final boolean useCSV ) {
 		return new VideoStatsModuleCreator() {
 			
 			@Override
@@ -68,24 +67,16 @@ public abstract class GraphFromDualFinderCreator<T> {
 
 				try {
 					// We calculate our container
-					Optional<IBoundedIndexContainer<T>> cntr = Optional.empty();
+					IBoundedIndexContainer<T> cntr;
 					if (useCSV && finderCSVStats.exists()) {
-						cntr = Optional.of(
-							createCntr(finderCSVStats)
-						);
+						cntr = createCntr(finderCSVStats);
 					} else if (finderCfgNRGHistory.exists()) {
-						cntr = Optional.of(
-							createCntr(finderCfgNRGHistory)
-						);
+						cntr = createCntr(finderCfgNRGHistory);
 					} else {
 						return;
 					}
-					
-					if (!cntr.isPresent()) {
-						return;
-					}
-					
-					Iterator<T> itr = new BoundedIndexContainerIterator<>(cntr.get(), 1000);
+						
+					Iterator<T> itr = new BoundedIndexContainerIterator<>(cntr, 1000);
 					
 					String graphFrameTitle = new FrameTitleGenerator().genFramePrefix( windowTitlePrefix, definition.getTitle() );
 

@@ -61,6 +61,8 @@ import org.anchoranalysis.gui.videostats.internalframe.cfgtorgb.markdisplay.Mark
 import org.anchoranalysis.gui.videostats.link.LinkModules;
 import org.anchoranalysis.gui.videostats.module.DefaultModuleState;
 import org.anchoranalysis.gui.videostats.module.VideoStatsModule;
+import org.anchoranalysis.image.object.properties.ObjectWithProperties;
+import org.anchoranalysis.image.stack.rgb.RGBStack;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -106,15 +108,13 @@ public class InternalFrameOverlayedInstantStateToRGBSelectable {
 			VideoStatsModuleGlobalParams mpg
 		) throws InitException {
 		
-		//assert( cfgCntr.get(0)!=null );
-		
 		// WE MUST SET THIS TO THE CORRECT initial state, as the frameIJ will not trigger events on its default state, to correct itself
 		this.selectionIndices.setCurrentSelection( initialState.getLinkState().getObjectIDs() );
 
 		// We create a wrapper that conditions the MarkDisplaySettings on the current selection 
 		MarkDisplaySettingsWrapper markDisplaySettingsWrapper =	new MarkDisplaySettingsWrapper(
 			initialState.getMarkDisplaySettings().duplicate(),
-			new IDMatchCondition( selectionIndices.getCurrentSelection() )
+			(ObjectWithProperties mask, RGBStack stack, int id) -> selectionIndices.getCurrentSelection().contains(id)
 		);
 		
 		

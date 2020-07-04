@@ -44,8 +44,13 @@ import org.anchoranalysis.image.stack.Stack;
 import org.anchoranalysis.io.bean.filepath.generator.FilePathGenerator;
 import org.anchoranalysis.io.error.AnchorIOException;
 import org.anchoranalysis.plugin.annotation.bean.strategy.PathFromGenerator;
+
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+
 import org.anchoranalysis.plugin.annotation.bean.strategy.MarkProposerStrategy;
 
+@NoArgsConstructor(access=AccessLevel.PRIVATE)
 class CreateMarkEvaluator {
 
 	public static MarkAnnotator apply(

@@ -29,6 +29,7 @@ package org.anchoranalysis.gui.videostats.dropdown.manifest;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.gui.finder.FinderNrgStack;
 import org.anchoranalysis.gui.io.loader.manifest.finder.CfgNRGFinderContext;
+import org.anchoranalysis.gui.io.loader.manifest.finder.FinderContext;
 import org.anchoranalysis.gui.io.loader.manifest.finder.FinderCfgNRGSet;
 import org.anchoranalysis.gui.videostats.dropdown.BoundVideoStatsModuleDropDown;
 import org.anchoranalysis.gui.videostats.dropdown.CombinedMenu;
@@ -42,7 +43,7 @@ class AddSets {
 	
 	private OperationCreateBackgroundSetWithAdder operationBwsa;
 	
-	private FinderCfgNRGSet.Context finderContext;
+	private FinderContext finderContext;
 	
 	public AddSets(
 		BoundVideoStatsModuleDropDown dropDown,
@@ -52,7 +53,7 @@ class AddSets {
 		super();
 		this.dropDown = dropDown;
 		this.operationBwsa = operationBwsa;
-		this.finderContext = new FinderCfgNRGSet.Context(
+		this.finderContext = new FinderContext(
 			operationBwsa.nrgBackground(),
 			dropDown,
 			dropDown.getRootMenu(),

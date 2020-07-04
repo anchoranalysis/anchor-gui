@@ -280,12 +280,6 @@ public class CfgNRGHistoryMenu {
 			
 		});
 		
-		// Only add the rest of the statistics if, we know how many kernels we are looking for - we can read the header names, if we don't
-		//  have a kernel proposer, but for now let's do it this way
-		if (finderKernelProposer.exists() && finderCSVStats.exists()) {
-			
-		}
-		
 		try {
 			GraphDefinitionBarNRGBreakdown graphNRGBreakdown = new GraphDefinitionBarNRGBreakdown();
 			graphNRGBreakdown.setGraphColorScheme(mpg.getGraphColorScheme());

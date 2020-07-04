@@ -44,14 +44,20 @@ import org.anchoranalysis.gui.videostats.dropdown.VideoStatsModuleGlobalParams;
 import org.anchoranalysis.gui.videostats.dropdown.contextualmodulecreator.ContextualModuleCreator;
 import org.anchoranalysis.gui.videostats.modulecreator.VideoStatsModuleCreator;
 
-public class GraphDualFinderCreator<ItemType> extends ContextualModuleCreator {
+/**
+ * 
+ * @author Owen Feehan
+ *
+ * @param <T> item-type
+ */
+public class GraphDualFinderCreator<T> extends ContextualModuleCreator {
 
-	private final GraphFromDualFinderCreator<ItemType> creator;
+	private final GraphFromDualFinderCreator<T> creator;
 	private final FinderHistoryFolder<CfgNRGInstantState> finderCfgNRGHistory;
 	private final FinderCSVStats finderCSVStats;
 	private final GraphColorScheme graphColorScheme;
 
-	public GraphDualFinderCreator(GraphFromDualFinderCreator<ItemType> creator,
+	public GraphDualFinderCreator(GraphFromDualFinderCreator<T> creator,
 			FinderHistoryFolder<CfgNRGInstantState> finderCfgNRGHistory,
 			FinderCSVStats finderCSVStats, GraphColorScheme graphColorScheme) {
 		super();
@@ -71,12 +77,12 @@ public class GraphDualFinderCreator<ItemType> extends ContextualModuleCreator {
 		ArrayList<NamedModule> outList = new ArrayList<>();
 		
 		if (!finderCfgNRGHistory.exists() && !finderCSVStats.exists()) {
-			return new NamedModule[] {};
+			return new NamedModule[]{};
 		}
 
 		VideoStatsModuleCreator preferredCreator = null;
 
-		GraphDefinition<ItemType> definition = creator.createGraphDefinition( graphColorScheme );
+		GraphDefinition<T> definition = creator.createGraphDefinition( graphColorScheme );
 		
 		// Priority given to CSV stats if available
 		if (finderCSVStats.exists()) {

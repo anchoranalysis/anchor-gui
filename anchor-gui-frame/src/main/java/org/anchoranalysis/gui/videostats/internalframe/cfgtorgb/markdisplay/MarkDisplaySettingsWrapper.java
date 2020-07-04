@@ -46,20 +46,13 @@ public class MarkDisplaySettingsWrapper implements IChangeMarkDisplaySendable {
 	private MarkDisplaySettings markDisplaySettings;
 	
 	private IfElseWriter.Condition idMatchCondition;
-
-	// Always returns false
-	private static class AlwaysFalseCondition extends IfElseWriter.Condition {
-
-		@Override
-		public boolean isTrue(ObjectWithProperties mask, RGBStack stack, int id) {
-			return false;
-		}
-		
-	}
 	
 	// We assume the idMatchCondition can never be obtained
 	public MarkDisplaySettingsWrapper( MarkDisplaySettings markDisplaySettings) {
-		this(markDisplaySettings, new AlwaysFalseCondition() );
+		this(
+			markDisplaySettings,
+			(ObjectWithProperties mask, RGBStack stack, int id)->false	// Always false
+		);
 	}
 	
 	

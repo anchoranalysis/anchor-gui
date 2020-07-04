@@ -426,9 +426,11 @@ public class ManifestDropDown {
 								throw new GetOperationFailedException(e);
 							}
 							
-							LoadContainer<CfgNRGInstantState> lc = new LoadContainer<CfgNRGInstantState>();
+							LoadContainer<CfgNRGInstantState> lc = new LoadContainer<>();
 							lc.setExpensiveLoad(false);
-							lc.setCntr( new SingleContainer<CfgNRGInstantState>(instantState, 0, false));
+							lc.setCntr(
+								new SingleContainer<>(instantState, 0, false)
+							);
 							return lc;
 						}
 					);
