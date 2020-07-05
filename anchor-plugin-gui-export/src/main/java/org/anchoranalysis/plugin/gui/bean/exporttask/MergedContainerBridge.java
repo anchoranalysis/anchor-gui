@@ -37,8 +37,8 @@ import org.anchoranalysis.anchor.mpp.feature.nrg.cfg.CfgWithNrgTotal;
 import org.anchoranalysis.anchor.mpp.overlay.OverlayCollectionMarkFactory;
 import org.anchoranalysis.anchor.overlay.OverlayedInstantState;
 import org.anchoranalysis.core.color.ColorIndex;
-import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.error.OperationFailedException;
+import org.anchoranalysis.core.error.friendly.AnchorImpossibleSituationException;
 import org.anchoranalysis.core.functional.FunctionWithException;
 import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.index.container.IBoundedIndexContainer;
@@ -59,7 +59,7 @@ class MergedContainerBridge implements FunctionWithException<ExportTaskParams,IB
 		this.regionMembership = regionMembership;
 	}
 
-	private BoundedIndexContainerBridgeWithoutIndex<OverlayedInstantState,CfgNRGInstantState> retBridge = null;
+	private BoundedIndexContainerBridgeWithoutIndex<OverlayedInstantState,CfgNRGInstantState,AnchorImpossibleSituationException> retBridge = null;
 	
 	@Override
 	public IBoundedIndexContainer<CfgNRGInstantState> apply(ExportTaskParams sourceObject) throws OperationFailedException {
@@ -76,7 +76,7 @@ class MergedContainerBridge implements FunctionWithException<ExportTaskParams,IB
 				);
 				
 				dualHistory.init();
-			} catch (InitException | GetOperationFailedException e) {
+			} catch (GetOperationFailedException e) {
 				throw new OperationFailedException(e);
 			}
 			
@@ -98,7 +98,10 @@ class MergedContainerBridge implements FunctionWithException<ExportTaskParams,IB
 				cfgCntr,
 				s -> {
 					Cfg cfg = OverlayCollectionMarkFactory.cfgFromOverlays(s.getOverlayCollection());
-					return new CfgNRGNonHandleInstantState(s.getIndex(), new CfgNRG( new CfgWithNrgTotal(cfg, null)) );
+					return new CfgNRGNonHandleInstantState(
+						s.getIndex(),
+						new CfgNRG( new CfgWithNrgTotal(cfg, null))
+					);
 				}
 			);
 		}

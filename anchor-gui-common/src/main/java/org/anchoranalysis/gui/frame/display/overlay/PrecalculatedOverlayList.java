@@ -43,7 +43,7 @@ import org.anchoranalysis.image.extent.ImageDimensions;
 /**
  * A helper for OverlayPrecalculatedCache
  * 
- * @author owen
+ * @author Owen Feehan
  *
  */
 class PrecalculatedOverlayList {

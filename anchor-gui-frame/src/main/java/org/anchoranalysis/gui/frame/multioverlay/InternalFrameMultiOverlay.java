@@ -75,14 +75,9 @@ class InternalFrameMultiOverlay<T> {
 	public SliderNRGState init(
 			final List<MultiInput<T>> list,
 			BridgeElementWithIndex<MultiInput<T>, OverlayedInstantState,OperationFailedException> bridge,
-			IRetrieveElements elementRetriever,
 			DefaultModuleStateManager defaultState,
 			final VideoStatsModuleGlobalParams mpg
 		) throws InitException {
-
-		assert( mpg.getLogErrorReporter()!=null );
-		
-		
 
 		IImageStackCntrFromName imageStackCntrFromName = createImageStackCntr(list);
 		
@@ -123,11 +118,10 @@ class InternalFrameMultiOverlay<T> {
 	}
 	
 	private static <T> IImageStackCntrFromName createImageStackCntr( final List<MultiInput<T>> list ) {
-		return name -> sourceObject -> {
-			return list.get(sourceObject).getNrgBackground().getBackgroundSet().doOperation(
+		return name -> sourceObject -> 
+			list.get(sourceObject).getNrgBackground().getBackgroundSet().doOperation(
 				ProgressReporterNull.get()
 			).singleStack(name);
-		};
 	}
 	
 	private static <T> IBoundedIndexContainer<OverlayedInstantState> bridgeList(

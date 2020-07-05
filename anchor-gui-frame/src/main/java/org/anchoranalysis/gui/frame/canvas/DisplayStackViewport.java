@@ -86,7 +86,7 @@ class DisplayStackViewport {
 	}
 	
 	public BoundingBox createBoxForShiftedView( Point2i shift, Extent canvasExtnt ) {
-		ReadableTuple3i crnrMin = this.bboxViewport.getCornerMin();
+		ReadableTuple3i crnrMin = this.bboxViewport.cornerMin();
 		
 		int xNew = crnrMin.getX() + shift.getX();
 		int yNew = crnrMin.getY() + shift.getY();
@@ -98,7 +98,7 @@ class DisplayStackViewport {
 		assert(pnt.getY() >= 0);
 		// We need to clip
 		
-		Point3i pnt3 = new Point3i(pnt.getX(),pnt.getY(),this.bboxViewport.getCornerMin().getZ());
+		Point3i pnt3 = new Point3i(pnt.getX(),pnt.getY(),this.bboxViewport.cornerMin().getZ());
 		
 		assert( pnt3.getX() >= 0 );
 		assert( pnt3.getY() >= 0 );

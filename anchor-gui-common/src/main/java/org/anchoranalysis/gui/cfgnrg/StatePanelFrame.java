@@ -41,7 +41,7 @@ import org.anchoranalysis.gui.videostats.module.VideoStatsModule;
 /**
  * A frame that encompasses a StatePanel (updated each time state of type T changes) 
  * 
- * @author FEEHANO
+ * @author Owen Feehan
  *
  * @param <T>
  */

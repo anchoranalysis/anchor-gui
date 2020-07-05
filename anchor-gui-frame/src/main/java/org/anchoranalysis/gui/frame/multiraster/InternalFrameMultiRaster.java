@@ -62,7 +62,7 @@ public class InternalFrameMultiRaster {
 
 		assert( mpg.getLogErrorReporter()!=null );
 		
-		BoundedIndexContainerBridgeWithoutIndex<NamedRasterSet,DisplayStack> bridge = new BoundedIndexContainerBridgeWithoutIndex<>(
+		BoundedIndexContainerBridgeWithoutIndex<NamedRasterSet,DisplayStack,BridgeElementException> bridge = new BoundedIndexContainerBridgeWithoutIndex<>(
 			new BoundedIndexContainerFromList<>(list),
 			InternalFrameMultiRaster::convertToDisplayStack
 		);

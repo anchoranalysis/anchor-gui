@@ -175,7 +175,9 @@ public class ManifestDropDown {
 
 	private FinderSerializedObject<KernelProposer<CfgNRGPixelized>> createFinderKernelProposer( VideoStatsModuleGlobalParams mpg ) {
 		FinderSerializedObject<KernelProposer<CfgNRGPixelized>> finderKernelProposer = new FinderSerializedObject<>("kernelProposer", mpg.getLogErrorReporter().getErrorReporter() );
-		finderKernelProposer.doFind(manifests.getExperimentManifest());
+		finderKernelProposer.doFind(
+			manifests.getExperimentManifest().get()	// NOSONAR
+		);
 		return finderKernelProposer;
 	}
 	

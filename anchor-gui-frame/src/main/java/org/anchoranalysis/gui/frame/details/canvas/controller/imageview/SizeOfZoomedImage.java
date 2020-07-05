@@ -39,7 +39,7 @@ import org.anchoranalysis.image.extent.ImageDimensions;
 /**
  * The size of an image after it has been zoomed to fit in a certain % of the screen-size
  * 
- * @author FEEHANO
+ * @author Owen Feehan
  *
  */
 class SizeOfZoomedImage {

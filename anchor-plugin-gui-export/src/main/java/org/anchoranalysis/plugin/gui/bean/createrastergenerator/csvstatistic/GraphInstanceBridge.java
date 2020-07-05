@@ -77,7 +77,7 @@ class GraphInstanceBridge<T> implements FunctionWithException<MappedFrom<CSVStat
 		int currentIndex = sourceObject.getOriginalIter();
 		
 		// The bridge between CSVStats and the graph
-		BoundedIndexContainerBridgeWithoutIndex<CSVStatistic, T> boundBridge
+		BoundedIndexContainerBridgeWithoutIndex<CSVStatistic, T, ? extends Exception> boundBridge
 			= new BoundedIndexContainerBridgeWithoutIndex<>(cntr, elementBridge);
 		
 		AxisLimits domainLimits = createLimitsFromCntr(cntr);
@@ -103,7 +103,7 @@ class GraphInstanceBridge<T> implements FunctionWithException<MappedFrom<CSVStat
 	}
 	
 	private Optional<AxisLimits> guessRangeLimits(
-		BoundedIndexContainerBridgeWithoutIndex<CSVStatistic, T> boundBridge,
+		BoundedIndexContainerBridgeWithoutIndex<CSVStatistic, T, ? extends Exception> boundBridge,
 		AxisLimits domainLimits
 	) throws CreateException {
 		Iterator<T> itrAll = new BoundedIndexContainerIterator<>(boundBridge, 1000);

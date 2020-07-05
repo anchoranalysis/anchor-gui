@@ -86,36 +86,36 @@ class DisplayStackViewportZoomed {
 				new ScaleFactor(zoomScale.getScale())
 			);
 		
-		assert( shiftedBox.getCornerMin().getX() >= 0 );
-		assert( shiftedBox.getCornerMin().getY() >= 0 );
+		assert( shiftedBox.cornerMin().getX() >= 0 );
+		assert( shiftedBox.cornerMin().getY() >= 0 );
 		
 		return shiftedBox;
 	}
 	
 
 	private int cnvrtCanvasXToImage( int val, ZoomScale zs ) {
-		return zs.removeScale(val) + delegate.getBBox().getCornerMin().getX();
+		return zs.removeScale(val) + delegate.getBBox().cornerMin().getX();
 	}
 	
 	private int cnvrtCanvasYToImage( int val, ZoomScale zs ) {
-		return zs.removeScale(val) + delegate.getBBox().getCornerMin().getY();
+		return zs.removeScale(val) + delegate.getBBox().cornerMin().getY();
 	}
 	
 	
 	public int cnvrtImageXToCanvas( int val ) {
-		return zoomScale.applyScale(val-delegate.getBBox().getCornerMin().getX());
+		return zoomScale.applyScale(val-delegate.getBBox().cornerMin().getX());
 	}
 	
 	public int cnvrtImageYToCanvas( int val ) {
-		return zoomScale.applyScale(val-delegate.getBBox().getCornerMin().getY());
+		return zoomScale.applyScale(val-delegate.getBBox().cornerMin().getY());
 	}
 		
 	public int cnvrtCanvasXToImage( int val ) {
-		return zoomScale.removeScale(val) + delegate.getBBox().getCornerMin().getX();
+		return zoomScale.removeScale(val) + delegate.getBBox().cornerMin().getX();
 	}
 	
 	public int cnvrtCanvasYToImage( int val ) {
-		return zoomScale.removeScale(val) + delegate.getBBox().getCornerMin().getY();
+		return zoomScale.removeScale(val) + delegate.getBBox().cornerMin().getY();
 	}
 	
 	

@@ -43,7 +43,7 @@ import org.anchoranalysis.io.manifest.finder.FinderSerializedObject;
 /**
  * Appends key-value params to an nrgStack operation
  *  
- * @author FEEHANO
+ * @author Owen Feehan
  *
  */
 class OperationStackWithParams extends CachedOperationWithProgressReporter<NRGStackWithParams,OperationFailedException> {

@@ -29,7 +29,7 @@ package org.anchoranalysis.gui.frame.details.canvas;
 /**
  * The initial-state of a slider (considering index and slice dimensions)
  * 
- * @author FEEHANO
+ * @author Owen Feehan
  *
  */
 public class InitialSliderState {

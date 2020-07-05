@@ -40,7 +40,7 @@ import org.anchoranalysis.core.index.container.IBoundedIndexContainer;
  * The number of iteration points is determined by {@link numPoints}, which divides roughly
  * the range of the {code container} into {code numPoints} equal parts.
  * 
- * @author FEEHANO
+ * @author Owen Feehan
  *
  * @param <T> type that is contained
  */

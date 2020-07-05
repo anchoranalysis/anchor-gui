@@ -39,7 +39,7 @@ import org.anchoranalysis.gui.reassign.SimpleToggleAction;
 
 /**
  * Panel that describes the current selection, and offers a button to Freeze
- * @author FEEHANO
+ * @author Owen Feehan
  *
  */
 public class DescriptionTopPanel {

@@ -254,7 +254,7 @@ public class ImageCanvas {
 		
 		assert( displayStackViewport.createDimensionsEntireScaled().contains(shiftedBox) );
 		
-		extentScrollbars.setValue( new Point2i(shiftedBox.getCornerMin().getX(), shiftedBox.getCornerMin().getY()) );
+		extentScrollbars.setValue( new Point2i(shiftedBox.cornerMin().getX(), shiftedBox.cornerMin().getY()) );
 		
 		updateStackViewportForImageExtnt( shiftedBox.extent() );
 	}
@@ -433,8 +433,8 @@ public class ImageCanvas {
 					BufferedImage bi = displayStackViewport.getUnzoomed().createPartOfCurrentView( bboxIntersect );
 					
 					// Impose the bi on top of the existing fi
-					int xCanvas = displayStackViewport.cnvrtImageXToCanvas( bboxIntersect.getCornerMin().getX() );
-					int yCanvas = displayStackViewport.cnvrtImageYToCanvas( bboxIntersect.getCornerMin().getY() );
+					int xCanvas = displayStackViewport.cnvrtImageXToCanvas( bboxIntersect.cornerMin().getX() );
+					int yCanvas = displayStackViewport.cnvrtImageYToCanvas( bboxIntersect.cornerMin().getY() );
 					
 					assert( xCanvas>=0 );
 					assert( yCanvas>=0 );
