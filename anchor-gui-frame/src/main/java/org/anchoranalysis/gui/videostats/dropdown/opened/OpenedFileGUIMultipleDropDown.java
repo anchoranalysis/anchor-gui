@@ -211,12 +211,12 @@ public class OpenedFileGUIMultipleDropDown {
 		
 		List<NamedRasterSet> list = new ArrayList<>();
 		for( IVideoStatsOperationCombine op : listCombined ) {
-			if (op.getNrgBackground()!=null && op.getCfg()==null && op.getObjMaskCollection()==null) {
+			if (op.getNrgBackground()!=null && !op.getCfg().isPresent() && !op.getObjMaskCollection().isPresent()) {
 				list.add( new NamedRasterSet( op.generateName(), op.getNrgBackground().getBackgroundSet()) );
 			}
 		}
 		
-		if (list.size()>0) {
+		if (!list.isEmpty()) {
 			RasterMultiModuleCreator creator = new RasterMultiModuleCreator(list,"multi-raster",mpg);
 			VideoStatsModuleCreatorAndAdder creatorAndAdder = new VideoStatsModuleCreatorAndAdder( new IdentityOperationWithProgressReporter<>(adder.createChild()), creator );
 			out.add( new VideoStatsOperationFromCreatorAndAdder("Multi Raster",creatorAndAdder, mpg.getThreadPool(), mpg.getLogErrorReporter() ) );		

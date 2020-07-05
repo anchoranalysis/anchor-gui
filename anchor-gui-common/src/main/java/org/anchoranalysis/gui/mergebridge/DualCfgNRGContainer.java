@@ -83,7 +83,7 @@ public class DualCfgNRGContainer<T> implements IBoundedIndexContainer<IndexedDua
 		
 		this.incrementalSequenceType = new IncrementalSequenceType();
 		this.incrementalSequenceType.setStart( maxOfMins() );
-		this.incrementalSequenceType.setIncrementSize( 1);
+		this.incrementalSequenceType.setIncrementSize(1);
 		this.incrementalSequenceType.setEnd( minOfMaxs() );
 	}
 
