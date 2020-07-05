@@ -32,13 +32,15 @@ import org.anchoranalysis.anchor.mpp.overlay.OverlayMark;
 import org.anchoranalysis.anchor.mpp.pair.Pair;
 import org.anchoranalysis.anchor.overlay.Overlay;
 import org.anchoranalysis.anchor.overlay.objmask.OverlayObjMask;
+import org.anchoranalysis.core.error.friendly.AnchorFriendlyRuntimeException;
+import org.anchoranalysis.core.error.friendly.AnchorImpossibleSituationException;
 import org.anchoranalysis.feature.input.FeatureInput;
 import org.anchoranalysis.feature.nrg.NRGStackWithParams;
 import org.anchoranalysis.feature.session.CreateFeatureInput;
 import org.anchoranalysis.gui.feature.FeatureListWithRegionMap;
 import org.anchoranalysis.gui.feature.evaluator.nrgtree.createparams.CreateIndFromObj;
 import org.anchoranalysis.gui.feature.evaluator.nrgtree.createparams.CreatePairFromObj;
-import org.anchoranalysis.image.objectmask.ObjectMask;
+import org.anchoranalysis.image.object.ObjectMask;
 
 public class CreateParamsFromOverlay {
 
@@ -66,8 +68,7 @@ public class CreateParamsFromOverlay {
 			);
 			
 		} else {
-			assert false;
-			return null;
+			throw new AnchorImpossibleSituationException();
 		}
 	}
 	
@@ -101,7 +102,7 @@ public class CreateParamsFromOverlay {
 				raster
 			);
 		} else {
-			return null;
+			throw new AnchorFriendlyRuntimeException("Unknown type of overlay");
 		}
 	}
 }

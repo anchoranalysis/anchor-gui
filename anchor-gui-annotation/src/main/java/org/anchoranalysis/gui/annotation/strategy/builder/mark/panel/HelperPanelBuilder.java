@@ -1,5 +1,7 @@
 package org.anchoranalysis.gui.annotation.strategy.builder.mark.panel;
 
+import java.util.Optional;
+
 /*-
  * #%L
  * anchor-gui-annotation
@@ -38,8 +40,12 @@ import org.anchoranalysis.gui.videostats.internalframe.annotator.navigation.Pane
 import org.anchoranalysis.gui.videostats.internalframe.annotator.navigation.PanelTool;
 import org.anchoranalysis.gui.videostats.internalframe.annotator.tool.ToolErrorReporter;
 import org.anchoranalysis.gui.videostats.internalframe.evaluator.EvaluatorWithContext;
-import org.anchoranalysis.image.extent.ImageDim;
+import org.anchoranalysis.image.extent.ImageDimensions;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+
+@NoArgsConstructor(access=AccessLevel.PRIVATE)
 class HelperPanelBuilder {
 
 	public static PanelNavigation createPanelNavigation(
@@ -91,13 +97,13 @@ class HelperPanelBuilder {
 	
 	private static PanelTool createPanelTool(
 		CurrentStateDisplayer currentStateDisplayer,
-		ImageDim dimViewer,
+		ImageDimensions dimViewer,
 		MarkAnnotator markAnnotator,
 		ToolErrorReporter errorReporter
 	) {
-		EvaluatorWithContext guessEvaluator = markAnnotator.createGuessEvaluator(errorReporter);
+		Optional<EvaluatorWithContext> guessEvaluator = markAnnotator.createGuessEvaluator(errorReporter);
 		
-		EvaluatorWithContext evaluatorSelectPoints = markAnnotator.createSelectPointsEvaluator(
+		Optional<EvaluatorWithContext> evaluatorSelectPoints = markAnnotator.createSelectPointsEvaluator(
 			dimViewer,
 			errorReporter
 		);

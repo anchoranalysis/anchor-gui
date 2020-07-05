@@ -41,18 +41,24 @@ import org.anchoranalysis.gui.videostats.internalframe.cfgtorgb.MultiInput;
 import org.anchoranalysis.gui.videostats.module.VideoStatsModuleCreateException;
 import org.anchoranalysis.gui.videostats.modulecreator.VideoStatsModuleCreator;
 
-public class RasterMultiCreator<InputType> extends VideoStatsModuleCreator {
+/**
+ * 
+ * @author Owen Feehan
+ *
+ * @param <T> input-type
+ */
+public class RasterMultiCreator<T> extends VideoStatsModuleCreator {
 	
-	private final List<MultiInput<InputType>> list;
+	private final List<MultiInput<T>> list;
 	private final String frameName;
 	private final VideoStatsModuleGlobalParams moduleParamsGlobal;
-	private final BridgeElementWithIndex<MultiInput<InputType>, OverlayedInstantState,OperationFailedException> bridge;
+	private final BridgeElementWithIndex<MultiInput<T>, OverlayedInstantState,OperationFailedException> bridge;
 			
 	public RasterMultiCreator(
-			List<MultiInput<InputType>> list,
+			List<MultiInput<T>> list,
 			String frameName,
 			VideoStatsModuleGlobalParams moduleParamsGlobal,
-			BridgeElementWithIndex<MultiInput<InputType>, OverlayedInstantState,OperationFailedException> bridge
+			BridgeElementWithIndex<MultiInput<T>, OverlayedInstantState,OperationFailedException> bridge
 		) {
 		super();
 		this.list = list;
@@ -66,11 +72,10 @@ public class RasterMultiCreator<InputType> extends VideoStatsModuleCreator {
 	public void createAndAddVideoStatsModule( IAddVideoStatsModule adder ) throws VideoStatsModuleCreateException {
 		
 		try {
-			InternalFrameMultiOverlay<InputType> internalFrame = new InternalFrameMultiOverlay<>(frameName);
+			InternalFrameMultiOverlay<T> internalFrame = new InternalFrameMultiOverlay<>(frameName);
 			SliderNRGState state = internalFrame.init(
 				list,
 				bridge,
-				internalFrame.getElementRetriever(),
 				adder.getSubgroup().getDefaultModuleState(),
 				moduleParamsGlobal
 			);

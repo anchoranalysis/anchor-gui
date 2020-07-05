@@ -41,7 +41,7 @@ import org.anchoranalysis.image.stack.Stack;
 import org.anchoranalysis.io.manifest.ManifestRecorder;
 
 /** Finds an image stack collection */
-public class FinderImgStackCollectionFromNrgStack extends FinderImgStackCollection {
+public class FinderImgStackCollectionFromNrgStack implements FinderImgStackCollection {
 	
 	private FinderNrgStack delegate = null;
 

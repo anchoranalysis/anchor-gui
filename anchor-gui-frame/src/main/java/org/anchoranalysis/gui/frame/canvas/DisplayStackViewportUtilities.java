@@ -28,7 +28,7 @@ package org.anchoranalysis.gui.frame.canvas;
 
 import org.anchoranalysis.core.geometry.Point2i;
 import org.anchoranalysis.image.extent.Extent;
-import org.anchoranalysis.image.extent.ImageDim;
+import org.anchoranalysis.image.extent.ImageDimensions;
 
 class DisplayStackViewportUtilities {
 
@@ -48,7 +48,7 @@ class DisplayStackViewportUtilities {
 		return val;
 	}
 	
-	public static Point2i clipToImage( Point2i val, Extent canvasExtnt, ImageDim sdImage ) {
+	public static Point2i clipToImage( Point2i val, Extent canvasExtnt, ImageDimensions sdImage ) {
 		Point2i out = new Point2i();
 		out.setX( clipToImage(val.getX(), sdImage.getX(), canvasExtnt.getX()) );
 		out.setY( clipToImage(val.getY(), sdImage.getY(), canvasExtnt.getY()) );

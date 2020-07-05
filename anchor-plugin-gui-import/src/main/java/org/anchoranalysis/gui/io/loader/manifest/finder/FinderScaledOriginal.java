@@ -28,6 +28,7 @@ package org.anchoranalysis.gui.io.loader.manifest.finder;
 
 
 import java.util.List;
+import java.util.Optional;
 
 import org.anchoranalysis.core.error.reporter.ErrorReporter;
 import org.anchoranalysis.image.experiment.identifiers.ImgStackIdentifiers;
@@ -47,7 +48,7 @@ public class FinderScaledOriginal extends FinderRasterStack {
 	}
 	
 	@Override
-	protected FileWrite findFile(ManifestRecorder manifestRecorder)
+	protected Optional<FileWrite> findFile(ManifestRecorder manifestRecorder)
 			throws MultipleFilesException {
 		
 		List<FileWrite> scaledOriginalList = FinderUtilities.findListFile(manifestRecorder, new FileWriteOutputName("stack_" + ImgStackIdentifiers.INPUT_IMAGE) ); 
@@ -55,7 +56,9 @@ public class FinderScaledOriginal extends FinderRasterStack {
 			throw new MultipleFilesException("cannot determine scaledOriginal exactly");
 		}
 		if (scaledOriginalList.size()==1) {
-			return scaledOriginalList.get(0);
+			return Optional.of(
+				scaledOriginalList.get(0)
+			);
 		}
 		
 		// We look for an original instead, as maybe scaling isn't used
@@ -65,10 +68,12 @@ public class FinderScaledOriginal extends FinderRasterStack {
 			throw new MultipleFilesException("cannot determine original exactly");
 		}
 		if (originalList.size()==1) {
-			return originalList.get(0);
+			return Optional.of(
+				originalList.get(0)
+			);
 		}
 		
-		return null;
+		return Optional.empty();
 	}
 
 }

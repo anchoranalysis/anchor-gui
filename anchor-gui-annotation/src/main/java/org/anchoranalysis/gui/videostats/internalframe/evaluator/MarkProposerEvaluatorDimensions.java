@@ -41,12 +41,12 @@ import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.geometry.Point3d;
 import org.anchoranalysis.gui.frame.overlays.ProposedCfg;
 import org.anchoranalysis.gui.videostats.internalframe.ProposalOperation;
-import org.anchoranalysis.image.extent.ImageDim;
+import org.anchoranalysis.image.extent.ImageDimensions;
 
 public class MarkProposerEvaluatorDimensions implements ProposalOperationCreator {
 
 	private MarkProposer markProposer;
-	private ImageDim dim;
+	private ImageDimensions dim;
 	private boolean detailedVisualization;
 	
 	public MarkProposerEvaluatorDimensions(MarkProposer markProposer, boolean detailedVisualization) {

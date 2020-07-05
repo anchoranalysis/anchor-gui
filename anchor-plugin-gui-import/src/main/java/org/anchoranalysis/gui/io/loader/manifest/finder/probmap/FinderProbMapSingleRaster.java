@@ -1,5 +1,7 @@
 package org.anchoranalysis.gui.io.loader.manifest.finder.probmap;
 
+import java.util.Optional;
+
 /*
  * #%L
  * anchor-gui
@@ -45,11 +47,11 @@ public class FinderProbMapSingleRaster extends FinderRasterChnlZeroOne {
 	}
 
 	@Override
-	protected FileWrite findFile(ManifestRecorder manifestRecorder) throws MultipleFilesException {
-		return FinderUtilities.findSingleItem( manifestRecorder, new FileWriteFileFunctionTypeOutputName("probmap","raster", probMapOutputName) );
+	protected Optional<FileWrite> findFile(ManifestRecorder manifestRecorder) throws MultipleFilesException {
+		return FinderUtilities.findSingleItem(
+			manifestRecorder,
+			new FileWriteFileFunctionTypeOutputName("probmap","raster", probMapOutputName)
+		);
 	}
-
-
-
 }
 

@@ -34,6 +34,7 @@ import org.anchoranalysis.anchor.mpp.feature.nrg.NRGPair;
 import org.anchoranalysis.anchor.mpp.feature.nrg.saved.NRGSavedPairs;
 import org.anchoranalysis.core.color.ColorIndex;
 import org.anchoranalysis.core.color.RGBColor;
+import org.anchoranalysis.core.error.friendly.AnchorImpossibleSituationException;
 
 public class PairTableModel extends AbstractTableModel implements IUpdateTableData {
 
@@ -101,8 +102,7 @@ public class PairTableModel extends AbstractTableModel implements IUpdateTableDa
 		case 4:
 			return String.class;
 		default:
-			assert false;
-			return null;
+			throw new AnchorImpossibleSituationException();
 		}
     }
 	

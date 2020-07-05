@@ -34,7 +34,6 @@ import org.anchoranalysis.anchor.mpp.feature.instantstate.CfgNRGInstantState;
  */
 
 
-import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.index.container.IBoundedIndexContainer;
@@ -46,13 +45,9 @@ import org.anchoranalysis.gui.mergebridge.DualCfgNRGContainer;
 
 public class ExportTaskCfgNRGInstantState extends ExportTaskRasterGeneratorFromBoundedIndexContainer<DualStateWithoutIndex<CfgNRGInstantState>> {
 
-	public ExportTaskCfgNRGInstantState() {
-		super();
-	}
-	
 	@Override
 	public void init() {
-		setBridge( s->convert(s) );
+		setBridge(this::convert);
 	}
 	
 	private IBoundedIndexContainer<DualStateWithoutIndex<CfgNRGInstantState>> createPrimaryOnly(ExportTaskParams sourceObject) throws GetOperationFailedException {
@@ -64,17 +59,12 @@ public class ExportTaskCfgNRGInstantState extends ExportTaskRasterGeneratorFromB
 	
 	private static DualCfgNRGContainer<CfgNRGInstantState> combine( List<ContainerGetter<CfgNRGInstantState>> cntrs ) throws GetOperationFailedException {
 		
-		DualCfgNRGContainer<CfgNRGInstantState> dualHistory = new DualCfgNRGContainer<CfgNRGInstantState>(
+		DualCfgNRGContainer<CfgNRGInstantState> dualHistory = new DualCfgNRGContainer<>(
 			ContainerUtilities.listCntrs(cntrs),
 			a->a
 		);
 		
-		try {
-			dualHistory.init();
-		} catch (InitException e) {
-			throw new GetOperationFailedException(e);
-		}
-		
+		dualHistory.init();
 		return dualHistory;
 	}
 	
@@ -89,12 +79,7 @@ public class ExportTaskCfgNRGInstantState extends ExportTaskRasterGeneratorFromB
 		// Otherwise we merge
 		
 		DualCfgNRGContainer<CfgNRGInstantState> dualHistory = mergedHistory(sourceObject);
-		
-		try {
-			dualHistory.init();
-		} catch (InitException e) {
-			throw new GetOperationFailedException(e);
-		}
+		dualHistory.init();
 		
 		return new BoundedIndexContainerBridgeWithoutIndex<>(
 			dualHistory,

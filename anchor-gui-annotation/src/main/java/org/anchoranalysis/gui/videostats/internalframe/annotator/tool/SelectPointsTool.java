@@ -1,5 +1,7 @@
 package org.anchoranalysis.gui.videostats.internalframe.annotator.tool;
 
+import java.util.Optional;
+
 import org.anchoranalysis.anchor.mpp.bean.points.fitter.InsufficientPointsException;
 import org.anchoranalysis.anchor.mpp.bean.points.fitter.PointsFitter;
 import org.anchoranalysis.anchor.mpp.bean.points.fitter.PointsFitterException;
@@ -37,39 +39,25 @@ import org.anchoranalysis.gui.videostats.internalframe.annotator.currentstate.IA
 import org.anchoranalysis.gui.videostats.internalframe.annotator.currentstate.IChangeSelectedPoints;
 import org.anchoranalysis.gui.videostats.internalframe.annotator.currentstate.IQuerySelectedPoints;
 import org.anchoranalysis.gui.videostats.internalframe.evaluator.EvaluatorWithContext;
-import org.anchoranalysis.image.extent.ImageDim;
+import org.anchoranalysis.image.extent.ImageDimensions;
 
+import lombok.RequiredArgsConstructor;
+
+@RequiredArgsConstructor
 public class SelectPointsTool extends AnnotationTool {
 
-	private EvaluatorWithContext evaluator;
-	private IChangeSelectedPoints changeSelectedPoints;
-	private PointsFitter pointsFitter;
-	private IAcceptProposal acceptProposal;
-	private ToolErrorReporter errorReporter;
-	private IQuerySelectedPoints selectedPoints;
+	private final Optional<EvaluatorWithContext> evaluator;
+	private final IChangeSelectedPoints changeSelectedPoints;
+	private final PointsFitter pointsFitter;
+	private final IAcceptProposal acceptProposal;
+	private final IQuerySelectedPoints selectedPoints;
+	private final ToolErrorReporter errorReporter;
+		
+	private ImageDimensions dim;
 	
-	private ImageDim dim;
-	
-	public SelectPointsTool(
-		EvaluatorWithContext evaluator,
-		IChangeSelectedPoints changeSelectedPoints,
-		PointsFitter pointsFitter,
-		IAcceptProposal acceptProposal,
-		IQuerySelectedPoints selectedPoints,
-		ToolErrorReporter errorReporter
-	) {
-		super();
-		this.evaluator = evaluator;
-		this.changeSelectedPoints = changeSelectedPoints;
-		this.pointsFitter = pointsFitter;
-		this.acceptProposal = acceptProposal;
-		this.errorReporter = errorReporter;
-		this.selectedPoints = selectedPoints;
-	}
-
 	@Override
 	public void leftMouseClickedAtPoint(Point3d pnt) {
-
+		// NOTHING TO DO
 	}
 
 	@Override
@@ -101,14 +89,22 @@ public class SelectPointsTool extends AnnotationTool {
 				);
 			}
 			
-			proposeCfgFromPoints();
+			if (evaluator.isPresent()) {
+				proposeCfgFromPoints(evaluator.get());	
+			} else {
+				errorReporter.showError(
+					SelectPointsTool.class,
+					"Incorrect initialization",
+					"No evaluator is defined"
+				);				
+			}
 		}
 	}
 	
-	private void proposeCfgFromPoints() {
+	private void proposeCfgFromPoints( EvaluatorWithContext eval ) {
 		
 		try {
-			changeSelectedPoints.addCurrentProposedCfgFromSelectedPoints( proposeMark() );
+			changeSelectedPoints.addCurrentProposedCfgFromSelectedPoints( proposeMark(eval) );
 		} catch (PointsFitterException e) {
 			
 			if (e.getCause()==null) {
@@ -126,15 +122,14 @@ public class SelectPointsTool extends AnnotationTool {
 		}		
 	}
 	
-	private Mark proposeMark() throws PointsFitterException, InsufficientPointsException {
-		Mark mark = evaluator.getCfgGen().getTemplateMark().create();
+	private Mark proposeMark( EvaluatorWithContext eval ) throws PointsFitterException, InsufficientPointsException {
+		Mark mark = eval.getCfgGen().getTemplateMark().create();
 		pointsFitter.fit(selectedPoints.selectedPointsAsFloats(), mark, dim);
 		return mark;
 	}
 
 	@Override
-	public EvaluatorWithContext evaluatorWithContextGetter() {
+	public Optional<EvaluatorWithContext> evaluatorWithContextGetter() {
 		return evaluator;
 	}
-
 }

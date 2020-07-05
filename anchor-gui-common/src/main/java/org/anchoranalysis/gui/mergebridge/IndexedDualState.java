@@ -30,7 +30,10 @@ import java.util.List;
 
 import org.anchoranalysis.core.index.SingleIndexCntr;
 
+import lombok.EqualsAndHashCode;
+
 // Primary and secondary together, which share a common index
+@EqualsAndHashCode(callSuper = true)
 public class IndexedDualState<T> extends SingleIndexCntr {
 	
 	private List<T> list;

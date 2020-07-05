@@ -1,5 +1,7 @@
 package org.anchoranalysis.gui.annotation.mark;
 
+import java.util.Optional;
+
 /*-
  * #%L
  * anchor-gui-annotation
@@ -35,11 +37,15 @@ import org.anchoranalysis.gui.videostats.internalframe.annotator.tool.ToolErrorR
 import org.anchoranalysis.gui.videostats.internalframe.evaluator.EvaluatorWithContext;
 import org.anchoranalysis.gui.videostats.internalframe.evaluator.MarkProposerEvaluatorDimensions;
 import org.anchoranalysis.gui.videostats.internalframe.evaluator.MarkSphereOnPointProposerEvaluator;
-import org.anchoranalysis.image.extent.ImageDim;
+import org.anchoranalysis.image.extent.ImageDimensions;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+
+@NoArgsConstructor(access=AccessLevel.PRIVATE)
 class EvaluatorFactory {
 
-	public static EvaluatorWithContext createGuessEvaluator(
+	public static Optional<EvaluatorWithContext> createGuessEvaluator(
 		MarkProposer markProposerGuess,
 		MarkEvaluatorRslvd markEvaluatorRslvd,
 		RegionMap regionMap,
@@ -48,38 +54,42 @@ class EvaluatorFactory {
 		
 		// If we have no guess proposer, then we return null
 		if (markProposerGuess==null) {
-			return null;
+			return Optional.empty();
 		}
 		
 		try {
-			return new EvaluatorWithContext(
-				new MarkProposerEvaluatorDimensions(markProposerGuess,false),
-				markEvaluatorRslvd.getNRGStack(),
-				markEvaluatorRslvd.getCfgGen(),
-				regionMap
+			return Optional.of(
+				new EvaluatorWithContext(
+					new MarkProposerEvaluatorDimensions(markProposerGuess,false),
+					markEvaluatorRslvd.getNRGStack(),
+					markEvaluatorRslvd.getCfgGen(),
+					regionMap
+				)
 			);
 		} catch (GetOperationFailedException e) {
 			errorReporter.showError(InternalFrameAnnotator.class, "Cannot create guess evaluator", e.toString() );
-			return null;
+			return Optional.empty();
 		}
 	}
 	
-	public static EvaluatorWithContext createSelectPointsEvaluator(
-		ImageDim dimViewer,
+	public static Optional<EvaluatorWithContext> createSelectPointsEvaluator(
+		ImageDimensions dimViewer,
 		MarkEvaluatorRslvd markEvaluatorRslvd,
 		RegionMap regionMap,
 		ToolErrorReporter errorReporter
 	) {
 		try {
-			return new EvaluatorWithContext(
-				new MarkSphereOnPointProposerEvaluator(dimViewer),
-				markEvaluatorRslvd.getNRGStack(),
-				markEvaluatorRslvd.getCfgGen(),
-				regionMap
+			return Optional.of(
+				new EvaluatorWithContext(
+					new MarkSphereOnPointProposerEvaluator(dimViewer),
+					markEvaluatorRslvd.getNRGStack(),
+					markEvaluatorRslvd.getCfgGen(),
+					regionMap
+				)
 			);
 		} catch (GetOperationFailedException e) {
 			errorReporter.showError(InternalFrameAnnotator.class, "Cannot create select-points evaluator", e.toString() );
-			return null;
+			return Optional.empty();
 		}
 	}
 }

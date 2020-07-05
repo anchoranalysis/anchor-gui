@@ -1,7 +1,7 @@
 package org.anchoranalysis.gui.feature.evaluator.treetable;
 
-import org.anchoranalysis.anchor.mpp.feature.bean.nrgscheme.NRGScheme;
 import org.anchoranalysis.anchor.mpp.feature.nrg.scheme.KeyValueParamsForImageCreator;
+import org.anchoranalysis.anchor.mpp.feature.nrg.scheme.NRGScheme;
 
 /*-
  * #%L

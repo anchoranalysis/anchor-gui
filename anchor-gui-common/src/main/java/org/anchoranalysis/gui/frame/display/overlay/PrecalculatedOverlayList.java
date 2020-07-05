@@ -37,13 +37,13 @@ import org.anchoranalysis.core.color.RGBColor;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.image.binary.values.BinaryValues;
 import org.anchoranalysis.image.extent.BoundingBox;
-import org.anchoranalysis.image.extent.ImageDim;
+import org.anchoranalysis.image.extent.ImageDimensions;
 
 
 /**
  * A helper for OverlayPrecalculatedCache
  * 
- * @author owen
+ * @author Owen Feehan
  *
  */
 class PrecalculatedOverlayList {
@@ -80,7 +80,7 @@ class PrecalculatedOverlayList {
 		generatedObjectsZoomed = new ArrayList<>();
 	}
 	
-	public PrecalculatedOverlayList(ColoredOverlayCollection overlayCollection, ImageDim dimEntireImage, OverlayWriter maskWriter) throws CreateException {
+	public PrecalculatedOverlayList(ColoredOverlayCollection overlayCollection, ImageDimensions dimEntireImage, OverlayWriter maskWriter) throws CreateException {
 		this.overlayCollection = overlayCollection;
 		rebuild(dimEntireImage, maskWriter);
 	}
@@ -105,7 +105,7 @@ class PrecalculatedOverlayList {
 		this.overlayCollection = overlayCollection;
 	}
 	
-	public void rebuild(ImageDim dimEntireImage, OverlayWriter maskWriter) throws CreateException {
+	public void rebuild(ImageDimensions dimEntireImage, OverlayWriter maskWriter) throws CreateException {
 		generatedObjects = OverlayWriter.precalculate(overlayCollection, maskWriter, dimEntireImage, BinaryValues.getDefault().createByte() );
 		listBoundingBox = overlayCollection.bboxList( maskWriter, dimEntireImage);
 		generatedObjectsZoomed = null;

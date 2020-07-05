@@ -27,6 +27,7 @@ package org.anchoranalysis.gui.interactivebrowser.openfile.importer;
  */
 
 import java.io.File;
+import java.util.Optional;
 
 import org.anchoranalysis.gui.bean.filecreator.FileCreator;
 import org.anchoranalysis.gui.bean.filecreator.NamedMultiCollectionCreator;
@@ -42,8 +43,10 @@ public class ImporterMulti extends ImporterFromBean {
 	}
 
 	@Override
-	public FileCreator create(Object bean, File file) {
-		return createMultiCollection( (MultiInputManagerBase) bean, file);
+	public Optional<FileCreator> create(Object bean, File file) {
+		return Optional.of(
+			createMultiCollection( (MultiInputManagerBase) bean, file)
+		);
 	}
 
 	private static FileCreator createMultiCollection( InputManager<MultiInput> inputManager, File f) {

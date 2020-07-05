@@ -31,16 +31,16 @@ import org.anchoranalysis.feature.bean.Feature;
 import org.anchoranalysis.feature.input.FeatureInput;
 import org.anchoranalysis.feature.nrg.NRGStackWithParams;
 import org.anchoranalysis.feature.session.CreateFeatureInput;
-import org.anchoranalysis.image.feature.objmask.FeatureInputSingleObj;
-import org.anchoranalysis.image.objectmask.ObjectMask;
+import org.anchoranalysis.image.feature.object.input.FeatureInputSingleObject;
+import org.anchoranalysis.image.object.ObjectMask;
 
 public class CreateIndFromObj extends CreateFeatureInput<FeatureInput> {
 
-	private FeatureInputSingleObj input;
+	private FeatureInputSingleObject input;
 	
 	public CreateIndFromObj(ObjectMask objMask, NRGStackWithParams nrgStack) {
 		super();
-		input = new FeatureInputSingleObj(objMask, nrgStack);
+		input = new FeatureInputSingleObject(objMask, nrgStack);
 	}
 
 	@Override

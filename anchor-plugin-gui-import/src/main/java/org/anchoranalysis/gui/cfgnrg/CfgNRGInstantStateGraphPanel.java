@@ -1,5 +1,7 @@
 package org.anchoranalysis.gui.cfgnrg;
 
+import java.util.Optional;
+
 /*
  * #%L
  * anchor-gui
@@ -36,8 +38,8 @@ import org.anchoranalysis.core.functional.FunctionWithException;
 import org.anchoranalysis.core.index.IntArray;
 import org.anchoranalysis.core.property.IPropertyValueReceivable;
 import org.anchoranalysis.core.property.IPropertyValueSendable;
-import org.anchoranalysis.gui.graph.panel.ClickableGraphInstance;
-import org.anchoranalysis.gui.graph.panel.GraphPanel;
+import org.anchoranalysis.gui.plot.panel.ClickableGraphInstance;
+import org.anchoranalysis.gui.plot.panel.GraphPanel;
 
 public class CfgNRGInstantStateGraphPanel extends StatePanel<CfgNRGInstantState> {
 
@@ -73,27 +75,22 @@ public class CfgNRGInstantStateGraphPanel extends StatePanel<CfgNRGInstantState>
 	}
 
 	@Override
-	public IPropertyValueSendable<IntArray> getSelectMarksSendable() {
-		return null;
+	public Optional<IPropertyValueSendable<IntArray>> getSelectMarksSendable() {
+		return Optional.empty();
 	}
 
-	
-
-
 	@Override
-	public IPropertyValueReceivable<IntArray> getSelectMarksReceivable() {
-		return null;
+	public Optional<IPropertyValueReceivable<IntArray>> getSelectMarksReceivable() {
+		return Optional.empty();
 	}
 
-
 	@Override
-	public IPropertyValueReceivable<OverlayCollection> getSelectOverlayCollectionReceivable() {
-		return null;
+	public Optional<IPropertyValueReceivable<OverlayCollection>> getSelectOverlayCollectionReceivable() {
+		return Optional.empty();
 	}
 
-
 	@Override
-	public IPropertyValueReceivable<Integer> getSelectIndexReceivable() {
-		return null;
+	public Optional<IPropertyValueReceivable<Integer>> getSelectIndexReceivable() {
+		return Optional.empty();
 	}
 }

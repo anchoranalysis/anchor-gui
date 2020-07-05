@@ -72,8 +72,7 @@ public abstract class GraphDynamicallyDrawnFromCfgNRGInstantState<T> extends Cre
 	
 	
 	@Override
-	public IterableObjectGenerator<MappedFrom<CfgNRGInstantState>, Stack> createGenerator(
-			ExportTaskParams params) throws CreateException {
+	public IterableObjectGenerator<MappedFrom<CfgNRGInstantState>, Stack> createGenerator(ExportTaskParams params) throws CreateException {
 
 		IterableObjectGenerator<MappedFrom<CSVStatistic>, Stack> generator = createDelegateIfNecessary().createGenerator(params);
 		

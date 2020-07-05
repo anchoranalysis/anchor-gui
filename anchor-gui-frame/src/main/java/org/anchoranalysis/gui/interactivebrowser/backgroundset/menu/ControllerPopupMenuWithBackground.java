@@ -40,7 +40,7 @@ import org.anchoranalysis.gui.videostats.dropdown.VideoStatsModuleGlobalParams;
 
 /**
  * Creates a background and menu for a frame
- * @author FEEHANO
+ * @author Owen Feehan
  *
  */
 public class ControllerPopupMenuWithBackground {

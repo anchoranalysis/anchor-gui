@@ -5,7 +5,7 @@ import java.util.Optional;
 import org.anchoranalysis.anchor.mpp.cfg.Cfg;
 import org.anchoranalysis.anchor.mpp.feature.instantstate.CfgWithNrgTotalInstantState;
 import org.anchoranalysis.anchor.mpp.feature.nrg.cfg.CfgNRGPixelized;
-import org.anchoranalysis.anchor.mpp.feature.nrg.cfg.CfgWithNrgTotal;
+import org.anchoranalysis.anchor.mpp.feature.nrg.cfg.CfgWithNRGTotal;
 import org.anchoranalysis.anchor.mpp.feature.nrg.scheme.NRGSchemeWithSharedFeatures;
 import org.anchoranalysis.anchor.mpp.feature.nrg.scheme.NamedNRGSchemeSet;
 
@@ -58,15 +58,15 @@ import org.anchoranalysis.gui.cfgnrg.StatePanelUpdateException;
 import org.anchoranalysis.gui.feature.evaluator.FeatureEvaluatorTableFrame;
 import org.anchoranalysis.gui.feature.evaluator.treetable.ExtractFromNamedNRGSchemeSet;
 import org.anchoranalysis.gui.feature.evaluator.treetable.FeatureListSrc;
-import org.anchoranalysis.gui.graph.definition.AcceptanceRateGraphDefinition;
-import org.anchoranalysis.gui.graph.definition.CfgSizeGraphDefinition;
-import org.anchoranalysis.gui.graph.definition.ExecutionTimeGraphDefinition;
-import org.anchoranalysis.gui.graph.definition.NRGGraphDefinition;
-import org.anchoranalysis.gui.graph.definition.TemperatureGraphDefinition;
-import org.anchoranalysis.gui.graph.visualvm.GraphPanel;
-import org.anchoranalysis.gui.graph.visualvm.GraphPanelList;
 import org.anchoranalysis.gui.image.frame.ISliderState;
 import org.anchoranalysis.gui.interactivebrowser.SubgrouppedAdder;
+import org.anchoranalysis.gui.plot.definition.AcceptanceRateGraphDefinition;
+import org.anchoranalysis.gui.plot.definition.CfgSizeGraphDefinition;
+import org.anchoranalysis.gui.plot.definition.ExecutionTimeGraphDefinition;
+import org.anchoranalysis.gui.plot.definition.NRGGraphDefinition;
+import org.anchoranalysis.gui.plot.definition.TemperatureGraphDefinition;
+import org.anchoranalysis.gui.plot.visualvm.GraphPanel;
+import org.anchoranalysis.gui.plot.visualvm.GraphPanelList;
 import org.anchoranalysis.gui.retrieveelements.ExportPopupParams;
 import org.anchoranalysis.gui.videostats.dropdown.AdderAppendNRGStack;
 import org.anchoranalysis.gui.videostats.dropdown.IAddVideoStatsModule;
@@ -78,9 +78,9 @@ import org.anchoranalysis.gui.videostats.module.DefaultModuleState;
 import org.anchoranalysis.gui.videostats.module.VideoStatsModule;
 import org.anchoranalysis.gui.videostats.module.VideoStatsModuleCreateException;
 import org.anchoranalysis.gui.videostats.module.VideoStatsModuleSubgroup;
+import org.anchoranalysis.image.bean.nonbean.init.CreateCombinedStack;
+import org.anchoranalysis.image.bean.nonbean.init.ImageInitParams;
 import org.anchoranalysis.image.experiment.identifiers.ImgStackIdentifiers;
-import org.anchoranalysis.image.init.CreateCombinedStack;
-import org.anchoranalysis.image.init.ImageInitParams;
 import org.anchoranalysis.image.stack.DisplayStack;
 import org.anchoranalysis.image.stack.wrap.WrapStackAsTimeSequence;
 import org.anchoranalysis.io.bean.color.generator.HSBColorSetGenerator;
@@ -170,10 +170,10 @@ public class VideoStatsEDT {
 			return;
 		}
 		
-		CfgWithNrgTotal nrgTotal = after.get().getCfgNRG().getCfgWithTotal();
+		CfgWithNRGTotal nrgTotal = after.get().getCfgNRG().getCfgWithTotal();
 		assert( nrgTotal != null );
 		
-		CfgWithNrgTotal cfgWithTotal = nrgTotal.deepCopy();
+		CfgWithNRGTotal cfgWithTotal = nrgTotal.deepCopy();
 		
 		//System.out.printf("AggReport iter=%d temp=%f\n", optStep.getIter(), optStep.getTemperature() );
 		cfgNRGCurrent.add( new CfgWithNrgTotalInstantState( reporting.getIter(), cfgWithTotal ) );
@@ -197,7 +197,7 @@ public class VideoStatsEDT {
 
 		assert( after.get().getCfgNRG().getCfgWithTotal() != null );
 		
-		CfgWithNrgTotal afterCopy = after.get().getCfgNRG().getCfgWithTotal().deepCopy();
+		CfgWithNRGTotal afterCopy = after.get().getCfgNRG().getCfgWithTotal().deepCopy();
 		
 		cfgNRGBest.add(
 			new CfgWithNrgTotalInstantState( reporting.getIter(), afterCopy  )
@@ -247,7 +247,7 @@ public class VideoStatsEDT {
 		
 		// Let's open with no configuration
 		Cfg cfgEmpty = new Cfg();
-		CfgWithNrgTotal cfgNRGEmpty = new CfgWithNrgTotal( cfgEmpty, initParams.getInitContext().getNrgScheme());
+		CfgWithNRGTotal cfgNRGEmpty = new CfgWithNRGTotal( cfgEmpty, initParams.getInitContext().getNrgScheme());
 		
 		CfgWithNrgTotalInstantState initialState = new CfgWithNrgTotalInstantState( 0, cfgNRGEmpty ); 
 		cfgNRGCurrent.add(initialState);

@@ -1,6 +1,7 @@
 package org.anchoranalysis.gui.io.loader.manifest.finder;
 
 import java.nio.file.Path;
+import java.util.Optional;
 
 import org.anchoranalysis.core.error.CreateException;
 
@@ -44,7 +45,7 @@ import org.anchoranalysis.io.manifest.finder.FinderSingleFile;
 
 public abstract class FinderRasterChnl extends FinderSingleFile implements FinderRasterSingleChnl {
 
-	private Channel result;
+	private Optional<Channel> result = Optional.empty();
 	
 	private RasterReader rasterReader;
 
@@ -55,12 +56,32 @@ public abstract class FinderRasterChnl extends FinderSingleFile implements Finde
 		this.rasterReader = rasterReader;
 		this.normalizeChnl = normalizeChnl;
 	}
-
-	private Channel createChnl( FileWrite fileWrite ) throws RasterIOException, CreateException {
-		
-		if (fileWrite==null) {
-			return null;
+	
+	public Channel get() throws GetOperationFailedException {
+		assert(exists());
+		if (!result.isPresent()) {
+			try {
+				result = Optional.of(
+					createChnl( getFoundFile() )
+				);
+			} catch (RasterIOException | CreateException e) {
+				throw new GetOperationFailedException(e);
+			}
 		}
+		return result.get();
+	}
+
+	@Override
+	public Channel getFirstChnl() throws GetOperationFailedException {
+		return get();
+	}
+		
+	@Override
+	public int getNumChnl() throws GetOperationFailedException {
+		return 1;
+	}
+	
+	private Channel createChnl( FileWrite fileWrite ) throws RasterIOException, CreateException {
 		
 		// Assume single series, single channel
 		Path filePath = fileWrite.calcPath();
@@ -82,28 +103,5 @@ public abstract class FinderRasterChnl extends FinderSingleFile implements Finde
 		
 			return stack.getChnl(0);
 		}
-	}
-	
-	public Channel get() throws GetOperationFailedException {
-		assert(exists());
-		if (result==null) {
-			try {
-				result = createChnl( getFoundFile() );
-			} catch (RasterIOException | CreateException e) {
-				throw new GetOperationFailedException(e);
-			}
-		}
-		return result;
-	}
-
-	@Override
-	public Channel getFirstChnl() throws GetOperationFailedException {
-		return get();
-	}
-	
-	
-	@Override
-	public int getNumChnl() throws GetOperationFailedException {
-		return 1;
 	}
 }

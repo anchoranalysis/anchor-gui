@@ -35,15 +35,15 @@ import org.anchoranalysis.anchor.mpp.cfg.ColoredCfg;
 import org.anchoranalysis.anchor.mpp.mark.Mark;
 import org.anchoranalysis.anchor.mpp.mark.MarkAbstractPosition;
 import org.anchoranalysis.anchor.mpp.mark.conic.MarkConicFactory;
-import org.anchoranalysis.anchor.mpp.proposer.visualization.ICreateProposalVisualization;
+import org.anchoranalysis.anchor.mpp.proposer.visualization.CreateProposalVisualization;
 import org.anchoranalysis.core.color.RGBColor;
 import org.anchoranalysis.core.geometry.Point3d;
 import org.anchoranalysis.core.random.RandomNumberGenerator;
-import org.anchoranalysis.image.extent.ImageDim;
+import org.anchoranalysis.image.extent.ImageDimensions;
 
 public class MarkProposerEvaluatorUtilities {
 
-	public static Mark createMarkFromPosition( Point3d position, Mark templateMark, final ImageDim dim, final RandomNumberGenerator re ) {
+	public static Mark createMarkFromPosition( Point3d position, Mark templateMark, final ImageDimensions dim, final RandomNumberGenerator re ) {
 		
 		final Mark me = templateMark.duplicate();
 
@@ -66,7 +66,7 @@ public class MarkProposerEvaluatorUtilities {
 			addMaskAtMousePoint(position, cfg, m.numDims()==3); 
 		}
 	
-		Optional<ICreateProposalVisualization> proposalVisualization = markProposer.proposalVisualization(detailedVisualization);
+		Optional<CreateProposalVisualization> proposalVisualization = markProposer.proposalVisualization(detailedVisualization);
 		proposalVisualization.ifPresent( pv ->
 			pv.addToCfg(cfg)
 		);
@@ -74,7 +74,7 @@ public class MarkProposerEvaluatorUtilities {
 	}
 	
 	private static void addMaskAtMousePoint(Point3d position, ColoredCfg cfg, boolean do3D) {
-		Mark mousePoint = MarkConicFactory.createMarkFromPoint3d(position, 1, do3D);
+		Mark mousePoint = MarkConicFactory.createMarkFromPoint(position, 1, do3D);
 		cfg.addChangeID(mousePoint, new RGBColor(Color.GREEN) );
 	}
 }

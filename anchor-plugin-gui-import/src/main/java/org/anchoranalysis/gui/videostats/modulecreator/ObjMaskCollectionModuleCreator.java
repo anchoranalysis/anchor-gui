@@ -1,8 +1,10 @@
 package org.anchoranalysis.gui.videostats.modulecreator;
 
+import java.util.Optional;
+
 import org.anchoranalysis.anchor.mpp.cfg.Cfg;
 import org.anchoranalysis.anchor.overlay.collection.OverlayCollection;
-import org.anchoranalysis.anchor.overlay.collection.OverlayCollectionObjMaskFactory;
+import org.anchoranalysis.anchor.overlay.collection.OverlayCollectionObjectFactory;
 import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.functional.Operation;
@@ -15,8 +17,8 @@ import org.anchoranalysis.gui.videostats.dropdown.common.NRGBackground;
 import org.anchoranalysis.gui.videostats.internalframe.InternalFrameStaticOverlaySelectable;
 import org.anchoranalysis.gui.videostats.module.VideoStatsModuleCreateException;
 import org.anchoranalysis.gui.videostats.operation.combine.IVideoStatsOperationCombine;
-import org.anchoranalysis.image.objectmask.ObjectMask;
-import org.anchoranalysis.image.objectmask.ObjectCollection;
+import org.anchoranalysis.image.object.ObjectCollection;
+import org.anchoranalysis.image.object.ObjectMask;
 
 public class ObjMaskCollectionModuleCreator extends VideoStatsModuleCreator {
 
@@ -49,7 +51,7 @@ public class ObjMaskCollectionModuleCreator extends VideoStatsModuleCreator {
 		try {
 			ObjectCollection objs = opObjs.doOperation();
 
-			OverlayCollection oc = OverlayCollectionObjMaskFactory.createWithoutColor(objs, new IDGetterIter<ObjectMask>() );
+			OverlayCollection oc = OverlayCollectionObjectFactory.createWithoutColor(objs, new IDGetterIter<ObjectMask>() );
 			
 			String frameName = String.format("%s: %s", fileIdentifier, name);
 			InternalFrameStaticOverlaySelectable imageFrame = new InternalFrameStaticOverlaySelectable( frameName, false );
@@ -73,38 +75,32 @@ public class ObjMaskCollectionModuleCreator extends VideoStatsModuleCreator {
 
 
 	@Override
-	public IVideoStatsOperationCombine getCombiner() {
-		return new IVideoStatsOperationCombine() {
-			
-			@Override
-			public Operation<Cfg,OperationFailedException> getCfg() {
-				return null;
-			}
+	public Optional<IVideoStatsOperationCombine> getCombiner() {
+		return Optional.of(
+			new IVideoStatsOperationCombine() {
+				
+				@Override
+				public Optional<Operation<Cfg,OperationFailedException>> getCfg() {
+					return Optional.empty();
+				}
+		
 	
-
-			@Override
-			public String generateName() {
-				return fileIdentifier;
-			}
-
-			@Override
-			public Operation<ObjectCollection,OperationFailedException> getObjMaskCollection() {
-				return opObjs;
-			}
-
-
-			@Override
-			public NRGBackground getNrgBackground() {
-				return nrgBackground;
-			}
-		};
-	}
-
-
-
-	@Override
-	public boolean canCombineOperations() {
-		return true;
-	}
+				@Override
+				public String generateName() {
+					return fileIdentifier;
+				}
 	
+				@Override
+				public Optional<Operation<ObjectCollection, OperationFailedException>> getObjMaskCollection() {
+					return Optional.of(opObjs);
+				}
+	
+	
+				@Override
+				public NRGBackground getNrgBackground() {
+					return nrgBackground;
+				}
+			}
+		);
+	}
 }

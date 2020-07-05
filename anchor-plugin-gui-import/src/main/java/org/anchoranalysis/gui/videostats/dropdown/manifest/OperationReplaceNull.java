@@ -36,7 +36,7 @@ import org.anchoranalysis.core.progress.ProgressReporterNull;
  * @param <T> return-type of operation
  * @param <E> exception-type if something goes wrong during operation
  **/
-class OperationReplaceNull<T, E extends Throwable> implements OperationWithProgressReporter<T,E> {
+class OperationReplaceNull<T, E extends Exception> implements OperationWithProgressReporter<T,E> {
 
 	private OperationWithProgressReporter<T,E> opFirst;
 	private OperationWithProgressReporter<T,E> opSecond;

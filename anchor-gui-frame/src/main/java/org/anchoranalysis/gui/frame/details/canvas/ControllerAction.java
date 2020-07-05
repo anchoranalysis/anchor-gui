@@ -32,7 +32,7 @@ package org.anchoranalysis.gui.frame.details.canvas;
  * Stuff which is useful for making basic actions in relation to the frames
  *  appearance and user-interaction
  * 
- * @author FEEHANO
+ * @author Owen Feehan
  *
  */
 public class ControllerAction {

@@ -28,6 +28,7 @@ package org.anchoranalysis.gui.finder;
 
 
 import java.util.List;
+import java.util.Optional;
 
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.OperationFailedException;
@@ -66,7 +67,7 @@ public class FinderRasterFolder extends FinderSingleFolder {
 	}
 
 	@Override
-	protected FolderWrite findFolder(ManifestRecorder manifestRecorder) {
+	protected Optional<FolderWrite> findFolder(ManifestRecorder manifestRecorder) {
 
 		FolderWriteAnd folderAdd = new FolderWriteAnd();
 		folderAdd.addCondition( new FolderWritePath(folderName) );
@@ -74,10 +75,10 @@ public class FinderRasterFolder extends FinderSingleFolder {
 		
 		List<FolderWrite> list = FinderUtilities.findListFolder(manifestRecorder, folderAdd );
 		
-		if (list.size()>0) {
-			return list.get(0);
+		if (!list.isEmpty()) {
+			return Optional.of(list.get(0));
 		} else {
-			return null;
+			return Optional.empty();
 		}
 	}
 

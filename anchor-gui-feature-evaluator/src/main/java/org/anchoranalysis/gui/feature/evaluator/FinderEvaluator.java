@@ -13,7 +13,6 @@ import org.anchoranalysis.anchor.mpp.mark.Mark;
 import org.anchoranalysis.anchor.mpp.overlay.OverlayCollectionMarkFactory;
 import org.anchoranalysis.anchor.mpp.overlay.OverlayMark;
 import org.anchoranalysis.anchor.mpp.pair.Pair;
-import org.anchoranalysis.anchor.mpp.pxlmark.memo.PxlMarkMemo;
 import org.anchoranalysis.anchor.mpp.pxlmark.memo.PxlMarkMemoFactory;
 import org.anchoranalysis.anchor.mpp.regionmap.RegionMapSingleton;
 import org.anchoranalysis.anchor.overlay.Overlay;
@@ -183,9 +182,13 @@ class FinderEvaluator {
 		}
 		
 		public boolean canGenerateEdge( Mark m1, Mark m2 ) throws CreateException {
-			PxlMarkMemo pmm1 = PxlMarkMemoFactory.create( m1, raster.getNrgStack(), regionMap );
-			PxlMarkMemo pmm2 = PxlMarkMemoFactory.create( m2, raster.getNrgStack(), regionMap );
-			return (addCriteria.generateEdge(pmm1, pmm2, raster, session, raster.getDimensions().getZ()>1 )!=null);
+			return addCriteria.generateEdge(
+				PxlMarkMemoFactory.create( m1, raster.getNrgStack(), regionMap ),
+				PxlMarkMemoFactory.create( m2, raster.getNrgStack(), regionMap ),
+				raster,
+				session,
+				raster.getDimensions().getZ()>1
+			).isPresent();
 		}
 		
 		private Optional<FeatureCalculatorMulti<FeatureInputPairMemo>> createSession(

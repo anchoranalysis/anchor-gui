@@ -1,10 +1,11 @@
 package org.anchoranalysis.gui.interactivebrowser.input;
 
 import org.anchoranalysis.anchor.mpp.bean.regionmap.RegionMap;
-import org.anchoranalysis.anchor.mpp.feature.bean.nrgscheme.NRGScheme;
+import org.anchoranalysis.anchor.mpp.feature.addcriteria.BBoxIntersection;
 import org.anchoranalysis.anchor.mpp.feature.bean.nrgscheme.NRGSchemeCreator;
 import org.anchoranalysis.anchor.mpp.feature.input.memo.FeatureInputPairMemo;
 import org.anchoranalysis.anchor.mpp.feature.input.memo.FeatureInputSingleMemo;
+import org.anchoranalysis.anchor.mpp.feature.nrg.scheme.NRGScheme;
 import org.anchoranalysis.anchor.mpp.feature.nrg.scheme.NamedNRGSchemeSet;
 import org.anchoranalysis.anchor.mpp.regionmap.RegionMapSingleton;
 
@@ -41,6 +42,7 @@ import org.anchoranalysis.core.name.provider.NamedProviderGetException;
 import org.anchoranalysis.core.name.store.NamedProviderStore;
 import org.anchoranalysis.feature.bean.Feature;
 import org.anchoranalysis.feature.bean.list.FeatureList;
+import org.anchoranalysis.feature.bean.list.FeatureListFactory;
 import org.anchoranalysis.feature.calc.FeatureCalcException;
 import org.anchoranalysis.feature.input.FeatureInput;
 import org.anchoranalysis.feature.shared.SharedFeaturesInitParams;
@@ -134,16 +136,26 @@ public class FeatureListSrcBuilder<T extends FeatureInput> {
 				FeatureList<FeatureInput> fl = store.getException(key);
 				
 				// Put this in there, to get rid of error. Unsure why. It should go in refactoring when FeatureSessions are properly implemented
+				// TODO resolve this error
 				//fl.init( new FeatureInitParams(soFeature.getSharedFeatureSet(), soFeature.getCachedCalculationList()) );
 				
 				// Determines which features belong in the Unary part of the NRGScheme, and which in the Pairwise part
-				FeatureList<FeatureInputSingleMemo> outUnary = new FeatureList<>();
-				FeatureList<FeatureInputPairMemo> outPairwise = new FeatureList<>();
+				FeatureList<FeatureInputSingleMemo> outUnary = FeatureListFactory.empty();
+				FeatureList<FeatureInputPairMemo> outPairwise = FeatureListFactory.empty();
 				determineUnaryPairwiseFeatures( fl, outUnary, outPairwise );
 				
-				nrgElemSet.add(key, new NRGScheme(outUnary, outPairwise, regionMap ) );
+				nrgElemSet.add(
+					key,
+					new NRGScheme(
+						outUnary,
+						outPairwise,
+						FeatureListFactory.empty(),
+						regionMap,
+						new BBoxIntersection()		// Arbitrarily chosen
+					)
+				);
 				
-			} catch (FeatureCalcException  e) {
+			} catch (FeatureCalcException | CreateException e) {
 				logErrorReporter.getErrorReporter().recordError(FeatureListSrcBuilder.class, e);
 			} catch (NamedProviderGetException e) {
 				logErrorReporter.getErrorReporter().recordError(FeatureListSrcBuilder.class, e.summarize());

@@ -43,9 +43,9 @@ import org.anchoranalysis.core.index.SetOperationFailedException;
 import org.anchoranalysis.image.binary.values.BinaryValues;
 import org.anchoranalysis.image.binary.values.BinaryValuesByte;
 import org.anchoranalysis.image.extent.BoundingBox;
-import org.anchoranalysis.image.extent.ImageDim;
-import org.anchoranalysis.image.index.rtree.BBoxRTree;
-import org.anchoranalysis.image.objectmask.properties.ObjectWithProperties;
+import org.anchoranalysis.image.extent.ImageDimensions;
+import org.anchoranalysis.image.index.BoundingBoxRTree;
+import org.anchoranalysis.image.object.properties.ObjectWithProperties;
 import org.anchoranalysis.image.scale.ScaleFactor;
 
 /**
@@ -73,7 +73,7 @@ public class OverlayPrecalculatedCache implements OverlayRetriever {
 	/**
 	 * Spatially indexes the bounding boxes in listBoundingBox (using the array index). Created when needed.
 	 */
-	private BBoxRTree rTree = null;
+	private BoundingBoxRTree rTree = null;
 	
 
 	
@@ -86,17 +86,17 @@ public class OverlayPrecalculatedCache implements OverlayRetriever {
 	
 	private OverlayWriter overlayWriter;
 	
-	private ImageDim dimEntireImage;
+	private ImageDimensions dimEntireImage;
 	
-	private ImageDim dimScaled;
+	private ImageDimensions dimScaled;
 	
 	/**
 	 * The binary values we use for making object masks
 	 */
-	private final static BinaryValuesByte bvOut = BinaryValues.getDefault().createByte();
+	private static final BinaryValuesByte bvOut = BinaryValues.getDefault().createByte();
 
 	
-	public OverlayPrecalculatedCache(ColoredOverlayCollection overlayCollection, ImageDim dimEntireImage, OverlayWriter maskWriter ) throws CreateException {
+	public OverlayPrecalculatedCache(ColoredOverlayCollection overlayCollection, ImageDimensions dimEntireImage, OverlayWriter maskWriter ) throws CreateException {
 		super();
 		this.overlayWriter = maskWriter;
 		this.dimEntireImage = dimEntireImage;
@@ -129,7 +129,7 @@ public class OverlayPrecalculatedCache implements OverlayRetriever {
 		
 		// If we haven't bother initializing these things before, we do now
 		if (rTree==null) {
-			rTree = new BBoxRTree( overlayList.getListBoundingBox() );
+			rTree = new BoundingBoxRTree( overlayList.getListBoundingBox() );
 		}
 		if (overlayList.hasGeneratedObjectsZoomed() || zoomFactorNew!=zoomFactor) {
 			overlayList.setZoomedToNull();
@@ -276,7 +276,7 @@ public class OverlayPrecalculatedCache implements OverlayRetriever {
 	private OverlayPrecalculatedCache(
 		PrecalculatedOverlayList overlayList,
 		double zoomFactor,
-		ImageDim dim
+		ImageDimensions dim
 	) {
 		this.overlayList = overlayList;
 		overlayList.assertListsSizeMatch();
@@ -301,7 +301,7 @@ public class OverlayPrecalculatedCache implements OverlayRetriever {
 	 * @return NULL if rejected
 	 * @throws OperationFailedException
 	 */
-	private PrecalcOverlay getOrCreateScaledMask( double zoomFactorNew, ObjectWithProperties om, Overlay ol, int i, ImageDim dimScaled ) throws OperationFailedException {
+	private PrecalcOverlay getOrCreateScaledMask( double zoomFactorNew, ObjectWithProperties om, Overlay ol, int i, ImageDimensions dimScaled ) throws OperationFailedException {
 		overlayList.assertZoomedExists();
 		if (zoomFactorNew==1) {
 			// We can steal from the main object
@@ -370,7 +370,7 @@ public class OverlayPrecalculatedCache implements OverlayRetriever {
 		}
 	}
 	
-	private ImageDim createDimensionsScaled( double zoomFactorNew ) {
+	private ImageDimensions createDimensionsScaled( double zoomFactorNew ) {
 		// We create a scaled version of our dimensions
 		return dimEntireImage.scaleXYBy(
 			new ScaleFactor(zoomFactorNew)

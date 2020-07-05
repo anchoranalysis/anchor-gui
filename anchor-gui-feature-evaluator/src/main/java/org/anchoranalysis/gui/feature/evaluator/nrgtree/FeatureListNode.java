@@ -63,16 +63,12 @@ abstract class FeatureListNode extends Node {
 	}
 	
 	protected void initChildFeatures(FeatureList<FeatureInput> features, ParamsSource params ) {
-		this.childFeatures = new FeatureList<>(features);
-		
 		// Sort out features in alphabetical order
-		Collections.sort(
-			childFeatures,
+		this.childFeatures = features.sort(
 			(f1,f2)->f1.getFriendlyName().compareTo(
 				f2.getFriendlyName()
-			)
+			)	
 		);
-		
 		this.params = params;
 	}
 

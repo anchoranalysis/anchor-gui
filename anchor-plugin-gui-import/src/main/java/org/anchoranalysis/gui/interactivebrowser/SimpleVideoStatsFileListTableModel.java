@@ -33,6 +33,7 @@ import javax.swing.event.TableModelListener;
 import javax.swing.table.AbstractTableModel;
 
 import org.anchoranalysis.core.error.OperationFailedException;
+import org.anchoranalysis.core.error.friendly.AnchorImpossibleSituationException;
 import org.anchoranalysis.core.progress.OperationWithProgressReporter;
 import org.anchoranalysis.core.progress.ProgressReporter;
 import org.anchoranalysis.gui.file.interactive.InteractiveFile;
@@ -92,8 +93,7 @@ public class SimpleVideoStatsFileListTableModel extends InteractiveFileListTable
 			case 0:
 				return String.class;
 			default:
-				assert false;
-				return null;
+				throw new AnchorImpossibleSituationException();
 			}
 	    }	
 	};

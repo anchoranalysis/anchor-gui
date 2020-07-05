@@ -1,8 +1,10 @@
 package org.anchoranalysis.gui.videostats.dropdown.modulecreator.graph;
 
-import org.anchoranalysis.anchor.graph.bean.GraphDefinition;
+import java.util.Optional;
+
 import org.anchoranalysis.anchor.mpp.feature.instantstate.CfgNRGInstantState;
-import org.anchoranalysis.anchor.mpp.graph.NRGGraphItem;
+import org.anchoranalysis.anchor.mpp.plot.NRGGraphItem;
+import org.anchoranalysis.anchor.plot.bean.GraphDefinition;
 import org.anchoranalysis.core.color.ColorIndex;
 import org.anchoranalysis.core.error.InitException;
 
@@ -36,8 +38,8 @@ import org.anchoranalysis.core.error.reporter.ErrorReporter;
 import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.gui.cfgnrg.CfgNRGInstantStateGraphPanel;
 import org.anchoranalysis.gui.cfgnrg.StatePanelFrameHistoryCfgNRGInstantState;
-import org.anchoranalysis.gui.graph.creator.GenerateGraphNRGBreakdownFromInstantState;
 import org.anchoranalysis.gui.io.loader.manifest.finder.historyfolder.FinderHistoryFolder;
+import org.anchoranalysis.gui.plot.creator.GenerateGraphNRGBreakdownFromInstantState;
 import org.anchoranalysis.gui.reassign.FrameTitleGenerator;
 import org.anchoranalysis.gui.videostats.IModuleCreatorDefaultState;
 import org.anchoranalysis.gui.videostats.dropdown.VideoStatsModuleGlobalParams;
@@ -65,7 +67,7 @@ public class GraphNRGBreakdownModuleCreator extends VideoStatsModuleCreatorConte
 	}
 
 	@Override
-	public IModuleCreatorDefaultState moduleCreator(DefaultModuleStateManager defaultStateManager, String namePrefix,
+	public Optional<IModuleCreatorDefaultState> moduleCreator(DefaultModuleStateManager defaultStateManager, String namePrefix,
 			VideoStatsModuleGlobalParams mpg) throws VideoStatsModuleCreateException {
 
 		ErrorReporter errorReporter = mpg.getLogErrorReporter().getErrorReporter();
@@ -84,7 +86,9 @@ public class GraphNRGBreakdownModuleCreator extends VideoStatsModuleCreatorConte
 				errorReporter
 			);
 			
-			return frame.moduleCreator();
+			return Optional.of(
+				frame.moduleCreator()
+			);
 
 		} catch (GetOperationFailedException e) {
 			throw new VideoStatsModuleCreateException(e);
@@ -100,7 +104,9 @@ public class GraphNRGBreakdownModuleCreator extends VideoStatsModuleCreatorConte
 	}
 
 	@Override
-	public String shortTitle() {
-		return definition.getShortTitle();
+	public Optional<String> shortTitle() {
+		return Optional.of(
+			definition.getShortTitle()
+		);
 	}
 }

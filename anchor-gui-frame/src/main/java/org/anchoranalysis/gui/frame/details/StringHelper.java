@@ -32,7 +32,7 @@ import java.util.List;
 
 import org.anchoranalysis.gui.frame.details.canvas.InternalFrameCanvas;
 import org.anchoranalysis.gui.image.frame.ISliderState;
-import org.anchoranalysis.image.extent.ImageRes;
+import org.anchoranalysis.image.extent.ImageResolution;
 import org.anchoranalysis.image.voxel.datatype.VoxelDataType;
 
 class StringHelper {
@@ -70,7 +70,7 @@ class StringHelper {
 	}
 
 	public String genResString() {
-		ImageRes sr = internalFrameCanvas.getRes();
+		ImageResolution sr = internalFrameCanvas.getRes();
 		if (sr.getX()==sr.getY()) {
 			return String.format("resXY=%s resZ=%s", formatUnits(sr.getX()), formatUnits(sr.getZ()) );
 		} else {

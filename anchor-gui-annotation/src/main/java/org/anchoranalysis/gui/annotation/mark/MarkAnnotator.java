@@ -1,5 +1,7 @@
 package org.anchoranalysis.gui.annotation.mark;
 
+import java.util.Optional;
+
 import org.anchoranalysis.anchor.mpp.bean.init.MPPInitParams;
 import org.anchoranalysis.anchor.mpp.bean.points.fitter.PointsFitter;
 
@@ -42,7 +44,7 @@ import org.anchoranalysis.gui.interactivebrowser.MarkEvaluatorRslvd;
 import org.anchoranalysis.gui.interactivebrowser.MarkEvaluatorSetForImage;
 import org.anchoranalysis.gui.videostats.internalframe.annotator.tool.ToolErrorReporter;
 import org.anchoranalysis.gui.videostats.internalframe.evaluator.EvaluatorWithContext;
-import org.anchoranalysis.image.extent.ImageDim;
+import org.anchoranalysis.image.extent.ImageDimensions;
 import org.anchoranalysis.image.stack.Stack;
 import org.anchoranalysis.plugin.annotation.bean.strategy.MarkProposerStrategy;
 
@@ -80,7 +82,7 @@ public class MarkAnnotator {
 		return backgroundStacks;
 	}
 	
-	public EvaluatorWithContext createGuessEvaluator(ToolErrorReporter errorReporter) {
+	public Optional<EvaluatorWithContext> createGuessEvaluator(ToolErrorReporter errorReporter) {
 		return EvaluatorFactory.createGuessEvaluator(
 			markProposerGuess,
 			markEvaluatorRslvd,
@@ -89,8 +91,8 @@ public class MarkAnnotator {
 		);
 	}
 		
-	public EvaluatorWithContext createSelectPointsEvaluator(
-		ImageDim dimViewer,
+	public Optional<EvaluatorWithContext> createSelectPointsEvaluator(
+		ImageDimensions dimViewer,
 		ToolErrorReporter errorReporter
 	) {
 		return EvaluatorFactory.createSelectPointsEvaluator(

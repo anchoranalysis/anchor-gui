@@ -32,6 +32,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
+import java.util.Optional;
 
 import javax.swing.AbstractAction;
 import javax.swing.BorderFactory;
@@ -75,16 +76,6 @@ public class ProposerFailureDescriptionPanel extends StatePanel<ProposerFailureD
 	// If set to a string, we always expand a node of this name
 	// If empty we expand all nodes
 	private String alwaysExpandNode = "";
-	
-	public ErrorNodeImpl getSelectedNode() {
-		if (tree.getSelectionPath()!=null) {
-			Object o = tree.getSelectionPath().getLastPathComponent();
-			ErrorNodeImpl node = (ErrorNodeImpl) o;
-			return node;	
-		} else {
-			return null;
-		}
-	}
 	
 	private class SetExpandAction extends AbstractAction {
 
@@ -266,10 +257,7 @@ public class ProposerFailureDescriptionPanel extends StatePanel<ProposerFailureD
 
 		public CustomTreePath(TreePath parent, Object lastElement) {
 			super(parent, lastElement);
-			// TODO Auto-generated constructor stub
 		}
-		
-		
 	}
 	
 	protected void walk(JTree jTree, ErrorNodeImpl o, String nodeName, TreePath path ){
@@ -322,22 +310,22 @@ public class ProposerFailureDescriptionPanel extends StatePanel<ProposerFailureD
 
 	
 	@Override
-	public IPropertyValueSendable<IntArray> getSelectMarksSendable() {
-		return null;
+	public Optional<IPropertyValueSendable<IntArray>> getSelectMarksSendable() {
+		return Optional.empty();
 	}
 
 	@Override
-	public IPropertyValueReceivable<IntArray> getSelectMarksReceivable() {
-		return null;
+	public Optional<IPropertyValueReceivable<IntArray>> getSelectMarksReceivable() {
+		return Optional.empty();
 	}
 
 	@Override
-	public IPropertyValueReceivable<OverlayCollection> getSelectOverlayCollectionReceivable() {
-		return null;
+	public Optional<IPropertyValueReceivable<OverlayCollection>> getSelectOverlayCollectionReceivable() {
+		return Optional.empty();
 	}
 
 	@Override
-	public IPropertyValueReceivable<Integer> getSelectIndexReceivable() {
-		return null;
+	public Optional<IPropertyValueReceivable<Integer>> getSelectIndexReceivable() {
+		return Optional.empty();
 	}
 }

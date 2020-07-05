@@ -31,6 +31,7 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
+import java.util.Optional;
 
 import javax.swing.AbstractAction;
 import javax.swing.BorderFactory;
@@ -133,7 +134,6 @@ public class KernelIterDescriptionNavigatorPanel extends StatePanel<KernelIterDe
 		public FindKernelAction( String title, boolean forward) {
 	        super(title, null);
 	        this.forward = forward;
-	        //putValue( ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_RIGHT, InputEvent.CTRL_MASK) );
 	    }
 	    @Override
 		public void actionPerformed(ActionEvent e) {
@@ -218,37 +218,18 @@ public class KernelIterDescriptionNavigatorPanel extends StatePanel<KernelIterDe
 		
 		
 		JPanel panelBottom = new JPanel();
-//		panelBottom.setLayout( new GridLayout(2,1) );
-//		panelBottom.setBorder( BorderFactory.createEmptyBorder(0, 0, 0, 0) );
-//		panelBottom.add( this.label );
-//		panelBottom.add( this.kernelFailurePanel.getPanel() );
 		panelBottom.setLayout( new BorderLayout() );
 		panelBottom.setBorder( BorderFactory.createEmptyBorder(0, 0, 0, 0) );
 		panelBottom.add( this.label, BorderLayout.NORTH );
 		panelBottom.add( this.kernelFailurePanel.getPanel(), BorderLayout.CENTER );
-		
-
-		//panelBottom.setPreferredSize( new Dimension(300,100) );
-		//panelBottom.setMinimumSize( new Dimension(300,100) );
-		
-		//this.kernelFailurePanel.setMaximumSize( new Dimension(300,100) );
-		
-		//panel.add( panelBottom, BorderLayout.SOUTH);
 
 		// All the different search filters
 		JPanel filterPanel = createFilterPanel();
 		filterPanel.setMinimumSize( new Dimension(300, 200 ));
 		
-		
-		
-		//panel.add( filterPanel, BorderLayout.CENTER );
-		
 		JSplitPane splitPane = new JSplitPane( JSplitPane.VERTICAL_SPLIT, filterPanel, panelBottom );
-		//splitPane.setResizeWeight(1.0);
 		
 		panel.add( splitPane );
-		
-		
 		
 		updateChoosePanelFromCurrentSelection();
 	}
@@ -308,14 +289,6 @@ public class KernelIterDescriptionNavigatorPanel extends StatePanel<KernelIterDe
 		this.label.setText( s.toString() );
 		
 		kernelFailurePanel.updateState( state.getNoProposalReason() );
-		
-		
-		 
-		// Scroll to top of the text
-		//this.label.setCaretPosition(0);
-		//this.label.scrollRectToVisible(new Rectangle(0,0,2, 2));
-		//JViewport jv = this.labelScrollPane.getViewport();  
-		//jv.setViewPosition(new Point(0,0)); 
 	}
 
 	private void updateChoosePanelFromCurrentSelection() {
@@ -328,48 +301,46 @@ public class KernelIterDescriptionNavigatorPanel extends StatePanel<KernelIterDe
 	}
 	
 	@Override
-	public IPropertyValueSendable<IntArray> getSelectMarksSendable() {
-		return new IPropertyValueSendable<IntArray>() {
-
-			@Override
-			public void setPropertyValue(IntArray value, boolean adjusting) {
-				
-				if (!toggleActionReceiveMarks.getToggleState()) {
-					return;
+	public Optional<IPropertyValueSendable<IntArray>> getSelectMarksSendable() {
+		return Optional.of(
+			(IntArray value, boolean adjusting) -> {
+			
+				if (toggleActionReceiveMarks.isToggleState()) {
+					currentSelection.setCurrentSelection( value.getArr() );
+					updateChoosePanelFromCurrentSelection();
 				}
-				
-				currentSelection.setCurrentSelection( value.getArr() );
-				updateChoosePanelFromCurrentSelection();
 			}
-		};
+		);
 	}
 
 
 	@Override
-	public IPropertyValueReceivable<IntArray> getSelectMarksReceivable() {
-		return null;
+	public Optional<IPropertyValueReceivable<IntArray>> getSelectMarksReceivable() {
+		return Optional.empty();
 	}
 
 
 	@Override
-	public IPropertyValueReceivable<OverlayCollection> getSelectOverlayCollectionReceivable() {
-		return null;
+	public Optional<IPropertyValueReceivable<OverlayCollection>> getSelectOverlayCollectionReceivable() {
+		return Optional.empty();
 	}
 
 
 	@Override
-	public IPropertyValueReceivable<Integer> getSelectIndexReceivable() {
-		return new IPropertyValueReceivable<Integer>() {
+	public Optional<IPropertyValueReceivable<Integer>> getSelectIndexReceivable() {
+		return Optional.of(
+			new IPropertyValueReceivable<Integer>() {
 
-			@Override
-			public void addPropertyValueChangeListener(PropertyValueChangeListener<Integer> changeListener) {
-				listeners.add( PropertyValueChangeListener.class, changeListener );
+				@Override
+				public void addPropertyValueChangeListener(PropertyValueChangeListener<Integer> changeListener) {
+					listeners.add( PropertyValueChangeListener.class, changeListener );
+				}
+	
+				@Override
+				public void removePropertyValueChangeListener(PropertyValueChangeListener<Integer> changeListener) {
+					listeners.remove( PropertyValueChangeListener.class, changeListener);
+				}
 			}
-
-			@Override
-			public void removePropertyValueChangeListener(PropertyValueChangeListener<Integer> changeListener) {
-				listeners.remove( PropertyValueChangeListener.class, changeListener);
-			}
-		};
+		);
 	}
 }

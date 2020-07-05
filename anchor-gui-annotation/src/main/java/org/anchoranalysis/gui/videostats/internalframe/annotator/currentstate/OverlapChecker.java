@@ -37,7 +37,7 @@ import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.feature.calc.FeatureCalcException;
 import org.anchoranalysis.feature.nrg.NRGStack;
 import org.anchoranalysis.gui.videostats.internalframe.annotator.tool.ToolErrorReporter;
-import org.anchoranalysis.image.extent.ImageDim;
+import org.anchoranalysis.image.extent.ImageDimensions;
 
 
 // Always uses the first region
@@ -51,7 +51,7 @@ class OverlapChecker {
 	private ToolErrorReporter errorReporter;
 	private RegionMap regionMap;
 	
-	public OverlapChecker(ImageDim dim, RegionMap regionMap, ToolErrorReporter errorReporter) {
+	public OverlapChecker(ImageDimensions dim, RegionMap regionMap, ToolErrorReporter errorReporter) {
 		super();
 		this.nrgStack = new NRGStack(dim);
 		this.errorReporter = errorReporter;

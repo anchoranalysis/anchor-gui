@@ -31,26 +31,14 @@ import org.anchoranalysis.anchor.mpp.regionmap.RegionMapSingleton;
  */
 
 public class ExportTaskMergedCfgNRGInstantState extends ExportTaskRasterGeneratorFromBoundedIndexContainer<CfgNRGInstantState> {
-
-	
-	
-	// START BEAN PROPERTIES
-	
-	// END BEAN PROPERTIES
-	
-	// TRANSIENT STATE
-	private MergedContainerBridge containerBridge;
-	
-	public ExportTaskMergedCfgNRGInstantState() {
-		super();
-	}
 	
 	public void init() {
-		containerBridge = new MergedContainerBridge(
-			() -> RegionMapSingleton.instance().membershipWithFlagsForIndex(
-				GlobalRegionIdentifiers.SUBMARK_INSIDE
-			)	
+		super.setBridge(
+			new MergedContainerBridge(
+				() -> RegionMapSingleton.instance().membershipWithFlagsForIndex(
+					GlobalRegionIdentifiers.SUBMARK_INSIDE
+				)
+			)
 		);
-		super.setBridge(containerBridge);
 	}
 }

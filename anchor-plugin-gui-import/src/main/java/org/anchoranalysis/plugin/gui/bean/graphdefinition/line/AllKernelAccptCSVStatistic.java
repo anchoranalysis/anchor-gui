@@ -1,6 +1,6 @@
 package org.anchoranalysis.plugin.gui.bean.graphdefinition.line;
 
-import org.anchoranalysis.anchor.graph.index.LinePlot.YValGetter;
+import org.anchoranalysis.anchor.plot.index.LinePlot.YValGetter;
 import org.anchoranalysis.core.index.GetOperationFailedException;
 
 /*

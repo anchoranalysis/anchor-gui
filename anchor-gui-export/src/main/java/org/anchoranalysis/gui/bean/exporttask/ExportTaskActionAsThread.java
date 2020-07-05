@@ -43,16 +43,16 @@ public class ExportTaskActionAsThread extends AbstractAction {
 	 */
 	private static final long serialVersionUID = -3944294960260017562L;
 	
-	private ExportTaskCommand command;	
+	private transient ExportTaskCommand command;	
 	
 	public static class ExportTaskCommand {
-		private IExportTask exportTask;
+		private ExportTask exportTask;
 		private ExportTaskParams exportTaskParams;
 		private JFrame parentFrame;
 		private boolean showMessageBoxes;
 		private ErrorReporter errorReporter;
 		
-		public ExportTaskCommand(IExportTask exportTask,
+		public ExportTaskCommand(ExportTask exportTask,
 				ExportTaskParams exportTaskParams, JFrame parentFrame, boolean showMessageBoxes, ErrorReporter errorReporter ) {
 			super();
 			this.exportTask = exportTask;
@@ -68,7 +68,7 @@ public class ExportTaskActionAsThread extends AbstractAction {
 			
 			try {
 				
-				exportTask.init( );
+				exportTask.init();
 				
 				int min = exportTask.getMinProgress(exportTaskParams);
 				
@@ -104,7 +104,7 @@ public class ExportTaskActionAsThread extends AbstractAction {
 			}
 		}
 
-		public IExportTask getExportTask() {
+		public ExportTask getExportTask() {
 			return exportTask;
 		}
 	}

@@ -1,7 +1,7 @@
 package org.anchoranalysis.gui.interactivebrowser;
 
 import org.anchoranalysis.anchor.mpp.bean.cfg.CfgGen;
-import org.anchoranalysis.anchor.mpp.feature.bean.nrgscheme.NRGScheme;
+import org.anchoranalysis.anchor.mpp.feature.nrg.scheme.NRGScheme;
 
 /*
  * #%L

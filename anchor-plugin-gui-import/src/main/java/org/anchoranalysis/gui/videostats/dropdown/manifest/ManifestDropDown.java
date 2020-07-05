@@ -175,7 +175,9 @@ public class ManifestDropDown {
 
 	private FinderSerializedObject<KernelProposer<CfgNRGPixelized>> createFinderKernelProposer( VideoStatsModuleGlobalParams mpg ) {
 		FinderSerializedObject<KernelProposer<CfgNRGPixelized>> finderKernelProposer = new FinderSerializedObject<>("kernelProposer", mpg.getLogErrorReporter().getErrorReporter() );
-		finderKernelProposer.doFind(manifests.getExperimentManifest());
+		finderKernelProposer.doFind(
+			manifests.getExperimentManifest().get()	// NOSONAR
+		);
 		return finderKernelProposer;
 	}
 	
@@ -402,7 +404,7 @@ public class ManifestDropDown {
 	private Operation<Cfg, OperationFailedException> getCfgChangeException(FinderSerializedObject<Cfg> finderFinalCfg) {
 		return () -> {
 			try {
-				return finderFinalCfg.operation().doOperation();
+				return finderFinalCfg.operation().doOperation().get();
 			} catch (IOException e) {
 				throw new OperationFailedException(e);
 			}
@@ -426,9 +428,11 @@ public class ManifestDropDown {
 								throw new GetOperationFailedException(e);
 							}
 							
-							LoadContainer<CfgNRGInstantState> lc = new LoadContainer<CfgNRGInstantState>();
+							LoadContainer<CfgNRGInstantState> lc = new LoadContainer<>();
 							lc.setExpensiveLoad(false);
-							lc.setCntr( new SingleContainer<CfgNRGInstantState>(instantState, 0, false));
+							lc.setCntr(
+								new SingleContainer<>(instantState, 0, false)
+							);
 							return lc;
 						}
 					);

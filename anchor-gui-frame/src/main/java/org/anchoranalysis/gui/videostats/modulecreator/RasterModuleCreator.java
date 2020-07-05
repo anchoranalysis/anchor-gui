@@ -1,5 +1,7 @@
 package org.anchoranalysis.gui.videostats.modulecreator;
 
+import java.util.Optional;
+
 import org.anchoranalysis.anchor.mpp.cfg.Cfg;
 import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.error.OperationFailedException;
@@ -11,7 +13,7 @@ import org.anchoranalysis.gui.videostats.dropdown.VideoStatsModuleGlobalParams;
 import org.anchoranalysis.gui.videostats.dropdown.common.NRGBackground;
 import org.anchoranalysis.gui.videostats.module.VideoStatsModuleCreateException;
 import org.anchoranalysis.gui.videostats.operation.combine.IVideoStatsOperationCombine;
-import org.anchoranalysis.image.objectmask.ObjectCollection;
+import org.anchoranalysis.image.object.ObjectCollection;
 
 public class RasterModuleCreator extends VideoStatsModuleCreator {
 	
@@ -23,8 +25,8 @@ public class RasterModuleCreator extends VideoStatsModuleCreator {
 	private IVideoStatsOperationCombine combiner = new IVideoStatsOperationCombine() {
 
 		@Override
-		public Operation<Cfg,OperationFailedException> getCfg() {
-			return null;
+		public Optional<Operation<Cfg,OperationFailedException>> getCfg() {
+			return Optional.empty();
 		}
 
 		@Override
@@ -33,8 +35,8 @@ public class RasterModuleCreator extends VideoStatsModuleCreator {
 		}
 
 		@Override
-		public Operation<ObjectCollection,OperationFailedException> getObjMaskCollection() {
-			return null;
+		public Optional<Operation<ObjectCollection, OperationFailedException>> getObjMaskCollection() {
+			return Optional.empty();
 		}
 
 		@Override
@@ -81,7 +83,7 @@ public class RasterModuleCreator extends VideoStatsModuleCreator {
 	}
 	
 	@Override
-	public IVideoStatsOperationCombine getCombiner() {
-		return combiner;
+	public Optional<IVideoStatsOperationCombine> getCombiner() {
+		return Optional.of(combiner);
 	}
 }

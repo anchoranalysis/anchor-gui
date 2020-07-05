@@ -38,26 +38,25 @@ import org.anchoranalysis.io.generator.IterableGenerator;
 import org.anchoranalysis.io.generator.sequence.SequenceMemory;
 import org.anchoranalysis.io.namestyle.IndexableOutputNameStyle;
 
-public class ExportTaskGenerator<IterableType> implements IExportTask {
+import lombok.AllArgsConstructor;
 
-	private IterableGenerator<IterableType> generator;
-	private JFrame parentFrame;
-	private IndexableOutputNameStyle outputNameStyle;
-	private SequenceMemory sequenceMemory;
-	private IterableType item;
-	
-	public ExportTaskGenerator(IterableGenerator<IterableType> generator, IterableType item, JFrame parentFrame, IndexableOutputNameStyle outputNameStyle, SequenceMemory sequenceMemory ) {
-		super();
-		this.generator = generator;
-		this.parentFrame = parentFrame;
-		this.outputNameStyle = outputNameStyle;
-		this.sequenceMemory = sequenceMemory;
-		this.item = item;
-	}
+/**
+ * 
+ * @author Owen Feehan
+ *
+ * @param <T> iterable-type
+ */
+@AllArgsConstructor
+public class ExportTaskGenerator<T> implements ExportTask {
+
+	private final IterableGenerator<T> generator;
+	private final T item;
+	private final JFrame parentFrame;
+	private final IndexableOutputNameStyle outputNameStyle;
+	private final SequenceMemory sequenceMemory;
 
 	@Override
 	public boolean hasNecessaryParams(ExportTaskParams params) {
-		//return createRasterGenerator.hasNecessaryParams(params) ;
 		return true;
 	}
 	
@@ -75,7 +74,7 @@ public class ExportTaskGenerator<IterableType> implements IExportTask {
 		
     	int numWritten = params.getOutputManager().getWriterCheckIfAllowed().write(
     		outputNameStyle,
-    		()->generator.getGenerator(),
+    		generator::getGenerator,
     		index
     	);
 		sequenceMemory.updateIndex(outputNameStyle.getOutputName(), index + numWritten );
@@ -109,6 +108,7 @@ public class ExportTaskGenerator<IterableType> implements IExportTask {
 
 	@Override
 	public void init() {
+		// NOTHING TO DO
 	}
 
 }

@@ -31,15 +31,15 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import javax.swing.JComboBox;
 import javax.swing.JPanel;
 import javax.swing.event.EventListenerList;
 
-import org.anchoranalysis.anchor.mpp.bean.cfg.CfgGen;
 import org.anchoranalysis.anchor.mpp.bean.init.MPPInitParams;
-import org.anchoranalysis.anchor.mpp.bean.regionmap.RegionMap;
 import org.anchoranalysis.core.error.CreateException;
+import org.anchoranalysis.core.error.friendly.AnchorImpossibleSituationException;
 import org.anchoranalysis.core.error.reporter.ErrorReporter;
 import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.gui.interactivebrowser.MarkEvaluatorRslvd;
@@ -56,7 +56,7 @@ public class EvaluatorChooser {
 	
 	private MarkEvaluatorSetForImage markEvaluatorSet;
 	
-	private ProposalOperationCreator evaluator;
+	private Optional<ProposalOperationCreator> evaluator = Optional.empty();
 	
 	private List<ProposalOperationCreatorFromProposer<?>> listEvaluators = new ArrayList<>(); 
 	private ErrorReporter errorReporter;
@@ -118,7 +118,9 @@ public class EvaluatorChooser {
 				}
 				
 				try {
-					evaluator = createProposerEvaluator(itemName);
+					evaluator = Optional.of(
+						createProposerEvaluator(itemName)
+					);
 				} catch (CreateException e1) {
 					errorReporter.recordError(EvaluatorChooser.class, e1);
 				}
@@ -162,7 +164,7 @@ public class EvaluatorChooser {
 
 		if (evaluatorName==null || evaluatorName.isEmpty()) {
 			markEvaluatorSelected = null;
-			evaluator = null;
+			evaluator = Optional.empty();
 			fireMarkEvaluatorChangedEvent();
 			return;
 		}
@@ -173,7 +175,7 @@ public class EvaluatorChooser {
 		// If it's called before the init
 		if (typeName==null) {
 			markEvaluatorSelected = null;
-			evaluator = null;
+			evaluator = Optional.empty();
 			fireMarkEvaluatorChangedEvent();
 			return;
 		}
@@ -230,44 +232,31 @@ public class EvaluatorChooser {
 				return item.createEvaluator(itemName);
 			}
 		}
-		
-		assert false;
-		return null;
+		throw new AnchorImpossibleSituationException();
 	}
 	
 	public JPanel getPanel() {
 		return panel;
 	}
 
-	public ProposalOperationCreator evaluator() {
+	public Optional<ProposalOperationCreator> evaluator() {
 		return evaluator;
 	}
-	
-	
+		
 	public EvaluatorWithContextGetter evaluatorWithContext() {
 		return () -> {
-			return new EvaluatorWithContext(
-				evaluator,
-				evaluator!=null ? markEvaluatorSelected.getNRGStack() : null,
-				evaluator!=null ? cfgGen() : null,
-				evaluator!=null ? regionMap() : null
+			if (!evaluator.isPresent() || markEvaluatorSelected==null) {
+				return Optional.empty();
+			}
+			
+			return Optional.of(
+				new EvaluatorWithContext(
+					evaluator.get(),
+					markEvaluatorSelected.getNRGStack(),
+					markEvaluatorSelected.getCfgGen(),
+					markEvaluatorSelected.getNrgScheme().getRegionMap()
+				)
 			);
 		};
-	}
-	
-	private CfgGen cfgGen() {
-		if (markEvaluatorSelected!=null) {
-			return markEvaluatorSelected.getCfgGen();
-		} else {
-			return null;
-		}
-	}
-	
-	private RegionMap regionMap() {
-		if (markEvaluatorSelected!=null) {
-			return markEvaluatorSelected.getNrgScheme().getRegionMap();
-		} else {
-			return null;
-		}
 	}
 }

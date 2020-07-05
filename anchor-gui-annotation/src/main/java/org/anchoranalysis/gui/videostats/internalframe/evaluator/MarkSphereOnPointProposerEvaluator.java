@@ -43,19 +43,19 @@ import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.geometry.Point3d;
 import org.anchoranalysis.gui.frame.overlays.ProposedCfg;
 import org.anchoranalysis.gui.videostats.internalframe.ProposalOperation;
-import org.anchoranalysis.image.extent.ImageDim;
+import org.anchoranalysis.image.extent.ImageDimensions;
 
 public class MarkSphereOnPointProposerEvaluator implements ProposalOperationCreator {
 
 	private RGBColor colorMark = new RGBColor(Color.YELLOW);
 	
-	private ImageDim dim;
+	private ImageDimensions dim;
 	
 	private static RegionMembershipWithFlags regionMembership = RegionMapSingleton.instance().membershipWithFlagsForIndex(
 		GlobalRegionIdentifiers.SUBMARK_INSIDE
 	);
 	
-	public MarkSphereOnPointProposerEvaluator(ImageDim dim) {
+	public MarkSphereOnPointProposerEvaluator(ImageDimensions dim) {
 		super();
 		this.dim = dim;
 	}

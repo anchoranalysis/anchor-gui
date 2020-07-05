@@ -28,17 +28,18 @@ package org.anchoranalysis.gui.videostats.dropdown.modulecreator.graph;
 
 
 import java.util.Iterator;
+import java.util.Optional;
 
-import org.anchoranalysis.anchor.graph.bean.GraphDefinition;
+import org.anchoranalysis.anchor.plot.bean.GraphDefinition;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.index.container.IBoundedIndexContainer;
-import org.anchoranalysis.gui.graph.BoundedIndexContainerIterator;
-import org.anchoranalysis.gui.graph.panel.ClickableGraphFactory;
-import org.anchoranalysis.gui.graph.panel.ClickableGraphInstance;
-import org.anchoranalysis.gui.graph.visualvm.InternalFrameGraphAsModule;
 import org.anchoranalysis.gui.io.loader.manifest.finder.FinderCSVStats;
 import org.anchoranalysis.gui.io.loader.manifest.finder.csvstatistic.CSVStatistic;
+import org.anchoranalysis.gui.plot.BoundedIndexContainerIterator;
+import org.anchoranalysis.gui.plot.panel.ClickableGraphFactory;
+import org.anchoranalysis.gui.plot.panel.ClickableGraphInstance;
+import org.anchoranalysis.gui.plot.visualvm.InternalFrameGraphAsModule;
 import org.anchoranalysis.gui.reassign.FrameTitleGenerator;
 import org.anchoranalysis.gui.videostats.IModuleCreatorDefaultState;
 import org.anchoranalysis.gui.videostats.dropdown.VideoStatsModuleGlobalParams;
@@ -65,7 +66,7 @@ public class GraphCSVStatisticModuleCreator extends VideoStatsModuleCreatorConte
 	}
 
 	@Override
-	public IModuleCreatorDefaultState moduleCreator(DefaultModuleStateManager defaultStateManager, String namePrefix,
+	public Optional<IModuleCreatorDefaultState> moduleCreator(DefaultModuleStateManager defaultStateManager, String namePrefix,
 			VideoStatsModuleGlobalParams mpg) throws VideoStatsModuleCreateException {
 
 		try {
@@ -77,7 +78,7 @@ public class GraphCSVStatisticModuleCreator extends VideoStatsModuleCreatorConte
 			CSVStatistic stat = cntr.get(minIndex);
 			
 			if (!definition.isItemAccepted(stat) ) {
-				return null;
+				return Optional.empty();
 			}
 			
 			Iterator<CSVStatistic> itr = new BoundedIndexContainerIterator<>(cntr, 1000);
@@ -87,11 +88,11 @@ public class GraphCSVStatisticModuleCreator extends VideoStatsModuleCreatorConte
 			String graphFrameTitle = new FrameTitleGenerator().genFramePrefix( namePrefix, title() );
 			
 			InternalFrameGraphAsModule frame = new InternalFrameGraphAsModule( graphFrameTitle, graphInstance );
-			return frame.moduleCreator();
+			return Optional.of(
+				frame.moduleCreator()
+			);
 
-		} catch (GetOperationFailedException e) {
-			throw new VideoStatsModuleCreateException(e);
-		} catch (CreateException e) {
+		} catch (GetOperationFailedException | CreateException e) {
 			throw new VideoStatsModuleCreateException(e);
 		}
 	}
@@ -102,7 +103,9 @@ public class GraphCSVStatisticModuleCreator extends VideoStatsModuleCreatorConte
 	}
 
 	@Override
-	public String shortTitle() {
-		return definition.getShortTitle();
+	public Optional<String> shortTitle() {
+		return Optional.of(
+			definition.getShortTitle()
+		);
 	}
 }

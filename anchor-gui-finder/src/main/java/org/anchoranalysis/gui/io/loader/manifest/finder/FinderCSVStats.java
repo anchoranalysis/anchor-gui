@@ -29,6 +29,7 @@ package org.anchoranalysis.gui.io.loader.manifest.finder;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.anchoranalysis.core.error.reporter.ErrorReporter;
 import org.anchoranalysis.core.index.GetOperationFailedException;
@@ -54,14 +55,49 @@ public class FinderCSVStats extends FinderSingleFile {
 
 	private String outputName;
 	
-	private IBoundedIndexContainer<CSVStatistic> statsCntr;
+	private Optional<IBoundedIndexContainer<CSVStatistic>> statsCntr = Optional.empty();
 	
 	public FinderCSVStats(String outputName, ErrorReporter errorReporter) {
 		super(errorReporter);
 		this.outputName = outputName;
 	}
 
-	private static List<FileWrite> findIncrementalCSVStats( ManifestRecorder manifestRecorder, String type, String outputName ) throws MultipleFilesException {
+	public IBoundedIndexContainer<CSVStatistic> get() throws GetOperationFailedException {
+		
+		assert( exists() );
+		
+		if (!statsCntr.isPresent()) {
+			statsCntr = Optional.of(
+				createContainer(getFoundFile())
+			);
+		}
+		return statsCntr.get();
+	}
+
+	@Override
+	protected Optional<FileWrite> findFile(ManifestRecorder manifestRecorder)
+			throws MultipleFilesException {
+		
+		if (outputName.isEmpty()) {
+			return Optional.empty(); 
+		}
+		
+		List<FileWrite> found = findIncrementalCSVStats( manifestRecorder, "csv", outputName );
+		
+		if (found.size()>=2) {
+			throw new MultipleFilesException("Multiple matching manifest descriptions find");
+		}
+		
+		if (found.isEmpty()) {
+			return Optional.empty();
+		}
+		return Optional.of(
+			found.get(0)
+		);
+	}
+	
+
+	private static List<FileWrite> findIncrementalCSVStats( ManifestRecorder manifestRecorder, String type, String outputName ) {
 		
 		FileWriteAnd match = new FileWriteAnd();
 		
@@ -79,56 +115,31 @@ public class FinderCSVStats extends FinderSingleFile {
 		
 		ArrayList<FileWrite> foundList = new ArrayList<>();
 		manifestRecorder.getRootFolder().findFile(foundList, match, false);
-		
 		return foundList;
 	}
 
-
-	private IBoundedIndexContainer<CSVStatistic> createCtnr( FileWrite fileWrite )
+	private IBoundedIndexContainer<CSVStatistic> createContainer( FileWrite fileWrite )
 			throws GetOperationFailedException {
-		
-		
+				
 		try {
-			CSVStatisticLoader loader = null;
-			if (fileWrite.getManifestDescription().getFunction().equals("event_aggregate_stats")) {
-				loader = new CSVStatisticLoaderEventAggregate();
-			} else if (fileWrite.getManifestDescription().getFunction().equals("interval_aggregate_stats")) {
-				loader = new CSVStatisticLoaderIntervalAggregate();
-			}
+			CSVStatisticLoader loader = createStatisticLoader(
+				fileWrite.getManifestDescription().getFunction()
+			);
 			return loader.createContainerFromCSV(fileWrite.calcPath() );
 			
 		} catch (CSVReaderException e) {
 			throw new GetOperationFailedException(e);
 		}
 	}
-
-	public IBoundedIndexContainer<CSVStatistic> get() throws GetOperationFailedException {
-		
-		assert( exists() );
-		
-		if (statsCntr==null) {
-			statsCntr = createCtnr( getFoundFile() );
+	
+	private CSVStatisticLoader createStatisticLoader(String function) throws GetOperationFailedException {
+		if (function.equals("event_aggregate_stats")) {
+			return new CSVStatisticLoaderEventAggregate();
+		} else if (function.equals("interval_aggregate_stats")) {
+			return new CSVStatisticLoaderIntervalAggregate();
+		} else {
+			throw new GetOperationFailedException("Cannot determine which CSVStatisticLoader to use");
 		}
-		return statsCntr;
 	}
-
-	@Override
-	protected FileWrite findFile(ManifestRecorder manifestRecorder)
-			throws MultipleFilesException {
-		
-		if (outputName.isEmpty()) {
-			return null; 
-		}
-		
-		List<FileWrite> found = findIncrementalCSVStats( manifestRecorder, "csv", outputName );
-		
-		if (found.size()>=2) {
-			throw new MultipleFilesException("Multiple matching manifest descriptions find");
-		}
-		
-		if (found.size()==0) {
-			return null;
-		}
-		return found.get(0);
-	}
+	
 }

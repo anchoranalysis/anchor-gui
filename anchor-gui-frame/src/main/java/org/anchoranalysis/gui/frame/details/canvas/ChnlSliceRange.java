@@ -27,13 +27,13 @@ package org.anchoranalysis.gui.frame.details.canvas;
  */
 
 import org.anchoranalysis.core.index.container.IBoundedRange;
-import org.anchoranalysis.image.extent.ImageDim;
+import org.anchoranalysis.image.extent.ImageDimensions;
 
 class ChnlSliceRange implements IBoundedRange {
 
-	private ImageDim sd;
+	private ImageDimensions sd;
 
-	public ChnlSliceRange(ImageDim sd) {
+	public ChnlSliceRange(ImageDimensions sd) {
 		super();
 		this.sd = sd;
 	}

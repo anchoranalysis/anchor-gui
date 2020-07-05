@@ -1,5 +1,7 @@
 package org.anchoranalysis.gui.videostats.dropdown.addoverlays;
 
+
+
 /*
  * #%L
  * anchor-gui
@@ -64,7 +66,7 @@ public class AdderAddOverlaysWithStack implements IAddVideoStatsModule {
 			IRoutableReceivable<PropertyValueChangeEvent<OverlayCollection>> rec = link.getOverlays().getReceivable();
 			if (rec!=null) {
 			
-				link.getOverlaysWithStack().add( 
+				link.getOverlaysWithStack().add(
 					new OverlayCollectionWithStackAdaptorRouted(
 						rec,
 						module.getNrgStackGetter(),

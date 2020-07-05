@@ -34,12 +34,12 @@ import java.awt.GraphicsConfiguration;
 import org.anchoranalysis.gui.frame.canvas.zoom.DefaultZoomSuggestor;
 import org.anchoranalysis.gui.frame.canvas.zoom.ZoomScale;
 import org.anchoranalysis.image.extent.Extent;
-import org.anchoranalysis.image.extent.ImageDim;
+import org.anchoranalysis.image.extent.ImageDimensions;
 
 /**
  * The size of an image after it has been zoomed to fit in a certain % of the screen-size
  * 
- * @author FEEHANO
+ * @author Owen Feehan
  *
  */
 class SizeOfZoomedImage {
@@ -50,7 +50,7 @@ class SizeOfZoomedImage {
 		int zoomWidthSubtract,
 		int zoomHeightSubtract,
 		GraphicsConfiguration graphicsConfiguration,
-		ImageDim imageSize	
+		ImageDimensions imageSize	
 	) {
 		Extent e = fractionScreenBounds(widthFractionScreen, heightFractionScreen, graphicsConfiguration);
 		Extent eAdjusted = addXY(e, -zoomWidthSubtract, -zoomHeightSubtract);
@@ -58,7 +58,7 @@ class SizeOfZoomedImage {
 	}
 	
 	/** The size of a zoomed-image after being zoomed to fit within bounds */ 
-	private static Extent sizeWithinBounds( ImageDim imageSize, Extent maxBounds ) {
+	private static Extent sizeWithinBounds( ImageDimensions imageSize, Extent maxBounds ) {
 		DefaultZoomSuggestor zoomSugg = new DefaultZoomSuggestor( maxBounds.getX(), maxBounds.getY() );
 		ZoomScale zs = zoomSugg.suggestDefaultZoomFor(imageSize);
 		

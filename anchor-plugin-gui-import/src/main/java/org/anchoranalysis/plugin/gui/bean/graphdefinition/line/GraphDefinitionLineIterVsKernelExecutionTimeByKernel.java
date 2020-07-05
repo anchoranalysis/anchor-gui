@@ -4,7 +4,7 @@ package org.anchoranalysis.plugin.gui.bean.graphdefinition.line;
  * #%L
  * anchor-plugin-gui-import
  * %%
- * Copyright (C) 2010 - 2019 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann la Roche
+ * Copyright (C) 2010 - 2020 Owen Feehan
  * %%
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -26,13 +26,13 @@ package org.anchoranalysis.plugin.gui.bean.graphdefinition.line;
  * #L%
  */
 
-import org.anchoranalysis.anchor.graph.GetForSeries;
-import org.anchoranalysis.anchor.graph.index.LinePlot.YValGetter;
 import org.anchoranalysis.anchor.mpp.feature.nrg.cfg.CfgNRGPixelized;
-import org.anchoranalysis.anchor.mpp.graph.execution.KernelExecutionTime;
+import org.anchoranalysis.anchor.mpp.plot.execution.KernelExecutionTime;
+import org.anchoranalysis.anchor.plot.GetForSeries;
+import org.anchoranalysis.anchor.plot.index.LinePlot.YValGetter;
 import org.anchoranalysis.core.index.GetOperationFailedException;
-import org.anchoranalysis.gui.graph.creator.IterAndExecutionTime;
-import org.anchoranalysis.gui.graph.definition.line.GraphDefinitionLineIterVsKernelExecutionTime;
+import org.anchoranalysis.gui.plot.creator.IterAndExecutionTime;
+import org.anchoranalysis.gui.plot.definition.line.GraphDefinitionLineIterVsKernelExecutionTime;
 import org.anchoranalysis.mpp.sgmn.bean.kernel.proposer.KernelProposer;
 
 public class GraphDefinitionLineIterVsKernelExecutionTimeByKernel extends GraphDefinitionLineIterVsKernelExecutionTime {

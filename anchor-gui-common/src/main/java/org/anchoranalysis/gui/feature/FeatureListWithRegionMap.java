@@ -36,6 +36,7 @@ import java.util.List;
 import org.anchoranalysis.anchor.mpp.bean.regionmap.RegionMap;
 import org.anchoranalysis.feature.bean.Feature;
 import org.anchoranalysis.feature.bean.list.FeatureList;
+import org.anchoranalysis.feature.bean.list.FeatureListFactory;
 import org.anchoranalysis.feature.input.FeatureInput;
 
 // Associates a RegionMap with each feature
@@ -52,11 +53,10 @@ public class FeatureListWithRegionMap<T extends FeatureInput> implements Iterabl
 	}
 	
 	public FeatureList<T> createFeatureList() {
-		FeatureList<T> fl = new FeatureList<>();
-		for (FeatureWithRegionMap<T> f : list) {
-			fl.add(f.getFeature());
-		}
-		return fl;
+		return FeatureListFactory.mapFrom(
+			list,
+			FeatureWithRegionMap::getFeature
+		);
 	}
 	
 	@SuppressWarnings("unchecked")

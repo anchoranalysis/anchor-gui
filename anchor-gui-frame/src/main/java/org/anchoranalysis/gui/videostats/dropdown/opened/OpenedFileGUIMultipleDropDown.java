@@ -29,6 +29,7 @@ package org.anchoranalysis.gui.videostats.dropdown.opened;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import javax.swing.JPopupMenu;
 
@@ -139,8 +140,10 @@ public class OpenedFileGUIMultipleDropDown {
 		all.add(or);
 		
 		List<IVideoStatsOperationCombine> listCombined = new ArrayList<>();
-		if (or.canCombineOperations()) {
-			listCombined.add(or.getCombiner());
+		if (or.getCombiner().isPresent()) {
+			listCombined.add(
+				or.getCombiner().get()
+			);
 		}
 		
 		// We loop through all the other menus, looking to see if they have the same item. We accept an item if they
@@ -152,8 +155,8 @@ public class OpenedFileGUIMultipleDropDown {
 			}
 			all.add(sameNameItem);
 			
-			if (sameNameItem.canCombineOperations()) {
-				listCombined.add(sameNameItem.getCombiner());
+			if (sameNameItem.getCombiner().isPresent()) {
+				listCombined.add(sameNameItem.getCombiner().get());
 			}
 		}
 		outIndividually.add( all );
@@ -208,12 +211,12 @@ public class OpenedFileGUIMultipleDropDown {
 		
 		List<NamedRasterSet> list = new ArrayList<>();
 		for( IVideoStatsOperationCombine op : listCombined ) {
-			if (op.getNrgBackground()!=null && op.getCfg()==null && op.getObjMaskCollection()==null) {
+			if (op.getNrgBackground()!=null && !op.getCfg().isPresent() && !op.getObjMaskCollection().isPresent()) {
 				list.add( new NamedRasterSet( op.generateName(), op.getNrgBackground().getBackgroundSet()) );
 			}
 		}
 		
-		if (list.size()>0) {
+		if (!list.isEmpty()) {
 			RasterMultiModuleCreator creator = new RasterMultiModuleCreator(list,"multi-raster",mpg);
 			VideoStatsModuleCreatorAndAdder creatorAndAdder = new VideoStatsModuleCreatorAndAdder( new IdentityOperationWithProgressReporter<>(adder.createChild()), creator );
 			out.add( new VideoStatsOperationFromCreatorAndAdder("Multi Raster",creatorAndAdder, mpg.getThreadPool(), mpg.getLogErrorReporter() ) );		
@@ -244,14 +247,17 @@ public class OpenedFileGUIMultipleDropDown {
 		// First we make a MultRaster, from all that suppport MultiRaster
 		List<MultiInput<T>> list = new ArrayList<>();
 		for( IVideoStatsOperationCombine op : listCombined ) {
-			if (op.getNrgBackground()!=null && getObjFromOperationCombine.getObj(op)!=null) {
+			if (op.getNrgBackground()!=null && getObjFromOperationCombine.getObj(op).isPresent()) {
 				
-				MultiInput<T> multiInput = new MultiInput<>(
-					op.generateName(),
-					op.getNrgBackground(),
-					getObjFromOperationCombine.getObj(op)
-				); 
-				list.add( multiInput );
+				Optional<Operation<T,OperationFailedException>> opt = getObjFromOperationCombine.getObj(op);
+				if (opt.isPresent()) {
+					MultiInput<T> multiInput = new MultiInput<>(
+						op.generateName(),
+						op.getNrgBackground(),
+						opt.get()
+					); 
+					list.add( multiInput );
+				}
 			}
 		}
 		
@@ -278,7 +284,7 @@ public class OpenedFileGUIMultipleDropDown {
 	
 	@FunctionalInterface
 	private interface GetObjFromOperationCombine<T> {
-	  public Operation<T,OperationFailedException> getObj( IVideoStatsOperationCombine op );
+	  public Optional<Operation<T,OperationFailedException>> getObj( IVideoStatsOperationCombine op );
 	}
 	
 	

@@ -37,8 +37,8 @@ import org.anchoranalysis.gui.frame.canvas.zoom.ZoomScale;
 import org.anchoranalysis.gui.frame.display.BoundOverlayedDisplayStack;
 import org.anchoranalysis.image.extent.BoundingBox;
 import org.anchoranalysis.image.extent.Extent;
-import org.anchoranalysis.image.extent.ImageDim;
-import org.anchoranalysis.image.extent.ImageRes;
+import org.anchoranalysis.image.extent.ImageDimensions;
+import org.anchoranalysis.image.extent.ImageResolution;
 import org.anchoranalysis.image.scale.ScaleFactor;
 import org.anchoranalysis.image.voxel.datatype.VoxelDataType;
 
@@ -86,36 +86,36 @@ class DisplayStackViewportZoomed {
 				new ScaleFactor(zoomScale.getScale())
 			);
 		
-		assert( shiftedBox.getCrnrMin().getX() >= 0 );
-		assert( shiftedBox.getCrnrMin().getY() >= 0 );
+		assert( shiftedBox.cornerMin().getX() >= 0 );
+		assert( shiftedBox.cornerMin().getY() >= 0 );
 		
 		return shiftedBox;
 	}
 	
 
 	private int cnvrtCanvasXToImage( int val, ZoomScale zs ) {
-		return zs.removeScale(val) + delegate.getBBox().getCrnrMin().getX();
+		return zs.removeScale(val) + delegate.getBBox().cornerMin().getX();
 	}
 	
 	private int cnvrtCanvasYToImage( int val, ZoomScale zs ) {
-		return zs.removeScale(val) + delegate.getBBox().getCrnrMin().getY();
+		return zs.removeScale(val) + delegate.getBBox().cornerMin().getY();
 	}
 	
 	
 	public int cnvrtImageXToCanvas( int val ) {
-		return zoomScale.applyScale(val-delegate.getBBox().getCrnrMin().getX());
+		return zoomScale.applyScale(val-delegate.getBBox().cornerMin().getX());
 	}
 	
 	public int cnvrtImageYToCanvas( int val ) {
-		return zoomScale.applyScale(val-delegate.getBBox().getCrnrMin().getY());
+		return zoomScale.applyScale(val-delegate.getBBox().cornerMin().getY());
 	}
 		
 	public int cnvrtCanvasXToImage( int val ) {
-		return zoomScale.removeScale(val) + delegate.getBBox().getCrnrMin().getX();
+		return zoomScale.removeScale(val) + delegate.getBBox().cornerMin().getX();
 	}
 	
 	public int cnvrtCanvasYToImage( int val ) {
-		return zoomScale.removeScale(val) + delegate.getBBox().getCrnrMin().getY();
+		return zoomScale.removeScale(val) + delegate.getBBox().cornerMin().getY();
 	}
 	
 	
@@ -124,7 +124,7 @@ class DisplayStackViewportZoomed {
 		delegate.setDisplayStackEntireImage(displayStack);
 	}
 
-	public ImageDim getDimensionsEntire() {
+	public ImageDimensions getDimensionsEntire() {
 		return delegate.getDimensionsEntire();
 	}
 
@@ -136,13 +136,13 @@ class DisplayStackViewportZoomed {
 		this.zoomScale = zoomScale;
 	}
 	
-	public ImageDim createDimensionsEntireScaled() {
+	public ImageDimensions createDimensionsEntireScaled() {
 		return getDimensionsEntire().scaleXYBy(
 			new ScaleFactor(zoomScale.getScale())
 		);
 	}
 
-	public ImageRes getRes() {
+	public ImageResolution getRes() {
 		return delegate.getDimensionsEntire().getRes();
 	}
 

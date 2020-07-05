@@ -28,7 +28,7 @@ package org.anchoranalysis.gui.bean.exporttask;
 
 import org.anchoranalysis.bean.AnchorBean;
 
-public abstract class ExportTaskBean extends AnchorBean<ExportTaskBean> implements IExportTask {
+public abstract class ExportTaskBean extends AnchorBean<ExportTaskBean> implements ExportTask {
 
 	// START BEAN PROPERTIES
 	

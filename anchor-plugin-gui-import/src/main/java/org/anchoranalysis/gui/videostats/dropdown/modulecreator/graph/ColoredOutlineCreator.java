@@ -1,5 +1,7 @@
 package org.anchoranalysis.gui.videostats.dropdown.modulecreator.graph;
 
+import java.util.Optional;
+
 import org.anchoranalysis.anchor.mpp.feature.instantstate.CfgNRGInstantState;
 import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.index.GetOperationFailedException;
@@ -62,7 +64,7 @@ public class ColoredOutlineCreator extends VideoStatsModuleCreatorContext {
 	}
 
 	@Override
-	public IModuleCreatorDefaultState moduleCreator(DefaultModuleStateManager defaultStateManager, String namePrefix,
+	public Optional<IModuleCreatorDefaultState> moduleCreator(DefaultModuleStateManager defaultStateManager, String namePrefix,
 			VideoStatsModuleGlobalParams mpg) throws VideoStatsModuleCreateException {
 		
 		InternalFrameCfgNRGHistoryFolder imageFrame = new InternalFrameCfgNRGHistoryFolder(namePrefix);
@@ -74,7 +76,9 @@ public class ColoredOutlineCreator extends VideoStatsModuleCreatorContext {
 				mpg
 			);
 			
-			return imageFrame.moduleCreator(sliderState);
+			return Optional.of(
+				imageFrame.moduleCreator(sliderState)
+			);
 					
 		} catch (InitException e) {
 			throw new VideoStatsModuleCreateException(e);
@@ -89,7 +93,7 @@ public class ColoredOutlineCreator extends VideoStatsModuleCreatorContext {
 	}
 
 	@Override
-	public String shortTitle() {
-		return null;
+	public Optional<String> shortTitle() {
+		return Optional.empty();
 	}
 }

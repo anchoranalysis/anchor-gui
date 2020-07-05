@@ -60,8 +60,8 @@ import org.anchoranalysis.gui.frame.canvas.zoom.ZoomScale;
 import org.anchoranalysis.gui.frame.display.DisplayUpdate;
 import org.anchoranalysis.image.extent.BoundingBox;
 import org.anchoranalysis.image.extent.Extent;
-import org.anchoranalysis.image.extent.ImageDim;
-import org.anchoranalysis.image.extent.ImageRes;
+import org.anchoranalysis.image.extent.ImageDimensions;
+import org.anchoranalysis.image.extent.ImageResolution;
 import org.anchoranalysis.image.voxel.datatype.VoxelDataType;
 
 public class ImageCanvas {
@@ -254,7 +254,7 @@ public class ImageCanvas {
 		
 		assert( displayStackViewport.createDimensionsEntireScaled().contains(shiftedBox) );
 		
-		extentScrollbars.setValue( new Point2i(shiftedBox.getCrnrMin().getX(), shiftedBox.getCrnrMin().getY()) );
+		extentScrollbars.setValue( new Point2i(shiftedBox.cornerMin().getX(), shiftedBox.cornerMin().getY()) );
 		
 		updateStackViewportForImageExtnt( shiftedBox.extent() );
 	}
@@ -331,7 +331,7 @@ public class ImageCanvas {
 
 
 
-	private Extent calcExtntToRetrieveScaled( ImageDim sdScaled ) {
+	private Extent calcExtntToRetrieveScaled( ImageDimensions sdScaled ) {
 		// We calculate the size of the region based upon the current size of the canvas (if we can)
 	
 		if (imageCanvas.getWidth()>0) {
@@ -341,7 +341,7 @@ public class ImageCanvas {
 			sy = Math.min(sy, sdScaled.getY() );
 			return new Extent(sx,sy,1);
 		} else {
-			ImageDim sdEntire = displayStackViewport.createDimensionsEntireScaled();
+			ImageDimensions sdEntire = displayStackViewport.createDimensionsEntireScaled();
 			int sx = Math.min(sdEntire.getX(), sdScaled.getX() );
 			int sy = Math.min(sdEntire.getY(), sdScaled.getY() );
 			return new Extent(sx,sy,1);
@@ -365,7 +365,7 @@ public class ImageCanvas {
 
 		
 		{
-			ImageDim sd = displayStackViewport.createDimensionsEntireScaled();
+			ImageDimensions sd = displayStackViewport.createDimensionsEntireScaled();
 			panel.setPreferredSize( new Dimension( sd.getX() + extentScrollbars.getPreferredWidth(), sd.getY() + extentScrollbars.getPreferredHeight()) );
 		}
 		
@@ -433,8 +433,8 @@ public class ImageCanvas {
 					BufferedImage bi = displayStackViewport.getUnzoomed().createPartOfCurrentView( bboxIntersect );
 					
 					// Impose the bi on top of the existing fi
-					int xCanvas = displayStackViewport.cnvrtImageXToCanvas( bboxIntersect.getCrnrMin().getX() );
-					int yCanvas = displayStackViewport.cnvrtImageYToCanvas( bboxIntersect.getCrnrMin().getY() );
+					int xCanvas = displayStackViewport.cnvrtImageXToCanvas( bboxIntersect.cornerMin().getX() );
+					int yCanvas = displayStackViewport.cnvrtImageYToCanvas( bboxIntersect.cornerMin().getY() );
 					
 					assert( xCanvas>=0 );
 					assert( yCanvas>=0 );
@@ -582,7 +582,7 @@ public class ImageCanvas {
 	
 	// START Getters and Setters
 	
-	public ImageDim getDimensions() {
+	public ImageDimensions getDimensions() {
 		return displayStackViewport.getDimensionsEntire();
 	}
 
@@ -598,7 +598,7 @@ public class ImageCanvas {
 		return panel.getPreferredSize();
 	}
 
-	public ImageRes getRes() {
+	public ImageResolution getRes() {
 		return displayStackViewport.getRes();
 	}
 

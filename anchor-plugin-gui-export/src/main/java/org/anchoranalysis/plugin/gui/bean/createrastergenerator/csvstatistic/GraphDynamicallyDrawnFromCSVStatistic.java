@@ -26,7 +26,7 @@ package org.anchoranalysis.plugin.gui.bean.createrastergenerator.csvstatistic;
  * #L%
  */
 
-import org.anchoranalysis.anchor.graph.GraphInstance;
+import org.anchoranalysis.anchor.plot.GraphInstance;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.functional.FunctionWithException;
 import org.anchoranalysis.core.index.GetOperationFailedException;
@@ -61,7 +61,7 @@ public class GraphDynamicallyDrawnFromCSVStatistic<T> extends CreateRasterGraph<
 		assert( getGraphDefinition()!=null );
 		
 		try {
-			FunctionWithException<MappedFrom<CSVStatistic>,GraphInstance,CreateException> bridge = new GraphInstanceBridge<T>(
+			FunctionWithException<MappedFrom<CSVStatistic>,GraphInstance,CreateException> bridge = new GraphInstanceBridge<>(
 				getGraphDefinition(),
 				params.getFinderCsvStatistics().get(),
 				elementBridge

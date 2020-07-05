@@ -1,5 +1,7 @@
 package org.anchoranalysis.gui.frame.multioverlay.instantstate;
 
+import java.util.Optional;
+
 import org.anchoranalysis.anchor.overlay.Overlay;
 import org.anchoranalysis.anchor.overlay.OverlayedInstantState;
 import org.anchoranalysis.anchor.overlay.collection.ColoredOverlayCollection;
@@ -59,6 +61,8 @@ import org.anchoranalysis.gui.videostats.internalframe.cfgtorgb.markdisplay.Mark
 import org.anchoranalysis.gui.videostats.link.LinkModules;
 import org.anchoranalysis.gui.videostats.module.DefaultModuleState;
 import org.anchoranalysis.gui.videostats.module.VideoStatsModule;
+import org.anchoranalysis.image.object.properties.ObjectWithProperties;
+import org.anchoranalysis.image.stack.rgb.RGBStack;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -104,15 +108,13 @@ public class InternalFrameOverlayedInstantStateToRGBSelectable {
 			VideoStatsModuleGlobalParams mpg
 		) throws InitException {
 		
-		//assert( cfgCntr.get(0)!=null );
-		
 		// WE MUST SET THIS TO THE CORRECT initial state, as the frameIJ will not trigger events on its default state, to correct itself
 		this.selectionIndices.setCurrentSelection( initialState.getLinkState().getObjectIDs() );
 
 		// We create a wrapper that conditions the MarkDisplaySettings on the current selection 
 		MarkDisplaySettingsWrapper markDisplaySettingsWrapper =	new MarkDisplaySettingsWrapper(
 			initialState.getMarkDisplaySettings().duplicate(),
-			new IDMatchCondition( selectionIndices.getCurrentSelection() )
+			(ObjectWithProperties mask, RGBStack stack, int id) -> selectionIndices.getCurrentSelection().contains(id)
 		);
 		
 		
@@ -186,14 +188,18 @@ public class InternalFrameOverlayedInstantStateToRGBSelectable {
 		
 		LinkModules link = new LinkModules(module);
 		link.getMarkIndices().add(
-			new PropertyValueReceivableFromIndicesSelection(selectionIndices.getLastExplicitSelection()),
-			(value, adjusting) -> {
-				// If the ids are the same as our current selection, we don't need to change
-				// anything
-				if (!selectionIndices.setCurrentSelection(value.getArr())) {
-					return;
+			Optional.of(
+				new PropertyValueReceivableFromIndicesSelection(selectionIndices.getLastExplicitSelection())
+			),
+			Optional.of(
+				(value, adjusting) -> {
+					// If the ids are the same as our current selection, we don't need to change
+					// anything
+					if (!selectionIndices.setCurrentSelection(value.getArr())) {
+						return;
+					}
 				}
-			}
+			)
 		);
 	}
 	
@@ -207,8 +213,11 @@ public class InternalFrameOverlayedInstantStateToRGBSelectable {
 			}
 			
 			LinkModules link = new LinkModules(module);
-			link.getOverlays().add( markClickAdapter.createSelectOverlayCollectionReceivable() );
-
+			link.getOverlays().add(
+				Optional.of(
+					markClickAdapter.createSelectOverlayCollectionReceivable()
+				)
+			);
 			return module;
 		};
 	}

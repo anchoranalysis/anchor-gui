@@ -39,7 +39,7 @@ import org.anchoranalysis.core.name.value.NameValue;
 import org.anchoranalysis.feature.nrg.NRGStackWithParams;
 import org.anchoranalysis.gui.cfgnrgtable.TitleValueTableModel;
 import org.anchoranalysis.gui.feature.evaluator.singlepair.IUpdatableSinglePair;
-import org.anchoranalysis.image.extent.ImageRes;
+import org.anchoranalysis.image.extent.ImageResolution;
 
 class OverlayDescription extends TitleValueTableModel implements IUpdatableSinglePair {
 
@@ -62,7 +62,7 @@ class OverlayDescription extends TitleValueTableModel implements IUpdatableSingl
 			return;
 		}
 		
-		ImageRes sr = raster.getDimensions()!= null ? raster.getDimensions().getRes() : null;
+		ImageResolution sr = raster.getDimensions()!= null ? raster.getDimensions().getRes() : null;
 		addOverlayDetails( overlay, "", sr );
 		
 		fireTableDataChanged();
@@ -87,7 +87,7 @@ class OverlayDescription extends TitleValueTableModel implements IUpdatableSingl
 	}
 	
 	
-	private void addOverlayDetails( Overlay overlay, String titlePrefix, ImageRes sr ) {
+	private void addOverlayDetails( Overlay overlay, String titlePrefix, ImageResolution sr ) {
 
 		OverlayProperties op = overlay.generateProperties(sr);
 		

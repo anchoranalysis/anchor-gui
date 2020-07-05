@@ -28,13 +28,11 @@ package org.anchoranalysis.gui.cfgnrg;
 
 
 import java.awt.BorderLayout;
-
 import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.error.reporter.ErrorReporter;
 import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.index.container.IBoundedIndexContainer;
 import org.anchoranalysis.core.property.IPropertyValueReceivable;
-import org.anchoranalysis.core.property.IPropertyValueSendable;
 import org.anchoranalysis.core.property.change.PropertyValueChangeEvent;
 import org.anchoranalysis.core.property.change.PropertyValueChangeListener;
 import org.anchoranalysis.gui.image.IndexSlider;
@@ -149,22 +147,17 @@ public class StatePanelFrameHistory<T> {
 			LinkModules link = new LinkModules(module);
 			link.getFrameIndex().add(
 				isir,
-				new IPropertyValueSendable<Integer>() {
+				(Integer frameIndex, boolean adjusting)->{
 					
-					@Override
-					public void setPropertyValue(Integer frameIndex, boolean adjusting) {
-						
-						// We ignore any events which are adjusting, unless includeFrameAdjusting mode is on
-						if (!includeIndexAdjusting && adjusting) {
-							return;
-						}
-						
-						indexSlider.getSelectIndexSendable().setPropertyValue(frameIndex, adjusting);
+					// We ignore any events which are adjusting, unless includeFrameAdjusting mode is on
+					if (!includeIndexAdjusting && adjusting) {
+						return;
 					}
+					
+					indexSlider.getSelectIndexSendable().setPropertyValue(frameIndex, adjusting);						
 				},
-				
 				// To catch events sent by the panel itself, and route them back to the index slider
-				evt -> evt.getValue()
+				PropertyValueChangeEvent::getValue
 			);
 			
 			return module;

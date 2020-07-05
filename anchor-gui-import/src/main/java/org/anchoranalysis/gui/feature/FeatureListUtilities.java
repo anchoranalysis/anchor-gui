@@ -3,7 +3,7 @@ package org.anchoranalysis.gui.feature;
 import java.util.function.Function;
 
 import org.anchoranalysis.anchor.mpp.bean.regionmap.RegionMap;
-import org.anchoranalysis.anchor.mpp.feature.bean.nrgscheme.NRGScheme;
+import org.anchoranalysis.anchor.mpp.feature.nrg.scheme.NRGScheme;
 import org.anchoranalysis.anchor.mpp.feature.nrg.scheme.NamedNRGSchemeSet;
 
 
@@ -33,7 +33,7 @@ import org.anchoranalysis.anchor.mpp.feature.nrg.scheme.NamedNRGSchemeSet;
  * #L%
  */
 
-import org.anchoranalysis.bean.NamedBean;
+import org.anchoranalysis.core.name.value.SimpleNameValue;
 import org.anchoranalysis.feature.bean.Feature;
 import org.anchoranalysis.feature.bean.list.FeatureList;
 import org.anchoranalysis.feature.bean.operator.Sum;
@@ -59,7 +59,7 @@ public class FeatureListUtilities {
 		
 		FeatureListWithRegionMap<T> featureList = new FeatureListWithRegionMap<>(); 
 		
-		for( NamedBean<NRGScheme> nnec : elemSet ) {
+		for( SimpleNameValue<NRGScheme> nnec : elemSet ) {
 			
 			NRGScheme nrgScheme = nnec.getValue();
 			
@@ -99,7 +99,7 @@ public class FeatureListUtilities {
 	
 	private static <T extends FeatureInput> Feature<T> sumFeatures( FeatureList<T> extractedList,	String name ) {
 		Sum<T> rootFeature = new Sum<>();
-		rootFeature.setList( extractedList );
+		rootFeature.setList(extractedList);
 		rootFeature.setCustomName(name);
 		return rootFeature;
 	}

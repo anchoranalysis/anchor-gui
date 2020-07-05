@@ -29,7 +29,7 @@
 	
 	<dependency>
 	  <groupId>${project.groupId}</groupId>
-	  <artifactId>anchor-gui-graph</artifactId>
+	  <artifactId>anchor-gui-plot</artifactId>
 	  <version>0.0.1-SNAPSHOT</version>
 	</dependency>
 		    

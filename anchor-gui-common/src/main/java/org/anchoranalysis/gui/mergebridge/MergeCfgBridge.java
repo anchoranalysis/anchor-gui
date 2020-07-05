@@ -28,8 +28,8 @@ package org.anchoranalysis.gui.mergebridge;
 
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.function.Supplier;
 
 import org.anchoranalysis.anchor.mpp.bean.regionmap.RegionMembershipWithFlags;
@@ -136,8 +136,8 @@ public class MergeCfgBridge implements FunctionWithException<IndexedDualState<Cf
 		// If both are valid we do an actual compare
 		if (sourceObject.getPrimary() != null && sourceObject.getSecondary() != null) {
 		
-			HashMap<Integer,Mark> selectedHash = sourceObject.getPrimary().createIdHashMap();
-			HashMap<Integer,Mark> proposalHash = sourceObject.getSecondary().createIdHashMap();
+			Map<Integer,Mark> selectedHash = sourceObject.getPrimary().createIdHashMap();
+			Map<Integer,Mark> proposalHash = sourceObject.getSecondary().createIdHashMap();
 			
 			// We now create a HashSet of all the IDs
 			HashSet<Integer> markIds = new HashSet<>();

@@ -29,6 +29,7 @@ import org.anchoranalysis.core.error.CreateException;
  */
 
 import org.anchoranalysis.core.error.OperationFailedException;
+import org.anchoranalysis.core.error.friendly.AnchorImpossibleSituationException;
 import org.anchoranalysis.core.error.reporter.ErrorReporter;
 import org.anchoranalysis.core.functional.FunctionWithException;
 import org.anchoranalysis.core.index.GetOperationFailedException;
@@ -45,13 +46,13 @@ import org.anchoranalysis.image.stack.Stack;
 import org.anchoranalysis.io.manifest.ManifestRecorder;
 import org.anchoranalysis.io.manifest.finder.Finder;
 
-public class FinderProbMap extends Finder implements BackgroundStackCntr, FinderRasterSingleChnl{
+public class FinderProbMap implements BackgroundStackCntr, FinderRasterSingleChnl, Finder{
 
-	private FinderProbMapSingleRaster singleRaster;
+	private final FinderProbMapSingleRaster singleRaster;
 
-	private FinderProbMapRasterSeries rasterSeries;
+	private final FinderProbMapRasterSeries rasterSeries;
 	
-	private String displayName;
+	private final String displayName;
 	
 	public FinderProbMap(RasterReader rasterReader, String singleRasterOutputName, ErrorReporter errorReporter ) {
 		singleRaster = new FinderProbMapSingleRaster(rasterReader, singleRasterOutputName, errorReporter );
@@ -103,8 +104,7 @@ public class FinderProbMap extends Finder implements BackgroundStackCntr, Finder
 		if (isRasterSeries()) {
 			return rasterSeries.get().get( rasterSeries.get().previousEqualIndex(0) ).getChnl(0);
 		}
-		assert false;
-		return null;
+		throw new AnchorImpossibleSituationException();
 	}
 	
 
@@ -131,11 +131,7 @@ public class FinderProbMap extends Finder implements BackgroundStackCntr, Finder
 					new BackgroundStackBridge()
 				);
 			}
-		} catch (OperationFailedException e) {
-			throw new GetOperationFailedException(e);
-		} catch (CreateException e) {
-			throw new GetOperationFailedException(e);
-		} catch (IncorrectImageSizeException e) {
+		} catch (OperationFailedException | CreateException | IncorrectImageSizeException e) {
 			throw new GetOperationFailedException(e);
 		}
 	}

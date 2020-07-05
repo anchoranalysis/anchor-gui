@@ -34,9 +34,9 @@ import org.anchoranalysis.core.progress.OperationWithProgressReporter;
 import org.anchoranalysis.image.stack.Stack;
 import org.anchoranalysis.io.manifest.finder.Finder;
 
-public abstract class FinderImgStackCollection extends Finder {
+public interface FinderImgStackCollection extends Finder {
 
-	public abstract NamedProvider<Stack> getImgStackCollection() throws GetOperationFailedException;
+	NamedProvider<Stack> getImgStackCollection() throws GetOperationFailedException;
 	
-	public abstract OperationWithProgressReporter<NamedProvider<Stack>,OperationFailedException> getImgStackCollectionAsOperationWithProgressReporter();
+	OperationWithProgressReporter<NamedProvider<Stack>,OperationFailedException> getImgStackCollectionAsOperationWithProgressReporter();
 }

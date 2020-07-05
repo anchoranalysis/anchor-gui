@@ -69,8 +69,8 @@ import org.anchoranalysis.gui.retrieveelements.InternalFrameIJPopupClickListener
 import org.anchoranalysis.gui.retrieveelements.RetrieveElements;
 import org.anchoranalysis.gui.retrieveelements.RetrieveElementsImage;
 import org.anchoranalysis.gui.videostats.dropdown.VideoStatsModuleGlobalParams;
-import org.anchoranalysis.image.extent.ImageDim;
-import org.anchoranalysis.image.extent.ImageRes;
+import org.anchoranalysis.image.extent.ImageDimensions;
+import org.anchoranalysis.image.extent.ImageResolution;
 import org.anchoranalysis.image.stack.DisplayStack;
 import org.anchoranalysis.image.voxel.datatype.VoxelDataType;
 
@@ -287,7 +287,7 @@ public class InternalFrameCanvas {
 	}
 
 
-	public ImageDim getDimensions() {
+	public ImageDimensions getDimensions() {
 		return canvas.getDimensions();
 	}
 
@@ -299,7 +299,7 @@ public class InternalFrameCanvas {
 		return canvas.getZoomScale();
 	}
 
-	public ImageRes getRes() {
+	public ImageResolution getRes() {
 		return canvas.getRes();
 	}
 

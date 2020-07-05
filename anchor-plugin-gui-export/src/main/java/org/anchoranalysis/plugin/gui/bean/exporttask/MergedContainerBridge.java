@@ -33,12 +33,11 @@ import org.anchoranalysis.anchor.mpp.cfg.Cfg;
 import org.anchoranalysis.anchor.mpp.feature.instantstate.CfgNRGInstantState;
 import org.anchoranalysis.anchor.mpp.feature.instantstate.CfgNRGNonHandleInstantState;
 import org.anchoranalysis.anchor.mpp.feature.nrg.cfg.CfgNRG;
-import org.anchoranalysis.anchor.mpp.feature.nrg.cfg.CfgWithNrgTotal;
+import org.anchoranalysis.anchor.mpp.feature.nrg.cfg.CfgWithNRGTotal;
 import org.anchoranalysis.anchor.mpp.overlay.OverlayCollectionMarkFactory;
 import org.anchoranalysis.anchor.overlay.OverlayedInstantState;
-import org.anchoranalysis.core.color.ColorIndex;
-import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.error.OperationFailedException;
+import org.anchoranalysis.core.error.friendly.AnchorImpossibleSituationException;
 import org.anchoranalysis.core.functional.FunctionWithException;
 import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.index.container.IBoundedIndexContainer;
@@ -50,16 +49,16 @@ import org.anchoranalysis.gui.mergebridge.MergeCfgBridge;
 import org.anchoranalysis.gui.mergebridge.MergedColorIndex;
 import org.anchoranalysis.gui.mergebridge.TransformToCfg;
 
+import lombok.RequiredArgsConstructor;
+
+@RequiredArgsConstructor
 class MergedContainerBridge implements FunctionWithException<ExportTaskParams,IBoundedIndexContainer<CfgNRGInstantState>,OperationFailedException> {
 
-	private Supplier<RegionMembershipWithFlags> regionMembership;
-	
-	public MergedContainerBridge( Supplier<RegionMembershipWithFlags> regionMembership ) {
-		super();
-		this.regionMembership = regionMembership;
-	}
+	// START REQUIRED ARGUMENTS
+	private final Supplier<RegionMembershipWithFlags> regionMembership;
+	// END REQUIRED ARGUMENTS
 
-	private BoundedIndexContainerBridgeWithoutIndex<OverlayedInstantState,CfgNRGInstantState> retBridge = null;
+	private BoundedIndexContainerBridgeWithoutIndex<OverlayedInstantState,CfgNRGInstantState,AnchorImpossibleSituationException> retBridge = null;
 	
 	@Override
 	public IBoundedIndexContainer<CfgNRGInstantState> apply(ExportTaskParams sourceObject) throws OperationFailedException {
@@ -76,13 +75,11 @@ class MergedContainerBridge implements FunctionWithException<ExportTaskParams,IB
 				);
 				
 				dualHistory.init();
-			} catch (InitException | GetOperationFailedException e) {
+			} catch (GetOperationFailedException e) {
 				throw new OperationFailedException(e);
 			}
 			
 			MergeCfgBridge mergeCfgBridge = new MergeCfgBridge(regionMembership);
-
-			ColorIndex mergedColorIndex = new MergedColorIndex(mergeCfgBridge);
 
 			
 			IBoundedIndexContainer<OverlayedInstantState> cfgCntr = new BoundedIndexContainerBridgeWithoutIndex<>(
@@ -91,14 +88,19 @@ class MergedContainerBridge implements FunctionWithException<ExportTaskParams,IB
 			);
 			
 			// TODO HACK to allow exportparams to work
-			sourceObject.setColorIndexMarks(mergedColorIndex);
+			sourceObject.setColorIndexMarks(
+				new MergedColorIndex(mergeCfgBridge)
+			);
 
 			
 			retBridge = new BoundedIndexContainerBridgeWithoutIndex<>(
 				cfgCntr,
 				s -> {
 					Cfg cfg = OverlayCollectionMarkFactory.cfgFromOverlays(s.getOverlayCollection());
-					return new CfgNRGNonHandleInstantState(s.getIndex(), new CfgNRG( new CfgWithNrgTotal(cfg, null)) );
+					return new CfgNRGNonHandleInstantState(
+						s.getIndex(),
+						new CfgNRG( new CfgWithNRGTotal(cfg, null))		// TODO This null seems wrong, fix!
+					);
 				}
 			);
 		}

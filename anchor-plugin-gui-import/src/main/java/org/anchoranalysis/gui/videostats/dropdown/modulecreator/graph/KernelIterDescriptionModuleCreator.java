@@ -1,6 +1,7 @@
 package org.anchoranalysis.gui.videostats.dropdown.modulecreator.graph;
 
 import java.io.IOException;
+import java.util.Optional;
 
 import org.anchoranalysis.anchor.mpp.feature.nrg.cfg.CfgNRGPixelized;
 import org.anchoranalysis.core.error.InitException;
@@ -76,7 +77,7 @@ public class KernelIterDescriptionModuleCreator extends VideoStatsModuleCreatorC
 	}
 
 	@Override
-	public IModuleCreatorDefaultState moduleCreator(DefaultModuleStateManager defaultStateManager, String namePrefix,
+	public Optional<IModuleCreatorDefaultState> moduleCreator(DefaultModuleStateManager defaultStateManager, String namePrefix,
 			VideoStatsModuleGlobalParams mpg) throws VideoStatsModuleCreateException {
 
 		ErrorReporter errorReporter = mpg.getLogErrorReporter().getErrorReporter();
@@ -98,7 +99,9 @@ public class KernelIterDescriptionModuleCreator extends VideoStatsModuleCreatorC
 			);
 			frame.controllerSize().configureSize(500, 500);
 			
-			return frame.moduleCreator();
+			return Optional.of(
+				frame.moduleCreator()
+			);
 			
 		} catch (GetOperationFailedException | InitException | IOException e) {
 			throw new VideoStatsModuleCreateException(e);
@@ -111,7 +114,7 @@ public class KernelIterDescriptionModuleCreator extends VideoStatsModuleCreatorC
 	}
 
 	@Override
-	public String shortTitle() {
-		return null;
+	public Optional<String> shortTitle() {
+		return Optional.empty();
 	}
 }

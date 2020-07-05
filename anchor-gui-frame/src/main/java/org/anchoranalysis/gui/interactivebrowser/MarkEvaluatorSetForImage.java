@@ -33,6 +33,7 @@ import java.io.IOException;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 
 import org.anchoranalysis.anchor.mpp.feature.bean.mark.MarkEvaluator;
@@ -53,12 +54,12 @@ public class MarkEvaluatorSetForImage {
 	private Map<String,Operation<MarkEvaluatorRslvd,OperationFailedException>> map = new HashMap<>(); 
 
 	private OperationWithProgressReporter<NamedProvider<Stack>,? extends Throwable> namedImgStackCollection;
-	private Operation<KeyValueParams,IOException> keyParams;
+	private Operation<Optional<KeyValueParams>,IOException> keyParams;
 	private BoundIOContext context;
 
 	public MarkEvaluatorSetForImage(
 		OperationWithProgressReporter<NamedProvider<Stack>,? extends Throwable> namedImgStackCollection,
-		Operation<KeyValueParams,IOException> keyParams,
+		Operation<Optional<KeyValueParams>,IOException> keyParams,
 		BoundIOContext context
 	) {
 		super();
@@ -103,7 +104,7 @@ public class MarkEvaluatorSetForImage {
 					operationProposerSharedObjects,
 					me.getCfgGen(),
 					me.getNrgSchemeCreator().create(),
-					keyParams.doOperation()
+					keyParams.doOperation().get()
 				);
 			} catch (CreateException | IOException e) {
 				throw new OperationFailedException(e);

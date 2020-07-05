@@ -34,14 +34,14 @@ import org.anchoranalysis.anchor.mpp.overlay.OverlayCollectionMarkFactory;
 import org.anchoranalysis.anchor.mpp.proposer.error.ProposerFailureDescription;
 import org.anchoranalysis.anchor.mpp.regionmap.RegionMapSingleton;
 import org.anchoranalysis.anchor.overlay.collection.ColoredOverlayCollection;
-import org.anchoranalysis.image.extent.ImageDim;
+import org.anchoranalysis.image.extent.ImageDimensions;
 
 public class ProposedCfg {
 
 	private ColoredOverlayCollection overlays = new ColoredOverlayCollection();				// The total cfg to be drawn
 	private Cfg cfgToRedraw = new Cfg();		// The marks that need to be redrawn, as they have changed
 	private Cfg cfgCore = new Cfg();	// The core part of the cfg
-	private ImageDim dim;
+	private ImageDimensions dim;
 	
 	private ProposerFailureDescription pfd;
 	private boolean success = false;
@@ -118,11 +118,11 @@ public class ProposedCfg {
 		this.cfgCore = cfgCore;
 	}
 
-	public ImageDim getDimensions() {
+	public ImageDimensions getDimensions() {
 		return dim;
 	}
 
-	public void setDimensions(ImageDim dim) {
+	public void setDimensions(ImageDimensions dim) {
 		this.dim = dim;
 	}
 }

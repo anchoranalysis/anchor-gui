@@ -34,7 +34,7 @@ import org.anchoranalysis.core.functional.Operation;
 import org.anchoranalysis.core.log.LogErrorReporter;
 import org.anchoranalysis.core.name.store.LazyEvaluationStore;
 import org.anchoranalysis.image.io.objs.ObjectMaskCollectionReader;
-import org.anchoranalysis.image.objectmask.ObjectCollection;
+import org.anchoranalysis.image.object.ObjectCollection;
 import org.apache.commons.io.FilenameUtils;
 
 class CreateObjStoreFromDirectory { 

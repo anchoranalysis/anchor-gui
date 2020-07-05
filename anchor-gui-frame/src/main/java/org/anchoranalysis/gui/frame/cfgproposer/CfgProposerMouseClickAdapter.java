@@ -30,6 +30,7 @@ package org.anchoranalysis.gui.frame.cfgproposer;
 import java.awt.event.InputEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.Optional;
 
 import javax.swing.event.EventListenerList;
 
@@ -91,10 +92,10 @@ public class CfgProposerMouseClickAdapter extends MouseAdapter {
 	    	return;
 	    }
 		
-	    EvaluatorWithContext evaluatorWithContext;
+	    Optional<EvaluatorWithContext> evaluatorWithContext;
 		try {
 			evaluatorWithContext = evaluatorGetter.getEvaluatorWithContext();
-			if (evaluatorWithContext==null) {
+			if (!evaluatorWithContext.isPresent()) {
 		    	// If we have no evaluatorWithCotnext we ignored it
 		    	return;
 		    }
@@ -104,7 +105,7 @@ public class CfgProposerMouseClickAdapter extends MouseAdapter {
 		}
 	    
 		try {
-			addCfg( new Point3d( arg0.getX(),arg0.getY(), sliderState.getSliceNum()), evaluatorWithContext );
+			addCfg( new Point3d( arg0.getX(),arg0.getY(), sliderState.getSliceNum()), evaluatorWithContext.get() );
 		} catch (ProposalAbnormalFailureException e) {
 
 			errorReporter.recordError(

@@ -1,5 +1,7 @@
 package org.anchoranalysis.gui.videostats.link;
 
+import java.util.Optional;
+
 /*-
  * #%L
  * anchor-gui-common
@@ -77,48 +79,67 @@ public class LinkModules {
 			return module.getReceivableSendablePairMap().get(id).getReceivable();
 		}
 		
-		public void add( IPropertyValueReceivable<T> receiver ) {
-			internalAdd(receiver, null);
+		public void add( Optional<IPropertyValueReceivable<T>> receiver ) {
+			internalAdd(receiver, Optional.empty());
 		}
 		
 		public void add( IPropertyValueSendable<T> sender ) {
-			internalAdd(null, sender);
+			internalAdd(
+				Optional.empty(),
+				Optional.of(sender)
+			);
 		}
 
 		public void add( IRoutableReceivable<PropertyValueChangeEvent<T>> receivable ) {
-			internalAddRoutable(receivable, null);
+			internalAddRoutable(
+				Optional.of(receivable),
+				Optional.empty()
+			);
 		}
 				
-		public void add( IPropertyValueReceivable<T> receiver, IPropertyValueSendable<T> sender ) {
+		public void add(
+			Optional<IPropertyValueReceivable<T>> receiver,
+			Optional<IPropertyValueSendable<T>> sender
+		) {
 			internalAdd(receiver, sender);
 		}
 		
-		public void add( IPropertyValueReceivable<T> receiver, IPropertyValueSendable<T> sender, Function<PropertyValueChangeEvent<T>,T> funcListener ) {
-			ReceivableSendablePair<T> rsp = internalAdd(receiver, sender);
+		public void add(
+			IPropertyValueReceivable<T> receiver,
+			IPropertyValueSendable<T> sender,
+			Function<PropertyValueChangeEvent<T>,T> funcListener
+		) {
+			ReceivableSendablePair<T> rsp = internalAdd(
+				Optional.of(receiver),
+				Optional.of(sender)
+			);
 			rsp.getReceivable().addRoutableListener( 
-				evt -> rsp.getSendable().setPropertyValue( funcListener.apply(evt.getEvent()), false)
+				evt -> rsp.getSendable().setPropertyValue(
+					funcListener.apply(evt.getEvent()),
+					false
+				)
 			);
 		}
 		
-		private ReceivableSendablePair<T> internalAdd( IPropertyValueReceivable<T> receiver, IPropertyValueSendable<T> sender ) {
+		private ReceivableSendablePair<T> internalAdd(
+			Optional<IPropertyValueReceivable<T>> receiver,
+			Optional<IPropertyValueSendable<T>> sender
+		) {
 			ReceivableSendablePair<T> rsp = createPairAdd();
-			if (receiver!=null) {
-				rsp.setReceivable( new PropertyValueReceivableAdapter<>(module, receiver) );	
-			}
-			if (sender!=null) {
-				rsp.setSendable(sender);
-			}
+			receiver.ifPresent( r->
+				rsp.setReceivable( new PropertyValueReceivableAdapter<>(module, r) )	
+			);
+			sender.ifPresent(rsp::setSendable);
 			return rsp;
 		}
 		
-		private ReceivableSendablePair<T> internalAddRoutable( IRoutableReceivable<PropertyValueChangeEvent<T>> receivable, IPropertyValueSendable<T> sender ) {
+		private ReceivableSendablePair<T> internalAddRoutable(
+			Optional<IRoutableReceivable<PropertyValueChangeEvent<T>>> receivable,
+			Optional<IPropertyValueSendable<T>> sender
+		) {
 			ReceivableSendablePair<T> rsp = createPairAdd();
-			if (receivable!=null) {
-				rsp.setReceivable( receivable );	
-			}
-			if (sender!=null) {
-				rsp.setSendable(sender);
-			}
+			receivable.ifPresent(rsp::setReceivable);
+			sender.ifPresent(rsp::setSendable);
 			return rsp;
 		}
 							

@@ -42,7 +42,7 @@ import org.anchoranalysis.core.functional.Operation;
 import org.anchoranalysis.gui.bean.exporttask.ExportTaskActionAsThread;
 import org.anchoranalysis.gui.bean.exporttask.ExportTaskGenerator;
 import org.anchoranalysis.gui.bean.exporttask.ExportTaskParams;
-import org.anchoranalysis.gui.bean.exporttask.IExportTask;
+import org.anchoranalysis.gui.bean.exporttask.ExportTask;
 import org.anchoranalysis.gui.bean.exporttask.ExportTaskActionAsThread.ExportTaskCommand;
 import org.anchoranalysis.image.io.generator.raster.StackGenerator;
 import org.anchoranalysis.image.stack.Stack;
@@ -98,7 +98,7 @@ public class ExportSubMenu implements IAddToExportSubMenu {
     	
     	IntegerSuffixOutputNameStyle ons = new IntegerSuffixOutputNameStyle(outputName, 6);
     	
-    	IExportTask task = new ExportTaskGenerator<T>(generator, itemToGenerate, params.getParentFrame(), ons, params.getSequenceMemory() );
+    	ExportTask task = new ExportTaskGenerator<T>(generator, itemToGenerate, params.getParentFrame(), ons, params.getSequenceMemory() );
     			
 		ExportTaskActionAsThread action = new ExportTaskActionAsThread(label, new ExportTaskCommand(task, exportTaskParams, params.getParentFrame(), false, errorReporter) );
 		menu.add( new JMenuItem(action) );   

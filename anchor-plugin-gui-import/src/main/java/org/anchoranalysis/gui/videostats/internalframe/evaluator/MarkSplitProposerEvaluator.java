@@ -28,7 +28,7 @@ package org.anchoranalysis.gui.videostats.internalframe.evaluator;
 
 
 import java.awt.Color;
-import java.util.List;
+import java.util.Optional;
 
 import org.anchoranalysis.anchor.mpp.bean.cfg.CfgGen;
 import org.anchoranalysis.anchor.mpp.bean.proposer.MarkSplitProposer;
@@ -36,7 +36,6 @@ import org.anchoranalysis.anchor.mpp.cfg.Cfg;
 import org.anchoranalysis.anchor.mpp.cfg.ColoredCfg;
 import org.anchoranalysis.anchor.mpp.mark.GlobalRegionIdentifiers;
 import org.anchoranalysis.anchor.mpp.mark.Mark;
-import org.anchoranalysis.anchor.mpp.mark.points.MarkPointListFactory;
 import org.anchoranalysis.anchor.mpp.pair.PairPxlMarkMemo;
 import org.anchoranalysis.anchor.mpp.proposer.ProposalAbnormalFailureException;
 import org.anchoranalysis.anchor.mpp.proposer.ProposerContext;
@@ -45,7 +44,6 @@ import org.anchoranalysis.anchor.mpp.pxlmark.memo.PxlMarkMemo;
 import org.anchoranalysis.core.color.RGBColor;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.geometry.Point3d;
-import org.anchoranalysis.core.geometry.Point3f;
 import org.anchoranalysis.gui.frame.overlays.ProposedCfg;
 import org.anchoranalysis.gui.videostats.internalframe.ProposalOperation;
 
@@ -53,7 +51,7 @@ public class MarkSplitProposerEvaluator implements ProposalOperationCreator {
 
 	private final MarkSplitProposer markSplitProposer;
 	
-	private PairPxlMarkMemo pair;
+	private Optional<PairPxlMarkMemo> pair = Optional.empty();
 	private Mark exstMark;
 	@SuppressWarnings("unused")
 	private Cfg exstCfg;
@@ -99,7 +97,7 @@ public class MarkSplitProposerEvaluator implements ProposalOperationCreator {
 					pair = markSplitProposer.propose(pmmExstMark, context, cfgGen);
 				}
 				
-				if (pair!=null) {
+				if (pair.isPresent()) {
 					ProposedCfg er = new ProposedCfg();
 					er.setDimensions( context.getDimensions() );
 					er.setSuccess(true);
@@ -107,8 +105,8 @@ public class MarkSplitProposerEvaluator implements ProposalOperationCreator {
 					er.setCfgToRedraw(cfg);
 					
 					Cfg core = new Cfg();
-					core.add( pair.getSource().getMark() );
-					core.add( pair.getDestination().getMark() );
+					core.add( pair.get().getSource().getMark() );
+					core.add( pair.get().getDestination().getMark() );
 					er.setCfgCore( core );
 					return er;
 				} else {
@@ -118,42 +116,15 @@ public class MarkSplitProposerEvaluator implements ProposalOperationCreator {
 				}
 			}
 		};
-
 	}
 
 	private ColoredCfg cfgForLast() {
-		
-		//Cfg exstDup = exstCfg.shallowCopy();
-		//exstDup.remove( exstDup.indexOf(exstMark) );
-		
-
-		
-		
 		ColoredCfg cfgOut = new ColoredCfg();
-		
-		if (pair!=null) {
+		if (pair.isPresent()) {
 			// We change the IDs
-			cfgOut.addChangeID( pair.getSource().getMark(), new RGBColor(Color.BLUE) );
-			cfgOut.addChangeID( pair.getDestination().getMark(), new RGBColor(Color.RED) );
+			cfgOut.addChangeID( pair.get().getSource().getMark(), new RGBColor(Color.BLUE) );
+			cfgOut.addChangeID( pair.get().getDestination().getMark(), new RGBColor(Color.RED) );
 		}
-		
-		
-		// Allows us to associate a list of points with  the mark
-		{
-			List<Point3f> pts = markSplitProposer.getLastPnts1();
-			if (pts!=null) {
-				cfgOut.addChangeID( MarkPointListFactory.createMarkFromPoints3f(pts, false), new RGBColor(Color.GREEN) );	// 1 is just to give us a different color
-			}
-		}
-		
-		// Allows us to associate a list of points with  the mark
-		{
-			List<Point3f> pts = markSplitProposer.getLastPnts2();
-			if (pts!=null) {
-				cfgOut.addChangeID( MarkPointListFactory.createMarkFromPoints3f(pts, false), new RGBColor(Color.YELLOW) );	// 1 is just to give us a different color
-			}
-		}
-		
 		return cfgOut;
 	}
 

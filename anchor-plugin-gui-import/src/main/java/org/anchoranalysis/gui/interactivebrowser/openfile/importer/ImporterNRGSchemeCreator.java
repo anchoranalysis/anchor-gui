@@ -27,6 +27,7 @@ package org.anchoranalysis.gui.interactivebrowser.openfile.importer;
  */
 
 import java.io.File;
+import java.util.Optional;
 
 import javax.swing.JOptionPane;
 
@@ -42,9 +43,9 @@ public class ImporterNRGSchemeCreator extends ImporterFromBean {
 	}
 
 	@Override
-	public FileCreator create(Object bean, File file) {
+	public Optional<FileCreator> create(Object bean, File file) {
 		updateNRGSchemeCreator( (NRGSchemeCreator) bean );
-		return null;
+		return Optional.empty();
 	}
 	
 	private static void updateNRGSchemeCreator( NRGSchemeCreator nrgScheme ) {

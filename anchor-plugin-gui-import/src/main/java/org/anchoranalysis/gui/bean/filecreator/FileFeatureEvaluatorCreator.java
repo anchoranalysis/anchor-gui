@@ -53,7 +53,7 @@ import org.anchoranalysis.gui.videostats.modulecreator.FeatureEvaluatorCreator;
 
 /**
  * Creates a feature-evaluator for a particular list of features 
- * @author FEEHANO
+ * @author Owen Feehan
  *
  */
 public class FileFeatureEvaluatorCreator extends FileCreator {

@@ -30,6 +30,7 @@ package org.anchoranalysis.gui.videostats.internalframe.annotator.navigation;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Optional;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JMenu;
@@ -64,8 +65,8 @@ public class PanelTool extends PanelWithLabel implements ISwitchToGuessOrSelectP
 		
 	public PanelTool(
 		CurrentStateDisplayer currentStateDisplayer,
-		EvaluatorWithContext evaluatorGuess,
-		EvaluatorWithContext evaluatorSelectPoints,
+		Optional<EvaluatorWithContext> evaluatorGuess,
+		Optional<EvaluatorWithContext> evaluatorSelectPoints,
 		PointsFitter pointsFitterSelectPoints,
 		ToolErrorReporter errorReporter
 	) {

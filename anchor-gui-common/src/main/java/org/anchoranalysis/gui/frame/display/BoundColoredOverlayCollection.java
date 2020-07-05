@@ -42,8 +42,8 @@ import org.anchoranalysis.core.index.SetOperationFailedException;
 import org.anchoranalysis.gui.frame.display.overlay.OverlayPrecalculatedCache;
 import org.anchoranalysis.image.extent.BoundingBox;
 import org.anchoranalysis.image.extent.Extent;
-import org.anchoranalysis.image.extent.ImageDim;
-import org.anchoranalysis.image.objectmask.properties.ObjectWithProperties;
+import org.anchoranalysis.image.extent.ImageDimensions;
+import org.anchoranalysis.image.object.properties.ObjectWithProperties;
 import org.anchoranalysis.image.stack.rgb.RGBStack;
 
 /**
@@ -59,12 +59,12 @@ public class BoundColoredOverlayCollection {
 	
 	private IDGetter<Overlay> idGetter;
 	
-	private ImageDim dimEntireImage;
+	private ImageDimensions dimEntireImage;
 	
 	// The current overlay, with additional cached objects
 	private OverlayPrecalculatedCache cache;
 		
-	public BoundColoredOverlayCollection(OverlayWriter maskWriter, IDGetter<Overlay> idGetter, ImageDim dim) throws CreateException {
+	public BoundColoredOverlayCollection(OverlayWriter maskWriter, IDGetter<Overlay> idGetter, ImageDimensions dim) throws CreateException {
 		super();
 		this.maskWriter = maskWriter;
 		this.idGetter = idGetter;
@@ -112,7 +112,7 @@ public class BoundColoredOverlayCollection {
 	}
 	
 	private static BoundingBox createZoomedContainer( BoundingBox bbox, double zoomFactor, Extent stackExtnt ) {
-		Point3i crnrMin = new Point3i( bbox.getCrnrMin() );
+		Point3i crnrMin = new Point3i( bbox.cornerMin() );
 		crnrMin.scaleXY(zoomFactor);
 		return new BoundingBox(crnrMin, stackExtnt);
 	}

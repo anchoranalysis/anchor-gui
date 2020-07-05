@@ -28,6 +28,7 @@ package org.anchoranalysis.gui.io.loader.manifest.finder;
 
 
 import java.util.List;
+import java.util.Optional;
 
 import org.anchoranalysis.core.error.reporter.ErrorReporter;
 import org.anchoranalysis.image.io.bean.rasterreader.RasterReader;
@@ -50,7 +51,7 @@ public class FinderRasterStackByOutputName extends FinderRasterStack {
 	}
 
 	@Override
-	protected FileWrite findFile(ManifestRecorder manifestRecorder)
+	protected Optional<FileWrite> findFile(ManifestRecorder manifestRecorder)
 			throws MultipleFilesException {
 		
 		List<FileWrite> list = FinderUtilities.findListFile(manifestRecorder, new FileWriteOutputName(outputName) ); 
@@ -58,10 +59,12 @@ public class FinderRasterStackByOutputName extends FinderRasterStack {
 			throw new MultipleFilesException("cannot determine " + outputName + " exactly");
 		}
 		if (list.size()==1) {
-			return list.get(0);
+			return Optional.of(
+				list.get(0)
+			);
 		}
 		
-		return null;
+		return Optional.empty();
 	}
 
 }
