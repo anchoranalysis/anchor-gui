@@ -5,7 +5,7 @@ import java.util.Optional;
 import org.anchoranalysis.anchor.mpp.cfg.Cfg;
 import org.anchoranalysis.anchor.mpp.feature.instantstate.CfgWithNrgTotalInstantState;
 import org.anchoranalysis.anchor.mpp.feature.nrg.cfg.CfgNRGPixelized;
-import org.anchoranalysis.anchor.mpp.feature.nrg.cfg.CfgWithNrgTotal;
+import org.anchoranalysis.anchor.mpp.feature.nrg.cfg.CfgWithNRGTotal;
 import org.anchoranalysis.anchor.mpp.feature.nrg.scheme.NRGSchemeWithSharedFeatures;
 import org.anchoranalysis.anchor.mpp.feature.nrg.scheme.NamedNRGSchemeSet;
 
@@ -170,10 +170,10 @@ public class VideoStatsEDT {
 			return;
 		}
 		
-		CfgWithNrgTotal nrgTotal = after.get().getCfgNRG().getCfgWithTotal();
+		CfgWithNRGTotal nrgTotal = after.get().getCfgNRG().getCfgWithTotal();
 		assert( nrgTotal != null );
 		
-		CfgWithNrgTotal cfgWithTotal = nrgTotal.deepCopy();
+		CfgWithNRGTotal cfgWithTotal = nrgTotal.deepCopy();
 		
 		//System.out.printf("AggReport iter=%d temp=%f\n", optStep.getIter(), optStep.getTemperature() );
 		cfgNRGCurrent.add( new CfgWithNrgTotalInstantState( reporting.getIter(), cfgWithTotal ) );
@@ -197,7 +197,7 @@ public class VideoStatsEDT {
 
 		assert( after.get().getCfgNRG().getCfgWithTotal() != null );
 		
-		CfgWithNrgTotal afterCopy = after.get().getCfgNRG().getCfgWithTotal().deepCopy();
+		CfgWithNRGTotal afterCopy = after.get().getCfgNRG().getCfgWithTotal().deepCopy();
 		
 		cfgNRGBest.add(
 			new CfgWithNrgTotalInstantState( reporting.getIter(), afterCopy  )
@@ -247,7 +247,7 @@ public class VideoStatsEDT {
 		
 		// Let's open with no configuration
 		Cfg cfgEmpty = new Cfg();
-		CfgWithNrgTotal cfgNRGEmpty = new CfgWithNrgTotal( cfgEmpty, initParams.getInitContext().getNrgScheme());
+		CfgWithNRGTotal cfgNRGEmpty = new CfgWithNRGTotal( cfgEmpty, initParams.getInitContext().getNrgScheme());
 		
 		CfgWithNrgTotalInstantState initialState = new CfgWithNrgTotalInstantState( 0, cfgNRGEmpty ); 
 		cfgNRGCurrent.add(initialState);

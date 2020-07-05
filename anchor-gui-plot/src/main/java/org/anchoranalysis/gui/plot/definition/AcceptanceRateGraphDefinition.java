@@ -26,7 +26,7 @@ package org.anchoranalysis.gui.plot.definition;
  * #L%
  */
 
-import org.anchoranalysis.anchor.mpp.feature.nrg.cfg.CfgWithNrgTotal;
+import org.anchoranalysis.anchor.mpp.feature.nrg.cfg.CfgWithNRGTotal;
 import org.anchoranalysis.mpp.sgmn.kernel.proposer.WeightedKernel;
 import org.anchoranalysis.mpp.sgmn.kernel.proposer.WeightedKernelList;
 import org.anchoranalysis.mpp.sgmn.optscheme.feedback.aggregate.Aggregator;
@@ -121,12 +121,12 @@ public class AcceptanceRateGraphDefinition extends GraphDefinition {
 
 	
     @Override
-	public void updateCrnt( int iter, long timeStamp, CfgWithNrgTotal crnt, Aggregator agg ) {
+	public void updateCrnt( int iter, long timeStamp, CfgWithNRGTotal crnt, Aggregator agg ) {
     	this.agg = agg;
     }
     
     @Override
-	public void updateBest( int iter, long timeStamp, CfgWithNrgTotal best ) {
+	public void updateBest( int iter, long timeStamp, CfgWithNRGTotal best ) {
     	
    }
 }

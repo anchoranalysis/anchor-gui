@@ -36,7 +36,7 @@ import org.anchoranalysis.image.stack.DisplayStack;
 import org.anchoranalysis.image.stack.region.RegionExtracter;
 import org.anchoranalysis.image.stack.rgb.RGBStack;
 
-class RegionExtracterFromOverlay extends RegionExtracter {
+class RegionExtracterFromOverlay implements RegionExtracter {
 
 	private RegionExtracter regionExtracter;
 	private BoundColoredOverlayCollection overlay;

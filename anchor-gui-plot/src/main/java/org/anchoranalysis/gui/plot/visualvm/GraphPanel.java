@@ -35,7 +35,7 @@ import java.util.TimeZone;
 import javax.swing.JInternalFrame;
 import javax.swing.JPanel;
 
-import org.anchoranalysis.anchor.mpp.feature.nrg.cfg.CfgWithNrgTotal;
+import org.anchoranalysis.anchor.mpp.feature.nrg.cfg.CfgWithNRGTotal;
 import org.anchoranalysis.gui.plot.definition.GraphDefinition;
 import org.anchoranalysis.gui.videostats.ICfgNRGUpdater;
 import org.anchoranalysis.mpp.sgmn.optscheme.feedback.aggregate.Aggregator;
@@ -80,14 +80,14 @@ public class GraphPanel extends JPanel implements ICfgNRGUpdater {
     }
     
     @Override
-	public void updateCrnt( int iter, long timeStamp, CfgWithNrgTotal crnt, Aggregator agg ) {
+	public void updateCrnt( int iter, long timeStamp, CfgWithNRGTotal crnt, Aggregator agg ) {
     	
     	graphDefinition.updateCrnt(iter, timeStamp, crnt, agg);
    	 	updateGraph( iter, timeStamp );
     }
     
     @Override
-	public void updateBest( int iter, long timeStamp, CfgWithNrgTotal best ) {
+	public void updateBest( int iter, long timeStamp, CfgWithNRGTotal best ) {
     	graphDefinition.updateBest(iter, timeStamp, best);
    }
 

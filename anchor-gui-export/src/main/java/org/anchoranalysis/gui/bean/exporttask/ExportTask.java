@@ -29,13 +29,13 @@ package org.anchoranalysis.gui.bean.exporttask;
 
 import javax.swing.ProgressMonitor;
 
-public interface IExportTask {
+public interface ExportTask {
 	
 	boolean hasNecessaryParams( ExportTaskParams params );
 	
 	String getBeanName();
 	
-	void init( );
+	void init();
 	
 	boolean execute( ExportTaskParams params, ProgressMonitor progressMonitor ) throws ExportTaskFailedException;
 	

@@ -33,7 +33,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 
-import org.anchoranalysis.anchor.mpp.feature.nrg.cfg.CfgWithNrgTotal;
+import org.anchoranalysis.anchor.mpp.feature.nrg.cfg.CfgWithNRGTotal;
 import org.anchoranalysis.gui.videostats.ICfgNRGUpdater;
 import org.anchoranalysis.mpp.sgmn.optscheme.feedback.aggregate.Aggregator;
 
@@ -47,7 +47,7 @@ public class GraphPanelList implements ICfgNRGUpdater, Collection<GraphPanel> {
 	}
 
 	@Override
-	public void updateCrnt(int iter, long timeStamp, CfgWithNrgTotal crnt, Aggregator agg) {
+	public void updateCrnt(int iter, long timeStamp, CfgWithNRGTotal crnt, Aggregator agg) {
 		for (GraphPanel gp : delegate) {
 			gp.updateCrnt(iter, timeStamp, crnt, agg);
 		}
@@ -55,7 +55,7 @@ public class GraphPanelList implements ICfgNRGUpdater, Collection<GraphPanel> {
 	}
 
 	@Override
-	public void updateBest(int iter, long timeStamp, CfgWithNrgTotal best) {
+	public void updateBest(int iter, long timeStamp, CfgWithNRGTotal best) {
 		for (GraphPanel gp : delegate) {
 			gp.updateBest(iter, timeStamp, best);
 		}

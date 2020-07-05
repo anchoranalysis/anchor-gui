@@ -26,7 +26,7 @@ package org.anchoranalysis.gui.plot.definition;
  * #L%
  */
 
-import org.anchoranalysis.anchor.mpp.feature.nrg.cfg.CfgWithNrgTotal;
+import org.anchoranalysis.anchor.mpp.feature.nrg.cfg.CfgWithNRGTotal;
 import org.anchoranalysis.mpp.sgmn.optscheme.feedback.aggregate.Aggregator;
 
 import com.sun.tools.visualvm.charts.SimpleXYChartDescriptor;
@@ -94,12 +94,12 @@ public class NRGGraphDefinition extends GraphDefinition {
 
 	
     @Override
-	public void updateCrnt( int iter, long timeStamp, CfgWithNrgTotal crnt, Aggregator agg ) {
+	public void updateCrnt( int iter, long timeStamp, CfgWithNRGTotal crnt, Aggregator agg ) {
    	 	 this.nrgCrnt = agg.getNrg();
     }
     
     @Override
-	public void updateBest( int iter, long timeStamp, CfgWithNrgTotal best ) {
+	public void updateBest( int iter, long timeStamp, CfgWithNRGTotal best ) {
   	 	 this.nrgBest = best.getNrgTotal();
    }
 }
