@@ -34,7 +34,7 @@ import org.anchoranalysis.core.cache.CachedOperation;
 import org.anchoranalysis.core.cache.CachedOperationWrap;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.OperationFailedException;
-import org.anchoranalysis.core.log.LogErrorReporter;
+import org.anchoranalysis.core.log.Logger;
 import org.anchoranalysis.core.name.provider.NamedProvider;
 import org.anchoranalysis.core.progress.OperationWithProgressReporter;
 import org.anchoranalysis.core.progress.ProgressReporterMultiple;
@@ -64,7 +64,7 @@ public abstract class AnnotationGuiBuilder<T extends AnnotationInitParams> {
 	public abstract T createInitParams(
 		ProgressReporterMultiple prm,
 		AnnotationGuiContext context,
-		LogErrorReporter logErrorReporter,
+		Logger logger,
 		boolean useDefaultCfg
 	) throws CreateException;
 	

@@ -78,7 +78,7 @@ public class InternalFrameThreadedOverlayProvider {
 			markDisplaySettingsWrapper,
 			defaultIndex,
 			mpg.getThreadPool(),
-			mpg.getLogErrorReporter().getErrorReporter()
+			mpg.getLogErrorReporter().errorReporter()
 		);
 	}
 

@@ -31,7 +31,7 @@ import javax.swing.SwingUtilities;
 
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.error.reporter.ErrorReporter;
-import org.anchoranalysis.core.log.LogErrorReporter;
+import org.anchoranalysis.core.log.Logger;
 import org.anchoranalysis.gui.cfgnrg.StatePanelFrame;
 import org.anchoranalysis.gui.cfgnrg.StatePanelUpdateException;
 import org.anchoranalysis.gui.feature.evaluator.treetable.FeatureListSrc;
@@ -49,15 +49,15 @@ public class FeatureEvaluatorTableFrame {
 	private ErrorReporter errorReporter;
 	private FeatureListSrc featureListSrc;
 	
-	public FeatureEvaluatorTableFrame( DefaultModuleState defaultFrameState, FeatureListSrc featureListSrc, boolean defaultKeepLastValid, LogErrorReporter logErrorReporter ) throws StatePanelUpdateException {
+	public FeatureEvaluatorTableFrame( DefaultModuleState defaultFrameState, FeatureListSrc featureListSrc, boolean defaultKeepLastValid, Logger logger ) throws StatePanelUpdateException {
 		this.featureListSrc = featureListSrc;
 		delegate = new StatePanelFrame<>(
 			"Feature Evaluator",
 			defaultFrameState.getLinkState().getCfgWithStack(),
-			new FeatureEvaluatorTablePanel( featureListSrc, defaultKeepLastValid, logErrorReporter )
+			new FeatureEvaluatorTablePanel( featureListSrc, defaultKeepLastValid, logger )
 		);
 		delegate.controllerSize().configureSize(200, 200, 650, 800);
-		this.errorReporter = logErrorReporter.getErrorReporter();
+		this.errorReporter = logger.errorReporter();
 	}
 		
 	public IModuleCreatorDefaultState moduleCreator() {

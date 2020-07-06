@@ -34,7 +34,7 @@ import org.anchoranalysis.annotation.io.wholeimage.WholeImageLabelAnnotationWrit
 import org.anchoranalysis.annotation.wholeimage.WholeImageLabelAnnotation;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.OperationFailedException;
-import org.anchoranalysis.core.log.LogErrorReporter;
+import org.anchoranalysis.core.log.Logger;
 import org.anchoranalysis.core.progress.ProgressReporterMultiple;
 import org.anchoranalysis.core.progress.ProgressReporterNull;
 import org.anchoranalysis.gui.annotation.AnnotationBackground;
@@ -74,7 +74,7 @@ public class BuilderWholeImage extends AnnotationGuiBuilderWithDelegate<InitPara
 	public InitParamsWholeImage createInitParams(
 		ProgressReporterMultiple prm,
 		AnnotationGuiContext context,
-		LogErrorReporter logErrorReporter,
+		Logger logger,
 		boolean useDefaultCfg
 	) throws CreateException {
 		

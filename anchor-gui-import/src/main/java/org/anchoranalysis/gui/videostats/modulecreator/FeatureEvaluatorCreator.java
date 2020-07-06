@@ -1,6 +1,6 @@
 package org.anchoranalysis.gui.videostats.modulecreator;
 
-import org.anchoranalysis.core.log.LogErrorReporter;
+import org.anchoranalysis.core.log.Logger;
 
 /*
  * #%L
@@ -39,9 +39,9 @@ import org.anchoranalysis.gui.videostats.module.VideoStatsModuleCreateException;
 public class FeatureEvaluatorCreator extends VideoStatsModuleCreator {
 
 	private FeatureListSrc featureListSrc;
-	private LogErrorReporter logger;
+	private Logger logger;
 	
-	public FeatureEvaluatorCreator( FeatureListSrc featureListSrc, LogErrorReporter logger) {
+	public FeatureEvaluatorCreator( FeatureListSrc featureListSrc, Logger logger) {
 		super();
 		this.featureListSrc = featureListSrc;
 		this.logger = logger;

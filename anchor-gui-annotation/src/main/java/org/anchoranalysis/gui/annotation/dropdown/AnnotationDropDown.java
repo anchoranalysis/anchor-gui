@@ -142,7 +142,7 @@ public class AnnotationDropDown {
 			),
 			adder,
 			mpg.getThreadPool(),
-			mpg.getLogErrorReporter().getErrorReporter()
+			mpg.getLogErrorReporter().errorReporter()
 		);
 		
 		DropDownUtilitiesRaster.addRaster(

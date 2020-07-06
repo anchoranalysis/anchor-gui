@@ -37,7 +37,7 @@ import org.anchoranalysis.core.idgetter.IDGetter;
 import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.index.IIndexGettableSettable;
 import org.anchoranalysis.core.index.SetOperationFailedException;
-import org.anchoranalysis.core.log.LogErrorReporter;
+import org.anchoranalysis.core.log.Logger;
 import org.anchoranalysis.core.property.change.PropertyValueChangeEvent;
 import org.anchoranalysis.core.property.change.PropertyValueChangeListener;
 import org.anchoranalysis.gui.displayupdate.IDisplayUpdateRememberStack;
@@ -67,7 +67,7 @@ class ThreadedOverlayUpdateProducer implements IRedrawable, IThreadedProducer, I
 	private PropertyValueChange propertyValueChange = null;
 	private MarkDisplaySettingsWrapper markDisplaySettingsWrapper = null;
 	private IDGetter<Overlay> idGetter;
-	private LogErrorReporter logErrorReporter;
+	private Logger logger;
 	
 	private class PropertyValueChange implements PropertyValueChangeListener<MarkDisplaySettings> {
 		
@@ -91,16 +91,16 @@ class ThreadedOverlayUpdateProducer implements IRedrawable, IThreadedProducer, I
 				
 				//cfgGenerator.applyRedrawUpdate( new ColoredCfgRedrawUpdate(null) );
 			} catch (SetOperationFailedException e) {
-				logErrorReporter.getErrorReporter().recordError(ThreadedOverlayUpdateProducer.class,e);
+				logger.errorReporter().recordError(ThreadedOverlayUpdateProducer.class,e);
 			}
 			consumer.update();
 			
 		}
 	}
 	
-	public ThreadedOverlayUpdateProducer( IDGetter<Overlay> idGetter, LogErrorReporter logErrorReporter ) {
+	public ThreadedOverlayUpdateProducer( IDGetter<Overlay> idGetter, Logger logger ) {
 		this.idGetter = idGetter;
-		this.logErrorReporter = logErrorReporter;
+		this.logger = logger;
 	}
 	
 	public void init(

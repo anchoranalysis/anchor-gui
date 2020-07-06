@@ -47,7 +47,7 @@ import org.anchoranalysis.core.index.container.BoundChangeEvent;
 import org.anchoranalysis.core.index.container.BoundChangeListener;
 import org.anchoranalysis.core.index.container.IBoundedRangeIncompleteDynamic;
 import org.anchoranalysis.core.index.container.BoundChangeEvent.BoundType;
-import org.anchoranalysis.core.log.LogErrorReporter;
+import org.anchoranalysis.core.log.Logger;
 import org.anchoranalysis.core.progress.ProgressReporterNull;
 import org.anchoranalysis.core.random.RandomNumberGeneratorMersenne;
 import org.anchoranalysis.feature.nrg.NRGStackWithParams;
@@ -119,7 +119,7 @@ public class VideoStatsEDT {
 	private BoundOutputManagerRouteErrors outputManager;
 	
 	private BackgroundSet backgroundSet;
-	private LogErrorReporter logErrorReporter;
+	private Logger logger;
 
 	private class FrameBoundsChanged implements BoundChangeListener {
 		
@@ -146,7 +146,7 @@ public class VideoStatsEDT {
 		}
 	}
 	
-	public void init(ImageInitParams so, LogErrorReporter logger)
+	public void init(ImageInitParams so, Logger logger)
 			throws InitException {
 		
 		try {
@@ -222,7 +222,7 @@ public class VideoStatsEDT {
 	public void reportBegin( OptimizationFeedbackInitParams<CfgNRGPixelized> initParams ) throws ReporterException {
 		
 		this.outputManager = initParams.getInitContext().getOutputManager();
-		this.logErrorReporter = initParams.getInitContext().getLogger();
+		this.logger = initParams.getInitContext().getLogger();
 		
 		// Then we want to shut down the previous
 		if (videoStatsFrame!=null) {
@@ -238,7 +238,7 @@ public class VideoStatsEDT {
 		assert( initParams.getInitContext().getExperimentDescription() != null );
 		
 		videoStatsFrame = new VideoStatsFrame( String.format("live mode - %s", initParams.getInitContext().getExperimentDescription() ) );
-		videoStatsFrame.initBeforeAddingFrames( logErrorReporter.getErrorReporter() );
+		videoStatsFrame.initBeforeAddingFrames( logger.errorReporter() );
 		
 		imageFrameCurrent = new InternalFrameCfgNRGLive("current");
 		imageFrameBest = new InternalFrameCfgNRGLive("best");
@@ -263,7 +263,7 @@ public class VideoStatsEDT {
 		}
 		
 		SequenceMemory sequenceMemory = new SequenceMemory();
-		ExportPopupParams popUpParams = new ExportPopupParams( logErrorReporter.getErrorReporter() );
+		ExportPopupParams popUpParams = new ExportPopupParams( logger.errorReporter() );
 		assert( outputManager!=null );
 		popUpParams.setOutputManager( outputManager );
 		popUpParams.setParentFrame( videoStatsFrame );
@@ -272,7 +272,7 @@ public class VideoStatsEDT {
 
 		VideoStatsModuleGlobalParams mpg = new VideoStatsModuleGlobalParams();
 		mpg.setExportPopupParams( popUpParams );
-		mpg.setLogErrorReporter( logErrorReporter );
+		mpg.setLogErrorReporter( logger );
 		mpg.setThreadPool( videoStatsFrame.getThreadPool() );
 		mpg.setRandomNumberGenerator( new RandomNumberGeneratorMersenne(false) );
 		mpg.setExportTaskList( new ExportTaskList() );
@@ -304,7 +304,7 @@ public class VideoStatsEDT {
 		}
 		
 		IAddVideoStatsModule adder = new SubgrouppedAdder(videoStatsFrame, liveSubgroup.getDefaultModuleState().getState() );
-		adder = new AdderAddOverlaysWithStack(adder, videoStatsFrame.getThreadPool(), logErrorReporter.getErrorReporter());
+		adder = new AdderAddOverlaysWithStack(adder, videoStatsFrame.getThreadPool(), logger.errorReporter());
 		
 		{
 			adder = new AdderAppendNRGStack(
@@ -327,9 +327,9 @@ public class VideoStatsEDT {
 			);
 			
 		} catch (VideoStatsModuleCreateException e) {
-			logErrorReporter.getErrorReporter().recordError(VideoStatsEDT.class, e);
+			logger.errorReporter().recordError(VideoStatsEDT.class, e);
 		} catch (InitException e) {
-			logErrorReporter.getErrorReporter().recordError(VideoStatsEDT.class, e);
+			logger.errorReporter().recordError(VideoStatsEDT.class, e);
 		}
 		
 		try {
@@ -345,9 +345,9 @@ public class VideoStatsEDT {
 				)
 			);
 		} catch (VideoStatsModuleCreateException e) {
-			logErrorReporter.getErrorReporter().recordError(VideoStatsEDT.class, e);
+			logger.errorReporter().recordError(VideoStatsEDT.class, e);
 		} catch (InitException e) {
-			logErrorReporter.getErrorReporter().recordError(VideoStatsEDT.class, e);
+			logger.errorReporter().recordError(VideoStatsEDT.class, e);
 		}
 		
 		for (GraphPanel gp : graphPanelList) {
@@ -358,7 +358,7 @@ public class VideoStatsEDT {
 					)
 				);
 			} catch (VideoStatsModuleCreateException e) {
-				logErrorReporter.getErrorReporter().recordError(VideoStatsEDT.class, e);
+				logger.errorReporter().recordError(VideoStatsEDT.class, e);
 			}
 		}
 
@@ -369,7 +369,7 @@ public class VideoStatsEDT {
 				adder
 			);
 		} catch (VideoStatsModuleCreateException e) {
-			logErrorReporter.getErrorReporter().recordError(VideoStatsEDT.class, e);
+			logger.errorReporter().recordError(VideoStatsEDT.class, e);
 		}
 		
 		cfgNRGCurrent.addBoundChangeListener(
@@ -421,7 +421,7 @@ public class VideoStatsEDT {
 				defaultState,
 				src,
 				false,
-				logErrorReporter
+				logger
 			);
 			adder.addVideoStatsModule( markPropertiesTableFrame.moduleCreator().createVideoStatsModule(defaultState) );
 		} catch (StatePanelUpdateException e) {

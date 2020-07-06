@@ -37,7 +37,7 @@ import org.anchoranalysis.anchor.mpp.regionmap.RegionMapSingleton;
 
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.InitException;
-import org.anchoranalysis.core.log.LogErrorReporter;
+import org.anchoranalysis.core.log.Logger;
 import org.anchoranalysis.core.name.provider.NamedProviderGetException;
 import org.anchoranalysis.core.name.store.NamedProviderStore;
 import org.anchoranalysis.feature.bean.Feature;
@@ -54,11 +54,11 @@ import org.anchoranalysis.gui.feature.evaluator.treetable.KeyValueParamsAugmente
 
 public class FeatureListSrcBuilder<T extends FeatureInput> {
 
-	private LogErrorReporter logErrorReporter;
+	private Logger logger;
 		
-	public FeatureListSrcBuilder(LogErrorReporter logErrorReporter) {
+	public FeatureListSrcBuilder(Logger logger) {
 		super();
-		this.logErrorReporter = logErrorReporter;
+		this.logger = logger;
 	}
 
 	/**
@@ -98,7 +98,7 @@ public class FeatureListSrcBuilder<T extends FeatureInput> {
 		NRGSchemeCreator nrgSchemeCreator
 	) throws CreateException {
 		
-		NRGScheme nrgScheme = createNRGScheme( nrgSchemeCreator, soFeature, logErrorReporter );
+		NRGScheme nrgScheme = createNRGScheme( nrgSchemeCreator, soFeature, logger );
 		RegionMapFinder.addFromNrgScheme( nrgElemSet, nrgScheme );
 		
 		addFromStore( nrgElemSet, soFeature.getFeatureListSet(), nrgScheme.getRegionMap() );
@@ -108,13 +108,13 @@ public class FeatureListSrcBuilder<T extends FeatureInput> {
 		KeyValueParamsAugmenter augmenter = new KeyValueParamsAugmenter(
 			nrgScheme,
 			soFeature.getSharedFeatureSet(),
-			logErrorReporter
+			logger
 		);
 		
 		return new ExtractFromNamedNRGSchemeSet(nrgElemSet, augmenter );
 	}
 	
-	private NRGScheme createNRGScheme( NRGSchemeCreator nrgSchemeCreator, SharedFeaturesInitParams soFeature, LogErrorReporter logger ) throws CreateException {
+	private NRGScheme createNRGScheme( NRGSchemeCreator nrgSchemeCreator, SharedFeaturesInitParams soFeature, Logger logger ) throws CreateException {
 		
 		try {
 			nrgSchemeCreator.initRecursive( soFeature, logger );
@@ -156,9 +156,9 @@ public class FeatureListSrcBuilder<T extends FeatureInput> {
 				);
 				
 			} catch (FeatureCalcException | CreateException e) {
-				logErrorReporter.getErrorReporter().recordError(FeatureListSrcBuilder.class, e);
+				logger.errorReporter().recordError(FeatureListSrcBuilder.class, e);
 			} catch (NamedProviderGetException e) {
-				logErrorReporter.getErrorReporter().recordError(FeatureListSrcBuilder.class, e.summarize());
+				logger.errorReporter().recordError(FeatureListSrcBuilder.class, e.summarize());
 			}
 		}
 	}

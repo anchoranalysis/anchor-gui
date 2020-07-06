@@ -30,7 +30,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.anchoranalysis.core.error.OperationFailedException;
-import org.anchoranalysis.core.log.LogErrorReporter;
+import org.anchoranalysis.core.log.Logger;
 import org.anchoranalysis.core.name.provider.NamedProvider;
 import org.anchoranalysis.image.object.ObjectCollection;
 import org.anchoranalysis.core.name.provider.NameValueSet;
@@ -65,7 +65,7 @@ public class FinderObjMaskCollectionFolder extends FinderSingleFolder {
 	}
 	
 	// If namesAsIndexes is true, we use the indexes as names instead of the existing names
-	public NamedProvider<ObjectCollection> createNamedProvider( boolean namesAsIndexes, LogErrorReporter logErrorReporter ) throws OperationFailedException {
+	public NamedProvider<ObjectCollection> createNamedProvider( boolean namesAsIndexes, Logger logger ) throws OperationFailedException {
 		
 		if (getFoundFolder()==null) {
 			return new NameValueSet<>();
@@ -73,7 +73,7 @@ public class FinderObjMaskCollectionFolder extends FinderSingleFolder {
 		
 		return new CreateObjStoreFromDirectory().apply(
 			getFoundFolder().calcPath(),
-			logErrorReporter
+			logger
 		);
 	}
 }

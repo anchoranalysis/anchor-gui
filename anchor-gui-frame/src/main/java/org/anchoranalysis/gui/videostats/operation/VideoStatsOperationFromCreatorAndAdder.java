@@ -28,7 +28,7 @@ import java.util.Optional;
  * #L%
  */
 
-import org.anchoranalysis.core.log.LogErrorReporter;
+import org.anchoranalysis.core.log.Logger;
 import org.anchoranalysis.gui.videostats.dropdown.VideoStatsModuleCreatorAndAdder;
 import org.anchoranalysis.gui.videostats.operation.combine.IVideoStatsOperationCombine;
 import org.anchoranalysis.gui.videostats.threading.InteractiveThreadPool;
@@ -38,13 +38,13 @@ public class VideoStatsOperationFromCreatorAndAdder implements VideoStatsOperati
 	private String name;
 	private VideoStatsModuleCreatorAndAdder creatorAndAdder;
 	private InteractiveThreadPool threadPool;
-	private LogErrorReporter logErrorReporter;
+	private Logger logger;
 	
-	public VideoStatsOperationFromCreatorAndAdder(String name, VideoStatsModuleCreatorAndAdder creatorAndAdder, InteractiveThreadPool threadPool, LogErrorReporter logErrorReporter ) {
+	public VideoStatsOperationFromCreatorAndAdder(String name, VideoStatsModuleCreatorAndAdder creatorAndAdder, InteractiveThreadPool threadPool, Logger logger ) {
 		this.name = name;
 		this.creatorAndAdder = creatorAndAdder;
 		this.threadPool = threadPool;
-		this.logErrorReporter = logErrorReporter;
+		this.logger = logger;
 	}
 
 	@Override
@@ -54,7 +54,7 @@ public class VideoStatsOperationFromCreatorAndAdder implements VideoStatsOperati
 
 	@Override
 	public void execute(boolean withMessages) {
-		creatorAndAdder.createVideoStatsModuleForAdder(threadPool,null,logErrorReporter);
+		creatorAndAdder.createVideoStatsModuleForAdder(threadPool,null,logger);
 	}
 
 	@Override

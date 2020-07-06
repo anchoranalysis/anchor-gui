@@ -108,7 +108,7 @@ public class VideoStats extends ReporterAgg<CfgNRGPixelized> {
 				try {
 					edtImpl.reportBegin(initParams);
 				} catch (ReporterException e) {
-					initParams.getInitContext().getLogger().getErrorReporter().recordError(VideoStats.class, e);
+					initParams.getInitContext().getLogger().errorReporter().recordError(VideoStats.class, e);
 				}
 			}
 		};

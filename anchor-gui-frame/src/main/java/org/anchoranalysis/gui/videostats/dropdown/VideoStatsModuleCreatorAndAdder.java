@@ -32,7 +32,7 @@ import java.util.concurrent.ExecutionException;
 
 import javax.swing.JOptionPane;
 
-import org.anchoranalysis.core.log.LogErrorReporter;
+import org.anchoranalysis.core.log.Logger;
 import org.anchoranalysis.core.progress.OperationWithProgressReporter;
 import org.anchoranalysis.core.progress.ProgressReporter;
 import org.anchoranalysis.core.progress.ProgressReporterMultiple;
@@ -66,9 +66,9 @@ public class VideoStatsModuleCreatorAndAdder {
 	public void createVideoStatsModuleForAdder(
 		InteractiveThreadPool threadPool,
 		Component parentComponent,
-		LogErrorReporter logErrorReporter
+		Logger logger
 	) {
-		Worker worker = new Worker( logErrorReporter );
+		Worker worker = new Worker( logger );
 		worker.beforeBackground(parentComponent);
 		threadPool.submitWithProgressMonitor(worker, "Create module");
 	}
@@ -76,11 +76,11 @@ public class VideoStatsModuleCreatorAndAdder {
 	private class Worker extends InteractiveWorker<IAddVideoStatsModule, Void> {
 
 		private Throwable exceptionRecorded;
-		private LogErrorReporter logErrorReporter;
+		private Logger logger;
 		
-		public Worker(LogErrorReporter logErrorReporter) {
+		public Worker(Logger logger) {
 			super();
-			this.logErrorReporter = logErrorReporter;
+			this.logger = logger;
 		}
 
 
@@ -132,7 +132,7 @@ public class VideoStatsModuleCreatorAndAdder {
 		
 		private void displayErrorDialog( Throwable e ) {
 			
-			logErrorReporter.getErrorReporter().recordError( VideoStatsModuleCreatorAndAdder.class, e);
+			logger.errorReporter().recordError( VideoStatsModuleCreatorAndAdder.class, e);
 			
 			//custom title, error icon
 			JOptionPane.showMessageDialog(null,

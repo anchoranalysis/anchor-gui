@@ -35,16 +35,12 @@ import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
-import javax.swing.event.TableModelEvent;
-import javax.swing.event.TableModelListener;
-
 import org.anchoranalysis.annotation.io.bean.input.AnnotationInputManager;
 import org.anchoranalysis.annotation.io.bean.strategy.AnnotatorStrategy;
 import org.anchoranalysis.annotation.io.input.AnnotationWithStrategy;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.error.OperationFailedException;
-import org.anchoranalysis.core.progress.OperationWithProgressReporter;
 import org.anchoranalysis.core.progress.ProgressReporter;
 import org.anchoranalysis.core.progress.ProgressReporterNull;
 import org.anchoranalysis.gui.bean.filecreator.MarkCreatorParams;
@@ -87,15 +83,13 @@ public class AnnotationListInternalFrame {
 		int widthDescriptionColumn 
 	) throws InitException {
 		
-		OperationWithProgressReporter<AnnotationProject,OperationFailedException> opAnnotationProject = (pr) -> createProject(
-			inputManager,
-			params,
-			progressReporter
-		);
-		
 		try {
 			annotationTableModel = new AnnotationTableModel(
-				opAnnotationProject,
+				pr -> createProject(
+					inputManager,
+					params,
+					progressReporter
+				),
 				progressReporter
 			);
 			delegate.init(
@@ -115,15 +109,8 @@ public class AnnotationListInternalFrame {
 			delegate.setColumnRenderer(0, tableCellRenderer );
 			delegate.setColumnRenderer(1, tableCellRenderer );
 			delegate.setColumnRenderer(2, tableCellRenderer );
-			
-			
-			annotationTableModel.addTableModelListener( new TableModelListener() {
-				
-				@Override
-				public void tableChanged(TableModelEvent e) {
-					refreshProgressBar();
-				}
-			});
+						
+			annotationTableModel.addTableModelListener(e->refreshProgressBar());
 		} catch (CreateException e) {
 			throw new InitException(e);
 		}
@@ -134,12 +121,11 @@ public class AnnotationListInternalFrame {
 	}
 	
 	private JProgressBar createProgressBar() {
-		JProgressBar progressBar = new JProgressBar(0, 100);
-		progressBar.setValue(0);
-		
-		progressBar.setName("Annotated");
-		progressBar.setStringPainted(true);
-		return progressBar;
+		JProgressBar pbar = new JProgressBar(0, 100);
+		pbar.setName("Annotated");
+		pbar.setValue(0);
+		pbar.setStringPainted(true);
+		return pbar;
 	}
 	
 	private void refreshProgressBar() {
@@ -155,7 +141,6 @@ public class AnnotationListInternalFrame {
 	public JPanel createPanelFor( JComponent component, String labelString ) {
 		JPanel panel = new JPanel();
 		panel.setBorder( BorderFactory.createEmptyBorder(5, 5, 5, 5) );
-		//panelButtons.setLayout( new FlowLayout(FlowLayout.RIGHT,7,0) );
 		panel.setLayout( new BorderLayout() );
 		panel.add(component, BorderLayout.CENTER );
 		panel.add( new JLabel(labelString), BorderLayout.WEST );
@@ -180,14 +165,12 @@ public class AnnotationListInternalFrame {
 				)
 			); 
 			
-			AnnotationProject ap = new AnnotationProject(
+			return new AnnotationProject(
 				inputObjs,
 				params.getMarkEvaluatorManager(),
 				params.getModuleParams(),
 				ProgressReporterNull.get()
 			);
-			
-			return ap;
 			
 		} catch (AnchorIOException | IOException | CreateException e) {
 			throw new OperationFailedException(e);

@@ -26,7 +26,7 @@ package org.anchoranalysis.gui.feature.evaluator.treetable;
  * #L%
  */
 
-import org.anchoranalysis.core.log.LogErrorReporter;
+import org.anchoranalysis.core.log.Logger;
 import org.netbeans.swing.outline.RenderDataProvider;
 import org.netbeans.swing.outline.RowModel;
 
@@ -35,15 +35,15 @@ public class TreeTableProperties {
 	private RowModel rowModel;
 	private RenderDataProvider renderDataProvider;
 	private String title;
-	private LogErrorReporter logErrorReporter;
+	private Logger logger;
 
 	public TreeTableProperties(RowModel rowModel, RenderDataProvider renderDataProvider, String title,
-			LogErrorReporter logErrorReporter) {
+			Logger logger) {
 		super();
 		this.rowModel = rowModel;
 		this.renderDataProvider = renderDataProvider;
 		this.title = title;
-		this.logErrorReporter = logErrorReporter;
+		this.logger = logger;
 	}
 
 	public RowModel getRowModel() {
@@ -58,8 +58,8 @@ public class TreeTableProperties {
 		return title;
 	}
 
-	public LogErrorReporter getLogErrorReporter() {
-		return logErrorReporter;
+	public Logger getLogErrorReporter() {
+		return logger;
 	}
 	
 }

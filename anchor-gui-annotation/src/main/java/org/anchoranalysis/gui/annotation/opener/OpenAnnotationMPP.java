@@ -33,7 +33,7 @@ import org.anchoranalysis.anchor.mpp.cfg.Cfg;
 import org.anchoranalysis.annotation.io.mark.MarkAnnotationReader;
 import org.anchoranalysis.annotation.mark.MarkAnnotation;
 import org.anchoranalysis.annotation.mark.RejectionReason;
-import org.anchoranalysis.core.log.LogErrorReporter;
+import org.anchoranalysis.core.log.Logger;
 import org.anchoranalysis.gui.annotation.InitAnnotation;
 import org.anchoranalysis.gui.annotation.AnnotatorModuleCreator;
 import org.anchoranalysis.gui.videostats.internalframe.annotator.currentstate.DualCfg;
@@ -57,7 +57,7 @@ public class OpenAnnotationMPP implements IOpenAnnotation {
 	@Override
 	public InitAnnotation open(
 		boolean useDefaultCfg,
-		LogErrorReporter logger
+		Logger logger
 	) throws VideoStatsModuleCreateException {
 		
 		// We try to read an existing annotation
@@ -70,7 +70,7 @@ public class OpenAnnotationMPP implements IOpenAnnotation {
 			return readDefaultCfg(defaultCfgPath.get(), logger);
 							
 		} else {
-			logger.getLogReporter().logFormatted("No cfg to open for annotation");
+			logger.messageLogger().logFormatted("No cfg to open for annotation");
 			return new InitAnnotation(Optional.empty());
 		}
 	}
@@ -101,7 +101,7 @@ public class OpenAnnotationMPP implements IOpenAnnotation {
 		}
 	}
 	
-	private InitAnnotation readDefaultCfg(Path defaultCfgPath, LogErrorReporter logger ) {
+	private InitAnnotation readDefaultCfg(Path defaultCfgPath, Logger logger ) {
 		try {
 			Cfg defaultCfg = annotationReader.readDefaultCfg(defaultCfgPath);
 			return new InitAnnotation(
@@ -109,8 +109,8 @@ public class OpenAnnotationMPP implements IOpenAnnotation {
 				new DualCfg( defaultCfg, new Cfg() )
 			);
 		} catch (DeserializationFailedException e) {
-			logger.getLogReporter().logFormatted("Cannot open defaultCfg at %s", defaultCfgPath);
-			logger.getErrorReporter().recordError(AnnotatorModuleCreator.class, e);
+			logger.messageLogger().logFormatted("Cannot open defaultCfg at %s", defaultCfgPath);
+			logger.errorReporter().recordError(AnnotatorModuleCreator.class, e);
 			return new InitAnnotation(Optional.empty());
 		}
 	}

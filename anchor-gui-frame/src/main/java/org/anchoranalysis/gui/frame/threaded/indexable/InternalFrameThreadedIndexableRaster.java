@@ -106,7 +106,7 @@ public class InternalFrameThreadedIndexableRaster {
 			threadedProvider.init(
 				new IndexBridge<>(cntr),
 				mpg.getThreadPool(),
-				mpg.getLogErrorReporter().getErrorReporter()
+				mpg.getLogErrorReporter().errorReporter()
 			);
 			return threadedProvider;
 		}

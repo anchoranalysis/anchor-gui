@@ -36,7 +36,7 @@ import org.anchoranalysis.annotation.io.mark.MarkAnnotationReader;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.functional.OptionalUtilities;
-import org.anchoranalysis.core.log.LogErrorReporter;
+import org.anchoranalysis.core.log.Logger;
 import org.anchoranalysis.core.progress.ProgressReporterMultiple;
 import org.anchoranalysis.gui.annotation.InitAnnotation;
 import org.anchoranalysis.gui.annotation.builder.AdditionalFramesContext;
@@ -86,7 +86,7 @@ public class BuilderProposeMarks extends AnnotationGuiBuilderWithDelegate<InitPa
 	public InitParamsProposeMarks createInitParams(
 		ProgressReporterMultiple prm,
 		AnnotationGuiContext context,
-		LogErrorReporter logErrorReporter,
+		Logger logger,
 		boolean useDefaultCfg
 	) throws CreateException {
 		
@@ -96,13 +96,13 @@ public class BuilderProposeMarks extends AnnotationGuiBuilderWithDelegate<InitPa
 				pathForBindingRequired(),
 				getStrategy(),
 				stacks(),
-				logErrorReporter
+				logger
 			);
 			
 			// Open initial cfg
 			InitAnnotation annotationExst = openAnnotation.open(
 				useDefaultCfg,
-				logErrorReporter
+				logger
 			);
 		
 			return new InitParamsProposeMarks(

@@ -31,7 +31,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
 import org.anchoranalysis.core.error.CreateException;
-import org.anchoranalysis.core.log.LogErrorReporter;
+import org.anchoranalysis.core.log.Logger;
 import org.anchoranalysis.core.progress.OperationWithProgressReporter;
 import org.anchoranalysis.gui.IconFactory;
 import org.anchoranalysis.gui.file.opened.IOpenedFileGUI;
@@ -68,16 +68,16 @@ public class BoundVideoStatsModuleDropDown {
 		return child;
 	}
 	
-	public void addModule( String itemName, VideoStatsModuleCreatorAndAdder creator, InteractiveThreadPool threadPool, LogErrorReporter logErrorReporter ) {
-		delegate.getRootMenu().add( new VideoStatsOperationFromCreatorAndAdder(itemName, creator, threadPool, logErrorReporter ) );
+	public void addModule( String itemName, VideoStatsModuleCreatorAndAdder creator, InteractiveThreadPool threadPool, Logger logger ) {
+		delegate.getRootMenu().add( new VideoStatsOperationFromCreatorAndAdder(itemName, creator, threadPool, logger ) );
 	}
 	
-	public void addModule( NamedModule module, InteractiveThreadPool threadPool, LogErrorReporter logErrorReporter ) {
-		addModule( module.getTitle(), module, threadPool, logErrorReporter );
+	public void addModule( NamedModule module, InteractiveThreadPool threadPool, Logger logger ) {
+		addModule( module.getTitle(), module, threadPool, logger );
 	}
 	
-	public void addModule( String itemName, NamedModule module, InteractiveThreadPool threadPool, LogErrorReporter logErrorReporter ) {
-		addModule( itemName, module.getCreator(), threadPool, logErrorReporter );
+	public void addModule( String itemName, NamedModule module, InteractiveThreadPool threadPool, Logger logger ) {
+		addModule( itemName, module.getCreator(), threadPool, logger );
 	}
 	
 	public void addModule(
@@ -102,9 +102,9 @@ public class BoundVideoStatsModuleDropDown {
 		}			
 	}
 	
-	public void addModule( String itemName, OperationWithProgressReporter<IAddVideoStatsModule,? extends Throwable> adder, VideoStatsModuleCreator creator, InteractiveThreadPool threadPool, LogErrorReporter logErrorReporter ) throws MenuAddException {
+	public void addModule( String itemName, OperationWithProgressReporter<IAddVideoStatsModule,? extends Throwable> adder, VideoStatsModuleCreator creator, InteractiveThreadPool threadPool, Logger logger ) throws MenuAddException {
 		VideoStatsModuleCreatorAndAdder creatorAndAdder = new VideoStatsModuleCreatorAndAdder(adder, creator);
-		addModule(itemName, creatorAndAdder, threadPool, logErrorReporter);
+		addModule(itemName, creatorAndAdder, threadPool, logger);
 	}
 	
 	

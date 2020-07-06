@@ -39,7 +39,7 @@ import org.anchoranalysis.bean.shared.params.keyvalue.KeyValueParamsInitParams;
 import org.anchoranalysis.bean.shared.params.keyvalue.KeyValueParamsProvider;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.OperationFailedException;
-import org.anchoranalysis.core.log.LogErrorReporter;
+import org.anchoranalysis.core.log.Logger;
 import org.anchoranalysis.core.name.store.SharedObjects;
 import org.anchoranalysis.core.params.KeyValueParams;
 import org.anchoranalysis.feature.bean.list.FeatureListProvider;
@@ -63,7 +63,7 @@ public class InteractiveBrowserInput implements InputFromManager {
 	private List<NamedBean<FilePathProvider>> namedItemFilePathProviderList;
 	private ImporterSettings importerSettings;
 	
-	public FeatureListSrc createFeatureListSrc(LogErrorReporter logger) throws CreateException {
+	public FeatureListSrc createFeatureListSrc(Logger logger) throws CreateException {
 		
 		SharedObjects so = new SharedObjects(logger);
 		KeyValueParamsInitParams soParams = KeyValueParamsInitParams.create(so);

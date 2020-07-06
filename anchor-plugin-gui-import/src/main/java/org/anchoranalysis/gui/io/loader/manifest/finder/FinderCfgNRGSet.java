@@ -69,7 +69,7 @@ public class FinderCfgNRGSet implements Finder, ContainerGetter<CfgNRGInstantSta
 		// CSV Stats
 		final FinderCSVStats finderCSVStats = new FinderCSVStats(
 			csvStatsName,
-			context.getMpg().getLogErrorReporter().getErrorReporter()
+			context.getMpg().getLogErrorReporter().errorReporter()
 		);
 		finderCSVStats.doFind(manifestRecorder);
 		
@@ -94,7 +94,7 @@ public class FinderCfgNRGSet implements Finder, ContainerGetter<CfgNRGInstantSta
 				context.getContext()
 			);
 		} catch (InitException | MenuAddException e) {
-			context.getMpg().getLogErrorReporter().getErrorReporter().recordError(FinderCfgNRGSet.class, e);
+			context.getMpg().getLogErrorReporter().errorReporter().recordError(FinderCfgNRGSet.class, e);
 			return false;
 		}
 		return true;

@@ -29,7 +29,7 @@ import java.io.IOException;
  */
 
 
-import org.anchoranalysis.core.log.LogErrorReporter;
+import org.anchoranalysis.core.log.Logger;
 import org.anchoranalysis.gui.interactivebrowser.openfile.importer.ImporterSettings;
 import org.anchoranalysis.image.io.bean.rasterreader.RasterReader;
 import org.anchoranalysis.io.params.InputContextParams;
@@ -54,7 +54,7 @@ public class FileCreatorParams {
 	public void setRasterReader(RasterReader rasterReader) {
 		this.rasterReader = rasterReader;
 	}
-	public LogErrorReporter getLogErrorReporter() {
+	public Logger getLogErrorReporter() {
 		return markCreatorParams.getModuleParams().getLogErrorReporter();
 	}
 	public ImporterSettings getImporterSettings() {

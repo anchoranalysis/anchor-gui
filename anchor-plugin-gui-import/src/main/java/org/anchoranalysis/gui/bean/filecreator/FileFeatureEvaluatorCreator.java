@@ -36,7 +36,7 @@ import org.anchoranalysis.bean.annotation.NonEmpty;
 import org.anchoranalysis.bean.annotation.OptionalBean;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.OperationFailedException;
-import org.anchoranalysis.core.log.LogErrorReporter;
+import org.anchoranalysis.core.log.Logger;
 import org.anchoranalysis.core.name.store.SharedObjects;
 import org.anchoranalysis.core.progress.ProgressReporter;
 import org.anchoranalysis.feature.bean.list.FeatureListProvider;
@@ -94,7 +94,7 @@ public class FileFeatureEvaluatorCreator extends FileCreator {
 		}
 	}
 	
-	private FeatureListSrc createSrc( LogErrorReporter logger ) throws CreateException {
+	private FeatureListSrc createSrc( Logger logger ) throws CreateException {
 		
 		FeatureListSrcBuilder<FeatureInput> builder = new FeatureListSrcBuilder<>(logger); 
 		
@@ -104,7 +104,7 @@ public class FileFeatureEvaluatorCreator extends FileCreator {
 		);
 	}
 	
-	private SharedFeaturesInitParams createInitParams( LogErrorReporter logger ) throws CreateException {
+	private SharedFeaturesInitParams createInitParams( Logger logger ) throws CreateException {
 		SharedObjects so = new SharedObjects( logger );
 		SharedFeaturesInitParams soFeature = SharedFeaturesInitParams.create(so);
 		

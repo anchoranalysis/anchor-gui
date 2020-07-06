@@ -38,7 +38,7 @@ import javax.swing.JSplitPane;
 import org.anchoranalysis.anchor.overlay.collection.OverlayCollection;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.index.IntArray;
-import org.anchoranalysis.core.log.LogErrorReporter;
+import org.anchoranalysis.core.log.Logger;
 import org.anchoranalysis.core.property.IPropertyValueReceivable;
 import org.anchoranalysis.core.property.IPropertyValueSendable;
 import org.anchoranalysis.gui.cfgnrg.StatePanel;
@@ -59,7 +59,7 @@ public class FeatureEvaluatorTablePanel extends StatePanel<OverlayCollectionWith
 	public FeatureEvaluatorTablePanel(
 		FeatureListSrc featureListSrc,
 		boolean defaultKeepLastValid,
-		LogErrorReporter logger
+		Logger logger
 	) {
 		super();
 		

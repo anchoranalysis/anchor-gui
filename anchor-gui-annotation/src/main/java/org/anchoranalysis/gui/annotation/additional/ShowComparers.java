@@ -35,7 +35,7 @@ import org.anchoranalysis.annotation.io.bean.comparer.MultipleComparer;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.functional.FunctionWithException;
 import org.anchoranalysis.core.index.GetOperationFailedException;
-import org.anchoranalysis.core.log.LogErrorReporter;
+import org.anchoranalysis.core.log.Logger;
 import org.anchoranalysis.core.name.value.NameValue;
 import org.anchoranalysis.gui.annotation.AnnotatorModuleCreator;
 import org.anchoranalysis.gui.backgroundset.BackgroundSet;
@@ -51,11 +51,11 @@ public class ShowComparers {
 	private Path matchPath;
 	private String name;
 	private FunctionWithException<Integer,DisplayStack,? extends Throwable> defaultBackground;
-	private LogErrorReporter logErrorReporter;
+	private Logger logger;
 
 	public ShowComparers(ShowRaster showRaster, MultipleComparer multipleComparer, ColorSetGenerator colorSetGenerator,
 			Path matchPath, String name,
-			FunctionWithException<Integer,DisplayStack,? extends Throwable> defaultBackground, LogErrorReporter logErrorReporter) {
+			FunctionWithException<Integer,DisplayStack,? extends Throwable> defaultBackground, Logger logger) {
 		super();
 		this.showRaster = showRaster;
 		this.multipleComparer = multipleComparer;
@@ -63,7 +63,7 @@ public class ShowComparers {
 		this.matchPath = matchPath;
 		this.name = name;
 		this.defaultBackground = defaultBackground;
-		this.logErrorReporter = logErrorReporter;
+		this.logger = logger;
 	}	
 	
 	public void apply( Optional<AnnotationWithCfg> annotationExst ) {
@@ -83,11 +83,11 @@ public class ShowComparers {
 				background,
 				matchPath,
 				colorSetGenerator,
-				logErrorReporter,
+				logger,
 				false
 			);
 		} catch (Throwable e1) {
-			logErrorReporter.getErrorReporter().recordError(AnnotatorModuleCreator.class, e1);
+			logger.errorReporter().recordError(AnnotatorModuleCreator.class, e1);
 			return;
 		}
 		

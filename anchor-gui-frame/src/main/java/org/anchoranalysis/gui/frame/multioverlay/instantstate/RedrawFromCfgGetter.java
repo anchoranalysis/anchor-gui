@@ -31,7 +31,7 @@ import org.anchoranalysis.anchor.overlay.collection.OverlayCollection;
 
 
 import org.anchoranalysis.core.index.IntArray;
-import org.anchoranalysis.core.log.LogErrorReporter;
+import org.anchoranalysis.core.log.Logger;
 import org.anchoranalysis.core.property.change.PropertyValueChangeEvent;
 import org.anchoranalysis.core.property.change.PropertyValueChangeListener;
 import org.anchoranalysis.gui.frame.display.IRedrawable;
@@ -53,7 +53,7 @@ class RedrawFromCfgGetter implements PropertyValueChangeListener<IntArray> {
 	private IRedrawable redrawable;
 	private ColoredOverlayCollection old;
 	
-	public RedrawFromCfgGetter(IGetOverlayCollection cfgGetter, IRedrawable redrawable, LogErrorReporter logErrorReporter ) {
+	public RedrawFromCfgGetter(IGetOverlayCollection cfgGetter, IRedrawable redrawable, Logger logger ) {
 		super();
 		assert(cfgGetter!=null);
 		assert(redrawable!=null);

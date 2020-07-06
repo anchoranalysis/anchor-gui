@@ -35,7 +35,7 @@ import org.anchoranalysis.anchor.plot.bean.colorscheme.GraphColorScheme;
 
 
 import org.anchoranalysis.core.color.ColorIndex;
-import org.anchoranalysis.core.log.LogErrorReporter;
+import org.anchoranalysis.core.log.Logger;
 import org.anchoranalysis.core.random.RandomNumberGenerator;
 import org.anchoranalysis.gui.retrieveelements.ExportPopupParams;
 import org.anchoranalysis.gui.videostats.threading.InteractiveThreadPool;
@@ -46,7 +46,7 @@ import org.anchoranalysis.plugin.gui.bean.exporttask.ExportTaskList;
 public class VideoStatsModuleGlobalParams {
 
 	private ExportPopupParams exportPopupParams;
-	private LogErrorReporter logErrorReporter;
+	private Logger logger;
 	private InteractiveThreadPool threadPool;
 	private RandomNumberGenerator randomNumberGenerator;
 	private ExportTaskList exportTaskList;
@@ -66,11 +66,11 @@ public class VideoStatsModuleGlobalParams {
 	public void setExportPopupParams(ExportPopupParams exportPopupParams) {
 		this.exportPopupParams = exportPopupParams;
 	}
-	public LogErrorReporter getLogErrorReporter() {
-		return logErrorReporter;
+	public Logger getLogErrorReporter() {
+		return logger;
 	}
-	public void setLogErrorReporter(LogErrorReporter logErrorReporter) {
-		this.logErrorReporter = logErrorReporter;
+	public void setLogErrorReporter(Logger logger) {
+		this.logger = logger;
 	}
 	public InteractiveThreadPool getThreadPool() {
 		return threadPool;

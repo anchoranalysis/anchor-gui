@@ -159,7 +159,7 @@ class InternalFrameMultiOverlay<T> {
 	) {
 		ControllerPopupMenuWithBackground controller = delegate.controllerBackgroundMenu(sliderState);
 		controller.add(
-			namesFromCurrentBackground(list, sliderState, mpg.getLogErrorReporter().getErrorReporter() ),
+			namesFromCurrentBackground(list, sliderState, mpg.getLogErrorReporter().errorReporter() ),
 			imageStackCntrFromName,
 			mpg
 		);

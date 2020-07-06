@@ -120,7 +120,7 @@ class AddObjs {
 			} 
 		
 		} catch (OperationFailedException e) {
-			mpg.getLogErrorReporter().getErrorReporter().recordError(ManifestDropDown.class, e);
+			mpg.getLogErrorReporter().errorReporter().recordError(ManifestDropDown.class, e);
 		}
 		
 		return false;
@@ -129,7 +129,7 @@ class AddObjs {
 	
 	private boolean fromSerializedCfgNRG( OperationCreateBackgroundSetWithAdder operationBwsaWithNRG ) {
 		try	{
-			final FinderSerializedObject<CfgNRG> finderFinalCfgNRG = new FinderSerializedObject<>("cfgNRG", mpg.getLogErrorReporter().getErrorReporter() );
+			final FinderSerializedObject<CfgNRG> finderFinalCfgNRG = new FinderSerializedObject<>("cfgNRG", mpg.getLogErrorReporter().errorReporter() );
 			finderFinalCfgNRG.doFind(manifests.getFileManifest().doOperation());
 			
 			if (finderFinalCfgNRG.exists()) {
@@ -166,7 +166,7 @@ class AddObjs {
 				return true;
 			}
 		} catch (MenuAddException | OperationFailedException e) {
-			 mpg.getLogErrorReporter().getErrorReporter().recordError(ManifestDropDown.class, e);
+			 mpg.getLogErrorReporter().errorReporter().recordError(ManifestDropDown.class, e);
 		}
 		return false;
 	}
@@ -189,7 +189,7 @@ class AddObjs {
 			);
 			
 		} catch (OperationFailedException e) {
-			mpg.getLogErrorReporter().getErrorReporter().recordError(ManifestDropDown.class, e);
+			mpg.getLogErrorReporter().errorReporter().recordError(ManifestDropDown.class, e);
 		}
 		
 	}

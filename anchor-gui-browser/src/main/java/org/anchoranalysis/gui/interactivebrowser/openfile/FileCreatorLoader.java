@@ -115,14 +115,14 @@ public class FileCreatorLoader {
 								
 				VideoStatsModule module = fileCreator.getValue().createModule( name, params, mpg, globalSubgroupAdder.createChild(), fileOpenManager, progressReporter );
 				
-				mpg.getLogErrorReporter().getLogReporter().logFormatted("Loaded fileListSummaryModule %s (%dms)", name, timer.getTime() );
+				mpg.getLogErrorReporter().messageLogger().logFormatted("Loaded fileListSummaryModule %s (%dms)", name, timer.getTime() );
 				
 				return module;
 				
 			} catch (VideoStatsModuleCreateException e) {
 				// Should we change this to the error reporter?
-				mpg.getLogErrorReporter().getLogReporter().logFormatted("Failed to load fileListSummaryModule after %s (%dms)", name, timer.getTime() );
-				mpg.getLogErrorReporter().getErrorReporter().recordError(FileCreatorLoader.class, e);
+				mpg.getLogErrorReporter().messageLogger().logFormatted("Failed to load fileListSummaryModule after %s (%dms)", name, timer.getTime() );
+				mpg.getLogErrorReporter().errorReporter().recordError(FileCreatorLoader.class, e);
 				
 				 //+ ExceptionUtils.getFullStackTrace(e)
 				JOptionPane.showMessageDialog(parentComponent, "An error occurred while loading module. See log." );
