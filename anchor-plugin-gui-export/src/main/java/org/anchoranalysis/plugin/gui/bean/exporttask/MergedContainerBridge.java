@@ -40,7 +40,7 @@ import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.error.friendly.AnchorImpossibleSituationException;
 import org.anchoranalysis.core.functional.FunctionWithException;
 import org.anchoranalysis.core.index.GetOperationFailedException;
-import org.anchoranalysis.core.index.container.IBoundedIndexContainer;
+import org.anchoranalysis.core.index.container.BoundedIndexContainer;
 import org.anchoranalysis.core.index.container.bridge.BoundedIndexContainerBridgeWithoutIndex;
 import org.anchoranalysis.gui.bean.exporttask.ExportTaskParams;
 import org.anchoranalysis.gui.container.ContainerUtilities;
@@ -52,7 +52,7 @@ import org.anchoranalysis.gui.mergebridge.TransformToCfg;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
-class MergedContainerBridge implements FunctionWithException<ExportTaskParams,IBoundedIndexContainer<CfgNRGInstantState>,OperationFailedException> {
+class MergedContainerBridge implements FunctionWithException<ExportTaskParams,BoundedIndexContainer<CfgNRGInstantState>,OperationFailedException> {
 
 	// START REQUIRED ARGUMENTS
 	private final Supplier<RegionMembershipWithFlags> regionMembership;
@@ -61,7 +61,7 @@ class MergedContainerBridge implements FunctionWithException<ExportTaskParams,IB
 	private BoundedIndexContainerBridgeWithoutIndex<OverlayedInstantState,CfgNRGInstantState,AnchorImpossibleSituationException> retBridge = null;
 	
 	@Override
-	public IBoundedIndexContainer<CfgNRGInstantState> apply(ExportTaskParams sourceObject) throws OperationFailedException {
+	public BoundedIndexContainer<CfgNRGInstantState> apply(ExportTaskParams sourceObject) throws OperationFailedException {
 
 		// TODO fix
 		if (retBridge==null) {
@@ -82,7 +82,7 @@ class MergedContainerBridge implements FunctionWithException<ExportTaskParams,IB
 			MergeCfgBridge mergeCfgBridge = new MergeCfgBridge(regionMembership);
 
 			
-			IBoundedIndexContainer<OverlayedInstantState> cfgCntr = new BoundedIndexContainerBridgeWithoutIndex<>(
+			BoundedIndexContainer<OverlayedInstantState> cfgCntr = new BoundedIndexContainerBridgeWithoutIndex<>(
 				dualHistory,
 				mergeCfgBridge
 			);

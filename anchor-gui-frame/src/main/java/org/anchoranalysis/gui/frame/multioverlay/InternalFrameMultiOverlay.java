@@ -42,7 +42,7 @@ import org.anchoranalysis.core.error.reporter.ErrorReporter;
 import org.anchoranalysis.core.idgetter.IDGetter;
 import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.index.container.BoundedIndexContainerFromList;
-import org.anchoranalysis.core.index.container.IBoundedIndexContainer;
+import org.anchoranalysis.core.index.container.BoundedIndexContainer;
 import org.anchoranalysis.core.index.container.bridge.BoundedIndexContainerBridgeWithIndex;
 import org.anchoranalysis.core.progress.ProgressReporterNull;
 import org.anchoranalysis.gui.frame.multioverlay.instantstate.InternalFrameOverlayedInstantStateToRGBSelectable;
@@ -124,7 +124,7 @@ class InternalFrameMultiOverlay<T> {
 			).singleStack(name);
 	}
 	
-	private static <T> IBoundedIndexContainer<OverlayedInstantState> bridgeList(
+	private static <T> BoundedIndexContainer<OverlayedInstantState> bridgeList(
 		List<T> list,
 		BridgeElementWithIndex<T, OverlayedInstantState,OperationFailedException> bridge
 	) {

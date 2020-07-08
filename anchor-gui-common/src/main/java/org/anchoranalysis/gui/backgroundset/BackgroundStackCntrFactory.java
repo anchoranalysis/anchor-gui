@@ -32,7 +32,7 @@ import org.anchoranalysis.core.error.CreateException;
 
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.index.GetOperationFailedException;
-import org.anchoranalysis.core.index.container.IBoundedIndexContainer;
+import org.anchoranalysis.core.index.container.BoundedIndexContainer;
 import org.anchoranalysis.core.index.container.SingleContainer;
 import org.anchoranalysis.core.index.container.bridge.BoundedIndexContainerBridgeWithoutIndex;
 import org.anchoranalysis.gui.container.background.BackgroundStackCntr;
@@ -51,9 +51,9 @@ public class BackgroundStackCntrFactory {
 	
 	private static class ExistingStack implements BackgroundStackCntr {
 		
-		private IBoundedIndexContainer<DisplayStack> cntr;
+		private BoundedIndexContainer<DisplayStack> cntr;
 				
-		public ExistingStack(IBoundedIndexContainer<DisplayStack> cntr) {
+		public ExistingStack(BoundedIndexContainer<DisplayStack> cntr) {
 			super();
 			this.cntr = cntr;
 		}
@@ -64,7 +64,7 @@ public class BackgroundStackCntrFactory {
 		}
 
 		@Override
-		public IBoundedIndexContainer<DisplayStack> backgroundStackCntr() throws GetOperationFailedException {
+		public BoundedIndexContainer<DisplayStack> backgroundStackCntr() throws GetOperationFailedException {
 			// TODO Auto-generated method stub
 			return cntr;
 		}
@@ -73,7 +73,7 @@ public class BackgroundStackCntrFactory {
 	public static BackgroundStackCntr convertedSequence( TimeSequence seq ) throws OperationFailedException {
 		
 		
-		IBoundedIndexContainer<DisplayStack> bridge = new BoundedIndexContainerBridgeWithoutIndex<>(
+		BoundedIndexContainer<DisplayStack> bridge = new BoundedIndexContainerBridgeWithoutIndex<>(
 			new TimeSequenceBridge(seq),
 			s -> {
 				try {

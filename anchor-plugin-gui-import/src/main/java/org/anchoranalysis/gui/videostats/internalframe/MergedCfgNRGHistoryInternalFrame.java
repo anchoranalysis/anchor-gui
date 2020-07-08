@@ -41,7 +41,7 @@ import org.anchoranalysis.core.color.ColorIndex;
 import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.idgetter.IDGetterIter;
 import org.anchoranalysis.core.index.GetOperationFailedException;
-import org.anchoranalysis.core.index.container.IBoundedIndexContainer;
+import org.anchoranalysis.core.index.container.BoundedIndexContainer;
 import org.anchoranalysis.core.index.container.bridge.BoundedIndexContainerBridgeWithoutIndex;
 import org.anchoranalysis.gui.frame.multioverlay.instantstate.InternalFrameOverlayedInstantStateToRGBSelectable;
 import org.anchoranalysis.gui.image.frame.ISliderState;
@@ -89,7 +89,7 @@ public class MergedCfgNRGHistoryInternalFrame {
 		);
 		
 		// We map each DualCfgInstantState
-		IBoundedIndexContainer<OverlayedInstantState> cfgCntnr = new BoundedIndexContainerBridgeWithoutIndex<>(
+		BoundedIndexContainer<OverlayedInstantState> cfgCntnr = new BoundedIndexContainerBridgeWithoutIndex<>(
 			dualHistory,
 			mergeCfgBridge
 		);
@@ -117,11 +117,11 @@ public class MergedCfgNRGHistoryInternalFrame {
 		return delegate.controllerBackgroundMenu(sliderState);
 	}
 
-	private static List<IBoundedIndexContainer<CfgNRGInstantState>> createInputList(
+	private static List<BoundedIndexContainer<CfgNRGInstantState>> createInputList(
 		LoadContainer<CfgNRGInstantState> selectedHistory,
 		LoadContainer<CfgNRGInstantState> proposalHistory
 	) {
-		List<IBoundedIndexContainer<CfgNRGInstantState>> out = new ArrayList<>();
+		List<BoundedIndexContainer<CfgNRGInstantState>> out = new ArrayList<>();
 		out.add(selectedHistory.getCntr());
 		out.add(proposalHistory.getCntr());
 		return out;

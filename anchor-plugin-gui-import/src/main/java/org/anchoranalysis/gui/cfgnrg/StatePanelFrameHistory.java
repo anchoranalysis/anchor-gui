@@ -31,7 +31,7 @@ import java.awt.BorderLayout;
 import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.error.reporter.ErrorReporter;
 import org.anchoranalysis.core.index.GetOperationFailedException;
-import org.anchoranalysis.core.index.container.IBoundedIndexContainer;
+import org.anchoranalysis.core.index.container.BoundedIndexContainer;
 import org.anchoranalysis.core.property.IPropertyValueReceivable;
 import org.anchoranalysis.core.property.change.PropertyValueChangeEvent;
 import org.anchoranalysis.core.property.change.PropertyValueChangeListener;
@@ -47,7 +47,7 @@ public class StatePanelFrameHistory<T> {
 
 	private StatePanelFrame<T> delegate;
 	
-	private IBoundedIndexContainer<T> boundedIndexCntr;
+	private BoundedIndexContainer<T> boundedIndexCntr;
 	private boolean includeIndexAdjusting;
 	private IndexSlider indexSlider;
 	private String title;

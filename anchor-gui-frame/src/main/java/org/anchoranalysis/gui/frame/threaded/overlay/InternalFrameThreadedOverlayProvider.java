@@ -32,7 +32,7 @@ import org.anchoranalysis.core.functional.FunctionWithException;
 import org.anchoranalysis.core.idgetter.IDGetter;
 import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.index.IIndexGettableSettable;
-import org.anchoranalysis.core.index.container.IBoundedRangeIncompleteDynamic;
+import org.anchoranalysis.core.index.container.BoundedRangeIncompleteDynamic;
 import org.anchoranalysis.gui.displayupdate.OverlayedDisplayStack;
 import org.anchoranalysis.gui.frame.details.ControllerPopupMenu;
 import org.anchoranalysis.gui.frame.details.IGenerateExtraDetail;
@@ -83,7 +83,7 @@ public class InternalFrameThreadedOverlayProvider {
 	}
 
 	public ISliderState init(
-		IBoundedRangeIncompleteDynamic indexBounds,
+		BoundedRangeIncompleteDynamic indexBounds,
 		boolean includeFrameAdjusting,
 		DefaultModuleState initialState,
 		IRetrieveElements elementRetriever,

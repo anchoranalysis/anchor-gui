@@ -36,20 +36,15 @@ import org.anchoranalysis.feature.nrg.NRGStackWithParams;
 import org.anchoranalysis.feature.session.CreateFeatureInput;
 import org.anchoranalysis.gui.feature.evaluator.params.ParamsFactoryForFeature;
 
-public class CreatePairFromMark extends CreateFeatureInput<FeatureInput> {
+import lombok.RequiredArgsConstructor;
 
-	private PxlMarkMemo pmm1;
-	private PxlMarkMemo pmm2;
-	private NRGStackWithParams raster;
+@RequiredArgsConstructor
+public class CreatePairFromMark implements CreateFeatureInput<FeatureInput> {
+
+	private final PxlMarkMemo pmm1;
+	private final PxlMarkMemo pmm2;
+	private final NRGStackWithParams raster;
 	
-	public CreatePairFromMark(PxlMarkMemo pmm1, PxlMarkMemo pmm2,
-			NRGStackWithParams raster ) {
-		super();
-		this.pmm1 = pmm1;
-		this.pmm2 = pmm2;
-		this.raster = raster;
-	}
-
 	@Override
 	public FeatureInput createForFeature(Feature<?> feature) throws CreateException {
 		try {

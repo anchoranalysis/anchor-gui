@@ -36,14 +36,14 @@ import org.anchoranalysis.core.cache.LRUCache;
 import org.anchoranalysis.core.functional.FunctionalUtilities;
 import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.index.container.BoundChangeListener;
-import org.anchoranalysis.core.index.container.IBoundedIndexContainer;
+import org.anchoranalysis.core.index.container.BoundedIndexContainer;
 import org.anchoranalysis.io.manifest.sequencetype.IncrementalSequenceType;
 
 // Contains both the selected and proposal histories
-public class DualCfgNRGContainer<T> implements IBoundedIndexContainer<IndexedDualState<T>> {
+public class DualCfgNRGContainer<T> implements BoundedIndexContainer<IndexedDualState<T>> {
 	
 	// Selected CfgNRG
-	private List<IBoundedIndexContainer<CfgNRGInstantState>> cntrs;
+	private List<BoundedIndexContainer<CfgNRGInstantState>> cntrs;
 	
 	private IncrementalSequenceType incrementalSequenceType;
 	
@@ -61,7 +61,7 @@ public class DualCfgNRGContainer<T> implements IBoundedIndexContainer<IndexedDua
 	 * @param cntrs assumed to represent a contiguous sequence in time
 	 * @param transformer
 	 */
-	public DualCfgNRGContainer( List<IBoundedIndexContainer<CfgNRGInstantState>> cntrs, TransformInstanteState<T> transformer ) throws GetOperationFailedException {
+	public DualCfgNRGContainer( List<BoundedIndexContainer<CfgNRGInstantState>> cntrs, TransformInstanteState<T> transformer ) throws GetOperationFailedException {
 		super();
 		
 		this.cntrs = cntrs;
@@ -127,7 +127,7 @@ public class DualCfgNRGContainer<T> implements IBoundedIndexContainer<IndexedDua
 		
 		int maxOfMins = Integer.MIN_VALUE;
 		
-		for( IBoundedIndexContainer<CfgNRGInstantState> cntr : cntrs ) {
+		for( BoundedIndexContainer<CfgNRGInstantState> cntr : cntrs ) {
 			
 			if (cntr.getMinimumIndex()>maxOfMins) {
 				maxOfMins = cntr.getMinimumIndex();
@@ -141,7 +141,7 @@ public class DualCfgNRGContainer<T> implements IBoundedIndexContainer<IndexedDua
 		
 		int minOfMaxs = Integer.MAX_VALUE;
 		
-		for( IBoundedIndexContainer<CfgNRGInstantState> cntr : cntrs ) {
+		for( BoundedIndexContainer<CfgNRGInstantState> cntr : cntrs ) {
 			
 			if (cntr.getMaximumIndex()<minOfMaxs) {
 				minOfMaxs = cntr.getMaximumIndex();
@@ -162,7 +162,7 @@ public class DualCfgNRGContainer<T> implements IBoundedIndexContainer<IndexedDua
 		).collect( Collectors.toList() );
 	}
 	
-	private static CfgNRGInstantState nearestState( IBoundedIndexContainer<CfgNRGInstantState> cntr, int index ) throws GetOperationFailedException {
+	private static CfgNRGInstantState nearestState( BoundedIndexContainer<CfgNRGInstantState> cntr, int index ) throws GetOperationFailedException {
 		return cntr.get(
 			cntr.previousEqualIndex(index)
 		);

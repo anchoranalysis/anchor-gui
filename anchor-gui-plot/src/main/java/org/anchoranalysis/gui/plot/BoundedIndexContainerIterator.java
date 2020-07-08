@@ -32,7 +32,7 @@ import java.util.NoSuchElementException;
 
 import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.index.GetOperationFailedExceptionRuntime;
-import org.anchoranalysis.core.index.container.IBoundedIndexContainer;
+import org.anchoranalysis.core.index.container.BoundedIndexContainer;
 
 /**
  * Iterates through the range of indexes in a container.
@@ -46,7 +46,7 @@ import org.anchoranalysis.core.index.container.IBoundedIndexContainer;
  */
 public class BoundedIndexContainerIterator<T> implements Iterator<T> {
 	
-	private final IBoundedIndexContainer<T> container;
+	private final BoundedIndexContainer<T> container;
 	private final int increment;
 	private final int maxIndex;
 	
@@ -58,11 +58,11 @@ public class BoundedIndexContainerIterator<T> implements Iterator<T> {
 	 * @param container the container providing a range over which iteration is possible
 	 * @param numPoints maximum number of sub-divisions
 	 */
-	public BoundedIndexContainerIterator(IBoundedIndexContainer<T> container, int numPoints) {
+	public BoundedIndexContainerIterator(BoundedIndexContainer<T> container, int numPoints) {
 		this( container, numPoints, container.getMaximumIndex() );
 	}
 	
-	public BoundedIndexContainerIterator(IBoundedIndexContainer<T> container, int numPoints, int maxIndex) {
+	public BoundedIndexContainerIterator(BoundedIndexContainer<T> container, int numPoints, int maxIndex) {
 		super();
 		this.container = container;
 		this.maxIndex = maxIndex;

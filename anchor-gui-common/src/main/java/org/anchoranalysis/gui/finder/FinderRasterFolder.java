@@ -30,10 +30,9 @@ package org.anchoranalysis.gui.finder;
 import java.util.List;
 import java.util.Optional;
 
-import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.index.GetOperationFailedException;
-import org.anchoranalysis.core.index.container.IBoundedIndexContainer;
+import org.anchoranalysis.core.index.container.BoundedIndexContainer;
 import org.anchoranalysis.core.progress.CachedOperationWithProgressReporter;
 import org.anchoranalysis.core.progress.ProgressReporter;
 import org.anchoranalysis.image.io.bean.rasterreader.RasterReader;
@@ -53,7 +52,7 @@ public class FinderRasterFolder extends FinderSingleFolder {
 
 	private String manifestFunction;
 	
-	private IBoundedIndexContainer<Stack> result;
+	private BoundedIndexContainer<Stack> result;
 	
 	private RasterReader rasterReader;
 	
@@ -82,11 +81,11 @@ public class FinderRasterFolder extends FinderSingleFolder {
 		}
 	}
 
-	private IBoundedIndexContainer<Stack> createCntr( FolderWrite folder ) {
+	private BoundedIndexContainer<Stack> createCntr( FolderWrite folder ) {
 		return new BoundsFromSequenceType<>( new SequencedFolderRasterReader(folder, rasterReader), folder.getAssociatedSequence() );
 	}
 	
-	public IBoundedIndexContainer<Stack> get() throws GetOperationFailedException {
+	public BoundedIndexContainer<Stack> get() {
 		assert(exists());
 		if (result==null) {
 			result = createCntr( getFoundFolder() );
@@ -117,7 +116,7 @@ public class FinderRasterFolder extends FinderSingleFolder {
 	}
 	
 	// If namesAsIndexes is true, we use the indexes as names instead of the existing names
-	public NamedImgStackCollection createStackCollection( boolean namesAsIndexes ) throws CreateException {
+	public NamedImgStackCollection createStackCollection( boolean namesAsIndexes ) {
 		
 		if (getFoundFolder()==null) {
 			return new NamedImgStackCollection();

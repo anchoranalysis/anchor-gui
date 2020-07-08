@@ -36,7 +36,7 @@ import org.anchoranalysis.feature.nrg.NRGStackWithParams;
 import org.anchoranalysis.feature.session.CreateFeatureInput;
 import org.anchoranalysis.gui.feature.evaluator.params.ParamsFactoryForFeature;
 
-public class CreateIndFromMark extends CreateFeatureInput<FeatureInput> {
+public class CreateIndFromMark implements CreateFeatureInput<FeatureInput> {
 
 	private PxlMarkMemo pmm;
 	private NRGStackWithParams raster;

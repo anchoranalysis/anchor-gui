@@ -81,10 +81,8 @@ class OverlapChecker {
 				PxlMarkMemo pmExst = new PxlMarkMemo(exst,nrgStack,regionMap,null);
 				
 				try {
-					if( pmProp.doOperation().getBoundingBox(0).intersection().existsWith(pmExst.doOperation().getBoundingBox(0))) {
-						if (hasLargeOverlap(pmProp,pmExst)) {
-							return true;
-						}
+					if(boundingBoxIntersectionExists(pmProp,pmExst) && hasLargeOverlap(pmProp,pmExst)) {
+						return true;
 					}
 				} catch( OperationFailedException e) {
 					errorReporter.showError(OverlapChecker.class, "Cannot calculate overlap", e.toString() );
@@ -95,6 +93,9 @@ class OverlapChecker {
 		return false;
 	}
 	
+	private static boolean boundingBoxIntersectionExists(PxlMarkMemo pmProp, PxlMarkMemo pmExst) {
+		return pmProp.doOperation().getBoundingBox().intersection().existsWith(pmExst.doOperation().getBoundingBox());
+	}
 	
 	private static double calcMinVolume( PxlMarkMemo obj1, PxlMarkMemo obj2, int regionID ) throws FeatureCalcException {
 		double size1 =  obj1.getMark().volume(0);

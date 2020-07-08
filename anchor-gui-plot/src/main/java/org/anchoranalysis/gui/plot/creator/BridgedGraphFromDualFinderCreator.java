@@ -4,7 +4,7 @@ import org.anchoranalysis.anchor.mpp.feature.instantstate.CfgNRGInstantState;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.functional.FunctionWithException;
 import org.anchoranalysis.core.index.GetOperationFailedException;
-import org.anchoranalysis.core.index.container.IBoundedIndexContainer;
+import org.anchoranalysis.core.index.container.BoundedIndexContainer;
 import org.anchoranalysis.core.index.container.bridge.BoundedIndexContainerBridgeWithoutIndex;
 
 /*
@@ -47,7 +47,7 @@ import org.anchoranalysis.gui.io.loader.manifest.finder.historyfolder.FinderHist
 public abstract class BridgedGraphFromDualFinderCreator<T> implements GraphFromDualFinderCreator<T> {
 
 	@Override
-	public IBoundedIndexContainer<T> createCntr( FinderCSVStats finderCSVStats ) throws CreateException {
+	public BoundedIndexContainer<T> createCntr( FinderCSVStats finderCSVStats ) throws CreateException {
 		
 		try {
 			return new BoundedIndexContainerBridgeWithoutIndex<>(
@@ -60,7 +60,7 @@ public abstract class BridgedGraphFromDualFinderCreator<T> implements GraphFromD
 	}
 	
 	@Override
-	public IBoundedIndexContainer<T> createCntr(FinderHistoryFolder<CfgNRGInstantState> finderCfgNRGHistory ) throws CreateException {
+	public BoundedIndexContainer<T> createCntr(FinderHistoryFolder<CfgNRGInstantState> finderCfgNRGHistory ) throws CreateException {
 
 		try {
 			return new BoundedIndexContainerBridgeWithoutIndex<>(

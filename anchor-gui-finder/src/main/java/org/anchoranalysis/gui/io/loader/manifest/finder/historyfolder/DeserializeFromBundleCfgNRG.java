@@ -32,9 +32,9 @@ import org.anchoranalysis.anchor.mpp.feature.nrg.cfg.CfgNRG;
 
 import org.anchoranalysis.core.index.ITypedGetFromIndex;
 import org.anchoranalysis.core.index.TypedGetFromIndexBridge;
+import org.anchoranalysis.io.manifest.deserializer.folder.BundleDeserializers;
 import org.anchoranalysis.io.manifest.deserializer.folder.DeserializeFromFolderBundle;
 import org.anchoranalysis.io.manifest.deserializer.folder.DeserializedObjectFromFolderBundle;
-import org.anchoranalysis.io.manifest.deserializer.folder.DeserializedObjectFromFolderBundle.BundleDeserializers;
 import org.anchoranalysis.io.manifest.folder.FolderWrite;
 
 class DeserializeFromBundleCfgNRG extends DeserializeFromFolderBundle<CfgNRGInstantState,CfgNRG> {

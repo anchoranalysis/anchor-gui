@@ -39,7 +39,7 @@ import org.anchoranalysis.anchor.overlay.collection.OverlayCollection;
 import org.anchoranalysis.core.color.ColorIndex;
 import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.idgetter.IDGetter;
-import org.anchoranalysis.core.index.container.IBoundedIndexContainer;
+import org.anchoranalysis.core.index.container.BoundedIndexContainer;
 import org.anchoranalysis.core.index.container.bridge.BoundedIndexContainerBridgeWithoutIndex;
 import org.anchoranalysis.core.property.IPropertyValueReceivable;
 import org.anchoranalysis.core.property.PropertyValueReceivableFromIndicesSelection;
@@ -99,7 +99,7 @@ public class InternalFrameOverlayedInstantStateToRGBSelectable {
 	
 	// Must be called before usage
 	public ISliderState init(
-			IBoundedIndexContainer<OverlayedInstantState> cfgCntr,
+			BoundedIndexContainer<OverlayedInstantState> cfgCntr,
 			ColorIndex colorIndex,
 			IDGetter<Overlay> idGetter,
 			IDGetter<Overlay> idColorGetter,
@@ -118,7 +118,7 @@ public class InternalFrameOverlayedInstantStateToRGBSelectable {
 		);
 		
 		
-		IBoundedIndexContainer<ColoredOverlayedInstantState> cfgCntrColored
+		BoundedIndexContainer<ColoredOverlayedInstantState> cfgCntrColored
 			= new BoundedIndexContainerBridgeWithoutIndex<>(
 				cfgCntr,
 				new AddColorBridge( colorIndex, idColorGetter )

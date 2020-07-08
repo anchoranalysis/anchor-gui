@@ -26,10 +26,10 @@ package org.anchoranalysis.gui.frame.details.canvas;
  * #L%
  */
 
-import org.anchoranalysis.core.index.container.IBoundedRange;
+import org.anchoranalysis.core.index.container.BoundedRange;
 import org.anchoranalysis.image.extent.ImageDimensions;
 
-class ChnlSliceRange implements IBoundedRange {
+class ChnlSliceRange implements BoundedRange {
 
 	private ImageDimensions sd;
 

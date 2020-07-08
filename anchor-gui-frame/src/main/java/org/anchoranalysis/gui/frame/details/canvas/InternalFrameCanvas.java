@@ -51,7 +51,7 @@ import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.error.reporter.ErrorReporter;
 import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.index.IIndexGettableSettable;
-import org.anchoranalysis.core.index.container.IBoundedRangeIncompleteDynamic;
+import org.anchoranalysis.core.index.container.BoundedRangeIncompleteDynamic;
 import org.anchoranalysis.gui.displayupdate.IDisplayUpdateProvider;
 import org.anchoranalysis.gui.displayupdate.IDisplayUpdateRememberStack;
 import org.anchoranalysis.gui.displayupdate.IOverlayedImgStackProvider;
@@ -192,7 +192,7 @@ public class InternalFrameCanvas {
 	}
 		
 	public ISliderState init(
-		IBoundedRangeIncompleteDynamic indexBounds,
+		BoundedRangeIncompleteDynamic indexBounds,
 		IIndexGettableSettable indexCntr,
 		IDisplayUpdateRememberStack stackProvider,
 		InitialSliderState initialState,

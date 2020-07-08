@@ -35,7 +35,7 @@ import org.anchoranalysis.core.index.GetOperationFailedException;
 
 import org.anchoranalysis.core.index.IIndexGettableSettable;
 import org.anchoranalysis.core.index.SetOperationFailedException;
-import org.anchoranalysis.core.index.container.IBoundedIndexContainer;
+import org.anchoranalysis.core.index.container.BoundedIndexContainer;
 import org.anchoranalysis.core.property.IPropertyValueSendable;
 import org.anchoranalysis.gui.frame.details.IGenerateExtraDetail;
 import org.anchoranalysis.gui.frame.details.canvas.ControllerAction;
@@ -75,7 +75,7 @@ class InternalFrameOverlayedInstantStateToRGB {
 	
 	// Must be called before usage
 	public ISliderState init(
-			IBoundedIndexContainer<ColoredOverlayedInstantState> overlaysCntr,
+			BoundedIndexContainer<ColoredOverlayedInstantState> overlaysCntr,
 			IDGetter<Overlay> idGetter,
 			boolean includeFrameAdjusting,
 			DefaultModuleState initialState,

@@ -32,7 +32,7 @@ import org.anchoranalysis.core.functional.FunctionWithException;
 import org.anchoranalysis.core.index.BoundedIndexBridge;
 import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.index.SetOperationFailedException;
-import org.anchoranalysis.core.index.container.IBoundedIndexContainer;
+import org.anchoranalysis.core.index.container.BoundedIndexContainer;
 import org.anchoranalysis.gui.displayupdate.OverlayedDisplayStack;
 import org.anchoranalysis.gui.videostats.internalframe.cfgtorgb.ColoredOverlayedInstantState;
 import org.anchoranalysis.image.stack.DisplayStack;
@@ -43,7 +43,7 @@ class IndexToRedrawUpdate implements FunctionWithException<Integer, OverlayedDis
 	private FunctionWithException<Integer,DisplayStack,GetOperationFailedException> background;
 	
 	public IndexToRedrawUpdate(
-		IBoundedIndexContainer<ColoredOverlayedInstantState> cntr,
+		BoundedIndexContainer<ColoredOverlayedInstantState> cntr,
 		FunctionWithException<Integer,DisplayStack, GetOperationFailedException> background
 	) {
 		delegate = new BoundedIndexBridge<>(cntr);

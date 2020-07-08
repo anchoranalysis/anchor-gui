@@ -33,7 +33,7 @@ import java.util.Optional;
 
 import org.anchoranalysis.core.error.reporter.ErrorReporter;
 import org.anchoranalysis.core.index.GetOperationFailedException;
-import org.anchoranalysis.core.index.container.IBoundedIndexContainer;
+import org.anchoranalysis.core.index.container.BoundedIndexContainer;
 import org.anchoranalysis.gui.io.loader.manifest.finder.csvstatistic.CSVStatistic;
 import org.anchoranalysis.gui.io.loader.manifest.finder.csvstatistic.CSVStatisticLoader;
 import org.anchoranalysis.gui.io.loader.manifest.finder.csvstatistic.CSVStatisticLoaderEventAggregate;
@@ -55,14 +55,14 @@ public class FinderCSVStats extends FinderSingleFile {
 
 	private String outputName;
 	
-	private Optional<IBoundedIndexContainer<CSVStatistic>> statsCntr = Optional.empty();
+	private Optional<BoundedIndexContainer<CSVStatistic>> statsCntr = Optional.empty();
 	
 	public FinderCSVStats(String outputName, ErrorReporter errorReporter) {
 		super(errorReporter);
 		this.outputName = outputName;
 	}
 
-	public IBoundedIndexContainer<CSVStatistic> get() throws GetOperationFailedException {
+	public BoundedIndexContainer<CSVStatistic> get() throws GetOperationFailedException {
 		
 		assert( exists() );
 		
@@ -118,7 +118,7 @@ public class FinderCSVStats extends FinderSingleFile {
 		return foundList;
 	}
 
-	private IBoundedIndexContainer<CSVStatistic> createContainer( FileWrite fileWrite )
+	private BoundedIndexContainer<CSVStatistic> createContainer( FileWrite fileWrite )
 			throws GetOperationFailedException {
 				
 		try {

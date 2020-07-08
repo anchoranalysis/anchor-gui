@@ -45,7 +45,7 @@ import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.index.container.ArrayListContainer;
 import org.anchoranalysis.core.index.container.BoundChangeEvent;
 import org.anchoranalysis.core.index.container.BoundChangeListener;
-import org.anchoranalysis.core.index.container.IBoundedRangeIncompleteDynamic;
+import org.anchoranalysis.core.index.container.BoundedRangeIncompleteDynamic;
 import org.anchoranalysis.core.index.container.BoundChangeEvent.BoundType;
 import org.anchoranalysis.core.log.Logger;
 import org.anchoranalysis.core.progress.ProgressReporterNull;
@@ -123,10 +123,10 @@ public class VideoStatsEDT {
 
 	private class FrameBoundsChanged implements BoundChangeListener {
 		
-		private IBoundedRangeIncompleteDynamic frameBounds;
+		private BoundedRangeIncompleteDynamic frameBounds;
 		private int prevBoundMax;
 		
-		public FrameBoundsChanged( IBoundedRangeIncompleteDynamic frameBounds ) {
+		public FrameBoundsChanged( BoundedRangeIncompleteDynamic frameBounds ) {
 			this.prevBoundMax = frameBounds.getMaximumIndex();
 			this.frameBounds = frameBounds;
 		}

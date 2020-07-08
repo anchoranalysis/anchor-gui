@@ -30,7 +30,7 @@ import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.index.container.BoundChangeListener;
-import org.anchoranalysis.core.index.container.IBoundedIndexContainer;
+import org.anchoranalysis.core.index.container.BoundedIndexContainer;
 import org.anchoranalysis.image.channel.Channel;
 import org.anchoranalysis.image.channel.factory.ChannelFactory;
 import org.anchoranalysis.image.extent.ImageDimensions;
@@ -39,11 +39,11 @@ import org.anchoranalysis.image.stack.DisplayStack;
 import org.anchoranalysis.image.stack.Stack;
 import org.anchoranalysis.image.voxel.datatype.VoxelDataTypeUnsignedByte;
 
-public class CombineRGBBoundedIndexContainer implements IBoundedIndexContainer<DisplayStack> {
+public class CombineRGBBoundedIndexContainer implements BoundedIndexContainer<DisplayStack> {
 
-	private IBoundedIndexContainer<DisplayStack> red;
-	private IBoundedIndexContainer<DisplayStack> blue;
-	private IBoundedIndexContainer<DisplayStack> green;
+	private BoundedIndexContainer<DisplayStack> red;
+	private BoundedIndexContainer<DisplayStack> blue;
+	private BoundedIndexContainer<DisplayStack> green;
 	
 	private int min;
 	private int max;
@@ -53,7 +53,7 @@ public class CombineRGBBoundedIndexContainer implements IBoundedIndexContainer<D
 	// We assume we will never have an index above this number
 	private static int MAX_NEVER_REACHED = 1000000;
 	
-	private void setDimensionsIfNeeded( IBoundedIndexContainer<DisplayStack> cntr ) throws GetOperationFailedException {
+	private void setDimensionsIfNeeded( BoundedIndexContainer<DisplayStack> cntr ) throws GetOperationFailedException {
 		if (cntr!=null && dim==null) {
 			dim = cntr.get( cntr.getMinimumIndex()).getDimensions();
 		}
@@ -94,27 +94,27 @@ public class CombineRGBBoundedIndexContainer implements IBoundedIndexContainer<D
 	
 	// GETTERS AND SETTERS
 	
-	public IBoundedIndexContainer<DisplayStack> getRed() {
+	public BoundedIndexContainer<DisplayStack> getRed() {
 		return red;
 	}
 
-	public void setRed(IBoundedIndexContainer<DisplayStack> red) {
+	public void setRed(BoundedIndexContainer<DisplayStack> red) {
 		this.red = red;
 	}
 
-	public IBoundedIndexContainer<DisplayStack> getBlue() {
+	public BoundedIndexContainer<DisplayStack> getBlue() {
 		return blue;
 	}
 
-	public void setBlue(IBoundedIndexContainer<DisplayStack> blue) {
+	public void setBlue(BoundedIndexContainer<DisplayStack> blue) {
 		this.blue = blue;
 	}
 
-	public IBoundedIndexContainer<DisplayStack> getGreen() {
+	public BoundedIndexContainer<DisplayStack> getGreen() {
 		return green;
 	}
 
-	public void setGreen(IBoundedIndexContainer<DisplayStack> green) {
+	public void setGreen(BoundedIndexContainer<DisplayStack> green) {
 		this.green = green;
 	}
 
@@ -209,7 +209,7 @@ public class CombineRGBBoundedIndexContainer implements IBoundedIndexContainer<D
 	}
 
 
-	private void addChnlToStack(Stack stackNew, IBoundedIndexContainer<DisplayStack> cntr, int index ) throws GetOperationFailedException {
+	private void addChnlToStack(Stack stackNew, BoundedIndexContainer<DisplayStack> cntr, int index ) throws GetOperationFailedException {
 		
 		try {
 			if (cntr!=null) {

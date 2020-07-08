@@ -27,9 +27,9 @@ package org.anchoranalysis.gui.frame.singleraster;
  */
 
 import org.anchoranalysis.core.index.container.BoundChangeListener;
-import org.anchoranalysis.core.index.container.IBoundedRangeIncompleteDynamic;
+import org.anchoranalysis.core.index.container.BoundedRangeIncompleteDynamic;
 
-class NullBounds implements IBoundedRangeIncompleteDynamic {
+class NullBounds implements BoundedRangeIncompleteDynamic {
 
 	@Override
 	public int nextIndex(int index) {

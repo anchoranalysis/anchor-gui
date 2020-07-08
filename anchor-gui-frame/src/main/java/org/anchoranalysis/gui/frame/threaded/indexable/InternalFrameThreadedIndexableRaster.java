@@ -28,7 +28,7 @@ package org.anchoranalysis.gui.frame.threaded.indexable;
 
 import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.index.IndexBridge;
-import org.anchoranalysis.core.index.container.IBoundedIndexContainer;
+import org.anchoranalysis.core.index.container.BoundedIndexContainer;
 import org.anchoranalysis.gui.frame.details.ControllerPopupMenu;
 import org.anchoranalysis.gui.frame.details.IGenerateExtraDetail;
 import org.anchoranalysis.gui.frame.multiraster.ThreadedIndexedDisplayStackSetter;
@@ -61,7 +61,7 @@ public class InternalFrameThreadedIndexableRaster {
 	}
 
 	public ISliderState init(
-			IBoundedIndexContainer<DisplayStack> cntr,
+			BoundedIndexContainer<DisplayStack> cntr,
 			DefaultModuleState initialState,
 			boolean includeFrameAdjusting,
 			IRetrieveElements elementRetriever,
@@ -99,7 +99,7 @@ public class InternalFrameThreadedIndexableRaster {
 	}
 	
 	private static ThreadedIndexedDisplayStackSetter setupProvider(
-			IBoundedIndexContainer<DisplayStack> cntr,
+			BoundedIndexContainer<DisplayStack> cntr,
 			VideoStatsModuleGlobalParams mpg
 		) throws InitException {
 			ThreadedIndexedDisplayStackSetter threadedProvider = new ThreadedIndexedDisplayStackSetter();

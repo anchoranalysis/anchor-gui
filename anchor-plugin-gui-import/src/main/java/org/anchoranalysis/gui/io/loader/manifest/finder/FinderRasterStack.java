@@ -32,7 +32,7 @@ import org.anchoranalysis.core.error.CreateException;
 
 import org.anchoranalysis.core.error.reporter.ErrorReporter;
 import org.anchoranalysis.core.index.GetOperationFailedException;
-import org.anchoranalysis.core.index.container.IBoundedIndexContainer;
+import org.anchoranalysis.core.index.container.BoundedIndexContainer;
 import org.anchoranalysis.core.index.container.SingleContainer;
 import org.anchoranalysis.gui.container.background.BackgroundStackCntr;
 import org.anchoranalysis.gui.finder.FinderRasterSingleChnl;
@@ -85,7 +85,7 @@ public abstract class FinderRasterStack extends FinderSingleFile implements Find
 	}
 	
 	@Override
-	public IBoundedIndexContainer<DisplayStack> backgroundStackCntr() throws GetOperationFailedException {
+	public BoundedIndexContainer<DisplayStack> backgroundStackCntr() throws GetOperationFailedException {
 		Stack resultNormalized = get().duplicate();
 		
 		try {

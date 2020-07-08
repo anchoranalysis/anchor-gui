@@ -1,6 +1,6 @@
 package org.anchoranalysis.gui.image;
 
-import org.anchoranalysis.core.index.container.IBoundedRangeIncompleteDynamic;
+import org.anchoranalysis.core.index.container.BoundedRangeIncompleteDynamic;
 import org.anchoranalysis.core.property.IPropertyValueReceivable;
 import org.anchoranalysis.core.property.IPropertyValueSendable;
 
@@ -38,7 +38,7 @@ public class IndexSlider {
 
 	private BoundedSideSlider delegate;
 	
-	public IndexSlider( IBoundedRangeIncompleteDynamic bounds, boolean includeAdjusting ) {
+	public IndexSlider( BoundedRangeIncompleteDynamic bounds, boolean includeAdjusting ) {
 		delegate = new BoundedSideSlider( bounds, 1000, 7, includeAdjusting );
 		delegate.setVisible(true);
 	}

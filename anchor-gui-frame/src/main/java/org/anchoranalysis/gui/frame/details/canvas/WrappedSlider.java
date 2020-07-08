@@ -31,7 +31,7 @@ import java.util.Optional;
 import javax.swing.JComponent;
 
 import org.anchoranalysis.core.index.IIndexGettableSettable;
-import org.anchoranalysis.core.index.container.IBoundedRangeIncompleteDynamic;
+import org.anchoranalysis.core.index.container.BoundedRangeIncompleteDynamic;
 import org.anchoranalysis.core.property.IPropertyValueSendable;
 import org.anchoranalysis.core.property.change.PropertyValueChangeListener;
 import org.anchoranalysis.gui.frame.canvas.ImageCanvas;
@@ -51,7 +51,7 @@ class WrappedSlider implements ISliderState {
 	
 	public WrappedSlider(
 		ChnlSliceRange sliceBounds,
-		IBoundedRangeIncompleteDynamic indexBounds,
+		BoundedRangeIncompleteDynamic indexBounds,
 		InitialSliderState initialState,
 		IIndexGettableSettable indexCntr
 	) {

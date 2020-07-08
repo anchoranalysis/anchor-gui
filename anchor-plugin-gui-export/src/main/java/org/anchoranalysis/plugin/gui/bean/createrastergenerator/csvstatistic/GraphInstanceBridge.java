@@ -34,7 +34,7 @@ import org.anchoranalysis.anchor.plot.GraphInstance;
 import org.anchoranalysis.anchor.plot.bean.GraphDefinition;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.functional.FunctionWithException;
-import org.anchoranalysis.core.index.container.IBoundedIndexContainer;
+import org.anchoranalysis.core.index.container.BoundedIndexContainer;
 import org.anchoranalysis.core.index.container.bridge.BoundedIndexContainerBridgeWithoutIndex;
 import org.anchoranalysis.gui.io.loader.manifest.finder.csvstatistic.CSVStatistic;
 import org.anchoranalysis.gui.plot.BoundedIndexContainerIterator;
@@ -50,14 +50,14 @@ class GraphInstanceBridge<T> implements FunctionWithException<MappedFrom<CSVStat
 	
 	// START: PARAMETERS IN
 	private GraphDefinition<T> graphDefinition;
-	private IBoundedIndexContainer<CSVStatistic> cntr;
+	private BoundedIndexContainer<CSVStatistic> cntr;
 	private FunctionWithException<CSVStatistic,T,? extends Exception> elementBridge;
 	// END: PARAMETERS IN
 	
 	private Optional<AxisLimits> rangeLimits = Optional.empty();
 
 	public GraphInstanceBridge(GraphDefinition<T> graphDefinition,
-			IBoundedIndexContainer<CSVStatistic> cntr,
+			BoundedIndexContainer<CSVStatistic> cntr,
 			FunctionWithException<CSVStatistic,T,? extends Exception> elementBridge
 		) {
 		super();
@@ -95,7 +95,7 @@ class GraphInstanceBridge<T> implements FunctionWithException<MappedFrom<CSVStat
 		);
 	}
 	
-	private static AxisLimits createLimitsFromCntr(IBoundedIndexContainer<CSVStatistic> cntr) {
+	private static AxisLimits createLimitsFromCntr(BoundedIndexContainer<CSVStatistic> cntr) {
 		AxisLimits limits = new AxisLimits();
 		limits.setAxisMin( cntr.getMinimumIndex() );
 		limits.setAxisMax( cntr.getMaximumIndex() );
