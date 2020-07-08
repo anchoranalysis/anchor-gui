@@ -48,7 +48,6 @@ public class GraphDefinitionCfgNRGSummary extends GraphDefinition<Integer> {
 	
 	private BoxPlot<Integer> delegate;
 	
-	@SuppressWarnings("rawtypes")
 	private static BoxAndWhiskerItem createFromCalculatedFeatureValues( CalculatedFeatureValues calculatedFeatures, int featureIndex ) {
 		double min = calculatedFeatures.getFeatureMin(featureIndex);
 		double max = calculatedFeatures.getFeatureMax(featureIndex);
@@ -56,7 +55,7 @@ public class GraphDefinitionCfgNRGSummary extends GraphDefinition<Integer> {
 		double median = calculatedFeatures.getFeatureMedian(featureIndex);
 		double q1 = calculatedFeatures.getFeatureQuantile(featureIndex,0.25);
 		double q3 = calculatedFeatures.getFeatureQuantile(featureIndex,0.75);
-		return new BoxAndWhiskerItem( mean, median, q1, q3, min, max, min, max, new ArrayList() );
+		return new BoxAndWhiskerItem( mean, median, q1, q3, min, max, min, max, new ArrayList<>() );
 	}
 	
 	public GraphDefinitionCfgNRGSummary( final List<CalculatedFeatureValues> tableModelList, final FeatureListWithRegionMap<?> features, final List<String> seriesNames) throws InitException {
