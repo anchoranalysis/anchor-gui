@@ -70,18 +70,18 @@ class DisplayStackViewportZoomed {
 		);
 		
 		// Scaling seemingly can produce a bbox that is slightly too-big
-		bboxScaled = bboxScaled.clipTo( delegate.getDisplayStackEntireImage().getDimensions().getExtnt() );
+		bboxScaled = bboxScaled.clipTo( delegate.getDisplayStackEntireImage().getDimensions().getExtent() );
 		assert( delegate.getDisplayStackEntireImage().getDimensions().contains(bboxScaled));
 		return delegate.updateView(bboxScaled, zoomScale);
 	}
 	
-	public BoundingBox createBoxForShiftedView(Point2i shift, Extent canvasExtnt) {
+	public BoundingBox createBoxForShiftedView(Point2i shift, Extent canvasExtent) {
 		
 		Point2i shiftImg = zoomScale.removeScale(shift);
-		Extent canvasExtntImg = zoomScale.removeScale(canvasExtnt);
+		Extent canvasExtentImg = zoomScale.removeScale(canvasExtent);
 		
 		BoundingBox shiftedBox = delegate
-			.createBoxForShiftedView(shiftImg, canvasExtntImg)
+			.createBoxForShiftedView(shiftImg, canvasExtentImg)
 			.scale(
 				new ScaleFactor(zoomScale.getScale())
 			);
@@ -168,14 +168,14 @@ class DisplayStackViewportZoomed {
 		return crnrPnt;
 	}
 	
-	public Point2i calcNewCrnrPosAfterChangeInZoom(Extent canvasExtntOld, ZoomScale zoomScaleOld,
-			Extent canvasExtntNew, Point2i scrollValImage) {
+	public Point2i calcNewCrnrPosAfterChangeInZoom(Extent canvasExtentOld, ZoomScale zoomScaleOld,
+			Extent canvasExtentNew, Point2i scrollValImage) {
 		
-		Extent canvasExtntNewImage = zoomScale.removeScale(canvasExtntNew);
-		Extent canvasExtntOldImage = zoomScaleOld.removeScale( canvasExtntOld );
+		Extent canvasExtentNewImage = zoomScale.removeScale(canvasExtentNew);
+		Extent canvasExtentOldImage = zoomScaleOld.removeScale( canvasExtentOld );
 		
-		Point2i scaleFree = delegate.calcNewCrnrPosAfterChangeInViewSize(canvasExtntOldImage,
-				canvasExtntNewImage, scrollValImage);
+		Point2i scaleFree = delegate.calcNewCrnrPosAfterChangeInViewSize(canvasExtentOldImage,
+				canvasExtentNewImage, scrollValImage);
 		return zoomScale.applyScale(scaleFree); 
 	}
 

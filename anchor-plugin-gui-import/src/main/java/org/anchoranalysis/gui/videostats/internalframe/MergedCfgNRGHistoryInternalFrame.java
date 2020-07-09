@@ -5,7 +5,6 @@ import java.util.List;
 
 import org.anchoranalysis.anchor.mpp.cfg.Cfg;
 import org.anchoranalysis.anchor.mpp.feature.instantstate.CfgNRGInstantState;
-import org.anchoranalysis.anchor.overlay.Overlay;
 import org.anchoranalysis.anchor.overlay.OverlayedInstantState;
 import org.anchoranalysis.anchor.overlay.id.IDGetterOverlayID;
 
@@ -40,7 +39,6 @@ import org.anchoranalysis.anchor.overlay.id.IDGetterOverlayID;
 import org.anchoranalysis.core.color.ColorIndex;
 import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.idgetter.IDGetterIter;
-import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.index.container.BoundedIndexContainer;
 import org.anchoranalysis.core.index.container.bridge.BoundedIndexContainerBridgeWithoutIndex;
 import org.anchoranalysis.gui.frame.multioverlay.instantstate.InternalFrameOverlayedInstantStateToRGBSelectable;
@@ -69,17 +67,12 @@ public class MergedCfgNRGHistoryInternalFrame {
 		DefaultModuleState defaultState,
 		VideoStatsModuleGlobalParams mpg
 	) throws InitException {
-		
-		DualCfgNRGContainer<Cfg> dualHistory;
-		try {
-			// A container that supplies DualCfgInstantState
-			dualHistory = new DualCfgNRGContainer<>(
+
+		// A container that supplies DualCfgInstantState
+		DualCfgNRGContainer<Cfg> dualHistory = new DualCfgNRGContainer<>(
 				createInputList(selectedHistory,proposalHistory),
 				new TransformToCfg()
 			);
-		} catch (GetOperationFailedException e) {
-			throw new InitException(e);
-		}
 		
 		dualHistory.init();
 
@@ -102,7 +95,7 @@ public class MergedCfgNRGHistoryInternalFrame {
 			cfgCntnr,
 			mergedColorIndex,
 			new IDGetterOverlayID(),
-			new IDGetterIter<Overlay>(),
+			new IDGetterIter<>(),
 			!eitherExpensiveLoad,
 			defaultState,
 			mpg

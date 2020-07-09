@@ -79,7 +79,7 @@ public class ImageCanvas {
 	
 	private EventListenerList eventList = new EventListenerList();
 	
-	private ExtntScrollBars extentScrollbars;
+	private ExtentScrollBars extentScrollbars;
 	
 	private JPanel panel;
 	
@@ -155,7 +155,7 @@ public class ImageCanvas {
 		//eventList.add( MouseListener.class, mmlDragView );
 		//eventList.add( MouseMotionListener.class, mmlDragView );
 		
-		this.extentScrollbars = new ExtntScrollBars();
+		this.extentScrollbars = new ExtentScrollBars();
 		this.extentScrollbars.addChangeListener( new UpdateViewportOnlyListener() );
 		
 		
@@ -195,7 +195,7 @@ public class ImageCanvas {
 	
 	public void resizeEventFromFrame( ComponentEvent e ) {
 		try {
-			setScrollBarExtnt();
+			setScrollBarExtent();
 			
 			// Keeps the current zoom level
 			updateImage(displayStackViewport.getZoomScale());
@@ -250,13 +250,13 @@ public class ImageCanvas {
 
 	public void shiftViewport( Point2i shift ) throws OperationFailedException {
 			
-		BoundingBox shiftedBox = displayStackViewport.createBoxForShiftedView(shift, imageCanvas.createExtnt() );
+		BoundingBox shiftedBox = displayStackViewport.createBoxForShiftedView(shift, imageCanvas.createExtent() );
 		
 		assert( displayStackViewport.createDimensionsEntireScaled().contains(shiftedBox) );
 		
 		extentScrollbars.setValue( new Point2i(shiftedBox.cornerMin().getX(), shiftedBox.cornerMin().getY()) );
 		
-		updateStackViewportForImageExtnt( shiftedBox.extent() );
+		updateStackViewportForImageExtent( shiftedBox.extent() );
 	}
 	
 
@@ -267,8 +267,8 @@ public class ImageCanvas {
 		try {
 			//applyPending();
 			
-			Extent e = calcExtntToRetrieveScaled( displayStackViewport.createDimensionsEntireScaled() );
-			updateStackViewportForImageExtnt(e);
+			Extent e = calcExtentToRetrieveScaled( displayStackViewport.createDimensionsEntireScaled() );
+			updateStackViewportForImageExtent(e);
 			
 		} catch (OperationFailedException e) {
 			errorReporter.recordError(ImageCanvas.class, e);
@@ -297,33 +297,33 @@ public class ImageCanvas {
 	
 		{
 			// We interpolate a region from the image
-			Extent extentNew = calcExtntToRetrieveScaled( displayStackViewport.createDimensionsEntireScaled() );
+			Extent extentNew = calcExtentToRetrieveScaled( displayStackViewport.createDimensionsEntireScaled() );
 	
 			// We update the scrollbars as well
-			updateScollBarsWithNewExtnt( extentNew, zoomScaleOld, zoomScaleNew, scrollVal, mousePoint );
+			updateScollBarsWithNewExtent( extentNew, zoomScaleOld, zoomScaleNew, scrollVal, mousePoint );
 				
-			updateStackViewportForImageExtnt(extentNew );
+			updateStackViewportForImageExtent(extentNew );
 		}
 	
 	}
 
 
-	private void updateScollBarsWithNewExtnt( Extent extentNew, ZoomScale zoomScaleOld, ZoomScale zoomScaleNew, Point2i scrollVal, Point2i mousePoint ) {
+	private void updateScollBarsWithNewExtent( Extent extentNew, ZoomScale zoomScaleOld, ZoomScale zoomScaleNew, Point2i scrollVal, Point2i mousePoint ) {
 		
-		Extent canvasExtntOld = imageCanvas.createExtnt();
+		Extent canvasExtentOld = imageCanvas.createExtent();
 		
 		assert( displayStackViewport.createDimensionsEntireScaled().contains( new BoundingBox(extentNew)) );
 		
 		Point2i scrollValNew;
 		// Only if we have a mouse point, and we are retrieving the same sized extent as previously
-		if (mousePoint!=null && extentNew.getVolume()==canvasExtntOld.getVolume() && zoomScaleNew.equals(zoomScaleOld)) {
+		if (mousePoint!=null && extentNew.getVolume()==canvasExtentOld.getVolume() && zoomScaleNew.equals(zoomScaleOld)) {
 			scrollValNew = displayStackViewport.calcNewCrnrPosToMaintainMousePoint( mousePoint, zoomScaleOld );
 		} else {
-			scrollValNew = displayStackViewport.calcNewCrnrPosAfterChangeInZoom( canvasExtntOld, zoomScaleOld, extentNew, scrollVal );
+			scrollValNew = displayStackViewport.calcNewCrnrPosAfterChangeInZoom( canvasExtentOld, zoomScaleOld, extentNew, scrollVal );
 			
 		}
 			
-		setScrollBarExtnt();
+		setScrollBarExtent();
 		extentScrollbars.setValue( scrollValNew );
 
 		assert( displayStackViewport.createDimensionsEntireScaled().contains( new BoundingBox(extentNew)) );
@@ -331,7 +331,7 @@ public class ImageCanvas {
 
 
 
-	private Extent calcExtntToRetrieveScaled( ImageDimensions sdScaled ) {
+	private Extent calcExtentToRetrieveScaled( ImageDimensions sdScaled ) {
 		// We calculate the size of the region based upon the current size of the canvas (if we can)
 	
 		if (imageCanvas.getWidth()>0) {
@@ -349,7 +349,7 @@ public class ImageCanvas {
 	}
 
 
-	private void updateStackViewportForImageExtnt( Extent extentImageSc ) throws OperationFailedException {
+	private void updateStackViewportForImageExtent( Extent extentImageSc ) throws OperationFailedException {
 		assert( displayStackViewport.createDimensionsEntireScaled().contains( new BoundingBox(extentImageSc)) );
 		
 		
@@ -425,7 +425,7 @@ public class ImageCanvas {
 				
 					BoundingBox bboxIntersect = bbox.intersection().withInside(
 						bboxCurrentDisplayed,
-						displayStackViewport.getUnzoomed().getDimensionsEntire().getExtnt()
+						displayStackViewport.getUnzoomed().getDimensionsEntire().getExtent()
 					).orElseThrow( ()->
 						new OperationFailedException("The bounding-box does not intersect with the viewport")
 					);
@@ -500,20 +500,20 @@ public class ImageCanvas {
 
 	
 	
-	public void setScrollBarExtnt() {
+	public void setScrollBarExtent() {
 		
-		Extent canvasExtnt = imageCanvas.createExtnt();
+		Extent canvasExtent = imageCanvas.createExtent();
 		
-		extentScrollbars.setVisibleAmount( canvasExtnt );
+		extentScrollbars.setVisibleAmount( canvasExtent );
 		
 		// If the viewport is much smaller than our canvas size, then we allow the scrollbars to disappear
 		// If we do this, when the size is similar, we can end up in endless loops of the scrollbars appearing
 		//   disappearing, causing flickering, so we only do with the size is less than the approz size of the scrollbar
 		
-		Extent entireImageExtnt = displayStackViewport.createDimensionsEntireScaled().getExtnt();
+		Extent entireImageExtent = displayStackViewport.createDimensionsEntireScaled().getExtent();
 		
-		boolean alwaysAllowChangeInVisibility = minSizeDifferenceXY( canvasExtnt, entireImageExtnt ) > (extentScrollbars.maxSizeOfScrollbar() + 1);
-		extentScrollbars.setMinMax( entireImageExtnt, alwaysAllowChangeInVisibility );
+		boolean alwaysAllowChangeInVisibility = minSizeDifferenceXY( canvasExtent, entireImageExtent ) > (extentScrollbars.maxSizeOfScrollbar() + 1);
+		extentScrollbars.setMinMax( entireImageExtent, alwaysAllowChangeInVisibility );
 	}
 	
 	

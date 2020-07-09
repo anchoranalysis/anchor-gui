@@ -85,7 +85,7 @@ class DisplayStackViewport {
 		return displayStackCurrentlyShown;
 	}
 	
-	public BoundingBox createBoxForShiftedView( Point2i shift, Extent canvasExtnt ) {
+	public BoundingBox createBoxForShiftedView( Point2i shift, Extent canvasExtent ) {
 		ReadableTuple3i crnrMin = this.bboxViewport.cornerMin();
 		
 		int xNew = crnrMin.getX() + shift.getX();
@@ -93,7 +93,7 @@ class DisplayStackViewport {
 		
 		Point2i pnt = new Point2i(xNew,yNew);
 		pnt = DisplayStackViewportUtilities.clipToImage(pnt, bboxViewport.extent(), getDimensionsEntire() );
-		pnt = DisplayStackViewportUtilities.clipToImage(pnt, canvasExtnt, getDimensionsEntire());
+		pnt = DisplayStackViewportUtilities.clipToImage(pnt, canvasExtent, getDimensionsEntire());
 		assert(pnt.getX() >= 0);
 		assert(pnt.getY() >= 0);
 		// We need to clip

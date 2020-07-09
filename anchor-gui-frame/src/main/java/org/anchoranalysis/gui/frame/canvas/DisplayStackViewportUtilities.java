@@ -30,28 +30,31 @@ import org.anchoranalysis.core.geometry.Point2i;
 import org.anchoranalysis.image.extent.Extent;
 import org.anchoranalysis.image.extent.ImageDimensions;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+
+@NoArgsConstructor(access=AccessLevel.PRIVATE)
 class DisplayStackViewportUtilities {
-
-
-	// Ensures a particular value is in the acceptable X range
-	private static int clipToImage( int val, int entireExtnt, int canvasWidth ) {
+	
+	public static Point2i clipToImage( Point2i val, Extent canvasExtent, ImageDimensions sdImage ) {
+		return new Point2i(
+			clipToImage(val.getX(), sdImage.getX(), canvasExtent.getX()),
+			clipToImage(val.getY(), sdImage.getY(), canvasExtent.getY())
+		);
+	}
+	
+	/** Ensures a particular value is in the acceptable X range */
+	private static int clipToImage( int val, int entireExtent, int canvasWidth ) {
 		
 		if (val<0) {
 			return 0;
 		}
 	
-		int furthestXVal = Math.max(entireExtnt - canvasWidth,0); 
+		int furthestXVal = Math.max(entireExtent - canvasWidth,0); 
 		if (val>furthestXVal) {
 			return furthestXVal;
 		}
 		
 		return val;
-	}
-	
-	public static Point2i clipToImage( Point2i val, Extent canvasExtnt, ImageDimensions sdImage ) {
-		Point2i out = new Point2i();
-		out.setX( clipToImage(val.getX(), sdImage.getX(), canvasExtnt.getX()) );
-		out.setY( clipToImage(val.getY(), sdImage.getY(), canvasExtnt.getY()) );
-		return out;
 	}
 }

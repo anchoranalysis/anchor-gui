@@ -69,7 +69,7 @@ public class BoundOverlayedDisplayStack {
 	// Creates a new DisplayStack after imposing the overlay on the background
 	public DisplayStack extractFullyOverlayed() throws OperationFailedException {
 		RegionExtracter re = background.createRegionExtracter();
-		return re.extractRegionFrom( new BoundingBox( background.getDimensions().getExtnt() ), 1.0 );
+		return re.extractRegionFrom( new BoundingBox( background.getDimensions().getExtent() ), 1.0 );
 	}
 
 	public final int getNumChnl() {

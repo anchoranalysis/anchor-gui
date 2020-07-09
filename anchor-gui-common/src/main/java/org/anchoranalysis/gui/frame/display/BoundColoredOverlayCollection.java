@@ -96,7 +96,7 @@ public class BoundColoredOverlayCollection {
 	public void drawRGB( RGBStack stack, BoundingBox bbox, double zoomFactor ) throws OperationFailedException {
 		
 		// Create a containing bounding box with the zoom
-		BoundingBox container = createZoomedContainer( bbox, zoomFactor, stack.getDimensions().getExtnt() );
+		BoundingBox container = createZoomedContainer( bbox, zoomFactor, stack.getDimensions().getExtent() );
 		
 		OverlayPrecalculatedCache marksWithinView = cache.subsetWithinView( bbox, container, zoomFactor );
 
@@ -111,10 +111,10 @@ public class BoundColoredOverlayCollection {
 		);
 	}
 	
-	private static BoundingBox createZoomedContainer( BoundingBox bbox, double zoomFactor, Extent stackExtnt ) {
+	private static BoundingBox createZoomedContainer( BoundingBox bbox, double zoomFactor, Extent stackExtent ) {
 		Point3i crnrMin = new Point3i( bbox.cornerMin() );
 		crnrMin.scaleXY(zoomFactor);
-		return new BoundingBox(crnrMin, stackExtnt);
+		return new BoundingBox(crnrMin, stackExtent);
 	}
 	
 	// Note the overlay do not actually have to be contained in the OverlayCollection for this to work

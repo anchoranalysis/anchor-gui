@@ -1,8 +1,6 @@
 package org.anchoranalysis.gui.mergebridge;
 
 import java.util.List;
-import java.util.stream.Collectors;
-
 import org.anchoranalysis.anchor.mpp.feature.instantstate.CfgNRGInstantState;
 import org.anchoranalysis.core.cache.LRUCache;
 
@@ -39,11 +37,17 @@ import org.anchoranalysis.core.index.container.BoundChangeListener;
 import org.anchoranalysis.core.index.container.BoundedIndexContainer;
 import org.anchoranalysis.io.manifest.sequencetype.IncrementalSequenceType;
 
+import lombok.RequiredArgsConstructor;
+
 // Contains both the selected and proposal histories
+@RequiredArgsConstructor
 public class DualCfgNRGContainer<T> implements BoundedIndexContainer<IndexedDualState<T>> {
 	
-	// Selected CfgNRG
-	private List<BoundedIndexContainer<CfgNRGInstantState>> cntrs;
+	// START REQUIRED ARGUMENTS
+	/** Assumed to represent a contiguous sequence in time */
+	private final List<BoundedIndexContainer<CfgNRGInstantState>> cntrs;
+	private final TransformInstanteState<T> transformer;
+	// END REQUIRED ARGUMENTS
 	
 	private IncrementalSequenceType incrementalSequenceType;
 	
@@ -53,24 +57,7 @@ public class DualCfgNRGContainer<T> implements BoundedIndexContainer<IndexedDual
 	public interface TransformInstanteState<T> {
 		T transform( CfgNRGInstantState state );
 	}
-		
-	private TransformInstanteState<T> transformer;
-	
-	/**
-	 * 
-	 * @param cntrs assumed to represent a contiguous sequence in time
-	 * @param transformer
-	 */
-	public DualCfgNRGContainer( List<BoundedIndexContainer<CfgNRGInstantState>> cntrs, TransformInstanteState<T> transformer ) throws GetOperationFailedException {
-		super();
-		
-		this.cntrs = cntrs;
-		
-		this.transformer = transformer;
-		
-	}
 
-	
 	public void init() {
 
 		this.recentAccessCache = new LRUCache<>(
@@ -141,7 +128,7 @@ public class DualCfgNRGContainer<T> implements BoundedIndexContainer<IndexedDual
 		
 		int minOfMaxs = Integer.MAX_VALUE;
 		
-		for( BoundedIndexContainer<CfgNRGInstantState> cntr : cntrs ) {
+		for( BoundedIndexContainer<CfgNRGInstantState> cntr : cntrs) {
 			
 			if (cntr.getMaximumIndex()<minOfMaxs) {
 				minOfMaxs = cntr.getMaximumIndex();
@@ -153,13 +140,13 @@ public class DualCfgNRGContainer<T> implements BoundedIndexContainer<IndexedDual
 	
 
 	private List<T> instanceStates(int index) throws GetOperationFailedException {
-		return FunctionalUtilities.mapWithException(
-			cntrs.stream(),
+		return FunctionalUtilities.mapToList(
+			cntrs,
 			GetOperationFailedException.class,
 			cntr-> transformer.transform(
 				nearestState(cntr,index)
 			)
-		).collect( Collectors.toList() );
+		);
 	}
 	
 	private static CfgNRGInstantState nearestState( BoundedIndexContainer<CfgNRGInstantState> cntr, int index ) throws GetOperationFailedException {

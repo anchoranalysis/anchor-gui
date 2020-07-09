@@ -27,24 +27,23 @@ package org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.definition;
  */
 
 import java.util.List;
-import java.util.stream.Collectors;
-
 import org.anchoranalysis.core.error.reporter.ErrorReporter;
+import org.anchoranalysis.core.functional.FunctionalUtilities;
 import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.progress.OperationWithProgressReporter;
 import org.anchoranalysis.gui.backgroundset.BackgroundSet;
 import org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.IGetNames;
 
+import lombok.RequiredArgsConstructor;
+
 /** Omits names from the background-map if they contain a substring */
+@RequiredArgsConstructor
 public class ChangeableBackgroundDefinitionIgnoreContains extends ChangeableBackgroundDefinition {
 
-	private ChangeableBackgroundDefinition background;
-	private String contains;
-	
-	public ChangeableBackgroundDefinitionIgnoreContains(ChangeableBackgroundDefinition background, String contains) {
-		this.contains = contains;
-		this.background = background;
-	}
+	// START REQUIRED ARGUMENTS
+	private final ChangeableBackgroundDefinition background;
+	private final String contains;
+	// END REQUIRED ARGUMENTS
 
 	@Override
 	public void update(OperationWithProgressReporter<BackgroundSet,GetOperationFailedException> backgroundSet) {
@@ -59,14 +58,12 @@ public class ChangeableBackgroundDefinitionIgnoreContains extends ChangeableBack
 	@Override
 	public IGetNames names(ErrorReporter errorReporter) {
 		IGetNames namesGet = background.names(errorReporter);
-		return () -> {
-			return filterList( namesGet.names() );
-		};
+		return () -> filterList(
+			namesGet.names()
+		);
 	}
 	
 	private List<String> filterList( List<String> list ) {
-		return list.stream()
-			.filter( a -> !a.contains(contains) )
-			.collect( Collectors.toList() );
+		return FunctionalUtilities.filterToList(list, a -> !a.contains(contains));  
 	}
 }
