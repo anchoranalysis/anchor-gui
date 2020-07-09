@@ -129,7 +129,7 @@ public class OverlayPrecalculatedCache implements OverlayRetriever {
 		
 		// If we haven't bother initializing these things before, we do now
 		if (rTree==null) {
-			rTree = new BoundingBoxRTree( overlayList.getListBoundingBox() );
+			rTree = new BoundingBoxRTree(overlayList.getListBoundingBox(), 10000);
 		}
 		if (overlayList.hasGeneratedObjectsZoomed() || zoomFactorNew!=zoomFactor) {
 			overlayList.setZoomedToNull();
