@@ -30,7 +30,6 @@ import org.anchoranalysis.anchor.mpp.pxlmark.memo.VoxelizedMarkMemo;
 
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.feature.bean.Feature;
-import org.anchoranalysis.feature.calc.FeatureCalcException;
 import org.anchoranalysis.feature.input.FeatureInput;
 import org.anchoranalysis.feature.nrg.NRGStackWithParams;
 import org.anchoranalysis.feature.session.CreateFeatureInput;
@@ -47,10 +46,10 @@ public class CreatePairFromMark implements CreateFeatureInput<FeatureInput> {
 	
 	@Override
 	public FeatureInput createForFeature(Feature<?> feature) throws CreateException {
-		try {
-			return ParamsFactoryForFeature.factoryFor( feature ).create(pmm1, pmm2, raster);
-		} catch (FeatureCalcException e) {
-			throw new CreateException(e);
-		}
+		return ParamsFactoryForFeature.factoryFor( feature ).create(
+			pmm1,
+			pmm2,
+			raster
+		);
 	}
 }
