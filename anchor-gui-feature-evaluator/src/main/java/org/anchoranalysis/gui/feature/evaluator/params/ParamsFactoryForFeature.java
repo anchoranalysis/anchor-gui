@@ -56,47 +56,47 @@ public class ParamsFactoryForFeature {
 			return new NullParamsFactory();
 		}
 		
-		if (paramType.equals(FeatureInputMarkDescriptor.instance)) {
+		if (paramType.equals(FeatureInputMarkDescriptor.INSTANCE)) {
 			return new FeatureMarkParamsFactory();
 		}
 
-		if (paramType.equals(FeatureInputSingleObjectDescriptor.instance)) {
+		if (paramType.equals(FeatureInputSingleObjectDescriptor.INSTANCE)) {
 			return new FeatureObjMaskParamsFactory( GlobalRegionIdentifiers.SUBMARK_INSIDE );
 		}
 		
-		if (paramType.equals(FeatureInputSingleMemoDescriptor.instance)) {
+		if (paramType.equals(FeatureInputSingleMemoDescriptor.INSTANCE)) {
 			return new NRGElemIndCalcParamsFactory();
 		}
 		
-		if (paramType.equals(FeatureInputPairMemoDescriptor.instance)) {
+		if (paramType.equals(FeatureInputPairMemoDescriptor.INSTANCE)) {
 			return new NRGElemPairCalcParamsFactory();
 		}
 		
-		if (paramType.equals(FeatureInputAllMemoDescriptor.instance)) {
+		if (paramType.equals(FeatureInputAllMemoDescriptor.INSTANCE)) {
 			return new NRGElemAllCalcParamsFactory();
 		}
 		
-		if (paramType.equals(FeatureInputCfgDescriptor.instance)) {
+		if (paramType.equals(FeatureInputCfgDescriptor.INSTANCE)) {
 			return new UnsupportedFactory();
 		}
 		
-		if (paramType.equals(FeatureInputObjectCollectionDescriptor.instance)) {
+		if (paramType.equals(FeatureInputObjectCollectionDescriptor.INSTANCE)) {
 			return new FeatureObjMaskCollectionParamsFactory( RegionMapSingleton.instance().membershipWithFlagsForIndex(GlobalRegionIdentifiers.SUBMARK_INSIDE) );
 		}
 		
-		if (paramType.equals(FeatureInputPairObjectsDescriptor.instance)) {
+		if (paramType.equals(FeatureInputPairObjectsDescriptor.INSTANCE)) {
 			return new FeatureObjMaskPairParamsFactory( GlobalRegionIdentifiers.SUBMARK_INSIDE );
 		}		
 		
-		if (paramType.equals(FeatureInputHistogramDescriptor.instance)) {
+		if (paramType.equals(FeatureInputHistogramDescriptor.INSTANCE)) {
 			return new UnsupportedFactory();
 		}
 		
-		if (paramType.equals(FeatureInputResultsDescriptor.instance)) {
+		if (paramType.equals(FeatureInputResultsDescriptor.INSTANCE)) {
 			return new UnsupportedFactory();
 		}
 		
-		if (paramType.equals(FeatureInputNRGStackDescriptor.instance)) {
+		if (paramType.equals(FeatureInputNRGStackDescriptor.INSTANCE)) {
 			return new FeatureObjMaskParamsFactory( GlobalRegionIdentifiers.SUBMARK_INSIDE );
 		}
 		
