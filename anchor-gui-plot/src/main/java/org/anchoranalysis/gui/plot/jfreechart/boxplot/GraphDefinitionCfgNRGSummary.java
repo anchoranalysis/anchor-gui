@@ -37,7 +37,6 @@ import org.anchoranalysis.anchor.plot.GraphInstance;
 import org.anchoranalysis.anchor.plot.bean.GraphDefinition;
 import org.anchoranalysis.anchor.plot.index.BoxPlot;
 import org.anchoranalysis.core.error.CreateException;
-import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.gui.feature.CalculatedFeatureValues;
 import org.anchoranalysis.gui.feature.FeatureListWithRegionMap;
 import org.jfree.data.statistics.BoxAndWhiskerItem;
@@ -58,8 +57,11 @@ public class GraphDefinitionCfgNRGSummary extends GraphDefinition<Integer> {
 		return new BoxAndWhiskerItem( mean, median, q1, q3, min, max, min, max, new ArrayList<>() );
 	}
 	
-	public GraphDefinitionCfgNRGSummary( final List<CalculatedFeatureValues> tableModelList, final FeatureListWithRegionMap<?> features, final List<String> seriesNames) throws InitException {
-		
+	public GraphDefinitionCfgNRGSummary(
+		final List<CalculatedFeatureValues> tableModelList,
+		final FeatureListWithRegionMap<?> features,
+		final List<String> seriesNames
+	) {
 		delegate = new BoxPlot<>(
 				getTitle(),
 				seriesNames.toArray( new String[]{} ),
@@ -75,9 +77,12 @@ public class GraphDefinitionCfgNRGSummary extends GraphDefinition<Integer> {
 	}
 	
 	@Override
-	public GraphInstance create(Iterator<Integer> items,
-			Optional<AxisLimits> domainLimits, Optional<AxisLimits> rangeLimits) throws CreateException {
-		return delegate.create(items, domainLimits, rangeLimits);
+	public GraphInstance create(
+		Iterator<Integer> items,
+		Optional<AxisLimits> domainLimits,
+		Optional<AxisLimits> rangeLimits
+	) throws CreateException {
+		return delegate.createWithRangeLimits(items, rangeLimits);
 	}
 
 	@Override
