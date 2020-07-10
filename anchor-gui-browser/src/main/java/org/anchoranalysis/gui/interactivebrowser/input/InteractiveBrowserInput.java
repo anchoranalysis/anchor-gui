@@ -41,7 +41,6 @@ import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.log.Logger;
 import org.anchoranalysis.core.name.store.SharedObjects;
-import org.anchoranalysis.core.params.KeyValueParams;
 import org.anchoranalysis.feature.bean.list.FeatureListProvider;
 import org.anchoranalysis.feature.input.FeatureInput;
 import org.anchoranalysis.feature.shared.SharedFeaturesInitParams;
@@ -81,13 +80,16 @@ public class InteractiveBrowserInput implements InputFromManager {
 			throw new CreateException(e2);
 		}
 		
-		return new FeatureListSrcBuilder<>(logger).build(soFeature, nrgSchemeCreator);
+		return new FeatureListSrcBuilder(logger).build(soFeature, nrgSchemeCreator);
 	}
 	
 	private void addKeyValueParams( KeyValueParamsInitParams soParams ) throws OperationFailedException {
 		
 		for( NamedBean<KeyValueParamsProvider> ni : this.namedItemKeyValueParamsProviderList ) {
-			soParams.getNamedKeyValueParamsCollection().add(ni.getName(), new OperationCreateFromProvider<KeyValueParams>(ni.getValue()) );
+			soParams.getNamedKeyValueParamsCollection().add(
+				ni.getName(),
+				new OperationCreateFromProvider<>(ni.getValue())
+			);
 		}
 	}
 	
@@ -96,7 +98,7 @@ public class InteractiveBrowserInput implements InputFromManager {
 		for( NamedBean<FilePathProvider> ni : this.namedItemFilePathProviderList ) {
 			soParams.getNamedFilePathCollection().add(
 				ni.getName(),
-				new OperationCreateFromProvider<Path>(ni.getValue())
+				new OperationCreateFromProvider<>(ni.getValue())
 			);
 		}
 	}

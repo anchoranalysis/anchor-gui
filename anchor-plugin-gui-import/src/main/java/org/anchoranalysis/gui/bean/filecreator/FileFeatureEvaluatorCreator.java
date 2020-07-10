@@ -95,10 +95,7 @@ public class FileFeatureEvaluatorCreator extends FileCreator {
 	}
 	
 	private FeatureListSrc createSrc( Logger logger ) throws CreateException {
-		
-		FeatureListSrcBuilder<FeatureInput> builder = new FeatureListSrcBuilder<>(logger); 
-		
-		return builder.build(
+		return new FeatureListSrcBuilder(logger).build(
 			createInitParams(logger),
 			nrgSchemeCreator
 		);

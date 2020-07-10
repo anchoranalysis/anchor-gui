@@ -43,7 +43,6 @@ import org.anchoranalysis.core.name.store.NamedProviderStore;
 import org.anchoranalysis.feature.bean.Feature;
 import org.anchoranalysis.feature.bean.list.FeatureList;
 import org.anchoranalysis.feature.bean.list.FeatureListFactory;
-import org.anchoranalysis.feature.calc.FeatureCalcException;
 import org.anchoranalysis.feature.input.FeatureInput;
 import org.anchoranalysis.feature.shared.SharedFeaturesInitParams;
 import org.anchoranalysis.gui.feature.evaluator.params.FeatureCalcParamsFactory;
@@ -52,14 +51,12 @@ import org.anchoranalysis.gui.feature.evaluator.treetable.ExtractFromNamedNRGSch
 import org.anchoranalysis.gui.feature.evaluator.treetable.FeatureListSrc;
 import org.anchoranalysis.gui.feature.evaluator.treetable.KeyValueParamsAugmenter;
 
-public class FeatureListSrcBuilder<T extends FeatureInput> {
+import lombok.AllArgsConstructor;
+
+@AllArgsConstructor
+public class FeatureListSrcBuilder {
 
 	private Logger logger;
-		
-	public FeatureListSrcBuilder(Logger logger) {
-		super();
-		this.logger = logger;
-	}
 
 	/**
 	 * Builds the nrgSchemeSet
@@ -155,7 +152,7 @@ public class FeatureListSrcBuilder<T extends FeatureInput> {
 					)
 				);
 				
-			} catch (FeatureCalcException | CreateException e) {
+			} catch (CreateException e) {
 				logger.errorReporter().recordError(FeatureListSrcBuilder.class, e);
 			} catch (NamedProviderGetException e) {
 				logger.errorReporter().recordError(FeatureListSrcBuilder.class, e.summarize());
@@ -163,20 +160,18 @@ public class FeatureListSrcBuilder<T extends FeatureInput> {
 		}
 	}
 	
-	private void determineUnaryPairwiseFeatures( FeatureList<FeatureInput> in, FeatureList<FeatureInputSingleMemo> outUnary, FeatureList<FeatureInputPairMemo> outPairwise ) throws FeatureCalcException {
-		
-		for( Feature<FeatureInput> f : in ) {
+	private void determineUnaryPairwiseFeatures( FeatureList<FeatureInput> in, FeatureList<FeatureInputSingleMemo> outUnary, FeatureList<FeatureInputPairMemo> outPairwise ) {
+		for( Feature<FeatureInput> feature : in ) {
 			
-			FeatureCalcParamsFactory factory = ParamsFactoryForFeature.factoryFor(f);
+			FeatureCalcParamsFactory factory = ParamsFactoryForFeature.factoryFor(feature);
 			
 			if (factory.isUnarySupported()) {
-				outUnary.add( f.downcast() );
+				outUnary.add( feature.downcast() );
 			}
 			
 			if (factory.isPairwiseSupported()) {
-				outPairwise.add( f.downcast() );
+				outPairwise.add( feature.downcast() );
 			}
-
 		}
 	}
 }

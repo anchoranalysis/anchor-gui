@@ -34,98 +34,50 @@ import org.anchoranalysis.anchor.mpp.bean.init.MPPInitParams;
 import org.anchoranalysis.anchor.mpp.feature.nrg.cfg.CfgNRGPixelized;
 import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.mpp.sgmn.bean.optscheme.feedback.ReporterAgg;
-import org.anchoranalysis.mpp.sgmn.optscheme.feedback.OptimizationFeedbackEndParams;
 import org.anchoranalysis.mpp.sgmn.optscheme.feedback.OptimizationFeedbackInitParams;
 import org.anchoranalysis.mpp.sgmn.optscheme.feedback.ReporterException;
 import org.anchoranalysis.mpp.sgmn.optscheme.feedback.aggregate.Aggregator;
-import org.anchoranalysis.mpp.sgmn.optscheme.feedback.aggregate.IAggregateReceiver;
+import org.anchoranalysis.mpp.sgmn.optscheme.feedback.aggregate.AggregateReceiver;
 import org.anchoranalysis.mpp.sgmn.optscheme.step.Reporting;
 
 // Sends all GUI operations to the edtImpl due to SWING
 public class VideoStats extends ReporterAgg<CfgNRGPixelized> {
-
-	//private static Log log = LogFactory.getLog(VideoStats.class);
 	
 	private VideoStatsEDT edtImpl = new VideoStatsEDT();
 	
-	public VideoStats() {
-		super();
-	}
-	
 	@Override
 	public void reportNewBest( final Reporting<CfgNRGPixelized> reporting ) {
-		
-		Runnable r = new Runnable() {
-
-			@Override
-			public void run() {
-				edtImpl.reportNewBest(reporting);
-			}
-		};
-		SwingUtilities.invokeLater(r);
+		SwingUtilities.invokeLater(
+			() -> edtImpl.reportNewBest(reporting) 
+		);
 	}
 
 	@Override
-	protected IAggregateReceiver<CfgNRGPixelized> getAggregateReceiver() {
-		
-		return new IAggregateReceiver<CfgNRGPixelized>() {
-
-			@Override
-			public void aggStart( OptimizationFeedbackInitParams<CfgNRGPixelized> initParams, Aggregator agg ) {
-				
-			}
-			
-			@Override
-			public void aggEnd( Aggregator agg ) {
-				
-			}
-			
-			@Override
-			public void aggReport( final Reporting<CfgNRGPixelized> reporting, final Aggregator agg ) {
-
-				Runnable r = new Runnable() {
-
-					@Override
-					public void run() {
-						// We need to copy the aggregator as the original could be updated in the interim
-						edtImpl.aggReport(reporting, agg.deepCopy() );
-					}
-				};
-				SwingUtilities.invokeLater(r);
-			}
-		};
+	protected AggregateReceiver<CfgNRGPixelized> getAggregateReceiver() {
+		// We need to copy the aggregator as the original could be updated in the interim
+		return (Reporting<CfgNRGPixelized> reporting, Aggregator agg) -> SwingUtilities.invokeLater(
+			() -> edtImpl.aggReport(reporting, agg.deepCopy() ) 
+		);
 	}
 	
 	@Override
 	public void reportBegin( final OptimizationFeedbackInitParams<CfgNRGPixelized> initParams ) throws ReporterException {
-		
 		super.reportBegin( initParams );
-		
-		Runnable r = new Runnable() {
 
-			@Override
-			public void run() {
+		SwingUtilities.invokeLater(
+			() -> {
 				try {
 					edtImpl.reportBegin(initParams);
 				} catch (ReporterException e) {
 					initParams.getInitContext().getLogger().errorReporter().recordError(VideoStats.class, e);
-				}
+				}				
 			}
-		};
-		SwingUtilities.invokeLater(r);
-	}
-	
-	
-	@Override
-	public void reportEnd(OptimizationFeedbackEndParams<CfgNRGPixelized> optStep) {
-		super.reportEnd(optStep);
+		);
 	}
 
 	@Override
 	public void onInit(MPPInitParams pso) throws InitException {
 		super.onInit(pso);
-		edtImpl.init( getSharedObjects().getImage(), getLogger() );
+		edtImpl.init( getInitializationParameters().getImage(), getLogger() );
 	}
-
-
 }
