@@ -3,7 +3,7 @@ package org.anchoranalysis.gui.feature.evaluator.params;
 import java.util.Optional;
 
 import org.anchoranalysis.anchor.mpp.bean.regionmap.RegionMembershipWithFlags;
-import org.anchoranalysis.anchor.mpp.pxlmark.memo.PxlMarkMemo;
+import org.anchoranalysis.anchor.mpp.pxlmark.memo.VoxelizedMarkMemo;
 
 /*
  * #%L
@@ -50,7 +50,7 @@ public class FeatureObjMaskCollectionParamsFactory extends FeatureCalcParamsUnar
 	}
 
 	@Override
-	public FeatureInput create(PxlMarkMemo pmm, NRGStackWithParams nrgStack)
+	public FeatureInput create(VoxelizedMarkMemo pmm, NRGStackWithParams nrgStack)
 			throws CreateException {
 		ObjectMask om = pmm.getMark().calcMask(nrgStack.getDimensions(), rm, BinaryValuesByte.getDefault() ).getMask();
 		return new FeatureInputObjectCollection(

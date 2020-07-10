@@ -1,6 +1,6 @@
 package org.anchoranalysis.gui.feature.evaluator.nrgtree.createparams;
 
-import org.anchoranalysis.anchor.mpp.pxlmark.memo.PxlMarkMemo;
+import org.anchoranalysis.anchor.mpp.pxlmark.memo.VoxelizedMarkMemo;
 
 /*-
  * #%L
@@ -41,8 +41,8 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class CreatePairFromMark implements CreateFeatureInput<FeatureInput> {
 
-	private final PxlMarkMemo pmm1;
-	private final PxlMarkMemo pmm2;
+	private final VoxelizedMarkMemo pmm1;
+	private final VoxelizedMarkMemo pmm2;
 	private final NRGStackWithParams raster;
 	
 	@Override

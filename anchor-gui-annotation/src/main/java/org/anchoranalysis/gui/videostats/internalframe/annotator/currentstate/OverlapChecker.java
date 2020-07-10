@@ -4,7 +4,7 @@ import org.anchoranalysis.anchor.mpp.bean.regionmap.RegionMap;
 import org.anchoranalysis.anchor.mpp.cfg.Cfg;
 import org.anchoranalysis.anchor.mpp.mark.Mark;
 import org.anchoranalysis.anchor.mpp.overlap.OverlapUtilities;
-import org.anchoranalysis.anchor.mpp.pxlmark.memo.PxlMarkMemo;
+import org.anchoranalysis.anchor.mpp.pxlmark.memo.VoxelizedMarkMemo;
 
 /*
  * #%L
@@ -57,17 +57,9 @@ class OverlapChecker {
 		this.errorReporter = errorReporter;
 		this.regionMap = regionMap;
 	}
-	
-	private boolean hasLargeOverlap( PxlMarkMemo pmProp1, PxlMarkMemo pmProp2 ) throws OperationFailedException {
-		
-		try {
-			double overlap = OverlapUtilities.overlapWith(pmProp1,pmProp2,0);
-			double overlapRatio = calcOverlapRatio(pmProp1, pmProp2, overlap, 0);
-			return (overlapRatio>largeOverlapThreshold);
-		} catch (FeatureCalcException e) {
-			throw new OperationFailedException(e);
-		}
-		
+
+	public static double calcOverlapRatio( VoxelizedMarkMemo obj1, VoxelizedMarkMemo obj2, double overlap, int regionID ) throws FeatureCalcException {
+		return overlap / calcMinVolume(obj1, obj2, regionID);
 	}
 	
 	// We look for larger overlap to warn the user
@@ -75,10 +67,10 @@ class OverlapChecker {
 		
 		for( Mark prop : proposed ) {
 			
-			PxlMarkMemo pmProp = new PxlMarkMemo(prop,nrgStack,regionMap,null);
+			VoxelizedMarkMemo pmProp = new VoxelizedMarkMemo(prop,nrgStack,regionMap,null);
 			
 			for( Mark exst : existing ) {
-				PxlMarkMemo pmExst = new PxlMarkMemo(exst,nrgStack,regionMap,null);
+				VoxelizedMarkMemo pmExst = new VoxelizedMarkMemo(exst,nrgStack,regionMap,null);
 				
 				try {
 					if(boundingBoxIntersectionExists(pmProp,pmExst) && hasLargeOverlap(pmProp,pmExst)) {
@@ -93,18 +85,26 @@ class OverlapChecker {
 		return false;
 	}
 	
-	private static boolean boundingBoxIntersectionExists(PxlMarkMemo pmProp, PxlMarkMemo pmExst) {
-		return pmProp.doOperation().getBoundingBox().intersection().existsWith(pmExst.doOperation().getBoundingBox());
+	private boolean hasLargeOverlap( VoxelizedMarkMemo pmProp1, VoxelizedMarkMemo pmProp2 ) throws OperationFailedException {
+		try {
+			double overlap = OverlapUtilities.overlapWith(pmProp1,pmProp2,0);
+			double overlapRatio = calcOverlapRatio(pmProp1, pmProp2, overlap, 0);
+			return (overlapRatio>largeOverlapThreshold);
+		} catch (FeatureCalcException e) {
+			throw new OperationFailedException(e);
+		}
 	}
 	
-	private static double calcMinVolume( PxlMarkMemo obj1, PxlMarkMemo obj2, int regionID ) throws FeatureCalcException {
-		double size1 =  obj1.getMark().volume(0);
-		double size2 =  obj2.getMark().volume(0);
-		return Math.min( size1, size2 );
+	private static boolean boundingBoxIntersectionExists(VoxelizedMarkMemo pmProp, VoxelizedMarkMemo pmExst) {
+		return pmProp.voxelized().getBoundingBox().intersection().existsWith(
+			pmExst.voxelized().getBoundingBox()
+		);
 	}
 	
-	public static double calcOverlapRatio( PxlMarkMemo obj1, PxlMarkMemo obj2, double overlap, int regionID ) throws FeatureCalcException {
-		double volume = calcMinVolume( obj1, obj2, regionID );
-		return overlap / volume;
+	private static double calcMinVolume( VoxelizedMarkMemo obj1, VoxelizedMarkMemo obj2, int regionID ) throws FeatureCalcException {
+		return Math.min(
+			obj1.getMark().volume(0),
+			obj2.getMark().volume(0)
+		);
 	}
 }

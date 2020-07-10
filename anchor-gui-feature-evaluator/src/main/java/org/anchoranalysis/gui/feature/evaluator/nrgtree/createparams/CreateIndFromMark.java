@@ -1,6 +1,6 @@
 package org.anchoranalysis.gui.feature.evaluator.nrgtree.createparams;
 
-import org.anchoranalysis.anchor.mpp.pxlmark.memo.PxlMarkMemo;
+import org.anchoranalysis.anchor.mpp.pxlmark.memo.VoxelizedMarkMemo;
 
 /*-
  * #%L
@@ -38,10 +38,10 @@ import org.anchoranalysis.gui.feature.evaluator.params.ParamsFactoryForFeature;
 
 public class CreateIndFromMark implements CreateFeatureInput<FeatureInput> {
 
-	private PxlMarkMemo pmm;
+	private VoxelizedMarkMemo pmm;
 	private NRGStackWithParams raster;
 	
-	public CreateIndFromMark(PxlMarkMemo pmm, NRGStackWithParams raster) {
+	public CreateIndFromMark(VoxelizedMarkMemo pmm, NRGStackWithParams raster) {
 		super();
 		this.pmm = pmm;
 		this.raster = raster;

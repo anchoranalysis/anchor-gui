@@ -1,7 +1,7 @@
 package org.anchoranalysis.gui.feature.evaluator.params;
 
 import org.anchoranalysis.anchor.mpp.feature.input.memo.FeatureInputPairMemo;
-import org.anchoranalysis.anchor.mpp.pxlmark.memo.PxlMarkMemo;
+import org.anchoranalysis.anchor.mpp.pxlmark.memo.VoxelizedMarkMemo;
 
 /*-
  * #%L
@@ -36,7 +36,7 @@ import org.anchoranalysis.feature.nrg.NRGStackWithParams;
 public class NRGElemPairCalcParamsFactory extends FeatureCalcParamsPairwiseFactory {
 
 	@Override
-	public FeatureInput create(PxlMarkMemo pmm1, PxlMarkMemo pmm2, NRGStackWithParams raster) throws CreateException {
+	public FeatureInput create(VoxelizedMarkMemo pmm1, VoxelizedMarkMemo pmm2, NRGStackWithParams raster) throws CreateException {
 		return new FeatureInputPairMemo(pmm1, pmm2, raster);
 	}
 

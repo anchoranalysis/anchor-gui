@@ -2,7 +2,7 @@ package org.anchoranalysis.gui.feature.evaluator.params;
 
 import java.util.Optional;
 
-import org.anchoranalysis.anchor.mpp.pxlmark.memo.PxlMarkMemo;
+import org.anchoranalysis.anchor.mpp.pxlmark.memo.VoxelizedMarkMemo;
 
 /*
  * #%L
@@ -48,7 +48,7 @@ public class FeatureObjMaskPairParamsFactory extends FeatureCalcParamsPairwiseFa
 	}
 
 	@Override
-	public FeatureInput create(PxlMarkMemo pmm1, PxlMarkMemo pmm2,
+	public FeatureInput create(VoxelizedMarkMemo pmm1, VoxelizedMarkMemo pmm2,
 			NRGStackWithParams nrgStack) throws CreateException {
 		
 		ObjectMask om1 = pmm1.getMark().calcMask(

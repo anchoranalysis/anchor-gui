@@ -40,7 +40,7 @@ import org.anchoranalysis.anchor.mpp.pair.PairPxlMarkMemo;
 import org.anchoranalysis.anchor.mpp.proposer.ProposalAbnormalFailureException;
 import org.anchoranalysis.anchor.mpp.proposer.ProposerContext;
 import org.anchoranalysis.anchor.mpp.proposer.error.ErrorNode;
-import org.anchoranalysis.anchor.mpp.pxlmark.memo.PxlMarkMemo;
+import org.anchoranalysis.anchor.mpp.pxlmark.memo.VoxelizedMarkMemo;
 import org.anchoranalysis.core.color.RGBColor;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.geometry.Point3d;
@@ -93,7 +93,7 @@ public class MarkSplitProposerEvaluator implements ProposalOperationCreator {
 				exstMark = marksAtPost.get(0);
 				
 				{
-					PxlMarkMemo pmmExstMark = context.create(exstMark);
+					VoxelizedMarkMemo pmmExstMark = context.create(exstMark);
 					pair = markSplitProposer.propose(pmmExstMark, context, cfgGen);
 				}
 				

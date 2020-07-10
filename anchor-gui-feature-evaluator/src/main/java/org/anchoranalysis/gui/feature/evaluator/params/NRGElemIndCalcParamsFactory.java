@@ -3,7 +3,7 @@ package org.anchoranalysis.gui.feature.evaluator.params;
 import java.util.Optional;
 
 import org.anchoranalysis.anchor.mpp.feature.input.memo.FeatureInputSingleMemo;
-import org.anchoranalysis.anchor.mpp.pxlmark.memo.PxlMarkMemo;
+import org.anchoranalysis.anchor.mpp.pxlmark.memo.VoxelizedMarkMemo;
 
 /*-
  * #%L
@@ -38,7 +38,7 @@ import org.anchoranalysis.feature.nrg.NRGStackWithParams;
 public class NRGElemIndCalcParamsFactory extends FeatureCalcParamsUnaryFactory {
 
 	@Override
-	public FeatureInput create(PxlMarkMemo pmm, NRGStackWithParams raster)
+	public FeatureInput create(VoxelizedMarkMemo pmm, NRGStackWithParams raster)
 			throws CreateException {
 		return new FeatureInputSingleMemo(
 			pmm,

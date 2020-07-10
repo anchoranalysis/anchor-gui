@@ -7,7 +7,7 @@ import org.anchoranalysis.anchor.mpp.mark.Mark;
 import org.anchoranalysis.anchor.mpp.proposer.ProposalAbnormalFailureException;
 import org.anchoranalysis.anchor.mpp.proposer.ProposerContext;
 import org.anchoranalysis.anchor.mpp.proposer.error.ErrorNode;
-import org.anchoranalysis.anchor.mpp.pxlmark.memo.PxlMarkMemo;
+import org.anchoranalysis.anchor.mpp.pxlmark.memo.VoxelizedMarkMemo;
 
 /*
  * #%L
@@ -68,7 +68,7 @@ public class MarkProposerEvaluatorNRGStack implements ProposalOperationCreator {
 			@Override
 			public ProposedCfg propose(ErrorNode errorNode) throws ProposalAbnormalFailureException {
 			
-				PxlMarkMemo pmm = context.create(m);
+				VoxelizedMarkMemo pmm = context.create(m);
 				
 				ProposedCfg er = new ProposedCfg();
 				er.setDimensions( context.getDimensions() );
