@@ -52,7 +52,7 @@ public class MarkProposerEvaluatorDimensions implements ProposalOperationCreator
 	public MarkProposerEvaluatorDimensions(MarkProposer markProposer, boolean detailedVisualization) {
 		super();
 		this.markProposer = markProposer;
-		assert( markProposer.isHasBeenInit() );
+		assert( markProposer.isInitialized() );
 		this.detailedVisualization = detailedVisualization;
 	}
 	
@@ -75,7 +75,7 @@ public class MarkProposerEvaluatorDimensions implements ProposalOperationCreator
 				ProposedCfg er = new ProposedCfg();
 				er.setDimensions( dim );
 				
-				assert( markProposer.isHasBeenInit() );
+				assert( markProposer.isInitialized() );
 				
 				// assumes only called once
 				boolean succ = markProposer.propose( pmm, context );
