@@ -43,28 +43,19 @@ import org.anchoranalysis.image.stack.DisplayStack;
 import org.anchoranalysis.image.stack.Stack;
 import org.anchoranalysis.io.bean.color.generator.ColorSetGenerator;
 
+import lombok.RequiredArgsConstructor;
+
+@RequiredArgsConstructor
 public class ShowComparers {
 
-	private ShowRaster showRaster;
-	private MultipleComparer multipleComparer;
-	private ColorSetGenerator colorSetGenerator;
-	private Path matchPath;
-	private String name;
-	private FunctionWithException<Integer,DisplayStack,? extends Throwable> defaultBackground;
-	private Logger logger;
-
-	public ShowComparers(ShowRaster showRaster, MultipleComparer multipleComparer, ColorSetGenerator colorSetGenerator,
-			Path matchPath, String name,
-			FunctionWithException<Integer,DisplayStack,? extends Throwable> defaultBackground, Logger logger) {
-		super();
-		this.showRaster = showRaster;
-		this.multipleComparer = multipleComparer;
-		this.colorSetGenerator = colorSetGenerator;
-		this.matchPath = matchPath;
-		this.name = name;
-		this.defaultBackground = defaultBackground;
-		this.logger = logger;
-	}	
+	private final ShowRaster showRaster;
+	private final MultipleComparer multipleComparer;
+	private final ColorSetGenerator colorSetGenerator;
+	private final Path matchPath;
+	private final String name;
+	private final FunctionWithException<Integer,DisplayStack,? extends Throwable> defaultBackground;
+	private final Path modelDirectory;
+	private final Logger logger;
 	
 	public void apply( Optional<AnnotationWithCfg> annotationExst ) {
 		// Any comparisons to be done
@@ -77,16 +68,17 @@ public class ShowComparers {
 				
 		List<NameValue<Stack>> rasters;
 		try {
-			DisplayStack background = defaultBackground.apply(0);  // createBackgroundFromSet( operationBackgroundSet );
+			DisplayStack background = defaultBackground.apply(0);
 			rasters = multipleComparer.createRasters(
 				annotationExst,
 				background,
 				matchPath,
 				colorSetGenerator,
+				modelDirectory,
 				logger,
 				false
 			);
-		} catch (Throwable e1) {
+		} catch (Exception e1) {
 			logger.errorReporter().recordError(AnnotatorModuleCreator.class, e1);
 			return;
 		}

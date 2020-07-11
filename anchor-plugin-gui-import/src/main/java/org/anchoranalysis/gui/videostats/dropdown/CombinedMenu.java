@@ -89,7 +89,7 @@ public class CombinedMenu {
 			context.getMpg().getExportTaskList(),
 			context.getOutputManager(),
 			context.getParentFrame(),
-			context.getMpg().getLogErrorReporter().errorReporter()
+			context.getMpg().getLogger().errorReporter()
 		);
 	}
 

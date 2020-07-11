@@ -1,6 +1,6 @@
 package org.anchoranalysis.gui.bean.filecreator;
 
-import java.io.IOException;
+
 
 /*
  * #%L
@@ -80,7 +80,7 @@ public class ExecutedExperimentFileCreator extends FileCreatorGeneralList {
 					params.getLogErrorReporter()
 				)
 			);
-		} catch (DeserializationFailedException | IOException e) {
+		} catch (DeserializationFailedException e) {
 			throw new OperationFailedException(e);
 		}
 		

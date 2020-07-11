@@ -30,35 +30,12 @@ import org.anchoranalysis.gui.videostats.dropdown.IAddVideoStatsModule;
 import org.anchoranalysis.gui.videostats.dropdown.VideoStatsModuleGlobalParams;
 import org.anchoranalysis.io.output.bean.OutputWriteSettings;
 
+import lombok.Value;
+
+@Value
 public class AdditionalFramesContext {
-
-	private IAddVideoStatsModule adder;
-	private String name;
-	private VideoStatsModuleGlobalParams mpg;
-	private OutputWriteSettings outputWriteSettings;
-	
-	public AdditionalFramesContext(IAddVideoStatsModule adder, String name, VideoStatsModuleGlobalParams mpg,
-			OutputWriteSettings outputWriteSettings) {
-		super();
-		this.adder = adder;
-		this.name = name;
-		this.mpg = mpg;
-		this.outputWriteSettings = outputWriteSettings;
-	}
-
-	public IAddVideoStatsModule getAdder() {
-		return adder;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public VideoStatsModuleGlobalParams getMpg() {
-		return mpg;
-	}
-
-	public OutputWriteSettings getOutputWriteSettings() {
-		return outputWriteSettings;
-	}	
+	private final IAddVideoStatsModule adder;
+	private final String name;
+	private final VideoStatsModuleGlobalParams mpg;
+	private final OutputWriteSettings outputWriteSettings;
 }

@@ -1,5 +1,7 @@
 package org.anchoranalysis.gui.bean.filecreator;
 
+
+
 /*-
  * #%L
  * anchor-plugin-gui-import
@@ -36,7 +38,7 @@ import org.anchoranalysis.bean.annotation.NonEmpty;
 import org.anchoranalysis.bean.annotation.OptionalBean;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.OperationFailedException;
-import org.anchoranalysis.core.log.Logger;
+import org.anchoranalysis.core.log.CommonContext;
 import org.anchoranalysis.core.name.store.SharedObjects;
 import org.anchoranalysis.core.progress.ProgressReporter;
 import org.anchoranalysis.feature.bean.list.FeatureListProvider;
@@ -51,6 +53,9 @@ import org.anchoranalysis.gui.videostats.module.VideoStatsModule;
 import org.anchoranalysis.gui.videostats.module.VideoStatsModuleCreateException;
 import org.anchoranalysis.gui.videostats.modulecreator.FeatureEvaluatorCreator;
 
+import lombok.Getter;
+import lombok.Setter;
+
 /**
  * Creates a feature-evaluator for a particular list of features 
  * @author Owen Feehan
@@ -59,10 +64,10 @@ import org.anchoranalysis.gui.videostats.modulecreator.FeatureEvaluatorCreator;
 public class FileFeatureEvaluatorCreator extends FileCreator {
 
 	// START BEAN PROPERTIES
-	@BeanField @NonEmpty
+	@BeanField @NonEmpty @Getter @Setter
 	private List<NamedBean<FeatureListProvider<FeatureInput>>> listFeatures = new ArrayList<>();
 	
-	@BeanField @OptionalBean
+	@BeanField @OptionalBean @Getter @Setter
 	private NRGSchemeCreator nrgSchemeCreator;
 	// END BEAN PROPERTIES
 	
@@ -83,10 +88,9 @@ public class FileFeatureEvaluatorCreator extends FileCreator {
 
 		try {
 			FeatureEvaluatorCreator creator = new FeatureEvaluatorCreator(
-				createSrc(mpg.getLogErrorReporter()),
-				mpg.getLogErrorReporter()
+				createSrc(mpg.getContext()),
+				mpg.getLogger()
 			);
-			
 			return creator.createVideoStatsModule(adder);
 			
 		} catch (CreateException e) {
@@ -94,42 +98,25 @@ public class FileFeatureEvaluatorCreator extends FileCreator {
 		}
 	}
 	
-	private FeatureListSrc createSrc( Logger logger ) throws CreateException {
-		return new FeatureListSrcBuilder(logger).build(
-			createInitParams(logger),
+	private FeatureListSrc createSrc(CommonContext context) throws CreateException {
+		return new FeatureListSrcBuilder(context.getLogger()).build(
+			createInitParams(context),
 			nrgSchemeCreator
 		);
 	}
 	
-	private SharedFeaturesInitParams createInitParams( Logger logger ) throws CreateException {
-		SharedObjects so = new SharedObjects( logger );
-		SharedFeaturesInitParams soFeature = SharedFeaturesInitParams.create(so);
-		
+	private SharedFeaturesInitParams createInitParams(CommonContext context) throws CreateException {
+		SharedFeaturesInitParams soFeature = SharedFeaturesInitParams.create(
+			new SharedObjects(context)
+		);
 		try {
 			soFeature.populate(
 				listFeatures,
-				logger
+				context.getLogger()
 			);
 		} catch (OperationFailedException e) {
 			throw new CreateException(e);
 		}
 		return soFeature;
 	}
-
-	public List<NamedBean<FeatureListProvider<FeatureInput>>> getListFeatures() {
-		return listFeatures;
-	}
-
-	public void setListFeatures(List<NamedBean<FeatureListProvider<FeatureInput>>> listFeatures) {
-		this.listFeatures = listFeatures;
-	}
-
-	public NRGSchemeCreator getNrgSchemeCreator() {
-		return nrgSchemeCreator;
-	}
-
-	public void setNrgSchemeCreator(NRGSchemeCreator nrgSchemeCreator) {
-		this.nrgSchemeCreator = nrgSchemeCreator;
-	}
-
 }

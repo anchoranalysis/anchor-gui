@@ -100,6 +100,6 @@ public class ControllerPopupMenuWithBackground {
 	}
 	
 	private ErrorReporter errorReporter( VideoStatsModuleGlobalParams mpg ) {
-		return mpg.getLogErrorReporter().errorReporter();
+		return mpg.getLogger().errorReporter();
 	}
 }

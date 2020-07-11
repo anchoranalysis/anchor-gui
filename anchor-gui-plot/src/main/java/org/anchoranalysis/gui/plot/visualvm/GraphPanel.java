@@ -40,7 +40,7 @@ import org.anchoranalysis.gui.plot.definition.GraphDefinition;
 import org.anchoranalysis.gui.videostats.ICfgNRGUpdater;
 import org.anchoranalysis.mpp.sgmn.optscheme.feedback.aggregate.Aggregator;
 
-import com.sun.tools.visualvm.charts.ChartFactory;
+import com.sun.tools.visualvm.charts.ChartFactory;	// NOSONAR
 import com.sun.tools.visualvm.charts.SimpleXYChartSupport;
 
 public class GraphPanel extends JPanel implements ICfgNRGUpdater {

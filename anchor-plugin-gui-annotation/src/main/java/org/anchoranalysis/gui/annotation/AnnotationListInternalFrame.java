@@ -28,7 +28,6 @@ package org.anchoranalysis.gui.annotation;
 
 
 import java.awt.BorderLayout;
-import java.io.IOException;
 import java.util.Collection;
 import javax.swing.BorderFactory;
 import javax.swing.JComponent;
@@ -161,7 +160,7 @@ public class AnnotationListInternalFrame {
 				new InputManagerParams(
 					params.getModuleParams().createInputContext(),
 					progressReporter,
-					params.getModuleParams().getLogErrorReporter()
+					params.getModuleParams().getLogger()
 				)
 			); 
 			
@@ -172,7 +171,7 @@ public class AnnotationListInternalFrame {
 				ProgressReporterNull.get()
 			);
 			
-		} catch (AnchorIOException | IOException | CreateException e) {
+		} catch (AnchorIOException | CreateException e) {
 			throw new OperationFailedException(e);
 		}
 	}

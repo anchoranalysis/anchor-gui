@@ -62,15 +62,14 @@ import org.anchoranalysis.plugin.gui.bean.exporttask.ExportTaskList;
 
 
 public class InteractiveBrowser {
-
-	private VideoStatsFrame videoStatsFrame;
-	
-	private int numColors = 20;
-	
-	private ExportTaskList exportTaskList;
 	
 	// How long the splash screen displays for
-	private int SplashScreenTime = 2000;
+	private static final int SPLASH_SCREEN_TIME = 2000;
+	private static final int NUM_COLORS = 20;
+		
+	private VideoStatsFrame videoStatsFrame;
+		
+	private ExportTaskList exportTaskList;
 	
 	// Manages the available mark evaluators
 	private MarkEvaluatorManager markEvaluatorManager;
@@ -138,7 +137,10 @@ public class InteractiveBrowser {
 		
 		if (interactiveBrowserInput.getNamedItemMarkEvaluatorList()!=null) {
 			for( NamedBean<MarkEvaluator> ni : interactiveBrowserInput.getNamedItemMarkEvaluatorList()) {
-				markEvaluatorManager.add(ni.getName(), ni.getValue());;
+				markEvaluatorManager.add(
+					ni.getName(),
+					ni.getValue()
+				);
 			}
 		}
 	}
@@ -152,9 +154,7 @@ public class InteractiveBrowser {
 		
 		FeatureListSrc featureListSrc;
 		try {
-			featureListSrc = interactiveBrowserInput.createFeatureListSrc(
-				context.getLogger()
-			);
+			featureListSrc = interactiveBrowserInput.createFeatureListSrc(context.common());
 		} catch (CreateException e) {
 			throw new InitException(e);
 		} 
@@ -249,20 +249,20 @@ public class InteractiveBrowser {
 	}
 
 	private VideoStatsModuleGlobalParams createModuleParams( ExportPopupParams popUpParams, ColorIndex colorIndex, RandomNumberGenerator re ) {
-		VideoStatsModuleGlobalParams moduleParams = new VideoStatsModuleGlobalParams();
-		moduleParams.setExportPopupParams(popUpParams);
-		moduleParams.setLogErrorReporter( context.getLogger() );
-		moduleParams.setThreadPool(videoStatsFrame.getThreadPool());
-		moduleParams.setRandomNumberGenerator(re);
-		moduleParams.setExportTaskList(exportTaskList);
-		moduleParams.setDefaultColorIndexForMarks(colorIndex);
-		moduleParams.setGraphicsCurrentScreen( videoStatsFrame.getGraphicsConfiguration() );
-		return moduleParams;
+		return new VideoStatsModuleGlobalParams(
+			popUpParams,
+			context.common(),
+			videoStatsFrame.getThreadPool(),
+			re,
+			exportTaskList,
+			colorIndex,
+			videoStatsFrame.getGraphicsConfiguration()
+		);
 	}
 	
 	private ColorIndex createColorIndex() throws InitException {
 		try {
-			return new HashedColorSet( new ShuffleColorSetGenerator( new HSBColorSetGenerator() ), numColors );
+			return new HashedColorSet( new ShuffleColorSetGenerator( new HSBColorSetGenerator() ), NUM_COLORS );
 		} catch (OperationFailedException e) {
 			throw new InitException(e);
 		}
@@ -273,7 +273,7 @@ public class InteractiveBrowser {
 		new SplashScreenTime(
 			"/appSplash/anchor_splash.png",
 			videoStatsFrame,
-			SplashScreenTime,
+			SPLASH_SCREEN_TIME,
 			context.getErrorReporter()
 		);
 	}

@@ -27,7 +27,6 @@ package org.anchoranalysis.gui.bean.filecreator;
  */
 
 
-import java.io.IOException;
 import java.util.Iterator;
 import java.util.List;
 
@@ -75,7 +74,7 @@ public class NamedSingleStackCreator extends FileCreatorGeneralList {
 
 			}
 			
-		} catch (AnchorIOException | IOException e) {
+		} catch (AnchorIOException e) {
 			throw new OperationFailedException(e);
 		}
 	}

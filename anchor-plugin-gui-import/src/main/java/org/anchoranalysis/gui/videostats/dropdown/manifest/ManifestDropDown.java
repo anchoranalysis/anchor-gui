@@ -122,7 +122,7 @@ public class ManifestDropDown {
 			nrgBackground,
 			adder,
 			mpg.getThreadPool(),
-			mpg.getLogErrorReporter().errorReporter()
+			mpg.getLogger().errorReporter()
 		);
 	}
 	
@@ -164,7 +164,7 @@ public class ManifestDropDown {
 	}
 	
 	private FinderNrgStack createFinderNrgStack( RasterReader rasterReader, VideoStatsModuleGlobalParams mpg ) throws InitException {
-		FinderNrgStack finderNrgStack = new FinderNrgStack(	rasterReader, mpg.getLogErrorReporter().errorReporter() );
+		FinderNrgStack finderNrgStack = new FinderNrgStack(	rasterReader, mpg.getLogger().errorReporter() );
 		try {
 			finderNrgStack.doFind(manifests.getFileManifest().doOperation());
 		} catch (OperationFailedException e) {
@@ -174,7 +174,7 @@ public class ManifestDropDown {
 	}
 
 	private FinderSerializedObject<KernelProposer<CfgNRGPixelized>> createFinderKernelProposer( VideoStatsModuleGlobalParams mpg ) {
-		FinderSerializedObject<KernelProposer<CfgNRGPixelized>> finderKernelProposer = new FinderSerializedObject<>("kernelProposer", mpg.getLogErrorReporter().errorReporter() );
+		FinderSerializedObject<KernelProposer<CfgNRGPixelized>> finderKernelProposer = new FinderSerializedObject<>("kernelProposer", mpg.getLogger().errorReporter() );
 		finderKernelProposer.doFind(
 			manifests.getExperimentManifest().get()	// NOSONAR
 		);
@@ -183,7 +183,7 @@ public class ManifestDropDown {
 	
 	private FinderSerializedObject<KeyValueParams> createFinderGroupParams( VideoStatsModuleGlobalParams mpg ) throws InitException {
 		final FinderSerializedObject<KeyValueParams> finderGroupParams =
-				new FinderSerializedObject<>("groupParams", mpg.getLogErrorReporter().errorReporter() );
+				new FinderSerializedObject<>("groupParams", mpg.getLogger().errorReporter() );
 			try {
 				finderGroupParams.doFind(manifests.getFileManifest().doOperation());
 			} catch (OperationFailedException e) {
@@ -289,7 +289,7 @@ public class ManifestDropDown {
 				addSets.apply(manifests,finderNrgStack);
 				
 			} catch (OperationFailedException e) {
-				mpg.getLogErrorReporter().errorReporter().recordError(ManifestDropDown.class, e);
+				mpg.getLogger().errorReporter().recordError(ManifestDropDown.class, e);
 			}
 		}
 	
@@ -310,7 +310,7 @@ public class ManifestDropDown {
 			),
 			adder,
 			mpg.getThreadPool(),
-			mpg.getLogErrorReporter().errorReporter()
+			mpg.getLogger().errorReporter()
 		);
 		
 		// TODO make this quicker
@@ -371,7 +371,7 @@ public class ManifestDropDown {
 		boolean defaultAdded = false;
 		
 		try	{
-			final FinderSerializedObject<Cfg> finderFinalCfg = new FinderSerializedObject<>("cfg", mpg.getLogErrorReporter().errorReporter() );
+			final FinderSerializedObject<Cfg> finderFinalCfg = new FinderSerializedObject<>("cfg", mpg.getLogger().errorReporter() );
 			finderFinalCfg.doFind(manifests.getFileManifest().doOperation());
 			
 			if (finderFinalCfg.exists()) {
@@ -389,7 +389,7 @@ public class ManifestDropDown {
 				defaultAdded = true;
 			}
 		} catch (OperationFailedException e) {
-			mpg.getLogErrorReporter().errorReporter().recordError(ManifestDropDown.class, e);
+			mpg.getLogger().errorReporter().recordError(ManifestDropDown.class, e);
 		}
 
 		
@@ -413,7 +413,7 @@ public class ManifestDropDown {
 	
 	private boolean addNRGTable( OperationCreateBackgroundSetWithAdder operationBwsaWithNRG, FinderNrgStack finderNrgStack, VideoStatsModuleGlobalParams mpg ) {
 		try	{
-			final FinderSerializedObject<CfgNRG> finderFinalCfgNRG = new FinderSerializedObject<>("cfgNRG", mpg.getLogErrorReporter().errorReporter() );
+			final FinderSerializedObject<CfgNRG> finderFinalCfgNRG = new FinderSerializedObject<>("cfgNRG", mpg.getLogger().errorReporter() );
 			finderFinalCfgNRG.doFind(manifests.getFileManifest().doOperation());
 			
 			if (finderFinalCfgNRG.exists()) {
@@ -457,7 +457,7 @@ public class ManifestDropDown {
 				return true;
 			}
 		} catch (MenuAddException | OperationFailedException e) {
-			 mpg.getLogErrorReporter().errorReporter().recordError(ManifestDropDown.class, e);
+			 mpg.getLogger().errorReporter().recordError(ManifestDropDown.class, e);
 		}
 		 return false;
 	}
@@ -468,7 +468,7 @@ public class ManifestDropDown {
 			FinderCfgFolder finder = new FinderCfgFolder("cfgCollection", "cfg");
 			finder.doFind(manifests.getFileManifest().doOperation());
 			
-			NamedProvider<Cfg> provider = finder.createNamedProvider(false, mpg.getLogErrorReporter());
+			NamedProvider<Cfg> provider = finder.createNamedProvider(false, mpg.getLogger());
 			DropDownUtilities.addCfgSubmenu(
 				delegate.getRootMenu(),
 				delegate,
@@ -479,7 +479,7 @@ public class ManifestDropDown {
 				false
 			);
 		} catch (OperationFailedException e) {
-			mpg.getLogErrorReporter().errorReporter().recordError(ManifestDropDown.class, e);
+			mpg.getLogger().errorReporter().recordError(ManifestDropDown.class, e);
 		}
 		
 		

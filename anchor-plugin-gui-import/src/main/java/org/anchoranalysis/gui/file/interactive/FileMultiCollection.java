@@ -85,18 +85,18 @@ public class FileMultiCollection extends InteractiveFile {
 		) throws OperationFailedException {
 		
 		LazyEvaluationStore<TimeSequence> stacks = new LazyEvaluationStore<>(
-			markCreatorParams.getModuleParams().getLogErrorReporter(),
+			markCreatorParams.getModuleParams().getLogger(),
 			"stacks"
 		); 
 		inputObject.stack().addToStore(stacks);
 		
 		LazyEvaluationStore<Cfg> cfgs = new LazyEvaluationStore<>(
-			markCreatorParams.getModuleParams().getLogErrorReporter(),
+			markCreatorParams.getModuleParams().getLogger(),
 			"cfg"
 		);
 		inputObject.cfg().addToStore(cfgs);
 
-		Logger logger = markCreatorParams.getModuleParams().getLogErrorReporter();
+		Logger logger = markCreatorParams.getModuleParams().getLogger();
 		LazyEvaluationStore<KeyValueParams> keyValueParams = new LazyEvaluationStore<>(
 			logger,
 			"keyValueParams"

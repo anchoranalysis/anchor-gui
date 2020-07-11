@@ -81,7 +81,7 @@ public class RasterMultiCreator<T> extends VideoStatsModuleCreator {
 			);
 			
 			// We create a special adder
-			adder = new AdderAddOverlaysWithStack( adder, moduleParamsGlobal.getThreadPool(), moduleParamsGlobal.getLogErrorReporter().errorReporter() );
+			adder = new AdderAddOverlaysWithStack( adder, moduleParamsGlobal.getThreadPool(), moduleParamsGlobal.getLogger().errorReporter() );
 			
 			adder = state.addNrgStackToAdder(adder);
 		

@@ -145,7 +145,7 @@ public class CfgNRGHistoryMenu {
 			context.getMpg().getExportTaskList(),
 			context.getOutputManager(),
 			context.getParentFrame(),
-			context.getMpg().getLogErrorReporter().errorReporter()
+			context.getMpg().getLogger().errorReporter()
 		);
 	}
 	
@@ -202,7 +202,7 @@ public class CfgNRGHistoryMenu {
 		
 		// We only add these items after the item has been selected, as it can be time consuming to do
 		//  the finderKernelProposer.get()
-		graphSubMenu.addMenuListener( new ExecuteWhenMenuFirstSelected(mpg.getLogErrorReporter().errorReporter()) {
+		graphSubMenu.addMenuListener( new ExecuteWhenMenuFirstSelected(mpg.getLogger().errorReporter()) {
 
 			private void addCSVStatistic( VideoStatsOperationMenu subMenu, GraphDefinition<CSVStatistic> graphDefinition, boolean useShortNames ) throws MenuAddException {
 				adder.addModuleToMenu(

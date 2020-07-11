@@ -1,7 +1,7 @@
 package org.anchoranalysis.gui.videostats.dropdown;
 
 import java.awt.GraphicsConfiguration;
-import java.io.IOException;
+import java.nio.file.Path;
 
 import org.anchoranalysis.anchor.mpp.bean.regionmap.RegionMap;
 import org.anchoranalysis.anchor.mpp.regionmap.RegionMapSingleton;
@@ -35,6 +35,7 @@ import org.anchoranalysis.anchor.plot.bean.colorscheme.GraphColorScheme;
 
 
 import org.anchoranalysis.core.color.ColorIndex;
+import org.anchoranalysis.core.log.CommonContext;
 import org.anchoranalysis.core.log.Logger;
 import org.anchoranalysis.core.random.RandomNumberGenerator;
 import org.anchoranalysis.gui.retrieveelements.ExportPopupParams;
@@ -42,73 +43,52 @@ import org.anchoranalysis.gui.videostats.threading.InteractiveThreadPool;
 import org.anchoranalysis.io.params.InputContextParams;
 import org.anchoranalysis.plugin.gui.bean.exporttask.ExportTaskList;
 
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+
 // Globally available parameters for a VideoStatsModule
+@RequiredArgsConstructor
 public class VideoStatsModuleGlobalParams {
 
-	private ExportPopupParams exportPopupParams;
-	private Logger logger;
-	private InteractiveThreadPool threadPool;
-	private RandomNumberGenerator randomNumberGenerator;
-	private ExportTaskList exportTaskList;
-	private ColorIndex defaultColorIndexForMarks;
+	// START BEAN PROPERTIES
+	@Getter
+	private final ExportPopupParams exportPopupParams;
+	
+	@Getter
+	private final CommonContext context;
+	
+	@Getter
+	private final InteractiveThreadPool threadPool;
+	
+	@Getter
+	private final RandomNumberGenerator randomNumberGenerator;
+	
+	@Getter
+	private final ExportTaskList exportTaskList;
+	
+	@Getter
+	private final ColorIndex defaultColorIndexForMarks;
+		
+	@Getter
+	private final GraphicsConfiguration graphicsCurrentScreen;
+	// END BEAN PROPERTIES
+	
+	@Getter @Setter
 	private GraphColorScheme graphColorScheme = new GraphColorScheme();
+	
+	@Getter
 	private RegionMap regionMap = RegionMapSingleton.instance();	// For now we use global regionMaps
-	private GraphicsConfiguration graphicsCurrentScreen;
 	
-	
-	public InputContextParams createInputContext() throws IOException {
+	public InputContextParams createInputContext() {
 		return new InputContextParams();
 	}
 	
-	public ExportPopupParams getExportPopupParams() {
-		return exportPopupParams;
+	public Logger getLogger() {
+		return context.getLogger();
 	}
-	public void setExportPopupParams(ExportPopupParams exportPopupParams) {
-		this.exportPopupParams = exportPopupParams;
-	}
-	public Logger getLogErrorReporter() {
-		return logger;
-	}
-	public void setLogErrorReporter(Logger logger) {
-		this.logger = logger;
-	}
-	public InteractiveThreadPool getThreadPool() {
-		return threadPool;
-	}
-	public void setThreadPool(InteractiveThreadPool threadPool) {
-		this.threadPool = threadPool;
-	}
-	public RandomNumberGenerator getRandomNumberGenerator() {
-		return randomNumberGenerator;
-	}
-	public void setRandomNumberGenerator(RandomNumberGenerator randomNumberGenerator) {
-		this.randomNumberGenerator = randomNumberGenerator;
-	}
-	public ExportTaskList getExportTaskList() {
-		return exportTaskList;
-	}
-	public void setExportTaskList(ExportTaskList exportTaskList) {
-		this.exportTaskList = exportTaskList;
-	}
-	public GraphColorScheme getGraphColorScheme() {
-		return graphColorScheme;
-	}
-	public void setGraphColorScheme(GraphColorScheme graphColorScheme) {
-		this.graphColorScheme = graphColorScheme;
-	}
-	public ColorIndex getDefaultColorIndexForMarks() {
-		return defaultColorIndexForMarks;
-	}
-	public void setDefaultColorIndexForMarks(ColorIndex colorIndex) {
-		this.defaultColorIndexForMarks = colorIndex;
-	}
-	public RegionMap getRegionMap() {
-		return regionMap;
-	}
-	public GraphicsConfiguration getGraphicsCurrentScreen() {
-		return graphicsCurrentScreen;
-	}
-	public void setGraphicsCurrentScreen(GraphicsConfiguration graphicsCurrentScreen) {
-		this.graphicsCurrentScreen = graphicsCurrentScreen;
+	
+	public Path getModelDirectory() {
+		return context.getModelDirectory();
 	}
 }

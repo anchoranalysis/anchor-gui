@@ -86,7 +86,7 @@ public class BoundVideoStatsModuleDropDown {
 		String namePrefix,
 		VideoStatsModuleGlobalParams mpg
 	) throws MenuAddException {
-		addModule( creator.createSingle(namePrefix, adder, mpg), mpg.getThreadPool(), mpg.getLogErrorReporter() );
+		addModule( creator.createSingle(namePrefix, adder, mpg), mpg.getThreadPool(), mpg.getLogger() );
 	}
 	
 	public VideoStatsModuleCreatorAndAdder addModule(
@@ -96,7 +96,7 @@ public class BoundVideoStatsModuleDropDown {
 	) throws MenuAddException {
 		try {
 			NamedModule[] moduleToAdd = creator.create( getNameAsPrefix(), adder, mpg );
-			return delegate.addNamedModules( moduleToAdd, mpg.getThreadPool(), mpg.getLogErrorReporter() );
+			return delegate.addNamedModules( moduleToAdd, mpg.getThreadPool(), mpg.getLogger() );
 		} catch (CreateException e) {
 			throw new MenuAddException(e);
 		}			
@@ -115,7 +115,7 @@ public class BoundVideoStatsModuleDropDown {
 			public VideoStatsModuleCreatorAndAdder addModuleToMenu( VideoStatsOperationMenu menu, ContextualModuleCreator creator, boolean useShortNames, VideoStatsModuleGlobalParams mpg ) throws MenuAddException {
 				try {
 					NamedModule[] moduleToAdd = creator.create( getNameAsPrefix(), adder, mpg );
-					return delegate.addNamedModules( menu, moduleToAdd, mpg.getThreadPool(), mpg.getLogErrorReporter(), useShortNames );
+					return delegate.addNamedModules( menu, moduleToAdd, mpg.getThreadPool(), mpg.getLogger(), useShortNames );
 				} catch (CreateException e) {
 					throw new MenuAddException(e);
 				}

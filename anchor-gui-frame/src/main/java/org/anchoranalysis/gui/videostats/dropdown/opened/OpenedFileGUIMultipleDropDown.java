@@ -219,7 +219,7 @@ public class OpenedFileGUIMultipleDropDown {
 		if (!list.isEmpty()) {
 			RasterMultiModuleCreator creator = new RasterMultiModuleCreator(list,"multi-raster",mpg);
 			VideoStatsModuleCreatorAndAdder creatorAndAdder = new VideoStatsModuleCreatorAndAdder( new IdentityOperationWithProgressReporter<>(adder.createChild()), creator );
-			out.add( new VideoStatsOperationFromCreatorAndAdder("Multi Raster",creatorAndAdder, mpg.getThreadPool(), mpg.getLogErrorReporter() ) );		
+			out.add( new VideoStatsOperationFromCreatorAndAdder("Multi Raster",creatorAndAdder, mpg.getThreadPool(), mpg.getLogger() ) );		
 		}
 	}
 	
@@ -276,7 +276,7 @@ public class OpenedFileGUIMultipleDropDown {
 					rootOperation.getName(),
 					creatorAndAdder,
 					mpg.getThreadPool(),
-					mpg.getLogErrorReporter()
+					mpg.getLogger()
 				)
 			);		
 		}

@@ -61,17 +61,16 @@ public class InteractiveBrowserInputManager extends InputManager<InteractiveBrow
 	private NRGSchemeCreator nrgSchemeCreator;
 	
 	@BeanField
-	private List<NamedBean<FeatureListProvider<FeatureInput>>> namedItemSharedFeatureList
-		= new ArrayList<NamedBean<FeatureListProvider<FeatureInput>>>();
+	private List<NamedBean<FeatureListProvider<FeatureInput>>> namedItemSharedFeatureList = new ArrayList<>();
 	
 	@BeanField
-	private List<NamedBean<MarkEvaluator>> namedItemMarkEvaluatorList = new ArrayList<NamedBean<MarkEvaluator>>();
+	private List<NamedBean<MarkEvaluator>> namedItemMarkEvaluatorList = new ArrayList<>();
 	
 	@BeanField @OptionalBean
-	private List<NamedBean<KeyValueParamsProvider>> namedItemKeyValueParamsProviderList = new ArrayList<NamedBean<KeyValueParamsProvider>>();
+	private List<NamedBean<KeyValueParamsProvider>> namedItemKeyValueParamsProviderList = new ArrayList<>();
 	
 	@BeanField @OptionalBean
-	private List<NamedBean<FilePathProvider>> namedItemFilePathProviderList = new ArrayList<NamedBean<FilePathProvider>>();
+	private List<NamedBean<FilePathProvider>> namedItemFilePathProviderList = new ArrayList<>();
 	
 	@BeanField
 	private ImporterSettings importerSettings;

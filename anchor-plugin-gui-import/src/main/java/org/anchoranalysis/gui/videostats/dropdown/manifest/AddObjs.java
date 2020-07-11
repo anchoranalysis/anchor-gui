@@ -103,13 +103,13 @@ class AddObjs {
 			
 			if (finderObjs.exists()) {
 				
-				NamedProvider<ObjectCollection> providers = finderObjs.createNamedProvider(false, mpg.getLogErrorReporter());
+				NamedProvider<ObjectCollection> providers = finderObjs.createNamedProvider(false, mpg.getLogger());
 				
 				for( String key : providers.keys() ) {
 					DropDownUtilities.addObjMaskCollection(
 						subMenu,
 						delegate,
-						new OperationFromNamedProvider<ObjectCollection>(providers,key),
+						new OperationFromNamedProvider<>(providers,key),
 						key,
 						operationBwsaWithNRG.nrgBackground(),
 						mpg,
@@ -120,7 +120,7 @@ class AddObjs {
 			} 
 		
 		} catch (OperationFailedException e) {
-			mpg.getLogErrorReporter().errorReporter().recordError(ManifestDropDown.class, e);
+			mpg.getLogger().errorReporter().recordError(ManifestDropDown.class, e);
 		}
 		
 		return false;
@@ -129,7 +129,10 @@ class AddObjs {
 	
 	private boolean fromSerializedCfgNRG( OperationCreateBackgroundSetWithAdder operationBwsaWithNRG ) {
 		try	{
-			final FinderSerializedObject<CfgNRG> finderFinalCfgNRG = new FinderSerializedObject<>("cfgNRG", mpg.getLogErrorReporter().errorReporter() );
+			final FinderSerializedObject<CfgNRG> finderFinalCfgNRG = new FinderSerializedObject<>(
+				"cfgNRG",
+				mpg.getLogger().errorReporter()
+			);
 			finderFinalCfgNRG.doFind(manifests.getFileManifest().doOperation());
 			
 			if (finderFinalCfgNRG.exists()) {
@@ -144,9 +147,9 @@ class AddObjs {
 								throw new GetOperationFailedException(e);
 							}
 							
-							LoadContainer<CfgNRGInstantState> lc = new LoadContainer<CfgNRGInstantState>();
+							LoadContainer<CfgNRGInstantState> lc = new LoadContainer<>();
 							lc.setExpensiveLoad(false);
-							lc.setCntr( new SingleContainer<CfgNRGInstantState>(instantState, 0, false));
+							lc.setCntr( new SingleContainer<>(instantState, 0, false));
 							return lc;
 						}
 					);
@@ -166,7 +169,7 @@ class AddObjs {
 				return true;
 			}
 		} catch (MenuAddException | OperationFailedException e) {
-			 mpg.getLogErrorReporter().errorReporter().recordError(ManifestDropDown.class, e);
+			 mpg.getLogger().errorReporter().recordError(ManifestDropDown.class, e);
 		}
 		return false;
 	}
@@ -177,7 +180,7 @@ class AddObjs {
 			FinderCfgFolder finder = new FinderCfgFolder("cfgCollection", "cfg");
 			finder.doFind(manifests.getFileManifest().doOperation());
 			
-			NamedProvider<Cfg> provider = finder.createNamedProvider(false, mpg.getLogErrorReporter());
+			NamedProvider<Cfg> provider = finder.createNamedProvider(false, mpg.getLogger());
 			DropDownUtilities.addCfgSubmenu(
 				delegate.getRootMenu(),
 				delegate,
@@ -189,7 +192,7 @@ class AddObjs {
 			);
 			
 		} catch (OperationFailedException e) {
-			mpg.getLogErrorReporter().errorReporter().recordError(ManifestDropDown.class, e);
+			mpg.getLogger().errorReporter().recordError(ManifestDropDown.class, e);
 		}
 		
 	}

@@ -72,13 +72,13 @@ public class InternalFrameThreadedOverlayProvider {
 		
 		this.markDisplaySettingsWrapper = markDisplaySettingsWrapper;
 				
-		threadedImageStackProvider = new ThreadedOverlayUpdateProducer(	idGetter, mpg.getLogErrorReporter()	);
+		threadedImageStackProvider = new ThreadedOverlayUpdateProducer(	idGetter, mpg.getLogger()	);
 		threadedImageStackProvider.init(
 			bridge,
 			markDisplaySettingsWrapper,
 			defaultIndex,
 			mpg.getThreadPool(),
-			mpg.getLogErrorReporter().errorReporter()
+			mpg.getLogger().errorReporter()
 		);
 	}
 

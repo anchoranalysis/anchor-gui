@@ -71,7 +71,7 @@ class ProposerEvaluatorModuleCreator extends VideoStatsModuleCreator {
 		
 		try {
 			InternalFrameMarkProposerEvaluator imageFrame = new InternalFrameMarkProposerEvaluator(
-				mpg.getLogErrorReporter().errorReporter()
+				mpg.getLogger().errorReporter()
 			);
 			
 			// Configure initial-size based upon overall window size
@@ -118,9 +118,9 @@ class ProposerEvaluatorModuleCreator extends VideoStatsModuleCreator {
 			ModuleAddUtilities.add(adder, imageFrame.moduleCreator(), sliderState);
 
 		} catch (VideoStatsModuleCreateException e) {
-			mpg.getLogErrorReporter().errorReporter().recordError(ProposerEvaluatorModuleCreator.class, e);
+			mpg.getLogger().errorReporter().recordError(ProposerEvaluatorModuleCreator.class, e);
 		} catch (InitException e) {
-			mpg.getLogErrorReporter().errorReporter().recordError(ProposerEvaluatorModuleCreator.class, e);
+			mpg.getLogger().errorReporter().recordError(ProposerEvaluatorModuleCreator.class, e);
 		}		
 	}
 }

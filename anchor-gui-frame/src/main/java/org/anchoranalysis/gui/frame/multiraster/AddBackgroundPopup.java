@@ -78,7 +78,7 @@ class AddBackgroundPopup {
 				return new ArrayList<>(names);
 				
 			} catch (Throwable e) {
-				mpg.getLogErrorReporter().errorReporter().recordError(InternalFrameMultiRaster.class, e);
+				mpg.getLogger().errorReporter().recordError(InternalFrameMultiRaster.class, e);
 				return new ArrayList<>();
 			}
 		};

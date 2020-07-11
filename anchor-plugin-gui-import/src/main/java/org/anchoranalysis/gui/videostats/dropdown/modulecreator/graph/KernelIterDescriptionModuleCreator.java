@@ -80,7 +80,7 @@ public class KernelIterDescriptionModuleCreator extends VideoStatsModuleCreatorC
 	public Optional<IModuleCreatorDefaultState> moduleCreator(DefaultModuleStateManager defaultStateManager, String namePrefix,
 			VideoStatsModuleGlobalParams mpg) throws VideoStatsModuleCreateException {
 
-		ErrorReporter errorReporter = mpg.getLogErrorReporter().errorReporter();
+		ErrorReporter errorReporter = mpg.getLogger().errorReporter();
 		
 		try {
 			KernelProposer<CfgNRGPixelized> kp = finderKernelProposer.get();

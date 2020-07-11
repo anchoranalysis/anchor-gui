@@ -101,7 +101,7 @@ public class DropDownUtilities {
 		); 	
 		
 		VideoStatsModuleCreatorAndAdder creatorAndAdder = new VideoStatsModuleCreatorAndAdder(adderOp,moduleCreator); 
-		dropDown.getRootMenu().add( new VideoStatsOperationFromCreatorAndAdder("Proposer Evaluator", creatorAndAdder, mpg.getThreadPool(), mpg.getLogErrorReporter() ) );
+		dropDown.getRootMenu().add( new VideoStatsOperationFromCreatorAndAdder("Proposer Evaluator", creatorAndAdder, mpg.getThreadPool(), mpg.getLogger() ) );
 	}
 	
 	public static void addCfg(
@@ -243,9 +243,9 @@ public class DropDownUtilities {
 		VideoStatsModuleCreatorAndAdder creatorAndAdder = new VideoStatsModuleCreatorAndAdder(opAdder,module);
 		
 		if (addAsDefault) {
-			menu.add( new VideoStatsOperationFromCreatorAndAdder(name,creatorAndAdder, mpg.getThreadPool(), mpg.getLogErrorReporter() ) );
+			menu.add( new VideoStatsOperationFromCreatorAndAdder(name,creatorAndAdder, mpg.getThreadPool(), mpg.getLogger() ) );
 		} else {
-			menu.addAsDefault( new VideoStatsOperationFromCreatorAndAdder(name,creatorAndAdder, mpg.getThreadPool(), mpg.getLogErrorReporter() ) );
+			menu.addAsDefault( new VideoStatsOperationFromCreatorAndAdder(name,creatorAndAdder, mpg.getThreadPool(), mpg.getLogger() ) );
 		}
 	}
 	

@@ -201,7 +201,7 @@ public class InternalFrameCanvas {
 	) throws InitException {
 
 		this.stackProvider = stackProvider;
-		this.errorReporter = mpg.getLogErrorReporter().errorReporter();
+		this.errorReporter = mpg.getLogger().errorReporter();
 		
 		
 		

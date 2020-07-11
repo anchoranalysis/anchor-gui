@@ -150,7 +150,7 @@ public class InternalFrameOverlayedInstantStateToRGBSelectable {
 			new RedrawFromCfgGetter(
 				currentlySelectedMarksGetter,
 				delegate.getRedrawable(),
-				mpg.getLogErrorReporter()
+				mpg.getLogger()
 			)
 		);
 		

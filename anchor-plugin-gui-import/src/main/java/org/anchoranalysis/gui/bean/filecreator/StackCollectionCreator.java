@@ -27,7 +27,6 @@ package org.anchoranalysis.gui.bean.filecreator;
  */
 
 
-import java.io.IOException;
 import java.util.Iterator;
 import java.util.List;
 
@@ -73,7 +72,7 @@ public class StackCollectionCreator extends FileCreatorGeneralList {
 				listFiles.add(file);
 			}
 			
-		} catch (IOException | AnchorIOException e) {
+		} catch (AnchorIOException e) {
 			throw new OperationFailedException(e);
 		}
 	}

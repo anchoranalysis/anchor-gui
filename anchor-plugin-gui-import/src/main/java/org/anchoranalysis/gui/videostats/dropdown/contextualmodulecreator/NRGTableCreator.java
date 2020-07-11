@@ -78,7 +78,7 @@ public class NRGTableCreator extends VideoStatsModuleCreatorContext {
 				defaultStateManager.getLinkStateManager().getState().getFrameIndex(),
 				cntr,
 				new CfgNRGTablePanel( colorIndex, nrgStackWithParams.doOperation() ),
-				mpg.getLogErrorReporter().errorReporter()
+				mpg.getLogger().errorReporter()
 			);
 			frame.controllerSize().configureSize(300,600, 300, 1000);
 			return Optional.of( frame.moduleCreator() );
