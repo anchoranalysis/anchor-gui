@@ -28,7 +28,7 @@ package org.anchoranalysis.gui.frame.threaded.overlay;
 
 import java.util.function.Supplier;
 
-import org.anchoranalysis.core.functional.FunctionWithException;
+import org.anchoranalysis.core.functional.function.FunctionWithException;
 import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.gui.displayupdate.OverlayedDisplayStack;
 import org.anchoranalysis.gui.frame.display.OverlayedDisplayStackUpdate;

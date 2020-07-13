@@ -1,7 +1,7 @@
 package org.anchoranalysis.plugin.gui.bean.exporttask;
 
 import org.anchoranalysis.core.error.OperationFailedException;
-import org.anchoranalysis.core.functional.FunctionWithException;
+import org.anchoranalysis.core.functional.function.FunctionWithException;
 
 /*
  * #%L

@@ -32,9 +32,9 @@ import java.util.Set;
 
 import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.error.OperationFailedException;
-import org.anchoranalysis.core.functional.FunctionWithException;
 import org.anchoranalysis.core.functional.IdentityOperation;
 import org.anchoranalysis.core.functional.Operation;
+import org.anchoranalysis.core.functional.function.FunctionWithException;
 import org.anchoranalysis.core.index.BoundedIndexBridge;
 import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.gui.container.background.BackgroundStackCntr;

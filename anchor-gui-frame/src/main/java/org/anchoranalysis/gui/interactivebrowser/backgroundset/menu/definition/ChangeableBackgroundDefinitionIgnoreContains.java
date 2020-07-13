@@ -28,7 +28,7 @@ package org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.definition;
 
 import java.util.List;
 import org.anchoranalysis.core.error.reporter.ErrorReporter;
-import org.anchoranalysis.core.functional.FunctionalUtilities;
+import org.anchoranalysis.core.functional.FunctionalList;
 import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.progress.OperationWithProgressReporter;
 import org.anchoranalysis.gui.backgroundset.BackgroundSet;
@@ -64,6 +64,6 @@ public class ChangeableBackgroundDefinitionIgnoreContains extends ChangeableBack
 	}
 	
 	private List<String> filterList( List<String> list ) {
-		return FunctionalUtilities.filterToList(list, a -> !a.contains(contains));  
+		return FunctionalList.filterToList(list, a -> !a.contains(contains));  
 	}
 }

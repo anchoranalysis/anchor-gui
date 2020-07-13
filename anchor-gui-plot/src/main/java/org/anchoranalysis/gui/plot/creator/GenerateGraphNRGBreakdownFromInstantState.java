@@ -42,7 +42,7 @@ import org.anchoranalysis.anchor.plot.bean.GraphDefinition;
 import org.anchoranalysis.core.color.ColorIndex;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.OperationFailedException;
-import org.anchoranalysis.core.functional.FunctionWithException;
+import org.anchoranalysis.core.functional.function.FunctionWithException;
 import org.anchoranalysis.feature.nrg.NRGTotal;
 import org.anchoranalysis.gui.plot.panel.ClickableGraphFactory;
 import org.anchoranalysis.gui.plot.panel.ClickableGraphInstance;

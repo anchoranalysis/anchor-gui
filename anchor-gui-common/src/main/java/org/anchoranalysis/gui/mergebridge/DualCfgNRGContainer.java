@@ -3,6 +3,7 @@ package org.anchoranalysis.gui.mergebridge;
 import java.util.List;
 import org.anchoranalysis.anchor.mpp.feature.instantstate.CfgNRGInstantState;
 import org.anchoranalysis.core.cache.LRUCache;
+import org.anchoranalysis.core.functional.FunctionalList;
 
 /*
  * #%L
@@ -31,7 +32,6 @@ import org.anchoranalysis.core.cache.LRUCache;
  */
 
 
-import org.anchoranalysis.core.functional.FunctionalUtilities;
 import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.index.container.BoundChangeListener;
 import org.anchoranalysis.core.index.container.BoundedIndexContainer;
@@ -140,10 +140,10 @@ public class DualCfgNRGContainer<T> implements BoundedIndexContainer<IndexedDual
 	
 
 	private List<T> instanceStates(int index) throws GetOperationFailedException {
-		return FunctionalUtilities.mapToList(
+		return FunctionalList.mapToList(
 			cntrs,
 			GetOperationFailedException.class,
-			cntr-> transformer.transform(
+			cntr -> transformer.transform(
 				nearestState(cntr,index)
 			)
 		);
