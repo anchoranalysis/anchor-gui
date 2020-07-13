@@ -33,7 +33,7 @@ import java.util.Optional;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.functional.Operation;
 import org.anchoranalysis.core.functional.OptionalUtilities;
-import org.anchoranalysis.core.log.LogErrorReporter;
+import org.anchoranalysis.core.log.Logger;
 import org.anchoranalysis.core.name.provider.NamedProvider;
 import org.anchoranalysis.core.params.KeyValueParams;
 import org.anchoranalysis.core.progress.OperationWithProgressReporter;
@@ -58,7 +58,7 @@ class CreateMarkEvaluator {
 		Path pathForBinding,
 		MarkProposerStrategy strategy,
 		OperationWithProgressReporter<NamedProvider<Stack>,CreateException> stacks,
-		LogErrorReporter logErrorReporter
+		Logger logger
 	) throws CreateException {
 		
 		MarkEvaluatorSetForImage set = createSet(
@@ -71,7 +71,7 @@ class CreateMarkEvaluator {
 		return new MarkAnnotator(
 			strategy,
 			set,
-			logErrorReporter
+			logger
 		);
 	}
 	

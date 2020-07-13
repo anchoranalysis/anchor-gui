@@ -36,7 +36,7 @@ import org.anchoranalysis.anchor.mpp.bean.regionmap.RegionMap;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.index.GetOperationFailedException;
-import org.anchoranalysis.core.log.LogErrorReporter;
+import org.anchoranalysis.core.log.Logger;
 import org.anchoranalysis.core.name.provider.NamedProviderGetException;
 import org.anchoranalysis.core.name.store.NamedProviderStore;
 import org.anchoranalysis.gui.annotation.AnnotatorModuleCreator;
@@ -59,7 +59,7 @@ public class MarkAnnotator {
 	public MarkAnnotator(
 		MarkProposerStrategy annotationStrategy,
 		MarkEvaluatorSetForImage markEvaluatorSet,
-		LogErrorReporter logErrorReporter
+		Logger logger
 	) throws CreateException {
 		
 		markEvaluatorRslvd = setupMarkEvaluator( annotationStrategy, markEvaluatorSet );
@@ -69,7 +69,7 @@ public class MarkAnnotator {
 		pointsFitterSelectPoints = extractPointsFitter(annotationStrategy, soMPP);
 		
 		// Nullable
-		markProposerGuess = setupGuess( soMPP, annotationStrategy, logErrorReporter );
+		markProposerGuess = setupGuess( soMPP, annotationStrategy, logger );
 		
 		this.backgroundStacks = soMPP.getImage().getStackCollection();
 	}
@@ -119,12 +119,12 @@ public class MarkAnnotator {
 		}
 	}
 	
-	private static MarkProposer setupGuess( MPPInitParams soMPP, MarkProposerStrategy annotationStrategy, LogErrorReporter logErrorReporter ) {
+	private static MarkProposer setupGuess( MPPInitParams soMPP, MarkProposerStrategy annotationStrategy, Logger logger ) {
 		try {
 			return soMPP.getMarkProposerSet().getException(annotationStrategy.getMarkProposerName());
 		} catch (NamedProviderGetException e) {
-			logErrorReporter.getLogReporter().log("Proceeding without 'Guess Tool' as an error occured");
-			logErrorReporter.getErrorReporter().recordError(AnnotatorModuleCreator.class, e.summarize().toString());
+			logger.messageLogger().log("Proceeding without 'Guess Tool' as an error occured");
+			logger.errorReporter().recordError(AnnotatorModuleCreator.class, e.summarize().toString());
 			return null;
 		}
 	}

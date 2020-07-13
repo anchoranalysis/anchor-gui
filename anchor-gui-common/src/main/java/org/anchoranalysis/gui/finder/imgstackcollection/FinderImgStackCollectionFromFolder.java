@@ -28,7 +28,6 @@ package org.anchoranalysis.gui.finder.imgstackcollection;
 
 
 import org.anchoranalysis.core.cache.WrapOperationWithProgressReporterAsCached;
-import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.name.provider.NamedProvider;
@@ -47,13 +46,7 @@ public class FinderImgStackCollectionFromFolder implements FinderImgStackCollect
 	
 	private CachedOperationWithProgressReporter<NamedProvider<Stack>,OperationFailedException> operationImgStackCollection =
 		new WrapOperationWithProgressReporterAsCached<>(
-			pr -> {
-				try {
-					return delegate.createStackCollection(false);
-				} catch (CreateException e) {
-					throw new OperationFailedException(e);
-				}
-			}
+			pr -> delegate.createStackCollection(false)
 		);
 	
 	

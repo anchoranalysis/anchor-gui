@@ -37,7 +37,6 @@ import org.anchoranalysis.anchor.plot.GraphInstance;
 import org.anchoranalysis.anchor.plot.bean.GraphDefinition;
 import org.anchoranalysis.anchor.plot.index.BoxPlot;
 import org.anchoranalysis.core.error.CreateException;
-import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.gui.feature.CalculatedFeatureValues;
 import org.anchoranalysis.gui.feature.FeatureListWithRegionMap;
 import org.jfree.data.statistics.BoxAndWhiskerItem;
@@ -48,7 +47,6 @@ public class GraphDefinitionCfgNRGSummary extends GraphDefinition<Integer> {
 	
 	private BoxPlot<Integer> delegate;
 	
-	@SuppressWarnings("rawtypes")
 	private static BoxAndWhiskerItem createFromCalculatedFeatureValues( CalculatedFeatureValues calculatedFeatures, int featureIndex ) {
 		double min = calculatedFeatures.getFeatureMin(featureIndex);
 		double max = calculatedFeatures.getFeatureMax(featureIndex);
@@ -56,11 +54,14 @@ public class GraphDefinitionCfgNRGSummary extends GraphDefinition<Integer> {
 		double median = calculatedFeatures.getFeatureMedian(featureIndex);
 		double q1 = calculatedFeatures.getFeatureQuantile(featureIndex,0.25);
 		double q3 = calculatedFeatures.getFeatureQuantile(featureIndex,0.75);
-		return new BoxAndWhiskerItem( mean, median, q1, q3, min, max, min, max, new ArrayList() );
+		return new BoxAndWhiskerItem( mean, median, q1, q3, min, max, min, max, new ArrayList<>() );
 	}
 	
-	public GraphDefinitionCfgNRGSummary( final List<CalculatedFeatureValues> tableModelList, final FeatureListWithRegionMap<?> features, final List<String> seriesNames) throws InitException {
-		
+	public GraphDefinitionCfgNRGSummary(
+		final List<CalculatedFeatureValues> tableModelList,
+		final FeatureListWithRegionMap<?> features,
+		final List<String> seriesNames
+	) {
 		delegate = new BoxPlot<>(
 				getTitle(),
 				seriesNames.toArray( new String[]{} ),
@@ -76,9 +77,12 @@ public class GraphDefinitionCfgNRGSummary extends GraphDefinition<Integer> {
 	}
 	
 	@Override
-	public GraphInstance create(Iterator<Integer> items,
-			Optional<AxisLimits> domainLimits, Optional<AxisLimits> rangeLimits) throws CreateException {
-		return delegate.create(items, domainLimits, rangeLimits);
+	public GraphInstance create(
+		Iterator<Integer> items,
+		Optional<AxisLimits> domainLimits,
+		Optional<AxisLimits> rangeLimits
+	) throws CreateException {
+		return delegate.createWithRangeLimits(items, rangeLimits);
 	}
 
 	@Override

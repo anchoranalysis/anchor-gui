@@ -33,7 +33,7 @@ import javax.swing.AbstractAction;
 
 import org.anchoranalysis.core.index.container.BoundChangeEvent;
 import org.anchoranalysis.core.index.container.BoundChangeListener;
-import org.anchoranalysis.core.index.container.IBoundedRangeIncompleteDynamic;
+import org.anchoranalysis.core.index.container.BoundedRangeIncompleteDynamic;
 import org.anchoranalysis.core.index.container.BoundChangeEvent.BoundType;
 import org.anchoranalysis.core.property.IPropertyValueReceivable;
 
@@ -42,7 +42,7 @@ public class BoundedSideSlider {
 
 	private SideSlider slider;
 	
-	private IBoundedRangeIncompleteDynamic bounds;
+	private BoundedRangeIncompleteDynamic bounds;
 
 	
 	public void dispose() {
@@ -117,7 +117,7 @@ public class BoundedSideSlider {
 	    }
 	}
 
-	public BoundedSideSlider(IBoundedRangeIncompleteDynamic bounds, int tickSpacing, int maxNumChars, boolean includeAdjusting) {
+	public BoundedSideSlider(BoundedRangeIncompleteDynamic bounds, int tickSpacing, int maxNumChars, boolean includeAdjusting) {
 		super();
 		this.slider = new SideSlider( bounds.getMinimumIndex(), bounds.getMaximumIndex(), tickSpacing, maxNumChars, includeAdjusting, new NextAction(), new PreviousAction() );
 		this.bounds = bounds;

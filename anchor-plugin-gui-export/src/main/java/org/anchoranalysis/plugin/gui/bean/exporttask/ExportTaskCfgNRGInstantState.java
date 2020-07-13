@@ -36,7 +36,7 @@ import org.anchoranalysis.anchor.mpp.feature.instantstate.CfgNRGInstantState;
 
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.index.GetOperationFailedException;
-import org.anchoranalysis.core.index.container.IBoundedIndexContainer;
+import org.anchoranalysis.core.index.container.BoundedIndexContainer;
 import org.anchoranalysis.core.index.container.bridge.BoundedIndexContainerBridgeWithoutIndex;
 import org.anchoranalysis.gui.bean.exporttask.ExportTaskParams;
 import org.anchoranalysis.gui.container.ContainerGetter;
@@ -50,7 +50,7 @@ public class ExportTaskCfgNRGInstantState extends ExportTaskRasterGeneratorFromB
 		setBridge(this::convert);
 	}
 	
-	private IBoundedIndexContainer<DualStateWithoutIndex<CfgNRGInstantState>> createPrimaryOnly(ExportTaskParams sourceObject) throws GetOperationFailedException {
+	private BoundedIndexContainer<DualStateWithoutIndex<CfgNRGInstantState>> createPrimaryOnly(ExportTaskParams sourceObject) throws GetOperationFailedException {
 		return new BoundedIndexContainerBridgeWithoutIndex<>(
 			sourceObject.getFinderCfgNRGHistory().getCntr(),
 			DualStateWithoutIndex::new
@@ -74,7 +74,7 @@ public class ExportTaskCfgNRGInstantState extends ExportTaskRasterGeneratorFromB
 		);
 	}
 	
-	private IBoundedIndexContainer<DualStateWithoutIndex<CfgNRGInstantState>> createMergedBridge(ExportTaskParams sourceObject) throws GetOperationFailedException {
+	private BoundedIndexContainer<DualStateWithoutIndex<CfgNRGInstantState>> createMergedBridge(ExportTaskParams sourceObject) throws GetOperationFailedException {
 
 		// Otherwise we merge
 		
@@ -87,7 +87,7 @@ public class ExportTaskCfgNRGInstantState extends ExportTaskRasterGeneratorFromB
 		);
 	}
 	
-	private IBoundedIndexContainer<DualStateWithoutIndex<CfgNRGInstantState>> convert( ExportTaskParams sourceObject ) throws OperationFailedException {
+	private BoundedIndexContainer<DualStateWithoutIndex<CfgNRGInstantState>> convert( ExportTaskParams sourceObject ) throws OperationFailedException {
 		assert(sourceObject.numCfgNRGHistory()>0);
 		
 		try {

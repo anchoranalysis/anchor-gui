@@ -1,6 +1,6 @@
 package org.anchoranalysis.gui.bean.filecreator;
 
-import java.io.IOException;
+
 
 /*
  * #%L
@@ -29,44 +29,32 @@ import java.io.IOException;
  */
 
 
-import org.anchoranalysis.core.log.LogErrorReporter;
+import org.anchoranalysis.core.log.Logger;
 import org.anchoranalysis.gui.interactivebrowser.openfile.importer.ImporterSettings;
 import org.anchoranalysis.image.io.bean.rasterreader.RasterReader;
 import org.anchoranalysis.io.params.InputContextParams;
 
+import lombok.Getter;
+import lombok.Setter;
+
 public class FileCreatorParams {
 
 	// Params from InteractiveBrowserInput
+	@Getter @Setter
 	private RasterReader rasterReader;
 	
 	// Params from General Environment
+	@Getter @Setter
 	private MarkCreatorParams markCreatorParams;
 
+	@Getter @Setter
 	private ImporterSettings importerSettings;
 	
-	public InputContextParams createInputContext() throws IOException {
+	public InputContextParams createInputContext() {
 		return markCreatorParams.getModuleParams().createInputContext();
 	}
 
-	public RasterReader getRasterReader() {
-		return rasterReader;
-	}
-	public void setRasterReader(RasterReader rasterReader) {
-		this.rasterReader = rasterReader;
-	}
-	public LogErrorReporter getLogErrorReporter() {
-		return markCreatorParams.getModuleParams().getLogErrorReporter();
-	}
-	public ImporterSettings getImporterSettings() {
-		return importerSettings;
-	}
-	public void setImporterSettings(ImporterSettings importerSettings) {
-		this.importerSettings = importerSettings;
-	}
-	public MarkCreatorParams getMarkCreatorParams() {
-		return markCreatorParams;
-	}
-	public void setMarkCreatorParams(MarkCreatorParams markCreatorParams) {
-		this.markCreatorParams = markCreatorParams;
+	public Logger getLogErrorReporter() {
+		return markCreatorParams.getModuleParams().getLogger();
 	}
 }

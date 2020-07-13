@@ -30,7 +30,7 @@ import org.anchoranalysis.anchor.mpp.feature.nrg.scheme.NRGScheme;
  */
 
 import org.anchoranalysis.core.error.OperationFailedException;
-import org.anchoranalysis.core.log.LogErrorReporter;
+import org.anchoranalysis.core.log.Logger;
 import org.anchoranalysis.core.params.KeyValueParams;
 import org.anchoranalysis.feature.calc.FeatureCalcException;
 import org.anchoranalysis.feature.nrg.NRGStackWithParams;
@@ -41,9 +41,9 @@ public class KeyValueParamsAugmenter {
 
 	private NRGScheme scheme;
 	private SharedFeatureMulti sharedFeatures;
-	private LogErrorReporter logger;
+	private Logger logger;
 	
-	public KeyValueParamsAugmenter(NRGScheme scheme, SharedFeatureMulti sharedFeatures, LogErrorReporter logger) {
+	public KeyValueParamsAugmenter(NRGScheme scheme, SharedFeatureMulti sharedFeatures, Logger logger) {
 		super();
 		this.scheme = scheme;
 		this.sharedFeatures = sharedFeatures;

@@ -70,7 +70,7 @@ public class GraphNRGBreakdownModuleCreator extends VideoStatsModuleCreatorConte
 	public Optional<IModuleCreatorDefaultState> moduleCreator(DefaultModuleStateManager defaultStateManager, String namePrefix,
 			VideoStatsModuleGlobalParams mpg) throws VideoStatsModuleCreateException {
 
-		ErrorReporter errorReporter = mpg.getLogErrorReporter().getErrorReporter();
+		ErrorReporter errorReporter = mpg.getLogger().errorReporter();
 		GenerateGraphNRGBreakdownFromInstantState generator = new GenerateGraphNRGBreakdownFromInstantState( definition, colorIndex );
 		
 		String graphFrameTitle = new FrameTitleGenerator().genFramePrefix( namePrefix, definition.getTitle() );

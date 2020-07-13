@@ -40,7 +40,7 @@ import org.anchoranalysis.anchor.mpp.mark.points.MarkPointListFactory;
 import org.anchoranalysis.anchor.mpp.proposer.ProposalAbnormalFailureException;
 import org.anchoranalysis.anchor.mpp.proposer.ProposerContext;
 import org.anchoranalysis.anchor.mpp.proposer.error.ErrorNode;
-import org.anchoranalysis.anchor.mpp.pxlmark.memo.PxlMarkMemo;
+import org.anchoranalysis.anchor.mpp.pxlmark.memo.VoxelizedMarkMemo;
 import org.anchoranalysis.core.color.RGBColor;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.geometry.Point3d;
@@ -74,8 +74,8 @@ public class MarkMergeProposerEvaluator implements ProposalOperationCreator {
 				Mark mark1 = cfg.get(0);
 				Mark mark2 = cfg.get(1);
 				
-				PxlMarkMemo markMemo1 = context.create( mark1 );
-				PxlMarkMemo markMemo2 = context.create( mark2 );
+				VoxelizedMarkMemo markMemo1 = context.create( mark1 );
+				VoxelizedMarkMemo markMemo2 = context.create( mark2 );
 				
 				Optional<Mark> proposedMark = markMergeProposer.propose( markMemo1, markMemo2, context.replaceError(errorNode) );
 				

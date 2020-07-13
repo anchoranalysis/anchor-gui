@@ -27,12 +27,12 @@ package org.anchoranalysis.gui.container.background;
  */
 
 import org.anchoranalysis.core.index.GetOperationFailedException;
-import org.anchoranalysis.core.index.container.IBoundedIndexContainer;
+import org.anchoranalysis.core.index.container.BoundedIndexContainer;
 import org.anchoranalysis.image.stack.DisplayStack;
 
 public interface BackgroundStackCntr {
 
 	boolean exists();
 	
-	IBoundedIndexContainer<DisplayStack> backgroundStackCntr() throws GetOperationFailedException;
+	BoundedIndexContainer<DisplayStack> backgroundStackCntr() throws GetOperationFailedException;
 }

@@ -76,8 +76,8 @@ public class ZoomScale {
 	}
 	
 	
-	private static int smallestZoom( int minExtnt, int actualExtnt ) {
-		double ratio = ((double) minExtnt) / actualExtnt;
+	private static int smallestZoom( int minExtent, int actualExtent ) {
+		double ratio = ((double) minExtent) / actualExtent;
 		double log = Math.log(ratio)/Math.log(2.0);
 		return (int) Math.ceil(log);
 	}

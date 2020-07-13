@@ -53,25 +53,21 @@ import org.anchoranalysis.io.manifest.sequencetype.IncrementalSequenceType;
 import org.anchoranalysis.io.namestyle.IntegerSuffixOutputNameStyle;
 import org.anchoranalysis.io.output.bound.BoundOutputManagerRouteErrors;
 
+import lombok.RequiredArgsConstructor;
+
+@RequiredArgsConstructor
 public class ExportSubMenu implements IAddToExportSubMenu {
 
-	private ExportPopupParams params;
+	private final ExportPopupParams params;
+	private final ErrorReporter errorReporter;
 	
 	private JMenu menu = new JMenu("Export");
-	
-	private ErrorReporter errorReporter;
-	
-	public ExportSubMenu( ExportPopupParams params, ErrorReporter errorReporter ) {
-		this.params = params;
-		this.errorReporter = errorReporter;
-		assert(params.getOutputManager()!=null);
-	}
 	
 	@Override
 	public void addExportItemStackGenerator( String outputName, String label, Operation<Stack,AnchorNeverOccursException> stack ) throws OperationFailedException {
     	
 		StackGenerator stackGenerator = new StackGenerator(true, outputName);
-		OperationGenerator<Stack,Stack> generator = new OperationGenerator<Stack,Stack>( stackGenerator );
+		OperationGenerator<Stack,Stack> generator = new OperationGenerator<>( stackGenerator );
 		addExportItem( generator, stack, outputName, label, generator.createManifestDescription(), 1 );
     }
     
@@ -81,18 +77,17 @@ public class ExportSubMenu implements IAddToExportSubMenu {
     	// No parameters available in this context
     	ExportTaskParams exportTaskParams = new ExportTaskParams();
     	    	
-    	ManifestFolderDescription mfd = new ManifestFolderDescription();
-    	mfd.setFileDescription(
+    	ManifestFolderDescription mfd = new ManifestFolderDescription(
     		md.orElseThrow( ()->
     			new AnchorFriendlyRuntimeException("A manifest-description is required for this operation")
-    		)
+    		),
+    		new IncrementalSequenceType()
     	);
-    	mfd.setSequenceType( new IncrementalSequenceType() );
 
     	// NB: As bindAsSubFolder can now return nulls, maybe some knock-on bugs are introduced here
     	exportTaskParams.setOutputManager(
-    		params.getOutputManager().getWriterAlwaysAllowed().bindAsSubFolder(outputName, mfd, Optional.empty()).orElseThrow( ()->
-    			new AnchorFriendlyRuntimeException("No subfolder can be created for output")	
+    		params.getOutputManager().getWriterAlwaysAllowed().bindAsSubdirectory(outputName, mfd).orElseThrow( ()->
+    			new AnchorFriendlyRuntimeException("No subdirectory can be created for output")	
     		)
     	);
     	

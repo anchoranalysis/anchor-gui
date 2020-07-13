@@ -70,7 +70,7 @@ public class FileAnnotationNamedChnlCollection extends InteractiveFile {
 		try {
 			op.doOperation();
 		} catch (Throwable e) {
-			mpg.getLogErrorReporter().getErrorReporter().recordError(FileAnnotationNamedChnlCollection.class, e);
+			mpg.getLogger().errorReporter().recordError(FileAnnotationNamedChnlCollection.class, e);
 		}
 	}
 
@@ -87,7 +87,7 @@ public class FileAnnotationNamedChnlCollection extends InteractiveFile {
 		try {
 			return op.doOperation();
 		} catch (Throwable e) {
-			mpg.getLogErrorReporter().getErrorReporter().recordError(FileAnnotationNamedChnlCollection.class, e);
+			mpg.getLogger().errorReporter().recordError(FileAnnotationNamedChnlCollection.class, e);
 			return null;
 		}
 	}

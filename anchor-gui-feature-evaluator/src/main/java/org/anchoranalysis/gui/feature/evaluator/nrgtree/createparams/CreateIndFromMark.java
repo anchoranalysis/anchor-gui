@@ -1,6 +1,6 @@
 package org.anchoranalysis.gui.feature.evaluator.nrgtree.createparams;
 
-import org.anchoranalysis.anchor.mpp.pxlmark.memo.PxlMarkMemo;
+import org.anchoranalysis.anchor.mpp.pxlmark.memo.VoxelizedMarkMemo;
 
 /*-
  * #%L
@@ -30,18 +30,17 @@ import org.anchoranalysis.anchor.mpp.pxlmark.memo.PxlMarkMemo;
 
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.feature.bean.Feature;
-import org.anchoranalysis.feature.calc.FeatureCalcException;
 import org.anchoranalysis.feature.input.FeatureInput;
 import org.anchoranalysis.feature.nrg.NRGStackWithParams;
 import org.anchoranalysis.feature.session.CreateFeatureInput;
 import org.anchoranalysis.gui.feature.evaluator.params.ParamsFactoryForFeature;
 
-public class CreateIndFromMark extends CreateFeatureInput<FeatureInput> {
+public class CreateIndFromMark implements CreateFeatureInput<FeatureInput> {
 
-	private PxlMarkMemo pmm;
+	private VoxelizedMarkMemo pmm;
 	private NRGStackWithParams raster;
 	
-	public CreateIndFromMark(PxlMarkMemo pmm, NRGStackWithParams raster) {
+	public CreateIndFromMark(VoxelizedMarkMemo pmm, NRGStackWithParams raster) {
 		super();
 		this.pmm = pmm;
 		this.raster = raster;
@@ -49,11 +48,7 @@ public class CreateIndFromMark extends CreateFeatureInput<FeatureInput> {
 
 	@Override
 	public FeatureInput createForFeature(Feature<?> feature) throws CreateException {
-		try {
-			return ParamsFactoryForFeature.factoryFor( feature ).create(pmm, raster);
-		} catch (FeatureCalcException e) {
-			throw new CreateException(e);
-		}
+		return ParamsFactoryForFeature.factoryFor( feature ).create(pmm, raster);
 	}
 
 }

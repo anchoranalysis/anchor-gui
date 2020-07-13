@@ -34,7 +34,7 @@ import org.anchoranalysis.core.geometry.Point2i;
 import org.anchoranalysis.image.extent.Extent;
 
 // Two scroll bars mapping a 2d extent
-class ExtntScrollBars {
+class ExtentScrollBars {
 	
 	// Our scrollbars
 	private JScrollBar scrollHor;
@@ -46,7 +46,7 @@ class ExtntScrollBars {
 	
 	private LocalChangeListener localChangeListener;
 	
-	public ExtntScrollBars() {
+	public ExtentScrollBars() {
 		this.scrollHor = new JScrollBar( JScrollBar.HORIZONTAL );
 		this.scrollVer = new JScrollBar( JScrollBar.VERTICAL );
 		this.scrollHor.setVisible(false);

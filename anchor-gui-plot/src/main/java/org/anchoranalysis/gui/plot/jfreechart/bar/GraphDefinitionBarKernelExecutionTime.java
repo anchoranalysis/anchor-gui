@@ -38,7 +38,6 @@ import org.anchoranalysis.anchor.plot.bean.GraphDefinition;
 import org.anchoranalysis.anchor.plot.bean.colorscheme.GraphColorScheme;
 import org.anchoranalysis.anchor.plot.index.BarChart;
 import org.anchoranalysis.core.error.CreateException;
-import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.gui.plot.definition.line.GraphDefinitionLineIterVsKernelExecutionTimeByState;
 
 public abstract class GraphDefinitionBarKernelExecutionTime extends GraphDefinition<KernelExecutionTime> {
@@ -48,7 +47,7 @@ public abstract class GraphDefinitionBarKernelExecutionTime extends GraphDefinit
 	private String[] seriesNames;
 	private String yAxisLabel;
 	
-	public GraphDefinitionBarKernelExecutionTime( final String title, final String[] seriesNames, GetForSeries<KernelExecutionTime,Double> valueGetter, String yAxisLabel, boolean stacked ) throws InitException {
+	public GraphDefinitionBarKernelExecutionTime( final String title, final String[] seriesNames, GetForSeries<KernelExecutionTime,Double> valueGetter, String yAxisLabel, boolean stacked ) {
 		
 		this.title = title;
 		this.seriesNames = seriesNames;
@@ -87,7 +86,7 @@ public abstract class GraphDefinitionBarKernelExecutionTime extends GraphDefinit
 	
 	@Override
 	public GraphInstance create( Iterator<KernelExecutionTime> items, Optional<AxisLimits> domainLimits, Optional<AxisLimits> rangeLimits ) throws CreateException {
-		return delegate.create( items, domainLimits, rangeLimits );
+		return delegate.createWithRangeLimits( items, rangeLimits );
 	}
 
 	@Override

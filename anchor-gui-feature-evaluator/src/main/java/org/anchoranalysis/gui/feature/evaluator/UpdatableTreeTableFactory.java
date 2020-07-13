@@ -26,7 +26,7 @@ package org.anchoranalysis.gui.feature.evaluator;
  * #L%
  */
 
-import org.anchoranalysis.core.log.LogErrorReporter;
+import org.anchoranalysis.core.log.Logger;
 import org.anchoranalysis.gui.feature.evaluator.nrgtree.FeatureCalcDescriptionTreeRenderData;
 import org.anchoranalysis.gui.feature.evaluator.nrgtree.FeatureCalcDescriptionTreeRowModel;
 import org.anchoranalysis.gui.feature.evaluator.treetable.FeatureListSrc;
@@ -52,7 +52,7 @@ class UpdatableTreeTableFactory {
 	public static UpdatableTreeTable create(
 		OverlayDescriptionPanel overlayDescriptionPanel,
 		FeatureListSrc featureListSrc,
-		LogErrorReporter logger
+		Logger logger
 	) {
 		
 		ITreeTableModel treeTable = createTreeTable(featureListSrc, logger);
@@ -66,18 +66,18 @@ class UpdatableTreeTableFactory {
 		return new UpdatableTreeTable( treeTable, markPairList );
 	}
 	
-	private static ITreeTableModel createTreeTable(	FeatureListSrc featureListSrc, LogErrorReporter logger ) {
+	private static ITreeTableModel createTreeTable(	FeatureListSrc featureListSrc, Logger logger ) {
 		FeatureCalcDescriptionTreeRowModel rowModel = new FeatureCalcDescriptionTreeRowModel();
 		
 		TreeTableProperties properties = new TreeTableProperties(
 			rowModel,
-    		new FeatureCalcDescriptionTreeRenderData(logger.getErrorReporter()),
+    		new FeatureCalcDescriptionTreeRenderData(logger.errorReporter()),
     		"NRG Term",
     		logger
 		);
 		
 		ITreeTableModel treeTable = new TreeTableWithModelMultiplex( properties, featureListSrc );
-    	treeTable.addMouseListenerToOutline( new ShowErrorMessageMouseListener(treeTable, logger.getErrorReporter()) );
+    	treeTable.addMouseListenerToOutline( new ShowErrorMessageMouseListener(treeTable, logger.errorReporter()) );
     	return treeTable;
 	}
 	

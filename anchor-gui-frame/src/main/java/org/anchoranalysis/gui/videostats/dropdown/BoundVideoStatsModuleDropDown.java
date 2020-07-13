@@ -31,7 +31,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
 import org.anchoranalysis.core.error.CreateException;
-import org.anchoranalysis.core.log.LogErrorReporter;
+import org.anchoranalysis.core.log.Logger;
 import org.anchoranalysis.core.progress.OperationWithProgressReporter;
 import org.anchoranalysis.gui.IconFactory;
 import org.anchoranalysis.gui.file.opened.IOpenedFileGUI;
@@ -68,16 +68,16 @@ public class BoundVideoStatsModuleDropDown {
 		return child;
 	}
 	
-	public void addModule( String itemName, VideoStatsModuleCreatorAndAdder creator, InteractiveThreadPool threadPool, LogErrorReporter logErrorReporter ) {
-		delegate.getRootMenu().add( new VideoStatsOperationFromCreatorAndAdder(itemName, creator, threadPool, logErrorReporter ) );
+	public void addModule( String itemName, VideoStatsModuleCreatorAndAdder creator, InteractiveThreadPool threadPool, Logger logger ) {
+		delegate.getRootMenu().add( new VideoStatsOperationFromCreatorAndAdder(itemName, creator, threadPool, logger ) );
 	}
 	
-	public void addModule( NamedModule module, InteractiveThreadPool threadPool, LogErrorReporter logErrorReporter ) {
-		addModule( module.getTitle(), module, threadPool, logErrorReporter );
+	public void addModule( NamedModule module, InteractiveThreadPool threadPool, Logger logger ) {
+		addModule( module.getTitle(), module, threadPool, logger );
 	}
 	
-	public void addModule( String itemName, NamedModule module, InteractiveThreadPool threadPool, LogErrorReporter logErrorReporter ) {
-		addModule( itemName, module.getCreator(), threadPool, logErrorReporter );
+	public void addModule( String itemName, NamedModule module, InteractiveThreadPool threadPool, Logger logger ) {
+		addModule( itemName, module.getCreator(), threadPool, logger );
 	}
 	
 	public void addModule(
@@ -86,7 +86,7 @@ public class BoundVideoStatsModuleDropDown {
 		String namePrefix,
 		VideoStatsModuleGlobalParams mpg
 	) throws MenuAddException {
-		addModule( creator.createSingle(namePrefix, adder, mpg), mpg.getThreadPool(), mpg.getLogErrorReporter() );
+		addModule( creator.createSingle(namePrefix, adder, mpg), mpg.getThreadPool(), mpg.getLogger() );
 	}
 	
 	public VideoStatsModuleCreatorAndAdder addModule(
@@ -96,15 +96,15 @@ public class BoundVideoStatsModuleDropDown {
 	) throws MenuAddException {
 		try {
 			NamedModule[] moduleToAdd = creator.create( getNameAsPrefix(), adder, mpg );
-			return delegate.addNamedModules( moduleToAdd, mpg.getThreadPool(), mpg.getLogErrorReporter() );
+			return delegate.addNamedModules( moduleToAdd, mpg.getThreadPool(), mpg.getLogger() );
 		} catch (CreateException e) {
 			throw new MenuAddException(e);
 		}			
 	}
 	
-	public void addModule( String itemName, OperationWithProgressReporter<IAddVideoStatsModule,? extends Throwable> adder, VideoStatsModuleCreator creator, InteractiveThreadPool threadPool, LogErrorReporter logErrorReporter ) throws MenuAddException {
+	public void addModule( String itemName, OperationWithProgressReporter<IAddVideoStatsModule,? extends Throwable> adder, VideoStatsModuleCreator creator, InteractiveThreadPool threadPool, Logger logger ) throws MenuAddException {
 		VideoStatsModuleCreatorAndAdder creatorAndAdder = new VideoStatsModuleCreatorAndAdder(adder, creator);
-		addModule(itemName, creatorAndAdder, threadPool, logErrorReporter);
+		addModule(itemName, creatorAndAdder, threadPool, logger);
 	}
 	
 	
@@ -115,7 +115,7 @@ public class BoundVideoStatsModuleDropDown {
 			public VideoStatsModuleCreatorAndAdder addModuleToMenu( VideoStatsOperationMenu menu, ContextualModuleCreator creator, boolean useShortNames, VideoStatsModuleGlobalParams mpg ) throws MenuAddException {
 				try {
 					NamedModule[] moduleToAdd = creator.create( getNameAsPrefix(), adder, mpg );
-					return delegate.addNamedModules( menu, moduleToAdd, mpg.getThreadPool(), mpg.getLogErrorReporter(), useShortNames );
+					return delegate.addNamedModules( menu, moduleToAdd, mpg.getThreadPool(), mpg.getLogger(), useShortNames );
 				} catch (CreateException e) {
 					throw new MenuAddException(e);
 				}

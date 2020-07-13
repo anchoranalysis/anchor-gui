@@ -31,7 +31,7 @@ import java.nio.file.Path;
 
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.functional.Operation;
-import org.anchoranalysis.core.log.LogErrorReporter;
+import org.anchoranalysis.core.log.Logger;
 import org.anchoranalysis.core.name.store.LazyEvaluationStore;
 import org.anchoranalysis.image.io.objs.ObjectMaskCollectionReader;
 import org.anchoranalysis.image.object.ObjectCollection;
@@ -39,9 +39,9 @@ import org.apache.commons.io.FilenameUtils;
 
 class CreateObjStoreFromDirectory { 
 
-	public LazyEvaluationStore<ObjectCollection> apply( Path pathFolder, LogErrorReporter logErrorReporter ) throws OperationFailedException {
+	public LazyEvaluationStore<ObjectCollection> apply( Path pathFolder, Logger logger ) throws OperationFailedException {
 		
-		LazyEvaluationStore<ObjectCollection> out = new LazyEvaluationStore<>(logErrorReporter, "finderObjMaskCollection");
+		LazyEvaluationStore<ObjectCollection> out = new LazyEvaluationStore<>(logger, "finderObjMaskCollection");
 		
 		/** All the .h5 files in the directory */
 		addHdf5Files( out, pathFolder );

@@ -163,7 +163,7 @@ class CachedRGB {
 		
 		for (BoundingBox bbox : listBBox) {
 			
-			BoundingBox bboxClipped = bbox.clipTo(backgroundOrig.getDimensions().getExtnt());
+			BoundingBox bboxClipped = bbox.clipTo(backgroundOrig.getDimensions().getExtent());
 			
 			for (int c=0; c<3; c++) {
 				Channel rgbTarget = rgb.getChnl(c);

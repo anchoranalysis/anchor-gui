@@ -54,9 +54,9 @@ class GlobalDropDown {
 		try {
 			delegate.addModule( "Selected Mark Properties",
 				new IdentityOperationWithProgressReporter<>(adder),
-				new FeatureEvaluatorCreator(src,mpg.getLogErrorReporter()),
+				new FeatureEvaluatorCreator(src,mpg.getLogger()),
 				mpg.getThreadPool(),
-				mpg.getLogErrorReporter()
+				mpg.getLogger()
 			);
 			
 		} catch (MenuAddException e) {

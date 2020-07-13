@@ -29,7 +29,7 @@ package org.anchoranalysis.gui.frame.multiraster;
 
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.index.GetOperationFailedException;
-import org.anchoranalysis.core.index.container.IBoundedIndexContainer;
+import org.anchoranalysis.core.index.container.BoundedIndexContainer;
 import org.anchoranalysis.core.progress.ProgressReporterNull;
 import org.anchoranalysis.gui.backgroundset.BackgroundSet;
 import org.anchoranalysis.image.stack.DisplayStack;
@@ -52,7 +52,7 @@ class ConvertToDisplayStack {
 		}
 	}
 	
-	private static IBoundedIndexContainer<DisplayStack> convertBackgroundSet( BackgroundSet bg ) throws OperationFailedException {
+	private static BoundedIndexContainer<DisplayStack> convertBackgroundSet( BackgroundSet bg ) throws OperationFailedException {
 		try {
 			return bg.getItem(
 				bg.names().iterator().next()	// Arbitrary name
@@ -62,7 +62,7 @@ class ConvertToDisplayStack {
 		}
 	}
 	
-	private static DisplayStack extractAtIndex( IBoundedIndexContainer<DisplayStack> indexCntr ) throws OperationFailedException {
+	private static DisplayStack extractAtIndex( BoundedIndexContainer<DisplayStack> indexCntr ) throws OperationFailedException {
 		if (indexCntr.getMinimumIndex()!=indexCntr.getMaximumIndex()) {
 			throw new OperationFailedException( "BackgroundSet has more than one image" );
 		}

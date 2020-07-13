@@ -103,7 +103,7 @@ public class AnnotatorModuleCreator<T extends AnnotationInitParams> extends Vide
 				paramsInit = annotation.createInitParams(
 					prm,
 					context,
-					mpg.getLogErrorReporter(), useDefaultCfg
+					mpg.getLogger(), useDefaultCfg
 				);
 			} catch (CreateException e) {
 				throw new VideoStatsModuleCreateException(e);
@@ -133,7 +133,7 @@ public class AnnotatorModuleCreator<T extends AnnotationInitParams> extends Vide
 			);
 			
 		} catch (VideoStatsModuleCreateException | InitException | OperationFailedException e) {
-			mpg.getLogErrorReporter().getErrorReporter().recordError(AnnotatorModuleCreator.class, e);
+			mpg.getLogger().errorReporter().recordError(AnnotatorModuleCreator.class, e);
 		}		
 	}
 	
@@ -141,7 +141,7 @@ public class AnnotatorModuleCreator<T extends AnnotationInitParams> extends Vide
 		
 		InternalFrameAnnotator imageFrame = new InternalFrameAnnotator(
 			name,
-			mpg.getLogErrorReporter().getErrorReporter()
+			mpg.getLogger().errorReporter()
 		);
 			
 		paramsInit.getBackground().configureLinkManager(

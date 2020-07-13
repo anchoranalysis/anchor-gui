@@ -28,8 +28,6 @@ package org.anchoranalysis.gui.videostats.dropdown.common;
 
 
 
-import java.util.Optional;
-
 import org.anchoranalysis.anchor.mpp.cfg.Cfg;
 import org.anchoranalysis.core.cache.WrapOperationWithProgressReporterAsCached;
 import org.anchoranalysis.core.error.InitException;
@@ -54,8 +52,8 @@ import org.anchoranalysis.gui.videostats.modulecreator.VideoStatsModuleCreator;
 import org.anchoranalysis.gui.videostats.operation.VideoStatsOperationFromCreatorAndAdder;
 import org.anchoranalysis.gui.videostats.operation.VideoStatsOperationMenu;
 import org.anchoranalysis.image.object.ObjectCollection;
-import org.anchoranalysis.io.manifest.ManifestDescription;
 import org.anchoranalysis.io.manifest.ManifestFolderDescription;
+import org.anchoranalysis.io.manifest.sequencetype.SetSequenceType;
 import org.anchoranalysis.io.output.bean.OutputWriteSettings;
 import org.anchoranalysis.io.output.bound.BoundOutputManagerRouteErrors;
 
@@ -103,7 +101,7 @@ public class DropDownUtilities {
 		); 	
 		
 		VideoStatsModuleCreatorAndAdder creatorAndAdder = new VideoStatsModuleCreatorAndAdder(adderOp,moduleCreator); 
-		dropDown.getRootMenu().add( new VideoStatsOperationFromCreatorAndAdder("Proposer Evaluator", creatorAndAdder, mpg.getThreadPool(), mpg.getLogErrorReporter() ) );
+		dropDown.getRootMenu().add( new VideoStatsOperationFromCreatorAndAdder("Proposer Evaluator", creatorAndAdder, mpg.getThreadPool(), mpg.getLogger() ) );
 	}
 	
 	public static void addCfg(
@@ -171,7 +169,7 @@ public class DropDownUtilities {
 		MarkDisplaySettings markDisplaySettings,
 		boolean addAsDefault
 	) {
-		if (cfgProvider.keys().size()==0) {
+		if (cfgProvider.keys().isEmpty()) {
 			return;
 		}
 		
@@ -200,7 +198,7 @@ public class DropDownUtilities {
 		VideoStatsModuleGlobalParams mpg,
 		boolean addAsDefault
 	) {
-		if (provider.keys().size()==0) {
+		if (provider.keys().isEmpty()) {
 			return;
 		}
 		
@@ -221,13 +219,15 @@ public class DropDownUtilities {
 	}
 	
 	public static BoundOutputManagerRouteErrors createOutputManagerForSubfolder( BoundOutputManagerRouteErrors parentOutputManager, String subFolderName ) throws InitException {
-		ManifestDescription manifestDescription = new ManifestDescription("interactiveOutput", "manifestInteractiveOutput");
 		
-		ManifestFolderDescription mfd = new ManifestFolderDescription();
-    	mfd.setFileDescription( manifestDescription );
+		ManifestFolderDescription mfd = new ManifestFolderDescription(
+			"interactiveOutput",
+			"manifestInteractiveOutput",
+			new SetSequenceType()
+		);
     	
     	// NB: As bindAsSubFolder can now return nulls, maybe some knock-on bugs are introduced here
-		return parentOutputManager.getWriterAlwaysAllowed().bindAsSubFolder(subFolderName, mfd, Optional.empty()).orElseThrow( ()->
+		return parentOutputManager.getWriterAlwaysAllowed().bindAsSubdirectory(subFolderName, mfd).orElseThrow( ()->
 			new InitException("Cannot create a sub-folder for output")
 		);
 	}
@@ -243,9 +243,9 @@ public class DropDownUtilities {
 		VideoStatsModuleCreatorAndAdder creatorAndAdder = new VideoStatsModuleCreatorAndAdder(opAdder,module);
 		
 		if (addAsDefault) {
-			menu.add( new VideoStatsOperationFromCreatorAndAdder(name,creatorAndAdder, mpg.getThreadPool(), mpg.getLogErrorReporter() ) );
+			menu.add( new VideoStatsOperationFromCreatorAndAdder(name,creatorAndAdder, mpg.getThreadPool(), mpg.getLogger() ) );
 		} else {
-			menu.addAsDefault( new VideoStatsOperationFromCreatorAndAdder(name,creatorAndAdder, mpg.getThreadPool(), mpg.getLogErrorReporter() ) );
+			menu.addAsDefault( new VideoStatsOperationFromCreatorAndAdder(name,creatorAndAdder, mpg.getThreadPool(), mpg.getLogger() ) );
 		}
 	}
 	

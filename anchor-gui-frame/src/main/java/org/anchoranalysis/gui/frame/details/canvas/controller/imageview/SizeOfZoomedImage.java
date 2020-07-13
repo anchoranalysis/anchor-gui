@@ -63,6 +63,6 @@ class SizeOfZoomedImage {
 		ZoomScale zs = zoomSugg.suggestDefaultZoomFor(imageSize);
 		
 		// The size of the image after it has been zoomed
-		return zs.applyScale(imageSize.getExtnt());
+		return zs.applyScale(imageSize.getExtent());
 	}
 }

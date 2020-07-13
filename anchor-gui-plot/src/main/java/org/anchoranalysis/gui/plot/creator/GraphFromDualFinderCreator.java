@@ -33,7 +33,7 @@ import org.anchoranalysis.anchor.mpp.feature.instantstate.CfgNRGInstantState;
 import org.anchoranalysis.anchor.plot.bean.GraphDefinition;
 import org.anchoranalysis.anchor.plot.bean.colorscheme.GraphColorScheme;
 import org.anchoranalysis.core.error.CreateException;
-import org.anchoranalysis.core.index.container.IBoundedIndexContainer;
+import org.anchoranalysis.core.index.container.BoundedIndexContainer;
 import org.anchoranalysis.gui.io.loader.manifest.finder.FinderCSVStats;
 import org.anchoranalysis.gui.io.loader.manifest.finder.historyfolder.FinderHistoryFolder;
 import org.anchoranalysis.gui.plot.BoundedIndexContainerIterator;
@@ -53,8 +53,8 @@ import org.anchoranalysis.gui.videostats.modulecreator.VideoStatsModuleCreator;
  */
 public interface GraphFromDualFinderCreator<T> {
 	
-	IBoundedIndexContainer<T> createCntr( final FinderCSVStats finderCSVStats ) throws CreateException;
-	IBoundedIndexContainer<T> createCntr( final FinderHistoryFolder<CfgNRGInstantState> finderCfgNRGHistory ) throws CreateException;
+	BoundedIndexContainer<T> createCntr( final FinderCSVStats finderCSVStats ) throws CreateException;
+	BoundedIndexContainer<T> createCntr( final FinderHistoryFolder<CfgNRGInstantState> finderCfgNRGHistory ) throws CreateException;
 	
 	GraphDefinition<T> createGraphDefinition( GraphColorScheme graphColorScheme ) throws CreateException;
 	
@@ -67,7 +67,7 @@ public interface GraphFromDualFinderCreator<T> {
 
 				try {
 					// We calculate our container
-					IBoundedIndexContainer<T> cntr;
+					BoundedIndexContainer<T> cntr;
 					if (useCSV && finderCSVStats.exists()) {
 						cntr = createCntr(finderCSVStats);
 					} else if (finderCfgNRGHistory.exists()) {

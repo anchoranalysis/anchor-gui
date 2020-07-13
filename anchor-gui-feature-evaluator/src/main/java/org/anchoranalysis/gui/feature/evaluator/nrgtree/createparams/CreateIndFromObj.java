@@ -34,7 +34,7 @@ import org.anchoranalysis.feature.session.CreateFeatureInput;
 import org.anchoranalysis.image.feature.object.input.FeatureInputSingleObject;
 import org.anchoranalysis.image.object.ObjectMask;
 
-public class CreateIndFromObj extends CreateFeatureInput<FeatureInput> {
+public class CreateIndFromObj implements CreateFeatureInput<FeatureInput> {
 
 	private FeatureInputSingleObject input;
 	
@@ -44,8 +44,7 @@ public class CreateIndFromObj extends CreateFeatureInput<FeatureInput> {
 	}
 
 	@Override
-	public FeatureInput createForFeature(Feature<?> feature)
-			throws CreateException {
+	public FeatureInput createForFeature(Feature<?> feature) throws CreateException {
 		return input;
 	}
 }

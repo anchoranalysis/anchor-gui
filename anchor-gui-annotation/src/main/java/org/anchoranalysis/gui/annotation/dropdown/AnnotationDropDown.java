@@ -107,7 +107,7 @@ public class AnnotationDropDown {
 			moduleCreator
 		); 
 		delegate.getRootMenu().addAsDefault(
-			new VideoStatsOperationFromCreatorAndAdder("Annotator", creatorAndAdder, mpg.getThreadPool(), mpg.getLogErrorReporter() )
+			new VideoStatsOperationFromCreatorAndAdder("Annotator", creatorAndAdder, mpg.getThreadPool(), mpg.getLogger() )
 		);
 	}
 	
@@ -142,7 +142,7 @@ public class AnnotationDropDown {
 			),
 			adder,
 			mpg.getThreadPool(),
-			mpg.getLogErrorReporter().getErrorReporter()
+			mpg.getLogger().errorReporter()
 		);
 		
 		DropDownUtilitiesRaster.addRaster(

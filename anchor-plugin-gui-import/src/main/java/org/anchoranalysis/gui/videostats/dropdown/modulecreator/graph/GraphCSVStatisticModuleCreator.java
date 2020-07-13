@@ -33,7 +33,7 @@ import java.util.Optional;
 import org.anchoranalysis.anchor.plot.bean.GraphDefinition;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.index.GetOperationFailedException;
-import org.anchoranalysis.core.index.container.IBoundedIndexContainer;
+import org.anchoranalysis.core.index.container.BoundedIndexContainer;
 import org.anchoranalysis.gui.io.loader.manifest.finder.FinderCSVStats;
 import org.anchoranalysis.gui.io.loader.manifest.finder.csvstatistic.CSVStatistic;
 import org.anchoranalysis.gui.plot.BoundedIndexContainerIterator;
@@ -70,7 +70,7 @@ public class GraphCSVStatisticModuleCreator extends VideoStatsModuleCreatorConte
 			VideoStatsModuleGlobalParams mpg) throws VideoStatsModuleCreateException {
 
 		try {
-			final IBoundedIndexContainer<CSVStatistic> cntr = finderCSVStats.get();
+			final BoundedIndexContainer<CSVStatistic> cntr = finderCSVStats.get();
 			
 			// We do a check that all necessary statistics are contained in container samples
 			//  by taking the first item

@@ -27,15 +27,15 @@ package org.anchoranalysis.gui.container.background;
  */
 
 import org.anchoranalysis.core.index.GetOperationFailedException;
-import org.anchoranalysis.core.index.container.IBoundedIndexContainer;
+import org.anchoranalysis.core.index.container.BoundedIndexContainer;
 import org.anchoranalysis.image.stack.DisplayStack;
 
 public class SingleBackgroundStackCntr implements BackgroundStackCntr {
 
-	private IBoundedIndexContainer<DisplayStack> cntr;
+	private BoundedIndexContainer<DisplayStack> cntr;
 	
 	public SingleBackgroundStackCntr(
-			IBoundedIndexContainer<DisplayStack> cntr) {
+			BoundedIndexContainer<DisplayStack> cntr) {
 		super();
 		this.cntr = cntr;
 	}
@@ -46,7 +46,7 @@ public class SingleBackgroundStackCntr implements BackgroundStackCntr {
 	}
 
 	@Override
-	public IBoundedIndexContainer<DisplayStack> backgroundStackCntr()
+	public BoundedIndexContainer<DisplayStack> backgroundStackCntr()
 			throws GetOperationFailedException {
 		return cntr;
 	}

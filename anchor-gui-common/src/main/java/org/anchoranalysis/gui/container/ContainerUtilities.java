@@ -31,13 +31,13 @@ import java.util.List;
 
 import org.anchoranalysis.anchor.mpp.feature.instantstate.CfgNRGInstantState;
 import org.anchoranalysis.core.index.GetOperationFailedException;
-import org.anchoranalysis.core.index.container.IBoundedIndexContainer;
+import org.anchoranalysis.core.index.container.BoundedIndexContainer;
 
 public class ContainerUtilities {
 	
-	public static List<IBoundedIndexContainer<CfgNRGInstantState>> listCntrs( List<ContainerGetter<CfgNRGInstantState>> cntrs ) throws GetOperationFailedException {
+	public static List<BoundedIndexContainer<CfgNRGInstantState>> listCntrs( List<ContainerGetter<CfgNRGInstantState>> cntrs ) throws GetOperationFailedException {
 		
-		List<IBoundedIndexContainer<CfgNRGInstantState>> out = new ArrayList<IBoundedIndexContainer<CfgNRGInstantState>>();
+		List<BoundedIndexContainer<CfgNRGInstantState>> out = new ArrayList<BoundedIndexContainer<CfgNRGInstantState>>();
 		
 		for( ContainerGetter<CfgNRGInstantState> item : cntrs ) {
 			out.add(

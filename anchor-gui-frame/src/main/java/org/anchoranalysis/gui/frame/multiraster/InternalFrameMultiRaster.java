@@ -60,7 +60,7 @@ public class InternalFrameMultiRaster {
 			VideoStatsModuleGlobalParams mpg
 		) throws InitException {
 
-		assert( mpg.getLogErrorReporter()!=null );
+		assert( mpg.getLogger()!=null );
 		
 		BoundedIndexContainerBridgeWithoutIndex<NamedRasterSet,DisplayStack,BridgeElementException> bridge = new BoundedIndexContainerBridgeWithoutIndex<>(
 			new BoundedIndexContainerFromList<>(list),

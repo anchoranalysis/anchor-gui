@@ -1,10 +1,10 @@
 package org.anchoranalysis.gui.feature.evaluator.params;
 
-import org.anchoranalysis.anchor.mpp.feature.bean.cfg.FeatureInputCfgDescriptor;
-import org.anchoranalysis.anchor.mpp.feature.bean.mark.FeatureInputMarkDescriptor;
-import org.anchoranalysis.anchor.mpp.feature.input.memo.FeatureInputPairMemoDescriptor;
-import org.anchoranalysis.anchor.mpp.feature.input.memo.FeatureInputSingleMemoDescriptor;
-import org.anchoranalysis.anchor.mpp.feature.input.memo.FeatureInputAllMemoDescriptor;
+import org.anchoranalysis.anchor.mpp.feature.bean.cfg.FeatureInputCfg;
+import org.anchoranalysis.anchor.mpp.feature.bean.mark.FeatureInputMark;
+import org.anchoranalysis.anchor.mpp.feature.input.memo.FeatureInputSingleMemo;
+import org.anchoranalysis.anchor.mpp.feature.input.memo.FeatureInputAllMemo;
+import org.anchoranalysis.anchor.mpp.feature.input.memo.FeatureInputPairMemo;
 import org.anchoranalysis.anchor.mpp.mark.GlobalRegionIdentifiers;
 import org.anchoranalysis.anchor.mpp.regionmap.RegionMapSingleton;
 
@@ -35,72 +35,74 @@ import org.anchoranalysis.anchor.mpp.regionmap.RegionMapSingleton;
  */
 
 import org.anchoranalysis.feature.bean.Feature;
-import org.anchoranalysis.feature.calc.FeatureCalcException;
-import org.anchoranalysis.feature.input.descriptor.FeatureInputDescriptor;
-import org.anchoranalysis.feature.input.descriptor.FeatureInputGenericDescriptor;
-import org.anchoranalysis.feature.input.descriptor.FeatureInputParamsDescriptor;
-import org.anchoranalysis.feature.resultsvectorcollection.FeatureInputResultsDescriptor;
-import org.anchoranalysis.image.feature.histogram.FeatureInputHistogramDescriptor;
-import org.anchoranalysis.image.feature.object.input.FeatureInputObjectCollectionDescriptor;
-import org.anchoranalysis.image.feature.object.input.FeatureInputPairObjectsDescriptor;
-import org.anchoranalysis.image.feature.object.input.FeatureInputSingleObjectDescriptor;
-import org.anchoranalysis.image.feature.stack.nrg.FeatureInputNRGStackDescriptor;
+import org.anchoranalysis.feature.input.FeatureInput;
+import org.anchoranalysis.feature.input.FeatureInputNRG;
+import org.anchoranalysis.feature.input.FeatureInputParams;
+import org.anchoranalysis.feature.resultsvectorcollection.FeatureInputResults;
+import org.anchoranalysis.image.feature.histogram.FeatureInputHistogram;
+import org.anchoranalysis.image.feature.object.input.FeatureInputObjectCollection;
+import org.anchoranalysis.image.feature.object.input.FeatureInputPairObjects;
+import org.anchoranalysis.image.feature.object.input.FeatureInputSingleObject;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+
+@NoArgsConstructor(access=AccessLevel.PRIVATE)
 public class ParamsFactoryForFeature {
 
-	public static FeatureCalcParamsFactory factoryFor( Feature<?> f ) throws FeatureCalcException {
+	public static FeatureCalcParamsFactory factoryFor( Feature<?> f ) {
 		
-		FeatureInputDescriptor paramType = f.inputDescriptor();
+		Class<? extends FeatureInput> paramType = f.inputType();
 		
-		if (paramType.equals(FeatureInputGenericDescriptor.INSTANCE)) {
+		if (paramType.equals(FeatureInput.class)) {
 			return new NullParamsFactory();
 		}
 		
-		if (paramType.equals(FeatureInputMarkDescriptor.instance)) {
+		if (paramType.equals(FeatureInputMark.class)) {
 			return new FeatureMarkParamsFactory();
 		}
 
-		if (paramType.equals(FeatureInputSingleObjectDescriptor.instance)) {
+		if (paramType.equals(FeatureInputSingleObject.class)) {
 			return new FeatureObjMaskParamsFactory( GlobalRegionIdentifiers.SUBMARK_INSIDE );
 		}
 		
-		if (paramType.equals(FeatureInputSingleMemoDescriptor.instance)) {
+		if (paramType.equals(FeatureInputSingleMemo.class)) {
 			return new NRGElemIndCalcParamsFactory();
 		}
 		
-		if (paramType.equals(FeatureInputPairMemoDescriptor.instance)) {
+		if (paramType.equals(FeatureInputPairMemo.class)) {
 			return new NRGElemPairCalcParamsFactory();
 		}
 		
-		if (paramType.equals(FeatureInputAllMemoDescriptor.instance)) {
+		if (paramType.equals(FeatureInputAllMemo.class)) {
 			return new NRGElemAllCalcParamsFactory();
 		}
 		
-		if (paramType.equals(FeatureInputCfgDescriptor.instance)) {
+		if (paramType.equals(FeatureInputCfg.class)) {
 			return new UnsupportedFactory();
 		}
 		
-		if (paramType.equals(FeatureInputObjectCollectionDescriptor.instance)) {
+		if (paramType.equals(FeatureInputObjectCollection.class)) {
 			return new FeatureObjMaskCollectionParamsFactory( RegionMapSingleton.instance().membershipWithFlagsForIndex(GlobalRegionIdentifiers.SUBMARK_INSIDE) );
 		}
 		
-		if (paramType.equals(FeatureInputPairObjectsDescriptor.instance)) {
+		if (paramType.equals(FeatureInputPairObjects.class)) {
 			return new FeatureObjMaskPairParamsFactory( GlobalRegionIdentifiers.SUBMARK_INSIDE );
 		}		
 		
-		if (paramType.equals(FeatureInputHistogramDescriptor.instance)) {
+		if (paramType.equals(FeatureInputHistogram.class)) {
 			return new UnsupportedFactory();
 		}
 		
-		if (paramType.equals(FeatureInputResultsDescriptor.instance)) {
+		if (paramType.equals(FeatureInputResults.class)) {
 			return new UnsupportedFactory();
 		}
 		
-		if (paramType.equals(FeatureInputNRGStackDescriptor.instance)) {
+		if (paramType.equals(FeatureInputNRG.class)) {
 			return new FeatureObjMaskParamsFactory( GlobalRegionIdentifiers.SUBMARK_INSIDE );
 		}
 		
-		if (paramType.equals(FeatureInputParamsDescriptor.INSTANCE)) {
+		if (paramType.equals(FeatureInputParams.class)) {
 			return new FeatureObjMaskParamsFactory( GlobalRegionIdentifiers.SUBMARK_INSIDE );
 		}
 		

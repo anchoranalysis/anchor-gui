@@ -31,7 +31,7 @@ import org.anchoranalysis.core.functional.FunctionWithException;
 
 
 import org.anchoranalysis.core.index.GetOperationFailedException;
-import org.anchoranalysis.core.index.container.IBoundedIndexContainer;
+import org.anchoranalysis.core.index.container.BoundedIndexContainer;
 import org.anchoranalysis.gui.bean.exporttask.ExportTaskParams;
 import org.anchoranalysis.gui.io.loader.manifest.finder.csvstatistic.CSVStatistic;
 
@@ -39,12 +39,12 @@ public class ExportTaskCSVStatistic extends ExportTaskRasterGeneratorFromBounded
 		
 	private static class ExportTaskParamsCSVStatisticContainerBridge implements FunctionWithException<
 		ExportTaskParams,
-		IBoundedIndexContainer<CSVStatistic>,
+		BoundedIndexContainer<CSVStatistic>,
 		OperationFailedException
 	> {
 
 		@Override
-		public IBoundedIndexContainer<CSVStatistic> apply(
+		public BoundedIndexContainer<CSVStatistic> apply(
 				ExportTaskParams sourceObject) throws OperationFailedException {
 			try {
 				return sourceObject.getFinderCsvStatistics().get();

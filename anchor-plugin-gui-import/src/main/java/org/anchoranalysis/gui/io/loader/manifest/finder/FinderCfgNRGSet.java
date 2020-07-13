@@ -3,7 +3,7 @@ package org.anchoranalysis.gui.io.loader.manifest.finder;
 import org.anchoranalysis.anchor.mpp.feature.instantstate.CfgNRGInstantState;
 import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.index.GetOperationFailedException;
-import org.anchoranalysis.core.index.container.IBoundedIndexContainer;
+import org.anchoranalysis.core.index.container.BoundedIndexContainer;
 import org.anchoranalysis.gui.container.ContainerGetter;
 import org.anchoranalysis.gui.io.loader.manifest.finder.historyfolder.FinderHistoryFolder;
 import org.anchoranalysis.gui.io.loader.manifest.finder.historyfolder.FinderHistoryFolderCfgNRGInstantState;
@@ -69,7 +69,7 @@ public class FinderCfgNRGSet implements Finder, ContainerGetter<CfgNRGInstantSta
 		// CSV Stats
 		final FinderCSVStats finderCSVStats = new FinderCSVStats(
 			csvStatsName,
-			context.getMpg().getLogErrorReporter().getErrorReporter()
+			context.getMpg().getLogger().errorReporter()
 		);
 		finderCSVStats.doFind(manifestRecorder);
 		
@@ -94,7 +94,7 @@ public class FinderCfgNRGSet implements Finder, ContainerGetter<CfgNRGInstantSta
 				context.getContext()
 			);
 		} catch (InitException | MenuAddException e) {
-			context.getMpg().getLogErrorReporter().getErrorReporter().recordError(FinderCfgNRGSet.class, e);
+			context.getMpg().getLogger().errorReporter().recordError(FinderCfgNRGSet.class, e);
 			return false;
 		}
 		return true;
@@ -119,7 +119,7 @@ public class FinderCfgNRGSet implements Finder, ContainerGetter<CfgNRGInstantSta
 			dropDown.getCreatorColoredOutline().createVideoStatsModuleForAdder(
 				context.getMpg().getThreadPool(),
 				context.getParentFrame(),
-				context.getMpg().getLogErrorReporter()
+				context.getMpg().getLogger()
 			);
 		}
 	}
@@ -130,7 +130,7 @@ public class FinderCfgNRGSet implements Finder, ContainerGetter<CfgNRGInstantSta
 	}
 
 	@Override
-	public IBoundedIndexContainer<CfgNRGInstantState> getCntr() throws GetOperationFailedException {
+	public BoundedIndexContainer<CfgNRGInstantState> getCntr() throws GetOperationFailedException {
 		return getHistory().getCntr();
 	}
 

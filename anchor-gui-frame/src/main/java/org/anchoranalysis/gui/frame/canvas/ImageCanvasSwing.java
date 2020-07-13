@@ -57,7 +57,7 @@ class ImageCanvasSwing extends JPanel{
     public ImageCanvasSwing( ) {
     }
 
-    public Extent createExtnt() {
+    public Extent createExtent() {
     	return new Extent( getWidth(), getHeight(), 1 );
     }
     

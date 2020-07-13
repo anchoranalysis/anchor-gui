@@ -49,7 +49,7 @@ import org.anchoranalysis.anchor.overlay.collection.OverlayCollection;
 import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.index.IndicesSelection;
 import org.anchoranalysis.core.index.IntArray;
-import org.anchoranalysis.core.index.container.IBoundedIndexContainer;
+import org.anchoranalysis.core.index.container.BoundedIndexContainer;
 import org.anchoranalysis.core.property.IPropertyValueReceivable;
 import org.anchoranalysis.core.property.IPropertyValueSendable;
 import org.anchoranalysis.core.property.change.PropertyValueChangeEvent;
@@ -73,7 +73,7 @@ public class KernelIterDescriptionNavigatorPanel extends StatePanel<KernelIterDe
 	
 	private int currentIndex;
 	
-	private IBoundedIndexContainer<KernelIterDescription> cntr;
+	private BoundedIndexContainer<KernelIterDescription> cntr;
 	
 	private EventListenerList listeners = new EventListenerList();
 	
@@ -163,7 +163,7 @@ public class KernelIterDescriptionNavigatorPanel extends StatePanel<KernelIterDe
 	}
 	
 	
-	public KernelIterDescriptionNavigatorPanel( IBoundedIndexContainer<KernelIterDescription> cntr, KernelProposer<CfgNRGPixelized> kernelProposer ) {
+	public KernelIterDescriptionNavigatorPanel( BoundedIndexContainer<KernelIterDescription> cntr, KernelProposer<CfgNRGPixelized> kernelProposer ) {
 		
 		this.kernelProposer = kernelProposer;
 		this.cntr = cntr;

@@ -34,6 +34,10 @@ import org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.definition.C
 import org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.definition.ChangeableBackgroundDefinitionMapped;
 import org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.definition.ChangeableBackgroundDefinitionSimple;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+
+@NoArgsConstructor(access=AccessLevel.PRIVATE)
 class BackgroundDefinitionCreator {
 
 	/**

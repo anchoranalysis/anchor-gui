@@ -32,9 +32,9 @@ import org.anchoranalysis.io.bean.deserializer.ObjectInputStreamDeserializer;
 import org.anchoranalysis.io.deserializer.DeserializationFailedException;
 import org.anchoranalysis.io.manifest.deserializer.bundle.Bundle;
 import org.anchoranalysis.io.manifest.deserializer.bundle.BundleParameters;
+import org.anchoranalysis.io.manifest.deserializer.folder.BundleDeserializers;
 import org.anchoranalysis.io.manifest.deserializer.folder.DeserializeFromFolderSimple;
 import org.anchoranalysis.io.manifest.deserializer.folder.LoadContainer;
-import org.anchoranalysis.io.manifest.deserializer.folder.DeserializedObjectFromFolderBundle.BundleDeserializers;
 import org.anchoranalysis.io.manifest.folder.FolderWrite;
 import org.anchoranalysis.mpp.sgmn.kernel.proposer.KernelIterDescription;
 

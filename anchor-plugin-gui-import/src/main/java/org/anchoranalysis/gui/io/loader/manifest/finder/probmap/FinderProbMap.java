@@ -33,7 +33,7 @@ import org.anchoranalysis.core.error.friendly.AnchorImpossibleSituationException
 import org.anchoranalysis.core.error.reporter.ErrorReporter;
 import org.anchoranalysis.core.functional.FunctionWithException;
 import org.anchoranalysis.core.index.GetOperationFailedException;
-import org.anchoranalysis.core.index.container.IBoundedIndexContainer;
+import org.anchoranalysis.core.index.container.BoundedIndexContainer;
 import org.anchoranalysis.core.index.container.SingleContainer;
 import org.anchoranalysis.core.index.container.bridge.BoundedIndexContainerBridgeWithoutIndex;
 import org.anchoranalysis.gui.container.background.BackgroundStackCntr;
@@ -92,7 +92,7 @@ public class FinderProbMap implements BackgroundStackCntr, FinderRasterSingleChn
 		return !isRasterSeries();
 	}
 	
-	public IBoundedIndexContainer<Stack> getRasterSeries() throws GetOperationFailedException {
+	public BoundedIndexContainer<Stack> getRasterSeries() throws GetOperationFailedException {
 		return rasterSeries.get();
 	}
 	
@@ -109,7 +109,7 @@ public class FinderProbMap implements BackgroundStackCntr, FinderRasterSingleChn
 	
 
 	@Override
-	public IBoundedIndexContainer<DisplayStack> backgroundStackCntr() throws GetOperationFailedException {
+	public BoundedIndexContainer<DisplayStack> backgroundStackCntr() throws GetOperationFailedException {
 
 		assert(exists());
 		

@@ -30,7 +30,7 @@ import org.anchoranalysis.anchor.mpp.feature.instantstate.CfgNRGInstantState;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.functional.FunctionWithException;
 import org.anchoranalysis.core.index.GetOperationFailedException;
-import org.anchoranalysis.core.index.container.IBoundedIndexContainer;
+import org.anchoranalysis.core.index.container.BoundedIndexContainer;
 import org.anchoranalysis.gui.io.loader.manifest.finder.csvstatistic.CSVStatistic;
 import org.anchoranalysis.plugin.gui.bean.exporttask.MappedFrom;
 
@@ -43,9 +43,9 @@ import org.anchoranalysis.plugin.gui.bean.exporttask.MappedFrom;
  */
 class FindNearestStatisticBridge implements FunctionWithException<MappedFrom<CfgNRGInstantState>, MappedFrom<CSVStatistic>,OperationFailedException> {
 	
-	private IBoundedIndexContainer<CSVStatistic> cntr;
+	private BoundedIndexContainer<CSVStatistic> cntr;
 		
-	public FindNearestStatisticBridge(IBoundedIndexContainer<CSVStatistic> cntr) {
+	public FindNearestStatisticBridge(BoundedIndexContainer<CSVStatistic> cntr) {
 		super();
 		this.cntr = cntr;
 	}

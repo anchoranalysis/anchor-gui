@@ -160,7 +160,7 @@ public class InteractiveFileListMouseListener extends MouseAdapter {
 			}
 
 		} catch (OperationFailedException exc) {
-			mpg.getLogErrorReporter().getErrorReporter().recordError(InteractiveFileListInternalFrame.class, exc);
+			mpg.getLogger().errorReporter().recordError(InteractiveFileListInternalFrame.class, exc);
 		}		    	
     }
         
@@ -176,7 +176,7 @@ public class InteractiveFileListMouseListener extends MouseAdapter {
 			}
 
 		} catch (OperationFailedException exc) {
-			mpg.getLogErrorReporter().getErrorReporter().recordError(InteractiveFileListInternalFrame.class, exc);
+			mpg.getLogger().errorReporter().recordError(InteractiveFileListInternalFrame.class, exc);
 		}		    	
     }
     
@@ -219,7 +219,7 @@ public class InteractiveFileListMouseListener extends MouseAdapter {
 				OpenedFile of = fileOpenManager.open( file );
 				listSelectedDropDown.add( of.getGUI() );
 			} catch (OperationFailedException exc) {
-				mpg.getLogErrorReporter().getErrorReporter().recordError(InteractiveFileListInternalFrame.class, exc);
+				mpg.getLogger().errorReporter().recordError(InteractiveFileListInternalFrame.class, exc);
 			}			        				
 		}    	
     }

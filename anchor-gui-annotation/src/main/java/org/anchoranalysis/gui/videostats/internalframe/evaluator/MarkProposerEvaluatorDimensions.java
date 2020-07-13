@@ -7,7 +7,7 @@ import org.anchoranalysis.anchor.mpp.mark.Mark;
 import org.anchoranalysis.anchor.mpp.proposer.ProposalAbnormalFailureException;
 import org.anchoranalysis.anchor.mpp.proposer.ProposerContext;
 import org.anchoranalysis.anchor.mpp.proposer.error.ErrorNode;
-import org.anchoranalysis.anchor.mpp.pxlmark.memo.PxlMarkMemo;
+import org.anchoranalysis.anchor.mpp.pxlmark.memo.VoxelizedMarkMemo;
 import org.anchoranalysis.anchor.mpp.pxlmark.memo.PxlMarkMemoFactory;
 
 /*
@@ -52,7 +52,7 @@ public class MarkProposerEvaluatorDimensions implements ProposalOperationCreator
 	public MarkProposerEvaluatorDimensions(MarkProposer markProposer, boolean detailedVisualization) {
 		super();
 		this.markProposer = markProposer;
-		assert( markProposer.isHasBeenInit() );
+		assert( markProposer.isInitialized() );
 		this.detailedVisualization = detailedVisualization;
 	}
 	
@@ -70,12 +70,12 @@ public class MarkProposerEvaluatorDimensions implements ProposalOperationCreator
 			@Override
 			public ProposedCfg propose(ErrorNode errorNode) throws ProposalAbnormalFailureException {
 
-				PxlMarkMemo pmm = PxlMarkMemoFactory.create( m, null, context.getRegionMap() );
+				VoxelizedMarkMemo pmm = PxlMarkMemoFactory.create( m, null, context.getRegionMap() );
 				
 				ProposedCfg er = new ProposedCfg();
 				er.setDimensions( dim );
 				
-				assert( markProposer.isHasBeenInit() );
+				assert( markProposer.isInitialized() );
 				
 				// assumes only called once
 				boolean succ = markProposer.propose( pmm, context );

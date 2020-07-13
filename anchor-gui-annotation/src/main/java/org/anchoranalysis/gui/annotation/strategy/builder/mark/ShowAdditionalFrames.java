@@ -35,6 +35,10 @@ import org.anchoranalysis.gui.annotation.additional.ShowRaster;
 import org.anchoranalysis.gui.annotation.builder.AdditionalFramesContext;
 import org.anchoranalysis.plugin.annotation.bean.strategy.MarkProposerStrategy;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+
+@NoArgsConstructor(access=AccessLevel.PACKAGE)
 class ShowAdditionalFrames {
 	
 	public static void apply(
@@ -43,7 +47,11 @@ class ShowAdditionalFrames {
 		Path matchPath,
 		MarkProposerStrategy strategy
 	) throws OperationFailedException {
-		ShowRaster showRaster = new ShowRaster( context.getAdder(), context.getMpg() );
+		
+		ShowRaster showRaster = new ShowRaster(
+			context.getAdder(),
+			context.getMpg()
+		);
 		
 		ShowAdditionalRasters showAdditional = new ShowAdditionalRasters(
 			showRaster,
@@ -61,7 +69,8 @@ class ShowAdditionalFrames {
 			matchPath,
 			context.getName(),
 			paramsInit.getBackground().getDefaultBackground(),
-			context.getMpg().getLogErrorReporter()
+			context.getMpg().getModelDirectory(),
+			context.getMpg().getLogger()
 		);
 		showComparers.apply(
 			paramsInit.getInitAnnotation().getAnnotation()

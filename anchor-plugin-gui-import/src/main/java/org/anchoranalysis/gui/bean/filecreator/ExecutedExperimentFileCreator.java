@@ -1,6 +1,6 @@
 package org.anchoranalysis.gui.bean.filecreator;
 
-import java.io.IOException;
+
 
 /*
  * #%L
@@ -55,7 +55,7 @@ public class ExecutedExperimentFileCreator extends FileCreatorGeneralList {
 	private CoupledManifestsInputManager coupledManifestsInputManager;
 	// END BEANS
 	
-	private transient List<String> experimentNames;
+	private List<String> experimentNames;
 
 	public CoupledManifestsInputManager getCoupledManifestsInputManager() {
 		return coupledManifestsInputManager;
@@ -80,7 +80,7 @@ public class ExecutedExperimentFileCreator extends FileCreatorGeneralList {
 					params.getLogErrorReporter()
 				)
 			);
-		} catch (DeserializationFailedException | IOException e) {
+		} catch (DeserializationFailedException e) {
 			throw new OperationFailedException(e);
 		}
 		
@@ -96,7 +96,7 @@ public class ExecutedExperimentFileCreator extends FileCreatorGeneralList {
 			CoupledManifests cm = itrCM.next();
 			
 			// We are only interested in coupledmanifests that we did not find previously
-			if (cm.getExperimentManifest()==null) {
+			if (!cm.getExperimentManifest().isPresent()) {
 				addVideoStatsFileToList(cm, params, listFiles);
 			}
 		}
@@ -105,10 +105,7 @@ public class ExecutedExperimentFileCreator extends FileCreatorGeneralList {
 	private void addVideoStatsFileFromManifestExperiment( ManifestRecorder manifestExperiment, FileCreatorParams params, ManifestCouplingDefinition manifestCouplingDefinition, List<InteractiveFile> listFiles ) {
 		experimentNames.add( manifestExperiment.getRootFolder().getRelativePath().toString() );
 		
-		// Takes just the final path
-		//experimentNames.add( new File( manifestExperiment.getRootFolder().calcPath() ).getName() );
-		
-		FinderSerializedObject<NRGScheme> finderNRGScheme = new FinderSerializedObject<>("nrgScheme", params.getLogErrorReporter().getErrorReporter() );
+		FinderSerializedObject<NRGScheme> finderNRGScheme = new FinderSerializedObject<>("nrgScheme", params.getLogErrorReporter().errorReporter() );
 		finderNRGScheme.doFind(manifestExperiment);
 		
 		for (Iterator<CoupledManifests> i = manifestCouplingDefinition.iteratorCoupledManifestsFor(manifestExperiment); i.hasNext(); ) 	{
@@ -139,7 +136,7 @@ public class ExecutedExperimentFileCreator extends FileCreatorGeneralList {
 			return getCustomName();
 		}
 		
-		if (experimentNames.size()==0) {
+		if (experimentNames.isEmpty()) {
 			return "Untitled Executed Experiment Files";
 		} else if (experimentNames.size()==1) {
 			return experimentNames.get(0);

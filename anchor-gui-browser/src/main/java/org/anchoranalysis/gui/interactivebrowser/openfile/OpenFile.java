@@ -45,7 +45,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.OperationFailedException;
-import org.anchoranalysis.core.log.LogErrorReporter;
+import org.anchoranalysis.core.log.Logger;
 import org.anchoranalysis.gui.IconFactory;
 import org.anchoranalysis.gui.interactivebrowser.openfile.importer.ImporterSettings;
 import org.anchoranalysis.gui.interactivebrowser.openfile.type.OpenFileType;
@@ -58,17 +58,17 @@ public class OpenFile extends AbstractAction {
 	private static final long serialVersionUID = 1L;
 	
 	private Component parentComponent; 
-	private LogErrorReporter logErrorReporter;
+	private Logger logger;
 	private FileCreatorLoader fileCreatorLoader;
 	private OpenFileTypeFactory factory;
 	
 	private JFileChooser fileChooser;
 	
-	public OpenFile( Frame parentComponent, FileCreatorLoader fileCreatorLoader, OpenFileTypeFactory factory, LogErrorReporter logErrorReporter ) {
+	public OpenFile( Frame parentComponent, FileCreatorLoader fileCreatorLoader, OpenFileTypeFactory factory, Logger logger ) {
 		super("Open File...", new IconFactory().icon("/toolbarIcon/file_open.png") );
 		this.parentComponent = parentComponent;
 		this.fileCreatorLoader = fileCreatorLoader;
-		this.logErrorReporter = logErrorReporter;
+		this.logger = logger;
 		this.factory = factory;
 		
 		//Create a file chooser
@@ -95,7 +95,7 @@ public class OpenFile extends AbstractAction {
 				fileChooser.setCurrentDirectory( file);
 			}
 		} catch (IOException e) {
-			logErrorReporter.getErrorReporter().recordError(OpenFile.class, e);
+			logger.errorReporter().recordError(OpenFile.class, e);
 		}
 	}
 	
@@ -194,10 +194,10 @@ public class OpenFile extends AbstractAction {
 			);
 			
 		} catch (CreateException e) {
-			logErrorReporter.getErrorReporter().recordError(OpenFile.class, e);
+			logger.errorReporter().recordError(OpenFile.class, e);
 			showError("An error occurred opening the bean. See log.");
 		} catch (OperationFailedException e) {
-			logErrorReporter.getErrorReporter().recordError(OpenFile.class, e);
+			logger.errorReporter().recordError(OpenFile.class, e);
 			showError("An error occurred opening the bean. See log.");
 		}
 		

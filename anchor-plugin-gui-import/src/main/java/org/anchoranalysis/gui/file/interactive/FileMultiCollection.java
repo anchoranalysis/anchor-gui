@@ -35,7 +35,7 @@ import org.anchoranalysis.anchor.mpp.cfg.Cfg;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.error.OperationFailedException;
-import org.anchoranalysis.core.log.LogErrorReporter;
+import org.anchoranalysis.core.log.Logger;
 import org.anchoranalysis.core.name.store.LazyEvaluationStore;
 import org.anchoranalysis.core.params.KeyValueParams;
 import org.anchoranalysis.gui.bean.filecreator.MarkCreatorParams;
@@ -85,26 +85,26 @@ public class FileMultiCollection extends InteractiveFile {
 		) throws OperationFailedException {
 		
 		LazyEvaluationStore<TimeSequence> stacks = new LazyEvaluationStore<>(
-			markCreatorParams.getModuleParams().getLogErrorReporter(),
+			markCreatorParams.getModuleParams().getLogger(),
 			"stacks"
 		); 
 		inputObject.stack().addToStore(stacks);
 		
 		LazyEvaluationStore<Cfg> cfgs = new LazyEvaluationStore<>(
-			markCreatorParams.getModuleParams().getLogErrorReporter(),
+			markCreatorParams.getModuleParams().getLogger(),
 			"cfg"
 		);
 		inputObject.cfg().addToStore(cfgs);
 
-		LogErrorReporter logErrorReporter = markCreatorParams.getModuleParams().getLogErrorReporter();
+		Logger logger = markCreatorParams.getModuleParams().getLogger();
 		LazyEvaluationStore<KeyValueParams> keyValueParams = new LazyEvaluationStore<>(
-			logErrorReporter,
+			logger,
 			"keyValueParams"
 		);
 		inputObject.keyValueParams().addToStore(keyValueParams);
 		
 		LazyEvaluationStore<ObjectCollection> objs = new LazyEvaluationStore<>(
-			logErrorReporter,
+			logger,
 			"objMaskCollection"
 		);
 		inputObject.objs().addToStore(objs);

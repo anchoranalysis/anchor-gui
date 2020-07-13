@@ -33,7 +33,7 @@ import javax.swing.tree.TreeNode;
 import org.anchoranalysis.anchor.mpp.pair.Pair;
 import org.anchoranalysis.anchor.overlay.Overlay;
 import org.anchoranalysis.core.error.OperationFailedException;
-import org.anchoranalysis.core.log.LogErrorReporter;
+import org.anchoranalysis.core.log.Logger;
 import org.anchoranalysis.feature.bean.list.FeatureList;
 import org.anchoranalysis.feature.calc.FeatureCalcException;
 import org.anchoranalysis.feature.calc.FeatureInitParams;
@@ -57,7 +57,7 @@ public class FeatureCalcDescriptionTreeModel extends DefaultTreeModel implements
 	private FeatureListWithRegionMap<FeatureInput> featureListWithRegions;
 	private FeatureList<FeatureInput> featureList;
 	
-	private LogErrorReporter logErrorReporter;
+	private Logger logger;
 	private SharedFeatureMulti sharedFeatures;
 	
 	private FeatureCalculatorMulti<FeatureInput> session = null;
@@ -69,7 +69,7 @@ public class FeatureCalcDescriptionTreeModel extends DefaultTreeModel implements
 	public FeatureCalcDescriptionTreeModel(
 		FeatureListWithRegionMap<FeatureInput> featureListWithRegions,
 		SharedFeatureMulti sharedFeatures,
-		LogErrorReporter logErrorReporter
+		Logger logger
 	) {
 		super( null );
 
@@ -82,10 +82,10 @@ public class FeatureCalcDescriptionTreeModel extends DefaultTreeModel implements
 		
 		
 		
-		final TreeNode root = new CustomRootNode(logErrorReporter.getErrorReporter());
+		final TreeNode root = new CustomRootNode(logger.errorReporter());
 		setRoot(root);
 		
-		this.logErrorReporter = logErrorReporter;
+		this.logger = logger;
 		
 		this.sharedFeatures = removeFeaturesFromShared(sharedFeatures, featureList);
 	}
@@ -113,7 +113,7 @@ public class FeatureCalcDescriptionTreeModel extends DefaultTreeModel implements
 			);
 
 		} catch (OperationFailedException e) {
-			logErrorReporter.getErrorReporter().recordError( FeatureCalcDescriptionTreeModel.class, e);
+			logger.errorReporter().recordError( FeatureCalcDescriptionTreeModel.class, e);
 		}
 	}
 	
@@ -141,7 +141,7 @@ public class FeatureCalcDescriptionTreeModel extends DefaultTreeModel implements
 			);
 		
 		} catch (OperationFailedException e) {
-			logErrorReporter.getErrorReporter().recordError( FeatureCalcDescriptionTreeModel.class, e);
+			logger.errorReporter().recordError( FeatureCalcDescriptionTreeModel.class, e);
 		}
 	}
 	
@@ -164,7 +164,7 @@ public class FeatureCalcDescriptionTreeModel extends DefaultTreeModel implements
 					featureList,
 					paramsInit,
 					sharedFeatures,
-					logErrorReporter
+					logger
 				);
 				
 				root.replaceFeatureList(

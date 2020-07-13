@@ -28,7 +28,7 @@ package org.anchoranalysis.gui.frame.threaded.stack;
 
 import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.index.IIndexGettableSettable;
-import org.anchoranalysis.core.index.container.IBoundedRangeIncompleteDynamic;
+import org.anchoranalysis.core.index.container.BoundedRangeIncompleteDynamic;
 import org.anchoranalysis.gui.frame.details.ControllerPopupMenu;
 import org.anchoranalysis.gui.frame.details.IGenerateExtraDetail;
 import org.anchoranalysis.gui.frame.details.InternalFrameWithDetailsTopPanel;
@@ -68,7 +68,7 @@ public class InternalFrameThreadedProvider {
 	
 	public ISliderState init(
 		IThreadedProducer producer,
-		IBoundedRangeIncompleteDynamic indexBounds,
+		BoundedRangeIncompleteDynamic indexBounds,
 		boolean includeFrameAdjusting,
 		DefaultModuleState initialState,
 		IRetrieveElements elementRetriever,

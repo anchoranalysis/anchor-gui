@@ -32,7 +32,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPopupMenu;
 
-import org.anchoranalysis.core.log.LogErrorReporter;
+import org.anchoranalysis.core.log.Logger;
 import org.anchoranalysis.gui.file.opened.IOpenedFileGUI;
 import org.anchoranalysis.gui.reassign.JDropdownButton;
 import org.anchoranalysis.gui.videostats.operation.VideoStatsOperationFromCreatorAndAdder;
@@ -58,7 +58,7 @@ public class VideoStatsModuleDropdown implements IOpenedFileGUI {
 	}
 	
 	// We always treat the first module as the return module
-	public VideoStatsModuleCreatorAndAdder addNamedModules( NamedModule[] modulesToAdd, InteractiveThreadPool threadPool, LogErrorReporter logErrorRepoter ) {
+	public VideoStatsModuleCreatorAndAdder addNamedModules( NamedModule[] modulesToAdd, InteractiveThreadPool threadPool, Logger logErrorRepoter ) {
 		
 		VideoStatsModuleCreatorAndAdder ret = null;
 		
@@ -84,16 +84,16 @@ public class VideoStatsModuleDropdown implements IOpenedFileGUI {
 	}
 	
 	// We always treat the first module as the return module
-	public VideoStatsModuleCreatorAndAdder addNamedModules( VideoStatsOperationMenu menu, NamedModule[] modulesToAdd, InteractiveThreadPool threadPool, LogErrorReporter logErrorReporter, boolean useShortNames ) {
+	public VideoStatsModuleCreatorAndAdder addNamedModules( VideoStatsOperationMenu menu, NamedModule[] modulesToAdd, InteractiveThreadPool threadPool, Logger logger, boolean useShortNames ) {
 		
 		VideoStatsModuleCreatorAndAdder ret = null;
 		
 		for (NamedModule moduleToAdd : modulesToAdd) {
 		
 			if (useShortNames) {
-				menu.add( new VideoStatsOperationFromCreatorAndAdder(moduleToAdd.getShortTitle(), moduleToAdd.getCreator(), threadPool, logErrorReporter) );
+				menu.add( new VideoStatsOperationFromCreatorAndAdder(moduleToAdd.getShortTitle(), moduleToAdd.getCreator(), threadPool, logger) );
 			} else {
-				menu.add( new VideoStatsOperationFromCreatorAndAdder(moduleToAdd.getTitle(), moduleToAdd.getCreator(), threadPool, logErrorReporter) );
+				menu.add( new VideoStatsOperationFromCreatorAndAdder(moduleToAdd.getTitle(), moduleToAdd.getCreator(), threadPool, logger) );
 			}
 			numItems++;
 			

@@ -127,7 +127,7 @@ public class InternalFrameMarkProposerEvaluator {
 			sliderState,
 			evaluatorChooser.evaluatorWithContext(),
 			mpg.getRandomNumberGenerator(),
-			mpg.getLogErrorReporter().getErrorReporter()
+			mpg.getLogger().errorReporter()
 		); 
 		delegate.controllerAction().mouse().addMouseListener( clickListener, false);
 		

@@ -73,17 +73,14 @@ public class FileCreatorLoader {
 	}
 	
 	private void addSingleCreator( FileCreator fileCreator, Component parentComponent ) {
-
-//		ProgressMonitor progressMonitor = new ProgressMonitor(ProgressMonitorExample.this,
-//                "Operation in progress...",
-//                "", 0, 100);
-		
 		String name = fileCreator.suggestName();
-		String threadDescription = String.format("Loading File Creator '%s'", name);
 		
 		SwingUtilities.invokeLater( () -> {
 			Loader loader = new Loader( new NamedBean<>(name, fileCreator), parentComponent );
-			mpg.getThreadPool().submitWithProgressMonitor(loader, threadDescription);
+			mpg.getThreadPool().submitWithProgressMonitor(
+				loader,
+				String.format("Loading File Creator '%s'", name)
+			);
 		});
 	}
 
@@ -115,14 +112,14 @@ public class FileCreatorLoader {
 								
 				VideoStatsModule module = fileCreator.getValue().createModule( name, params, mpg, globalSubgroupAdder.createChild(), fileOpenManager, progressReporter );
 				
-				mpg.getLogErrorReporter().getLogReporter().logFormatted("Loaded fileListSummaryModule %s (%dms)", name, timer.getTime() );
+				mpg.getLogger().messageLogger().logFormatted("Loaded fileListSummaryModule %s (%dms)", name, timer.getTime() );
 				
 				return module;
 				
 			} catch (VideoStatsModuleCreateException e) {
 				// Should we change this to the error reporter?
-				mpg.getLogErrorReporter().getLogReporter().logFormatted("Failed to load fileListSummaryModule after %s (%dms)", name, timer.getTime() );
-				mpg.getLogErrorReporter().getErrorReporter().recordError(FileCreatorLoader.class, e);
+				mpg.getLogger().messageLogger().logFormatted("Failed to load fileListSummaryModule after %s (%dms)", name, timer.getTime() );
+				mpg.getLogger().errorReporter().recordError(FileCreatorLoader.class, e);
 				
 				 //+ ExceptionUtils.getFullStackTrace(e)
 				JOptionPane.showMessageDialog(parentComponent, "An error occurred while loading module. See log." );

@@ -121,7 +121,7 @@ public class InternalFrameAnnotator {
 		ShowError showError = new ShowError();
 		ToolErrorReporter toolErrorReporter = new ToolErrorReporter(
 			showError,
-			mpg.getLogErrorReporter().getErrorReporter()
+			mpg.getLogger().errorReporter()
 		);
 		
 		AnnotationPanelParams params = new AnnotationPanelParams(

@@ -37,13 +37,12 @@ import org.anchoranalysis.anchor.mpp.regionmap.RegionMapSingleton;
 
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.InitException;
-import org.anchoranalysis.core.log.LogErrorReporter;
+import org.anchoranalysis.core.log.Logger;
 import org.anchoranalysis.core.name.provider.NamedProviderGetException;
 import org.anchoranalysis.core.name.store.NamedProviderStore;
 import org.anchoranalysis.feature.bean.Feature;
 import org.anchoranalysis.feature.bean.list.FeatureList;
 import org.anchoranalysis.feature.bean.list.FeatureListFactory;
-import org.anchoranalysis.feature.calc.FeatureCalcException;
 import org.anchoranalysis.feature.input.FeatureInput;
 import org.anchoranalysis.feature.shared.SharedFeaturesInitParams;
 import org.anchoranalysis.gui.feature.evaluator.params.FeatureCalcParamsFactory;
@@ -52,14 +51,12 @@ import org.anchoranalysis.gui.feature.evaluator.treetable.ExtractFromNamedNRGSch
 import org.anchoranalysis.gui.feature.evaluator.treetable.FeatureListSrc;
 import org.anchoranalysis.gui.feature.evaluator.treetable.KeyValueParamsAugmenter;
 
-public class FeatureListSrcBuilder<T extends FeatureInput> {
+import lombok.AllArgsConstructor;
 
-	private LogErrorReporter logErrorReporter;
-		
-	public FeatureListSrcBuilder(LogErrorReporter logErrorReporter) {
-		super();
-		this.logErrorReporter = logErrorReporter;
-	}
+@AllArgsConstructor
+public class FeatureListSrcBuilder {
+
+	private Logger logger;
 
 	/**
 	 * Builds the nrgSchemeSet
@@ -98,7 +95,7 @@ public class FeatureListSrcBuilder<T extends FeatureInput> {
 		NRGSchemeCreator nrgSchemeCreator
 	) throws CreateException {
 		
-		NRGScheme nrgScheme = createNRGScheme( nrgSchemeCreator, soFeature, logErrorReporter );
+		NRGScheme nrgScheme = createNRGScheme( nrgSchemeCreator, soFeature, logger );
 		RegionMapFinder.addFromNrgScheme( nrgElemSet, nrgScheme );
 		
 		addFromStore( nrgElemSet, soFeature.getFeatureListSet(), nrgScheme.getRegionMap() );
@@ -108,13 +105,13 @@ public class FeatureListSrcBuilder<T extends FeatureInput> {
 		KeyValueParamsAugmenter augmenter = new KeyValueParamsAugmenter(
 			nrgScheme,
 			soFeature.getSharedFeatureSet(),
-			logErrorReporter
+			logger
 		);
 		
 		return new ExtractFromNamedNRGSchemeSet(nrgElemSet, augmenter );
 	}
 	
-	private NRGScheme createNRGScheme( NRGSchemeCreator nrgSchemeCreator, SharedFeaturesInitParams soFeature, LogErrorReporter logger ) throws CreateException {
+	private NRGScheme createNRGScheme( NRGSchemeCreator nrgSchemeCreator, SharedFeaturesInitParams soFeature, Logger logger ) throws CreateException {
 		
 		try {
 			nrgSchemeCreator.initRecursive( soFeature, logger );
@@ -155,28 +152,26 @@ public class FeatureListSrcBuilder<T extends FeatureInput> {
 					)
 				);
 				
-			} catch (FeatureCalcException | CreateException e) {
-				logErrorReporter.getErrorReporter().recordError(FeatureListSrcBuilder.class, e);
+			} catch (CreateException e) {
+				logger.errorReporter().recordError(FeatureListSrcBuilder.class, e);
 			} catch (NamedProviderGetException e) {
-				logErrorReporter.getErrorReporter().recordError(FeatureListSrcBuilder.class, e.summarize());
+				logger.errorReporter().recordError(FeatureListSrcBuilder.class, e.summarize());
 			}
 		}
 	}
 	
-	private void determineUnaryPairwiseFeatures( FeatureList<FeatureInput> in, FeatureList<FeatureInputSingleMemo> outUnary, FeatureList<FeatureInputPairMemo> outPairwise ) throws FeatureCalcException {
-		
-		for( Feature<FeatureInput> f : in ) {
+	private void determineUnaryPairwiseFeatures( FeatureList<FeatureInput> in, FeatureList<FeatureInputSingleMemo> outUnary, FeatureList<FeatureInputPairMemo> outPairwise ) {
+		for( Feature<FeatureInput> feature : in ) {
 			
-			FeatureCalcParamsFactory factory = ParamsFactoryForFeature.factoryFor(f);
+			FeatureCalcParamsFactory factory = ParamsFactoryForFeature.factoryFor(feature);
 			
 			if (factory.isUnarySupported()) {
-				outUnary.add( f.downcast() );
+				outUnary.add( feature.downcast() );
 			}
 			
 			if (factory.isPairwiseSupported()) {
-				outPairwise.add( f.downcast() );
+				outPairwise.add( feature.downcast() );
 			}
-
 		}
 	}
 }

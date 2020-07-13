@@ -105,7 +105,7 @@ public class ShowRaster {
 			);
 			
 		} catch (InitException | GetOperationFailedException | VideoStatsModuleCreateException e) {
-			mpg.getLogErrorReporter().getErrorReporter().recordError(AnnotatorModuleCreator.class, e);
+			mpg.getLogger().errorReporter().recordError(AnnotatorModuleCreator.class, e);
 		}
 	}
 }

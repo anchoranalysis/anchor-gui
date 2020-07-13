@@ -45,7 +45,7 @@ import org.anchoranalysis.anchor.overlay.collection.OverlayCollection;
  */
 
 import org.anchoranalysis.core.error.CreateException;
-import org.anchoranalysis.core.log.LogErrorReporter;
+import org.anchoranalysis.core.log.Logger;
 import org.anchoranalysis.feature.bean.list.FeatureList;
 import org.anchoranalysis.feature.calc.FeatureCalcException;
 import org.anchoranalysis.feature.calc.FeatureInitParams;
@@ -57,9 +57,9 @@ import org.anchoranalysis.feature.shared.SharedFeatureMulti;
 class FinderEvaluator {
 
 	private SharedFeatureMulti sharedFeatureList;
-	private LogErrorReporter logger;
+	private Logger logger;
 		
-	public FinderEvaluator(SharedFeatureMulti sharedFeatureList, LogErrorReporter logger) {
+	public FinderEvaluator(SharedFeatureMulti sharedFeatureList, Logger logger) {
 		super();
 		this.sharedFeatureList = sharedFeatureList;
 		this.logger = logger;
@@ -115,7 +115,7 @@ class FinderEvaluator {
 		Cfg cfg,
 		NRGStackWithParams raster,
 		SharedFeatureMulti sharedFeatureList,
-		LogErrorReporter logger
+		Logger logger
 	) throws CreateException {
 		
 		RegionMembershipWithFlags regionMembership = RegionMapSingleton
@@ -174,7 +174,7 @@ class FinderEvaluator {
 		public EdgeTester(
 			NRGStackWithParams raster,
 			SharedFeatureMulti sharedFeatureList,
-			LogErrorReporter logger
+			Logger logger
 		) throws CreateException {
 			
 			this.raster = raster;
@@ -193,7 +193,7 @@ class FinderEvaluator {
 		
 		private Optional<FeatureCalculatorMulti<FeatureInputPairMemo>> createSession(
 			SharedFeatureMulti sharedFeatureList,
-			LogErrorReporter logger	
+			Logger logger	
 		) throws CreateException {
 			Optional<FeatureList<FeatureInputPairMemo>> relevantFeatures = addCriteria.orderedListOfFeatures();
 			if (relevantFeatures.isPresent() && relevantFeatures.get().size()>0) {

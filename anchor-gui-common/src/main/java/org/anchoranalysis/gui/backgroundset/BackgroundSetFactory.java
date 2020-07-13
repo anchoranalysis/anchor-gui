@@ -34,7 +34,7 @@ import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.functional.Operation;
 import org.anchoranalysis.core.index.GetOperationFailedException;
-import org.anchoranalysis.core.index.container.IBoundedIndexContainer;
+import org.anchoranalysis.core.index.container.BoundedIndexContainer;
 import org.anchoranalysis.core.index.container.bridge.BoundedIndexContainerBridgeWithoutIndex;
 import org.anchoranalysis.core.name.provider.NamedProvider;
 import org.anchoranalysis.core.name.provider.NamedProviderGetException;
@@ -109,7 +109,7 @@ public class BackgroundSetFactory {
 	}
 	
 	
-	private static IBoundedIndexContainer<DisplayStack> rasterBridge( final LoadContainer<MarkWithRaster> cntr, final String name ) {
+	private static BoundedIndexContainer<DisplayStack> rasterBridge( final LoadContainer<MarkWithRaster> cntr, final String name ) {
 		
 		assert(cntr!=null);
 		return new BoundedIndexContainerBridgeWithoutIndex<>(

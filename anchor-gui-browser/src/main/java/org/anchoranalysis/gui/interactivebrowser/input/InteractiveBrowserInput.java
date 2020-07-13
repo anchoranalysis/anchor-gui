@@ -39,9 +39,8 @@ import org.anchoranalysis.bean.shared.params.keyvalue.KeyValueParamsInitParams;
 import org.anchoranalysis.bean.shared.params.keyvalue.KeyValueParamsProvider;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.OperationFailedException;
-import org.anchoranalysis.core.log.LogErrorReporter;
+import org.anchoranalysis.core.log.CommonContext;
 import org.anchoranalysis.core.name.store.SharedObjects;
-import org.anchoranalysis.core.params.KeyValueParams;
 import org.anchoranalysis.feature.bean.list.FeatureListProvider;
 import org.anchoranalysis.feature.input.FeatureInput;
 import org.anchoranalysis.feature.shared.SharedFeaturesInitParams;
@@ -52,26 +51,44 @@ import org.anchoranalysis.image.io.bean.rasterreader.RasterReader;
 import org.anchoranalysis.io.bean.filepath.provider.FilePathProvider;
 import org.anchoranalysis.io.input.InputFromManager;
 
+import lombok.Getter;
+import lombok.Setter;
+
 public class InteractiveBrowserInput implements InputFromManager {
 	
+	@Getter @Setter
 	private RasterReader rasterReader;
+	
+	@Getter @Setter
 	private List<FileCreator> listFileCreators;
+	
+	@Setter
 	private NRGSchemeCreator nrgSchemeCreator;
+	
+	@Setter
 	private List<NamedBean<FeatureListProvider<FeatureInput>>> namedItemSharedFeatureList;
+	
+	@Getter @Setter
 	private List<NamedBean<MarkEvaluator>> namedItemMarkEvaluatorList;
+	
+	@Setter
 	private List<NamedBean<KeyValueParamsProvider>> namedItemKeyValueParamsProviderList;
+
+	@Setter
 	private List<NamedBean<FilePathProvider>> namedItemFilePathProviderList;
+	
+	@Getter @Setter
 	private ImporterSettings importerSettings;
 	
-	public FeatureListSrc createFeatureListSrc(LogErrorReporter logger) throws CreateException {
+	public FeatureListSrc createFeatureListSrc(CommonContext context) throws CreateException {
 		
-		SharedObjects so = new SharedObjects(logger);
+		SharedObjects so = new SharedObjects(context);
 		KeyValueParamsInitParams soParams = KeyValueParamsInitParams.create(so);
 		SharedFeaturesInitParams soFeature = SharedFeaturesInitParams.create(so);
 		
 		try {
 			// Adds the feature-lists to the shared-objects
-			soFeature.populate(namedItemSharedFeatureList, logger);
+			soFeature.populate(namedItemSharedFeatureList, context.getLogger());
 			
 			addKeyValueParams( soParams );
 			addFilePaths( soParams );
@@ -81,13 +98,16 @@ public class InteractiveBrowserInput implements InputFromManager {
 			throw new CreateException(e2);
 		}
 		
-		return new FeatureListSrcBuilder<>(logger).build(soFeature, nrgSchemeCreator);
+		return new FeatureListSrcBuilder( context.getLogger() ).build(soFeature, nrgSchemeCreator);
 	}
 	
 	private void addKeyValueParams( KeyValueParamsInitParams soParams ) throws OperationFailedException {
 		
 		for( NamedBean<KeyValueParamsProvider> ni : this.namedItemKeyValueParamsProviderList ) {
-			soParams.getNamedKeyValueParamsCollection().add(ni.getName(), new OperationCreateFromProvider<KeyValueParams>(ni.getValue()) );
+			soParams.getNamedKeyValueParamsCollection().add(
+				ni.getName(),
+				new OperationCreateFromProvider<>(ni.getValue())
+			);
 		}
 	}
 	
@@ -96,7 +116,7 @@ public class InteractiveBrowserInput implements InputFromManager {
 		for( NamedBean<FilePathProvider> ni : this.namedItemFilePathProviderList ) {
 			soParams.getNamedFilePathCollection().add(
 				ni.getName(),
-				new OperationCreateFromProvider<Path>(ni.getValue())
+				new OperationCreateFromProvider<>(ni.getValue())
 			);
 		}
 	}
@@ -109,72 +129,5 @@ public class InteractiveBrowserInput implements InputFromManager {
 	@Override
 	public Optional<Path> pathForBinding() {
 		return Optional.empty();
-	}
-	public RasterReader getRasterReader() {
-		return rasterReader;
-	}
-
-	public void setRasterReader(RasterReader rasterReader) {
-		this.rasterReader = rasterReader;
-	}
-
-	public List<FileCreator> getListFileCreators() {
-		return listFileCreators;
-	}
-
-	public void setListFileCreators(List<FileCreator> listFileCreators) {
-		this.listFileCreators = listFileCreators;
-	}
-
-
-	public NRGSchemeCreator getNrgSchemeCreator() {
-		return nrgSchemeCreator;
-	}
-
-
-	public void setNrgSchemeCreator(NRGSchemeCreator nrgSchemeCreator) {
-		this.nrgSchemeCreator = nrgSchemeCreator;
-	}
-
-	public void setNamedItemSharedFeatureList(
-			List<NamedBean<FeatureListProvider<FeatureInput>>> namedItemSharedFeatureList) {
-		this.namedItemSharedFeatureList = namedItemSharedFeatureList;
-	}
-
-	public List<NamedBean<MarkEvaluator>> getNamedItemMarkEvaluatorList() {
-		return namedItemMarkEvaluatorList;
-	}
-
-	public void setNamedItemMarkEvaluatorList(
-			List<NamedBean<MarkEvaluator>> namedItemMarkEvaluatorList) {
-		this.namedItemMarkEvaluatorList = namedItemMarkEvaluatorList;
-	}
-
-	public List<NamedBean<KeyValueParamsProvider>> getNamedItemKeyValueParamsProviderList() {
-		return namedItemKeyValueParamsProviderList;
-	}
-
-	public List<NamedBean<FilePathProvider>> getNamedItemFilePathProviderList() {
-		return namedItemFilePathProviderList;
-	}
-
-
-	public void setNamedItemFilePathProviderList(
-			List<NamedBean<FilePathProvider>> namedItemFilePathProviderList) {
-		this.namedItemFilePathProviderList = namedItemFilePathProviderList;
-	}
-
-
-	public void setNamedItemKeyValueParamsProviderList(
-			List<NamedBean<KeyValueParamsProvider>> namedItemKeyValueParamsProviderList) {
-		this.namedItemKeyValueParamsProviderList = namedItemKeyValueParamsProviderList;
-	}
-
-	public ImporterSettings getImporterSettings() {
-		return importerSettings;
-	}
-
-	public void setImporterSettings(ImporterSettings importerSettings) {
-		this.importerSettings = importerSettings;
 	}
 }

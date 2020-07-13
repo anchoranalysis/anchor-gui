@@ -33,8 +33,8 @@ import javax.swing.BorderFactory;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 
-import org.anchoranalysis.core.index.container.IBoundedRange;
-import org.anchoranalysis.core.index.container.IBoundedRangeIncompleteDynamic;
+import org.anchoranalysis.core.index.container.BoundedRange;
+import org.anchoranalysis.core.index.container.BoundedRangeIncompleteDynamic;
 import org.anchoranalysis.core.property.IPropertyValueReceivable;
 import org.anchoranalysis.gui.image.IndexSlider;
 import org.anchoranalysis.gui.slider.SideSlider;
@@ -46,7 +46,7 @@ class SliceIndexSlider {
 	private SideSlider stackSlider;
 	private IndexSlider indexSlider;
 
-	public SliceIndexSlider( IBoundedRange sliceBounds, IBoundedRangeIncompleteDynamic indexBounds, boolean includeAdjustingIndex ) {
+	public SliceIndexSlider( BoundedRange sliceBounds, BoundedRangeIncompleteDynamic indexBounds, boolean includeAdjustingIndex ) {
 		
 		delegate = new JPanel();
 		delegate.setLayout( new BorderLayout() );
@@ -71,7 +71,7 @@ class SliceIndexSlider {
 		indexSlider.dispose();
 	}
 	
-	public void setSliceBounds( IBoundedRange sliceBounds ) {
+	public void setSliceBounds( BoundedRange sliceBounds ) {
 		stackSlider.setMinimum( sliceBounds.getMinimumIndex() );
 		stackSlider.setMaximum( sliceBounds.getMaximumIndex() );
 		updateSliderVisibilityFromBounds( sliceBounds );
@@ -81,7 +81,7 @@ class SliceIndexSlider {
 		stackSlider.setVisible(visibility);
 	}
 	
-	public void updateSliderVisibilityFromBounds( IBoundedRange sliceBounds ) {
+	public void updateSliderVisibilityFromBounds( BoundedRange sliceBounds ) {
 		setStackSliderVisible( sliceBounds.getMinimumIndex()!=sliceBounds.getMaximumIndex() );
 	}
 	

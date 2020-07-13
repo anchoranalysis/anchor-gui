@@ -103,7 +103,7 @@ public class MultiCollectionDropDown {
 			),
 			adder,
 			params.getModuleParams().getThreadPool(),
-			params.getModuleParams().getLogErrorReporter().getErrorReporter()
+			params.getModuleParams().getLogger().errorReporter()
 		);
 		
 		DropDownUtilitiesRaster.addRaster(
@@ -165,7 +165,7 @@ public class MultiCollectionDropDown {
 				() -> Optional.of(
 					ParamsUtils.apply(
 						paramsCollection,
-						mpg.getLogErrorReporter().getErrorReporter()
+						mpg.getLogger().errorReporter()
 					)
 				)
 			);

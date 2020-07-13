@@ -30,7 +30,7 @@ package org.anchoranalysis.gui.io.loader.manifest.finder.csvstatistic;
 import java.nio.file.Path;
 
 import org.anchoranalysis.core.index.container.ArrayListContainer;
-import org.anchoranalysis.core.index.container.IBoundedIndexContainer;
+import org.anchoranalysis.core.index.container.BoundedIndexContainer;
 import org.anchoranalysis.io.csv.reader.CSVReaderByLine;
 import org.anchoranalysis.io.csv.reader.CSVReaderByLine.ReadByLine;
 import org.anchoranalysis.io.csv.reader.CSVReaderException;
@@ -38,7 +38,7 @@ import org.anchoranalysis.io.csv.reader.CSVReaderException;
 public class CSVStatisticLoaderIntervalAggregate extends CSVStatisticLoader {
 
 	@Override
-	public IBoundedIndexContainer<CSVStatistic> createContainerFromCSV(Path csvPath) throws CSVReaderException {
+	public BoundedIndexContainer<CSVStatistic> createContainerFromCSV(Path csvPath) throws CSVReaderException {
 		
 		ArrayListContainer<CSVStatistic> cntr = new ArrayListContainer<>();
 		
