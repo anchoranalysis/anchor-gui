@@ -103,16 +103,16 @@ public class FileMultiCollection extends InteractiveFile {
 		);
 		inputObject.keyValueParams().addToStore(keyValueParams);
 		
-		LazyEvaluationStore<ObjectCollection> objs = new LazyEvaluationStore<>(
+		LazyEvaluationStore<ObjectCollection> objects = new LazyEvaluationStore<>(
 			logger,
 			"objMaskCollection"
 		);
-		inputObject.objs().addToStore(objs);
+		inputObject.objects().addToStore(objects);
 		
 		MultiCollectionDropDown dropDown = new MultiCollectionDropDown(
 			progressReporter ->	createTimeSequenceProvider(stacks),
 			cfgs,
-			objs,
+			objects,
 			keyValueParams,
 			identifier(),
 			true

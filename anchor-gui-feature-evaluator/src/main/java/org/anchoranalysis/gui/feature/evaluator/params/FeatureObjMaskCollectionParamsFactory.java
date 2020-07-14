@@ -40,21 +40,24 @@ import org.anchoranalysis.image.feature.object.input.FeatureInputObjectCollectio
 import org.anchoranalysis.image.object.ObjectCollectionFactory;
 import org.anchoranalysis.image.object.ObjectMask;
 
+import lombok.AllArgsConstructor;
+
+@AllArgsConstructor
 public class FeatureObjMaskCollectionParamsFactory extends FeatureCalcParamsUnaryFactory {
 
-	private RegionMembershipWithFlags rm;
-	
-	public FeatureObjMaskCollectionParamsFactory(RegionMembershipWithFlags rm) {
-		super();
-		this.rm = rm;
-	}
+	private final RegionMembershipWithFlags regionMembership;
 
 	@Override
-	public FeatureInput create(VoxelizedMarkMemo pmm, NRGStackWithParams nrgStack)
-			throws CreateException {
-		ObjectMask om = pmm.getMark().calcMask(nrgStack.getDimensions(), rm, BinaryValuesByte.getDefault() ).getMask();
+	public FeatureInput create(VoxelizedMarkMemo pmm, NRGStackWithParams nrgStack) throws CreateException {
+		
+		ObjectMask object = pmm.getMark().calcMask(
+			nrgStack.getDimensions(),
+			regionMembership,
+			BinaryValuesByte.getDefault()
+		).getMask();
+		
 		return new FeatureInputObjectCollection(
-			ObjectCollectionFactory.from(om),
+			ObjectCollectionFactory.from(object),
 			Optional.of(nrgStack)
 		);
 	}

@@ -1,10 +1,8 @@
-package org.anchoranalysis.gui.frame.overlays;
-
-import org.anchoranalysis.gui.frame.display.overlay.IGetOverlayCollection;
+package org.anchoranalysis.gui.frame.display.overlay;
 
 /*-
  * #%L
- * anchor-gui-frame
+ * anchor-mpp-io
  * %%
  * Copyright (C) 2010 - 2019 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann la Roche
  * %%
@@ -28,9 +26,8 @@ import org.anchoranalysis.gui.frame.display.overlay.IGetOverlayCollection;
  * #L%
  */
 
-import org.anchoranalysis.image.extent.ImageDimensions;
+import org.anchoranalysis.anchor.overlay.collection.ColoredOverlayCollection;
 
-public interface IExtractOverlays extends IGetOverlayCollection {
-
-	ImageDimensions getDimensions();
+public interface GetOverlayCollection {
+	ColoredOverlayCollection getOverlays();
 }

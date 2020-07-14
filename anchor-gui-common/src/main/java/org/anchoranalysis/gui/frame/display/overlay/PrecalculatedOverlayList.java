@@ -28,10 +28,11 @@ package org.anchoranalysis.gui.frame.display.overlay;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.anchoranalysis.anchor.overlay.Overlay;
 import org.anchoranalysis.anchor.overlay.collection.ColoredOverlayCollection;
-import org.anchoranalysis.anchor.overlay.writer.OverlayWriter;
+import org.anchoranalysis.anchor.overlay.writer.DrawOverlay;
 import org.anchoranalysis.anchor.overlay.writer.PrecalcOverlay;
 import org.anchoranalysis.core.color.RGBColor;
 import org.anchoranalysis.core.error.CreateException;
@@ -76,11 +77,11 @@ class PrecalculatedOverlayList {
 	public PrecalculatedOverlayList() {
 		overlayCollection = new ColoredOverlayCollection();
 		generatedObjects = new ArrayList<>();
-		listBoundingBox = new ArrayList<BoundingBox>();
+		listBoundingBox = new ArrayList<>();
 		generatedObjectsZoomed = new ArrayList<>();
 	}
 	
-	public PrecalculatedOverlayList(ColoredOverlayCollection overlayCollection, ImageDimensions dimEntireImage, OverlayWriter maskWriter) throws CreateException {
+	public PrecalculatedOverlayList(ColoredOverlayCollection overlayCollection, ImageDimensions dimEntireImage, DrawOverlay maskWriter) throws CreateException {
 		this.overlayCollection = overlayCollection;
 		rebuild(dimEntireImage, maskWriter);
 	}
@@ -105,19 +106,23 @@ class PrecalculatedOverlayList {
 		this.overlayCollection = overlayCollection;
 	}
 	
-	public void rebuild(ImageDimensions dimEntireImage, OverlayWriter maskWriter) throws CreateException {
-		generatedObjects = OverlayWriter.precalculate(overlayCollection, maskWriter, dimEntireImage, BinaryValues.getDefault().createByte() );
+	public void rebuild(ImageDimensions dimEntireImage, DrawOverlay maskWriter) throws CreateException {
+		generatedObjects = DrawOverlay.precalculate(overlayCollection, maskWriter, dimEntireImage, BinaryValues.getDefault().createByte() );
 		listBoundingBox = overlayCollection.bboxList( maskWriter, dimEntireImage);
 		generatedObjectsZoomed = null;
 	}
 	
-	public void add( Overlay ol, RGBColor color, PrecalcOverlay precalc, BoundingBox bbox, PrecalcOverlay precalcZoomed ) {
-		overlayCollection.add( ol, color );
+	public void add(
+		Overlay overlay,
+		RGBColor color,
+		PrecalcOverlay precalc,
+		BoundingBox bbox,
+		Optional<PrecalcOverlay> precalcZoomed
+	) {
+		overlayCollection.add( overlay, color );
 		generatedObjects.add(precalc);
 		listBoundingBox.add( bbox );
-		if (generatedObjectsZoomed!=null) {
-			generatedObjectsZoomed.add(precalcZoomed);
-		}
+		precalcZoomed.ifPresent(generatedObjectsZoomed::add);
 	}
 	
 	public void remove( int index ) {

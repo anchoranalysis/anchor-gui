@@ -51,21 +51,21 @@ public class FeatureObjMaskPairMergedParamsFactory extends FeatureCalcParamsPair
 	public FeatureInput create(VoxelizedMarkMemo pmm1, VoxelizedMarkMemo pmm2,
 			NRGStackWithParams nrgStack) throws CreateException {
 		
-		ObjectMask om1 = pmm1.getMark().calcMask(
+		ObjectMask object1 = pmm1.getMark().calcMask(
 			nrgStack.getDimensions(),
 			pmm1.getRegionMap().membershipWithFlagsForIndex(regionID),
 			BinaryValuesByte.getDefault()
 		).getMask();
 		
-		ObjectMask om2 = pmm1.getMark().calcMask(
+		ObjectMask object2 = pmm1.getMark().calcMask(
 			nrgStack.getDimensions(),
 			pmm2.getRegionMap().membershipWithFlagsForIndex(regionID),
 			BinaryValuesByte.getDefault()
 		).getMask();
 		
 		return new FeatureInputPairObjects(
-			om1,
-			om2,
+			object1,
+			object2,
 			Optional.of(nrgStack)
 		);
 	}

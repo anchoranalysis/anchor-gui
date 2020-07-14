@@ -31,7 +31,7 @@ import org.anchoranalysis.anchor.mpp.mark.Mark;
 import org.anchoranalysis.anchor.mpp.overlay.OverlayMark;
 import org.anchoranalysis.anchor.mpp.pair.Pair;
 import org.anchoranalysis.anchor.overlay.Overlay;
-import org.anchoranalysis.anchor.overlay.objmask.OverlayObjMask;
+import org.anchoranalysis.anchor.overlay.object.OverlayObjectMask;
 import org.anchoranalysis.core.error.friendly.AnchorFriendlyRuntimeException;
 import org.anchoranalysis.core.error.friendly.AnchorImpossibleSituationException;
 import org.anchoranalysis.feature.input.FeatureInput;
@@ -58,9 +58,9 @@ public class CreateParamsFromOverlay {
 				featureList.get(0).getRegionMap()
 			);
 
-		} else if (overlay instanceof OverlayObjMask) {
+		} else if (overlay instanceof OverlayObjectMask) {
 			
-			OverlayObjMask overlayCast = (OverlayObjMask) overlay;
+			OverlayObjectMask overlayCast = (OverlayObjectMask) overlay;
 			
 			return new CreateIndFromObj(
 				overlayCast.getObjMask().getMask(),
@@ -91,10 +91,10 @@ public class CreateParamsFromOverlay {
 			);
 			return cache.getOrCreate(featureList.get(0).getRegionMap());
 			
-		} else if (pair.getSource() instanceof OverlayObjMask ) {
+		} else if (pair.getSource() instanceof OverlayObjectMask ) {
 			
-			ObjectMask source = ((OverlayObjMask) pair.getSource()).getObjMask().getMask();
-			ObjectMask dest = ((OverlayObjMask) pair.getDestination()).getObjMask().getMask();
+			ObjectMask source = ((OverlayObjectMask) pair.getSource()).getObjMask().getMask();
+			ObjectMask dest = ((OverlayObjectMask) pair.getDestination()).getObjMask().getMask();
 			
 			return new CreatePairFromObj(
 				source,

@@ -49,15 +49,13 @@ public class FeatureObjMaskParamsFactory extends FeatureCalcParamsUnaryFactory {
 	public FeatureInput create(VoxelizedMarkMemo pmm, NRGStackWithParams nrgStack)
 			throws CreateException {
 		
-		ObjectMask om = pmm.getMark().calcMask(
+		ObjectMask object = pmm.getMark().calcMask(
 			nrgStack.getDimensions(),
 			pmm.getRegionMap().membershipWithFlagsForIndex(regionID),
 			BinaryValuesByte.getDefault()
 		).getMask();
 		
-		FeatureInputSingleObject params = new FeatureInputSingleObject(om);
-		params.setNrgStack(nrgStack);
-		return params;
+		return new FeatureInputSingleObject(object, nrgStack);
 	}
 	
 }

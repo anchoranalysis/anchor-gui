@@ -33,7 +33,7 @@ import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.functional.Operation;
 import org.anchoranalysis.core.log.Logger;
 import org.anchoranalysis.core.name.store.LazyEvaluationStore;
-import org.anchoranalysis.image.io.objs.ObjectMaskCollectionReader;
+import org.anchoranalysis.image.io.objects.ObjectMaskCollectionReader;
 import org.anchoranalysis.image.object.ObjectCollection;
 import org.apache.commons.io.FilenameUtils;
 

@@ -36,7 +36,7 @@ import org.anchoranalysis.anchor.mpp.mark.IDGetterMarkID;
 import org.anchoranalysis.anchor.mpp.mark.Mark;
 import org.anchoranalysis.anchor.mpp.overlay.OverlayCollectionMarkFactory;
 import org.anchoranalysis.anchor.mpp.regionmap.RegionMapSingleton;
-import org.anchoranalysis.anchor.overlay.bean.objmask.writer.ObjMaskWriter;
+import org.anchoranalysis.anchor.overlay.bean.DrawObject;
 import org.anchoranalysis.anchor.overlay.collection.ColoredOverlayCollection;
 import org.anchoranalysis.anchor.overlay.id.IDGetterOverlayID;
 import org.anchoranalysis.bean.annotation.BeanField;
@@ -51,42 +51,37 @@ import org.anchoranalysis.gui.frame.display.OverlayedDisplayStackUpdate;
 import org.anchoranalysis.image.io.generator.raster.RasterGeneratorFromDisplayStack;
 import org.anchoranalysis.image.stack.DisplayStack;
 import org.anchoranalysis.image.stack.Stack;
-import org.anchoranalysis.io.bean.objmask.writer.RGBOutlineWriter;
+import org.anchoranalysis.io.bean.object.writer.Outline;
 import org.anchoranalysis.io.generator.IterableObjectGenerator;
 import org.anchoranalysis.io.generator.IterableObjectGeneratorBridge;
 import org.anchoranalysis.mpp.io.cfg.generator.SimpleOverlayWriter;
 import org.anchoranalysis.plugin.gui.bean.createrastergenerator.CreateRasterGenerator;
 import org.anchoranalysis.plugin.gui.bean.exporttask.MappedFrom;
 
-public class ObjMaskWriterFromCfgNRGInstantState extends CreateRasterGenerator<CfgNRGInstantState> {
+import lombok.Getter;
+import lombok.Setter;
+
+public class ObjectWriterFromCfgNRGInstantState extends CreateRasterGenerator<CfgNRGInstantState> {
 
 	// END BEAN PROPERTIES
-	@BeanField
-	private ObjMaskWriter objMaskWriter;
+	@BeanField @Getter @Setter
+	private DrawObject drawObject;
 	
-	@BeanField
+	@BeanField @Getter @Setter
 	private boolean mip = false;
 	
-	@BeanField
+	@BeanField @Getter @Setter
 	private boolean colorFromIter = false;
 	
-	@BeanField
+	@BeanField @Getter @Setter
 	private int borderSize = 3;
 	
-	@BeanField
+	@BeanField @Getter @Setter
 	private String backgroundStackName = "input_image";
 	// END BEAN PROPERTIES
 
-	public ObjMaskWriterFromCfgNRGInstantState() {
-		objMaskWriter = new RGBOutlineWriter(borderSize);
-	}
-	
-	private IDGetter<Mark> colorGetter() {
-		if (colorFromIter) {
-			return new IDGetterIter<>();
-		} else {
-			return new IDGetterMarkID();
-		}
+	public ObjectWriterFromCfgNRGInstantState() {
+		drawObject = new Outline(borderSize);
 	}
 	
 	@Override
@@ -108,11 +103,9 @@ public class ObjMaskWriterFromCfgNRGInstantState extends CreateRasterGenerator<C
 				params.getOutputManager().getErrorReporter()
 			); 
 			
-			SimpleOverlayWriter writer = new SimpleOverlayWriter(
-				objMaskWriter
+			ccGenerator.updateMaskWriter(
+				new SimpleOverlayWriter(drawObject)
 			);
-			
-			ccGenerator.updateMaskWriter(writer);
 			
 			generator = new RasterGeneratorFromDisplayStack<>(ccGenerator,true);
 		}
@@ -121,6 +114,32 @@ public class ObjMaskWriterFromCfgNRGInstantState extends CreateRasterGenerator<C
 			generator,
 			elem -> bridgeElement(elem, params)
 		);
+	}
+	
+	@Override
+	public boolean hasNecessaryParams(ExportTaskParams params) {
+		return params.getFinderImgStackCollection() != null && params.getColorIndexMarks() != null;
+	}
+
+	@Override
+	public String getBeanDscr() {
+		return String.format("%s(mip=%d, drawObject=%s)", getBeanName(), mip ? 1 : 0, drawObject.getBeanDscr() );
+	}
+	
+	private static Cfg extractOrEmpty( CfgNRG cfgNRG ) {
+		if (cfgNRG!=null) {
+			return cfgNRG.getCfg();
+		} else {
+			return new Cfg();
+		}
+	}
+	
+	private IDGetter<Mark> colorGetter() {
+		if (colorFromIter) {
+			return new IDGetterIter<>();
+		} else {
+			return new IDGetterMarkID();
+		}
 	}
 	
 	private OverlayedDisplayStackUpdate bridgeElement( MappedFrom<CfgNRGInstantState> sourceObject, ExportTaskParams params ) throws OperationFailedException {
@@ -153,63 +172,4 @@ public class ObjMaskWriterFromCfgNRGInstantState extends CreateRasterGenerator<C
 			throw new OperationFailedException(e.summarize());
 		}
 	}
-
-	private static Cfg extractOrEmpty( CfgNRG cfgNRG ) {
-		if (cfgNRG!=null) {
-			return cfgNRG.getCfg();
-		} else {
-			return new Cfg();
-		}
-	}
-
-	@Override
-	public boolean hasNecessaryParams(ExportTaskParams params) {
-		return params.getFinderImgStackCollection() != null && params.getColorIndexMarks() != null;
-	}
-
-	public ObjMaskWriter getObjMaskWriter() {
-		return objMaskWriter;
-	}
-
-	public void setObjMaskWriter(ObjMaskWriter objMaskWriter) {
-		this.objMaskWriter = objMaskWriter;
-	}
-
-	public boolean isMip() {
-		return mip;
-	}
-
-	public void setMip(boolean mip) {
-		this.mip = mip;
-	}
-
-	@Override
-	public String getBeanDscr() {
-		return String.format("%s(mip=%d, objMaskWriter=%s)", getBeanName(), mip ? 1 : 0, objMaskWriter.getBeanDscr() );
-	}
-
-	public int getBorderSize() {
-		return borderSize;
-	}
-
-	public void setBorderSize(int borderSize) {
-		this.borderSize = borderSize;
-	}
-
-	public boolean isColorFromIter() {
-		return colorFromIter;
-	}
-
-	public void setColorFromIter(boolean colorFromIter) {
-		this.colorFromIter = colorFromIter;
-	}
-
-	public String getBackgroundStackName() {
-		return backgroundStackName;
-	}
-
-	public void setBackgroundStackName(String backgroundStackName) {
-		this.backgroundStackName = backgroundStackName;
-	}
-	
 }

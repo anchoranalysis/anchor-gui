@@ -67,8 +67,8 @@ public class RedrawUpdateFromProposal {
 		
 		OverlayCollection ocFirst = new OverlayCollection();
 		
-		if (er.isSuccess() && er.getColoredCfg().getOverlayCollection().size()>=1) {
-			ocFirst.add( er.getColoredCfg().getOverlayCollection().get(0) );
+		if (er.isSuccess() && er.getColoredCfg().getOverlays().size()>=1) {
+			ocFirst.add( er.getColoredCfg().getOverlays().get(0) );
 		}
 		
 		return ocFirst;

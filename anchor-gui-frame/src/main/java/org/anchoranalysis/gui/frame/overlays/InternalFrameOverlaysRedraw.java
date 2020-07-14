@@ -135,7 +135,7 @@ public class InternalFrameOverlaysRedraw {
 		return delegate.controllerImageView();
 	}
 
-	public IExtractOverlays extractOverlays() {
+	public ExtractOverlays extractOverlays() {
 		return delegate.extractOverlays();
 	}
 

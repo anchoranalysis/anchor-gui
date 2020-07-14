@@ -27,19 +27,19 @@ package org.anchoranalysis.gui.videostats.internalframe.annotator;
  */
 
 import org.anchoranalysis.gui.frame.details.canvas.ControllerAction;
-import org.anchoranalysis.gui.frame.overlays.IExtractOverlays;
+import org.anchoranalysis.gui.frame.overlays.ExtractOverlays;
 import org.anchoranalysis.gui.frame.overlays.IShowOverlays;
 import org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.ControllerPopupMenuWithBackground;
 
 public class AnnotationFrameControllers {
 
-	private IExtractOverlays extractOverlays;
+	private ExtractOverlays extractOverlays;
 	private IShowOverlays showOverlays;
 	
 	private ControllerPopupMenuWithBackground popup;
 	private ControllerAction action;
 	
-	public AnnotationFrameControllers(IExtractOverlays extractOverlays, IShowOverlays showOverlays,
+	public AnnotationFrameControllers(ExtractOverlays extractOverlays, IShowOverlays showOverlays,
 			ControllerPopupMenuWithBackground popup, ControllerAction action) {
 		super();
 		this.extractOverlays = extractOverlays;
@@ -48,7 +48,7 @@ public class AnnotationFrameControllers {
 		this.action = action;
 	}
 
-	public IExtractOverlays extractOverlays() {
+	public ExtractOverlays extractOverlays() {
 		return extractOverlays;
 	}
 

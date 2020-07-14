@@ -173,7 +173,7 @@ public class OverlayedDisplayStackUpdate {
 			// We assume than we receive a new ColoredCfg redraw parts is also not simultaenously set
 			if (getColoredCfg()!=null) {
 				
-				ColoredOverlayCollection cachedOverlayCollection = boundOverlay.getPrecalculatedCache().getOverlayCollection();
+				ColoredOverlayCollection cachedOverlayCollection = boundOverlay.getPrecalculatedCache().getOverlays();
 				
 //				if (getRedrawParts()!=null) {
 //					System.out.println("Assuming existing redraw parts knows best");

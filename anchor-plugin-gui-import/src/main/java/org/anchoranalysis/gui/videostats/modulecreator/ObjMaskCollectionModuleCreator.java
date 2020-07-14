@@ -49,9 +49,9 @@ public class ObjMaskCollectionModuleCreator extends VideoStatsModuleCreator {
 	public void createAndAddVideoStatsModule(IAddVideoStatsModule adder)
 			throws VideoStatsModuleCreateException {
 		try {
-			ObjectCollection objs = opObjs.doOperation();
+			ObjectCollection objects = opObjs.doOperation();
 
-			OverlayCollection oc = OverlayCollectionObjectFactory.createWithoutColor(objs, new IDGetterIter<ObjectMask>() );
+			OverlayCollection oc = OverlayCollectionObjectFactory.createWithoutColor(objects, new IDGetterIter<ObjectMask>() );
 			
 			String frameName = String.format("%s: %s", fileIdentifier, name);
 			InternalFrameStaticOverlaySelectable imageFrame = new InternalFrameStaticOverlaySelectable( frameName, false );

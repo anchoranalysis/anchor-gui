@@ -36,7 +36,7 @@ import org.anchoranalysis.core.random.RandomNumberGenerator;
 import org.anchoranalysis.gui.frame.cfgproposer.CfgProposerMouseClickAdapter;
 import org.anchoranalysis.gui.frame.details.canvas.ControllerAction;
 import org.anchoranalysis.gui.frame.details.canvas.ControllerMouse;
-import org.anchoranalysis.gui.frame.overlays.IExtractOverlays;
+import org.anchoranalysis.gui.frame.overlays.ExtractOverlays;
 import org.anchoranalysis.gui.image.frame.ISliderState;
 import org.anchoranalysis.gui.videostats.internalframe.annotator.AnnotationPanelParams;
 import org.anchoranalysis.gui.videostats.internalframe.annotator.navigation.PanelMark;
@@ -50,7 +50,7 @@ class HelperAddActions {
 	
 	public static void apply(
 		ControllerAction action,
-		IExtractOverlays extractOverlays,
+		ExtractOverlays extractOverlays,
 		AnnotationPanelParams params,
 		PanelTool panelTool,
 		PanelMark panelMark
@@ -94,7 +94,7 @@ class HelperAddActions {
 	}
 	
 	private static void addClickListener(
-		IExtractOverlays extractOverlays,
+		ExtractOverlays extractOverlays,
 		ControllerMouse controllerMouse,
 		PanelTool panelTool,			
 		ISliderState sliderState,

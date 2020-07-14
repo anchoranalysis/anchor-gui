@@ -38,9 +38,9 @@ public class CreateIndFromObj implements CreateFeatureInput<FeatureInput> {
 
 	private FeatureInputSingleObject input;
 	
-	public CreateIndFromObj(ObjectMask objMask, NRGStackWithParams nrgStack) {
+	public CreateIndFromObj(ObjectMask object, NRGStackWithParams nrgStack) {
 		super();
-		input = new FeatureInputSingleObject(objMask, nrgStack);
+		input = new FeatureInputSingleObject(object, nrgStack);
 	}
 
 	@Override

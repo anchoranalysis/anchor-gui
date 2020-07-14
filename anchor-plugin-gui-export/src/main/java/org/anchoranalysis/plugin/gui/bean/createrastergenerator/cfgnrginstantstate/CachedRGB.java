@@ -32,7 +32,7 @@ import java.util.List;
 
 import org.anchoranalysis.anchor.overlay.Overlay;
 import org.anchoranalysis.anchor.overlay.collection.ColoredOverlayCollection;
-import org.anchoranalysis.anchor.overlay.writer.OverlayWriter;
+import org.anchoranalysis.anchor.overlay.writer.DrawOverlay;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.idgetter.IDGetter;
 import org.anchoranalysis.gui.frame.display.OverlayedDisplayStackUpdate;
@@ -54,7 +54,7 @@ class CachedRGB {
 	
 	private ColoredOverlayCollection currentCfg;
 	
-	private OverlayWriter maskWriter;
+	private DrawOverlay maskWriter;
 	
 	private boolean needsBackgroundRefresh = false;
 	
@@ -68,7 +68,7 @@ class CachedRGB {
 		needsBackgroundRefresh = true;
 	}
 	
-	public void updateMaskWriter( OverlayWriter maskWriter ) {
+	public void updateMaskWriter( DrawOverlay maskWriter ) {
 		
 		// change to only trigger a redraw at the next operation
 		

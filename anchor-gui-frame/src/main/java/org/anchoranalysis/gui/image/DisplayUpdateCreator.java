@@ -1,7 +1,7 @@
 package org.anchoranalysis.gui.image;
 
 import org.anchoranalysis.anchor.overlay.Overlay;
-import org.anchoranalysis.anchor.overlay.writer.OverlayWriter;
+import org.anchoranalysis.anchor.overlay.writer.DrawOverlay;
 import org.anchoranalysis.core.error.CreateException;
 
 /*
@@ -51,7 +51,7 @@ import org.anchoranalysis.image.stack.DisplayStack;
 public class DisplayUpdateCreator implements FunctionWithException<Integer, DisplayUpdate,OperationFailedException> {
 
 	private FunctionWithException<Integer,OverlayedDisplayStackUpdate,GetOperationFailedException> src;
-	private OverlayWriter maskWriter;
+	private DrawOverlay maskWriter;
 	private IDGetter<Overlay> idGetter;
 	
 	// This keeps track of the current over
@@ -64,7 +64,7 @@ public class DisplayUpdateCreator implements FunctionWithException<Integer, Disp
 	}
 
 	// Must be called before we can bridge any elements
-	public void updateMaskWriter( OverlayWriter maskWriter ) throws SetOperationFailedException {
+	public void updateMaskWriter( DrawOverlay maskWriter ) throws SetOperationFailedException {
 		this.maskWriter = maskWriter;
 		if (boundOverlay!=null) {
 			boundOverlay.updateMaskWriter(maskWriter);

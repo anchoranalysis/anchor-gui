@@ -1,6 +1,6 @@
 package org.anchoranalysis.gui.videostats.internalframe.cfgtorgb.markdisplay;
 
-import org.anchoranalysis.anchor.overlay.writer.OverlayWriter;
+import org.anchoranalysis.anchor.overlay.writer.DrawOverlay;
 import org.anchoranalysis.core.property.change.PropertyValueChangeEvent;
 import org.anchoranalysis.core.property.change.PropertyValueChangeListener;
 
@@ -37,7 +37,7 @@ import org.anchoranalysis.gui.propertyvalue.PropertyValueChangeListenerList;
 import org.anchoranalysis.gui.videostats.action.changemarkdisplay.IChangeMarkDisplaySendable;
 import org.anchoranalysis.image.object.properties.ObjectWithProperties;
 import org.anchoranalysis.image.stack.rgb.RGBStack;
-import org.anchoranalysis.io.bean.objmask.writer.IfElseWriter;
+import org.anchoranalysis.io.bean.object.writer.IfElse;
 
 public class MarkDisplaySettingsWrapper implements IChangeMarkDisplaySendable {
 	
@@ -45,7 +45,7 @@ public class MarkDisplaySettingsWrapper implements IChangeMarkDisplaySendable {
 	
 	private MarkDisplaySettings markDisplaySettings;
 	
-	private IfElseWriter.Condition idMatchCondition;
+	private IfElse.Condition idMatchCondition;
 	
 	// We assume the idMatchCondition can never be obtained
 	public MarkDisplaySettingsWrapper( MarkDisplaySettings markDisplaySettings) {
@@ -56,7 +56,7 @@ public class MarkDisplaySettingsWrapper implements IChangeMarkDisplaySendable {
 	}
 	
 	
-	public MarkDisplaySettingsWrapper( MarkDisplaySettings markDisplaySettings, IfElseWriter.Condition idMatchCondition) {
+	public MarkDisplaySettingsWrapper( MarkDisplaySettings markDisplaySettings, IfElse.Condition idMatchCondition) {
 		super();
 		this.markDisplaySettings = markDisplaySettings;
 		this.idMatchCondition = idMatchCondition;
@@ -114,7 +114,7 @@ public class MarkDisplaySettingsWrapper implements IChangeMarkDisplaySendable {
 		}
 	}
 	
-	public OverlayWriter createObjMaskWriter() {
+	public DrawOverlay createObjMaskWriter() {
 		return markDisplaySettings.createConditionalObjMaskWriter(idMatchCondition);
 	}
 	

@@ -44,10 +44,11 @@ class MultiObjMaskCollectionInputToOverlay implements BridgeElementWithIndex<Mul
 		int index,
 		MultiInput<ObjectCollection> sourceObject
 	) throws OperationFailedException {
-
-		ObjectCollection objs = sourceObject.getAssociatedObjects().doOperation();
 		
-		OverlayCollection oc = OverlayCollectionObjectFactory.createWithoutColor(objs, new IDGetterIter<>() );
+		OverlayCollection oc = OverlayCollectionObjectFactory.createWithoutColor(
+			sourceObject.getAssociatedObjects().doOperation(),
+			new IDGetterIter<>()
+		);
 		return new OverlayedInstantState(index, oc);
 	}
 }

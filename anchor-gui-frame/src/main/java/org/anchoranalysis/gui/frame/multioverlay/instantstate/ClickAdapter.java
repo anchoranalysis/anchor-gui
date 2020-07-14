@@ -78,8 +78,6 @@ class ClickAdapter extends MouseAdapter {
 		// This our current
 		OverlayCollection selectedOverlays = overlaysGetter.overlaysAt(pnt);
 
-		
-		//int[] ids = IndicesUtils.intArrayFromCollection(idList);
 		int[] ids = idArrayFromOverlayCollection(selectedOverlays);
 		if (e.isControlDown()) {
 			// If control is pressed, we add/remove objects from selection
@@ -97,9 +95,9 @@ class ClickAdapter extends MouseAdapter {
 		
 		selectionIndices.updateBoth( ids );
 		
-		ColoredOverlayCollection overlays = overlaysGetter.getOverlayCollection();
+		ColoredOverlayCollection overlays = overlaysGetter.getOverlays();
 		
-		OverlayCollection overlaysSubset = overlays.getOverlayCollection().createSubset( new IndicesSelection(ids) ); 
+		OverlayCollection overlaysSubset = overlays.getOverlays().createSubset( new IndicesSelection(ids) ); 
 		
 		// We also trigger an selectMark
 		triggerObjectChangeEvent( overlaysSubset );		
@@ -114,13 +112,9 @@ class ClickAdapter extends MouseAdapter {
 	}
 	
 	private void triggerObjectChangeEvent( OverlayCollection state ) {
-		
-		//System.out.printf("Triggering Object Change Event: %d listeners\n", eventListenerList.size() );
-		
-		for (PropertyValueChangeListener<OverlayCollection> l : eventListenerList) {
-			l.propertyValueChanged( new PropertyValueChangeEvent<>(this, state, false) );
+		for (PropertyValueChangeListener<OverlayCollection> listener : eventListenerList) {
+			listener.propertyValueChanged( new PropertyValueChangeEvent<>(this, state, false) );
 		}
-
 	}
 
 	public IPropertyValueReceivable<OverlayCollection> createSelectOverlayCollectionReceivable() {

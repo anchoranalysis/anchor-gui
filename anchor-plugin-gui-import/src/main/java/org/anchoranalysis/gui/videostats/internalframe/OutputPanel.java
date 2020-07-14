@@ -38,7 +38,7 @@ import org.anchoranalysis.anchor.mpp.mark.IDGetterMarkID;
 import org.anchoranalysis.anchor.overlay.id.IDGetterOverlayID;
 import org.anchoranalysis.core.color.ColorIndex;
 import org.anchoranalysis.core.error.reporter.ErrorReporter;
-import org.anchoranalysis.io.bean.objmask.writer.RGBOutlineWriter;
+import org.anchoranalysis.io.bean.object.writer.Outline;
 import org.anchoranalysis.io.generator.sequence.GeneratorSequenceIncrementalRerouteErrors;
 import org.anchoranalysis.io.generator.sequence.GeneratorSequenceIncrementalWriter;
 import org.anchoranalysis.io.manifest.ManifestDescription;
@@ -74,7 +74,7 @@ public class OutputPanel {
 		
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
-			CfgGenerator generator = new CfgGenerator( new RGBOutlineWriter(2), new IDGetterOverlayID() );
+			CfgGenerator generator = new CfgGenerator( new Outline(2), new IDGetterOverlayID() );
 			
 			IndexableOutputNameStyle outputNameStyle = new IntegerSuffixOutputNameStyle("markEvaluator",6);
 			

@@ -2,7 +2,7 @@ package org.anchoranalysis.plugin.gui.bean.createrastergenerator.cfgnrginstantst
 
 import java.nio.file.Path;
 
-import org.anchoranalysis.anchor.overlay.writer.OverlayWriter;
+import org.anchoranalysis.anchor.overlay.writer.DrawOverlay;
 import org.anchoranalysis.core.error.CreateException;
 
 /*
@@ -57,7 +57,7 @@ class CfgCachedGenerator extends CacheableCfgToRGBGenerator {
 	
 	// THIS MUST BE CALLED before we do any drawing.
 	@Override
-	public void updateMaskWriter( OverlayWriter maskWriter ) {
+	public void updateMaskWriter( DrawOverlay maskWriter ) {
 		this.cachedRGB.updateMaskWriter( maskWriter );
 	}
 

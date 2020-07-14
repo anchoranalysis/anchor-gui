@@ -1,7 +1,7 @@
 package org.anchoranalysis.gui.frame.threaded.overlay;
 
 import org.anchoranalysis.anchor.overlay.Overlay;
-import org.anchoranalysis.anchor.overlay.writer.OverlayWriter;
+import org.anchoranalysis.anchor.overlay.writer.DrawOverlay;
 import org.anchoranalysis.core.error.InitException;
 
 
@@ -83,7 +83,7 @@ class ThreadedOverlayUpdateProducer implements IRedrawable, IThreadedProducer, I
 		public void propertyValueChanged(
 				PropertyValueChangeEvent<MarkDisplaySettings> evt) {
 			
-			OverlayWriter maskWriter = markDisplaySettingsWrapper.createObjMaskWriter() ;
+			DrawOverlay maskWriter = markDisplaySettingsWrapper.createObjMaskWriter() ;
 		
 			try {
 				displayStackCreator.updateMaskWriter(maskWriter);
@@ -200,7 +200,7 @@ class ThreadedOverlayUpdateProducer implements IRedrawable, IThreadedProducer, I
 	private static DisplayUpdateCreator setupDisplayUpdateCreator(
 		FunctionWithException<Integer,OverlayedDisplayStackUpdate,GetOperationFailedException> findCorrectUpdate,
 		IDGetter<Overlay> idGetter,
-		OverlayWriter maskWriter
+		DrawOverlay maskWriter
 	) throws InitException {
 		
 		DisplayUpdateCreator displayStackCreator = new DisplayUpdateCreator( findCorrectUpdate,	idGetter );

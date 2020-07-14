@@ -26,7 +26,6 @@ package org.anchoranalysis.gui.frame.overlays.onrgb;
  * #L%
  */
 
-import org.anchoranalysis.anchor.mpp.mark.Mark;
 import org.anchoranalysis.anchor.overlay.Overlay;
 import org.anchoranalysis.anchor.overlay.collection.ColoredOverlayCollection;
 import org.anchoranalysis.core.error.InitException;
@@ -41,7 +40,7 @@ import org.anchoranalysis.gui.frame.details.canvas.ControllerAction;
 import org.anchoranalysis.gui.frame.details.canvas.InternalFrameCanvas;
 import org.anchoranalysis.gui.frame.details.canvas.controller.imageview.ControllerImageView;
 import org.anchoranalysis.gui.frame.display.IRedrawable;
-import org.anchoranalysis.gui.frame.overlays.IExtractOverlays;
+import org.anchoranalysis.gui.frame.overlays.ExtractOverlays;
 import org.anchoranalysis.gui.frame.threaded.overlay.InternalFrameThreadedOverlayProvider;
 import org.anchoranalysis.gui.image.frame.ISliderState;
 import org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.ControllerPopupMenuWithBackground;
@@ -63,7 +62,7 @@ class InternalFrameOverlaysOnRGB {
 	
 	private SingleContainer<OverlayedDisplayStack> cntr;
 	private ControllerPopupMenuWithBackground controllerMenu;
-	private IExtractOverlays extractOverlays;
+	private ExtractOverlays extractOverlays;
 	
 	public InternalFrameOverlaysOnRGB( String title, boolean indexesAreFrames ) {
 		delegate = new InternalFrameThreadedOverlayProvider(title, indexesAreFrames);
@@ -75,7 +74,6 @@ class InternalFrameOverlaysOnRGB {
 	public ISliderState init(
 			OverlayedDisplayStack overlayedDisplayStack,
 			IDGetter<Overlay> idGetter,
-			IDGetter<Mark> idColorGetter,
 			boolean includeFrameAdjusting,
 			DefaultModuleState initialState,
 			MarkDisplaySettingsWrapper markDisplaySettingsWrapper,
@@ -84,8 +82,7 @@ class InternalFrameOverlaysOnRGB {
 		) throws InitException {
 
 		assert( initialState.getLinkState().getBackground() != null );
-	
-		//assert( coloredCfg.getCfg().getCfg().size()==coloredCfg.getCfg().getColorList().size() );
+
 		cntr.setItem( overlayedDisplayStack , 0);
 		
 		FunctionWithException<Integer,OverlayedDisplayStack,GetOperationFailedException> bridge = new CfgCntrBridge(cntr);
@@ -119,11 +116,11 @@ class InternalFrameOverlaysOnRGB {
 		return sliderState;
 	}
 
-	private class OverlayerExtracter implements IExtractOverlays {
+	private class OverlayerExtracter implements ExtractOverlays {
 
 		@Override
-		public ColoredOverlayCollection getOverlayCollection() {
-			return delegate.getOverlayRetriever().getOverlayCollection();
+		public ColoredOverlayCollection getOverlays() {
+			return delegate.getOverlayRetriever().getOverlays();
 		}
 		
 		@Override
@@ -164,7 +161,7 @@ class InternalFrameOverlaysOnRGB {
 		return delegate.controllerImageView();
 	}
 
-	public IExtractOverlays extractOverlays() {
+	public ExtractOverlays extractOverlays() {
 		return extractOverlays;
 	}
 

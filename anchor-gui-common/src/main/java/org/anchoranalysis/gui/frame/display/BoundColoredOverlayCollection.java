@@ -32,7 +32,8 @@ import java.util.List;
 import org.anchoranalysis.anchor.overlay.Overlay;
 import org.anchoranalysis.anchor.overlay.collection.ColoredOverlayCollection;
 import org.anchoranalysis.anchor.overlay.collection.OverlayCollection;
-import org.anchoranalysis.anchor.overlay.writer.OverlayWriter;
+import org.anchoranalysis.anchor.overlay.writer.DrawOverlay;
+import org.anchoranalysis.anchor.overlay.writer.ObjectDrawAttributesFactory;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.geometry.Point3i;
@@ -43,7 +44,6 @@ import org.anchoranalysis.gui.frame.display.overlay.OverlayPrecalculatedCache;
 import org.anchoranalysis.image.extent.BoundingBox;
 import org.anchoranalysis.image.extent.Extent;
 import org.anchoranalysis.image.extent.ImageDimensions;
-import org.anchoranalysis.image.object.properties.ObjectWithProperties;
 import org.anchoranalysis.image.stack.rgb.RGBStack;
 
 /**
@@ -55,7 +55,7 @@ import org.anchoranalysis.image.stack.rgb.RGBStack;
  */
 public class BoundColoredOverlayCollection {
 	
-	private OverlayWriter maskWriter;
+	private DrawOverlay maskWriter;
 	
 	private IDGetter<Overlay> idGetter;
 	
@@ -64,7 +64,7 @@ public class BoundColoredOverlayCollection {
 	// The current overlay, with additional cached objects
 	private OverlayPrecalculatedCache cache;
 		
-	public BoundColoredOverlayCollection(OverlayWriter maskWriter, IDGetter<Overlay> idGetter, ImageDimensions dim) throws CreateException {
+	public BoundColoredOverlayCollection(DrawOverlay maskWriter, IDGetter<Overlay> idGetter, ImageDimensions dim) throws CreateException {
 		super();
 		this.maskWriter = maskWriter;
 		this.idGetter = idGetter;
@@ -72,7 +72,7 @@ public class BoundColoredOverlayCollection {
 		this.cache = new OverlayPrecalculatedCache( new ColoredOverlayCollection(), dimEntireImage, maskWriter);
 	}
 
-	public void updateMaskWriter( OverlayWriter maskWriter ) throws SetOperationFailedException {
+	public void updateMaskWriter( DrawOverlay maskWriter ) throws SetOperationFailedException {
 		this.maskWriter = maskWriter;
 		this.cache.setMaskWriter(maskWriter);
 	}
@@ -102,11 +102,13 @@ public class BoundColoredOverlayCollection {
 
 		maskWriter.writePrecalculatedOverlays(
 			marksWithinView.getGeneratedObjectsZoomed(),
-			marksWithinView.getOverlayCollection(),
 			dimEntireImage,
 			stack,
-			idGetter,
-			new IDGetterIter<ObjectWithProperties>(),
+			ObjectDrawAttributesFactory.createFromOverlays(
+				marksWithinView.getOverlays(),
+				idGetter,
+				new IDGetterIter<>()
+			),
 			container
 		);
 	}

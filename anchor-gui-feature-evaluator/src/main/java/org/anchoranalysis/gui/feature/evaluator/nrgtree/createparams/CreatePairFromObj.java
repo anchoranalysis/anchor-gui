@@ -40,14 +40,14 @@ public class CreatePairFromObj implements CreateFeatureInput<FeatureInput> {
 	
 	private FeatureInputPairObjects input;
 	
-	public CreatePairFromObj(ObjectMask om1, ObjectMask om2, NRGStackWithParams raster) {
+	public CreatePairFromObj(ObjectMask object1, ObjectMask object2, NRGStackWithParams raster) {
 
 		// We make the params here, so the same object is always returned. This avoids needless creation of params
 		//   and as FeatureObjMaskPairMergedParams does a lazy-evaluation of the merged-object. It also caches
 		//  this operation so it's not repeated needlessly for each feature
 		input = new FeatureInputPairObjects(
-			om1,
-			om2,
+			object1,
+			object2,
 			Optional.of(raster)
 		);
 	}

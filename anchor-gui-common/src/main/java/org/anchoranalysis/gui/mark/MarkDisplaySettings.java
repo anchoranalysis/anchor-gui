@@ -33,16 +33,16 @@ import java.util.List;
 import org.anchoranalysis.anchor.mpp.bean.regionmap.RegionMembershipWithFlags;
 import org.anchoranalysis.anchor.mpp.mark.GlobalRegionIdentifiers;
 import org.anchoranalysis.anchor.mpp.regionmap.RegionMapSingleton;
-import org.anchoranalysis.anchor.overlay.bean.objmask.writer.ObjMaskWriter;
-import org.anchoranalysis.anchor.overlay.writer.OverlayWriter;
-import org.anchoranalysis.io.bean.objmask.writer.IfElseWriter;
-import org.anchoranalysis.io.bean.objmask.writer.NullWriter;
-import org.anchoranalysis.io.bean.objmask.writer.ObjMaskListWriter;
-import org.anchoranalysis.io.bean.objmask.writer.RGBBBoxOutlineWriter;
-import org.anchoranalysis.io.bean.objmask.writer.RGBMidpointWriter;
-import org.anchoranalysis.io.bean.objmask.writer.RGBOrientationWriter;
-import org.anchoranalysis.io.bean.objmask.writer.RGBOutlineWriter;
-import org.anchoranalysis.io.bean.objmask.writer.RGBSolidWriter;
+import org.anchoranalysis.anchor.overlay.bean.DrawObject;
+import org.anchoranalysis.anchor.overlay.writer.DrawOverlay;
+import org.anchoranalysis.io.bean.object.writer.BoundingBoxOutline;
+import org.anchoranalysis.io.bean.object.writer.Combine;
+import org.anchoranalysis.io.bean.object.writer.Filled;
+import org.anchoranalysis.io.bean.object.writer.IfElse;
+import org.anchoranalysis.io.bean.object.writer.Midpoint;
+import org.anchoranalysis.io.bean.object.writer.Nothing;
+import org.anchoranalysis.io.bean.object.writer.Orientation;
+import org.anchoranalysis.io.bean.object.writer.Outline;
 import org.anchoranalysis.mpp.io.cfg.generator.SimpleOverlayWriter;
 
 // Contains display settings for a mark
@@ -62,19 +62,19 @@ public class MarkDisplaySettings {
 	
 	private boolean showSolid = false;
 	
-	public OverlayWriter createConditionalObjMaskWriter( IfElseWriter.Condition conditionSelected ) {
+	public DrawOverlay createConditionalObjMaskWriter( IfElse.Condition conditionSelected ) {
 		
 		int borderSize = showThickBorder ? 6 : 1;
 		
-		List<ObjMaskWriter> insideList = new ArrayList<>();
-		List<ObjMaskWriter> shellList = new ArrayList<>();
+		List<DrawObject> insideList = new ArrayList<>();
+		List<DrawObject> shellList = new ArrayList<>();
 		
 		if (showInside) {
 			addShowInside( insideList, conditionSelected, borderSize );
 		}
 
 		if (showBoundingBox) {
-			insideList.add( new RGBBBoxOutlineWriter(borderSize) );
+			insideList.add( new BoundingBoxOutline(borderSize) );
 		}
 		
 		if (showShell) {
@@ -97,66 +97,66 @@ public class MarkDisplaySettings {
 		return copy;
 	}
 
-	private ObjMaskWriter createInsideConditionalWriter( IfElseWriter.Condition conditionSelected, int borderSize ) {
+	private DrawObject createInsideConditionalWriter( IfElse.Condition conditionSelected, int borderSize ) {
 		
 		// TRUE WRITER is for when selected
-		ObjMaskWriter trueWriter = new RGBSolidWriter();
+		DrawObject trueWriter = new Filled();
 		
 		// FALSE writer is for when not selected
-		RGBOutlineWriter falseWriter = new RGBOutlineWriter(borderSize);
+		Outline falseWriter = new Outline(borderSize);
 		falseWriter.setForce2D(true);
 		
 		// Combining both situations gives us a selectable
-		ObjMaskWriter edgeSelectableWriter = new IfElseWriter(conditionSelected, trueWriter, falseWriter);
+		DrawObject edgeSelectableWriter = new IfElse(conditionSelected, trueWriter, falseWriter);
 		
 		return edgeSelectableWriter;
 	}
 	
-	private static ObjMaskWriter createWriterFromList( List<ObjMaskWriter> writerList ) {
+	private static DrawObject createWriterFromList( List<DrawObject> writerList ) {
 		
 		if (writerList.size()==0) {
 			return null;
 		}
 		
-		return new ObjMaskListWriter(writerList);
+		return new Combine(writerList);
 	}
 			
-	private void addShowInside( List<ObjMaskWriter> insideList, IfElseWriter.Condition conditionSelected, int borderSize ) {
+	private void addShowInside( List<DrawObject> insideList, IfElse.Condition conditionSelected, int borderSize ) {
 		insideList.add( createInsideConditionalWriter(conditionSelected,borderSize) );
 		
 		if (showSolid) {
-			insideList.add( new RGBSolidWriter() );
+			insideList.add( new Filled() );
 		} else {
 		
 			// We only consider these if we are not considering a solid
 			if (showMidpoint) {
-				insideList.add( new RGBMidpointWriter() );
+				insideList.add( new Midpoint() );
 			}
 			
 			if (showOrientationLine) {
-				insideList.add( new RGBOrientationWriter() );
+				insideList.add( new Orientation() );
 			}
 		}
 	}
 	
 
-	private void addShowShell( List<ObjMaskWriter> insideList, List<ObjMaskWriter> shellList, int borderSize ) {
+	private void addShowShell( List<DrawObject> insideList, List<DrawObject> shellList, int borderSize ) {
 
-		RGBOutlineWriter outlineWriter = new RGBOutlineWriter(borderSize);
+		Outline outlineWriter = new Outline(borderSize);
 		outlineWriter.setForce2D(true);
 		shellList.add( outlineWriter );
 		
 		if (showBoundingBox) {
-			shellList.add( new RGBBBoxOutlineWriter(borderSize) );
+			shellList.add( new BoundingBoxOutline(borderSize) );
 		}
 		
 		// If showInside is switched off, then we have a second chance to show the midpoint
 		if (showMidpoint && !showInside) {
-			shellList.add( new RGBMidpointWriter() );
+			shellList.add( new Midpoint() );
 		}
 		
 		if (showOrientationLine && !showInside) {
-			insideList.add( new RGBOrientationWriter() );
+			insideList.add( new Orientation() );
 		}		
 	}
 	
@@ -166,10 +166,10 @@ public class MarkDisplaySettings {
 		return RegionMapSingleton.instance().membershipWithFlagsForIndex(identifier);
 	}
 	
-	private static SimpleOverlayWriter determineWriter( List<ObjMaskWriter> insideList, List<ObjMaskWriter> shellList ) {
+	private static SimpleOverlayWriter determineWriter( List<DrawObject> insideList, List<DrawObject> shellList ) {
 
-		ObjMaskWriter insideWriter = createWriterFromList(insideList);
-		ObjMaskWriter shellWriter = createWriterFromList(shellList);
+		DrawObject insideWriter = createWriterFromList(insideList);
+		DrawObject shellWriter = createWriterFromList(shellList);
 				
 		if (shellList.size()>0) {
 			return new SimpleOverlayWriter(	shellWriter );
@@ -180,7 +180,7 @@ public class MarkDisplaySettings {
 			} else {
 				// Then there is no mask
 				// We should not get here at the moment, as it is impossible to disable showInside
-				return new SimpleOverlayWriter(	new NullWriter() );
+				return new SimpleOverlayWriter(	new Nothing() );
 			}
 		}
 	}

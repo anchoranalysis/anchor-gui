@@ -36,7 +36,7 @@ import org.anchoranalysis.core.property.change.PropertyValueChangeEvent;
 import org.anchoranalysis.core.property.change.PropertyValueChangeListener;
 import org.anchoranalysis.gui.frame.display.IRedrawable;
 import org.anchoranalysis.gui.frame.display.OverlayedDisplayStackUpdate;
-import org.anchoranalysis.gui.frame.display.overlay.IGetOverlayCollection;
+import org.anchoranalysis.gui.frame.display.overlay.GetOverlayCollection;
 
 /**
  * Triggers redraw updates in response to changes in the currently selected overlay
@@ -49,11 +49,11 @@ import org.anchoranalysis.gui.frame.display.overlay.IGetOverlayCollection;
 class RedrawFromCfgGetter implements PropertyValueChangeListener<IntArray> {
 	
 	// Gives us the currently selected marks
-	private IGetOverlayCollection cfgGetter;
+	private GetOverlayCollection cfgGetter;
 	private IRedrawable redrawable;
 	private ColoredOverlayCollection old;
 	
-	public RedrawFromCfgGetter(IGetOverlayCollection cfgGetter, IRedrawable redrawable, Logger logger ) {
+	public RedrawFromCfgGetter(GetOverlayCollection cfgGetter, IRedrawable redrawable, Logger logger ) {
 		super();
 		assert(cfgGetter!=null);
 		assert(redrawable!=null);
@@ -64,7 +64,7 @@ class RedrawFromCfgGetter implements PropertyValueChangeListener<IntArray> {
 	@Override
 	public synchronized void propertyValueChanged(PropertyValueChangeEvent<IntArray> evt) {
 		
-		ColoredOverlayCollection cfgNew = cfgGetter.getOverlayCollection();
+		ColoredOverlayCollection cfgNew = cfgGetter.getOverlays();
 		
 		if (old==null) {
 			

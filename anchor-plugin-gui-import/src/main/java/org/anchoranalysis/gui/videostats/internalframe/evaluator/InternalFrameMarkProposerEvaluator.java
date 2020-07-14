@@ -195,7 +195,7 @@ public class InternalFrameMarkProposerEvaluator {
 			
 			try {
 				// We the marks back from the overlays
-				Cfg cfg = OverlayCollectionMarkFactory.cfgFromOverlays( er.getColoredCfg().getOverlayCollection() );
+				Cfg cfg = OverlayCollectionMarkFactory.cfgFromOverlays( er.getColoredCfg().getOverlays() );
 				
 				outputPanel.output( new CfgWithDisplayStack( cfg, delegate.getBackground() ) );
 				

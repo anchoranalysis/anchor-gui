@@ -45,7 +45,7 @@ import org.anchoranalysis.core.error.reporter.ErrorReporter;
 import org.anchoranalysis.core.geometry.Point3d;
 import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.random.RandomNumberGenerator;
-import org.anchoranalysis.gui.frame.overlays.IExtractOverlays;
+import org.anchoranalysis.gui.frame.overlays.ExtractOverlays;
 import org.anchoranalysis.gui.frame.overlays.ProposedCfg;
 import org.anchoranalysis.gui.image.frame.ISliderState;
 import org.anchoranalysis.gui.videostats.internalframe.ProposalOperation;
@@ -55,7 +55,7 @@ import org.anchoranalysis.gui.videostats.internalframe.evaluator.ProposalOperati
 
 public class CfgProposerMouseClickAdapter extends MouseAdapter {
 
-	private IExtractOverlays extractOverlays;
+	private ExtractOverlays extractOverlays;
 	private ISliderState sliderState;
 	private EvaluatorWithContextGetter evaluatorGetter;
 	private RandomNumberGenerator re;
@@ -64,7 +64,7 @@ public class CfgProposerMouseClickAdapter extends MouseAdapter {
 	private EventListenerList eventListeners = new EventListenerList();
 	
 	public CfgProposerMouseClickAdapter(
-		IExtractOverlays extractOverlays,
+		ExtractOverlays extractOverlays,
 		ISliderState sliderState,
 		EvaluatorWithContextGetter evaluatorGetter,
 		RandomNumberGenerator re,
@@ -128,7 +128,7 @@ public class CfgProposerMouseClickAdapter extends MouseAdapter {
 		
 		// We convert the overlays into a Cfg. There's almost definitely a better way of doing this
 		Cfg cfg = OverlayCollectionMarkFactory.cfgFromOverlays(
-			extractOverlays.getOverlayCollection().getOverlayCollection()
+			extractOverlays.getOverlays().getOverlays()
 		);
 		
 		ProposedCfg er = generateEvaluationResult( cfg, position, evaluatorWithContext );

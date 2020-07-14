@@ -1,6 +1,5 @@
 package org.anchoranalysis.gui.frame.overlays.onrgb;
 
-import org.anchoranalysis.anchor.mpp.mark.IDGetterMarkID;
 import org.anchoranalysis.anchor.overlay.collection.ColoredOverlayCollection;
 import org.anchoranalysis.anchor.overlay.id.IDGetterOverlayID;
 import org.anchoranalysis.core.error.InitException;
@@ -37,7 +36,7 @@ import org.anchoranalysis.gui.displayupdate.OverlayedDisplayStack;
 import org.anchoranalysis.gui.frame.details.canvas.ControllerAction;
 import org.anchoranalysis.gui.frame.details.canvas.controller.imageview.ControllerImageView;
 import org.anchoranalysis.gui.frame.display.OverlayedDisplayStackUpdate;
-import org.anchoranalysis.gui.frame.overlays.IExtractOverlays;
+import org.anchoranalysis.gui.frame.overlays.ExtractOverlays;
 import org.anchoranalysis.gui.image.frame.ISliderState;
 import org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.ControllerPopupMenuWithBackground;
 import org.anchoranalysis.gui.retrieveelements.IRetrieveElements;
@@ -73,7 +72,6 @@ public class InternalFrameEditableOverlays implements IColoredCfgUpdater {
 					defaultState.getLinkState().getBackground().apply(0)
 				),
 				new IDGetterOverlayID(),
-				new IDGetterMarkID(),
 				false,
 				defaultState,
 				markDisplaySettings,
@@ -112,7 +110,7 @@ public class InternalFrameEditableOverlays implements IColoredCfgUpdater {
 			rel.add( internalFrame.getElementRetriever().retrieveElements() );
 			
 			RetrieveElementsOverlayCollection rempp = new RetrieveElementsOverlayCollection();
-			rempp.setCurrentObjects( internalFrame.extractOverlays().getOverlayCollection().getOverlayCollection() );
+			rempp.setCurrentObjects( internalFrame.extractOverlays().getOverlays().getOverlays() );
 			
 			rel.add( rempp );
 			return rel;
@@ -135,7 +133,7 @@ public class InternalFrameEditableOverlays implements IColoredCfgUpdater {
 		return delegate.controllerImageView();
 	}
 
-	public IExtractOverlays extractOverlays() {
+	public ExtractOverlays extractOverlays() {
 		return delegate.extractOverlays();
 	}
 

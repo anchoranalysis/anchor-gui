@@ -45,7 +45,7 @@ import org.anchoranalysis.core.property.IPropertyValueReceivable;
 import org.anchoranalysis.core.property.PropertyValueReceivableFromIndicesSelection;
 import org.anchoranalysis.gui.frame.details.IGenerateExtraDetail;
 import org.anchoranalysis.gui.frame.details.canvas.InternalFrameCanvas;
-import org.anchoranalysis.gui.frame.display.overlay.IGetOverlayCollection;
+import org.anchoranalysis.gui.frame.display.overlay.GetOverlayCollection;
 import org.anchoranalysis.gui.frame.display.overlay.OverlayRetriever;
 import org.anchoranalysis.gui.image.frame.ISliderState;
 import org.anchoranalysis.gui.indices.DualIndicesSelection;
@@ -82,11 +82,11 @@ public class InternalFrameOverlayedInstantStateToRGBSelectable {
 	private boolean sendReceiveIndices = false;
 	
 	// Returns a Cfg representing the currently selected marks
-	private class CurrentlySelectedMarks implements IGetOverlayCollection {
+	private class CurrentlySelectedMarks implements GetOverlayCollection {
 		
 		@Override
-		public ColoredOverlayCollection getOverlayCollection() {
-			return delegate.getOverlayRetriever().getOverlayCollection().createSubsetFromIDs( selectionIndices.getCurrentSelection() );
+		public ColoredOverlayCollection getOverlays() {
+			return delegate.getOverlayRetriever().getOverlays().createSubsetFromIDs( selectionIndices.getCurrentSelection() );
 		}
 		
 	};
@@ -139,7 +139,7 @@ public class InternalFrameOverlayedInstantStateToRGBSelectable {
 			@Override
 			public String genStr(int index) {
 				OverlayRetriever or = delegate.getOverlayRetriever();
-				return String.format("cfgSize=%s", or.getOverlayCollection()!=null ? or.getOverlayCollection().size() : -1 );
+				return String.format("cfgSize=%s", or.getOverlays()!=null ? or.getOverlays().size() : -1 );
 			}
 		};
 		
@@ -174,8 +174,8 @@ public class InternalFrameOverlayedInstantStateToRGBSelectable {
 				rel.add( delegate.getElementRetriever().retrieveElements() );
 				
 				RetrieveElementsOverlayCollection rempp = new RetrieveElementsOverlayCollection();
-				rempp.setCurrentSelectedObjects( currentlySelectedMarksGetter.getOverlayCollection().getOverlayCollection() );
-				rempp.setCurrentObjects( delegate.getOverlayRetriever().getOverlayCollection().getOverlayCollection() );
+				rempp.setCurrentSelectedObjects( currentlySelectedMarksGetter.getOverlays().getOverlays() );
+				rempp.setCurrentObjects( delegate.getOverlayRetriever().getOverlays().getOverlays() );
 				
 				rel.add( rempp );
 				return rel;
