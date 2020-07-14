@@ -1,10 +1,15 @@
-package org.anchoranalysis.gui.retrieveelements;
+package org.anchoranalysis.gui.videostats.dropdown.opened;
 
-/*-
+import org.anchoranalysis.anchor.overlay.OverlayedInstantState;
+import org.anchoranalysis.anchor.overlay.collection.OverlayCollection;
+import org.anchoranalysis.anchor.overlay.collection.OverlayCollectionObjectFactory;
+import org.anchoranalysis.core.bridge.BridgeElementWithIndex;
+
+/*
  * #%L
- * anchor-gui-frame
+ * anchor-gui
  * %%
- * Copyright (C) 2010 - 2020 Owen Feehan
+ * Copyright (C) 2016 ETH Zurich, University of Zurich, Owen Feehan
  * %%
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -26,21 +31,24 @@ package org.anchoranalysis.gui.retrieveelements;
  * #L%
  */
 
-import java.util.Optional;
 
-import org.anchoranalysis.core.error.AnchorNeverOccursException;
 import org.anchoranalysis.core.error.OperationFailedException;
-import org.anchoranalysis.core.functional.Operation;
-import org.anchoranalysis.image.stack.Stack;
-import org.anchoranalysis.io.generator.IterableGenerator;
-import org.anchoranalysis.io.manifest.ManifestDescription;
-import org.anchoranalysis.io.output.bound.BoundOutputManagerRouteErrors;
+import org.anchoranalysis.core.idgetter.IDGetterIter;
+import org.anchoranalysis.gui.videostats.internalframe.cfgtorgb.MultiInput;
+import org.anchoranalysis.image.object.ObjectCollection;
 
-public interface IAddToExportSubMenu {
-
-	void addExportItemStackGenerator( String outputName, String label, Operation<Stack,AnchorNeverOccursException> stack ) throws OperationFailedException;
+class MultiObjectsInputToOverlay implements BridgeElementWithIndex<MultiInput<ObjectCollection>, OverlayedInstantState,OperationFailedException> {
 	
-	<T> void addExportItem( IterableGenerator<T> generator, T itemToGenerate, String outputName, String label, Optional<ManifestDescription> md, int numItems );
-	
-	BoundOutputManagerRouteErrors getOutputManager();
+	@Override
+	public OverlayedInstantState bridgeElement(
+		int index,
+		MultiInput<ObjectCollection> sourceObject
+	) throws OperationFailedException {
+		
+		OverlayCollection oc = OverlayCollectionObjectFactory.createWithoutColor(
+			sourceObject.getAssociatedObjects().doOperation(),
+			new IDGetterIter<>()
+		);
+		return new OverlayedInstantState(index, oc);
+	}
 }

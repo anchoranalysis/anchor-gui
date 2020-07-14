@@ -39,7 +39,7 @@ public class RetrieveElementsList extends RetrieveElements {
 	}
 	
 	@Override
-	public void addToPopUp(IAddToExportSubMenu popUp) {
+	public void addToPopUp(AddToExportSubMenu popUp) {
 
 		for (RetrieveElements re : list) {
 			re.addToPopUp(popUp);

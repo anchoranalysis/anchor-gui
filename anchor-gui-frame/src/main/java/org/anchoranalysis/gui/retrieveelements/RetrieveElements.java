@@ -29,5 +29,5 @@ package org.anchoranalysis.gui.retrieveelements;
 
 public abstract class RetrieveElements {
 
-	public abstract void addToPopUp( IAddToExportSubMenu popUp);
+	public abstract void addToPopUp( AddToExportSubMenu popUp);
 }

@@ -1,6 +1,8 @@
 package org.anchoranalysis.gui.feature.evaluator.params;
 
-import org.anchoranalysis.anchor.mpp.feature.mark.MemoCollection;
+import java.util.Optional;
+
+import org.anchoranalysis.anchor.mpp.feature.input.memo.FeatureInputSingleMemo;
 import org.anchoranalysis.anchor.mpp.pxlmark.memo.VoxelizedMarkMemo;
 
 /*-
@@ -33,28 +35,14 @@ import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.feature.input.FeatureInput;
 import org.anchoranalysis.feature.nrg.NRGStackWithParams;
 
-public abstract class FeatureCalcParamsPairwiseFactory extends FeatureCalcParamsFactory {
+public class MemoUnaryFactory extends UnaryFactory {
 
 	@Override
-	public FeatureInput create(VoxelizedMarkMemo pmm, NRGStackWithParams nrgStack)
+	public FeatureInput create(VoxelizedMarkMemo pmm, NRGStackWithParams raster)
 			throws CreateException {
-		throw new CreateException("unsupported");		
+		return new FeatureInputSingleMemo(
+			pmm,
+			Optional.of(raster)
+		);
 	}
-
-	@Override
-	public FeatureInput create(MemoCollection pmmhList,
-			NRGStackWithParams raster) throws CreateException {
-		throw new CreateException("unsupported");
-	}
-	
-	@Override
-	public boolean isPairwiseSupported() {
-		return true;
-	}
-	
-	@Override
-	public boolean isUnarySupported() {
-		return false;
-	}
-
 }

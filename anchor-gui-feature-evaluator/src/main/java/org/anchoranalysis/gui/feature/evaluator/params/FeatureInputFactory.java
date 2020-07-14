@@ -1,15 +1,13 @@
 package org.anchoranalysis.gui.feature.evaluator.params;
 
-import java.util.Optional;
-
-import org.anchoranalysis.anchor.mpp.bean.regionmap.RegionMembershipWithFlags;
+import org.anchoranalysis.anchor.mpp.feature.mark.MemoCollection;
 import org.anchoranalysis.anchor.mpp.pxlmark.memo.VoxelizedMarkMemo;
 
-/*
+/*-
  * #%L
- * anchor-gui
+ * anchor-gui-feature-evaluator
  * %%
- * Copyright (C) 2016 ETH Zurich, University of Zurich, Owen Feehan
+ * Copyright (C) 2010 - 2019 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann la Roche
  * %%
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -31,34 +29,20 @@ import org.anchoranalysis.anchor.mpp.pxlmark.memo.VoxelizedMarkMemo;
  * #L%
  */
 
-
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.feature.input.FeatureInput;
 import org.anchoranalysis.feature.nrg.NRGStackWithParams;
-import org.anchoranalysis.image.binary.values.BinaryValuesByte;
-import org.anchoranalysis.image.feature.object.input.FeatureInputObjectCollection;
-import org.anchoranalysis.image.object.ObjectCollectionFactory;
-import org.anchoranalysis.image.object.ObjectMask;
 
-import lombok.AllArgsConstructor;
+public interface FeatureInputFactory {
 
-@AllArgsConstructor
-public class FeatureObjMaskCollectionParamsFactory extends FeatureCalcParamsUnaryFactory {
+	FeatureInput create( VoxelizedMarkMemo pmm, NRGStackWithParams raster ) throws CreateException;
 
-	private final RegionMembershipWithFlags regionMembership;
-
-	@Override
-	public FeatureInput create(VoxelizedMarkMemo pmm, NRGStackWithParams nrgStack) throws CreateException {
-		
-		ObjectMask object = pmm.getMark().calcMask(
-			nrgStack.getDimensions(),
-			regionMembership,
-			BinaryValuesByte.getDefault()
-		).getMask();
-		
-		return new FeatureInputObjectCollection(
-			ObjectCollectionFactory.from(object),
-			Optional.of(nrgStack)
-		);
-	}
+	FeatureInput create( VoxelizedMarkMemo pmm1, VoxelizedMarkMemo pmm2, NRGStackWithParams raster ) throws CreateException;
+	
+	FeatureInput create( MemoCollection pmmhList, NRGStackWithParams raster ) throws CreateException;
+	
+	boolean isPairwiseSupported();
+	
+	boolean isUnarySupported();
+	
 }

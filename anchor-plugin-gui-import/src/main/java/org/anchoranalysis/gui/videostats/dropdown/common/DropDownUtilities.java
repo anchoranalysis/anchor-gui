@@ -47,7 +47,7 @@ import org.anchoranalysis.gui.videostats.dropdown.OperationNRGStackFromMarkEvalu
 import org.anchoranalysis.gui.videostats.dropdown.VideoStatsModuleCreatorAndAdder;
 import org.anchoranalysis.gui.videostats.dropdown.VideoStatsModuleGlobalParams;
 import org.anchoranalysis.gui.videostats.modulecreator.CfgModuleCreator;
-import org.anchoranalysis.gui.videostats.modulecreator.ObjMaskCollectionModuleCreator;
+import org.anchoranalysis.gui.videostats.modulecreator.ObjectCollectionModuleCreator;
 import org.anchoranalysis.gui.videostats.modulecreator.VideoStatsModuleCreator;
 import org.anchoranalysis.gui.videostats.operation.VideoStatsOperationFromCreatorAndAdder;
 import org.anchoranalysis.gui.videostats.operation.VideoStatsOperationMenu;
@@ -143,7 +143,7 @@ public class DropDownUtilities {
 		VideoStatsModuleGlobalParams mpg,
 		boolean addAsDefault
 	) {
-		VideoStatsModuleCreator module = new ObjMaskCollectionModuleCreator(
+		VideoStatsModuleCreator module = new ObjectCollectionModuleCreator(
 			delegate.getName(),
 			name,
 			op,

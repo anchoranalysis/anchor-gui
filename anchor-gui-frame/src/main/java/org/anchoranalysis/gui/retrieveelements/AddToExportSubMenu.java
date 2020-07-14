@@ -1,13 +1,10 @@
-package org.anchoranalysis.gui.feature.evaluator.params;
-
-import org.anchoranalysis.anchor.mpp.feature.bean.mark.FeatureInputMark;
-import org.anchoranalysis.anchor.mpp.pxlmark.memo.VoxelizedMarkMemo;
+package org.anchoranalysis.gui.retrieveelements;
 
 /*-
  * #%L
- * anchor-gui-feature-evaluator
+ * anchor-gui-frame
  * %%
- * Copyright (C) 2010 - 2019 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann la Roche
+ * Copyright (C) 2010 - 2020 Owen Feehan
  * %%
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,20 +26,21 @@ import org.anchoranalysis.anchor.mpp.pxlmark.memo.VoxelizedMarkMemo;
  * #L%
  */
 
-import org.anchoranalysis.core.error.CreateException;
-import org.anchoranalysis.feature.input.FeatureInput;
-import org.anchoranalysis.feature.nrg.NRGStackWithParams;
+import java.util.Optional;
 
-public class FeatureMarkParamsFactory extends FeatureCalcParamsUnaryFactory {
+import org.anchoranalysis.core.error.AnchorNeverOccursException;
+import org.anchoranalysis.core.error.OperationFailedException;
+import org.anchoranalysis.core.functional.Operation;
+import org.anchoranalysis.image.stack.Stack;
+import org.anchoranalysis.io.generator.IterableGenerator;
+import org.anchoranalysis.io.manifest.ManifestDescription;
+import org.anchoranalysis.io.output.bound.BoundOutputManagerRouteErrors;
 
-	@Override
-	public FeatureInput create(VoxelizedMarkMemo pmm, NRGStackWithParams raster)
-			throws CreateException {
-		return new FeatureInputMark(
-			pmm.getMark(),
-			raster.getDimensions(),
-			raster.getParams()
-		);
-	}
+public interface AddToExportSubMenu {
+
+	void addExportItemStackGenerator( String outputName, String label, Operation<Stack,AnchorNeverOccursException> stack ) throws OperationFailedException;
 	
+	<T> void addExportItem( IterableGenerator<T> generator, T itemToGenerate, String outputName, String label, Optional<ManifestDescription> md, int numItems );
+	
+	BoundOutputManagerRouteErrors getOutputManager();
 }

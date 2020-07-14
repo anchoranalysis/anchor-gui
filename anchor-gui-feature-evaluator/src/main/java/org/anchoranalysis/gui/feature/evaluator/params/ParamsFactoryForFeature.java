@@ -50,28 +50,28 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access=AccessLevel.PRIVATE)
 public class ParamsFactoryForFeature {
 
-	public static FeatureCalcParamsFactory factoryFor( Feature<?> f ) {
+	public static FeatureInputFactory factoryFor( Feature<?> f ) {
 		
 		Class<? extends FeatureInput> paramType = f.inputType();
 		
 		if (paramType.equals(FeatureInput.class)) {
-			return new NullParamsFactory();
+			return new NullFactory();
 		}
 		
 		if (paramType.equals(FeatureInputMark.class)) {
-			return new FeatureMarkParamsFactory();
+			return new MarkUnaryFactory();
 		}
 
 		if (paramType.equals(FeatureInputSingleObject.class)) {
-			return new FeatureObjMaskParamsFactory( GlobalRegionIdentifiers.SUBMARK_INSIDE );
+			return new ObjectUnaryFactory( GlobalRegionIdentifiers.SUBMARK_INSIDE );
 		}
 		
 		if (paramType.equals(FeatureInputSingleMemo.class)) {
-			return new NRGElemIndCalcParamsFactory();
+			return new MemoUnaryFactory();
 		}
 		
 		if (paramType.equals(FeatureInputPairMemo.class)) {
-			return new NRGElemPairCalcParamsFactory();
+			return new MemoPairwiseFactory();
 		}
 		
 		if (paramType.equals(FeatureInputAllMemo.class)) {
@@ -83,11 +83,11 @@ public class ParamsFactoryForFeature {
 		}
 		
 		if (paramType.equals(FeatureInputObjectCollection.class)) {
-			return new FeatureObjMaskCollectionParamsFactory( RegionMapSingleton.instance().membershipWithFlagsForIndex(GlobalRegionIdentifiers.SUBMARK_INSIDE) );
+			return new ObjectCollectionUnaryFactory( RegionMapSingleton.instance().membershipWithFlagsForIndex(GlobalRegionIdentifiers.SUBMARK_INSIDE) );
 		}
 		
 		if (paramType.equals(FeatureInputPairObjects.class)) {
-			return new FeatureObjMaskPairParamsFactory( GlobalRegionIdentifiers.SUBMARK_INSIDE );
+			return new ObjectPairwiseFactory( GlobalRegionIdentifiers.SUBMARK_INSIDE );
 		}		
 		
 		if (paramType.equals(FeatureInputHistogram.class)) {
@@ -99,14 +99,14 @@ public class ParamsFactoryForFeature {
 		}
 		
 		if (paramType.equals(FeatureInputNRG.class)) {
-			return new FeatureObjMaskParamsFactory( GlobalRegionIdentifiers.SUBMARK_INSIDE );
+			return new ObjectUnaryFactory( GlobalRegionIdentifiers.SUBMARK_INSIDE );
 		}
 		
 		if (paramType.equals(FeatureInputParams.class)) {
-			return new FeatureObjMaskParamsFactory( GlobalRegionIdentifiers.SUBMARK_INSIDE );
+			return new ObjectUnaryFactory( GlobalRegionIdentifiers.SUBMARK_INSIDE );
 		}
 		
 		assert false;
-		return new NullParamsFactory();
+		return new NullFactory();
 	}
 }

@@ -36,14 +36,12 @@ import org.anchoranalysis.image.binary.values.BinaryValuesByte;
 import org.anchoranalysis.image.feature.object.input.FeatureInputSingleObject;
 import org.anchoranalysis.image.object.ObjectMask;
 
-public class FeatureObjMaskParamsFactory extends FeatureCalcParamsUnaryFactory {
+import lombok.AllArgsConstructor;
 
-	private int regionID;
-	
-	public FeatureObjMaskParamsFactory(int regionID) {
-		super();
-		this.regionID = regionID;
-	}
+@AllArgsConstructor
+public class ObjectUnaryFactory extends UnaryFactory {
+
+	private final int regionID;
 
 	@Override
 	public FeatureInput create(VoxelizedMarkMemo pmm, NRGStackWithParams nrgStack)

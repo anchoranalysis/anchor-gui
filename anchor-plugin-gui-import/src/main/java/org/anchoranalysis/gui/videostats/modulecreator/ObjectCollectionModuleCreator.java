@@ -20,34 +20,19 @@ import org.anchoranalysis.gui.videostats.operation.combine.IVideoStatsOperationC
 import org.anchoranalysis.image.object.ObjectCollection;
 import org.anchoranalysis.image.object.ObjectMask;
 
-public class ObjMaskCollectionModuleCreator extends VideoStatsModuleCreator {
+import lombok.AllArgsConstructor;
+
+@AllArgsConstructor
+public class ObjectCollectionModuleCreator extends VideoStatsModuleCreator {
 
 	private String fileIdentifier;
 	private String name;
 	private Operation<ObjectCollection,OperationFailedException> opObjs;
 	private NRGBackground nrgBackground;
-	
 	private VideoStatsModuleGlobalParams mpg;
 	
-	public ObjMaskCollectionModuleCreator(
-		String fileIdentifier,
-		String name,
-		Operation<ObjectCollection,OperationFailedException> op,
-		NRGBackground nrgBackground,
-		VideoStatsModuleGlobalParams mpg
-	) {
-		super();
-		this.fileIdentifier = fileIdentifier;
-		this.name = name;
-		this.opObjs = op;
-		this.nrgBackground = nrgBackground;
-		this.mpg = mpg;
-	}
-
-
 	@Override
-	public void createAndAddVideoStatsModule(IAddVideoStatsModule adder)
-			throws VideoStatsModuleCreateException {
+	public void createAndAddVideoStatsModule(IAddVideoStatsModule adder) throws VideoStatsModuleCreateException {
 		try {
 			ObjectCollection objects = opObjs.doOperation();
 
@@ -71,8 +56,6 @@ public class ObjMaskCollectionModuleCreator extends VideoStatsModuleCreator {
 			throw new VideoStatsModuleCreateException(e);
 		}
 	}
-
-
 
 	@Override
 	public Optional<IVideoStatsOperationCombine> getCombiner() {

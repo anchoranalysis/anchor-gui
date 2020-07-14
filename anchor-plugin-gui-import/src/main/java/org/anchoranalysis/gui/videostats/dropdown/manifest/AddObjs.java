@@ -41,7 +41,7 @@ import org.anchoranalysis.core.index.container.SingleContainer;
 import org.anchoranalysis.core.name.provider.NamedProvider;
 import org.anchoranalysis.gui.finder.FinderNrgStack;
 import org.anchoranalysis.gui.io.loader.manifest.finder.FinderCfgFolder;
-import org.anchoranalysis.gui.io.loader.manifest.finder.FinderObjMaskCollectionFolder;
+import org.anchoranalysis.gui.io.loader.manifest.finder.FinderObjectCollectionFolder;
 import org.anchoranalysis.gui.mark.MarkDisplaySettings;
 import org.anchoranalysis.gui.videostats.dropdown.BoundVideoStatsModuleDropDown;
 import org.anchoranalysis.gui.videostats.dropdown.MenuAddException;
@@ -98,12 +98,12 @@ class AddObjs {
 		OperationCreateBackgroundSetWithAdder operationBwsaWithNRG
 	) {
 		try	{
-			final FinderObjMaskCollectionFolder finderObjs = new FinderObjMaskCollectionFolder("objMaskCollection" );
+			final FinderObjectCollectionFolder finderObjs = new FinderObjectCollectionFolder("objMaskCollection" );
 			finderObjs.doFind(manifests.getFileManifest().doOperation());
 			
 			if (finderObjs.exists()) {
 				
-				NamedProvider<ObjectCollection> providers = finderObjs.createNamedProvider(false, mpg.getLogger());
+				NamedProvider<ObjectCollection> providers = finderObjs.createNamedProvider(mpg.getLogger());
 				
 				for( String key : providers.keys() ) {
 					DropDownUtilities.addObjMaskCollection(

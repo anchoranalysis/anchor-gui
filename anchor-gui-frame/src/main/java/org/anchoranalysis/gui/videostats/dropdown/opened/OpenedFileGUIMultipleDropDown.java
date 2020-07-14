@@ -195,7 +195,7 @@ public class OpenedFileGUIMultipleDropDown {
 			out,
 			rootOperation,
 			"Objs",
-			new MultiObjMaskCollectionInputToOverlay(),
+			new MultiObjectsInputToOverlay(),
 			op->op.getObjMaskCollection()
 		);
 	}

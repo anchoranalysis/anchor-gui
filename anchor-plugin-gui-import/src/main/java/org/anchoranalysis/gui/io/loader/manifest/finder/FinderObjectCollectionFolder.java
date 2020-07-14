@@ -40,14 +40,12 @@ import org.anchoranalysis.io.manifest.finder.FinderUtilities;
 import org.anchoranalysis.io.manifest.folder.FolderWrite;
 import org.anchoranalysis.io.manifest.match.FolderWritePath;
 
-public class FinderObjMaskCollectionFolder extends FinderSingleFolder {
+import lombok.AllArgsConstructor;
 
-	private String folderName;
-		
-	public FinderObjMaskCollectionFolder(String folderName ) {
-		super();
-		this.folderName = folderName;
-	}
+@AllArgsConstructor
+public class FinderObjectCollectionFolder extends FinderSingleFolder {
+
+	private final String folderName;
 
 	@Override
 	protected Optional<FolderWrite> findFolder(ManifestRecorder manifestRecorder) {
@@ -65,7 +63,7 @@ public class FinderObjMaskCollectionFolder extends FinderSingleFolder {
 	}
 	
 	// If namesAsIndexes is true, we use the indexes as names instead of the existing names
-	public NamedProvider<ObjectCollection> createNamedProvider( boolean namesAsIndexes, Logger logger ) throws OperationFailedException {
+	public NamedProvider<ObjectCollection> createNamedProvider(Logger logger) throws OperationFailedException {
 		
 		if (getFoundFolder()==null) {
 			return new NameValueSet<>();

@@ -1,14 +1,13 @@
 package org.anchoranalysis.gui.feature.evaluator.params;
 
-import java.util.Optional;
-
+import org.anchoranalysis.anchor.mpp.feature.mark.MemoCollection;
 import org.anchoranalysis.anchor.mpp.pxlmark.memo.VoxelizedMarkMemo;
 
-/*
+/*-
  * #%L
- * anchor-gui
+ * anchor-gui-feature-evaluator
  * %%
- * Copyright (C) 2016 ETH Zurich, University of Zurich, Owen Feehan
+ * Copyright (C) 2010 - 2019 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann la Roche
  * %%
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -30,44 +29,32 @@ import org.anchoranalysis.anchor.mpp.pxlmark.memo.VoxelizedMarkMemo;
  * #L%
  */
 
-
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.feature.input.FeatureInput;
 import org.anchoranalysis.feature.nrg.NRGStackWithParams;
-import org.anchoranalysis.image.binary.values.BinaryValuesByte;
-import org.anchoranalysis.image.feature.object.input.FeatureInputPairObjects;
-import org.anchoranalysis.image.object.ObjectMask;
 
-public class FeatureObjMaskPairMergedParamsFactory extends FeatureCalcParamsPairwiseFactory {
+public abstract class PairwiseFactory implements FeatureInputFactory {
 
-	private int regionID;
-	
-	public FeatureObjMaskPairMergedParamsFactory(int regionID) {
-		super();
-		this.regionID = regionID;
+	@Override
+	public FeatureInput create(VoxelizedMarkMemo pmm, NRGStackWithParams nrgStack)
+			throws CreateException {
+		throw new CreateException("unsupported");		
 	}
 
 	@Override
-	public FeatureInput create(VoxelizedMarkMemo pmm1, VoxelizedMarkMemo pmm2,
-			NRGStackWithParams nrgStack) throws CreateException {
-		
-		ObjectMask object1 = pmm1.getMark().calcMask(
-			nrgStack.getDimensions(),
-			pmm1.getRegionMap().membershipWithFlagsForIndex(regionID),
-			BinaryValuesByte.getDefault()
-		).getMask();
-		
-		ObjectMask object2 = pmm1.getMark().calcMask(
-			nrgStack.getDimensions(),
-			pmm2.getRegionMap().membershipWithFlagsForIndex(regionID),
-			BinaryValuesByte.getDefault()
-		).getMask();
-		
-		return new FeatureInputPairObjects(
-			object1,
-			object2,
-			Optional.of(nrgStack)
-		);
+	public FeatureInput create(MemoCollection pmmhList,
+			NRGStackWithParams raster) throws CreateException {
+		throw new CreateException("unsupported");
 	}
 	
+	@Override
+	public boolean isPairwiseSupported() {
+		return true;
+	}
+	
+	@Override
+	public boolean isUnarySupported() {
+		return false;
+	}
+
 }

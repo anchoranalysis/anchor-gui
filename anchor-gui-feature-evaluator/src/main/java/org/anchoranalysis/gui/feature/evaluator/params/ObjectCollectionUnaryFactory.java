@@ -1,9 +1,9 @@
-package org.anchoranalysis.gui.videostats.dropdown.opened;
+package org.anchoranalysis.gui.feature.evaluator.params;
 
-import org.anchoranalysis.anchor.overlay.OverlayedInstantState;
-import org.anchoranalysis.anchor.overlay.collection.OverlayCollection;
-import org.anchoranalysis.anchor.overlay.collection.OverlayCollectionObjectFactory;
-import org.anchoranalysis.core.bridge.BridgeElementWithIndex;
+import java.util.Optional;
+
+import org.anchoranalysis.anchor.mpp.bean.regionmap.RegionMembershipWithFlags;
+import org.anchoranalysis.anchor.mpp.pxlmark.memo.VoxelizedMarkMemo;
 
 /*
  * #%L
@@ -32,23 +32,33 @@ import org.anchoranalysis.core.bridge.BridgeElementWithIndex;
  */
 
 
-import org.anchoranalysis.core.error.OperationFailedException;
-import org.anchoranalysis.core.idgetter.IDGetterIter;
-import org.anchoranalysis.gui.videostats.internalframe.cfgtorgb.MultiInput;
-import org.anchoranalysis.image.object.ObjectCollection;
+import org.anchoranalysis.core.error.CreateException;
+import org.anchoranalysis.feature.input.FeatureInput;
+import org.anchoranalysis.feature.nrg.NRGStackWithParams;
+import org.anchoranalysis.image.binary.values.BinaryValuesByte;
+import org.anchoranalysis.image.feature.object.input.FeatureInputObjectCollection;
+import org.anchoranalysis.image.object.ObjectCollectionFactory;
+import org.anchoranalysis.image.object.ObjectMask;
 
-class MultiObjMaskCollectionInputToOverlay implements BridgeElementWithIndex<MultiInput<ObjectCollection>, OverlayedInstantState,OperationFailedException> {
-	
+import lombok.AllArgsConstructor;
+
+@AllArgsConstructor
+public class ObjectCollectionUnaryFactory extends UnaryFactory {
+
+	private final RegionMembershipWithFlags regionMembership;
+
 	@Override
-	public OverlayedInstantState bridgeElement(
-		int index,
-		MultiInput<ObjectCollection> sourceObject
-	) throws OperationFailedException {
+	public FeatureInput create(VoxelizedMarkMemo pmm, NRGStackWithParams nrgStack) throws CreateException {
 		
-		OverlayCollection oc = OverlayCollectionObjectFactory.createWithoutColor(
-			sourceObject.getAssociatedObjects().doOperation(),
-			new IDGetterIter<>()
+		ObjectMask object = pmm.getMark().calcMask(
+			nrgStack.getDimensions(),
+			regionMembership,
+			BinaryValuesByte.getDefault()
+		).getMask();
+		
+		return new FeatureInputObjectCollection(
+			ObjectCollectionFactory.from(object),
+			Optional.of(nrgStack)
 		);
-		return new OverlayedInstantState(index, oc);
 	}
 }

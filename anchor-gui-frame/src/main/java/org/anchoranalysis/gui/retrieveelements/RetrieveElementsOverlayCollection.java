@@ -47,7 +47,7 @@ public class RetrieveElementsOverlayCollection extends RetrieveElements {
 	private OverlayCollection currentObjects;
 
 	@Override
-	public void addToPopUp(IAddToExportSubMenu popUp) {
+	public void addToPopUp(AddToExportSubMenu popUp) {
 
 		if (currentObjects!=null) {
 			Cfg cfg = OverlayCollectionMarkFactory.cfgFromOverlays( currentObjects );
@@ -68,7 +68,7 @@ public class RetrieveElementsOverlayCollection extends RetrieveElements {
 	}
 	
 	
-	private void addSelectedObjects( IAddToExportSubMenu popUp, ObjectCollection objects ) {
+	private void addSelectedObjects( AddToExportSubMenu popUp, ObjectCollection objects ) {
 		popUp.addExportItem(
 			ObjectMaskCollectionWriter.generator(),
 			objects,
@@ -81,7 +81,7 @@ public class RetrieveElementsOverlayCollection extends RetrieveElements {
 		);
 	}
 	
-	private void addSelectedMarksSerialized( IAddToExportSubMenu popUp, Cfg cfg ) {
+	private void addSelectedMarksSerialized( AddToExportSubMenu popUp, Cfg cfg ) {
 		Collection<Mark> marks = cfg.createSet();
 		ObjectOutputStreamGenerator<Mark> generatorMark = new ObjectOutputStreamGenerator<>(
 			Optional.of("mark")
@@ -90,14 +90,14 @@ public class RetrieveElementsOverlayCollection extends RetrieveElements {
 		popUp.addExportItem( generatorCollection, marks, "selectedMarksObjects", "Selected Marks [Serialized]", generatorMark.createManifestDescription(), marks.size() );
 	}
 	
-	private void addSelectedMarksAsConfiguration( IAddToExportSubMenu popUp, Cfg cfg ) {
+	private void addSelectedMarksAsConfiguration( AddToExportSubMenu popUp, Cfg cfg ) {
 		ObjectOutputStreamGenerator<Cfg> generatorCfg = new ObjectOutputStreamGenerator<>(
 			Optional.of("cfg")
 		);
 		popUp.addExportItem( generatorCfg, cfg, "selectedMarksCfg", "Selected Marks as Configuration", generatorCfg.createManifestDescription(), 1 );
 	}
 	
-	private void addAllMarksAsConfiguration( IAddToExportSubMenu popUp, Cfg cfg ) {
+	private void addAllMarksAsConfiguration( AddToExportSubMenu popUp, Cfg cfg ) {
 		ObjectOutputStreamGenerator<Cfg> generator = new ObjectOutputStreamGenerator<>(
 			Optional.of("cfg")
 		);

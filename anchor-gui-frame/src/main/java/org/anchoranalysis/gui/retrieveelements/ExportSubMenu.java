@@ -56,7 +56,7 @@ import org.anchoranalysis.io.output.bound.BoundOutputManagerRouteErrors;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
-public class ExportSubMenu implements IAddToExportSubMenu {
+public class ExportSubMenu implements AddToExportSubMenu {
 
 	private final ExportPopupParams params;
 	private final ErrorReporter errorReporter;

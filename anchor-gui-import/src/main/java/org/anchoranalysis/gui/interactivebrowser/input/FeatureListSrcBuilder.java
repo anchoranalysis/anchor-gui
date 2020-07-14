@@ -45,7 +45,7 @@ import org.anchoranalysis.feature.bean.list.FeatureList;
 import org.anchoranalysis.feature.bean.list.FeatureListFactory;
 import org.anchoranalysis.feature.input.FeatureInput;
 import org.anchoranalysis.feature.shared.SharedFeaturesInitParams;
-import org.anchoranalysis.gui.feature.evaluator.params.FeatureCalcParamsFactory;
+import org.anchoranalysis.gui.feature.evaluator.params.FeatureInputFactory;
 import org.anchoranalysis.gui.feature.evaluator.params.ParamsFactoryForFeature;
 import org.anchoranalysis.gui.feature.evaluator.treetable.ExtractFromNamedNRGSchemeSet;
 import org.anchoranalysis.gui.feature.evaluator.treetable.FeatureListSrc;
@@ -163,7 +163,7 @@ public class FeatureListSrcBuilder {
 	private void determineUnaryPairwiseFeatures( FeatureList<FeatureInput> in, FeatureList<FeatureInputSingleMemo> outUnary, FeatureList<FeatureInputPairMemo> outPairwise ) {
 		for( Feature<FeatureInput> feature : in ) {
 			
-			FeatureCalcParamsFactory factory = ParamsFactoryForFeature.factoryFor(feature);
+			FeatureInputFactory factory = ParamsFactoryForFeature.factoryFor(feature);
 			
 			if (factory.isUnarySupported()) {
 				outUnary.add( feature.downcast() );

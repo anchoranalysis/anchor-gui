@@ -63,7 +63,7 @@ public class RetrieveElementsImage extends RetrieveElements {
 	}
 	
 	@Override
-	public void addToPopUp( IAddToExportSubMenu popUp) {
+	public void addToPopUp( AddToExportSubMenu popUp) {
 		
     	if (getStack()!=null) {
     		

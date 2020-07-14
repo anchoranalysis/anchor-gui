@@ -31,36 +31,30 @@ import org.anchoranalysis.anchor.mpp.pxlmark.memo.VoxelizedMarkMemo;
 
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.feature.input.FeatureInput;
-import org.anchoranalysis.feature.input.FeatureInputNull;
 import org.anchoranalysis.feature.nrg.NRGStackWithParams;
 
-public class NullParamsFactory extends FeatureCalcParamsFactory {
-
-	@Override
-	public FeatureInput create(VoxelizedMarkMemo pmm, NRGStackWithParams raster)
-			throws CreateException {
-		return FeatureInputNull.instance();
-	}
+public abstract class UnaryFactory implements FeatureInputFactory {
 
 	@Override
 	public FeatureInput create(VoxelizedMarkMemo pmm1, VoxelizedMarkMemo pmm2,
 			NRGStackWithParams raster) throws CreateException {
-		return FeatureInputNull.instance();
+		throw new CreateException("unsupported");
 	}
 
 	@Override
 	public FeatureInput create(MemoCollection pmmhList,
 			NRGStackWithParams raster) throws CreateException {
-		return FeatureInputNull.instance();
+		throw new CreateException("unsupported");
 	}
 
 	@Override
 	public boolean isPairwiseSupported() {
-		return true;
+		return false;
 	}
 	
 	@Override
 	public boolean isUnarySupported() {
 		return true;
 	}
+
 }
