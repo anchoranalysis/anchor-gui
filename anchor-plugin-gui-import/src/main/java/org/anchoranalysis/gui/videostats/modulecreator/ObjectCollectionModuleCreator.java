@@ -18,8 +18,6 @@ import org.anchoranalysis.gui.videostats.internalframe.InternalFrameStaticOverla
 import org.anchoranalysis.gui.videostats.module.VideoStatsModuleCreateException;
 import org.anchoranalysis.gui.videostats.operation.combine.IVideoStatsOperationCombine;
 import org.anchoranalysis.image.object.ObjectCollection;
-import org.anchoranalysis.image.object.ObjectMask;
-
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
@@ -27,21 +25,25 @@ public class ObjectCollectionModuleCreator extends VideoStatsModuleCreator {
 
 	private String fileIdentifier;
 	private String name;
-	private Operation<ObjectCollection,OperationFailedException> opObjs;
+	private Operation<ObjectCollection,OperationFailedException> opObjects;
 	private NRGBackground nrgBackground;
 	private VideoStatsModuleGlobalParams mpg;
 	
 	@Override
 	public void createAndAddVideoStatsModule(IAddVideoStatsModule adder) throws VideoStatsModuleCreateException {
 		try {
-			ObjectCollection objects = opObjs.doOperation();
-
-			OverlayCollection oc = OverlayCollectionObjectFactory.createWithoutColor(objects, new IDGetterIter<ObjectMask>() );
+			OverlayCollection overlays = OverlayCollectionObjectFactory.createWithoutColor(
+				opObjects.doOperation(),
+				new IDGetterIter<>()
+			);
 			
-			String frameName = String.format("%s: %s", fileIdentifier, name);
-			InternalFrameStaticOverlaySelectable imageFrame = new InternalFrameStaticOverlaySelectable( frameName, false );
+			InternalFrameStaticOverlaySelectable imageFrame = new InternalFrameStaticOverlaySelectable(
+				String.format("%s: %s", fileIdentifier, name),
+				false
+			);
+			
 			ISliderState sliderState = imageFrame.init(
-				oc,
+				overlays,
 				adder.getSubgroup().getDefaultModuleState().getState(),
 				mpg
 			);
@@ -50,7 +52,10 @@ public class ObjectCollectionModuleCreator extends VideoStatsModuleCreator {
 				mpg,
 				nrgBackground.getBackgroundSet()
 			);
-			ModuleAddUtilities.add(adder, imageFrame.moduleCreator(sliderState) );
+			ModuleAddUtilities.add(
+				adder,
+				imageFrame.moduleCreator(sliderState)
+			);
 
 		} catch (InitException | OperationFailedException e) {
 			throw new VideoStatsModuleCreateException(e);
@@ -67,18 +72,16 @@ public class ObjectCollectionModuleCreator extends VideoStatsModuleCreator {
 					return Optional.empty();
 				}
 		
-	
 				@Override
 				public String generateName() {
 					return fileIdentifier;
 				}
 	
 				@Override
-				public Optional<Operation<ObjectCollection, OperationFailedException>> getObjMaskCollection() {
-					return Optional.of(opObjs);
+				public Optional<Operation<ObjectCollection, OperationFailedException>> getObjects() {
+					return Optional.of(opObjects);
 				}
-	
-	
+		
 				@Override
 				public NRGBackground getNrgBackground() {
 					return nrgBackground;

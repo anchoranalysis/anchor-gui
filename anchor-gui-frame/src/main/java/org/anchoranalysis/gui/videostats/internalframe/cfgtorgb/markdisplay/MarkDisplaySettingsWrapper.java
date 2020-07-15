@@ -114,8 +114,8 @@ public class MarkDisplaySettingsWrapper implements IChangeMarkDisplaySendable {
 		}
 	}
 	
-	public DrawOverlay createObjMaskWriter() {
-		return markDisplaySettings.createConditionalObjMaskWriter(idMatchCondition);
+	public DrawOverlay createObjectDrawer() {
+		return markDisplaySettings.createConditionalObjectDrawer(idMatchCondition);
 	}
 	
 	public void addChangeListener( PropertyValueChangeListener<MarkDisplaySettings> listener ) {

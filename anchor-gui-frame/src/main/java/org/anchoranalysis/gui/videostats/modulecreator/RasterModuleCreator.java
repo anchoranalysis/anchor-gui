@@ -35,7 +35,7 @@ public class RasterModuleCreator extends VideoStatsModuleCreator {
 		}
 
 		@Override
-		public Optional<Operation<ObjectCollection, OperationFailedException>> getObjMaskCollection() {
+		public Optional<Operation<ObjectCollection, OperationFailedException>> getObjects() {
 			return Optional.empty();
 		}
 

@@ -62,7 +62,7 @@ public class MarkDisplaySettings {
 	
 	private boolean showSolid = false;
 	
-	public DrawOverlay createConditionalObjMaskWriter( IfElse.Condition conditionSelected ) {
+	public DrawOverlay createConditionalObjectDrawer( IfElse.Condition conditionSelected ) {
 		
 		int borderSize = showThickBorder ? 6 : 1;
 		
@@ -107,14 +107,12 @@ public class MarkDisplaySettings {
 		falseWriter.setForce2D(true);
 		
 		// Combining both situations gives us a selectable
-		DrawObject edgeSelectableWriter = new IfElse(conditionSelected, trueWriter, falseWriter);
-		
-		return edgeSelectableWriter;
+		return new IfElse(conditionSelected, trueWriter, falseWriter);
 	}
 	
 	private static DrawObject createWriterFromList( List<DrawObject> writerList ) {
 		
-		if (writerList.size()==0) {
+		if (writerList.isEmpty()) {
 			return null;
 		}
 		
@@ -171,11 +169,11 @@ public class MarkDisplaySettings {
 		DrawObject insideWriter = createWriterFromList(insideList);
 		DrawObject shellWriter = createWriterFromList(shellList);
 				
-		if (shellList.size()>0) {
+		if (!shellList.isEmpty()) {
 			return new SimpleOverlayWriter(	shellWriter );
 		} else {
 			
-			if (insideList.size()>0) {
+			if (!insideList.isEmpty()) {
 				return new SimpleOverlayWriter(	insideWriter );
 			} else {
 				// Then there is no mask

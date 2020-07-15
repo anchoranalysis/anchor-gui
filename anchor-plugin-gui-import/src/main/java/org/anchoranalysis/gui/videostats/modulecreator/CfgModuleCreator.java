@@ -122,7 +122,7 @@ public class CfgModuleCreator extends VideoStatsModuleCreator {
 				}
 	
 				@Override
-				public Optional<Operation<ObjectCollection, OperationFailedException>> getObjMaskCollection() {
+				public Optional<Operation<ObjectCollection, OperationFailedException>> getObjects() {
 					return Optional.empty();
 				}
 	

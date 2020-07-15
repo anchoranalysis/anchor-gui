@@ -54,33 +54,27 @@ import org.anchoranalysis.gui.videostats.operation.VideoStatsOperationMenu;
 import org.anchoranalysis.image.object.ObjectCollection;
 import org.anchoranalysis.io.manifest.deserializer.folder.LoadContainer;
 import org.anchoranalysis.io.manifest.finder.FinderSerializedObject;
+import org.anchoranalysis.mpp.sgmn.define.OutputterDirectories;
 import org.anchoranalysis.plugin.io.manifest.CoupledManifests;
 
-class AddObjs {
+import lombok.AllArgsConstructor;
+
+@AllArgsConstructor
+class AddObjects {
 
 	private BoundVideoStatsModuleDropDown delegate;
 	private CoupledManifests manifests;
 	private FinderNrgStack finderNrgStack;
 	private VideoStatsModuleGlobalParams mpg;
 	private MarkDisplaySettings markDisplaySettings;
-		
-	public AddObjs(BoundVideoStatsModuleDropDown delegate, CoupledManifests manifests, FinderNrgStack finderNrgStack,
-			VideoStatsModuleGlobalParams mpg, MarkDisplaySettings markDisplaySettings) {
-		super();
-		this.delegate = delegate;
-		this.manifests = manifests;
-		this.finderNrgStack = finderNrgStack;
-		this.mpg = mpg;
-		this.markDisplaySettings = markDisplaySettings;
-	}
 	
 	public boolean apply( OperationCreateBackgroundSetWithAdder operationBwsaWithNRG ) {
 		
-		VideoStatsOperationMenu subMenu = delegate.getRootMenu().createSubMenu("Objs", true);
+		VideoStatsOperationMenu subMenu = delegate.getRootMenu().createSubMenu("Objects", true);
 		
 		boolean defaultAdded = false;
 		
-		if (fromObjMaskCollectionFolder(subMenu, operationBwsaWithNRG)) {
+		if (fromObjectCollectionFolder(subMenu, operationBwsaWithNRG)) {
 			defaultAdded = true;
 		}
 		
@@ -93,20 +87,22 @@ class AddObjs {
 		return defaultAdded;
 	}
 
-	private boolean fromObjMaskCollectionFolder(
+	private boolean fromObjectCollectionFolder(
 		VideoStatsOperationMenu subMenu,
 		OperationCreateBackgroundSetWithAdder operationBwsaWithNRG
 	) {
 		try	{
-			final FinderObjectCollectionFolder finderObjs = new FinderObjectCollectionFolder("objMaskCollection" );
-			finderObjs.doFind(manifests.getFileManifest().doOperation());
+			final FinderObjectCollectionFolder finderObjects = new FinderObjectCollectionFolder(
+				OutputterDirectories.OBJECT
+			);
+			finderObjects.doFind(manifests.getFileManifest().doOperation());
 			
-			if (finderObjs.exists()) {
+			if (finderObjects.exists()) {
 				
-				NamedProvider<ObjectCollection> providers = finderObjs.createNamedProvider(mpg.getLogger());
+				NamedProvider<ObjectCollection> providers = finderObjects.createNamedProvider(mpg.getLogger());
 				
 				for( String key : providers.keys() ) {
-					DropDownUtilities.addObjMaskCollection(
+					DropDownUtilities.addObjectCollection(
 						subMenu,
 						delegate,
 						new OperationFromNamedProvider<>(providers,key),

@@ -134,7 +134,7 @@ public class DropDownUtilities {
 	}
 	
 	
-	public static void addObjMaskCollection(
+	public static void addObjectCollection(
 		VideoStatsOperationMenu menu,
 		BoundVideoStatsModuleDropDown delegate,
 		Operation<ObjectCollection,OperationFailedException> op,
@@ -190,7 +190,7 @@ public class DropDownUtilities {
 		}
 	}
 		
-	public static void addObjSubmenu(
+	public static void addObjectsSubmenu(
 		VideoStatsOperationMenu menu,
 		BoundVideoStatsModuleDropDown delegate,
 		final NamedProvider<ObjectCollection> provider,
@@ -202,11 +202,11 @@ public class DropDownUtilities {
 			return;
 		}
 		
-		VideoStatsOperationMenu subMenu = menu.createSubMenu("Objs", true);
+		VideoStatsOperationMenu subMenu = menu.createSubMenu("Objects", true);
 		
 		for( final String providerName : provider.keys() ) {
 			
-			addObjMaskCollection(
+			addObjectCollection(
 				subMenu,
 				delegate.createChild(providerName),
 				() -> getFromProvider(provider,providerName),

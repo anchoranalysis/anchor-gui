@@ -179,7 +179,7 @@ public class OpenedFileGUIMultipleDropDown {
 		VideoStatsOperation rootOperation,
 		MarkDisplaySettings markDisplaySettings
 	) {
-		addBackgroundSetAndNoObjs(listCombined, out);
+		addBackgroundSetAndNoObjects(listCombined, out);
 		
 		// Get cfg menu
 		addMulti(
@@ -187,31 +187,31 @@ public class OpenedFileGUIMultipleDropDown {
 			out,
 			rootOperation,
 			"Cfg",
-			new MultiCfgInputToOverlay(markDisplaySettings	),
-			op->op.getCfg()
+			new MultiCfgInputToOverlay(markDisplaySettings),
+			IVideoStatsOperationCombine::getCfg
 		);
 		addMulti(
 			listCombined,
 			out,
 			rootOperation,
-			"Objs",
+			"Objects",
 			new MultiObjectsInputToOverlay(),
-			op->op.getObjMaskCollection()
+			IVideoStatsOperationCombine::getObjects
 		);
 	}
 	
 	
 	/**
-	 * Creates a "Multi Raster" for the operations that give Rasters but no Cfg or Objs
+	 * Creates a "Multi Raster" for the operations that give Rasters but no Cfg or objects
 	 * 
 	 * @param listCombined
 	 * @param out
 	 */
-	private void addBackgroundSetAndNoObjs( List<IVideoStatsOperationCombine> listCombined, VideoStatsOperationMenu out ) {
+	private void addBackgroundSetAndNoObjects( List<IVideoStatsOperationCombine> listCombined, VideoStatsOperationMenu out ) {
 		
 		List<NamedRasterSet> list = new ArrayList<>();
 		for( IVideoStatsOperationCombine op : listCombined ) {
-			if (op.getNrgBackground()!=null && !op.getCfg().isPresent() && !op.getObjMaskCollection().isPresent()) {
+			if (op.getNrgBackground()!=null && !op.getCfg().isPresent() && !op.getObjects().isPresent()) {
 				list.add( new NamedRasterSet( op.generateName(), op.getNrgBackground().getBackgroundSet()) );
 			}
 		}

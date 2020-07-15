@@ -35,22 +35,24 @@ import org.anchoranalysis.feature.nrg.NRGStackWithParams;
 
 public class UnsupportedFactory implements FeatureInputFactory {
 
+	private static final String UNSUPPORTED_MESSAGE = "unsupported";
+	
 	@Override
 	public FeatureInput create(VoxelizedMarkMemo pmm, NRGStackWithParams nrgStack)
 			throws CreateException {
-		throw new CreateException("unsupported");
+		throw new CreateException(UNSUPPORTED_MESSAGE);
 	}
 
 	@Override
 	public FeatureInput create(VoxelizedMarkMemo pmm1, VoxelizedMarkMemo pmm2,
 			NRGStackWithParams raster) throws CreateException {
-		throw new CreateException("unsupported");
+		throw new CreateException(UNSUPPORTED_MESSAGE);
 	}
 
 	@Override
 	public FeatureInput create(MemoCollection pmmhList,
 			NRGStackWithParams raster) throws CreateException {
-		throw new CreateException("unsupported");
+		throw new CreateException(UNSUPPORTED_MESSAGE);
 	}
 
 	@Override

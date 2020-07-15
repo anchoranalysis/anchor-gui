@@ -232,10 +232,10 @@ public class ManifestDropDown {
 		FinderImgStackCollectionCombine finderImgStackCollection = createFinderImgStack( finderNrgStack, rasterReader );
 		OperationCreateBackgroundSetWithAdder opBackgroundNRG = createBackgroundSetWithNRG( finderNrgStack, finderImgStackCollection, adder, mpg );
 		
-		// Add: Cfgs, Rasters and ObjMasks
+		// Add: Cfgs, Rasters and object-masks
 		boolean defaultAdded = addCfgs(	opBackgroundNRG, finderNrgStack, mpg );
 		addRaster( opBackgroundNRG, mpg, defaultAdded );
-		new AddObjs(
+		new AddObjects(
 			delegate,
 			manifests,
 			finderNrgStack,

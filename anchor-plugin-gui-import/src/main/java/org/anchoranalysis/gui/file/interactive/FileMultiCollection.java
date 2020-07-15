@@ -105,7 +105,7 @@ public class FileMultiCollection extends InteractiveFile {
 		
 		LazyEvaluationStore<ObjectCollection> objects = new LazyEvaluationStore<>(
 			logger,
-			"objMaskCollection"
+			"object-collections"
 		);
 		inputObject.objects().addToStore(objects);
 		

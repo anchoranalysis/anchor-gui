@@ -35,7 +35,7 @@ import org.anchoranalysis.anchor.mpp.mark.Mark;
 import org.anchoranalysis.anchor.mpp.overlay.OverlayCollectionMarkFactory;
 import org.anchoranalysis.anchor.overlay.collection.OverlayCollection;
 import org.anchoranalysis.anchor.overlay.collection.OverlayCollectionObjectFactory;
-import org.anchoranalysis.image.io.objects.ObjectMaskCollectionWriter;
+import org.anchoranalysis.image.io.objects.ObjectCollectionWriter;
 import org.anchoranalysis.image.object.ObjectCollection;
 import org.anchoranalysis.io.generator.collection.SubfolderGenerator;
 import org.anchoranalysis.io.generator.sequence.CollectionGenerator;
@@ -70,12 +70,12 @@ public class RetrieveElementsOverlayCollection extends RetrieveElements {
 	
 	private void addSelectedObjects( AddToExportSubMenu popUp, ObjectCollection objects ) {
 		popUp.addExportItem(
-			ObjectMaskCollectionWriter.generator(),
+			ObjectCollectionWriter.generator(),
 			objects,
 			"selectedObjects",
 			"Selected Objects",
 			Optional.of(
-				SubfolderGenerator.createManifestDescription("objMaskCollection")
+				SubfolderGenerator.createManifestDescription(ObjectCollectionWriter.MANIFEST_DESCRIPTION)
 			),
 			1
 		);

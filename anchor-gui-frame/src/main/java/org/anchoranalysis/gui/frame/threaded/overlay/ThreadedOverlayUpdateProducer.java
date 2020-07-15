@@ -83,7 +83,7 @@ class ThreadedOverlayUpdateProducer implements IRedrawable, IThreadedProducer, I
 		public void propertyValueChanged(
 				PropertyValueChangeEvent<MarkDisplaySettings> evt) {
 			
-			DrawOverlay maskWriter = markDisplaySettingsWrapper.createObjMaskWriter() ;
+			DrawOverlay maskWriter = markDisplaySettingsWrapper.createObjectDrawer() ;
 		
 			try {
 				displayStackCreator.updateMaskWriter(maskWriter);
@@ -129,7 +129,7 @@ class ThreadedOverlayUpdateProducer implements IRedrawable, IThreadedProducer, I
 		displayStackCreator = setupDisplayUpdateCreator(
 			findCorrectUpdate,
 			idGetter,
-			markDisplaySettingsWrapper.createObjMaskWriter()
+			markDisplaySettingsWrapper.createObjectDrawer()
 		);
 		
 		consumer = new ThreadedDisplayUpdateConsumer(

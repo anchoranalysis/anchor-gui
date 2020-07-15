@@ -115,7 +115,6 @@ public class CfgProposerMouseClickAdapter extends MouseAdapter {
 					e.friendlyMessageHierarchy()
 				)
 			);
-			return;
 		}
 	}
 	

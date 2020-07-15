@@ -156,7 +156,7 @@ public class AnnotationListInternalFrame {
 		ProgressReporter progressReporter
 	) throws OperationFailedException {
 		try {
-			Collection<AnnotationWithStrategy<T>> inputObjs = inputManager.inputObjects(
+			Collection<AnnotationWithStrategy<T>> inputObjects = inputManager.inputObjects(
 				new InputManagerParams(
 					params.getModuleParams().createInputContext(),
 					progressReporter,
@@ -165,7 +165,7 @@ public class AnnotationListInternalFrame {
 			); 
 			
 			return new AnnotationProject(
-				inputObjs,
+				inputObjects,
 				params.getMarkEvaluatorManager(),
 				params.getModuleParams(),
 				ProgressReporterNull.get()

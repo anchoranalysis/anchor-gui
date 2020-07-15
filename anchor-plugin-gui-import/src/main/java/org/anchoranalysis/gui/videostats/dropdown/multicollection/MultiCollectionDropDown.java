@@ -128,7 +128,7 @@ public class MultiCollectionDropDown {
 		}
 		
 		if (objCollection!=null) {
-			DropDownUtilities.addObjSubmenu(
+			DropDownUtilities.addObjectsSubmenu(
 				delegate.getRootMenu(),
 				delegate,
 				objCollection,

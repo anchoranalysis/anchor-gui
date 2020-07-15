@@ -21,7 +21,7 @@ public interface IVideoStatsOperationCombine {
 	
 	Optional<Operation<Cfg,OperationFailedException>> getCfg();
 	
-	Optional<Operation<ObjectCollection, OperationFailedException>> getObjMaskCollection();
+	Optional<Operation<ObjectCollection, OperationFailedException>> getObjects();
 	
 	String generateName();
 }

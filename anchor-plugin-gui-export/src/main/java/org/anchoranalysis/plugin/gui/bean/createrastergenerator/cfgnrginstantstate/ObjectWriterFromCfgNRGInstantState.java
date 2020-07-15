@@ -90,8 +90,7 @@ public class ObjectWriterFromCfgNRGInstantState extends CreateRasterGenerator<Cf
 
 		final IterableObjectGenerator<OverlayedDisplayStackUpdate,Stack> generator;
 		
-		// params.getColorIndexMarks()
-		if (mip==true) {
+		if (mip) {
 			throw new CreateException("The mip flag is no longer supported for this bean");
 		} else {
 			

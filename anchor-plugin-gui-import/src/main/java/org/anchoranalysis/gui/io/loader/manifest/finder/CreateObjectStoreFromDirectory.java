@@ -33,15 +33,15 @@ import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.functional.Operation;
 import org.anchoranalysis.core.log.Logger;
 import org.anchoranalysis.core.name.store.LazyEvaluationStore;
-import org.anchoranalysis.image.io.objects.ObjectMaskCollectionReader;
+import org.anchoranalysis.image.io.objects.ObjectCollectionReader;
 import org.anchoranalysis.image.object.ObjectCollection;
 import org.apache.commons.io.FilenameUtils;
 
-class CreateObjStoreFromDirectory { 
+class CreateObjectStoreFromDirectory { 
 
 	public LazyEvaluationStore<ObjectCollection> apply( Path pathFolder, Logger logger ) throws OperationFailedException {
 		
-		LazyEvaluationStore<ObjectCollection> out = new LazyEvaluationStore<>(logger, "finderObjMaskCollection");
+		LazyEvaluationStore<ObjectCollection> out = new LazyEvaluationStore<>(logger, "finder object-collections");
 		
 		/** All the .h5 files in the directory */
 		addHdf5Files( out, pathFolder );
@@ -93,7 +93,7 @@ class CreateObjStoreFromDirectory {
 		
 		out.add(
 			name,
-			ObjectMaskCollectionReader.createFromPathCached(pathOp)
+			ObjectCollectionReader.createFromPathCached(pathOp)
 		);
 	}
 	
@@ -103,7 +103,7 @@ class CreateObjStoreFromDirectory {
 	
 	private static File[] hd5fFilesFor( Path pathFolder ) {
 		return pathFolder.toFile().listFiles(
-			f-> ObjectMaskCollectionReader.hasHdf5Extension( f.toPath() )
+			f-> ObjectCollectionReader.hasHdf5Extension( f.toPath() )
 		);
 	}
 }

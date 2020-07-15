@@ -77,19 +77,19 @@ class FinderEvaluator {
 
 	public Pair<Overlay> findPairFromCurrentSelection( OverlayCollection overlays, NRGStackWithParams nrgStack ) throws CreateException {
 		
-		if (doMarkOrObjMask(overlays)) {
+		if (doMarkOrObject(overlays)) {
 			Cfg cfg = OverlayCollectionMarkFactory.cfgFromOverlays( overlays );
 			return FinderEvaluator.findPairFromCurrentSelectionMark( cfg, nrgStack, sharedFeatureList, logger );
 		} else {
-			return FinderEvaluator.findPairFromCurrentSelectionObjMask( overlays );
+			return FinderEvaluator.findPairFromCurrentSelectionObject( overlays );
 		}
 	}
 	
 	
 	
-	// Decides whether to use Mark features or ObjMask Features based upon whatever there is more of in the selection
-	private static boolean doMarkOrObjMask( OverlayCollection oc ) {
-		int cntMark = 0;;
+	// Decides whether to use mark- or object- features based upon whatever there is more of in the selection
+	private static boolean doMarkOrObject( OverlayCollection oc ) {
+		int cntMark = 0;
 		int cntOther = 0;
 		for( Overlay ol : oc ) {
 			if (ol instanceof OverlayMark) {
@@ -101,14 +101,14 @@ class FinderEvaluator {
 		return cntMark > cntOther;
 	}
 
-	private static Pair<Overlay> findPairFromCurrentSelectionObjMask( OverlayCollection oc ) throws CreateException {
+	private static Pair<Overlay> findPairFromCurrentSelectionObject( OverlayCollection oc ) {
 
 		if (oc.size()<=1) {
 			return null;
 		}
 			
 		// We always take the first two
-		return new Pair<Overlay>( oc.get(0), oc.get(1) );
+		return new Pair<>( oc.get(0), oc.get(1) );
 	}
 	
 	private static Pair<Overlay> findPairFromCurrentSelectionMark(
@@ -148,7 +148,7 @@ class FinderEvaluator {
 				assert(m2!=null);
 								
 				if (edgeTester.canGenerateEdge( m1, m2 )) {
-					return new Pair<Overlay>(
+					return new Pair<>(
 						new OverlayMark(m1, regionMembership),
 						new OverlayMark(m2, regionMembership)
 					);

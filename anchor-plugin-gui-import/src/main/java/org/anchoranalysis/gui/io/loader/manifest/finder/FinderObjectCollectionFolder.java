@@ -69,7 +69,7 @@ public class FinderObjectCollectionFolder extends FinderSingleFolder {
 			return new NameValueSet<>();
 		}
 		
-		return new CreateObjStoreFromDirectory().apply(
+		return new CreateObjectStoreFromDirectory().apply(
 			getFoundFolder().calcPath(),
 			logger
 		);
