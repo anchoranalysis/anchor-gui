@@ -48,16 +48,12 @@ import org.anchoranalysis.core.geometry.Point3f;
 import org.anchoranalysis.gui.frame.overlays.ProposedCfg;
 import org.anchoranalysis.gui.videostats.internalframe.ProposalOperation;
 
+import lombok.AllArgsConstructor;
+
+@AllArgsConstructor
 public class MarkMergeProposerEvaluator implements ProposalOperationCreator {
 
 	private final MarkMergeProposer markMergeProposer;
-	
-	public MarkMergeProposerEvaluator(MarkMergeProposer markMergeProposer) {
-		super();		
-		assert(markMergeProposer!=null);
-		
-		this.markMergeProposer = markMergeProposer;
-	}
 
 	@Override
 	public ProposalOperation create(final Cfg cfg, Point3d position,

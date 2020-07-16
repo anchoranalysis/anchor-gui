@@ -1,6 +1,6 @@
 package org.anchoranalysis.gui.frame.canvas.zoom;
 
-import org.anchoranalysis.anchor.mpp.bean.bound.RslvdBound;
+import org.anchoranalysis.anchor.mpp.bean.bound.ResolvedBound;
 
 /*-
  * #%L
@@ -43,7 +43,7 @@ public class ZoomScale {
 	
 	
 	// A bound on the exponent
-	private RslvdBound boundZoom;
+	private ResolvedBound boundZoom;
 	
 	private static int minWidth = 10;
 	private static int minHeight = 10;
@@ -69,7 +69,7 @@ public class ZoomScale {
 		scaleInv = 1/scale;
 	}
 	
-	public ZoomScale( int exp, RslvdBound boundZoom ) {
+	public ZoomScale( int exp, ResolvedBound boundZoom ) {
 		this.exp = exp;
 		this.boundZoom = boundZoom;
 		updateScale();
@@ -93,7 +93,7 @@ public class ZoomScale {
 		int smallestZoomExp = Math.max(smallestZoomX, smallestZoomY);
 		
 		// The largest zoom is 10
-		boundZoom = new RslvdBound( smallestZoomExp, largestZoomExp );
+		boundZoom = new ResolvedBound( smallestZoomExp, largestZoomExp );
 	}
 	
 	public double getScale() {

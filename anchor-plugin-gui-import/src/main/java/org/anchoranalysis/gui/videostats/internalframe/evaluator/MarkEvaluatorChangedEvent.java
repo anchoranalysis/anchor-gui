@@ -27,7 +27,7 @@ package org.anchoranalysis.gui.videostats.internalframe.evaluator;
  */
 
 
-import org.anchoranalysis.gui.interactivebrowser.MarkEvaluatorRslvd;
+import org.anchoranalysis.gui.interactivebrowser.MarkEvaluatorResolved;
 
 public class MarkEvaluatorChangedEvent extends java.util.EventObject {
     
@@ -36,16 +36,16 @@ public class MarkEvaluatorChangedEvent extends java.util.EventObject {
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	private MarkEvaluatorRslvd markEvalutor;
+	private MarkEvaluatorResolved markEvalutor;
 	private String markEvaluatorName;
 	
-    public MarkEvaluatorChangedEvent(Object source, MarkEvaluatorRslvd markEvalutor, String markEvaluatorName ) {
+    public MarkEvaluatorChangedEvent(Object source, MarkEvaluatorResolved markEvalutor, String markEvaluatorName ) {
         super(source);
         this.markEvalutor = markEvalutor;
         this.markEvaluatorName = markEvaluatorName;
     }
 
-	public MarkEvaluatorRslvd getMarkEvaluator() {
+	public MarkEvaluatorResolved getMarkEvaluator() {
 		return markEvalutor;
 	}
 

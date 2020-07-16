@@ -37,14 +37,14 @@ import org.anchoranalysis.feature.nrg.NRGStackWithParams;
 
 // A MarkEvaluator after it has been resolved for usage by converting
 //  it into a ProposerSharedObjectsImageSpecific and other necessary components
-public class MarkEvaluatorRslvd {
+public class MarkEvaluatorResolved {
 
-	private OperationInitParams operationCreateProposerSharedObjects;
-	private OperationNrgStack operationCreateNrgStack;
-	private CfgGen cfgGen;
-	private NRGScheme nrgScheme;
+	private final OperationInitParams operationCreateProposerSharedObjects;
+	private final OperationNrgStack operationCreateNrgStack;
+	private final CfgGen cfgGen;
+	private final NRGScheme nrgScheme;
 	
-	public MarkEvaluatorRslvd(
+	public MarkEvaluatorResolved(
 			OperationInitParams proposerSharedObjects,
 			CfgGen cfgGen,
 			NRGScheme nrgScheme,

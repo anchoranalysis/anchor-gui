@@ -51,7 +51,7 @@ public class AcceptanceRateGraphDefinition extends GraphDefinition {
 		this.windowSize = windowSize;
 	}
 
-	private long rslv( double nrg ) {
+	private long resolve( double nrg ) {
     	return (long) ( 1000 * nrg);
     }
 	
@@ -94,9 +94,9 @@ public class AcceptanceRateGraphDefinition extends GraphDefinition {
     	
     	int i = 0;
     	long[] values = new long[1+numKernel];
-    	values[i++] = rslv( this.agg.getAccptAll() );
+    	values[i++] = resolve( this.agg.getAccptAll() );
     	 for (int j=0; j<numKernel; j++) {
-    		 values[i++] = rslv( agg.getKernelAccpt().get(j) );
+    		 values[i++] = resolve( agg.getKernelAccpt().get(j) );
          }
     	
     	return values;

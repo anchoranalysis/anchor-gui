@@ -31,7 +31,7 @@ import java.util.Optional;
 import org.anchoranalysis.anchor.mpp.bean.proposer.MarkProposer;
 import org.anchoranalysis.anchor.mpp.bean.regionmap.RegionMap;
 import org.anchoranalysis.core.index.GetOperationFailedException;
-import org.anchoranalysis.gui.interactivebrowser.MarkEvaluatorRslvd;
+import org.anchoranalysis.gui.interactivebrowser.MarkEvaluatorResolved;
 import org.anchoranalysis.gui.videostats.internalframe.annotator.InternalFrameAnnotator;
 import org.anchoranalysis.gui.videostats.internalframe.annotator.tool.ToolErrorReporter;
 import org.anchoranalysis.gui.videostats.internalframe.evaluator.EvaluatorWithContext;
@@ -47,7 +47,7 @@ class EvaluatorFactory {
 
 	public static Optional<EvaluatorWithContext> createGuessEvaluator(
 		MarkProposer markProposerGuess,
-		MarkEvaluatorRslvd markEvaluatorRslvd,
+		MarkEvaluatorResolved markEvaluatorResolved,
 		RegionMap regionMap,
 		ToolErrorReporter errorReporter
 	) {
@@ -61,8 +61,8 @@ class EvaluatorFactory {
 			return Optional.of(
 				new EvaluatorWithContext(
 					new MarkProposerEvaluatorDimensions(markProposerGuess,false),
-					markEvaluatorRslvd.getNRGStack(),
-					markEvaluatorRslvd.getCfgGen(),
+					markEvaluatorResolved.getNRGStack(),
+					markEvaluatorResolved.getCfgGen(),
 					regionMap
 				)
 			);
@@ -74,7 +74,7 @@ class EvaluatorFactory {
 	
 	public static Optional<EvaluatorWithContext> createSelectPointsEvaluator(
 		ImageDimensions dimViewer,
-		MarkEvaluatorRslvd markEvaluatorRslvd,
+		MarkEvaluatorResolved markEvaluatorResolved,
 		RegionMap regionMap,
 		ToolErrorReporter errorReporter
 	) {
@@ -82,8 +82,8 @@ class EvaluatorFactory {
 			return Optional.of(
 				new EvaluatorWithContext(
 					new MarkSphereOnPointProposerEvaluator(dimViewer),
-					markEvaluatorRslvd.getNRGStack(),
-					markEvaluatorRslvd.getCfgGen(),
+					markEvaluatorResolved.getNRGStack(),
+					markEvaluatorResolved.getCfgGen(),
 					regionMap
 				)
 			);

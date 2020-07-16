@@ -46,7 +46,7 @@ public class NRGGraphDefinition extends GraphDefinition {
 		this.windowSize = windowSize;
 	}
 
-	private long rslv( double nrg ) {
+	private long resolve( double nrg ) {
     	return (long) (100 * nrg);
     }
     
@@ -77,8 +77,8 @@ public class NRGGraphDefinition extends GraphDefinition {
 	public long[] valueArr( int iter, long timeStamp ) {
 		
 		long[] values = new long[2];
-		values[0] = rslv( this.nrgBest );
-		values[1] = rslv( this.nrgCrnt );
+		values[0] = resolve( this.nrgBest );
+		values[1] = resolve( this.nrgCrnt );
 		return values;
 	}
 	

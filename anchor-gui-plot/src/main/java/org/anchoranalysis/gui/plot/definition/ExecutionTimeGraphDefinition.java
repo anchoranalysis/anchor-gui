@@ -48,7 +48,7 @@ public class ExecutionTimeGraphDefinition extends GraphDefinition {
 		this.windowSize = windowSize;
 	}
 
-	private long rslv( double nrg ) {
+	private long resolve( double nrg ) {
     	return (long) ( 100 * nrg);
     }
     
@@ -78,7 +78,7 @@ public class ExecutionTimeGraphDefinition extends GraphDefinition {
 	public long[] valueArr( int iter, long timeStamp ) {
 		
 		long[] values = new long[1];
-		values[0] = rslv( this.msPerIter );
+		values[0] = resolve( this.msPerIter );
 		return values;
 	}
 	

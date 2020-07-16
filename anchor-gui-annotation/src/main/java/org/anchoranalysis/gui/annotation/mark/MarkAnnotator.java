@@ -40,7 +40,7 @@ import org.anchoranalysis.core.log.Logger;
 import org.anchoranalysis.core.name.provider.NamedProviderGetException;
 import org.anchoranalysis.core.name.store.NamedProviderStore;
 import org.anchoranalysis.gui.annotation.AnnotatorModuleCreator;
-import org.anchoranalysis.gui.interactivebrowser.MarkEvaluatorRslvd;
+import org.anchoranalysis.gui.interactivebrowser.MarkEvaluatorResolved;
 import org.anchoranalysis.gui.interactivebrowser.MarkEvaluatorSetForImage;
 import org.anchoranalysis.gui.videostats.internalframe.annotator.tool.ToolErrorReporter;
 import org.anchoranalysis.gui.videostats.internalframe.evaluator.EvaluatorWithContext;
@@ -50,7 +50,7 @@ import org.anchoranalysis.plugin.annotation.bean.strategy.MarkProposerStrategy;
 
 public class MarkAnnotator {
 
-	private MarkEvaluatorRslvd markEvaluatorRslvd;
+	private MarkEvaluatorResolved markEvaluatorResolved;
 	private MarkProposer markProposerGuess;
 	private PointsFitter pointsFitterSelectPoints;
 
@@ -62,9 +62,9 @@ public class MarkAnnotator {
 		Logger logger
 	) throws CreateException {
 		
-		markEvaluatorRslvd = setupMarkEvaluator( annotationStrategy, markEvaluatorSet );
+		markEvaluatorResolved = setupMarkEvaluator( annotationStrategy, markEvaluatorSet );
 		
-		MPPInitParams soMPP = setupEvaluatorAndPointsFitter(markEvaluatorRslvd, annotationStrategy);
+		MPPInitParams soMPP = setupEvaluatorAndPointsFitter(markEvaluatorResolved, annotationStrategy);
 		
 		pointsFitterSelectPoints = extractPointsFitter(annotationStrategy, soMPP);
 		
@@ -75,7 +75,7 @@ public class MarkAnnotator {
 	}
 	
 	public RegionMap getRegionMap() {
-		return markEvaluatorRslvd.getNrgScheme().getRegionMap();
+		return markEvaluatorResolved.getNrgScheme().getRegionMap();
 	}
 
 	public NamedProviderStore<Stack> getBackgroundStacks() {
@@ -85,7 +85,7 @@ public class MarkAnnotator {
 	public Optional<EvaluatorWithContext> createGuessEvaluator(ToolErrorReporter errorReporter) {
 		return EvaluatorFactory.createGuessEvaluator(
 			markProposerGuess,
-			markEvaluatorRslvd,
+			markEvaluatorResolved,
 			getRegionMap(),
 			errorReporter	
 		);
@@ -97,7 +97,7 @@ public class MarkAnnotator {
 	) {
 		return EvaluatorFactory.createSelectPointsEvaluator(
 			dimViewer,
-			markEvaluatorRslvd,
+			markEvaluatorResolved,
 			getRegionMap(),
 			errorReporter
 		);
@@ -107,7 +107,7 @@ public class MarkAnnotator {
 		return pointsFitterSelectPoints;
 	}
 
-	private static MPPInitParams setupEvaluatorAndPointsFitter( MarkEvaluatorRslvd markEvaluator, MarkProposerStrategy annotationStrategy ) throws CreateException {
+	private static MPPInitParams setupEvaluatorAndPointsFitter( MarkEvaluatorResolved markEvaluator, MarkProposerStrategy annotationStrategy ) throws CreateException {
 		return markEvaluator.getProposerSharedObjectsOperation().doOperation();
 	}
 	
@@ -129,7 +129,7 @@ public class MarkAnnotator {
 		}
 	}
 
-	private static MarkEvaluatorRslvd setupMarkEvaluator( MarkProposerStrategy annotationStrategy, MarkEvaluatorSetForImage markEvaluatorSet ) throws CreateException {
+	private static MarkEvaluatorResolved setupMarkEvaluator( MarkProposerStrategy annotationStrategy, MarkEvaluatorSetForImage markEvaluatorSet ) throws CreateException {
 		try {
 			if (annotationStrategy.getMarkEvaluator()!=null) {
 				markEvaluatorSet.add(

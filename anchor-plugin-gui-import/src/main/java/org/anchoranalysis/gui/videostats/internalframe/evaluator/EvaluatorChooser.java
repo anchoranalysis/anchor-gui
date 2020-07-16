@@ -42,7 +42,7 @@ import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.friendly.AnchorImpossibleSituationException;
 import org.anchoranalysis.core.error.reporter.ErrorReporter;
 import org.anchoranalysis.core.index.GetOperationFailedException;
-import org.anchoranalysis.gui.interactivebrowser.MarkEvaluatorRslvd;
+import org.anchoranalysis.gui.interactivebrowser.MarkEvaluatorResolved;
 import org.anchoranalysis.gui.interactivebrowser.MarkEvaluatorSetForImage;
 import org.anchoranalysis.gui.videostats.internalframe.evaluator.fromproposer.ProposalOperationCreatorFromProposer;
 
@@ -61,7 +61,7 @@ public class EvaluatorChooser {
 	private List<ProposalOperationCreatorFromProposer<?>> listEvaluators = new ArrayList<>(); 
 	private ErrorReporter errorReporter;
 	
-	private MarkEvaluatorRslvd markEvaluatorSelected;
+	private MarkEvaluatorResolved markEvaluatorSelected;
 	
 	private EventListenerList eventListenerList = new EventListenerList();
 	

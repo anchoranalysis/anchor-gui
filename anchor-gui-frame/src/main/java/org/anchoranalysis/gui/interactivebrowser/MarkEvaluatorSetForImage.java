@@ -51,7 +51,7 @@ import org.anchoranalysis.io.output.bound.BoundIOContext;
 
 public class MarkEvaluatorSetForImage {
 
-	private Map<String,Operation<MarkEvaluatorRslvd,OperationFailedException>> map = new HashMap<>(); 
+	private Map<String,Operation<MarkEvaluatorResolved,OperationFailedException>> map = new HashMap<>(); 
 
 	private OperationWithProgressReporter<NamedProvider<Stack>,? extends Throwable> namedImgStackCollection;
 	private Operation<Optional<KeyValueParams>,IOException> keyParams;
@@ -68,12 +68,12 @@ public class MarkEvaluatorSetForImage {
 		this.context = context;
 	}
 
-	private class Rslv extends CachedOperation<MarkEvaluatorRslvd,OperationFailedException> {
+	private class Resolved extends CachedOperation<MarkEvaluatorResolved,OperationFailedException> {
 
 		private OperationInitParams operationProposerSharedObjects;
 		private MarkEvaluator me;
 		
-		public Rslv( MarkEvaluator me ) throws CreateException {
+		public Resolved( MarkEvaluator me ) throws CreateException {
 			this.me = me;
 			operationProposerSharedObjects =
 				new OperationInitParams(
@@ -98,9 +98,9 @@ public class MarkEvaluatorSetForImage {
 		}
 		
 		@Override
-		protected MarkEvaluatorRslvd execute() throws OperationFailedException {
+		protected MarkEvaluatorResolved execute() throws OperationFailedException {
 			try {
-				return new MarkEvaluatorRslvd(
+				return new MarkEvaluatorResolved(
 					operationProposerSharedObjects,
 					me.getCfgGen(),
 					me.getNrgSchemeCreator().create(),
@@ -115,7 +115,7 @@ public class MarkEvaluatorSetForImage {
 	
 	public void add( String key, MarkEvaluator me ) throws OperationFailedException {
 		try {
-			map.put(key, new Rslv(me) );
+			map.put(key, new Resolved(me) );
 		} catch (CreateException e) {
 			throw new OperationFailedException(e);
 		}
@@ -125,9 +125,9 @@ public class MarkEvaluatorSetForImage {
 		return map.keySet();
 	}
 	
-	public MarkEvaluatorRslvd get(String key) throws GetOperationFailedException {
+	public MarkEvaluatorResolved get(String key) throws GetOperationFailedException {
 		try {
-			Operation<MarkEvaluatorRslvd,OperationFailedException> op = map.get(key); 
+			Operation<MarkEvaluatorResolved,OperationFailedException> op = map.get(key); 
 			
 			if (op==null) {
 				throw new GetOperationFailedException( String.format("Cannot find markEvaluator '%s'", key) );
