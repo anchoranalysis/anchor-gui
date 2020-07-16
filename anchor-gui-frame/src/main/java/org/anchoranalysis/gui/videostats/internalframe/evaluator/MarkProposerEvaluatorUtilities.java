@@ -41,9 +41,18 @@ import org.anchoranalysis.core.geometry.Point3d;
 import org.anchoranalysis.core.random.RandomNumberGenerator;
 import org.anchoranalysis.image.extent.ImageDimensions;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+
+@NoArgsConstructor(access=AccessLevel.PRIVATE)
 public class MarkProposerEvaluatorUtilities {
 
-	public static Mark createMarkFromPosition( Point3d position, Mark templateMark, final ImageDimensions dim, final RandomNumberGenerator randomNumberGenerator ) {
+	public static Mark createMarkFromPosition(
+		Point3d position,
+		Mark templateMark,
+		final ImageDimensions dimensions,
+		final RandomNumberGenerator randomNumberGenerator
+	) {
 		
 		final Mark me = templateMark.duplicate();
 

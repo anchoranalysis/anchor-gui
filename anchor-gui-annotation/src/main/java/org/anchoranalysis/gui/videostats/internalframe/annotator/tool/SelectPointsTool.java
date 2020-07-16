@@ -53,7 +53,7 @@ public class SelectPointsTool extends AnnotationTool {
 	private final IQuerySelectedPoints selectedPoints;
 	private final ToolErrorReporter errorReporter;
 		
-	private ImageDimensions dim;
+	private ImageDimensions dimensions;
 	
 	@Override
 	public void leftMouseClickedAtPoint(Point3d point) {
@@ -63,7 +63,7 @@ public class SelectPointsTool extends AnnotationTool {
 	@Override
 	public void proposed(ProposedCfg proposedCfg) {
 		
-		dim = proposedCfg.getDimensions();
+		dimensions = proposedCfg.getDimensions();
 		
 		// Extract what should be the only mark
 		assert( proposedCfg.getCfgCore().getMarks().size() ==1 );
@@ -81,7 +81,7 @@ public class SelectPointsTool extends AnnotationTool {
 
 		if (selectedPoints.hasSelectedPoints()) {
 			
-			if (dim==null) {
+			if (dimensions==null) {
 				errorReporter.showError(
 					SelectPointsTool.class,
 					"Incorrect initialization",
@@ -124,7 +124,7 @@ public class SelectPointsTool extends AnnotationTool {
 	
 	private Mark proposeMark( EvaluatorWithContext eval ) throws PointsFitterException, InsufficientPointsException {
 		Mark mark = eval.getCfgGen().getTemplateMark().create();
-		pointsFitter.fit(selectedPoints.selectedPointsAsFloats(), mark, dim);
+		pointsFitter.fit(selectedPoints.selectedPointsAsFloats(), mark, dimensions);
 		return mark;
 	}
 

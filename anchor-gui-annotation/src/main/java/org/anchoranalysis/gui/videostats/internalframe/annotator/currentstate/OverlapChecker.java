@@ -51,9 +51,9 @@ class OverlapChecker {
 	private ToolErrorReporter errorReporter;
 	private RegionMap regionMap;
 	
-	public OverlapChecker(ImageDimensions dim, RegionMap regionMap, ToolErrorReporter errorReporter) {
+	public OverlapChecker(ImageDimensions dimensions, RegionMap regionMap, ToolErrorReporter errorReporter) {
 		super();
-		this.nrgStack = new NRGStack(dim);
+		this.nrgStack = new NRGStack(dimensions);
 		this.errorReporter = errorReporter;
 		this.regionMap = regionMap;
 	}

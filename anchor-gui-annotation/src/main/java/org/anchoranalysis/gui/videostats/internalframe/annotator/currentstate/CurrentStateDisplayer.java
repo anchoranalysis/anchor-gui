@@ -73,13 +73,13 @@ public class CurrentStateDisplayer {
 	public CurrentStateDisplayer(
 		ShowCurrentState cfgShower,
 		SaveMonitor saveMonitor,
-		ImageDimensions dim,
+		ImageDimensions dimensions,
 		RegionMap regionMap,
 		ToolErrorReporter errorReporter
 	) {
 		this.cfgShower = cfgShower;
 		this.currentState = new CurrentState(saveMonitor);
-		this.overlapChecker = new OverlapChecker(dim, regionMap, errorReporter );
+		this.overlapChecker = new OverlapChecker(dimensions, regionMap, errorReporter );
 		this.confirmReset = new WrapConfirmReset(currentState.confirmReset());
 	}
 	

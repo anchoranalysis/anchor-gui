@@ -46,7 +46,7 @@ import org.anchoranalysis.image.extent.ImageDimensions;
 public class MarkProposerEvaluatorDimensions implements ProposalOperationCreator {
 
 	private MarkProposer markProposer;
-	private ImageDimensions dim;
+	private ImageDimensions dimensions;
 	private boolean detailedVisualization;
 	
 	public MarkProposerEvaluatorDimensions(MarkProposer markProposer, boolean detailedVisualization) {
@@ -73,7 +73,7 @@ public class MarkProposerEvaluatorDimensions implements ProposalOperationCreator
 				VoxelizedMarkMemo pmm = PxlMarkMemoFactory.create( m, null, context.getRegionMap() );
 				
 				ProposedCfg er = new ProposedCfg();
-				er.setDimensions( dim );
+				er.setDimensions( dimensions );
 				
 				assert( markProposer.isInitialized() );
 				

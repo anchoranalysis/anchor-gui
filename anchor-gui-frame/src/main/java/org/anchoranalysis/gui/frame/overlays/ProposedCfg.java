@@ -41,7 +41,7 @@ public class ProposedCfg {
 	private ColoredOverlayCollection overlays = new ColoredOverlayCollection();				// The total cfg to be drawn
 	private Cfg cfgToRedraw = new Cfg();		// The marks that need to be redrawn, as they have changed
 	private Cfg cfgCore = new Cfg();	// The core part of the cfg
-	private ImageDimensions dim;
+	private ImageDimensions dimensions;
 	
 	private ProposerFailureDescription pfd;
 	private boolean success = false;
@@ -119,10 +119,10 @@ public class ProposedCfg {
 	}
 
 	public ImageDimensions getDimensions() {
-		return dim;
+		return dimensions;
 	}
 
 	public void setDimensions(ImageDimensions dim) {
-		this.dim = dim;
+		this.dimensions = dim;
 	}
 }

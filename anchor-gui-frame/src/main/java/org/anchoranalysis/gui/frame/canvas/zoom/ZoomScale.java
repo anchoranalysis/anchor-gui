@@ -35,19 +35,24 @@ import org.anchoranalysis.image.extent.ImageDimensions;
 import org.anchoranalysis.image.scale.ScaleFactor;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 
-public class ZoomScale {
+import lombok.Getter;
 
+public class ZoomScale {
+	
+	private static final int MIN_WIDTH = 10;
+	private static final int MIN_HEIGHT = 10;
+	private static final int LARGEST_ZOOM_EXP = 5;
+	
 	private int exp = 0;
+	
+	@Getter
 	private double scale = 1;
+	
+	@Getter
 	private double scaleInv = 1;
-	
-	
+		
 	// A bound on the exponent
 	private ResolvedBound boundZoom;
-	
-	private static int minWidth = 10;
-	private static int minHeight = 10;
-	private static int largestZoomExp = 5;
 	
 	public ZoomScale() {
 		exp = 0;
@@ -83,27 +88,19 @@ public class ZoomScale {
 	}
 	
 	// Establishes an upper and lower limit for zooming
-	public void establishBounds( ImageDimensions dim ) {
+	public void establishBounds( ImageDimensions dimensions ) {
 		
 		
 		// The smallest zoom that keeps out size above 10, or 1
 		// ceil( x = log2( minWidth / actualWidth ) )
-		int smallestZoomX = smallestZoom(minWidth, dim.getX());
-		int smallestZoomY = smallestZoom(minHeight, dim.getY());
+		int smallestZoomX = smallestZoom(MIN_WIDTH, dimensions.getX());
+		int smallestZoomY = smallestZoom(MIN_HEIGHT, dimensions.getY());
 		int smallestZoomExp = Math.max(smallestZoomX, smallestZoomY);
 		
 		// The largest zoom is 10
-		boundZoom = new ResolvedBound( smallestZoomExp, largestZoomExp );
+		boundZoom = new ResolvedBound( smallestZoomExp, LARGEST_ZOOM_EXP );
 	}
-	
-	public double getScale() {
-		return scale;
-	}
-	
-	public double getScaleInv() {
-		return scaleInv;
-	}
-	
+		
 	public ZoomScale zoomIn() {
 		int expNew = exp + 1;
 		if (boundZoom.contains(expNew)) {

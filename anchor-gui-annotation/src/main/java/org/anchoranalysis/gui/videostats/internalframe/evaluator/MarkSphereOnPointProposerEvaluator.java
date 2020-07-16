@@ -45,55 +45,46 @@ import org.anchoranalysis.gui.frame.overlays.ProposedCfg;
 import org.anchoranalysis.gui.videostats.internalframe.ProposalOperation;
 import org.anchoranalysis.image.extent.ImageDimensions;
 
+import lombok.RequiredArgsConstructor;
+
+@RequiredArgsConstructor
 public class MarkSphereOnPointProposerEvaluator implements ProposalOperationCreator {
 
-	private RGBColor colorMark = new RGBColor(Color.YELLOW);
+	// START REQUIRED ARGUMENTS
+	private final ImageDimensions dimensions;
+	// END REQUIRED ARGUMENTS
 	
-	private ImageDimensions dim;
+	private RGBColor colorMark = new RGBColor(Color.YELLOW);
 	
 	private static RegionMembershipWithFlags regionMembership = RegionMapSingleton.instance().membershipWithFlagsForIndex(
 		GlobalRegionIdentifiers.SUBMARK_INSIDE
 	);
 	
-	public MarkSphereOnPointProposerEvaluator(ImageDimensions dim) {
-		super();
-		this.dim = dim;
-	}
-
-
-
 	@Override
 	public ProposalOperation create(Cfg cfg, final Point3d position,
 			ProposerContext context,
 			CfgGen cfgGen)
 			throws OperationFailedException {
 		
-		return new ProposalOperation() {
-
-			@Override
-			public ProposedCfg propose(ErrorNode errorNode) {
-
-				
-				ProposedCfg proposedCfg = new ProposedCfg();
-				proposedCfg.setDimensions( dim );
-				proposedCfg.setSuccess(true);
-				
-				MarkSphere markSphere = new MarkSphere();
-				markSphere.setRadius(1);
-				markSphere.setPos(position);
-				
-				
-				proposedCfg.getCfgCore().add(markSphere);
-				proposedCfg.getCfgToRedraw().add(markSphere);
-				proposedCfg.getColoredCfg().add(
-					new OverlayMark(markSphere, regionMembership),
-					colorMark
-				);
-				proposedCfg.setSuggestedSliceNum( (int) position.getZ() ); 
-				
-				return proposedCfg;
-			}
+		return errorNode -> {
+			ProposedCfg proposedCfg = new ProposedCfg();
+			proposedCfg.setDimensions( dimensions );
+			proposedCfg.setSuccess(true);
 			
+			MarkSphere markSphere = new MarkSphere();
+			markSphere.setRadius(1);
+			markSphere.setPos(position);
+			
+			
+			proposedCfg.getCfgCore().add(markSphere);
+			proposedCfg.getCfgToRedraw().add(markSphere);
+			proposedCfg.getColoredCfg().add(
+				new OverlayMark(markSphere, regionMembership),
+				colorMark
+			);
+			proposedCfg.setSuggestedSliceNum( (int) position.getZ() ); 
+			
+			return proposedCfg;
 		};
 	}
 

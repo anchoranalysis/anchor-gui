@@ -29,14 +29,12 @@ package org.anchoranalysis.gui.frame.details.canvas;
 import org.anchoranalysis.core.index.container.BoundedRange;
 import org.anchoranalysis.image.extent.ImageDimensions;
 
+import lombok.AllArgsConstructor;
+
+@AllArgsConstructor
 class ChnlSliceRange implements BoundedRange {
 
-	private ImageDimensions sd;
-
-	public ChnlSliceRange(ImageDimensions sd) {
-		super();
-		this.sd = sd;
-	}
+	private final ImageDimensions dimensions;
 
 	@Override
 	public int getMinimumIndex() {
@@ -45,6 +43,6 @@ class ChnlSliceRange implements BoundedRange {
 
 	@Override
 	public int getMaximumIndex() {
-		return (sd.getZ() - 1);
+		return (dimensions.getZ() - 1);
 	}
 }

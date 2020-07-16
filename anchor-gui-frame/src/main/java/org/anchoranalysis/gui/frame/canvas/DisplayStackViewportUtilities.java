@@ -36,10 +36,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access=AccessLevel.PRIVATE)
 class DisplayStackViewportUtilities {
 	
-	public static Point2i clipToImage( Point2i val, Extent canvasExtent, ImageDimensions sdImage ) {
+	public static Point2i clipToImage( Point2i val, Extent canvasExtent, ImageDimensions dimensions ) {
 		return new Point2i(
-			clipToImage(val.getX(), sdImage.getX(), canvasExtent.getX()),
-			clipToImage(val.getY(), sdImage.getY(), canvasExtent.getY())
+			clipToImage(val.getX(), dimensions.getX(), canvasExtent.getX()),
+			clipToImage(val.getY(), dimensions.getY(), canvasExtent.getY())
 		);
 	}
 	

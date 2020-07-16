@@ -48,14 +48,14 @@ public class CombineRGBBoundedIndexContainer implements BoundedIndexContainer<Di
 	private int min;
 	private int max;
 	
-	private ImageDimensions dim;
+	private ImageDimensions dimensions;
 	
 	// We assume we will never have an index above this number
 	private static int MAX_NEVER_REACHED = 1000000;
 	
 	private void setDimensionsIfNeeded( BoundedIndexContainer<DisplayStack> cntr ) throws GetOperationFailedException {
-		if (cntr!=null && dim==null) {
-			dim = cntr.get( cntr.getMinimumIndex()).getDimensions();
+		if (cntr!=null && dimensions==null) {
+			dimensions = cntr.get( cntr.getMinimumIndex()).getDimensions();
 		}
 	}
 	
@@ -216,8 +216,8 @@ public class CombineRGBBoundedIndexContainer implements BoundedIndexContainer<Di
 				stackNew.addChnl( cntr.get( cntr.previousEqualIndex(index) ).createChnl(0, false) );
 			} else {
 				// TODO, why do we create an empty initialised here
-				assert(dim!=null);
-				Channel chnlNew = ChannelFactory.instance().createEmptyInitialised(dim, VoxelDataTypeUnsignedByte.INSTANCE);
+				assert(dimensions!=null);
+				Channel chnlNew = ChannelFactory.instance().createEmptyInitialised(dimensions, VoxelDataTypeUnsignedByte.INSTANCE);
 				stackNew.addChnl( chnlNew );
 			}
 		} catch (IncorrectImageSizeException e) {

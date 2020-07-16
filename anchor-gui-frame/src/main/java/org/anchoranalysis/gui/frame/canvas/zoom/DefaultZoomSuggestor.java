@@ -28,20 +28,17 @@ package org.anchoranalysis.gui.frame.canvas.zoom;
 
 import org.anchoranalysis.image.extent.ImageDimensions;
 
+import lombok.AllArgsConstructor;
+
+@AllArgsConstructor
 public class DefaultZoomSuggestor {
 
-	private int maxX;
-	private int maxY;
+	private final int maxX;
+	private final int maxY;
 	
-	public DefaultZoomSuggestor(int maxX, int maxY) {
-		super();
-		this.maxX = maxX;
-		this.maxY = maxY;
-	}
-
-	public ZoomScale suggestDefaultZoomFor( ImageDimensions sd ) {
-		int maxExpX = getMaxExpForDim( maxX, sd.getX() );
-		int maxExpY = getMaxExpForDim( maxY, sd.getY() );
+	public ZoomScale suggestDefaultZoomFor( ImageDimensions dimensions ) {
+		int maxExpX = getMaxExpForDim( maxX, dimensions.getX() );
+		int maxExpY = getMaxExpForDim( maxY, dimensions.getY() );
 		int exp = Math.min( maxExpX, maxExpY );
 		return new ZoomScale(exp);
 	}
