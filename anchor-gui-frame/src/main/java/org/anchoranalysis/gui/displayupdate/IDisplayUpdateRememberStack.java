@@ -23,10 +23,8 @@
  * THE SOFTWARE.
  * #L%
  */
+/* (C)2020 */
 package org.anchoranalysis.gui.displayupdate;
 
-
-
-public interface IDisplayUpdateRememberStack extends IDisplayUpdateProvider, IOverlayedImgStackProvider {
-
-}
+public interface IDisplayUpdateRememberStack
+        extends IDisplayUpdateProvider, IOverlayedImgStackProvider {}

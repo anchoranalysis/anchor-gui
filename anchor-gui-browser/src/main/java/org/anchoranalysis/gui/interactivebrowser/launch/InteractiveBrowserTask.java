@@ -1,85 +1,52 @@
-/*-
- * #%L
- * anchor-gui-browser
- * %%
- * Copyright (C) 2010 - 2020 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann-La Roche
- * %%
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- * 
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- * 
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
- * #L%
- */
+/* (C)2020 */
 package org.anchoranalysis.gui.interactivebrowser.launch;
-
-
-
-
-
 
 import org.anchoranalysis.bean.annotation.BeanField;
 import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.experiment.JobExecutionException;
 import org.anchoranalysis.experiment.bean.task.TaskWithoutSharedState;
+import org.anchoranalysis.experiment.task.InputBound;
 import org.anchoranalysis.experiment.task.InputTypesExpected;
 import org.anchoranalysis.experiment.task.NoSharedState;
-import org.anchoranalysis.experiment.task.InputBound;
 import org.anchoranalysis.gui.interactivebrowser.browser.InteractiveBrowser;
 import org.anchoranalysis.gui.interactivebrowser.input.InteractiveBrowserInput;
 import org.anchoranalysis.plugin.gui.bean.exporttask.ExportTaskList;
 
-
 public class InteractiveBrowserTask extends TaskWithoutSharedState<InteractiveBrowserInput> {
 
-	// START BEAN PROPERTIES
-	@BeanField
-	private ExportTaskList exportTaskList;
-	// END BEAN PROPERTIES
+    // START BEAN PROPERTIES
+    @BeanField private ExportTaskList exportTaskList;
+    // END BEAN PROPERTIES
 
-	@Override
-	public InputTypesExpected inputTypesExpected() {
-		return new InputTypesExpected(InteractiveBrowserInput.class);
-	}
-		
-	@Override
-	public void doJobOnInputObject(InputBound<InteractiveBrowserInput,NoSharedState> params)	throws JobExecutionException {
-		
-		try {
-			InteractiveBrowser browser = new InteractiveBrowser(
-				params.context(),
-				getExportTaskList()
-			);
-			browser.init( params.getInputObject() );
-			browser.showWithDefaultView();
-		} catch (InitException e) {
-			throw new JobExecutionException(e);
-		}
-		
-	}
-	
-	@Override
-	public boolean hasVeryQuickPerInputExecution() {
-		return true;
-	}
-	
-	public ExportTaskList getExportTaskList() {
-		return exportTaskList;
-	}
+    @Override
+    public InputTypesExpected inputTypesExpected() {
+        return new InputTypesExpected(InteractiveBrowserInput.class);
+    }
 
-	public void setExportTaskList(ExportTaskList exportTaskList) {
-		this.exportTaskList = exportTaskList;
-	}
+    @Override
+    public void doJobOnInputObject(InputBound<InteractiveBrowserInput, NoSharedState> params)
+            throws JobExecutionException {
+
+        try {
+            InteractiveBrowser browser =
+                    new InteractiveBrowser(params.context(), getExportTaskList());
+            browser.init(params.getInputObject());
+            browser.showWithDefaultView();
+        } catch (InitException e) {
+            throw new JobExecutionException(e);
+        }
+    }
+
+    @Override
+    public boolean hasVeryQuickPerInputExecution() {
+        return true;
+    }
+
+    public ExportTaskList getExportTaskList() {
+        return exportTaskList;
+    }
+
+    public void setExportTaskList(ExportTaskList exportTaskList) {
+        this.exportTaskList = exportTaskList;
+    }
 }

@@ -23,43 +23,38 @@
  * THE SOFTWARE.
  * #L%
  */
+/* (C)2020 */
 package org.anchoranalysis.plugin.gui.bean.exporttask;
-
-
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-
 import org.anchoranalysis.bean.AnchorBean;
 import org.anchoranalysis.bean.annotation.BeanField;
 import org.anchoranalysis.gui.bean.exporttask.ExportTaskBean;
 
 public class ExportTaskList extends AnchorBean<ExportTaskList> implements Iterable<ExportTaskBean> {
 
-	// START BEAN PROPERTIES
-	@BeanField
-	private List<ExportTaskBean> list = new ArrayList<>();
-	// END BEAN PROPERTIES
+    // START BEAN PROPERTIES
+    @BeanField private List<ExportTaskBean> list = new ArrayList<>();
+    // END BEAN PROPERTIES
 
-	public ExportTaskList() {
-		
-	}
+    public ExportTaskList() {}
 
-	@Override
-	public Iterator<ExportTaskBean> iterator() {
-		return list.iterator();
-	}
+    @Override
+    public Iterator<ExportTaskBean> iterator() {
+        return list.iterator();
+    }
 
-	public boolean add(ExportTaskBean e) {
-		return list.add(e);
-	}
-		
-	public List<ExportTaskBean> getList() {
-		return list;
-	}
+    public boolean add(ExportTaskBean e) {
+        return list.add(e);
+    }
 
-	public void setList(List<ExportTaskBean> list) {
-		this.list = list;
-	}
+    public List<ExportTaskBean> getList() {
+        return list;
+    }
+
+    public void setList(List<ExportTaskBean> list) {
+        this.list = list;
+    }
 }

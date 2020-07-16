@@ -23,12 +23,12 @@
  * THE SOFTWARE.
  * #L%
  */
+/* (C)2020 */
 package org.anchoranalysis.gui.frame.overlays;
-
 
 import org.anchoranalysis.anchor.mpp.cfg.Cfg;
 
 @FunctionalInterface
 public interface IShowEvaluationResult {
-	void showEvaluationResult( ProposedCfg er, Cfg bboxRedraw );
+    void showEvaluationResult(ProposedCfg er, Cfg bboxRedraw);
 }

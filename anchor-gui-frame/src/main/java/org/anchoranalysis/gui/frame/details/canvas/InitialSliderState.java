@@ -23,37 +23,38 @@
  * THE SOFTWARE.
  * #L%
  */
+/* (C)2020 */
 package org.anchoranalysis.gui.frame.details.canvas;
-
 
 public class InitialSliderState {
 
-	private boolean frameAdjusting;
-	private int index;
-	private int sliceNum;
-	private boolean showIndexSlider;
-	
-	public InitialSliderState(boolean frameAdjusting, int index, int sliceNum, boolean showIndexSlider) {
-		super();
-		this.frameAdjusting = frameAdjusting;
-		this.index = index;
-		this.sliceNum = sliceNum;
-		this.showIndexSlider = showIndexSlider;
-	}
+    private boolean frameAdjusting;
+    private int index;
+    private int sliceNum;
+    private boolean showIndexSlider;
 
-	public boolean isFrameAdjusting() {
-		return frameAdjusting;
-	}
+    public InitialSliderState(
+            boolean frameAdjusting, int index, int sliceNum, boolean showIndexSlider) {
+        super();
+        this.frameAdjusting = frameAdjusting;
+        this.index = index;
+        this.sliceNum = sliceNum;
+        this.showIndexSlider = showIndexSlider;
+    }
 
-	public int getIndex() {
-		return index;
-	}
+    public boolean isFrameAdjusting() {
+        return frameAdjusting;
+    }
 
-	public int getSliceNum() {
-		return sliceNum;
-	}
+    public int getIndex() {
+        return index;
+    }
 
-	public boolean isShowIndexSlider() {
-		return showIndexSlider;
-	}
+    public int getSliceNum() {
+        return sliceNum;
+    }
+
+    public boolean isShowIndexSlider() {
+        return showIndexSlider;
+    }
 }

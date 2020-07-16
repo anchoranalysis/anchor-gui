@@ -1,37 +1,11 @@
-/*-
- * #%L
- * anchor-gui-browser
- * %%
- * Copyright (C) 2010 - 2020 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann-La Roche
- * %%
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- * 
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- * 
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
- * #L%
- */
+/* (C)2020 */
 package org.anchoranalysis.gui.interactivebrowser.input;
 
 import java.nio.file.Path;
-
-
-
 import java.util.List;
 import java.util.Optional;
-
+import lombok.Getter;
+import lombok.Setter;
 import org.anchoranalysis.anchor.mpp.feature.bean.mark.MarkEvaluator;
 import org.anchoranalysis.anchor.mpp.feature.bean.nrgscheme.NRGSchemeCreator;
 import org.anchoranalysis.bean.NamedBean;
@@ -51,83 +25,69 @@ import org.anchoranalysis.image.io.bean.rasterreader.RasterReader;
 import org.anchoranalysis.io.bean.filepath.provider.FilePathProvider;
 import org.anchoranalysis.io.input.InputFromManager;
 
-import lombok.Getter;
-import lombok.Setter;
-
 public class InteractiveBrowserInput implements InputFromManager {
-	
-	@Getter @Setter
-	private RasterReader rasterReader;
-	
-	@Getter @Setter
-	private List<FileCreator> listFileCreators;
-	
-	@Setter
-	private NRGSchemeCreator nrgSchemeCreator;
-	
-	@Setter
-	private List<NamedBean<FeatureListProvider<FeatureInput>>> namedItemSharedFeatureList;
-	
-	@Getter @Setter
-	private List<NamedBean<MarkEvaluator>> namedItemMarkEvaluatorList;
-	
-	@Setter
-	private List<NamedBean<KeyValueParamsProvider>> namedItemKeyValueParamsProviderList;
 
-	@Setter
-	private List<NamedBean<FilePathProvider>> namedItemFilePathProviderList;
-	
-	@Getter @Setter
-	private ImporterSettings importerSettings;
-	
-	public FeatureListSrc createFeatureListSrc(CommonContext context) throws CreateException {
-		
-		SharedObjects so = new SharedObjects(context);
-		KeyValueParamsInitParams soParams = KeyValueParamsInitParams.create(so);
-		SharedFeaturesInitParams soFeature = SharedFeaturesInitParams.create(so);
-		
-		try {
-			// Adds the feature-lists to the shared-objects
-			soFeature.populate(namedItemSharedFeatureList, context.getLogger());
-			
-			addKeyValueParams( soParams );
-			addFilePaths( soParams );
-			
-			//so.g
-		} catch (OperationFailedException e2) {
-			throw new CreateException(e2);
-		}
-		
-		return new FeatureListSrcBuilder( context.getLogger() ).build(soFeature, nrgSchemeCreator);
-	}
-	
-	private void addKeyValueParams( KeyValueParamsInitParams soParams ) throws OperationFailedException {
-		
-		for( NamedBean<KeyValueParamsProvider> ni : this.namedItemKeyValueParamsProviderList ) {
-			soParams.getNamedKeyValueParamsCollection().add(
-				ni.getName(),
-				new OperationCreateFromProvider<>(ni.getValue())
-			);
-		}
-	}
-	
-	private void addFilePaths( KeyValueParamsInitParams soParams ) throws OperationFailedException {
-		
-		for( NamedBean<FilePathProvider> ni : this.namedItemFilePathProviderList ) {
-			soParams.getNamedFilePathCollection().add(
-				ni.getName(),
-				new OperationCreateFromProvider<>(ni.getValue())
-			);
-		}
-	}
-		
-	@Override
-	public String descriptiveName() {
-		return "interactiveBrowserInput";
-	}
+    @Getter @Setter private RasterReader rasterReader;
 
-	@Override
-	public Optional<Path> pathForBinding() {
-		return Optional.empty();
-	}
+    @Getter @Setter private List<FileCreator> listFileCreators;
+
+    @Setter private NRGSchemeCreator nrgSchemeCreator;
+
+    @Setter private List<NamedBean<FeatureListProvider<FeatureInput>>> namedItemSharedFeatureList;
+
+    @Getter @Setter private List<NamedBean<MarkEvaluator>> namedItemMarkEvaluatorList;
+
+    @Setter private List<NamedBean<KeyValueParamsProvider>> namedItemKeyValueParamsProviderList;
+
+    @Setter private List<NamedBean<FilePathProvider>> namedItemFilePathProviderList;
+
+    @Getter @Setter private ImporterSettings importerSettings;
+
+    public FeatureListSrc createFeatureListSrc(CommonContext context) throws CreateException {
+
+        SharedObjects so = new SharedObjects(context);
+        KeyValueParamsInitParams soParams = KeyValueParamsInitParams.create(so);
+        SharedFeaturesInitParams soFeature = SharedFeaturesInitParams.create(so);
+
+        try {
+            // Adds the feature-lists to the shared-objects
+            soFeature.populate(namedItemSharedFeatureList, context.getLogger());
+
+            addKeyValueParams(soParams);
+            addFilePaths(soParams);
+
+            // so.g
+        } catch (OperationFailedException e2) {
+            throw new CreateException(e2);
+        }
+
+        return new FeatureListSrcBuilder(context.getLogger()).build(soFeature, nrgSchemeCreator);
+    }
+
+    private void addKeyValueParams(KeyValueParamsInitParams soParams)
+            throws OperationFailedException {
+
+        for (NamedBean<KeyValueParamsProvider> ni : this.namedItemKeyValueParamsProviderList) {
+            soParams.getNamedKeyValueParamsCollection()
+                    .add(ni.getName(), new OperationCreateFromProvider<>(ni.getValue()));
+        }
+    }
+
+    private void addFilePaths(KeyValueParamsInitParams soParams) throws OperationFailedException {
+
+        for (NamedBean<FilePathProvider> ni : this.namedItemFilePathProviderList) {
+            soParams.getNamedFilePathCollection()
+                    .add(ni.getName(), new OperationCreateFromProvider<>(ni.getValue()));
+        }
+    }
+
+    @Override
+    public String descriptiveName() {
+        return "interactiveBrowserInput";
+    }
+
+    @Override
+    public Optional<Path> pathForBinding() {
+        return Optional.empty();
+    }
 }

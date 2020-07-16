@@ -23,6 +23,7 @@
  * THE SOFTWARE.
  * #L%
  */
+/* (C)2020 */
 package org.anchoranalysis.gui.interactivebrowser.backgroundset.menu;
 
 import org.anchoranalysis.core.functional.function.FunctionWithException;
@@ -32,8 +33,9 @@ import org.anchoranalysis.image.stack.DisplayStack;
 
 @FunctionalInterface
 public interface IBackgroundSetter {
-	
-	void setImageStackCntr(
-		FunctionWithException<Integer,DisplayStack,GetOperationFailedException> imageStackCntr
-	) throws SetOperationFailedException;
+
+    void setImageStackCntr(
+            FunctionWithException<Integer, DisplayStack, GetOperationFailedException>
+                    imageStackCntr)
+            throws SetOperationFailedException;
 }

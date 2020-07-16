@@ -23,8 +23,8 @@
  * THE SOFTWARE.
  * #L%
  */
+/* (C)2020 */
 package org.anchoranalysis.gui.frame.overlays.onrgb;
-
 
 import org.anchoranalysis.anchor.overlay.Overlay;
 import org.anchoranalysis.anchor.overlay.collection.ColoredOverlayCollection;
@@ -55,127 +55,115 @@ import org.apache.commons.logging.LogFactory;
 
 class InternalFrameOverlaysOnRGB {
 
-	@SuppressWarnings("unused")
-	private static Log log = LogFactory.getLog(InternalFrameOverlaysOnRGB.class);
-	
-	private InternalFrameThreadedOverlayProvider delegate;
-	
-	private SingleContainer<OverlayedDisplayStack> cntr;
-	private ControllerPopupMenuWithBackground controllerMenu;
-	private ExtractOverlays extractOverlays;
-	
-	public InternalFrameOverlaysOnRGB( String title, boolean indexesAreFrames ) {
-		delegate = new InternalFrameThreadedOverlayProvider(title, indexesAreFrames);
-		
-		cntr = new SingleContainer<>(false);
-	}
-	
-	// Must be called before usage
-	public ISliderState init(
-			OverlayedDisplayStack overlayedDisplayStack,
-			IDGetter<Overlay> idGetter,
-			boolean includeFrameAdjusting,
-			DefaultModuleState initialState,
-			MarkDisplaySettingsWrapper markDisplaySettingsWrapper,
-			IRetrieveElements elementRetriever,
-			VideoStatsModuleGlobalParams mpg
-		) throws InitException {
+    @SuppressWarnings("unused")
+    private static Log log = LogFactory.getLog(InternalFrameOverlaysOnRGB.class);
 
-		assert( initialState.getLinkState().getBackground() != null );
+    private InternalFrameThreadedOverlayProvider delegate;
 
-		cntr.setItem( overlayedDisplayStack , 0);
-		
-		FunctionWithException<Integer,OverlayedDisplayStack,GetOperationFailedException> bridge = new CfgCntrBridge(cntr);
-		
-		delegate.beforeInit(
-			bridge,
-			idGetter,
-			0,
-			markDisplaySettingsWrapper,
-			mpg
-		);
-		
-		BackgroundSetterLocal backgroundSetter = new BackgroundSetterLocal( delegate.getRedrawable() );
-		extractOverlays = new OverlayerExtracter();
-		
-		// We assume all channels have the same number of slices
-		ISliderState sliderState = delegate.init(
-			cntr,
-			includeFrameAdjusting,
-			initialState,
-			elementRetriever,
-			mpg
-		);
-		
-		// This must be done after init() on delegate, otherwise controllerPopupMenu() is null
-		controllerMenu = new ControllerPopupMenuWithBackground(
-			delegate.controllerPopupMenu(),
-			backgroundSetter
-		);
-		
-		return sliderState;
-	}
+    private SingleContainer<OverlayedDisplayStack> cntr;
+    private ControllerPopupMenuWithBackground controllerMenu;
+    private ExtractOverlays extractOverlays;
 
-	private class OverlayerExtracter implements ExtractOverlays {
+    public InternalFrameOverlaysOnRGB(String title, boolean indexesAreFrames) {
+        delegate = new InternalFrameThreadedOverlayProvider(title, indexesAreFrames);
 
-		@Override
-		public ColoredOverlayCollection getOverlays() {
-			return delegate.getOverlayRetriever().getOverlays();
-		}
-		
-		@Override
-		public ImageDimensions getDimensions() {
-			return delegate.getDimensions();
-		}
-	}
-	
-	public InternalFrameCanvas getFrameCanvas() {
-		return delegate.getFrameCanvas();
-	}
+        cntr = new SingleContainer<>(false);
+    }
 
-	public void setIndexSliderVisible(boolean visibility) {
-		delegate.setIndexSliderVisible(visibility);
-	}
+    // Must be called before usage
+    public ISliderState init(
+            OverlayedDisplayStack overlayedDisplayStack,
+            IDGetter<Overlay> idGetter,
+            boolean includeFrameAdjusting,
+            DefaultModuleState initialState,
+            MarkDisplaySettingsWrapper markDisplaySettingsWrapper,
+            IRetrieveElements elementRetriever,
+            VideoStatsModuleGlobalParams mpg)
+            throws InitException {
 
-	public IRetrieveElements getElementRetriever() {
-		return delegate.getElementRetriever();
-	}
+        assert (initialState.getLinkState().getBackground() != null);
 
-	public void flush() {
-		delegate.flush();
-	}
+        cntr.setItem(overlayedDisplayStack, 0);
 
-	public IRedrawable getRedrawable() {
-		return delegate.getRedrawable();
-	}
+        FunctionWithException<Integer, OverlayedDisplayStack, GetOperationFailedException> bridge =
+                new CfgCntrBridge(cntr);
 
-	public boolean addAdditionalDetails(IGenerateExtraDetail arg0) {
-		return delegate.addAdditionalDetails(arg0);
-	}
+        delegate.beforeInit(bridge, idGetter, 0, markDisplaySettingsWrapper, mpg);
 
-	public ControllerPopupMenuWithBackground controllerBackgroundMenu() {
-		return controllerMenu;
-	}
+        BackgroundSetterLocal backgroundSetter =
+                new BackgroundSetterLocal(delegate.getRedrawable());
+        extractOverlays = new OverlayerExtracter();
 
-	public ControllerImageView controllerImageView() {
-		return delegate.controllerImageView();
-	}
+        // We assume all channels have the same number of slices
+        ISliderState sliderState =
+                delegate.init(cntr, includeFrameAdjusting, initialState, elementRetriever, mpg);
 
-	public ExtractOverlays extractOverlays() {
-		return extractOverlays;
-	}
+        // This must be done after init() on delegate, otherwise controllerPopupMenu() is null
+        controllerMenu =
+                new ControllerPopupMenuWithBackground(
+                        delegate.controllerPopupMenu(), backgroundSetter);
 
-	public ControllerAction controllerAction() {
-		return delegate.controllerAction();
-	}
+        return sliderState;
+    }
 
+    private class OverlayerExtracter implements ExtractOverlays {
 
-	public IModuleCreatorDefaultState moduleCreator(ISliderState sliderState) {
-		return delegate.moduleCreator(sliderState);
-	}
+        @Override
+        public ColoredOverlayCollection getOverlays() {
+            return delegate.getOverlayRetriever().getOverlays();
+        }
 
+        @Override
+        public ImageDimensions getDimensions() {
+            return delegate.getDimensions();
+        }
+    }
 
-	public IIndexGettableSettable getIndexGettableSettable() {
-		return delegate.getIndexGettableSettable();
-	}
+    public InternalFrameCanvas getFrameCanvas() {
+        return delegate.getFrameCanvas();
+    }
+
+    public void setIndexSliderVisible(boolean visibility) {
+        delegate.setIndexSliderVisible(visibility);
+    }
+
+    public IRetrieveElements getElementRetriever() {
+        return delegate.getElementRetriever();
+    }
+
+    public void flush() {
+        delegate.flush();
+    }
+
+    public IRedrawable getRedrawable() {
+        return delegate.getRedrawable();
+    }
+
+    public boolean addAdditionalDetails(IGenerateExtraDetail arg0) {
+        return delegate.addAdditionalDetails(arg0);
+    }
+
+    public ControllerPopupMenuWithBackground controllerBackgroundMenu() {
+        return controllerMenu;
+    }
+
+    public ControllerImageView controllerImageView() {
+        return delegate.controllerImageView();
+    }
+
+    public ExtractOverlays extractOverlays() {
+        return extractOverlays;
+    }
+
+    public ControllerAction controllerAction() {
+        return delegate.controllerAction();
+    }
+
+    public IModuleCreatorDefaultState moduleCreator(ISliderState sliderState) {
+        return delegate.moduleCreator(sliderState);
+    }
+
+    public IIndexGettableSettable getIndexGettableSettable() {
+        return delegate.getIndexGettableSettable();
+    }
 }

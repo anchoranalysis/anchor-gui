@@ -23,13 +23,11 @@
  * THE SOFTWARE.
  * #L%
  */
+/* (C)2020 */
 package org.anchoranalysis.gui.mark;
-
-
 
 import java.util.ArrayList;
 import java.util.List;
-
 import org.anchoranalysis.anchor.mpp.bean.regionmap.RegionMembershipWithFlags;
 import org.anchoranalysis.anchor.mpp.mark.GlobalRegionIdentifiers;
 import org.anchoranalysis.anchor.mpp.regionmap.RegionMapSingleton;
@@ -48,195 +46,198 @@ import org.anchoranalysis.mpp.io.cfg.generator.SimpleOverlayWriter;
 // Contains display settings for a mark
 public class MarkDisplaySettings {
 
-	private boolean showBoundingBox = false;
-	
-	private boolean showShell = false;
-	
-	private boolean showInside = true;
-	
-	private boolean showMidpoint = false;
+    private boolean showBoundingBox = false;
 
-	private boolean showOrientationLine = false;
-	
-	private boolean showThickBorder = false;
-	
-	private boolean showSolid = false;
-	
-	public DrawOverlay createConditionalObjectDrawer( IfElse.Condition conditionSelected ) {
-		
-		int borderSize = showThickBorder ? 6 : 1;
-		
-		List<DrawObject> insideList = new ArrayList<>();
-		List<DrawObject> shellList = new ArrayList<>();
-		
-		if (showInside) {
-			addShowInside( insideList, conditionSelected, borderSize );
-		}
+    private boolean showShell = false;
 
-		if (showBoundingBox) {
-			insideList.add( new BoundingBoxOutline(borderSize) );
-		}
-		
-		if (showShell) {
-			addShowShell(insideList, shellList, borderSize );
-		}
-		
-		return determineWriter( insideList, shellList );
+    private boolean showInside = true;
 
-	}
-	
-	public MarkDisplaySettings duplicate() {
-		MarkDisplaySettings copy = new MarkDisplaySettings();
-		copy.showBoundingBox = this.showBoundingBox;
-		copy.showShell = this.showShell;
-		copy.showInside = this.showInside;
-		copy.showMidpoint = this.showMidpoint;
-		copy.showOrientationLine = this.showOrientationLine;
-		copy.showThickBorder = this.showThickBorder;
-		copy.showSolid = this.showSolid;
-		return copy;
-	}
+    private boolean showMidpoint = false;
 
-	private DrawObject createInsideConditionalWriter( IfElse.Condition conditionSelected, int borderSize ) {
-		
-		// TRUE WRITER is for when selected
-		DrawObject trueWriter = new Filled();
-		
-		// FALSE writer is for when not selected
-		Outline falseWriter = new Outline(borderSize);
-		falseWriter.setForce2D(true);
-		
-		// Combining both situations gives us a selectable
-		return new IfElse(conditionSelected, trueWriter, falseWriter);
-	}
-	
-	private static DrawObject createWriterFromList( List<DrawObject> writerList ) {
-		
-		if (writerList.isEmpty()) {
-			return null;
-		}
-		
-		return new Combine(writerList);
-	}
-			
-	private void addShowInside( List<DrawObject> insideList, IfElse.Condition conditionSelected, int borderSize ) {
-		insideList.add( createInsideConditionalWriter(conditionSelected,borderSize) );
-		
-		if (showSolid) {
-			insideList.add( new Filled() );
-		} else {
-		
-			// We only consider these if we are not considering a solid
-			if (showMidpoint) {
-				insideList.add( new Midpoint() );
-			}
-			
-			if (showOrientationLine) {
-				insideList.add( new Orientation() );
-			}
-		}
-	}
-	
+    private boolean showOrientationLine = false;
 
-	private void addShowShell( List<DrawObject> insideList, List<DrawObject> shellList, int borderSize ) {
+    private boolean showThickBorder = false;
 
-		Outline outlineWriter = new Outline(borderSize);
-		outlineWriter.setForce2D(true);
-		shellList.add( outlineWriter );
-		
-		if (showBoundingBox) {
-			shellList.add( new BoundingBoxOutline(borderSize) );
-		}
-		
-		// If showInside is switched off, then we have a second chance to show the midpoint
-		if (showMidpoint && !showInside) {
-			shellList.add( new Midpoint() );
-		}
-		
-		if (showOrientationLine && !showInside) {
-			insideList.add( new Orientation() );
-		}		
-	}
-	
-	public RegionMembershipWithFlags regionMembership() {
-		int identifier = showShell ? GlobalRegionIdentifiers.SUBMARK_SHELL :
-			GlobalRegionIdentifiers.SUBMARK_INSIDE;
-		return RegionMapSingleton.instance().membershipWithFlagsForIndex(identifier);
-	}
-	
-	private static SimpleOverlayWriter determineWriter( List<DrawObject> insideList, List<DrawObject> shellList ) {
+    private boolean showSolid = false;
 
-		DrawObject insideWriter = createWriterFromList(insideList);
-		DrawObject shellWriter = createWriterFromList(shellList);
-				
-		if (!shellList.isEmpty()) {
-			return new SimpleOverlayWriter(	shellWriter );
-		} else {
-			
-			if (!insideList.isEmpty()) {
-				return new SimpleOverlayWriter(	insideWriter );
-			} else {
-				// Then there is no mask
-				// We should not get here at the moment, as it is impossible to disable showInside
-				return new SimpleOverlayWriter(	new Nothing() );
-			}
-		}
-	}
+    public DrawOverlay createConditionalObjectDrawer(IfElse.Condition conditionSelected) {
 
-	public boolean isShowMidpoint() {
-		return showMidpoint;
-	}
+        int borderSize = showThickBorder ? 6 : 1;
 
-	public void setShowMidpoint(boolean showMidpoint) {
-		this.showMidpoint = showMidpoint;
-	}
+        List<DrawObject> insideList = new ArrayList<>();
+        List<DrawObject> shellList = new ArrayList<>();
 
-	public boolean isShowOrientationLine() {
-		return showOrientationLine;
-	}
+        if (showInside) {
+            addShowInside(insideList, conditionSelected, borderSize);
+        }
 
-	public void setShowOrientationLine(boolean showOrientationLine) {
-		this.showOrientationLine = showOrientationLine;
-	}
+        if (showBoundingBox) {
+            insideList.add(new BoundingBoxOutline(borderSize));
+        }
 
-	public boolean isShowThickBorder() {
-		return showThickBorder;
-	}
+        if (showShell) {
+            addShowShell(insideList, shellList, borderSize);
+        }
 
-	public void setShowThickBorder(boolean showThickBorder) {
-		this.showThickBorder = showThickBorder;
-	}
+        return determineWriter(insideList, shellList);
+    }
 
-	public boolean isShowSolid() {
-		return showSolid;
-	}
+    public MarkDisplaySettings duplicate() {
+        MarkDisplaySettings copy = new MarkDisplaySettings();
+        copy.showBoundingBox = this.showBoundingBox;
+        copy.showShell = this.showShell;
+        copy.showInside = this.showInside;
+        copy.showMidpoint = this.showMidpoint;
+        copy.showOrientationLine = this.showOrientationLine;
+        copy.showThickBorder = this.showThickBorder;
+        copy.showSolid = this.showSolid;
+        return copy;
+    }
 
-	public void setShowSolid(boolean showSolid) {
-		this.showSolid = showSolid;
-	}
+    private DrawObject createInsideConditionalWriter(
+            IfElse.Condition conditionSelected, int borderSize) {
 
-	public boolean isShowInside() {
-		return showInside;
-	}
+        // TRUE WRITER is for when selected
+        DrawObject trueWriter = new Filled();
 
-	public void setShowInside(boolean showInside) {
-		this.showInside = showInside;
-	}
-	
-	
-	public boolean isShowBoundingBox() {
-		return showBoundingBox;
-	}
+        // FALSE writer is for when not selected
+        Outline falseWriter = new Outline(borderSize);
+        falseWriter.setForce2D(true);
 
-	public void setShowBoundingBox(boolean showBoundingBox) {
-		this.showBoundingBox = showBoundingBox;
-	}
+        // Combining both situations gives us a selectable
+        return new IfElse(conditionSelected, trueWriter, falseWriter);
+    }
 
-	public boolean isShowShell() {
-		return showShell;
-	}
+    private static DrawObject createWriterFromList(List<DrawObject> writerList) {
 
-	public void setShowShell(boolean showShell) {
-		this.showShell = showShell;
-	}
+        if (writerList.isEmpty()) {
+            return null;
+        }
+
+        return new Combine(writerList);
+    }
+
+    private void addShowInside(
+            List<DrawObject> insideList, IfElse.Condition conditionSelected, int borderSize) {
+        insideList.add(createInsideConditionalWriter(conditionSelected, borderSize));
+
+        if (showSolid) {
+            insideList.add(new Filled());
+        } else {
+
+            // We only consider these if we are not considering a solid
+            if (showMidpoint) {
+                insideList.add(new Midpoint());
+            }
+
+            if (showOrientationLine) {
+                insideList.add(new Orientation());
+            }
+        }
+    }
+
+    private void addShowShell(
+            List<DrawObject> insideList, List<DrawObject> shellList, int borderSize) {
+
+        Outline outlineWriter = new Outline(borderSize);
+        outlineWriter.setForce2D(true);
+        shellList.add(outlineWriter);
+
+        if (showBoundingBox) {
+            shellList.add(new BoundingBoxOutline(borderSize));
+        }
+
+        // If showInside is switched off, then we have a second chance to show the midpoint
+        if (showMidpoint && !showInside) {
+            shellList.add(new Midpoint());
+        }
+
+        if (showOrientationLine && !showInside) {
+            insideList.add(new Orientation());
+        }
+    }
+
+    public RegionMembershipWithFlags regionMembership() {
+        int identifier =
+                showShell
+                        ? GlobalRegionIdentifiers.SUBMARK_SHELL
+                        : GlobalRegionIdentifiers.SUBMARK_INSIDE;
+        return RegionMapSingleton.instance().membershipWithFlagsForIndex(identifier);
+    }
+
+    private static SimpleOverlayWriter determineWriter(
+            List<DrawObject> insideList, List<DrawObject> shellList) {
+
+        DrawObject insideWriter = createWriterFromList(insideList);
+        DrawObject shellWriter = createWriterFromList(shellList);
+
+        if (!shellList.isEmpty()) {
+            return new SimpleOverlayWriter(shellWriter);
+        } else {
+
+            if (!insideList.isEmpty()) {
+                return new SimpleOverlayWriter(insideWriter);
+            } else {
+                // Then there is no mask
+                // We should not get here at the moment, as it is impossible to disable showInside
+                return new SimpleOverlayWriter(new Nothing());
+            }
+        }
+    }
+
+    public boolean isShowMidpoint() {
+        return showMidpoint;
+    }
+
+    public void setShowMidpoint(boolean showMidpoint) {
+        this.showMidpoint = showMidpoint;
+    }
+
+    public boolean isShowOrientationLine() {
+        return showOrientationLine;
+    }
+
+    public void setShowOrientationLine(boolean showOrientationLine) {
+        this.showOrientationLine = showOrientationLine;
+    }
+
+    public boolean isShowThickBorder() {
+        return showThickBorder;
+    }
+
+    public void setShowThickBorder(boolean showThickBorder) {
+        this.showThickBorder = showThickBorder;
+    }
+
+    public boolean isShowSolid() {
+        return showSolid;
+    }
+
+    public void setShowSolid(boolean showSolid) {
+        this.showSolid = showSolid;
+    }
+
+    public boolean isShowInside() {
+        return showInside;
+    }
+
+    public void setShowInside(boolean showInside) {
+        this.showInside = showInside;
+    }
+
+    public boolean isShowBoundingBox() {
+        return showBoundingBox;
+    }
+
+    public void setShowBoundingBox(boolean showBoundingBox) {
+        this.showBoundingBox = showBoundingBox;
+    }
+
+    public boolean isShowShell() {
+        return showShell;
+    }
+
+    public void setShowShell(boolean showShell) {
+        this.showShell = showShell;
+    }
 }

@@ -23,9 +23,8 @@
  * THE SOFTWARE.
  * #L%
  */
+/* (C)2020 */
 package org.anchoranalysis.gui.videostats.module;
-
-
 
 import java.util.EventListener;
 

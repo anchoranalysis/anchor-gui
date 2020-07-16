@@ -23,9 +23,8 @@
  * THE SOFTWARE.
  * #L%
  */
+/* (C)2020 */
 package org.anchoranalysis.gui.frame.details.canvas;
-
-
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -33,7 +32,6 @@ import java.awt.event.ComponentEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.util.Optional;
-
 import javax.swing.ActionMap;
 import javax.swing.BorderFactory;
 import javax.swing.InputMap;
@@ -44,7 +42,6 @@ import javax.swing.JSplitPane;
 import javax.swing.event.InternalFrameAdapter;
 import javax.swing.event.InternalFrameEvent;
 import javax.swing.event.InternalFrameListener;
-
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.error.OperationFailedException;
@@ -76,419 +73,392 @@ import org.anchoranalysis.image.voxel.datatype.VoxelDataType;
 
 public class InternalFrameCanvas {
 
-	private ImageCanvas canvas = new ImageCanvas();
+    private ImageCanvas canvas = new ImageCanvas();
 
-	private String frameName;
-	
-	private WrappedSlider slider;
-	
-	private IOverlayedImgStackProvider stackProvider;
+    private String frameName;
 
-	private InternalFrameIJPopupClickListener popUpListener;
-	
-	private boolean updateToMaximumNextFlush = false;
-	
-	private JPanel panelTop;
-	private JPanel panelBottom;
-	
-	private InternalFrameDelegate frame;
-	
-	private ErrorReporter errorReporter;
-	
-	private boolean useSplitPlane = true;
-	
-	private TitleBoundsUpdater titleBoundsUpdater;
-		
-	private ControllerOrder controllerOrder;
-	private ControllerFrame controllerFrame;
-		
-	private ControllerZoom controllerZoom = new ControllerZoom() {
-		
-		@Override
-		public void setEnforceMinimumSizeAfterGuessZoom(
-				boolean enforceMinimumSizeAfterGuessZoom) {
-			canvas.setEnforceMinimumSizeAfterGuessZoom(enforceMinimumSizeAfterGuessZoom);
-		}
+    private WrappedSlider slider;
 
-		@Override
-		public void setDefaultZoomSuggestor(
-				DefaultZoomSuggestor defaultZoomSuggestor) {
-			canvas.setDefaultZoomSuggestor(defaultZoomSuggestor);
-		}
-	};
-	
-	private ControllerKeyboard controllerKeyboard = new ControllerKeyboard() {
-		
-		@Override
-		public InputMap getInputMap() {
-			return canvas.getInputMap();
-		}
+    private IOverlayedImgStackProvider stackProvider;
 
-		@Override
-		public ActionMap getActionMap() {
-			return canvas.getActionMap();
-		}
-	};
-	
-	private ControllerMouse controllerMouse = new ControllerMouse() {
-		
-		@Override
-		public void addMouseListener(MouseListener l, boolean absCoord) {
-			canvas.addMouseListener(l,absCoord);
-		}
-	};
-		
-	private ControllerAction controllerAction;
-	
-	private ControllerImageView controllerImageView;
-	
-	public InternalFrameCanvas( String frameName ) {
-		this.frame = new InternalFrameDelegate( frameName, true, true, true, true );
-		this.frameName = frameName;
-		this.frame.setTitle( frameName );
-		//this.frame.setMinimumSize( new Dimension(150,70) );
-		
-		this.panelTop = new JPanel();
-		this.panelTop.setLayout( new BorderLayout() );
-		panelTop.setBorder( BorderFactory.createEmptyBorder(0, 0, 0, 0) );
-		
-		// We add these here, as they will be referenced in setAsBottomComponent() which should be called before init()
-		this.panelBottom = new JPanel();
-		this.panelBottom.setLayout( new BorderLayout() );
-		panelBottom.setBorder( BorderFactory.createEmptyBorder(0, 0, 0, 0) );
-		
-		//this.canvas.add
-		
+    private InternalFrameIJPopupClickListener popUpListener;
 
-		frame.addInternalFrameListener( new DisposeCanvasWhenFrameIsClosed(canvas) );
-		
-		ControllerSize controllerSize = new SizeController();
-		
-		controllerImageView = new ControllerImageView(
-			controllerSize,
-			controllerZoom
-		);
-		
-		controllerOrder = new ControllerOrder() {
+    private boolean updateToMaximumNextFlush = false;
 
-			public void setAsTopComponent( JComponent component ) {
-				setAsPanelComponent(panelTop, component);
-			}
-			
-			// SHOULD BE CALLED BEFORE INIT
-			public void setAsBottomComponent( JComponent component ) {
-				setAsPanelComponent(panelBottom, component);
-			}
-		};
-		
-		controllerFrame = new FrameController();
-		
-		controllerAction =new ControllerAction(
-			controllerOrder,
-			controllerFrame,
-			controllerMouse,
-			controllerKeyboard
-		);
-	}
-		
-	public ISliderState init(
-		BoundedRangeIncompleteDynamic indexBounds,
-		IIndexGettableSettable indexCntr,
-		IDisplayUpdateRememberStack stackProvider,
-		InitialSliderState initialState,
-		IRetrieveElements elementRetriever,
-		final VideoStatsModuleGlobalParams mpg
-	) throws InitException {
+    private JPanel panelTop;
+    private JPanel panelBottom;
 
-		this.stackProvider = stackProvider;
-		this.errorReporter = mpg.getLogger().errorReporter();
-		
-		
-		
-		
-		
-		
-		BoundOverlayedDisplayStack initialStack;
-		try {
-			initialStack = this.stackProvider.getCurrentDisplayStack();
-		} catch (GetOperationFailedException e1) {
-			throw new InitException(e1);
-		}
-		ChnlSliceRange sliceBounds = new ChnlSliceRange( initialStack.getDimensions() );
-		
-		// Responsible for all the stack conversion
-		
-		// Create slider panel
-		this.slider = new WrappedSlider( sliceBounds, indexBounds, initialState, indexCntr );
-		
-		
-		// Create ImageJ Canvas
-		canvas.init( stackProvider, errorReporter );
-		
+    private InternalFrameDelegate frame;
 
-		
-		JPanel panel = new JPanel();
-		{
-			panel.setLayout( new BorderLayout() );
-			panel.setBorder( BorderFactory.createEmptyBorder(0, 0, 0, 0) );
-			panel.add( canvas.getPanel() );
-	
-			panel.setMinimumSize( canvas.getMinimumSize() );
-			panel.setPreferredSize( canvas.getPrefferedSize() );
-		}
-		
-		this.panelBottom.add( slider.getComponent(), BorderLayout.SOUTH );
+    private ErrorReporter errorReporter;
 
+    private boolean useSplitPlane = true;
 
-		
-		
-		frame.add( panelTop, BorderLayout.NORTH );
-		
-		addPanelMaybeSplit( panel );
-		
-		frame.setVisible(true);
-		
-		addTitleBoundsUpdater(stackProvider, indexCntr);
-				
-		canvas.addMouseWheelListener( new MouseWheelListenerSlices(slider.getSlider() ) );
-		
-		slider.configure(canvas);
-		
-		controllerMouse.addMouseListener( new FocusRequester(canvas), false );
-		
-		addPopup( mpg.getExportPopupParams(), elementRetriever );
-				
-		titleBoundsUpdater.updateTitle();
-		
-		return slider;
-	}
-	
-	public synchronized void flush() {
-		
-		if (updateToMaximumNextFlush==true) {
-			
-			slider.setIndexToMaximum();
-			updateToMaximumNextFlush = false;
-		}
-	}
+    private TitleBoundsUpdater titleBoundsUpdater;
 
-	@Override
-	public String toString() {
-		return canvas.toString();
-	}
-			
-	public IRetrieveElements getElementRetriever() {
-		return new RetrieveElementsLocal();
-	}
-	
-	public void setIndexSliderVisible( boolean visibility ) {
-		slider.setIndexSliderVisible(visibility);
-		titleBoundsUpdater.updateTitle();
-	}
+    private ControllerOrder controllerOrder;
+    private ControllerFrame controllerFrame;
 
+    private ControllerZoom controllerZoom =
+            new ControllerZoom() {
 
-	public ImageDimensions getDimensions() {
-		return canvas.getDimensions();
-	}
+                @Override
+                public void setEnforceMinimumSizeAfterGuessZoom(
+                        boolean enforceMinimumSizeAfterGuessZoom) {
+                    canvas.setEnforceMinimumSizeAfterGuessZoom(enforceMinimumSizeAfterGuessZoom);
+                }
 
-	public void addMouseMotionListener(MouseMotionListener arg0, boolean absCoord) {
-		canvas.addMouseMotionListener(arg0, absCoord);
-	}
+                @Override
+                public void setDefaultZoomSuggestor(DefaultZoomSuggestor defaultZoomSuggestor) {
+                    canvas.setDefaultZoomSuggestor(defaultZoomSuggestor);
+                }
+            };
 
-	public ZoomScale getZoomScale() {
-		return canvas.getZoomScale();
-	}
+    private ControllerKeyboard controllerKeyboard =
+            new ControllerKeyboard() {
 
-	public ImageResolution getRes() {
-		return canvas.getRes();
-	}
+                @Override
+                public InputMap getInputMap() {
+                    return canvas.getInputMap();
+                }
 
-	public boolean canvasContainsAbs(int x, int y) {
-		return canvas.canvasContainsAbs(x, y);
-	}
+                @Override
+                public ActionMap getActionMap() {
+                    return canvas.getActionMap();
+                }
+            };
 
+    private ControllerMouse controllerMouse =
+            new ControllerMouse() {
 
-	public String intensityStrAtAbs(int x, int y) {
-		return canvas.intensityStrAtAbs(x, y);
-	}
-	
-	// empty() means it cannot be determined
-	public Optional<VoxelDataType> associatedDataType() {
-		return canvas.associatedDataType();
-	}
+                @Override
+                public void addMouseListener(MouseListener l, boolean absCoord) {
+                    canvas.addMouseListener(l, absCoord);
+                }
+            };
 
+    private ControllerAction controllerAction;
 
-	public int hashCode() {
-		return canvas.hashCode();
-	}
+    private ControllerImageView controllerImageView;
 
+    public InternalFrameCanvas(String frameName) {
+        this.frame = new InternalFrameDelegate(frameName, true, true, true, true);
+        this.frameName = frameName;
+        this.frame.setTitle(frameName);
+        // this.frame.setMinimumSize( new Dimension(150,70) );
 
-	public void init(IDisplayUpdateProvider imageProvider,
-			ErrorReporter errorReporter) throws InitException {
-		canvas.init(imageProvider, errorReporter);
-	}
+        this.panelTop = new JPanel();
+        this.panelTop.setLayout(new BorderLayout());
+        panelTop.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
 
+        // We add these here, as they will be referenced in setAsBottomComponent() which should be
+        // called before init()
+        this.panelBottom = new JPanel();
+        this.panelBottom.setLayout(new BorderLayout());
+        panelBottom.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
 
-	public boolean equals(Object obj) {
-		return canvas.equals(obj);
-	}
+        // this.canvas.add
 
+        frame.addInternalFrameListener(new DisposeCanvasWhenFrameIsClosed(canvas));
 
-	public void resizeEventFromFrame(ComponentEvent e) {
-		canvas.resizeEventFromFrame(e);
-	}
+        ControllerSize controllerSize = new SizeController();
 
+        controllerImageView = new ControllerImageView(controllerSize, controllerZoom);
 
+        controllerOrder =
+                new ControllerOrder() {
 
-	public void zoomIn() {
-		canvas.zoomIn( null );
-	}
+                    public void setAsTopComponent(JComponent component) {
+                        setAsPanelComponent(panelTop, component);
+                    }
 
+                    // SHOULD BE CALLED BEFORE INIT
+                    public void setAsBottomComponent(JComponent component) {
+                        setAsPanelComponent(panelBottom, component);
+                    }
+                };
 
-	public void zoomOut() {
-		canvas.zoomOut( null );
-	}
+        controllerFrame = new FrameController();
 
-	public ControllerImageView controllerImageView() {
-		return controllerImageView;
-	}
+        controllerAction =
+                new ControllerAction(
+                        controllerOrder, controllerFrame, controllerMouse, controllerKeyboard);
+    }
 
-	public ControllerPopupMenu controllerPopupMenu() {
-		assert(popUpListener!=null);
-		return popUpListener.controllerPopupMenu();
-	}
+    public ISliderState init(
+            BoundedRangeIncompleteDynamic indexBounds,
+            IIndexGettableSettable indexCntr,
+            IDisplayUpdateRememberStack stackProvider,
+            InitialSliderState initialState,
+            IRetrieveElements elementRetriever,
+            final VideoStatsModuleGlobalParams mpg)
+            throws InitException {
 
-	private class RetrieveElementsLocal implements IRetrieveElements {
-		
-		@Override
-		public RetrieveElements retrieveElements() {
-			
-			RetrieveElementsImage rei = new RetrieveElementsImage();
+        this.stackProvider = stackProvider;
+        this.errorReporter = mpg.getLogger().errorReporter();
 
-			try {
-				DisplayStack stack = stackProvider.getCurrentDisplayStack().extractFullyOverlayed(); 
-				rei.setStack( stack );
-				rei.setSlice( stack.extractSlice( canvas.getSlice() ) );
-			} catch (GetOperationFailedException | CreateException | OperationFailedException e) {
-				errorReporter.recordError(InternalFrameCanvas.class, e);
-				rei.setStack( null );
-				rei.setSlice( null );
-			}			
-			return rei;
-		}
-	}
-	
-	private class FrameController implements ControllerFrame {
-		
-		@Override
-		public void setUseSplitPlane(boolean use) {
-			useSplitPlane = use;
-		}
+        BoundOverlayedDisplayStack initialStack;
+        try {
+            initialStack = this.stackProvider.getCurrentDisplayStack();
+        } catch (GetOperationFailedException e1) {
+            throw new InitException(e1);
+        }
+        ChnlSliceRange sliceBounds = new ChnlSliceRange(initialStack.getDimensions());
 
-		@Override
-		public void addInternalFrameListener(InternalFrameListener l) {
-			frame.addInternalFrameListener(l);
-		}
+        // Responsible for all the stack conversion
 
-		@Override
-		public void setDefaultCloseOperation(int operation) {
-			frame.setDefaultCloseOperation(operation);
-		}
-				
-		@Override
-		public JInternalFrame getFrame() {
-			return frame.getFrame();
-		}
-	}
+        // Create slider panel
+        this.slider = new WrappedSlider(sliceBounds, indexBounds, initialState, indexCntr);
 
-	private class SizeController extends ControllerSize {
-	
-		@Override
-		protected void setMinimumSize(Dimension minimumSize) {
-			frame.getContentPane().setMinimumSize(minimumSize);
-		}
-	
-	
-		@Override
-		protected void setPreferredSize(Dimension preferredSize) {
-			frame.getContentPane().setPreferredSize(preferredSize);
-		}
-	};
-	
-	private class DisposeCanvasWhenFrameIsClosed extends InternalFrameAdapter {
+        // Create ImageJ Canvas
+        canvas.init(stackProvider, errorReporter);
 
-		private ImageCanvas canvas;
-				
-		public DisposeCanvasWhenFrameIsClosed(ImageCanvas canvas) {
-			super();
-			this.canvas = canvas;
-		}
+        JPanel panel = new JPanel();
+        {
+            panel.setLayout(new BorderLayout());
+            panel.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
+            panel.add(canvas.getPanel());
 
-		@Override
-		public void internalFrameClosed(InternalFrameEvent e) {
-			slider.dispose();
-			slider = null;
-			stackProvider = null;
-			panelTop.removeAll();
-			panelBottom.removeAll();
-			panelTop = null;
-			panelBottom = null;
-			popUpListener = null;
-			canvas.dispose();
-			canvas = null;
-			frame.getContentPane().removeAll();
-			frame.dispose();
-			frame = null;
-		}
-		
-	}
+            panel.setMinimumSize(canvas.getMinimumSize());
+            panel.setPreferredSize(canvas.getPrefferedSize());
+        }
 
-	private void setAsPanelComponent( JPanel panel, JComponent component ) {
-		if (panel.getComponentCount()>0) {
-			panel.removeAll();
-		}
-		panel.add( component, BorderLayout.CENTER );
-	}
-	
+        this.panelBottom.add(slider.getComponent(), BorderLayout.SOUTH);
 
-	private void addPanelMaybeSplit( JPanel panel ) {
-		// We only use a split pane if there is more in the panelBottom than the index slider
-		if (this.panelBottom.getComponentCount()>1 && useSplitPlane) {
-			
-			JSplitPane splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, panel, panelBottom);
-			splitPane.setBorder( BorderFactory.createEmptyBorder(0, 0, 0, 0) );
-			 //splitPane.setResizeWeight(0.5);
-			frame.add( splitPane, BorderLayout.CENTER );
-			
-		} else {
-			frame.add( panel, BorderLayout.CENTER );
-			frame.add( panelBottom, BorderLayout.SOUTH );
-		}		
-	}
-		
-	private void addTitleBoundsUpdater( IDisplayUpdateRememberStack stackProvider, IIndexGettableSettable indexCntr ) {
-		this.titleBoundsUpdater = new TitleBoundsUpdater(
-			errorReporter,
-			indexCntr,
-			stackProvider,
-			slider.getSlider(),
-			frame,
-			frameName
-		);
-		stackProvider.addChangeListener( titleBoundsUpdater );
-	}
-	
-	
-	private void addPopup( ExportPopupParams exportPopupParams, IRetrieveElements elementRetriever ) {
-		popUpListener = new InternalFrameIJPopupClickListener(
-			exportPopupParams,
-			elementRetriever,
-			errorReporter
-		);
-		controllerMouse.addMouseListener( popUpListener, true );
-	}
+        frame.add(panelTop, BorderLayout.NORTH);
 
-	public ControllerAction controllerAction() {
-		return controllerAction;
-	}
+        addPanelMaybeSplit(panel);
+
+        frame.setVisible(true);
+
+        addTitleBoundsUpdater(stackProvider, indexCntr);
+
+        canvas.addMouseWheelListener(new MouseWheelListenerSlices(slider.getSlider()));
+
+        slider.configure(canvas);
+
+        controllerMouse.addMouseListener(new FocusRequester(canvas), false);
+
+        addPopup(mpg.getExportPopupParams(), elementRetriever);
+
+        titleBoundsUpdater.updateTitle();
+
+        return slider;
+    }
+
+    public synchronized void flush() {
+
+        if (updateToMaximumNextFlush == true) {
+
+            slider.setIndexToMaximum();
+            updateToMaximumNextFlush = false;
+        }
+    }
+
+    @Override
+    public String toString() {
+        return canvas.toString();
+    }
+
+    public IRetrieveElements getElementRetriever() {
+        return new RetrieveElementsLocal();
+    }
+
+    public void setIndexSliderVisible(boolean visibility) {
+        slider.setIndexSliderVisible(visibility);
+        titleBoundsUpdater.updateTitle();
+    }
+
+    public ImageDimensions getDimensions() {
+        return canvas.getDimensions();
+    }
+
+    public void addMouseMotionListener(MouseMotionListener arg0, boolean absCoord) {
+        canvas.addMouseMotionListener(arg0, absCoord);
+    }
+
+    public ZoomScale getZoomScale() {
+        return canvas.getZoomScale();
+    }
+
+    public ImageResolution getRes() {
+        return canvas.getRes();
+    }
+
+    public boolean canvasContainsAbs(int x, int y) {
+        return canvas.canvasContainsAbs(x, y);
+    }
+
+    public String intensityStrAtAbs(int x, int y) {
+        return canvas.intensityStrAtAbs(x, y);
+    }
+
+    // empty() means it cannot be determined
+    public Optional<VoxelDataType> associatedDataType() {
+        return canvas.associatedDataType();
+    }
+
+    public int hashCode() {
+        return canvas.hashCode();
+    }
+
+    public void init(IDisplayUpdateProvider imageProvider, ErrorReporter errorReporter)
+            throws InitException {
+        canvas.init(imageProvider, errorReporter);
+    }
+
+    public boolean equals(Object obj) {
+        return canvas.equals(obj);
+    }
+
+    public void resizeEventFromFrame(ComponentEvent e) {
+        canvas.resizeEventFromFrame(e);
+    }
+
+    public void zoomIn() {
+        canvas.zoomIn(null);
+    }
+
+    public void zoomOut() {
+        canvas.zoomOut(null);
+    }
+
+    public ControllerImageView controllerImageView() {
+        return controllerImageView;
+    }
+
+    public ControllerPopupMenu controllerPopupMenu() {
+        assert (popUpListener != null);
+        return popUpListener.controllerPopupMenu();
+    }
+
+    private class RetrieveElementsLocal implements IRetrieveElements {
+
+        @Override
+        public RetrieveElements retrieveElements() {
+
+            RetrieveElementsImage rei = new RetrieveElementsImage();
+
+            try {
+                DisplayStack stack = stackProvider.getCurrentDisplayStack().extractFullyOverlayed();
+                rei.setStack(stack);
+                rei.setSlice(stack.extractSlice(canvas.getSlice()));
+            } catch (GetOperationFailedException | CreateException | OperationFailedException e) {
+                errorReporter.recordError(InternalFrameCanvas.class, e);
+                rei.setStack(null);
+                rei.setSlice(null);
+            }
+            return rei;
+        }
+    }
+
+    private class FrameController implements ControllerFrame {
+
+        @Override
+        public void setUseSplitPlane(boolean use) {
+            useSplitPlane = use;
+        }
+
+        @Override
+        public void addInternalFrameListener(InternalFrameListener l) {
+            frame.addInternalFrameListener(l);
+        }
+
+        @Override
+        public void setDefaultCloseOperation(int operation) {
+            frame.setDefaultCloseOperation(operation);
+        }
+
+        @Override
+        public JInternalFrame getFrame() {
+            return frame.getFrame();
+        }
+    }
+
+    private class SizeController extends ControllerSize {
+
+        @Override
+        protected void setMinimumSize(Dimension minimumSize) {
+            frame.getContentPane().setMinimumSize(minimumSize);
+        }
+
+        @Override
+        protected void setPreferredSize(Dimension preferredSize) {
+            frame.getContentPane().setPreferredSize(preferredSize);
+        }
+    }
+    ;
+
+    private class DisposeCanvasWhenFrameIsClosed extends InternalFrameAdapter {
+
+        private ImageCanvas canvas;
+
+        public DisposeCanvasWhenFrameIsClosed(ImageCanvas canvas) {
+            super();
+            this.canvas = canvas;
+        }
+
+        @Override
+        public void internalFrameClosed(InternalFrameEvent e) {
+            slider.dispose();
+            slider = null;
+            stackProvider = null;
+            panelTop.removeAll();
+            panelBottom.removeAll();
+            panelTop = null;
+            panelBottom = null;
+            popUpListener = null;
+            canvas.dispose();
+            canvas = null;
+            frame.getContentPane().removeAll();
+            frame.dispose();
+            frame = null;
+        }
+    }
+
+    private void setAsPanelComponent(JPanel panel, JComponent component) {
+        if (panel.getComponentCount() > 0) {
+            panel.removeAll();
+        }
+        panel.add(component, BorderLayout.CENTER);
+    }
+
+    private void addPanelMaybeSplit(JPanel panel) {
+        // We only use a split pane if there is more in the panelBottom than the index slider
+        if (this.panelBottom.getComponentCount() > 1 && useSplitPlane) {
+
+            JSplitPane splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, panel, panelBottom);
+            splitPane.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
+            // splitPane.setResizeWeight(0.5);
+            frame.add(splitPane, BorderLayout.CENTER);
+
+        } else {
+            frame.add(panel, BorderLayout.CENTER);
+            frame.add(panelBottom, BorderLayout.SOUTH);
+        }
+    }
+
+    private void addTitleBoundsUpdater(
+            IDisplayUpdateRememberStack stackProvider, IIndexGettableSettable indexCntr) {
+        this.titleBoundsUpdater =
+                new TitleBoundsUpdater(
+                        errorReporter,
+                        indexCntr,
+                        stackProvider,
+                        slider.getSlider(),
+                        frame,
+                        frameName);
+        stackProvider.addChangeListener(titleBoundsUpdater);
+    }
+
+    private void addPopup(ExportPopupParams exportPopupParams, IRetrieveElements elementRetriever) {
+        popUpListener =
+                new InternalFrameIJPopupClickListener(
+                        exportPopupParams, elementRetriever, errorReporter);
+        controllerMouse.addMouseListener(popUpListener, true);
+    }
+
+    public ControllerAction controllerAction() {
+        return controllerAction;
+    }
 }

@@ -23,9 +23,8 @@
  * THE SOFTWARE.
  * #L%
  */
+/* (C)2020 */
 package org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.definition;
-
-
 
 import org.anchoranalysis.core.error.reporter.ErrorReporter;
 import org.anchoranalysis.core.functional.function.FunctionWithException;
@@ -37,26 +36,25 @@ import org.anchoranalysis.image.stack.DisplayStack;
 
 class StackFromBackgroundSet implements IImageStackCntrFromName {
 
-	private OperationWithProgressReporter<BackgroundSet,? extends Throwable> backgroundSet;
-	private ErrorReporter errorReporter;
-	
-	public StackFromBackgroundSet(
-		OperationWithProgressReporter<BackgroundSet,? extends Throwable> backgroundSet,
-		ErrorReporter errorReporter
-	) {
-		super();
-		this.backgroundSet = backgroundSet;
-		this.errorReporter = errorReporter;
-	}
+    private OperationWithProgressReporter<BackgroundSet, ? extends Throwable> backgroundSet;
+    private ErrorReporter errorReporter;
 
-	@Override
-	public FunctionWithException<Integer, DisplayStack,GetOperationFailedException> imageStackCntrFromName(String name) {
-		try {				
-			return backgroundSet.doOperation( ProgressReporterNull.get() ).stackCntr(name);
-		} catch (Throwable e) {
-			errorReporter.recordError(NamesFromBackgroundSet.class, e);
-			return null;
-		}
-	}
-	
+    public StackFromBackgroundSet(
+            OperationWithProgressReporter<BackgroundSet, ? extends Throwable> backgroundSet,
+            ErrorReporter errorReporter) {
+        super();
+        this.backgroundSet = backgroundSet;
+        this.errorReporter = errorReporter;
+    }
+
+    @Override
+    public FunctionWithException<Integer, DisplayStack, GetOperationFailedException>
+            imageStackCntrFromName(String name) {
+        try {
+            return backgroundSet.doOperation(ProgressReporterNull.get()).stackCntr(name);
+        } catch (Throwable e) {
+            errorReporter.recordError(NamesFromBackgroundSet.class, e);
+            return null;
+        }
+    }
 }

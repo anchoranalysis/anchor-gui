@@ -23,118 +23,110 @@
  * THE SOFTWARE.
  * #L%
  */
+/* (C)2020 */
 package org.anchoranalysis.gui.videostats.threading;
-
-
 
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.SwingWorker;
 import javax.swing.Timer;
-
 import org.apache.commons.lang.time.StopWatch;
 
 public class ProgressBarInternalFrame {
-	
-	private JProgressBar progressBar;
-	private JInternalFrame internalFrame;
-	private Timer timer;
-	
-	public ProgressBarInternalFrame( String name ) {
-		progressBar = new JProgressBar(0, 100);
-		progressBar.setValue(0);
-		progressBar.setStringPainted(true);
-		progressBar.setIndeterminate(true);
-		progressBar.setString("");
-		
-		JPanel center_panel = new JPanel();
-		center_panel.add( new JLabel(name) );
-		center_panel.add(progressBar);
-		
-		internalFrame = new JInternalFrame("Working...");
-		internalFrame.setClosable(true);
-		internalFrame.getContentPane().add(center_panel, BorderLayout.CENTER);
-		internalFrame.pack();
-		
-		
-		final StopWatch sw = new StopWatch();
-		
-		ActionListener timerListener = new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				if (progressBar!=null && progressBar.isIndeterminate()==true) {
-					long time = sw.getTime()/1000;
-					progressBar.setString( String.format("%ds",time) );
-				}
-			}
-		};
-		
-		sw.start();
-		timer = new Timer(1000, timerListener);
-		timer.setRepeats(true);
-		timer.start();
-	}
 
-	public JProgressBar getProgressBar() {
-		return progressBar;
-	}
+    private JProgressBar progressBar;
+    private JInternalFrame internalFrame;
+    private Timer timer;
 
-	public JInternalFrame getInternalFrame() {
-		return internalFrame;
-	}
-	
-	
-	private class UpdateProgressBar implements PropertyChangeListener {
+    public ProgressBarInternalFrame(String name) {
+        progressBar = new JProgressBar(0, 100);
+        progressBar.setValue(0);
+        progressBar.setStringPainted(true);
+        progressBar.setIndeterminate(true);
+        progressBar.setString("");
 
-		private SwingWorker<?,?> sw;
-		
-		public UpdateProgressBar(SwingWorker<?, ?> sw) {
-			super();
-			this.sw = sw;
-		}
-		
-		@Override
-		public void propertyChange(PropertyChangeEvent evt) {
-			
-			if (progressBar==null) {
-				return;
-			}
-			
-			int progress = sw.getProgress();
-			
-			if (progress!=progressBar.getMaximum()) {
-				progressBar.setValue( progress );
-				
-				// We assume once we've received the first report of progress above 0 the
-				//  indeterminate part is now over
-				if (progress!=0) {
-					progressBar.setIndeterminate(false);
-					timer.stop();
-					progressBar.setString(null);
-					
-				}
-			} else {
-				internalFrame.dispose();
-				internalFrame = null;
-				progressBar = null;
-				timer = null;
-			}
-			
-		}
-		
-	}
-	
-	
-	public PropertyChangeListener createChangeListener( final SwingWorker<?,?> sw ) {
-		return new UpdateProgressBar(sw);
-	}
+        JPanel center_panel = new JPanel();
+        center_panel.add(new JLabel(name));
+        center_panel.add(progressBar);
+
+        internalFrame = new JInternalFrame("Working...");
+        internalFrame.setClosable(true);
+        internalFrame.getContentPane().add(center_panel, BorderLayout.CENTER);
+        internalFrame.pack();
+
+        final StopWatch sw = new StopWatch();
+
+        ActionListener timerListener =
+                new ActionListener() {
+
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        if (progressBar != null && progressBar.isIndeterminate() == true) {
+                            long time = sw.getTime() / 1000;
+                            progressBar.setString(String.format("%ds", time));
+                        }
+                    }
+                };
+
+        sw.start();
+        timer = new Timer(1000, timerListener);
+        timer.setRepeats(true);
+        timer.start();
+    }
+
+    public JProgressBar getProgressBar() {
+        return progressBar;
+    }
+
+    public JInternalFrame getInternalFrame() {
+        return internalFrame;
+    }
+
+    private class UpdateProgressBar implements PropertyChangeListener {
+
+        private SwingWorker<?, ?> sw;
+
+        public UpdateProgressBar(SwingWorker<?, ?> sw) {
+            super();
+            this.sw = sw;
+        }
+
+        @Override
+        public void propertyChange(PropertyChangeEvent evt) {
+
+            if (progressBar == null) {
+                return;
+            }
+
+            int progress = sw.getProgress();
+
+            if (progress != progressBar.getMaximum()) {
+                progressBar.setValue(progress);
+
+                // We assume once we've received the first report of progress above 0 the
+                //  indeterminate part is now over
+                if (progress != 0) {
+                    progressBar.setIndeterminate(false);
+                    timer.stop();
+                    progressBar.setString(null);
+                }
+            } else {
+                internalFrame.dispose();
+                internalFrame = null;
+                progressBar = null;
+                timer = null;
+            }
+        }
+    }
+
+    public PropertyChangeListener createChangeListener(final SwingWorker<?, ?> sw) {
+        return new UpdateProgressBar(sw);
+    }
 }

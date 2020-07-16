@@ -23,6 +23,7 @@
  * THE SOFTWARE.
  * #L%
  */
+/* (C)2020 */
 package org.anchoranalysis.gui.frame.overlays.onrgb;
 
 import org.anchoranalysis.core.functional.function.FunctionWithException;
@@ -34,30 +35,27 @@ import org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.IBackgroundS
 import org.anchoranalysis.image.stack.DisplayStack;
 
 class BackgroundSetterLocal implements IBackgroundSetter {
-	
-	private IRedrawable redrawable;
-	
-	public BackgroundSetterLocal( IRedrawable redrawable) {
-		super();
-		this.redrawable = redrawable;
-	}
 
-	@Override
-	public void setImageStackCntr(
-		FunctionWithException<Integer, DisplayStack,GetOperationFailedException> imageStackCntr
-	) throws SetOperationFailedException {
-		
-		
-		DisplayStack stack;
-		try {
-			stack = imageStackCntr.apply(0);
-		} catch (GetOperationFailedException e) {
-			throw new SetOperationFailedException(e);
-		}
-		
-		redrawable.applyRedrawUpdate(
-			OverlayedDisplayStackUpdate.assignBackground(stack)
-		);
-		
-	}
+    private IRedrawable redrawable;
+
+    public BackgroundSetterLocal(IRedrawable redrawable) {
+        super();
+        this.redrawable = redrawable;
+    }
+
+    @Override
+    public void setImageStackCntr(
+            FunctionWithException<Integer, DisplayStack, GetOperationFailedException>
+                    imageStackCntr)
+            throws SetOperationFailedException {
+
+        DisplayStack stack;
+        try {
+            stack = imageStackCntr.apply(0);
+        } catch (GetOperationFailedException e) {
+            throw new SetOperationFailedException(e);
+        }
+
+        redrawable.applyRedrawUpdate(OverlayedDisplayStackUpdate.assignBackground(stack));
+    }
 }

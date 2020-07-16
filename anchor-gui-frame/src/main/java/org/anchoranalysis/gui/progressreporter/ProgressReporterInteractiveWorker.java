@@ -23,80 +23,77 @@
  * THE SOFTWARE.
  * #L%
  */
+/* (C)2020 */
 package org.anchoranalysis.gui.progressreporter;
 
 import org.anchoranalysis.core.progress.ProgressReporter;
-
-
-
 import org.anchoranalysis.gui.videostats.threading.InteractiveWorker;
 
 public class ProgressReporterInteractiveWorker implements ProgressReporter {
 
-	private int min;
-	private int max;
-	private InteractiveWorker<?, ?> worker;
+    private int min;
+    private int max;
+    private InteractiveWorker<?, ?> worker;
 
-	private int range;
-	
-	public ProgressReporterInteractiveWorker( InteractiveWorker<?, ?> worker ) {
-		this(worker,0,1);
-	}
-	
-	public ProgressReporterInteractiveWorker( InteractiveWorker<?, ?> worker, int min, int max) {
-		super();
-		this.worker = worker;
-		this.min = min;
-		this.max = max;
-		updateRange();
-	}
-	
-	private void updateRange() {
-		this.range = max - min;
-	}
-	
-	@Override
-	public void open() {
-		//System.out.println("Start");
-	}
-	
-	@Override
-	public void update( int val ) {
-		assert( val<=max );
-		
-		int valRec = val - min;
-		double progress = (((double) valRec) / range) * 100;
-		worker.setProgressExt( (int) Math.round(progress) );
-		
-		//System.out.printf("Update %d of %d\n", val, max);
-	}
-	
-	@Override
-	public void close() {
-		worker.setProgressExt( 100 );
-		//System.out.println("End");
-	}
+    private int range;
 
-	@Override
-	public int getMin() {
-		return min;
-	}
+    public ProgressReporterInteractiveWorker(InteractiveWorker<?, ?> worker) {
+        this(worker, 0, 1);
+    }
 
-	@Override
-	public void setMin(int min) {
-		this.min = min;
-		updateRange();
-	}
+    public ProgressReporterInteractiveWorker(InteractiveWorker<?, ?> worker, int min, int max) {
+        super();
+        this.worker = worker;
+        this.min = min;
+        this.max = max;
+        updateRange();
+    }
 
-	@Override
-	public int getMax() {
-		return max;
-	}
+    private void updateRange() {
+        this.range = max - min;
+    }
 
-	@Override
-	public void setMax(int max) {
-		this.max = max;
-		updateRange();
-	}
+    @Override
+    public void open() {
+        // System.out.println("Start");
+    }
 
+    @Override
+    public void update(int val) {
+        assert (val <= max);
+
+        int valRec = val - min;
+        double progress = (((double) valRec) / range) * 100;
+        worker.setProgressExt((int) Math.round(progress));
+
+        // System.out.printf("Update %d of %d\n", val, max);
+    }
+
+    @Override
+    public void close() {
+        worker.setProgressExt(100);
+        // System.out.println("End");
+    }
+
+    @Override
+    public int getMin() {
+        return min;
+    }
+
+    @Override
+    public void setMin(int min) {
+        this.min = min;
+        updateRange();
+    }
+
+    @Override
+    public int getMax() {
+        return max;
+    }
+
+    @Override
+    public void setMax(int max) {
+        this.max = max;
+        updateRange();
+    }
 }

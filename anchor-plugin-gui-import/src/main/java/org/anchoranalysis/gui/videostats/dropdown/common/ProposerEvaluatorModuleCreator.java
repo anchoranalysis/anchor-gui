@@ -1,34 +1,7 @@
-/*-
- * #%L
- * anchor-plugin-gui-import
- * %%
- * Copyright (C) 2010 - 2020 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann-La Roche
- * %%
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- * 
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- * 
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
- * #L%
- */
+/* (C)2020 */
 package org.anchoranalysis.gui.videostats.dropdown.common;
 
 import org.anchoranalysis.core.error.InitException;
-
-
-
 import org.anchoranalysis.gui.image.frame.ISliderState;
 import org.anchoranalysis.gui.interactivebrowser.MarkEvaluatorSetForImage;
 import org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.IBackgroundUpdater;
@@ -43,84 +16,78 @@ import org.anchoranalysis.gui.videostats.modulecreator.VideoStatsModuleCreator;
 import org.anchoranalysis.io.output.bean.OutputWriteSettings;
 
 class ProposerEvaluatorModuleCreator extends VideoStatsModuleCreator {
-	
-	private MarkEvaluatorSetForImage markEvaluatorSet;
-	private NRGBackground nrgBackground;
-	private OutputWriteSettings outputWriteSettings;
-	private IUpdatableMarkEvaluator markEvaluatorUpdater;
-	private VideoStatsModuleGlobalParams mpg;
-	
-	public ProposerEvaluatorModuleCreator(
-			MarkEvaluatorSetForImage markEvaluatorSet,
-			NRGBackground nrgBackground,
-			OutputWriteSettings outputWriteSettings,
-			IUpdatableMarkEvaluator markEvaluatorUpdater,
-			VideoStatsModuleGlobalParams mpg			
-		) {
-		super();
-		this.markEvaluatorSet = markEvaluatorSet;
-		this.nrgBackground = nrgBackground;
-		this.outputWriteSettings = outputWriteSettings;
-		this.mpg = mpg;
-		this.markEvaluatorUpdater = markEvaluatorUpdater;
-	}
 
+    private MarkEvaluatorSetForImage markEvaluatorSet;
+    private NRGBackground nrgBackground;
+    private OutputWriteSettings outputWriteSettings;
+    private IUpdatableMarkEvaluator markEvaluatorUpdater;
+    private VideoStatsModuleGlobalParams mpg;
 
-	@Override
-	public void createAndAddVideoStatsModule(IAddVideoStatsModule adder) throws VideoStatsModuleCreateException {
-		
-		try {
-			InternalFrameMarkProposerEvaluator imageFrame = new InternalFrameMarkProposerEvaluator(
-				mpg.getLogger().errorReporter()
-			);
-			
-			// Configure initial-size based upon overall window size
-			imageFrame.controllerImageView().configure(
-				0.8,
-				0.6,
-				0,
-				50,
-				mpg.getGraphicsCurrentScreen()
-			);
-			
-			// Here we optionally set an adder to send back nrg_stacks
-			ISliderState sliderState = imageFrame.init(
-				markEvaluatorSet,
-				adder.getSubgroup().getDefaultModuleState().getState(),
-				nrgBackground.getBackgroundSet(),
-				outputWriteSettings,
-				mpg
-			);
-			
-			IBackgroundUpdater backgroundUpdater = imageFrame.controllerBackgroundMenu().add(
-				mpg,
-				nrgBackground.getBackgroundSet()
-			);
-			
-			imageFrame.addMarkEvaluatorChangedListener( e -> {
+    public ProposerEvaluatorModuleCreator(
+            MarkEvaluatorSetForImage markEvaluatorSet,
+            NRGBackground nrgBackground,
+            OutputWriteSettings outputWriteSettings,
+            IUpdatableMarkEvaluator markEvaluatorUpdater,
+            VideoStatsModuleGlobalParams mpg) {
+        super();
+        this.markEvaluatorSet = markEvaluatorSet;
+        this.nrgBackground = nrgBackground;
+        this.outputWriteSettings = outputWriteSettings;
+        this.mpg = mpg;
+        this.markEvaluatorUpdater = markEvaluatorUpdater;
+    }
 
-				if (e.getMarkEvaluator()!=null) {
-					backgroundUpdater.update(
-						new CreateBackgroundSetFromExisting(
-							nrgBackground.getBackgroundSet(),
-							e.getMarkEvaluator().getProposerSharedObjectsOperation(),
-							outputWriteSettings
-						)
-					);
-					markEvaluatorUpdater.setMarkEvaluatorIdentifier( e.getMarkEvaluatorName() );
-				} else {
-					
-					backgroundUpdater.update( nrgBackground.getBackgroundSet() );
-					markEvaluatorUpdater.setMarkEvaluatorIdentifier(null);
-				}
-			});
-			
-			ModuleAddUtilities.add(adder, imageFrame.moduleCreator(), sliderState);
+    @Override
+    public void createAndAddVideoStatsModule(IAddVideoStatsModule adder)
+            throws VideoStatsModuleCreateException {
 
-		} catch (VideoStatsModuleCreateException e) {
-			mpg.getLogger().errorReporter().recordError(ProposerEvaluatorModuleCreator.class, e);
-		} catch (InitException e) {
-			mpg.getLogger().errorReporter().recordError(ProposerEvaluatorModuleCreator.class, e);
-		}		
-	}
+        try {
+            InternalFrameMarkProposerEvaluator imageFrame =
+                    new InternalFrameMarkProposerEvaluator(mpg.getLogger().errorReporter());
+
+            // Configure initial-size based upon overall window size
+            imageFrame
+                    .controllerImageView()
+                    .configure(0.8, 0.6, 0, 50, mpg.getGraphicsCurrentScreen());
+
+            // Here we optionally set an adder to send back nrg_stacks
+            ISliderState sliderState =
+                    imageFrame.init(
+                            markEvaluatorSet,
+                            adder.getSubgroup().getDefaultModuleState().getState(),
+                            nrgBackground.getBackgroundSet(),
+                            outputWriteSettings,
+                            mpg);
+
+            IBackgroundUpdater backgroundUpdater =
+                    imageFrame
+                            .controllerBackgroundMenu()
+                            .add(mpg, nrgBackground.getBackgroundSet());
+
+            imageFrame.addMarkEvaluatorChangedListener(
+                    e -> {
+                        if (e.getMarkEvaluator() != null) {
+                            backgroundUpdater.update(
+                                    new CreateBackgroundSetFromExisting(
+                                            nrgBackground.getBackgroundSet(),
+                                            e.getMarkEvaluator()
+                                                    .getProposerSharedObjectsOperation(),
+                                            outputWriteSettings));
+                            markEvaluatorUpdater.setMarkEvaluatorIdentifier(
+                                    e.getMarkEvaluatorName());
+                        } else {
+
+                            backgroundUpdater.update(nrgBackground.getBackgroundSet());
+                            markEvaluatorUpdater.setMarkEvaluatorIdentifier(null);
+                        }
+                    });
+
+            ModuleAddUtilities.add(adder, imageFrame.moduleCreator(), sliderState);
+
+        } catch (VideoStatsModuleCreateException e) {
+            mpg.getLogger().errorReporter().recordError(ProposerEvaluatorModuleCreator.class, e);
+        } catch (InitException e) {
+            mpg.getLogger().errorReporter().recordError(ProposerEvaluatorModuleCreator.class, e);
+        }
+    }
 }

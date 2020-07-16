@@ -23,6 +23,7 @@
  * THE SOFTWARE.
  * #L%
  */
+/* (C)2020 */
 package org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.definition;
 
 import org.anchoranalysis.core.functional.function.FunctionWithException;
@@ -31,6 +32,7 @@ import org.anchoranalysis.image.stack.DisplayStack;
 
 @FunctionalInterface
 public interface IImageStackCntrFromName {
-	
-	FunctionWithException<Integer,DisplayStack,GetOperationFailedException> imageStackCntrFromName( String name ) throws GetOperationFailedException;
+
+    FunctionWithException<Integer, DisplayStack, GetOperationFailedException>
+            imageStackCntrFromName(String name) throws GetOperationFailedException;
 }

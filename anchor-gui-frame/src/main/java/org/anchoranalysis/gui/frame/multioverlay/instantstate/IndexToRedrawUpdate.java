@@ -23,6 +23,7 @@
  * THE SOFTWARE.
  * #L%
  */
+/* (C)2020 */
 package org.anchoranalysis.gui.frame.multioverlay.instantstate;
 
 import org.anchoranalysis.core.functional.function.FunctionWithException;
@@ -34,34 +35,33 @@ import org.anchoranalysis.gui.displayupdate.OverlayedDisplayStack;
 import org.anchoranalysis.gui.videostats.internalframe.cfgtorgb.ColoredOverlayedInstantState;
 import org.anchoranalysis.image.stack.DisplayStack;
 
-class IndexToRedrawUpdate implements FunctionWithException<Integer, OverlayedDisplayStack,GetOperationFailedException> {
+class IndexToRedrawUpdate
+        implements FunctionWithException<
+                Integer, OverlayedDisplayStack, GetOperationFailedException> {
 
-	private BoundedIndexBridge<ColoredOverlayedInstantState> delegate;
-	private FunctionWithException<Integer,DisplayStack,GetOperationFailedException> background;
-	
-	public IndexToRedrawUpdate(
-		BoundedIndexContainer<ColoredOverlayedInstantState> cntr,
-		FunctionWithException<Integer,DisplayStack, GetOperationFailedException> background
-	) {
-		delegate = new BoundedIndexBridge<>(cntr);
-		this.background = background;
-	}
-	
-	@Override
-	public OverlayedDisplayStack apply(Integer sourceObject) throws GetOperationFailedException {
-		
-		ColoredOverlayedInstantState found = delegate.apply(sourceObject);
-		
-		return new OverlayedDisplayStack(
-			found.getOverlayCollection(),
-			background.apply(sourceObject)
-		);
-	}
+    private BoundedIndexBridge<ColoredOverlayedInstantState> delegate;
+    private FunctionWithException<Integer, DisplayStack, GetOperationFailedException> background;
 
-	public void setImageStackCntr(
-			FunctionWithException<Integer, DisplayStack, GetOperationFailedException> imageStackCntr)
-			throws SetOperationFailedException {
-		this.background = imageStackCntr;
-	}
-	
+    public IndexToRedrawUpdate(
+            BoundedIndexContainer<ColoredOverlayedInstantState> cntr,
+            FunctionWithException<Integer, DisplayStack, GetOperationFailedException> background) {
+        delegate = new BoundedIndexBridge<>(cntr);
+        this.background = background;
+    }
+
+    @Override
+    public OverlayedDisplayStack apply(Integer sourceObject) throws GetOperationFailedException {
+
+        ColoredOverlayedInstantState found = delegate.apply(sourceObject);
+
+        return new OverlayedDisplayStack(
+                found.getOverlayCollection(), background.apply(sourceObject));
+    }
+
+    public void setImageStackCntr(
+            FunctionWithException<Integer, DisplayStack, GetOperationFailedException>
+                    imageStackCntr)
+            throws SetOperationFailedException {
+        this.background = imageStackCntr;
+    }
 }

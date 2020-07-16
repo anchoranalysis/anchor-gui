@@ -23,9 +23,8 @@
  * THE SOFTWARE.
  * #L%
  */
+/* (C)2020 */
 package org.anchoranalysis.gui.finder.imgstackcollection;
-
-
 
 import org.anchoranalysis.core.cache.WrapOperationWithProgressReporterAsCached;
 import org.anchoranalysis.core.error.OperationFailedException;
@@ -42,38 +41,39 @@ import org.anchoranalysis.io.manifest.ManifestRecorder;
 // Finds an image stack collection from the files in the root directory
 public class FinderImgStackCollectionFromRootFiles implements FinderImgStackCollection {
 
-	private FinderRasterFilesByManifestDescriptionFunction delegate;
-	
-	private CachedOperationWithProgressReporter<NamedProvider<Stack>,OperationFailedException> operationImgStackCollection =
-		new WrapOperationWithProgressReporterAsCached<>(
-			pr -> delegate.createStackCollection()
-		);
-	
-	public FinderImgStackCollectionFromRootFiles( RasterReader rasterReader, String function ) {
-		delegate = new FinderRasterFilesByManifestDescriptionFunction(rasterReader, function );
-	}
+    private FinderRasterFilesByManifestDescriptionFunction delegate;
 
-	@Override
-	public NamedProvider<Stack> getImgStackCollection() throws GetOperationFailedException {
-		try {
-			return operationImgStackCollection.doOperation( ProgressReporterNull.get() );
-		} catch (OperationFailedException e) {
-			throw new GetOperationFailedException(e);
-		}
-	}
-	
-	@Override
-	public OperationWithProgressReporter<NamedProvider<Stack>,OperationFailedException> getImgStackCollectionAsOperationWithProgressReporter() {
-		return operationImgStackCollection;
-	}
+    private CachedOperationWithProgressReporter<NamedProvider<Stack>, OperationFailedException>
+            operationImgStackCollection =
+                    new WrapOperationWithProgressReporterAsCached<>(
+                            pr -> delegate.createStackCollection());
 
-	@Override
-	public boolean doFind(ManifestRecorder manifestRecorder) {
-		return delegate.doFind(manifestRecorder);
-	}
+    public FinderImgStackCollectionFromRootFiles(RasterReader rasterReader, String function) {
+        delegate = new FinderRasterFilesByManifestDescriptionFunction(rasterReader, function);
+    }
 
-	@Override
-	public boolean exists() {
-		return delegate.exists();
-	}
+    @Override
+    public NamedProvider<Stack> getImgStackCollection() throws GetOperationFailedException {
+        try {
+            return operationImgStackCollection.doOperation(ProgressReporterNull.get());
+        } catch (OperationFailedException e) {
+            throw new GetOperationFailedException(e);
+        }
+    }
+
+    @Override
+    public OperationWithProgressReporter<NamedProvider<Stack>, OperationFailedException>
+            getImgStackCollectionAsOperationWithProgressReporter() {
+        return operationImgStackCollection;
+    }
+
+    @Override
+    public boolean doFind(ManifestRecorder manifestRecorder) {
+        return delegate.doFind(manifestRecorder);
+    }
+
+    @Override
+    public boolean exists() {
+        return delegate.exists();
+    }
 }

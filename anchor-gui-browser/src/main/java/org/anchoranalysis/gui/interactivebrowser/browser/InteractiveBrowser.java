@@ -1,35 +1,7 @@
-/*-
- * #%L
- * anchor-gui-browser
- * %%
- * Copyright (C) 2010 - 2020 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann-La Roche
- * %%
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- * 
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- * 
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
- * #L%
- */
+/* (C)2020 */
 package org.anchoranalysis.gui.interactivebrowser.browser;
 
-
-
-
 import java.util.List;
-
 import org.anchoranalysis.anchor.mpp.feature.bean.mark.MarkEvaluator;
 import org.anchoranalysis.bean.NamedBean;
 import org.anchoranalysis.core.color.ColorIndex;
@@ -60,221 +32,213 @@ import org.anchoranalysis.io.generator.sequence.SequenceMemory;
 import org.anchoranalysis.io.output.bound.BoundIOContext;
 import org.anchoranalysis.plugin.gui.bean.exporttask.ExportTaskList;
 
-
 public class InteractiveBrowser {
-	
-	// How long the splash screen displays for
-	private static final int SPLASH_SCREEN_TIME = 2000;
-	private static final int NUM_COLORS = 20;
-		
-	private VideoStatsFrame videoStatsFrame;
-		
-	private ExportTaskList exportTaskList;
-	
-	// Manages the available mark evaluators
-	private MarkEvaluatorManager markEvaluatorManager;
-	
-	private OpenFile openFileCreator;
-	
-	private OpenFileTypeFactory openFileTypeFactory;
-	
-	private BoundIOContext context;
-	
-	public InteractiveBrowser(BoundIOContext context, ExportTaskList exportTaskList ) {
-		super();
-		this.exportTaskList = exportTaskList;
-		this.context = context;
-	}
-	
-	public void init(
-		InteractiveBrowserInput interactiveBrowserInput
-	) throws InitException {
-		
-		videoStatsFrame = new VideoStatsFrame( "Interactive Browser" );
 
-		openFileTypeFactory = new OpenFileTypeFactory(
-			interactiveBrowserInput.getImporterSettings().getOpenFileImporters()
-		);
-		
-		displaySplashScreen();
-	
-		setup( interactiveBrowserInput );
-	}
-		
-	public void showWithDefaultView() {
-		videoStatsFrame.showWithDefaultView();
-	}
-	
-	private void setup( InteractiveBrowserInput interactiveBrowserInput ) throws InitException {
-		SubgrouppedAdder globalSubgroupAdder = new SubgrouppedAdder(videoStatsFrame,new DefaultModuleState());
-		
-		VideoStatsModuleGlobalParams moduleParams = createModuleParams(
-			createExportPopupParams(),
-			createColorIndex(),
-			new RandomNumberGeneratorMersenne(false)
-		);
-		
-		initMarkEvaluatorManager(interactiveBrowserInput);
-		
-		addGUIComponents(
-			interactiveBrowserInput,
-			moduleParams,
-			globalSubgroupAdder,
-			createFileOpenManager(globalSubgroupAdder)
-		);
-	}
-	
-	private FileOpenManager createFileOpenManager( SubgrouppedAdder globalSubgroupAdder ) {
-		return new FileOpenManager(
-			globalSubgroupAdder,
-			videoStatsFrame,
-			context.getOutputManager()
-		);
-	}
-	
-	private void initMarkEvaluatorManager( InteractiveBrowserInput interactiveBrowserInput ) {
-		markEvaluatorManager = new MarkEvaluatorManager(context);
-		
-		if (interactiveBrowserInput.getNamedItemMarkEvaluatorList()!=null) {
-			for( NamedBean<MarkEvaluator> ni : interactiveBrowserInput.getNamedItemMarkEvaluatorList()) {
-				markEvaluatorManager.add(
-					ni.getName(),
-					ni.getValue()
-				);
-			}
-		}
-	}
-	
-	private void addGUIComponents(
-		InteractiveBrowserInput interactiveBrowserInput,
-		VideoStatsModuleGlobalParams moduleParams,
-		SubgrouppedAdder globalSubgroupAdder,
-		FileOpenManager fileOpenManager
-	) throws InitException {
-		
-		FeatureListSrc featureListSrc;
-		try {
-			featureListSrc = interactiveBrowserInput.createFeatureListSrc(context.common());
-		} catch (CreateException e) {
-			throw new InitException(e);
-		} 
-		
-		AdderWithNrg adderWithNrg = new AdderWithNrg(
-			moduleParams,
-			featureListSrc,
-			globalSubgroupAdder
-		);
-						
-		FileCreatorLoader fileCreatorLoader = creatorLoader(
-			adderWithNrg,
-			interactiveBrowserInput.getRasterReader(),
-			fileOpenManager,
-			interactiveBrowserInput.getImporterSettings()
-		);
-		
-		openFileCreator = new OpenFile(
-			videoStatsFrame,
-			fileCreatorLoader,
-			openFileTypeFactory,
-			context.getLogger()
-		);
-		videoStatsFrame.getListFileActions().add( openFileCreator );
-					
-		
-		// We add the GUI components
-		addGUIComponentsInner( adderWithNrg, fileCreatorLoader, fileOpenManager, interactiveBrowserInput.getListFileCreators() );
-	}
-	
-	private FileCreatorLoader creatorLoader(
-		AdderWithNrg adderWithNrg,
-		RasterReader rasterReader,
-		FileOpenManager fileOpenManager,
-		ImporterSettings importerSettings
-	) {
-		return adderWithNrg.createFileCreatorLoader(
-			rasterReader,
-			fileOpenManager,
-			markEvaluatorManager,
-			importerSettings,
-			videoStatsFrame.getLastMarkDisplaySettings()
-		);
-	}
-	
-	private void addGUIComponentsInner( AdderWithNrg adderNrg, FileCreatorLoader fileCreatorLoader, FileOpenManager fileOpenManager, List<FileCreator> fileCreators ) throws InitException {
-		
-		videoStatsFrame.getToolbar().add( openFileCreator);
-		videoStatsFrame.getToolbar().addSeparator();
-		
-		videoStatsFrame.initBeforeAddingFrames( context.getErrorReporter() );
-		
-		videoStatsFrame.getToolbar().addSeparator();
-		
-		adderNrg.addGlobalSet(videoStatsFrame.getToolbar());
-		
-		videoStatsFrame.getToolbar().addSeparator();
-		
-		videoStatsFrame.getToolbar().addSeparator();
+    // How long the splash screen displays for
+    private static final int SPLASH_SCREEN_TIME = 2000;
+    private static final int NUM_COLORS = 20;
 
-		
-		// We maintain a mapping between modules and 
-		videoStatsFrame.addVideoStatsModuleClosedListener( evt -> {
-			assert( evt.getModule()!=null );
-			fileOpenManager.closeModule(evt.getModule());
-			videoStatsFrame.selectFrame(true);
-		});
+    private VideoStatsFrame videoStatsFrame;
 
-		fileCreatorLoader.addFileListSummaryModule( fileCreators, videoStatsFrame );
-		
-		videoStatsFrame.setDropTarget(
-			new CustomDropTarget(
-				openFileCreator,
-				videoStatsFrame,
-				fileCreatorLoader.getImporterSettings(),
-				context.getErrorReporter()
-			)
-		);
-		
-	}
+    private ExportTaskList exportTaskList;
 
-	private ExportPopupParams createExportPopupParams() {
-		SequenceMemory sequenceMemory = new SequenceMemory();
-		ExportPopupParams popUpParams = new ExportPopupParams(
-			context.getErrorReporter()
-		);
-		assert( context.getOutputManager()!= null );
-		popUpParams.setOutputManager( context.getOutputManager() );
-		popUpParams.setParentFrame( videoStatsFrame );
-		popUpParams.setSequenceMemory( sequenceMemory );
-		return popUpParams;
-	}
+    // Manages the available mark evaluators
+    private MarkEvaluatorManager markEvaluatorManager;
 
-	private VideoStatsModuleGlobalParams createModuleParams( ExportPopupParams popUpParams, ColorIndex colorIndex, RandomNumberGenerator randomNumberGenerator ) {
-		return new VideoStatsModuleGlobalParams(
-			popUpParams,
-			context.common(),
-			videoStatsFrame.getThreadPool(),
-			randomNumberGenerator,
-			exportTaskList,
-			colorIndex,
-			videoStatsFrame.getGraphicsConfiguration()
-		);
-	}
-	
-	private ColorIndex createColorIndex() throws InitException {
-		try {
-			return new HashedColorSet( new ShuffleColorSetGenerator( new HSBColorSetGenerator() ), NUM_COLORS );
-		} catch (OperationFailedException e) {
-			throw new InitException(e);
-		}
-	}
+    private OpenFile openFileCreator;
 
-	private void displaySplashScreen() {
-		// Display splash scren
-		new SplashScreenTime(
-			"/appSplash/anchor_splash.png",
-			videoStatsFrame,
-			SPLASH_SCREEN_TIME,
-			context.getErrorReporter()
-		);
-	}
+    private OpenFileTypeFactory openFileTypeFactory;
+
+    private BoundIOContext context;
+
+    public InteractiveBrowser(BoundIOContext context, ExportTaskList exportTaskList) {
+        super();
+        this.exportTaskList = exportTaskList;
+        this.context = context;
+    }
+
+    public void init(InteractiveBrowserInput interactiveBrowserInput) throws InitException {
+
+        videoStatsFrame = new VideoStatsFrame("Interactive Browser");
+
+        openFileTypeFactory =
+                new OpenFileTypeFactory(
+                        interactiveBrowserInput.getImporterSettings().getOpenFileImporters());
+
+        displaySplashScreen();
+
+        setup(interactiveBrowserInput);
+    }
+
+    public void showWithDefaultView() {
+        videoStatsFrame.showWithDefaultView();
+    }
+
+    private void setup(InteractiveBrowserInput interactiveBrowserInput) throws InitException {
+        SubgrouppedAdder globalSubgroupAdder =
+                new SubgrouppedAdder(videoStatsFrame, new DefaultModuleState());
+
+        VideoStatsModuleGlobalParams moduleParams =
+                createModuleParams(
+                        createExportPopupParams(),
+                        createColorIndex(),
+                        new RandomNumberGeneratorMersenne(false));
+
+        initMarkEvaluatorManager(interactiveBrowserInput);
+
+        addGUIComponents(
+                interactiveBrowserInput,
+                moduleParams,
+                globalSubgroupAdder,
+                createFileOpenManager(globalSubgroupAdder));
+    }
+
+    private FileOpenManager createFileOpenManager(SubgrouppedAdder globalSubgroupAdder) {
+        return new FileOpenManager(
+                globalSubgroupAdder, videoStatsFrame, context.getOutputManager());
+    }
+
+    private void initMarkEvaluatorManager(InteractiveBrowserInput interactiveBrowserInput) {
+        markEvaluatorManager = new MarkEvaluatorManager(context);
+
+        if (interactiveBrowserInput.getNamedItemMarkEvaluatorList() != null) {
+            for (NamedBean<MarkEvaluator> ni :
+                    interactiveBrowserInput.getNamedItemMarkEvaluatorList()) {
+                markEvaluatorManager.add(ni.getName(), ni.getValue());
+            }
+        }
+    }
+
+    private void addGUIComponents(
+            InteractiveBrowserInput interactiveBrowserInput,
+            VideoStatsModuleGlobalParams moduleParams,
+            SubgrouppedAdder globalSubgroupAdder,
+            FileOpenManager fileOpenManager)
+            throws InitException {
+
+        FeatureListSrc featureListSrc;
+        try {
+            featureListSrc = interactiveBrowserInput.createFeatureListSrc(context.common());
+        } catch (CreateException e) {
+            throw new InitException(e);
+        }
+
+        AdderWithNrg adderWithNrg =
+                new AdderWithNrg(moduleParams, featureListSrc, globalSubgroupAdder);
+
+        FileCreatorLoader fileCreatorLoader =
+                creatorLoader(
+                        adderWithNrg,
+                        interactiveBrowserInput.getRasterReader(),
+                        fileOpenManager,
+                        interactiveBrowserInput.getImporterSettings());
+
+        openFileCreator =
+                new OpenFile(
+                        videoStatsFrame,
+                        fileCreatorLoader,
+                        openFileTypeFactory,
+                        context.getLogger());
+        videoStatsFrame.getListFileActions().add(openFileCreator);
+
+        // We add the GUI components
+        addGUIComponentsInner(
+                adderWithNrg,
+                fileCreatorLoader,
+                fileOpenManager,
+                interactiveBrowserInput.getListFileCreators());
+    }
+
+    private FileCreatorLoader creatorLoader(
+            AdderWithNrg adderWithNrg,
+            RasterReader rasterReader,
+            FileOpenManager fileOpenManager,
+            ImporterSettings importerSettings) {
+        return adderWithNrg.createFileCreatorLoader(
+                rasterReader,
+                fileOpenManager,
+                markEvaluatorManager,
+                importerSettings,
+                videoStatsFrame.getLastMarkDisplaySettings());
+    }
+
+    private void addGUIComponentsInner(
+            AdderWithNrg adderNrg,
+            FileCreatorLoader fileCreatorLoader,
+            FileOpenManager fileOpenManager,
+            List<FileCreator> fileCreators)
+            throws InitException {
+
+        videoStatsFrame.getToolbar().add(openFileCreator);
+        videoStatsFrame.getToolbar().addSeparator();
+
+        videoStatsFrame.initBeforeAddingFrames(context.getErrorReporter());
+
+        videoStatsFrame.getToolbar().addSeparator();
+
+        adderNrg.addGlobalSet(videoStatsFrame.getToolbar());
+
+        videoStatsFrame.getToolbar().addSeparator();
+
+        videoStatsFrame.getToolbar().addSeparator();
+
+        // We maintain a mapping between modules and
+        videoStatsFrame.addVideoStatsModuleClosedListener(
+                evt -> {
+                    assert (evt.getModule() != null);
+                    fileOpenManager.closeModule(evt.getModule());
+                    videoStatsFrame.selectFrame(true);
+                });
+
+        fileCreatorLoader.addFileListSummaryModule(fileCreators, videoStatsFrame);
+
+        videoStatsFrame.setDropTarget(
+                new CustomDropTarget(
+                        openFileCreator,
+                        videoStatsFrame,
+                        fileCreatorLoader.getImporterSettings(),
+                        context.getErrorReporter()));
+    }
+
+    private ExportPopupParams createExportPopupParams() {
+        SequenceMemory sequenceMemory = new SequenceMemory();
+        ExportPopupParams popUpParams = new ExportPopupParams(context.getErrorReporter());
+        assert (context.getOutputManager() != null);
+        popUpParams.setOutputManager(context.getOutputManager());
+        popUpParams.setParentFrame(videoStatsFrame);
+        popUpParams.setSequenceMemory(sequenceMemory);
+        return popUpParams;
+    }
+
+    private VideoStatsModuleGlobalParams createModuleParams(
+            ExportPopupParams popUpParams,
+            ColorIndex colorIndex,
+            RandomNumberGenerator randomNumberGenerator) {
+        return new VideoStatsModuleGlobalParams(
+                popUpParams,
+                context.common(),
+                videoStatsFrame.getThreadPool(),
+                randomNumberGenerator,
+                exportTaskList,
+                colorIndex,
+                videoStatsFrame.getGraphicsConfiguration());
+    }
+
+    private ColorIndex createColorIndex() throws InitException {
+        try {
+            return new HashedColorSet(
+                    new ShuffleColorSetGenerator(new HSBColorSetGenerator()), NUM_COLORS);
+        } catch (OperationFailedException e) {
+            throw new InitException(e);
+        }
+    }
+
+    private void displaySplashScreen() {
+        // Display splash scren
+        new SplashScreenTime(
+                "/appSplash/anchor_splash.png",
+                videoStatsFrame,
+                SPLASH_SCREEN_TIME,
+                context.getErrorReporter());
+    }
 }

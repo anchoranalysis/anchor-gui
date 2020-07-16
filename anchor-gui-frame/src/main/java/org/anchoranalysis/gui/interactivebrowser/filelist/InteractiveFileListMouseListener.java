@@ -23,17 +23,14 @@
  * THE SOFTWARE.
  * #L%
  */
+/* (C)2020 */
 package org.anchoranalysis.gui.interactivebrowser.filelist;
-
-
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.swing.JTable;
-
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.gui.file.interactive.InteractiveFile;
 import org.anchoranalysis.gui.file.opened.IOpenedFileGUI;
@@ -46,181 +43,175 @@ import org.anchoranalysis.gui.videostats.dropdown.opened.OpenedFileGUIMultipleDr
 import org.apache.commons.lang3.ArrayUtils;
 
 public class InteractiveFileListMouseListener extends MouseAdapter {
-	
-	private IAddVideoStatsModule adder;
-	private InteractiveFileListTableModel tableModel;
-	private IOpenFile fileOpenManager;
-	private VideoStatsModuleGlobalParams mpg;
-	private MarkDisplaySettings markDisplaySettings;
-	
-	public InteractiveFileListMouseListener(IAddVideoStatsModule adder,
-			InteractiveFileListTableModel tableModel,
-			IOpenFile fileOpenManager,
-			VideoStatsModuleGlobalParams mpg,
-			MarkDisplaySettings markDisplaySettings
-	) {
-		super();
-		this.adder = adder;
-		this.tableModel = tableModel;
-		this.fileOpenManager = fileOpenManager;
-		this.mpg = mpg;
-		this.markDisplaySettings = markDisplaySettings;
-	}
 
-	// NB  Popup can occur on mousePressed (Linux,MacOS)  or on mouseReleased (Windows)
-	// Double-click is mousePressed on all of the above OSes
-	
-	@Override
-	public void mousePressed(MouseEvent e) {
-        maybeShowPopup(e,true);
+    private IAddVideoStatsModule adder;
+    private InteractiveFileListTableModel tableModel;
+    private IOpenFile fileOpenManager;
+    private VideoStatsModuleGlobalParams mpg;
+    private MarkDisplaySettings markDisplaySettings;
+
+    public InteractiveFileListMouseListener(
+            IAddVideoStatsModule adder,
+            InteractiveFileListTableModel tableModel,
+            IOpenFile fileOpenManager,
+            VideoStatsModuleGlobalParams mpg,
+            MarkDisplaySettings markDisplaySettings) {
+        super();
+        this.adder = adder;
+        this.tableModel = tableModel;
+        this.fileOpenManager = fileOpenManager;
+        this.mpg = mpg;
+        this.markDisplaySettings = markDisplaySettings;
+    }
+
+    // NB  Popup can occur on mousePressed (Linux,MacOS)  or on mouseReleased (Windows)
+    // Double-click is mousePressed on all of the above OSes
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+        maybeShowPopup(e, true);
     }
 
     @Override
-	public void mouseReleased(MouseEvent e) {
-        maybeShowPopup(e,false);
+    public void mouseReleased(MouseEvent e) {
+        maybeShowPopup(e, false);
     }
-    
+
     private void maybeShowPopup(MouseEvent e, boolean includeDoubleClick) {
-    	
-    	if (e.isPopupTrigger()) {
-    		
-        	maybeSelectCurrentRow(e);
-    		
-    		doPopup(e);
-        	return;
+
+        if (e.isPopupTrigger()) {
+
+            maybeSelectCurrentRow(e);
+
+            doPopup(e);
+            return;
         }
-    	
-    	if (includeDoubleClick && e.getClickCount()>=2) {
-    		doDefaultOperationOnSelection(e);
-    	}
+
+        if (includeDoubleClick && e.getClickCount() >= 2) {
+            doDefaultOperationOnSelection(e);
+        }
     }
-    
+
     private void maybeSelectCurrentRow(MouseEvent e) {
-    	JTable target = (JTable)e.getSource();
-    	
-    	 int r = target.rowAtPoint(e.getPoint());
-    	 
-    	 if ( !isRowSelected(target, r)) {
-    		 // If row isn't already selected there is no need for us to select it
-    		 setSelectionToSingleRow(target, r);
-    	 }
+        JTable target = (JTable) e.getSource();
+
+        int r = target.rowAtPoint(e.getPoint());
+
+        if (!isRowSelected(target, r)) {
+            // If row isn't already selected there is no need for us to select it
+            setSelectionToSingleRow(target, r);
+        }
     }
-    
-    private static void setSelectionToSingleRow( JTable table, int rowIndex ) {
-    	 
-    	if (rowIndex >= 0 && rowIndex < table.getRowCount()) {
-    		table.setRowSelectionInterval(rowIndex,rowIndex);
-         } else {
-        	table.clearSelection();
-         }    	
+
+    private static void setSelectionToSingleRow(JTable table, int rowIndex) {
+
+        if (rowIndex >= 0 && rowIndex < table.getRowCount()) {
+            table.setRowSelectionInterval(rowIndex, rowIndex);
+        } else {
+            table.clearSelection();
+        }
     }
-    
-    private static boolean isRowSelected( JTable table, int rowIndex ) {
-    	return ArrayUtils.contains(
-    		table.getSelectedRows(),
-    		rowIndex
-    	);
+
+    private static boolean isRowSelected(JTable table, int rowIndex) {
+        return ArrayUtils.contains(table.getSelectedRows(), rowIndex);
     }
-    
+
     private void doPopup(MouseEvent e) {
-    	JTable target = (JTable)e.getSource();
-    	
-    	if (target.getSelectedRowCount()==0) {
-    		// We do nothing
-    	} else if (target.getSelectedRowCount()==1) {
-			singleSelectionPopup(target, e);
-    	} else {
-    		multipleSelectionPopup(target, e);
-    	}
-    	
+        JTable target = (JTable) e.getSource();
+
+        if (target.getSelectedRowCount() == 0) {
+            // We do nothing
+        } else if (target.getSelectedRowCount() == 1) {
+            singleSelectionPopup(target, e);
+        } else {
+            multipleSelectionPopup(target, e);
+        }
     }
-    
+
     private void doDefaultOperationOnSelection(MouseEvent e) {
-    	JTable target = (JTable)e.getSource();
-    	
-    	if (target.getSelectedRowCount()==0) {
-    		// We do nothing
-    	} else if (target.getSelectedRowCount()==1) {
-    		singleSelectionDefaultOperation(target, e);
-    	} else {
-    		singleSelectionDefaultOperation(target, e);
-    	}
+        JTable target = (JTable) e.getSource();
 
+        if (target.getSelectedRowCount() == 0) {
+            // We do nothing
+        } else if (target.getSelectedRowCount() == 1) {
+            singleSelectionDefaultOperation(target, e);
+        } else {
+            singleSelectionDefaultOperation(target, e);
+        }
     }
-    
-    private void singleSelectionDefaultOperation( JTable target, MouseEvent e ) {
-    	int row = target.getSelectedRow();
 
-		try {
-			OpenedFile of = fileOpenManager.open( tableModel.get(row) );
-			IOpenedFileGUI dropDown = of.getGUI();
-			
-			if (dropDown!=null) {
-				dropDown.executeDefaultOperation();
-			}
+    private void singleSelectionDefaultOperation(JTable target, MouseEvent e) {
+        int row = target.getSelectedRow();
 
-		} catch (OperationFailedException exc) {
-			mpg.getLogger().errorReporter().recordError(InteractiveFileListInternalFrame.class, exc);
-		}		    	
-    }
-        
-    private void singleSelectionPopup( JTable target, MouseEvent e ) {
-    	int row = target.getSelectedRow();
+        try {
+            OpenedFile of = fileOpenManager.open(tableModel.get(row));
+            IOpenedFileGUI dropDown = of.getGUI();
 
-		try {
-			OpenedFile of = fileOpenManager.open( tableModel.get(row) );
-			IOpenedFileGUI dropDown = of.getGUI();
-			
-			if (dropDown!=null) {
-				dropDown.getPopup().show( e.getComponent(), e.getX(), e.getY() );
-			}
+            if (dropDown != null) {
+                dropDown.executeDefaultOperation();
+            }
 
-		} catch (OperationFailedException exc) {
-			mpg.getLogger().errorReporter().recordError(InteractiveFileListInternalFrame.class, exc);
-		}		    	
+        } catch (OperationFailedException exc) {
+            mpg.getLogger()
+                    .errorReporter()
+                    .recordError(InteractiveFileListInternalFrame.class, exc);
+        }
     }
-    
-    private void multipleSelectionPopup( JTable target, MouseEvent e ) {
-    	
-    	List<IOpenedFileGUI> listSelectedDropDown = openAllSelected(target);
-  		
-  		if (listSelectedDropDown.size()==0) {
-  			return;
-  		}
-  		
-  		// We create a special drop-down menu, that resembles the manifest dropdowns in the others
-  		//  but only shows items that exist in all
-  		
-  		OpenedFileGUIMultipleDropDown dropDown = new OpenedFileGUIMultipleDropDown(
-  			adder,
-  			listSelectedDropDown,
-  			mpg,
-  			markDisplaySettings
-  		);
-  		dropDown.getPopupMenu().show(
-  			e.getComponent(),
-  			e.getX(),
-  			e.getY()
-  		);
+
+    private void singleSelectionPopup(JTable target, MouseEvent e) {
+        int row = target.getSelectedRow();
+
+        try {
+            OpenedFile of = fileOpenManager.open(tableModel.get(row));
+            IOpenedFileGUI dropDown = of.getGUI();
+
+            if (dropDown != null) {
+                dropDown.getPopup().show(e.getComponent(), e.getX(), e.getY());
+            }
+
+        } catch (OperationFailedException exc) {
+            mpg.getLogger()
+                    .errorReporter()
+                    .recordError(InteractiveFileListInternalFrame.class, exc);
+        }
     }
-    
-    private List<IOpenedFileGUI> openAllSelected( JTable target ) {
-    	List<IOpenedFileGUI> list = new ArrayList<>(); 
-  		for (int i: target.getSelectedRows()) {
-  			addIndice(list, i);
-  		}
-  		return list;
+
+    private void multipleSelectionPopup(JTable target, MouseEvent e) {
+
+        List<IOpenedFileGUI> listSelectedDropDown = openAllSelected(target);
+
+        if (listSelectedDropDown.size() == 0) {
+            return;
+        }
+
+        // We create a special drop-down menu, that resembles the manifest dropdowns in the others
+        //  but only shows items that exist in all
+
+        OpenedFileGUIMultipleDropDown dropDown =
+                new OpenedFileGUIMultipleDropDown(
+                        adder, listSelectedDropDown, mpg, markDisplaySettings);
+        dropDown.getPopupMenu().show(e.getComponent(), e.getX(), e.getY());
     }
-    
+
+    private List<IOpenedFileGUI> openAllSelected(JTable target) {
+        List<IOpenedFileGUI> list = new ArrayList<>();
+        for (int i : target.getSelectedRows()) {
+            addIndice(list, i);
+        }
+        return list;
+    }
+
     private void addIndice(List<IOpenedFileGUI> listSelectedDropDown, int rowIndex) {
-		InteractiveFile file = tableModel.get(rowIndex);
-		if (file!=null) {
-			try {
-				OpenedFile of = fileOpenManager.open( file );
-				listSelectedDropDown.add( of.getGUI() );
-			} catch (OperationFailedException exc) {
-				mpg.getLogger().errorReporter().recordError(InteractiveFileListInternalFrame.class, exc);
-			}			        				
-		}    	
+        InteractiveFile file = tableModel.get(rowIndex);
+        if (file != null) {
+            try {
+                OpenedFile of = fileOpenManager.open(file);
+                listSelectedDropDown.add(of.getGUI());
+            } catch (OperationFailedException exc) {
+                mpg.getLogger()
+                        .errorReporter()
+                        .recordError(InteractiveFileListInternalFrame.class, exc);
+            }
+        }
     }
 }

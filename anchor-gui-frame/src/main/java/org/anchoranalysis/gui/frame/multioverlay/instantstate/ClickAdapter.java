@@ -23,15 +23,12 @@
  * THE SOFTWARE.
  * #L%
  */
+/* (C)2020 */
 package org.anchoranalysis.gui.frame.multioverlay.instantstate;
-
-
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-
 import javax.swing.SwingUtilities;
-
 import org.anchoranalysis.anchor.overlay.collection.ColoredOverlayCollection;
 import org.anchoranalysis.anchor.overlay.collection.OverlayCollection;
 import org.anchoranalysis.core.geometry.Point3i;
@@ -45,79 +42,90 @@ import org.anchoranalysis.gui.indices.DualIndicesSelection;
 import org.anchoranalysis.gui.propertyvalue.PropertyValueChangeListenerList;
 
 class ClickAdapter extends MouseAdapter {
-	
-	private ISliceNumGetter sliceNumGetter;
-	
-	private OverlayRetriever overlaysGetter;
-	
-	private DualIndicesSelection selectionIndices;
-	private PropertyValueChangeListenerList<OverlayCollection> eventListenerList = new PropertyValueChangeListenerList<>();
-	
-	public ClickAdapter( DualIndicesSelection selectionIndices, ISliceNumGetter sliceNumGetter, OverlayRetriever overlaysGetter ) {
-		super();
-		this.selectionIndices = selectionIndices;
-		this.sliceNumGetter = sliceNumGetter;
-		this.overlaysGetter = overlaysGetter;
-	}
-	
-	@Override
-	public void mousePressed(MouseEvent e) {
 
-		// If any control keys are also pressed, or if we happen to be triggering the pop, we ignore
-		if (e.isPopupTrigger() || e.isShiftDown() || e.isMetaDown() || e.isAltDown() || e.isAltGraphDown()) {
-			return;
-		}
-		
-		// If it's not the left mouse button, we ignore
-		if (!SwingUtilities.isLeftMouseButton(e)) {
-			return;
-		}
-		
-		Point3i point = new Point3i( e.getX(), e.getY(), sliceNumGetter.getSliceNum() );
-		
-		// This our current
-		OverlayCollection selectedOverlays = overlaysGetter.overlaysAt(point);
+    private ISliceNumGetter sliceNumGetter;
 
-		int[] ids = idArrayFromOverlayCollection(selectedOverlays);
-		if (e.isControlDown()) {
-			// If control is pressed, we add/remove objects from selection
-			
-			// Then we add all the exisitng ids to the selectionIndices
-			ids = IndicesSelection.mergedList(ids,selectionIndices.getCurrentSelection().getCurrentSelection());	
-			// Then we merge the two lists.  If an ID appears twice, then we remove it
-		} else {
-			// If control is not pressed, we select new objects
-			if (selectionIndices.getCurrentSelection().equalsInt(ids)) {
-				// If we click on a mark that is already toggled, then we reset to null
-				ids = new int[]{};
-			}
-		}
-		
-		selectionIndices.updateBoth( ids );
-		
-		ColoredOverlayCollection overlays = overlaysGetter.getOverlays();
-		
-		OverlayCollection overlaysSubset = overlays.getOverlays().createSubset( new IndicesSelection(ids) ); 
-		
-		// We also trigger an selectMark
-		triggerObjectChangeEvent( overlaysSubset );		
-	}
-	
-	private static int[] idArrayFromOverlayCollection( OverlayCollection oc ) {
-		int[] out = new int[oc.size()];
-		for( int i=0; i<oc.size(); i++ ) {
-			out[i] = oc.get(i).getId();
-		}
-		return out;
-	}
-	
-	private void triggerObjectChangeEvent( OverlayCollection state ) {
-		for (PropertyValueChangeListener<OverlayCollection> listener : eventListenerList) {
-			listener.propertyValueChanged( new PropertyValueChangeEvent<>(this, state, false) );
-		}
-	}
+    private OverlayRetriever overlaysGetter;
 
-	public IPropertyValueReceivable<OverlayCollection> createSelectOverlayCollectionReceivable() {
-		return eventListenerList.createPropertyValueReceivable();
-	}
+    private DualIndicesSelection selectionIndices;
+    private PropertyValueChangeListenerList<OverlayCollection> eventListenerList =
+            new PropertyValueChangeListenerList<>();
+
+    public ClickAdapter(
+            DualIndicesSelection selectionIndices,
+            ISliceNumGetter sliceNumGetter,
+            OverlayRetriever overlaysGetter) {
+        super();
+        this.selectionIndices = selectionIndices;
+        this.sliceNumGetter = sliceNumGetter;
+        this.overlaysGetter = overlaysGetter;
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+
+        // If any control keys are also pressed, or if we happen to be triggering the pop, we ignore
+        if (e.isPopupTrigger()
+                || e.isShiftDown()
+                || e.isMetaDown()
+                || e.isAltDown()
+                || e.isAltGraphDown()) {
+            return;
+        }
+
+        // If it's not the left mouse button, we ignore
+        if (!SwingUtilities.isLeftMouseButton(e)) {
+            return;
+        }
+
+        Point3i point = new Point3i(e.getX(), e.getY(), sliceNumGetter.getSliceNum());
+
+        // This our current
+        OverlayCollection selectedOverlays = overlaysGetter.overlaysAt(point);
+
+        int[] ids = idArrayFromOverlayCollection(selectedOverlays);
+        if (e.isControlDown()) {
+            // If control is pressed, we add/remove objects from selection
+
+            // Then we add all the exisitng ids to the selectionIndices
+            ids =
+                    IndicesSelection.mergedList(
+                            ids, selectionIndices.getCurrentSelection().getCurrentSelection());
+            // Then we merge the two lists.  If an ID appears twice, then we remove it
+        } else {
+            // If control is not pressed, we select new objects
+            if (selectionIndices.getCurrentSelection().equalsInt(ids)) {
+                // If we click on a mark that is already toggled, then we reset to null
+                ids = new int[] {};
+            }
+        }
+
+        selectionIndices.updateBoth(ids);
+
+        ColoredOverlayCollection overlays = overlaysGetter.getOverlays();
+
+        OverlayCollection overlaysSubset =
+                overlays.getOverlays().createSubset(new IndicesSelection(ids));
+
+        // We also trigger an selectMark
+        triggerObjectChangeEvent(overlaysSubset);
+    }
+
+    private static int[] idArrayFromOverlayCollection(OverlayCollection oc) {
+        int[] out = new int[oc.size()];
+        for (int i = 0; i < oc.size(); i++) {
+            out[i] = oc.get(i).getId();
+        }
+        return out;
+    }
+
+    private void triggerObjectChangeEvent(OverlayCollection state) {
+        for (PropertyValueChangeListener<OverlayCollection> listener : eventListenerList) {
+            listener.propertyValueChanged(new PropertyValueChangeEvent<>(this, state, false));
+        }
+    }
+
+    public IPropertyValueReceivable<OverlayCollection> createSelectOverlayCollectionReceivable() {
+        return eventListenerList.createPropertyValueReceivable();
+    }
 }

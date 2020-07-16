@@ -23,8 +23,8 @@
  * THE SOFTWARE.
  * #L%
  */
+/* (C)2020 */
 package org.anchoranalysis.gui.backgroundset;
-
 
 import java.util.HashMap;
 import java.util.Set;

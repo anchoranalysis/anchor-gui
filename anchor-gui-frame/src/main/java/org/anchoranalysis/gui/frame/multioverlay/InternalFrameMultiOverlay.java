@@ -23,15 +23,12 @@
  * THE SOFTWARE.
  * #L%
  */
+/* (C)2020 */
 package org.anchoranalysis.gui.frame.multioverlay;
 
 import java.util.ArrayList;
-
-
-
 import java.util.List;
 import java.util.Set;
-
 import org.anchoranalysis.anchor.overlay.Overlay;
 import org.anchoranalysis.anchor.overlay.OverlayedInstantState;
 import org.anchoranalysis.anchor.overlay.id.IDGetterOverlayID;
@@ -41,8 +38,8 @@ import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.error.reporter.ErrorReporter;
 import org.anchoranalysis.core.idgetter.IDGetter;
 import org.anchoranalysis.core.index.GetOperationFailedException;
-import org.anchoranalysis.core.index.container.BoundedIndexContainerFromList;
 import org.anchoranalysis.core.index.container.BoundedIndexContainer;
+import org.anchoranalysis.core.index.container.BoundedIndexContainerFromList;
 import org.anchoranalysis.core.index.container.bridge.BoundedIndexContainerBridgeWithIndex;
 import org.anchoranalysis.core.progress.ProgressReporterNull;
 import org.anchoranalysis.gui.frame.multioverlay.instantstate.InternalFrameOverlayedInstantStateToRGBSelectable;
@@ -58,135 +55,125 @@ import org.anchoranalysis.gui.videostats.internalframe.cfgtorgb.MultiInput;
 import org.anchoranalysis.gui.videostats.module.DefaultModuleState;
 import org.anchoranalysis.gui.videostats.module.DefaultModuleStateManager;
 
-
 class InternalFrameMultiOverlay<T> {
-	private InternalFrameOverlayedInstantStateToRGBSelectable delegate;
+    private InternalFrameOverlayedInstantStateToRGBSelectable delegate;
 
-	public InternalFrameMultiOverlay( String frameName ) {
-		delegate = new InternalFrameOverlayedInstantStateToRGBSelectable( frameName, false, true );
-	}
-	
-	public SliderNRGState init(
-			final List<MultiInput<T>> list,
-			BridgeElementWithIndex<MultiInput<T>, OverlayedInstantState,OperationFailedException> bridge,
-			DefaultModuleStateManager defaultState,
-			final VideoStatsModuleGlobalParams mpg
-		) throws InitException {
+    public InternalFrameMultiOverlay(String frameName) {
+        delegate = new InternalFrameOverlayedInstantStateToRGBSelectable(frameName, false, true);
+    }
 
-		IImageStackCntrFromName imageStackCntrFromName = createImageStackCntr(list);
-		
-		// We assume all NRGBackgrounds have the same stack-names, so it doesn't
-		//  matter which is picked
-		String arbitraryStackName = list.get(0).getNrgBackground().arbitraryBackgroundStackName();
-		DefaultModuleState defaultStateNew = assignInitialBackground(
-			defaultState,
-			arbitraryStackName,
-			imageStackCntrFromName
-		);
-		
-		IDGetter<Overlay> idGetter = new IDGetterOverlayID(); 
-		
-		ISliderState sliderState = delegate.init(
-			bridgeList(list, bridge),
-			mpg.getDefaultColorIndexForMarks(),
-			idGetter,
-			idGetter,
-			false,
-			defaultStateNew,
-			mpg
-		);
-		
-		addExtraDetail(list);
-		addBackgroundMenu(
-			list,
-			sliderState,
-			imageStackCntrFromName,
-			mpg
-		);
-		
-		NRGBackground nrgBackground = list.get(
-			sliderState.getIndex()
-		).getNrgBackground();
-		
-		return new SliderNRGState(sliderState, nrgBackground);
-	}
-	
-	private static <T> IImageStackCntrFromName createImageStackCntr( final List<MultiInput<T>> list ) {
-		return name -> sourceObject -> 
-			list.get(sourceObject).getNrgBackground().getBackgroundSet().doOperation(
-				ProgressReporterNull.get()
-			).singleStack(name);
-	}
-	
-	private static <T> BoundedIndexContainer<OverlayedInstantState> bridgeList(
-		List<T> list,
-		BridgeElementWithIndex<T, OverlayedInstantState,OperationFailedException> bridge
-	) {
-		BoundedIndexContainerFromList<T> cntr = new BoundedIndexContainerFromList<>(list);
-		return new BoundedIndexContainerBridgeWithIndex<>(cntr, bridge );
-	}
-	
-	private static DefaultModuleState assignInitialBackground(
-		DefaultModuleStateManager defaultState,
-		String stackName,
-		IImageStackCntrFromName imageStackCntrFromName
-	) throws InitException {
-		
-		// We always set an initial background
-		try {
-			return defaultState.copyChangeBackground(
-				imageStackCntrFromName.imageStackCntrFromName(stackName)
-			);
+    public SliderNRGState init(
+            final List<MultiInput<T>> list,
+            BridgeElementWithIndex<MultiInput<T>, OverlayedInstantState, OperationFailedException>
+                    bridge,
+            DefaultModuleStateManager defaultState,
+            final VideoStatsModuleGlobalParams mpg)
+            throws InitException {
 
-		} catch (GetOperationFailedException e) {
-			throw new InitException(e);
-		}
-	}
+        IImageStackCntrFromName imageStackCntrFromName = createImageStackCntr(list);
 
-		
-	
-	private void addBackgroundMenu(
-		List<MultiInput<T>> list,
-		ISliderState sliderState,
-		IImageStackCntrFromName imageStackCntrFromName,
-		VideoStatsModuleGlobalParams mpg
-	) {
-		ControllerPopupMenuWithBackground controller = delegate.controllerBackgroundMenu(sliderState);
-		controller.add(
-			namesFromCurrentBackground(list, sliderState, mpg.getLogger().errorReporter() ),
-			imageStackCntrFromName,
-			mpg
-		);
-	}
-	
-	private IGetNames namesFromCurrentBackground( List<MultiInput<T>> list, ISliderState sliderState, ErrorReporter errorReporter ) {
-		return () -> {
-			try {
-				Set<String> names = list.get(
-					sliderState.getIndex()
-				).getNrgBackground().getBackgroundSet().doOperation( ProgressReporterNull.get() ).names();
-				return new ArrayList<>(names);
-				
-			} catch (GetOperationFailedException e) {
-				errorReporter.recordError(InternalFrameMultiOverlay.class, e);
-				return new ArrayList<>();
-			}
-		};
-	}
-	
-	private void addExtraDetail( List<MultiInput<T>> list ) {
-		
-		delegate.addAdditionalDetails(index ->
-			String.format("id=%s", list.get(index).getName() )
-		);		
-	}
+        // We assume all NRGBackgrounds have the same stack-names, so it doesn't
+        //  matter which is picked
+        String arbitraryStackName = list.get(0).getNrgBackground().arbitraryBackgroundStackName();
+        DefaultModuleState defaultStateNew =
+                assignInitialBackground(defaultState, arbitraryStackName, imageStackCntrFromName);
 
-	public IRetrieveElements getElementRetriever() {
-		return delegate.getElementRetriever();
-	}
+        IDGetter<Overlay> idGetter = new IDGetterOverlayID();
 
-	public IModuleCreatorDefaultState moduleCreator(ISliderState sliderState) {
-		return delegate.moduleCreator(sliderState);
-	}
-	
+        ISliderState sliderState =
+                delegate.init(
+                        bridgeList(list, bridge),
+                        mpg.getDefaultColorIndexForMarks(),
+                        idGetter,
+                        idGetter,
+                        false,
+                        defaultStateNew,
+                        mpg);
+
+        addExtraDetail(list);
+        addBackgroundMenu(list, sliderState, imageStackCntrFromName, mpg);
+
+        NRGBackground nrgBackground = list.get(sliderState.getIndex()).getNrgBackground();
+
+        return new SliderNRGState(sliderState, nrgBackground);
+    }
+
+    private static <T> IImageStackCntrFromName createImageStackCntr(
+            final List<MultiInput<T>> list) {
+        return name ->
+                sourceObject ->
+                        list.get(sourceObject)
+                                .getNrgBackground()
+                                .getBackgroundSet()
+                                .doOperation(ProgressReporterNull.get())
+                                .singleStack(name);
+    }
+
+    private static <T> BoundedIndexContainer<OverlayedInstantState> bridgeList(
+            List<T> list,
+            BridgeElementWithIndex<T, OverlayedInstantState, OperationFailedException> bridge) {
+        BoundedIndexContainerFromList<T> cntr = new BoundedIndexContainerFromList<>(list);
+        return new BoundedIndexContainerBridgeWithIndex<>(cntr, bridge);
+    }
+
+    private static DefaultModuleState assignInitialBackground(
+            DefaultModuleStateManager defaultState,
+            String stackName,
+            IImageStackCntrFromName imageStackCntrFromName)
+            throws InitException {
+
+        // We always set an initial background
+        try {
+            return defaultState.copyChangeBackground(
+                    imageStackCntrFromName.imageStackCntrFromName(stackName));
+
+        } catch (GetOperationFailedException e) {
+            throw new InitException(e);
+        }
+    }
+
+    private void addBackgroundMenu(
+            List<MultiInput<T>> list,
+            ISliderState sliderState,
+            IImageStackCntrFromName imageStackCntrFromName,
+            VideoStatsModuleGlobalParams mpg) {
+        ControllerPopupMenuWithBackground controller =
+                delegate.controllerBackgroundMenu(sliderState);
+        controller.add(
+                namesFromCurrentBackground(list, sliderState, mpg.getLogger().errorReporter()),
+                imageStackCntrFromName,
+                mpg);
+    }
+
+    private IGetNames namesFromCurrentBackground(
+            List<MultiInput<T>> list, ISliderState sliderState, ErrorReporter errorReporter) {
+        return () -> {
+            try {
+                Set<String> names =
+                        list.get(sliderState.getIndex())
+                                .getNrgBackground()
+                                .getBackgroundSet()
+                                .doOperation(ProgressReporterNull.get())
+                                .names();
+                return new ArrayList<>(names);
+
+            } catch (GetOperationFailedException e) {
+                errorReporter.recordError(InternalFrameMultiOverlay.class, e);
+                return new ArrayList<>();
+            }
+        };
+    }
+
+    private void addExtraDetail(List<MultiInput<T>> list) {
+
+        delegate.addAdditionalDetails(index -> String.format("id=%s", list.get(index).getName()));
+    }
+
+    public IRetrieveElements getElementRetriever() {
+        return delegate.getElementRetriever();
+    }
+
+    public IModuleCreatorDefaultState moduleCreator(ISliderState sliderState) {
+        return delegate.moduleCreator(sliderState);
+    }
 }

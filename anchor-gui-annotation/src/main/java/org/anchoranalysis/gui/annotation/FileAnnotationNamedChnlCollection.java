@@ -1,35 +1,8 @@
-/*-
- * #%L
- * anchor-gui-annotation
- * %%
- * Copyright (C) 2010 - 2020 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann-La Roche
- * %%
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- * 
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- * 
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
- * #L%
- */
+/* (C)2020 */
 package org.anchoranalysis.gui.annotation;
-
-
 
 import java.io.File;
 import java.util.Optional;
-
 import org.anchoranalysis.core.cache.CachedOperation;
 import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.error.OperationFailedException;
@@ -47,93 +20,87 @@ import org.anchoranalysis.io.output.bound.BoundOutputManagerRouteErrors;
 
 public class FileAnnotationNamedChnlCollection extends InteractiveFile {
 
-	private AnnotationGuiBuilder<?> annotation;
-	private VideoStatsModuleGlobalParams mpg;
-	private AnnotationRefresher annotationRefresher;
-	private CachedOperation<AnnotationSummary,? extends Throwable> op;
-	private MarkEvaluatorManager markEvaluatorManager;
-	
-	public FileAnnotationNamedChnlCollection(
-		AnnotationGuiBuilder<?> annotation,
-		AnnotationRefresher annotationRefresher,
-		MarkEvaluatorManager markEvaluatorManager,
-		VideoStatsModuleGlobalParams mpg
-	) {
-		super();
-		this.annotation = annotation;
-		this.annotationRefresher = annotationRefresher;
-		this.mpg = mpg;
-		this.markEvaluatorManager = markEvaluatorManager;
-		
-		op = annotation.queryAnnotationSummary();
-		
-		try {
-			op.doOperation();
-		} catch (Throwable e) {
-			mpg.getLogger().errorReporter().recordError(FileAnnotationNamedChnlCollection.class, e);
-		}
-	}
+    private AnnotationGuiBuilder<?> annotation;
+    private VideoStatsModuleGlobalParams mpg;
+    private AnnotationRefresher annotationRefresher;
+    private CachedOperation<AnnotationSummary, ? extends Throwable> op;
+    private MarkEvaluatorManager markEvaluatorManager;
 
-	@Override
-	public String identifier() {
-		return annotation.descriptiveName();
-	}
+    public FileAnnotationNamedChnlCollection(
+            AnnotationGuiBuilder<?> annotation,
+            AnnotationRefresher annotationRefresher,
+            MarkEvaluatorManager markEvaluatorManager,
+            VideoStatsModuleGlobalParams mpg) {
+        super();
+        this.annotation = annotation;
+        this.annotationRefresher = annotationRefresher;
+        this.mpg = mpg;
+        this.markEvaluatorManager = markEvaluatorManager;
 
-	private void invalidateProgressState() {
-		op.reset();
-	}
-	
-	public AnnotationSummary summary() {
-		try {
-			return op.doOperation();
-		} catch (Throwable e) {
-			mpg.getLogger().errorReporter().recordError(FileAnnotationNamedChnlCollection.class, e);
-			return null;
-		}
-	}
-		
-	@Override
-	public String type() {
-		return FileAnnotationNamedChnlCollection.class.getSimpleName();
-	}
+        op = annotation.queryAnnotationSummary();
 
-	@Override
-	public OpenedFile open(
-			IAddVideoStatsModule globalSubgroupAdder,
-			BoundOutputManagerRouteErrors outputManager
-		) throws OperationFailedException {
-		
-		AnnotationRefresher refresherResetCache = new AnnotationRefresher() {
+        try {
+            op.doOperation();
+        } catch (Throwable e) {
+            mpg.getLogger().errorReporter().recordError(FileAnnotationNamedChnlCollection.class, e);
+        }
+    }
 
-			@Override
-			public void refreshAnnotation() {
-				invalidateProgressState();
-				annotationRefresher.refreshAnnotation();
-			}
-			
-		};
-		
-		AnnotationDropDown dropDown = new AnnotationDropDown(
-			annotation,
-			new AnnotationGuiContext(refresherResetCache, markEvaluatorManager),
-			identifier()
-		);
-		
-		try {
-			dropDown.init(
-				globalSubgroupAdder,
-				outputManager,
-				mpg
-			);
-		} catch (InitException e) {
-			throw new OperationFailedException(e);
-		}
-		
-		return new OpenedFileGUI(this, dropDown.openedFileGUI() );
-	}
+    @Override
+    public String identifier() {
+        return annotation.descriptiveName();
+    }
 
-	@Override
-	public Optional<File> associatedFile() {
-		return annotation.associatedFile();
-	}
+    private void invalidateProgressState() {
+        op.reset();
+    }
+
+    public AnnotationSummary summary() {
+        try {
+            return op.doOperation();
+        } catch (Throwable e) {
+            mpg.getLogger().errorReporter().recordError(FileAnnotationNamedChnlCollection.class, e);
+            return null;
+        }
+    }
+
+    @Override
+    public String type() {
+        return FileAnnotationNamedChnlCollection.class.getSimpleName();
+    }
+
+    @Override
+    public OpenedFile open(
+            IAddVideoStatsModule globalSubgroupAdder, BoundOutputManagerRouteErrors outputManager)
+            throws OperationFailedException {
+
+        AnnotationRefresher refresherResetCache =
+                new AnnotationRefresher() {
+
+                    @Override
+                    public void refreshAnnotation() {
+                        invalidateProgressState();
+                        annotationRefresher.refreshAnnotation();
+                    }
+                };
+
+        AnnotationDropDown dropDown =
+                new AnnotationDropDown(
+                        annotation,
+                        new AnnotationGuiContext(refresherResetCache, markEvaluatorManager),
+                        identifier());
+
+        try {
+            dropDown.init(globalSubgroupAdder, outputManager, mpg);
+        } catch (InitException e) {
+            throw new OperationFailedException(e);
+        }
+
+        return new OpenedFileGUI(this, dropDown.openedFileGUI());
+    }
+
+    @Override
+    public Optional<File> associatedFile() {
+        return annotation.associatedFile();
+    }
 }

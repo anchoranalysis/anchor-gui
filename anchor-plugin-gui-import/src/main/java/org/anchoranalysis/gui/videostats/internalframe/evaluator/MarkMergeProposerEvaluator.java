@@ -1,36 +1,10 @@
-/*-
- * #%L
- * anchor-plugin-gui-import
- * %%
- * Copyright (C) 2010 - 2020 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann-La Roche
- * %%
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- * 
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- * 
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
- * #L%
- */
+/* (C)2020 */
 package org.anchoranalysis.gui.videostats.internalframe.evaluator;
-
-
 
 import java.awt.Color;
 import java.util.List;
 import java.util.Optional;
-
+import lombok.AllArgsConstructor;
 import org.anchoranalysis.anchor.mpp.bean.cfg.CfgGen;
 import org.anchoranalysis.anchor.mpp.bean.proposer.MarkMergeProposer;
 import org.anchoranalysis.anchor.mpp.cfg.Cfg;
@@ -48,90 +22,79 @@ import org.anchoranalysis.core.geometry.Point3f;
 import org.anchoranalysis.gui.frame.overlays.ProposedCfg;
 import org.anchoranalysis.gui.videostats.internalframe.ProposalOperation;
 
-import lombok.AllArgsConstructor;
-
 @AllArgsConstructor
 public class MarkMergeProposerEvaluator implements ProposalOperationCreator {
 
-	private final MarkMergeProposer markMergeProposer;
+    private final MarkMergeProposer markMergeProposer;
 
-	@Override
-	public ProposalOperation create(final Cfg cfg, Point3d position,
-			final ProposerContext context, final CfgGen cfgGen) throws OperationFailedException {
-		
-		if (cfg.size()!=2) {
-			throw new IllegalArgumentException("The existing configuration must have exactly 2 items");
-		}
+    @Override
+    public ProposalOperation create(
+            final Cfg cfg, Point3d position, final ProposerContext context, final CfgGen cfgGen)
+            throws OperationFailedException {
 
-		return new ProposalOperation() {
-			@Override
-			public ProposedCfg propose(ErrorNode errorNode) throws ProposalAbnormalFailureException {
+        if (cfg.size() != 2) {
+            throw new IllegalArgumentException(
+                    "The existing configuration must have exactly 2 items");
+        }
 
-				Mark mark1 = cfg.get(0);
-				Mark mark2 = cfg.get(1);
-				
-				VoxelizedMarkMemo markMemo1 = context.create( mark1 );
-				VoxelizedMarkMemo markMemo2 = context.create( mark2 );
-				
-				Optional<Mark> proposedMark = markMergeProposer.propose( markMemo1, markMemo2, context.replaceError(errorNode) );
-				
-				ProposedCfg er = new ProposedCfg();
-				er.setDimensions( context.getDimensions() );
-				
-				if (proposedMark.isPresent()) {
-					er.setSuccess( true );
-					
-					ColoredCfg coloredCfg = cfgForMark(proposedMark);
-					er.setColoredCfg( coloredCfg );	
-					er.setCfgToRedraw( cfg.createMerged( coloredCfg.getCfg()) );
-					er.setCfgCore(
-						new Cfg(proposedMark.get())
-					);
-				} else {
-					er.setCfgToRedraw( cfg );
-				}
-				return er;
-				
-			}
-		};
+        return new ProposalOperation() {
+            @Override
+            public ProposedCfg propose(ErrorNode errorNode)
+                    throws ProposalAbnormalFailureException {
 
-	}
+                Mark mark1 = cfg.get(0);
+                Mark mark2 = cfg.get(1);
 
-	private ColoredCfg cfgForMark(Optional<Mark> mark) {
-		
-		ColoredCfg cfgOut = new ColoredCfg();
-		if (mark.isPresent()) {
-		
-			Mark markNew = mark.get().duplicate();
-			markNew.setId(0);
-			
-			cfgOut.addChangeID( markNew, new RGBColor( Color.BLUE)  );
-		}
-	
-		
-		// Allows us to associate a list of points with  the mark
-		addToOut(
-			markMergeProposer.getLastPoints1(),
-			Color.GREEN,
-			cfgOut
-		);
-		
-		// Allows us to associate a list of points with  the mark
-		addToOut(
-			markMergeProposer.getLastPoints2(),
-			Color.YELLOW,
-			cfgOut
-		);
-		
-		return cfgOut;
-	}
-	
-	private static void addToOut( Optional<List<Point3f>> points, Color color, ColoredCfg cfgOut ) {
-		if (points.isPresent()) {
-			cfgOut.addChangeID(
-				MarkPointListFactory.createMarkFromPoints3f(points.get()),
-				new RGBColor(color)
-			);	// 1 is just to give us a different color
-		}
-	}
+                VoxelizedMarkMemo markMemo1 = context.create(mark1);
+                VoxelizedMarkMemo markMemo2 = context.create(mark2);
+
+                Optional<Mark> proposedMark =
+                        markMergeProposer.propose(
+                                markMemo1, markMemo2, context.replaceError(errorNode));
+
+                ProposedCfg er = new ProposedCfg();
+                er.setDimensions(context.getDimensions());
+
+                if (proposedMark.isPresent()) {
+                    er.setSuccess(true);
+
+                    ColoredCfg coloredCfg = cfgForMark(proposedMark);
+                    er.setColoredCfg(coloredCfg);
+                    er.setCfgToRedraw(cfg.createMerged(coloredCfg.getCfg()));
+                    er.setCfgCore(new Cfg(proposedMark.get()));
+                } else {
+                    er.setCfgToRedraw(cfg);
+                }
+                return er;
+            }
+        };
+    }
+
+    private ColoredCfg cfgForMark(Optional<Mark> mark) {
+
+        ColoredCfg cfgOut = new ColoredCfg();
+        if (mark.isPresent()) {
+
+            Mark markNew = mark.get().duplicate();
+            markNew.setId(0);
+
+            cfgOut.addChangeID(markNew, new RGBColor(Color.BLUE));
+        }
+
+        // Allows us to associate a list of points with  the mark
+        addToOut(markMergeProposer.getLastPoints1(), Color.GREEN, cfgOut);
+
+        // Allows us to associate a list of points with  the mark
+        addToOut(markMergeProposer.getLastPoints2(), Color.YELLOW, cfgOut);
+
+        return cfgOut;
+    }
+
+    private static void addToOut(Optional<List<Point3f>> points, Color color, ColoredCfg cfgOut) {
+        if (points.isPresent()) {
+            cfgOut.addChangeID(
+                    MarkPointListFactory.createMarkFromPoints3f(points.get()),
+                    new RGBColor(color)); // 1 is just to give us a different color
+        }
+    }
 }

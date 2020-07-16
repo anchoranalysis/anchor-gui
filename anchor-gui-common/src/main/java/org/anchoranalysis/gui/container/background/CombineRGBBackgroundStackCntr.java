@@ -23,64 +23,62 @@
  * THE SOFTWARE.
  * #L%
  */
+/* (C)2020 */
 package org.anchoranalysis.gui.container.background;
-
 
 import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.index.GetOperationFailedException;
 
 public class CombineRGBBackgroundStackCntr {
 
-	private BackgroundStackCntr red;
-	private BackgroundStackCntr green;
-	private BackgroundStackCntr blue;
-	
-	public BackgroundStackCntr create() throws GetOperationFailedException, InitException {
-		
-		final CombineRGBBoundedIndexContainer combinedCntr = new CombineRGBBoundedIndexContainer();
-		
-		assert( red!=null || green!=null || blue!=null );
-		
-		if (red!=null) {
-			combinedCntr.setRed(red.backgroundStackCntr());
-		}
+    private BackgroundStackCntr red;
+    private BackgroundStackCntr green;
+    private BackgroundStackCntr blue;
 
-		if (green!=null) {
-			combinedCntr.setGreen(green.backgroundStackCntr());
-		}
-		
-		if (blue!=null) {
-			combinedCntr.setBlue(blue.backgroundStackCntr());
-		}
-		
-		combinedCntr.init();
-		
-		return new SingleBackgroundStackCntr(combinedCntr);
-	}
+    public BackgroundStackCntr create() throws GetOperationFailedException, InitException {
 
-	public BackgroundStackCntr getRed() {
-		return red;
-	}
+        final CombineRGBBoundedIndexContainer combinedCntr = new CombineRGBBoundedIndexContainer();
 
-	public void setRed(BackgroundStackCntr red) {
-		this.red = red;
-	}
+        assert (red != null || green != null || blue != null);
 
-	public BackgroundStackCntr getGreen() {
-		return green;
-	}
+        if (red != null) {
+            combinedCntr.setRed(red.backgroundStackCntr());
+        }
 
-	public void setGreen(BackgroundStackCntr green) {
-		this.green = green;
-	}
+        if (green != null) {
+            combinedCntr.setGreen(green.backgroundStackCntr());
+        }
 
-	public BackgroundStackCntr getBlue() {
-		return blue;
-	}
+        if (blue != null) {
+            combinedCntr.setBlue(blue.backgroundStackCntr());
+        }
 
-	public void setBlue(BackgroundStackCntr blue) {
-		this.blue = blue;
-	}
-	
-	
+        combinedCntr.init();
+
+        return new SingleBackgroundStackCntr(combinedCntr);
+    }
+
+    public BackgroundStackCntr getRed() {
+        return red;
+    }
+
+    public void setRed(BackgroundStackCntr red) {
+        this.red = red;
+    }
+
+    public BackgroundStackCntr getGreen() {
+        return green;
+    }
+
+    public void setGreen(BackgroundStackCntr green) {
+        this.green = green;
+    }
+
+    public BackgroundStackCntr getBlue() {
+        return blue;
+    }
+
+    public void setBlue(BackgroundStackCntr blue) {
+        this.blue = blue;
+    }
 }

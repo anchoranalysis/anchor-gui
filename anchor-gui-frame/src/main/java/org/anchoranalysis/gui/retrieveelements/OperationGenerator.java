@@ -23,12 +23,11 @@
  * THE SOFTWARE.
  * #L%
  */
+/* (C)2020 */
 package org.anchoranalysis.gui.retrieveelements;
-
 
 import java.nio.file.Path;
 import java.util.Optional;
-
 import org.anchoranalysis.core.error.AnchorNeverOccursException;
 import org.anchoranalysis.core.functional.Operation;
 import org.anchoranalysis.core.index.SetOperationFailedException;
@@ -38,69 +37,63 @@ import org.anchoranalysis.io.manifest.ManifestDescription;
 import org.anchoranalysis.io.output.bean.OutputWriteSettings;
 import org.anchoranalysis.io.output.error.OutputWriteFailedException;
 
+class OperationGenerator<S, T> extends ObjectGenerator<S>
+        implements IterableObjectGenerator<Operation<T, AnchorNeverOccursException>, S> {
 
-class OperationGenerator<S,T> extends ObjectGenerator<S> implements IterableObjectGenerator<Operation<T,AnchorNeverOccursException>, S> {
+    private IterableObjectGenerator<T, S> delegate;
 
-	private IterableObjectGenerator<T, S> delegate;
+    private Operation<T, AnchorNeverOccursException> element;
 
-	private Operation<T,AnchorNeverOccursException> element;
-	
-	public OperationGenerator(
-			IterableObjectGenerator<T, S> delegate) {
-		super();
-		this.delegate = delegate;
-	}
+    public OperationGenerator(IterableObjectGenerator<T, S> delegate) {
+        super();
+        this.delegate = delegate;
+    }
 
-	@Override
-	public void setIterableElement(Operation<T,AnchorNeverOccursException> element)
-			throws SetOperationFailedException {
-		this.element = element;
-		delegate.setIterableElement(
-			element.doOperation()
-		);
-	}
-	
-	@Override
-	public Operation<T,AnchorNeverOccursException> getIterableElement() {
-		return element;
-	}
+    @Override
+    public void setIterableElement(Operation<T, AnchorNeverOccursException> element)
+            throws SetOperationFailedException {
+        this.element = element;
+        delegate.setIterableElement(element.doOperation());
+    }
 
-	@Override
-	public void start() throws OutputWriteFailedException {
-		delegate.start();
-	}
+    @Override
+    public Operation<T, AnchorNeverOccursException> getIterableElement() {
+        return element;
+    }
 
-	@Override
-	public void end() throws OutputWriteFailedException {
-		delegate.end();
-	}
+    @Override
+    public void start() throws OutputWriteFailedException {
+        delegate.start();
+    }
 
-	@Override
-	public ObjectGenerator<S> getGenerator() {
-		return delegate.getGenerator();
-	}
+    @Override
+    public void end() throws OutputWriteFailedException {
+        delegate.end();
+    }
 
-	@Override
-	public S generate() throws OutputWriteFailedException {
-		return delegate.getGenerator().generate();
-	}
+    @Override
+    public ObjectGenerator<S> getGenerator() {
+        return delegate.getGenerator();
+    }
 
-	@Override
-	public void writeToFile(OutputWriteSettings outputWriteSettings,
-			Path filePath) throws OutputWriteFailedException {
-		delegate.getGenerator().writeToFile(outputWriteSettings, filePath);
-		
-	}
+    @Override
+    public S generate() throws OutputWriteFailedException {
+        return delegate.getGenerator().generate();
+    }
 
-	@Override
-	public String getFileExtension(OutputWriteSettings outputWriteSettings) {
-		return delegate.getGenerator().getFileExtension(outputWriteSettings);
-	}
+    @Override
+    public void writeToFile(OutputWriteSettings outputWriteSettings, Path filePath)
+            throws OutputWriteFailedException {
+        delegate.getGenerator().writeToFile(outputWriteSettings, filePath);
+    }
 
-	@Override
-	public Optional<ManifestDescription> createManifestDescription() {
-		return delegate.getGenerator().createManifestDescription();
-	}
-	
-	
+    @Override
+    public String getFileExtension(OutputWriteSettings outputWriteSettings) {
+        return delegate.getGenerator().getFileExtension(outputWriteSettings);
+    }
+
+    @Override
+    public Optional<ManifestDescription> createManifestDescription() {
+        return delegate.getGenerator().createManifestDescription();
+    }
 }

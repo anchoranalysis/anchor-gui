@@ -23,12 +23,11 @@
  * THE SOFTWARE.
  * #L%
  */
+/* (C)2020 */
 package org.anchoranalysis.gui.frame.multiraster;
 
 import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.error.OperationFailedException;
-
-
 import org.anchoranalysis.core.error.reporter.ErrorReporter;
 import org.anchoranalysis.core.functional.function.FunctionWithException;
 import org.anchoranalysis.core.index.GetOperationFailedException;
@@ -46,62 +45,55 @@ import org.anchoranalysis.io.generator.IterableObjectGeneratorBridge;
 
 public class ThreadedIndexedDisplayStackSetter implements IBackgroundSetter, IThreadedProducer {
 
-	private ThreadedDisplayUpdateConsumer delegate;
-	
-	private IterableObjectGenerator<DisplayStack, DisplayStack> stackGenerator;
-	
-	public void init(
-		FunctionWithException<Integer,DisplayStack,? extends Throwable> cntrDisplayStack,
-		InteractiveThreadPool threadPool,
-		ErrorReporter errorReporter
-	) throws InitException {
+    private ThreadedDisplayUpdateConsumer delegate;
 
-		stackGenerator = new DisplayStackGenerator("display" );
-	
-		delegate = new ThreadedDisplayUpdateConsumer(
-			ensure8bit(cntrDisplayStack),
-			0,
-			threadPool,
-			errorReporter
-		);		
-	}
-	
-	// How it provides stacks to other applications (the output)
-	public IDisplayUpdateRememberStack getStackProvider() {
-		return delegate;
-	}
-	
-	// How it is updated with indexes from other classes (the input control mechanism)
-	public IIndexGettableSettable getIndexGettableSettable() {
-		return delegate;
-	}
+    private IterableObjectGenerator<DisplayStack, DisplayStack> stackGenerator;
 
-	public int getIndex() {
-		return delegate.getIndex();
-	}
-	
-	
-	@Override
-	public void setImageStackCntr( FunctionWithException<Integer,DisplayStack,GetOperationFailedException> imageStackCntr ) {
-		
-		delegate.setImageStackGenerator(
-			ensure8bit(imageStackCntr)
-		);
-		delegate.update();
-	}
+    public void init(
+            FunctionWithException<Integer, DisplayStack, ? extends Throwable> cntrDisplayStack,
+            InteractiveThreadPool threadPool,
+            ErrorReporter errorReporter)
+            throws InitException {
 
-	@Override
-	public void dispose() {
-		delegate.dispose();
-	}
-	
-	private FunctionWithException<Integer, DisplayUpdate,OperationFailedException> ensure8bit( FunctionWithException<Integer,DisplayStack,? extends Throwable> cntr ) {
-		return new NoOverlayBridgeFromGenerator(
-			new IterableObjectGeneratorBridge<>(
-				stackGenerator,
-				new EnsureUnsigned8Bit<>(cntr)
-			)
-		);
-	}
+        stackGenerator = new DisplayStackGenerator("display");
 
+        delegate =
+                new ThreadedDisplayUpdateConsumer(
+                        ensure8bit(cntrDisplayStack), 0, threadPool, errorReporter);
+    }
+
+    // How it provides stacks to other applications (the output)
+    public IDisplayUpdateRememberStack getStackProvider() {
+        return delegate;
+    }
+
+    // How it is updated with indexes from other classes (the input control mechanism)
+    public IIndexGettableSettable getIndexGettableSettable() {
+        return delegate;
+    }
+
+    public int getIndex() {
+        return delegate.getIndex();
+    }
+
+    @Override
+    public void setImageStackCntr(
+            FunctionWithException<Integer, DisplayStack, GetOperationFailedException>
+                    imageStackCntr) {
+
+        delegate.setImageStackGenerator(ensure8bit(imageStackCntr));
+        delegate.update();
+    }
+
+    @Override
+    public void dispose() {
+        delegate.dispose();
+    }
+
+    private FunctionWithException<Integer, DisplayUpdate, OperationFailedException> ensure8bit(
+            FunctionWithException<Integer, DisplayStack, ? extends Throwable> cntr) {
+        return new NoOverlayBridgeFromGenerator(
+                new IterableObjectGeneratorBridge<>(
+                        stackGenerator, new EnsureUnsigned8Bit<>(cntr)));
+    }
 }

@@ -23,17 +23,15 @@
  * THE SOFTWARE.
  * #L%
  */
+/* (C)2020 */
 package org.anchoranalysis.gui.frame.cfgproposer;
-
-
 
 import java.awt.event.InputEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.Optional;
-
 import javax.swing.event.EventListenerList;
-
+import lombok.RequiredArgsConstructor;
 import org.anchoranalysis.anchor.mpp.cfg.Cfg;
 import org.anchoranalysis.anchor.mpp.overlay.OverlayCollectionMarkFactory;
 import org.anchoranalysis.anchor.mpp.proposer.ProposalAbnormalFailureException;
@@ -53,121 +51,117 @@ import org.anchoranalysis.gui.videostats.internalframe.evaluator.EvaluatorWithCo
 import org.anchoranalysis.gui.videostats.internalframe.evaluator.EvaluatorWithContextGetter;
 import org.anchoranalysis.gui.videostats.internalframe.evaluator.ProposalOperationCreator;
 
-import lombok.RequiredArgsConstructor;
-
 @RequiredArgsConstructor
 public class CfgProposerMouseClickAdapter extends MouseAdapter {
 
-	// START REQUIRED ARGUMENTS
-	private final ExtractOverlays extractOverlays;
-	private final ISliderState sliderState;
-	private final EvaluatorWithContextGetter evaluatorGetter;
-	private final RandomNumberGenerator randomNumberGenerator;
-	private final ErrorReporter errorReporter;
-	// END REQUIRED ARGUMENTS
-	
-	private EventListenerList eventListeners = new EventListenerList();
-	
-	@Override
-	public void mouseReleased(MouseEvent arg0) {
-		super.mouseReleased(arg0);
-		
-		if (arg0.isControlDown() || arg0.isShiftDown() || arg0.isMetaDown()) {
-			return;
-		}
-		
-		int modifiers = arg0.getModifiers();
-	    if ((modifiers & InputEvent.BUTTON1_MASK) != InputEvent.BUTTON1_MASK) {
-	    	// If it's not the left mouse button, we ignore it
-	    	return;
-	    }
-		
-	    Optional<EvaluatorWithContext> evaluatorWithContext;
-		try {
-			evaluatorWithContext = evaluatorGetter.getEvaluatorWithContext();
-			if (!evaluatorWithContext.isPresent()) {
-		    	// If we have no evaluatorWithCotnext we ignored it
-		    	return;
-		    }
-		} catch (GetOperationFailedException e) {
-			errorReporter.recordError(CfgProposerMouseClickAdapter.class, e );
-			return;
-		}
-	    
-		try {
-			addCfg( new Point3d( arg0.getX(),arg0.getY(), sliderState.getSliceNum()), evaluatorWithContext.get() );
-		} catch (ProposalAbnormalFailureException e) {
+    // START REQUIRED ARGUMENTS
+    private final ExtractOverlays extractOverlays;
+    private final ISliderState sliderState;
+    private final EvaluatorWithContextGetter evaluatorGetter;
+    private final RandomNumberGenerator randomNumberGenerator;
+    private final ErrorReporter errorReporter;
+    // END REQUIRED ARGUMENTS
 
-			errorReporter.recordError(
-				CfgProposerMouseClickAdapter.class,
-				String.format(
-					"Failed to propose cfg due to an abnormal error%n%s%n",
-					e.friendlyMessageHierarchy()
-				)
-			);
-		}
-	}
-	
-	private void addCfg( Point3d position, EvaluatorWithContext evaluatorWithContext ) throws ProposalAbnormalFailureException {
-		
-		// We exit early if position is outside our scene size
-		if (!extractOverlays.getDimensions().contains(position)) {
-			return;
-		}
-		
-		// We convert the overlays into a Cfg. There's almost definitely a better way of doing this
-		Cfg cfg = OverlayCollectionMarkFactory.cfgFromOverlays(
-			extractOverlays.getOverlays().getOverlays()
-		);
-		
-		ProposedCfg er = generateEvaluationResult( cfg, position, evaluatorWithContext );
+    private EventListenerList eventListeners = new EventListenerList();
 
-		for( CfgProposedListener al : eventListeners.getListeners(CfgProposedListener.class)) {
-			al.proposed(er);
-		}
-	}
-	
-	
-	private ProposedCfg generateEvaluationResult( Cfg cfgExst, Point3d position, EvaluatorWithContext evaluatorWithContext ) throws ProposalAbnormalFailureException {
-		
-		
-		ProposalOperationCreator evaluator = evaluatorWithContext.getEvaluator();
-		
-		if (evaluator!=null) {
-		
-			ProposerFailureDescription pfd = ProposerFailureDescription.createRoot();
-			
-			try {
-				ProposerContext context = new ProposerContext(
-					randomNumberGenerator,
-					evaluatorWithContext.getNrgStack(),
-					evaluatorWithContext.getRegionMap(),
-					ErrorNodeNull.instance()
-				);
-				
-				final ProposalOperation proposalOperation = evaluator.create(
-					cfgExst,
-					position,
-					context,
-					evaluatorWithContext.getCfgGen()
-				);
-				ProposedCfg er = proposalOperation.propose( pfd.getRoot() );
-				er.setPfd(pfd);
-				return er;
-			} catch (OperationFailedException e) {
-				ProposedCfg er = new ProposedCfg();
-				er.setSuccess(false);
-				pfd.getRoot().add(e);
-				er.setPfd(pfd);
-				return er;
-			}
-			
-		} else {
-			return new ProposedCfg();
-		}
-	}
+    @Override
+    public void mouseReleased(MouseEvent arg0) {
+        super.mouseReleased(arg0);
 
-	public void addCfgProposedListener(CfgProposedListener a) {
-		eventListeners.add(CfgProposedListener.class,a);
-	}
+        if (arg0.isControlDown() || arg0.isShiftDown() || arg0.isMetaDown()) {
+            return;
+        }
+
+        int modifiers = arg0.getModifiers();
+        if ((modifiers & InputEvent.BUTTON1_MASK) != InputEvent.BUTTON1_MASK) {
+            // If it's not the left mouse button, we ignore it
+            return;
+        }
+
+        Optional<EvaluatorWithContext> evaluatorWithContext;
+        try {
+            evaluatorWithContext = evaluatorGetter.getEvaluatorWithContext();
+            if (!evaluatorWithContext.isPresent()) {
+                // If we have no evaluatorWithCotnext we ignored it
+                return;
+            }
+        } catch (GetOperationFailedException e) {
+            errorReporter.recordError(CfgProposerMouseClickAdapter.class, e);
+            return;
+        }
+
+        try {
+            addCfg(
+                    new Point3d(arg0.getX(), arg0.getY(), sliderState.getSliceNum()),
+                    evaluatorWithContext.get());
+        } catch (ProposalAbnormalFailureException e) {
+
+            errorReporter.recordError(
+                    CfgProposerMouseClickAdapter.class,
+                    String.format(
+                            "Failed to propose cfg due to an abnormal error%n%s%n",
+                            e.friendlyMessageHierarchy()));
+        }
+    }
+
+    private void addCfg(Point3d position, EvaluatorWithContext evaluatorWithContext)
+            throws ProposalAbnormalFailureException {
+
+        // We exit early if position is outside our scene size
+        if (!extractOverlays.getDimensions().contains(position)) {
+            return;
+        }
+
+        // We convert the overlays into a Cfg. There's almost definitely a better way of doing this
+        Cfg cfg =
+                OverlayCollectionMarkFactory.cfgFromOverlays(
+                        extractOverlays.getOverlays().getOverlays());
+
+        ProposedCfg er = generateEvaluationResult(cfg, position, evaluatorWithContext);
+
+        for (CfgProposedListener al : eventListeners.getListeners(CfgProposedListener.class)) {
+            al.proposed(er);
+        }
+    }
+
+    private ProposedCfg generateEvaluationResult(
+            Cfg cfgExst, Point3d position, EvaluatorWithContext evaluatorWithContext)
+            throws ProposalAbnormalFailureException {
+
+        ProposalOperationCreator evaluator = evaluatorWithContext.getEvaluator();
+
+        if (evaluator != null) {
+
+            ProposerFailureDescription pfd = ProposerFailureDescription.createRoot();
+
+            try {
+                ProposerContext context =
+                        new ProposerContext(
+                                randomNumberGenerator,
+                                evaluatorWithContext.getNrgStack(),
+                                evaluatorWithContext.getRegionMap(),
+                                ErrorNodeNull.instance());
+
+                final ProposalOperation proposalOperation =
+                        evaluator.create(
+                                cfgExst, position, context, evaluatorWithContext.getCfgGen());
+                ProposedCfg er = proposalOperation.propose(pfd.getRoot());
+                er.setPfd(pfd);
+                return er;
+            } catch (OperationFailedException e) {
+                ProposedCfg er = new ProposedCfg();
+                er.setSuccess(false);
+                pfd.getRoot().add(e);
+                er.setPfd(pfd);
+                return er;
+            }
+
+        } else {
+            return new ProposedCfg();
+        }
+    }
+
+    public void addCfgProposedListener(CfgProposedListener a) {
+        eventListeners.add(CfgProposedListener.class, a);
+    }
 }
