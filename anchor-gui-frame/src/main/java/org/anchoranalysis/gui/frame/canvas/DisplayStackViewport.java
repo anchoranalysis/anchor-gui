@@ -86,10 +86,10 @@ class DisplayStackViewport {
 	}
 	
 	public BoundingBox createBoxForShiftedView( Point2i shift, Extent canvasExtent ) {
-		ReadableTuple3i crnrMin = this.bboxViewport.cornerMin();
+		ReadableTuple3i cornerMin = this.bboxViewport.cornerMin();
 		
-		int xNew = crnrMin.getX() + shift.getX();
-		int yNew = crnrMin.getY() + shift.getY();
+		int xNew = cornerMin.getX() + shift.getX();
+		int yNew = cornerMin.getY() + shift.getY();
 		
 		Point2i point = new Point2i(xNew,yNew);
 		point = DisplayStackViewportUtilities.clipToImage(point, bboxViewport.extent(), getDimensionsEntire() );

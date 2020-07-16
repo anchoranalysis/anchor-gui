@@ -114,9 +114,9 @@ public class BoundColoredOverlayCollection {
 	}
 	
 	private static BoundingBox createZoomedContainer( BoundingBox bbox, double zoomFactor, Extent stackExtent ) {
-		Point3i crnrMin = new Point3i( bbox.cornerMin() );
-		crnrMin.scaleXY(zoomFactor);
-		return new BoundingBox(crnrMin, stackExtent);
+		Point3i cornerMin = new Point3i( bbox.cornerMin() );
+		cornerMin.scaleXY(zoomFactor);
+		return new BoundingBox(cornerMin, stackExtent);
 	}
 	
 	// Note the overlay do not actually have to be contained in the OverlayCollection for this to work

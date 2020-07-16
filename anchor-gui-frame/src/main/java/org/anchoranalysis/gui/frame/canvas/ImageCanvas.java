@@ -354,8 +354,8 @@ public class ImageCanvas {
 		
 		
 		Point2i scrollVal = extentScrollbars.value();
-		Point3i crnrMin = new Point3i( scrollVal.getX(), scrollVal.getY(), slice );
-		BoundingBox bboxView = new BoundingBox(crnrMin, extentImageSc);
+		Point3i cornerMin = new Point3i( scrollVal.getX(), scrollVal.getY(), slice );
+		BoundingBox bboxView = new BoundingBox(cornerMin, extentImageSc);
 		
 		// We ignore nulls, as it means nothing has changed
 		BufferedImage biUpdate = displayStackViewport.updateView( bboxView );
