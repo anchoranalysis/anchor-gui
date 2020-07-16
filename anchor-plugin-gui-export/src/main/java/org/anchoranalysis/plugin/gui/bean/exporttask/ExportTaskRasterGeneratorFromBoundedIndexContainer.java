@@ -85,9 +85,8 @@ public abstract class ExportTaskRasterGeneratorFromBoundedIndexContainer<T>
             return delegate.execute(
                     params,
                     progressMonitor,
-                    createGeneratorSequenceWriter(params),
-                    params.getOutputManager(),
-                    getOutputName());
+                    createGeneratorSequenceWriter(params)
+            );
         } catch (CreateException e) {
             throw new ExportTaskFailedException(e);
         }

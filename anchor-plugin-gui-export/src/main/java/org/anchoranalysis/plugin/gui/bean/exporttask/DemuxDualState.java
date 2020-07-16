@@ -54,8 +54,7 @@ public class DemuxDualState<T> extends CreateRasterGenerator<DualStateWithoutInd
 
         IterableObjectGenerator<MappedFrom<T>, Stack> generator = item.createGenerator(params);
 
-        return new IterableObjectGeneratorBridge<
-                Stack, MappedFrom<DualStateWithoutIndex<T>>, MappedFrom<T>>(
+        return new IterableObjectGeneratorBridge<>(
                 generator,
                 sourceObject ->
                         new MappedFrom<>(

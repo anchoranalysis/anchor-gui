@@ -50,7 +50,7 @@ public abstract class CreateStringRasterGenerator
     public IterableObjectGenerator<MappedFrom<CfgNRGInstantState>, Stack> createGenerator(
             ExportTaskParams params) throws CreateException {
 
-        return new IterableObjectGeneratorBridge<Stack, MappedFrom<CfgNRGInstantState>, String>(
+        return new IterableObjectGeneratorBridge<>(
                 stringGenerator.createGenerator(),
                 sourceObject -> extractStringFrom(sourceObject.getObj().getCfgNRG()));
     }
