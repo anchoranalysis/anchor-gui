@@ -1,10 +1,8 @@
-package org.anchoranalysis.gui.annotation.opener;
-
 /*-
  * #%L
  * anchor-gui-annotation
  * %%
- * Copyright (C) 2010 - 2019 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann la Roche
+ * Copyright (C) 2010 - 2020 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann-La Roche
  * %%
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -25,6 +23,8 @@ package org.anchoranalysis.gui.annotation.opener;
  * THE SOFTWARE.
  * #L%
  */
+package org.anchoranalysis.gui.annotation.opener;
+
 
 import java.nio.file.Path;
 import java.util.Optional;
@@ -115,7 +115,6 @@ public class OpenAnnotationMPP implements IOpenAnnotation {
 		}
 	}
 	
-	/** A message explaining why the annotation wasn't accepted */
 	private static String genErrorMsg(RejectionReason reason) {
 		StringBuilder sb = new StringBuilder("Annotation was SKIPPED due to ");
 		switch (reason) {

@@ -1,10 +1,8 @@
-package org.anchoranalysis.gui.interactivebrowser.openfile.importer;
-
 /*-
  * #%L
  * anchor-gui-import
  * %%
- * Copyright (C) 2010 - 2019 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann la Roche
+ * Copyright (C) 2010 - 2020 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann-La Roche
  * %%
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -25,6 +23,8 @@ package org.anchoranalysis.gui.interactivebrowser.openfile.importer;
  * THE SOFTWARE.
  * #L%
  */
+package org.anchoranalysis.gui.interactivebrowser.openfile.importer;
+
 
 import java.io.File;
 import java.util.function.BiConsumer;
@@ -34,16 +34,6 @@ import org.apache.commons.io.FilenameUtils;
 
 class CreatorFactory {
 
-	/**
-	 * Creates the FileCreator from an inputManager that needs some property set (the lambda)
-	 * 
-	 * @param creator a new object that is a subclass of FileCreator
-	 * @param propertyToSet the property-value that will be set on the FileCreator
-	 * @param setPropertyFunc the lambda that sets the property 
-	 * @param f file that the bean was loaded from
-	 * @param customNamePrefix a prefix that is used before the custom-name
-	 * @return the same object creator that is passed (after operations have been applied)
-	 */
 	public static <S extends FileCreator, T> FileCreator create(
 		S creator,
 		T propertyToSet,

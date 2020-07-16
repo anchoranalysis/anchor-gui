@@ -1,13 +1,8 @@
-package org.anchoranalysis.plugin.gui.bean.createrastergenerator;
-
-import org.anchoranalysis.bean.AnchorBean;
-import org.anchoranalysis.core.error.CreateException;
-
-/*
+/*-
  * #%L
- * anchor-gui
+ * anchor-plugin-gui-export
  * %%
- * Copyright (C) 2016 ETH Zurich, University of Zurich, Owen Feehan
+ * Copyright (C) 2010 - 2020 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann-La Roche
  * %%
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -28,6 +23,11 @@ import org.anchoranalysis.core.error.CreateException;
  * THE SOFTWARE.
  * #L%
  */
+package org.anchoranalysis.plugin.gui.bean.createrastergenerator;
+
+import org.anchoranalysis.bean.AnchorBean;
+import org.anchoranalysis.core.error.CreateException;
+
 
 
 import org.anchoranalysis.gui.bean.exporttask.ExportTaskParams;
@@ -36,12 +36,6 @@ import org.anchoranalysis.io.generator.IterableObjectGenerator;
 import org.anchoranalysis.plugin.gui.bean.exporttask.MappedFrom;
 
 
-/**
- * 
- * @author feehano
- *
- * @param <T> source-type
- */
 public abstract class CreateRasterGenerator<T> extends AnchorBean<CreateRasterGenerator<T>> {
 
 	public abstract IterableObjectGenerator<MappedFrom<T>,Stack> createGenerator( ExportTaskParams params ) throws CreateException;

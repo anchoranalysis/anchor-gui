@@ -1,14 +1,8 @@
-package org.anchoranalysis.gui.feature.evaluator;
-
-import org.anchoranalysis.anchor.mpp.pair.Pair;
-import org.anchoranalysis.anchor.overlay.Overlay;
-import org.anchoranalysis.anchor.overlay.collection.OverlayCollection;
-
 /*-
  * #%L
  * anchor-gui-feature-evaluator
  * %%
- * Copyright (C) 2010 - 2019 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann la Roche
+ * Copyright (C) 2010 - 2020 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann-La Roche
  * %%
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,6 +23,12 @@ import org.anchoranalysis.anchor.overlay.collection.OverlayCollection;
  * THE SOFTWARE.
  * #L%
  */
+package org.anchoranalysis.gui.feature.evaluator;
+
+import org.anchoranalysis.anchor.mpp.pair.Pair;
+import org.anchoranalysis.anchor.overlay.Overlay;
+import org.anchoranalysis.anchor.overlay.collection.OverlayCollection;
+
 
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.feature.nrg.NRGStackWithParams;

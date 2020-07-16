@@ -1,10 +1,8 @@
-package org.anchoranalysis.gui.plot;
-
-/*
+/*-
  * #%L
- * anchor-gui
+ * anchor-gui-plot
  * %%
- * Copyright (C) 2016 ETH Zurich, University of Zurich, Owen Feehan
+ * Copyright (C) 2010 - 2020 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann-La Roche
  * %%
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -25,6 +23,8 @@ package org.anchoranalysis.gui.plot;
  * THE SOFTWARE.
  * #L%
  */
+package org.anchoranalysis.gui.plot;
+
 
 
 import java.util.Iterator;
@@ -34,16 +34,6 @@ import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.index.GetOperationFailedExceptionRuntime;
 import org.anchoranalysis.core.index.container.BoundedIndexContainer;
 
-/**
- * Iterates through the range of indexes in a container.
- * <p>
- * The number of iteration points is determined by {@link numPoints}, which divides roughly
- * the range of the {code container} into {code numPoints} equal parts.
- * 
- * @author Owen Feehan
- *
- * @param <T> type that is contained
- */
 public class BoundedIndexContainerIterator<T> implements Iterator<T> {
 	
 	private final BoundedIndexContainer<T> container;

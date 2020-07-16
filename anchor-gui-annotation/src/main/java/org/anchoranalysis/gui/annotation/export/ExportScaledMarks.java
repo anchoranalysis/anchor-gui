@@ -1,10 +1,8 @@
-package org.anchoranalysis.gui.annotation.export;
-
 /*-
  * #%L
  * anchor-gui-annotation
  * %%
- * Copyright (C) 2010 - 2019 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann la Roche
+ * Copyright (C) 2010 - 2020 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann-La Roche
  * %%
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -25,6 +23,8 @@ package org.anchoranalysis.gui.annotation.export;
  * THE SOFTWARE.
  * #L%
  */
+package org.anchoranalysis.gui.annotation.export;
+
 
 import java.io.File;
 import java.nio.file.Path;
@@ -94,9 +94,6 @@ public class ExportScaledMarks extends ExportAnnotation {
 		}
 	}
 	
-	/** Adds a suffix to the basename of a file (i.e. before the extension
-	 *  e.g. /path/to/abc.txt  become /pth/to/abcsuffix.txt
-	 * */
 	private static Path suffixBasename( Path path, String suffix ) {
 		
 		String filePath = path.toString();

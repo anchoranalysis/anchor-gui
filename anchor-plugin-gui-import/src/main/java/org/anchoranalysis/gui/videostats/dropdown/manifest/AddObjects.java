@@ -1,17 +1,8 @@
-package org.anchoranalysis.gui.videostats.dropdown.manifest;
-
-import java.io.IOException;
-
-import org.anchoranalysis.anchor.mpp.cfg.Cfg;
-import org.anchoranalysis.anchor.mpp.feature.instantstate.CfgNRGInstantState;
-import org.anchoranalysis.anchor.mpp.feature.instantstate.CfgNRGNonHandleInstantState;
-import org.anchoranalysis.anchor.mpp.feature.nrg.cfg.CfgNRG;
-
 /*-
  * #%L
  * anchor-plugin-gui-import
  * %%
- * Copyright (C) 2010 - 2019 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann la Roche
+ * Copyright (C) 2010 - 2020 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann-La Roche
  * %%
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -32,6 +23,15 @@ import org.anchoranalysis.anchor.mpp.feature.nrg.cfg.CfgNRG;
  * THE SOFTWARE.
  * #L%
  */
+package org.anchoranalysis.gui.videostats.dropdown.manifest;
+
+import java.io.IOException;
+
+import org.anchoranalysis.anchor.mpp.cfg.Cfg;
+import org.anchoranalysis.anchor.mpp.feature.instantstate.CfgNRGInstantState;
+import org.anchoranalysis.anchor.mpp.feature.instantstate.CfgNRGNonHandleInstantState;
+import org.anchoranalysis.anchor.mpp.feature.nrg.cfg.CfgNRG;
+
 
 import org.anchoranalysis.core.cache.CachedOperation;
 import org.anchoranalysis.core.cache.WrapOperationAsCached;

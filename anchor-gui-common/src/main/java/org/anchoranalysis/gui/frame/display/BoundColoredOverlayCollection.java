@@ -1,10 +1,8 @@
-package org.anchoranalysis.gui.frame.display;
-
-/*
+/*-
  * #%L
- * anchor-mpp-io
+ * anchor-gui-common
  * %%
- * Copyright (C) 2016 ETH Zurich, University of Zurich, Owen Feehan
+ * Copyright (C) 2010 - 2020 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann-La Roche
  * %%
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -25,6 +23,7 @@ package org.anchoranalysis.gui.frame.display;
  * THE SOFTWARE.
  * #L%
  */
+package org.anchoranalysis.gui.frame.display;
 
 
 import java.util.List;
@@ -46,13 +45,6 @@ import org.anchoranalysis.image.extent.Extent;
 import org.anchoranalysis.image.extent.ImageDimensions;
 import org.anchoranalysis.image.stack.rgb.RGBStack;
 
-/**
- *  Contains set of colored-overlays that is bound with various additional objects provided
- *  by the environment, needed to write the overlays on actual RGB-stacks (with invariant dim)
- *  
- * @author Owen Feehan
- *
- */
 public class BoundColoredOverlayCollection {
 	
 	private DrawOverlay maskWriter;

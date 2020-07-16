@@ -1,10 +1,8 @@
-package org.anchoranalysis.gui.annotation.builder;
-
 /*-
  * #%L
  * anchor-gui-annotation
  * %%
- * Copyright (C) 2010 - 2019 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann la Roche
+ * Copyright (C) 2010 - 2020 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann-La Roche
  * %%
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -25,6 +23,8 @@ package org.anchoranalysis.gui.annotation.builder;
  * THE SOFTWARE.
  * #L%
  */
+package org.anchoranalysis.gui.annotation.builder;
+
 
 import java.io.File;
 import java.nio.file.Path;
@@ -43,11 +43,6 @@ import org.anchoranalysis.gui.videostats.internalframe.annotator.AnnotationInitP
 import org.anchoranalysis.image.stack.Stack;
 import org.anchoranalysis.io.error.AnchorIOException;
 
-/** 
- * Convenience class for using a delegate to populate a lot of fields automatically
- *  for AnnotationGuiBuilder
- *
- */
 public abstract class AnnotationGuiBuilderWithDelegate<T extends AnnotationInitParams,S  extends AnnotatorStrategy> extends AnnotationGuiBuilder<T> {
 
 	private AnnotationWithStrategy<S> delegate;

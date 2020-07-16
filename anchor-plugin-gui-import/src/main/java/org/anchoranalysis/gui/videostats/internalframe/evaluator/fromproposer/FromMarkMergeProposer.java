@@ -1,14 +1,8 @@
-package org.anchoranalysis.gui.videostats.internalframe.evaluator.fromproposer;
-
-import org.anchoranalysis.anchor.mpp.bean.init.MPPInitParams;
-import org.anchoranalysis.anchor.mpp.bean.proposer.MarkMergeProposer;
-import org.anchoranalysis.core.name.provider.NamedProvider;
-
-/*
+/*-
  * #%L
- * anchor-gui
+ * anchor-plugin-gui-import
  * %%
- * Copyright (C) 2016 ETH Zurich, University of Zurich, Owen Feehan
+ * Copyright (C) 2010 - 2020 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann-La Roche
  * %%
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,6 +23,12 @@ import org.anchoranalysis.core.name.provider.NamedProvider;
  * THE SOFTWARE.
  * #L%
  */
+package org.anchoranalysis.gui.videostats.internalframe.evaluator.fromproposer;
+
+import org.anchoranalysis.anchor.mpp.bean.init.MPPInitParams;
+import org.anchoranalysis.anchor.mpp.bean.proposer.MarkMergeProposer;
+import org.anchoranalysis.core.name.provider.NamedProvider;
+
 
 
 import org.anchoranalysis.gui.videostats.internalframe.evaluator.MarkMergeProposerEvaluator;

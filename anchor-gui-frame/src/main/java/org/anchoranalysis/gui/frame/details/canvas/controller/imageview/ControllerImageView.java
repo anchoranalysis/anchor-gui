@@ -1,10 +1,8 @@
-package org.anchoranalysis.gui.frame.details.canvas.controller.imageview;
-
 /*-
  * #%L
  * anchor-gui-frame
  * %%
- * Copyright (C) 2010 - 2019 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann la Roche
+ * Copyright (C) 2010 - 2020 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann-La Roche
  * %%
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -25,6 +23,8 @@ package org.anchoranalysis.gui.frame.details.canvas.controller.imageview;
  * THE SOFTWARE.
  * #L%
  */
+package org.anchoranalysis.gui.frame.details.canvas.controller.imageview;
+
 
 import static org.anchoranalysis.gui.frame.details.canvas.controller.imageview.Utilities.*;
 
@@ -36,7 +36,6 @@ import org.anchoranalysis.gui.image.frame.ControllerSize;
 import org.anchoranalysis.image.extent.Extent;
 import org.anchoranalysis.image.extent.ImageDimensions;
 
-/** Controls a widget that contains a zoomed-image */
 public class ControllerImageView {
 
 	private ControllerSize size;

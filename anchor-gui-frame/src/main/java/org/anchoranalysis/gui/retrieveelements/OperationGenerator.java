@@ -1,10 +1,8 @@
-package org.anchoranalysis.gui.retrieveelements;
-
 /*-
  * #%L
  * anchor-gui-frame
  * %%
- * Copyright (C) 2010 - 2020 Owen Feehan
+ * Copyright (C) 2010 - 2020 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann-La Roche
  * %%
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -25,6 +23,8 @@ package org.anchoranalysis.gui.retrieveelements;
  * THE SOFTWARE.
  * #L%
  */
+package org.anchoranalysis.gui.retrieveelements;
+
 
 import java.nio.file.Path;
 import java.util.Optional;
@@ -39,13 +39,6 @@ import org.anchoranalysis.io.output.bean.OutputWriteSettings;
 import org.anchoranalysis.io.output.error.OutputWriteFailedException;
 
 
-/**
- * 
- * @author Owen Feehan
- *
- * @param <S> generated-type
- * @param <T> iteration-type
- */
 class OperationGenerator<S,T> extends ObjectGenerator<S> implements IterableObjectGenerator<Operation<T,AnchorNeverOccursException>, S> {
 
 	private IterableObjectGenerator<T, S> delegate;

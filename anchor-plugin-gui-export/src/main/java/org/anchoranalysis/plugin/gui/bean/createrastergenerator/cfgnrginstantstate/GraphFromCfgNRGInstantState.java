@@ -1,15 +1,8 @@
-package org.anchoranalysis.plugin.gui.bean.createrastergenerator.cfgnrginstantstate;
-
-import org.anchoranalysis.anchor.plot.GraphInstance;
-import org.anchoranalysis.anchor.mpp.feature.instantstate.CfgNRGInstantState;
-import org.anchoranalysis.anchor.mpp.plot.NRGGraphItem;
-import org.anchoranalysis.core.error.CreateException;
-
-/*
+/*-
  * #%L
- * anchor-gui
+ * anchor-plugin-gui-export
  * %%
- * Copyright (C) 2016 ETH Zurich, University of Zurich, Owen Feehan
+ * Copyright (C) 2010 - 2020 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann-La Roche
  * %%
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -30,6 +23,13 @@ import org.anchoranalysis.core.error.CreateException;
  * THE SOFTWARE.
  * #L%
  */
+package org.anchoranalysis.plugin.gui.bean.createrastergenerator.cfgnrginstantstate;
+
+import org.anchoranalysis.anchor.plot.GraphInstance;
+import org.anchoranalysis.anchor.mpp.feature.instantstate.CfgNRGInstantState;
+import org.anchoranalysis.anchor.mpp.plot.NRGGraphItem;
+import org.anchoranalysis.core.error.CreateException;
+
 
 
 import org.anchoranalysis.gui.bean.exporttask.ExportTaskParams;

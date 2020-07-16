@@ -1,10 +1,8 @@
-package org.anchoranalysis.gui.videostats.module;
-
-/*
+/*-
  * #%L
- * anchor-gui
+ * anchor-gui-common
  * %%
- * Copyright (C) 2016 ETH Zurich, University of Zurich, Owen Feehan
+ * Copyright (C) 2010 - 2020 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann-La Roche
  * %%
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -25,15 +23,14 @@ package org.anchoranalysis.gui.videostats.module;
  * THE SOFTWARE.
  * #L%
  */
+package org.anchoranalysis.gui.videostats.module;
+
 
 
 import java.util.EventObject;
 
 public class VideoStatsModuleClosedEvent extends EventObject {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	/**
 	 * 

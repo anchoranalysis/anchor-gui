@@ -1,10 +1,8 @@
-package org.anchoranalysis.gui.annotation.builder;
-
 /*-
  * #%L
  * anchor-gui-annotation
  * %%
- * Copyright (C) 2010 - 2019 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann la Roche
+ * Copyright (C) 2010 - 2020 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann-La Roche
  * %%
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -25,6 +23,8 @@ package org.anchoranalysis.gui.annotation.builder;
  * THE SOFTWARE.
  * #L%
  */
+package org.anchoranalysis.gui.annotation.builder;
+
 
 import org.anchoranalysis.annotation.io.bean.background.AnnotationBackgroundDefinition;
 import org.anchoranalysis.bean.shared.StringMap;
@@ -40,13 +40,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access=AccessLevel.PRIVATE)
 class BackgroundDefinitionCreator {
 
-	/**
-	 * Creates a changeable-background from an existing background and an AnnotationBackgroundDefinition
-	 * 
-	 * @param existingBackground current background to the annotation
-	 * @param abd defines how to construct set of multiple backgrounds to choose from
-	 * @return
-	 */
 	public static ChangeableBackgroundDefinition create( AnnotationBackground existingBackground, AnnotationBackgroundDefinition abd ) {
 		ChangeableBackgroundDefinition def = backgroundDefinition(existingBackground, abd.getBackgroundStackMap());
 		

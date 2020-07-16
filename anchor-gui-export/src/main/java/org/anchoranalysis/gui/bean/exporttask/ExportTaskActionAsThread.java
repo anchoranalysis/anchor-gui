@@ -1,10 +1,8 @@
-package org.anchoranalysis.gui.bean.exporttask;
-
-/*
+/*-
  * #%L
- * anchor-gui
+ * anchor-gui-export
  * %%
- * Copyright (C) 2016 ETH Zurich, University of Zurich, Owen Feehan
+ * Copyright (C) 2010 - 2020 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann-La Roche
  * %%
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -25,6 +23,8 @@ package org.anchoranalysis.gui.bean.exporttask;
  * THE SOFTWARE.
  * #L%
  */
+package org.anchoranalysis.gui.bean.exporttask;
+
 
 
 import java.awt.event.ActionEvent;
@@ -38,9 +38,6 @@ import org.anchoranalysis.core.error.reporter.ErrorReporter;
 
 public class ExportTaskActionAsThread extends AbstractAction {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -3944294960260017562L;
 	
 	private transient ExportTaskCommand command;	

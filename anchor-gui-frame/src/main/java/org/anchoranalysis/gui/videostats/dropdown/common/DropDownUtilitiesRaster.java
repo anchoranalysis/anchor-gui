@@ -1,17 +1,8 @@
-package org.anchoranalysis.gui.videostats.dropdown.common;
-
-import org.anchoranalysis.gui.videostats.dropdown.BoundVideoStatsModuleDropDown;
-import org.anchoranalysis.gui.videostats.dropdown.VideoStatsModuleCreatorAndAdder;
-import org.anchoranalysis.gui.videostats.dropdown.VideoStatsModuleGlobalParams;
-import org.anchoranalysis.gui.videostats.modulecreator.RasterModuleCreator;
-import org.anchoranalysis.gui.videostats.operation.VideoStatsOperationFromCreatorAndAdder;
-import org.anchoranalysis.gui.videostats.operation.VideoStatsOperationMenu;
-
-/*
+/*-
  * #%L
- * anchor-gui
+ * anchor-gui-frame
  * %%
- * Copyright (C) 2016 ETH Zurich, University of Zurich, Owen Feehan
+ * Copyright (C) 2010 - 2020 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann-La Roche
  * %%
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -32,6 +23,15 @@ import org.anchoranalysis.gui.videostats.operation.VideoStatsOperationMenu;
  * THE SOFTWARE.
  * #L%
  */
+package org.anchoranalysis.gui.videostats.dropdown.common;
+
+import org.anchoranalysis.gui.videostats.dropdown.BoundVideoStatsModuleDropDown;
+import org.anchoranalysis.gui.videostats.dropdown.VideoStatsModuleCreatorAndAdder;
+import org.anchoranalysis.gui.videostats.dropdown.VideoStatsModuleGlobalParams;
+import org.anchoranalysis.gui.videostats.modulecreator.RasterModuleCreator;
+import org.anchoranalysis.gui.videostats.operation.VideoStatsOperationFromCreatorAndAdder;
+import org.anchoranalysis.gui.videostats.operation.VideoStatsOperationMenu;
+
 
 
 public class DropDownUtilitiesRaster {

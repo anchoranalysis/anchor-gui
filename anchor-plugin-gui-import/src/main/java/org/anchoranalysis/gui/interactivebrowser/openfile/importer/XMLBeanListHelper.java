@@ -1,10 +1,8 @@
-package org.anchoranalysis.gui.interactivebrowser.openfile.importer;
-
 /*-
  * #%L
  * anchor-plugin-gui-import
  * %%
- * Copyright (C) 2010 - 2019 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann la Roche
+ * Copyright (C) 2010 - 2020 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann-La Roche
  * %%
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -25,6 +23,8 @@ package org.anchoranalysis.gui.interactivebrowser.openfile.importer;
  * THE SOFTWARE.
  * #L%
  */
+package org.anchoranalysis.gui.interactivebrowser.openfile.importer;
+
 
 import static org.anchoranalysis.gui.interactivebrowser.openfile.importer.CreatorFactory.*;
 
@@ -76,7 +76,6 @@ class XMLBeanListHelper {
 		}
 	}
 	
-	/** Can return null */
 	@SuppressWarnings("unchecked")
 	private static FileCreator creatorForNamedBean( NamedBean<AnchorBean<?>> namedBean, Object bean, File f ) throws CreateException {
 		

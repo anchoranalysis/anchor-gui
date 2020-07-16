@@ -1,10 +1,8 @@
-package org.anchoranalysis.gui.cfgnrgtable;
-
 /*-
  * #%L
  * anchor-plugin-gui-import
  * %%
- * Copyright (C) 2010 - 2020 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann la Roche
+ * Copyright (C) 2010 - 2020 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann-La Roche
  * %%
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -25,14 +23,13 @@ package org.anchoranalysis.gui.cfgnrgtable;
  * THE SOFTWARE.
  * #L%
  */
+package org.anchoranalysis.gui.cfgnrgtable;
+
 
 import org.anchoranalysis.anchor.mpp.feature.instantstate.CfgNRGInstantState;
 
 public class SummaryTableModel extends TitleValueTableModel implements IUpdateTableData {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 7092606148170077373L;
 
 	public SummaryTableModel() {

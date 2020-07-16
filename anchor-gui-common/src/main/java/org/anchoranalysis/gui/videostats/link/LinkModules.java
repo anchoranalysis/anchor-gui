@@ -1,12 +1,8 @@
-package org.anchoranalysis.gui.videostats.link;
-
-import java.util.Optional;
-
 /*-
  * #%L
  * anchor-gui-common
  * %%
- * Copyright (C) 2010 - 2019 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann la Roche
+ * Copyright (C) 2010 - 2020 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann-La Roche
  * %%
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -27,6 +23,10 @@ import java.util.Optional;
  * THE SOFTWARE.
  * #L%
  */
+package org.anchoranalysis.gui.videostats.link;
+
+import java.util.Optional;
+
 
 import java.util.function.Function;
 
@@ -69,7 +69,6 @@ public class LinkModules {
 			this.id = id;
 		}
 		
-		/** Does a receivable-sendable pair map already exist */
 		public boolean exists() {
 			return module.getReceivableSendablePairMap().get(id)!=null;
 		}

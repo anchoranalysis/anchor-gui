@@ -1,10 +1,8 @@
-package org.anchoranalysis.plugin.gui.bean.createrastergenerator.cfgnrginstantstate.dynamically;
-
 /*-
  * #%L
  * anchor-plugin-gui-export
  * %%
- * Copyright (C) 2010 - 2020 Owen Feehan
+ * Copyright (C) 2010 - 2020 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann-La Roche
  * %%
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -25,6 +23,8 @@ package org.anchoranalysis.plugin.gui.bean.createrastergenerator.cfgnrginstantst
  * THE SOFTWARE.
  * #L%
  */
+package org.anchoranalysis.plugin.gui.bean.createrastergenerator.cfgnrginstantstate.dynamically;
+
 
 import org.anchoranalysis.anchor.mpp.feature.instantstate.CfgNRGInstantState;
 import org.anchoranalysis.core.error.OperationFailedException;
@@ -34,13 +34,6 @@ import org.anchoranalysis.core.index.container.BoundedIndexContainer;
 import org.anchoranalysis.gui.io.loader.manifest.finder.csvstatistic.CSVStatistic;
 import org.anchoranalysis.plugin.gui.bean.exporttask.MappedFrom;
 
-/**
- * 1. Finds the nearest (previous or equal) CSVStatistic
- * 2. Copies it, and updates the iteration to match the current iteration
- * 
- * @author feehano
- *
- */
 class FindNearestStatisticBridge implements FunctionWithException<MappedFrom<CfgNRGInstantState>, MappedFrom<CSVStatistic>,OperationFailedException> {
 	
 	private BoundedIndexContainer<CSVStatistic> cntr;

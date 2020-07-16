@@ -1,10 +1,8 @@
-package org.anchoranalysis.gui.plot.creator;
-
-/*
+/*-
  * #%L
- * anchor-gui
+ * anchor-gui-plot
  * %%
- * Copyright (C) 2016 ETH Zurich, University of Zurich, Owen Feehan
+ * Copyright (C) 2010 - 2020 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann-La Roche
  * %%
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -25,6 +23,8 @@ package org.anchoranalysis.gui.plot.creator;
  * THE SOFTWARE.
  * #L%
  */
+package org.anchoranalysis.gui.plot.creator;
+
 
 
 import java.util.Iterator;
@@ -45,12 +45,6 @@ import org.anchoranalysis.gui.videostats.dropdown.ModuleAddUtilities;
 import org.anchoranalysis.gui.videostats.module.VideoStatsModuleCreateException;
 import org.anchoranalysis.gui.videostats.modulecreator.VideoStatsModuleCreator;
 
-/**
- * 
- * @author Owen Feehan
- *
- * @param <T> item-type
- */
 public interface GraphFromDualFinderCreator<T> {
 	
 	BoundedIndexContainer<T> createCntr( final FinderCSVStats finderCSVStats ) throws CreateException;

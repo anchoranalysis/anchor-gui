@@ -1,10 +1,8 @@
-package org.anchoranalysis.gui.frame.multioverlay;
-
-/*
+/*-
  * #%L
- * anchor-gui
+ * anchor-gui-frame
  * %%
- * Copyright (C) 2016 ETH Zurich, University of Zurich, Owen Feehan
+ * Copyright (C) 2010 - 2020 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann-La Roche
  * %%
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -25,6 +23,8 @@ package org.anchoranalysis.gui.frame.multioverlay;
  * THE SOFTWARE.
  * #L%
  */
+package org.anchoranalysis.gui.frame.multioverlay;
+
 
 
 import java.util.List;
@@ -41,12 +41,6 @@ import org.anchoranalysis.gui.videostats.internalframe.cfgtorgb.MultiInput;
 import org.anchoranalysis.gui.videostats.module.VideoStatsModuleCreateException;
 import org.anchoranalysis.gui.videostats.modulecreator.VideoStatsModuleCreator;
 
-/**
- * 
- * @author Owen Feehan
- *
- * @param <T> input-type
- */
 public class RasterMultiCreator<T> extends VideoStatsModuleCreator {
 	
 	private final List<MultiInput<T>> list;

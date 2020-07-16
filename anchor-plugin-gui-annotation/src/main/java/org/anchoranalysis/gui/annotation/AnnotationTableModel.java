@@ -1,10 +1,8 @@
-package org.anchoranalysis.gui.annotation;
-
-/*
+/*-
  * #%L
- * anchor-gui
+ * anchor-plugin-gui-annotation
  * %%
- * Copyright (C) 2016 ETH Zurich, University of Zurich, Owen Feehan
+ * Copyright (C) 2010 - 2020 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann-La Roche
  * %%
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -25,6 +23,8 @@ package org.anchoranalysis.gui.annotation;
  * THE SOFTWARE.
  * #L%
  */
+package org.anchoranalysis.gui.annotation;
+
 
 
 import javax.swing.event.TableModelListener;
@@ -46,9 +46,6 @@ public class AnnotationTableModel extends InteractiveFileListTableModel {
 	
 	private AbstractTableModel tableModel = new AbstractTableModel() {
 		
-		/**
-		 * 
-		 */
 		private static final long serialVersionUID = 1L;
 
 		@Override

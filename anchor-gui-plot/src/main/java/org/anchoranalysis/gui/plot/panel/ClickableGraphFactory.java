@@ -1,10 +1,8 @@
-package org.anchoranalysis.gui.plot.panel;
-
 /*-
  * #%L
  * anchor-gui-plot
  * %%
- * Copyright (C) 2010 - 2019 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann la Roche
+ * Copyright (C) 2010 - 2020 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann-La Roche
  * %%
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -25,6 +23,8 @@ package org.anchoranalysis.gui.plot.panel;
  * THE SOFTWARE.
  * #L%
  */
+package org.anchoranalysis.gui.plot.panel;
+
 
 import java.util.Iterator;
 import java.util.Optional;
@@ -38,17 +38,6 @@ import org.jfree.data.general.Dataset;
 public class ClickableGraphFactory {
 
 
-	/**
-	 * Creates an instance of a line graph can be listened to (if domainLimits are non-NULL)
-	 * 
-	 * @param <T> container-type
-	 * @param graphIndex
-	 * @param itr
-	 * @param domainLimits
-	 * @param rangeLimits
-	 * @return
-	 * @throws CreateException
-	 */
 	public static <T> ClickableGraphInstance create(
 		GraphDefinition<T> definition,
 		Iterator<T> items,

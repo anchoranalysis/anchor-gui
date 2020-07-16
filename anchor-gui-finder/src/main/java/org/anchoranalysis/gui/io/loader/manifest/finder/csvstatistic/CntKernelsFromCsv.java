@@ -1,10 +1,8 @@
-package org.anchoranalysis.gui.io.loader.manifest.finder.csvstatistic;
-
 /*-
  * #%L
  * anchor-gui-finder
  * %%
- * Copyright (C) 2010 - 2019 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann la Roche
+ * Copyright (C) 2010 - 2020 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann-La Roche
  * %%
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -25,18 +23,11 @@ package org.anchoranalysis.gui.io.loader.manifest.finder.csvstatistic;
  * THE SOFTWARE.
  * #L%
  */
+package org.anchoranalysis.gui.io.loader.manifest.finder.csvstatistic;
+
 
 class CntKernelsFromCsv {
 
-	/**
-	 * Counts the number of kernels contained in a csvStatsAgg.csv file
-	 * 
-	 * Assumes there is an equal number of Prop and Accpt columns for kernels
-	 * Assumes columns are in ascending contiguous order
-	 * 
-	 * @param headers
-	 * @return the total number of kernels
-	 */
 	public static int apply( String[] headers ) {
 		// Find the last header that matches Prop
 		

@@ -1,10 +1,8 @@
-package org.anchoranalysis.gui.mdi;
-
-/*
+/*-
  * #%L
- * anchor-gui
+ * anchor-gui-mdi
  * %%
- * Copyright (C) 2016 ETH Zurich, University of Zurich, Owen Feehan
+ * Copyright (C) 2010 - 2020 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann-La Roche
  * %%
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -25,6 +23,8 @@ package org.anchoranalysis.gui.mdi;
  * THE SOFTWARE.
  * #L%
  */
+package org.anchoranalysis.gui.mdi;
+
 
 
 import javax.swing.DefaultDesktopManager;
@@ -37,14 +37,6 @@ import javax.swing.JScrollPane;
 import javax.swing.JInternalFrame;
 import javax.swing.JViewport;
 
-/**
-* Private class used to replace the standard DesktopManager for JDesktopPane.
-* Used to provide scrollbar functionality.
-*/
-class MDIDesktopManager extends DefaultDesktopManager {
-  /**
-	 * 
-	 */
   private static final long serialVersionUID = 4323947782956971576L;
 
   private MDIDesktopPane desktop;

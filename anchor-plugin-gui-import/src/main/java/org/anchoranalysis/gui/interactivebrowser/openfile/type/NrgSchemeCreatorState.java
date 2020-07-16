@@ -1,10 +1,8 @@
-package org.anchoranalysis.gui.interactivebrowser.openfile.type;
-
 /*-
  * #%L
  * anchor-plugin-gui-import
  * %%
- * Copyright (C) 2010 - 2020 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann la Roche
+ * Copyright (C) 2010 - 2020 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann-La Roche
  * %%
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -25,14 +23,11 @@ package org.anchoranalysis.gui.interactivebrowser.openfile.type;
  * THE SOFTWARE.
  * #L%
  */
+package org.anchoranalysis.gui.interactivebrowser.openfile.type;
+
 
 import org.anchoranalysis.anchor.mpp.feature.bean.nrgscheme.NRGSchemeCreator;
 
-/** Stores a single instance of a NrgSchemeCreator that is used when creating XML beans (e.g. loading FeatureLists)
- *  SINGLETON
- *  
- *  Originally, it is set to NULL and can be updated afterwards
- * */
 public class NrgSchemeCreatorState {
 
 	private static NrgSchemeCreatorState instance;

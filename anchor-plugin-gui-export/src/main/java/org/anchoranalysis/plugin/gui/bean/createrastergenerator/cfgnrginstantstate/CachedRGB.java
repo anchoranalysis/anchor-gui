@@ -1,10 +1,8 @@
-package org.anchoranalysis.plugin.gui.bean.createrastergenerator.cfgnrginstantstate;
-
-/*
+/*-
  * #%L
- * anchor-mpp-io
+ * anchor-plugin-gui-export
  * %%
- * Copyright (C) 2016 ETH Zurich, University of Zurich, Owen Feehan
+ * Copyright (C) 2010 - 2020 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann-La Roche
  * %%
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -25,6 +23,7 @@ package org.anchoranalysis.plugin.gui.bean.createrastergenerator.cfgnrginstantst
  * THE SOFTWARE.
  * #L%
  */
+package org.anchoranalysis.plugin.gui.bean.createrastergenerator.cfgnrginstantstate;
 
 
 import java.nio.ByteBuffer;
@@ -197,8 +196,6 @@ class CachedRGB {
 		maskWriter.writeOverlays( cfg, rgb, idGetter );
 	}
 	
-	/** Draws objects from cfg, but only if they intersect with the bounding boxes of
-	   objects in intersectCfg */
 	private void drawCfgIfIntersects( ColoredOverlayCollection oc, List<BoundingBox> bboxList ) throws OperationFailedException {
 		
 		// We only draw marks which intersect with the bounding box

@@ -1,10 +1,8 @@
-package org.anchoranalysis.gui.annotation.export;
-
 /*-
  * #%L
  * anchor-gui-annotation
  * %%
- * Copyright (C) 2010 - 2019 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann la Roche
+ * Copyright (C) 2010 - 2020 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann-La Roche
  * %%
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -25,6 +23,8 @@ package org.anchoranalysis.gui.annotation.export;
  * THE SOFTWARE.
  * #L%
  */
+package org.anchoranalysis.gui.annotation.export;
+
 
 import java.nio.file.Path;
 
@@ -33,7 +33,6 @@ import javax.swing.JFrame;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.gui.annotation.AnnotationRefresher;
 
-/** Exports an annotation */
 public abstract class ExportAnnotation {
 
 	/** Do we prompt the user to ask if they want to scale */

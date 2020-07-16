@@ -1,10 +1,8 @@
-package org.anchoranalysis.gui.videostats.link;
-
-/*
+/*-
  * #%L
- * anchor-gui
+ * anchor-gui-common
  * %%
- * Copyright (C) 2016 ETH Zurich, University of Zurich, Owen Feehan
+ * Copyright (C) 2010 - 2020 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann-La Roche
  * %%
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -25,6 +23,8 @@ package org.anchoranalysis.gui.videostats.link;
  * THE SOFTWARE.
  * #L%
  */
+package org.anchoranalysis.gui.videostats.link;
+
 
 
 import java.util.HashMap;
@@ -37,13 +37,6 @@ import org.anchoranalysis.core.property.IPropertyValueSendable;
 import org.anchoranalysis.gui.image.OverlayCollectionWithImgStack;
 import org.anchoranalysis.image.stack.DisplayStack;
 
-/**
- * When a new module is created, this sets a sensible default value for all of these linked
- *  properties based upon other open entities, or the last value that was previously used
- *  
- * This provides the only write access to DefaultLinkState so that the code can carefully
- *  control all operations that change the default state 
- */
 public class DefaultLinkStateManager {
 
 	private DefaultLinkState delegate;

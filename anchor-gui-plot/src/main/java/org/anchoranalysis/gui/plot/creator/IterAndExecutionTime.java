@@ -1,12 +1,8 @@
-package org.anchoranalysis.gui.plot.creator;
-
-import org.anchoranalysis.anchor.mpp.plot.execution.KernelExecutionTimeAllEach;
-
 /*-
  * #%L
  * anchor-gui-plot
  * %%
- * Copyright (C) 2010 - 2019 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann la Roche
+ * Copyright (C) 2010 - 2020 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann-La Roche
  * %%
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -27,6 +23,10 @@ import org.anchoranalysis.anchor.mpp.plot.execution.KernelExecutionTimeAllEach;
  * THE SOFTWARE.
  * #L%
  */
+package org.anchoranalysis.gui.plot.creator;
+
+import org.anchoranalysis.anchor.mpp.plot.execution.KernelExecutionTimeAllEach;
+
 
 import org.anchoranalysis.core.index.IIndexGetter;
 

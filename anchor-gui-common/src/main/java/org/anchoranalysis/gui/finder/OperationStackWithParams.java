@@ -1,12 +1,8 @@
-package org.anchoranalysis.gui.finder;
-
-import java.io.IOException;
-
 /*-
  * #%L
  * anchor-gui-common
  * %%
- * Copyright (C) 2010 - 2019 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann la Roche
+ * Copyright (C) 2010 - 2020 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann-La Roche
  * %%
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -27,6 +23,10 @@ import java.io.IOException;
  * THE SOFTWARE.
  * #L%
  */
+package org.anchoranalysis.gui.finder;
+
+import java.io.IOException;
+
 
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.index.GetOperationFailedException;
@@ -40,12 +40,6 @@ import org.anchoranalysis.image.stack.Stack;
 import org.anchoranalysis.io.manifest.finder.FinderKeyValueParams;
 import org.anchoranalysis.io.manifest.finder.FinderSerializedObject;
 
-/**
- * Appends key-value params to an nrgStack operation
- *  
- * @author Owen Feehan
- *
- */
 class OperationStackWithParams extends CachedOperationWithProgressReporter<NRGStackWithParams,OperationFailedException> {
 
 	private OperationFindNrgStackFromStackCollection nrgStackOperation;

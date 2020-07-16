@@ -1,16 +1,8 @@
-package org.anchoranalysis.gui.frame.multioverlay.instantstate;
-
-import org.anchoranalysis.anchor.overlay.Overlay;
-import org.anchoranalysis.core.error.InitException;
-import org.anchoranalysis.core.functional.function.FunctionWithException;
-import org.anchoranalysis.core.idgetter.IDGetter;
-import org.anchoranalysis.core.index.GetOperationFailedException;
-
-/*
+/*-
  * #%L
- * anchor-gui
+ * anchor-gui-frame
  * %%
- * Copyright (C) 2016 ETH Zurich, University of Zurich, Owen Feehan
+ * Copyright (C) 2010 - 2020 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann-La Roche
  * %%
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -31,6 +23,14 @@ import org.anchoranalysis.core.index.GetOperationFailedException;
  * THE SOFTWARE.
  * #L%
  */
+package org.anchoranalysis.gui.frame.multioverlay.instantstate;
+
+import org.anchoranalysis.anchor.overlay.Overlay;
+import org.anchoranalysis.core.error.InitException;
+import org.anchoranalysis.core.functional.function.FunctionWithException;
+import org.anchoranalysis.core.idgetter.IDGetter;
+import org.anchoranalysis.core.index.GetOperationFailedException;
+
 
 
 import org.anchoranalysis.core.index.IIndexGettableSettable;

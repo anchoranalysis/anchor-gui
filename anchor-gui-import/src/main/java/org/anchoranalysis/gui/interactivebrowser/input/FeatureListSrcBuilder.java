@@ -1,19 +1,8 @@
-package org.anchoranalysis.gui.interactivebrowser.input;
-
-import org.anchoranalysis.anchor.mpp.bean.regionmap.RegionMap;
-import org.anchoranalysis.anchor.mpp.feature.addcriteria.BBoxIntersection;
-import org.anchoranalysis.anchor.mpp.feature.bean.nrgscheme.NRGSchemeCreator;
-import org.anchoranalysis.anchor.mpp.feature.input.memo.FeatureInputPairMemo;
-import org.anchoranalysis.anchor.mpp.feature.input.memo.FeatureInputSingleMemo;
-import org.anchoranalysis.anchor.mpp.feature.nrg.scheme.NRGScheme;
-import org.anchoranalysis.anchor.mpp.feature.nrg.scheme.NamedNRGSchemeSet;
-import org.anchoranalysis.anchor.mpp.regionmap.RegionMapSingleton;
-
 /*-
  * #%L
  * anchor-gui-import
  * %%
- * Copyright (C) 2010 - 2019 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann la Roche
+ * Copyright (C) 2010 - 2020 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann-La Roche
  * %%
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -34,6 +23,17 @@ import org.anchoranalysis.anchor.mpp.regionmap.RegionMapSingleton;
  * THE SOFTWARE.
  * #L%
  */
+package org.anchoranalysis.gui.interactivebrowser.input;
+
+import org.anchoranalysis.anchor.mpp.bean.regionmap.RegionMap;
+import org.anchoranalysis.anchor.mpp.feature.addcriteria.BBoxIntersection;
+import org.anchoranalysis.anchor.mpp.feature.bean.nrgscheme.NRGSchemeCreator;
+import org.anchoranalysis.anchor.mpp.feature.input.memo.FeatureInputPairMemo;
+import org.anchoranalysis.anchor.mpp.feature.input.memo.FeatureInputSingleMemo;
+import org.anchoranalysis.anchor.mpp.feature.nrg.scheme.NRGScheme;
+import org.anchoranalysis.anchor.mpp.feature.nrg.scheme.NamedNRGSchemeSet;
+import org.anchoranalysis.anchor.mpp.regionmap.RegionMapSingleton;
+
 
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.InitException;
@@ -58,13 +58,6 @@ public class FeatureListSrcBuilder {
 
 	private Logger logger;
 
-	/**
-	 * Builds the nrgSchemeSet
-	 * @param soFeature
-	 * @param nrgSchemeCreator optional parameter. ignored if NULL
-	 * @return
-	 * @throws CreateException
-	 */
 	public FeatureListSrc build( SharedFeaturesInitParams soFeature, NRGSchemeCreator nrgSchemeCreator ) throws CreateException {
 
 		NamedNRGSchemeSet nrgElemSet = new NamedNRGSchemeSet(

@@ -1,15 +1,8 @@
-package org.anchoranalysis.gui.mergebridge;
-
-import java.util.List;
-import org.anchoranalysis.anchor.mpp.feature.instantstate.CfgNRGInstantState;
-import org.anchoranalysis.core.cache.LRUCache;
-import org.anchoranalysis.core.functional.FunctionalList;
-
-/*
+/*-
  * #%L
- * anchor-gui
+ * anchor-gui-common
  * %%
- * Copyright (C) 2016 ETH Zurich, University of Zurich, Owen Feehan
+ * Copyright (C) 2010 - 2020 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann-La Roche
  * %%
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -30,6 +23,13 @@ import org.anchoranalysis.core.functional.FunctionalList;
  * THE SOFTWARE.
  * #L%
  */
+package org.anchoranalysis.gui.mergebridge;
+
+import java.util.List;
+import org.anchoranalysis.anchor.mpp.feature.instantstate.CfgNRGInstantState;
+import org.anchoranalysis.core.cache.LRUCache;
+import org.anchoranalysis.core.functional.FunctionalList;
+
 
 
 import org.anchoranalysis.core.index.GetOperationFailedException;
@@ -44,7 +44,6 @@ import lombok.RequiredArgsConstructor;
 public class DualCfgNRGContainer<T> implements BoundedIndexContainer<IndexedDualState<T>> {
 	
 	// START REQUIRED ARGUMENTS
-	/** Assumed to represent a contiguous sequence in time */
 	private final List<BoundedIndexContainer<CfgNRGInstantState>> cntrs;
 	private final TransformInstanteState<T> transformer;
 	// END REQUIRED ARGUMENTS

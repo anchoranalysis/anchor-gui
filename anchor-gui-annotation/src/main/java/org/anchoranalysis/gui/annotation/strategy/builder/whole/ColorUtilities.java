@@ -1,10 +1,8 @@
-package org.anchoranalysis.gui.annotation.strategy.builder.whole;
-
 /*-
  * #%L
  * anchor-gui-annotation
  * %%
- * Copyright (C) 2010 - 2019 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann la Roche
+ * Copyright (C) 2010 - 2020 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann-La Roche
  * %%
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -25,6 +23,8 @@ package org.anchoranalysis.gui.annotation.strategy.builder.whole;
  * THE SOFTWARE.
  * #L%
  */
+package org.anchoranalysis.gui.annotation.strategy.builder.whole;
+
 
 import java.awt.Color;
 
@@ -45,17 +45,6 @@ class ColorUtilities {
 		button.setForeground( getContrastColor(col) );		
 	}
 	
-	/**
-	 * Calculates a contrast color (black or white) for a particular color. Useful for text labels
-	//  on a particular background
-	 * 
-	 * Inspired by:
-	 * 
-	 * https://stackoverflow.com/questions/3942878/how-to-decide-font-color-in-white-or-black-depending-on-background-color
-	 * 
-	 * @param col input color
-	 * @return the contrasted color
-	 */
 	private static Color getContrastColor(Color col) {
 	    double lum = (((0.299 * col.getRed()) + ((0.587 * col.getGreen()) + (0.114 * col.getBlue()))));
 	    return lum > 186 ? Color.BLACK: Color.WHITE;

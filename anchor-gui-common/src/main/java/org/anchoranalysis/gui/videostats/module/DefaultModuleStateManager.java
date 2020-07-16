@@ -2,7 +2,7 @@
  * #%L
  * anchor-gui-common
  * %%
- * Copyright (C) 2010 - 2020 Owen Feehan
+ * Copyright (C) 2010 - 2020 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann-La Roche
  * %%
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -51,7 +51,6 @@ public class DefaultModuleStateManager {
 	}
 	
 
-	/* Provides a copy of the current state (if you change it, it won't affect the global defaults ) */
 	public DefaultModuleState copy() {
 		DefaultModuleState dms = new DefaultModuleState(
 			linkStateManager.copy(),

@@ -1,10 +1,8 @@
-package org.anchoranalysis.gui.videostats.internalframe.cfgtorgb;
-
 /*-
  * #%L
  * anchor-gui-frame
  * %%
- * Copyright (C) 2010 - 2020 Owen Feehan
+ * Copyright (C) 2010 - 2020 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann-La Roche
  * %%
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -25,17 +23,13 @@ package org.anchoranalysis.gui.videostats.internalframe.cfgtorgb;
  * THE SOFTWARE.
  * #L%
  */
+package org.anchoranalysis.gui.videostats.internalframe.cfgtorgb;
+
 
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.functional.Operation;
 import org.anchoranalysis.gui.videostats.dropdown.common.NRGBackground;
 
-/**
- * 
- * @author Owen Feehan
- *
- * @param <T> object-type
- */
 public class MultiInput<T> {
 
 	private String name;

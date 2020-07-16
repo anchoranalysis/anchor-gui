@@ -1,10 +1,8 @@
-package org.anchoranalysis.gui.mdi;
-
-/*
+/*-
  * #%L
- * anchor-gui
+ * anchor-gui-mdi
  * %%
- * Copyright (C) 2016 ETH Zurich, University of Zurich, Owen Feehan
+ * Copyright (C) 2010 - 2020 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann-La Roche
  * %%
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -25,6 +23,8 @@ package org.anchoranalysis.gui.mdi;
  * THE SOFTWARE.
  * #L%
  */
+package org.anchoranalysis.gui.mdi;
+
 
 
 import java.awt.*;
@@ -32,10 +32,6 @@ import java.awt.event.*;
 
 // http://www.onyxbits.de/content/swing-mdi-coming-window-placement-algorithm-jinternalframes-jdesktoppanes
 
-/**
- * A simple window placement algorithm for "smartly" positioning 
- * placing components inside a MDI style container.
- */
 public class Usher implements ContainerListener {
 
   /**

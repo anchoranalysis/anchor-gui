@@ -1,16 +1,8 @@
-package org.anchoranalysis.plugin.gui.bean.createrastergenerator.cfgnrginstantstate;
-
-import java.util.Optional;
-
-import org.anchoranalysis.anchor.overlay.writer.DrawOverlay;
-import org.anchoranalysis.gui.frame.display.IRedrawable;
-import org.anchoranalysis.gui.frame.display.OverlayedDisplayStackUpdate;
-
 /*-
  * #%L
- * anchor-mpp-io
+ * anchor-plugin-gui-export
  * %%
- * Copyright (C) 2010 - 2019 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann la Roche
+ * Copyright (C) 2010 - 2020 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann-La Roche
  * %%
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -31,6 +23,14 @@ import org.anchoranalysis.gui.frame.display.OverlayedDisplayStackUpdate;
  * THE SOFTWARE.
  * #L%
  */
+package org.anchoranalysis.plugin.gui.bean.createrastergenerator.cfgnrginstantstate;
+
+import java.util.Optional;
+
+import org.anchoranalysis.anchor.overlay.writer.DrawOverlay;
+import org.anchoranalysis.gui.frame.display.IRedrawable;
+import org.anchoranalysis.gui.frame.display.OverlayedDisplayStackUpdate;
+
 
 import org.anchoranalysis.image.stack.DisplayStack;
 import org.anchoranalysis.io.generator.IterableObjectGenerator;

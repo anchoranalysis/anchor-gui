@@ -1,10 +1,8 @@
-package org.anchoranalysis.gui.videostats.frame;
-
 /*-
  * #%L
  * anchor-gui-mdi
  * %%
- * Copyright (C) 2010 - 2019 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann la Roche
+ * Copyright (C) 2010 - 2020 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann-La Roche
  * %%
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -25,6 +23,8 @@ package org.anchoranalysis.gui.videostats.frame;
  * THE SOFTWARE.
  * #L%
  */
+package org.anchoranalysis.gui.videostats.frame;
+
 
 import java.awt.event.ActionEvent;
 
@@ -32,9 +32,6 @@ import javax.swing.AbstractAction;
 
 class ExitAction extends AbstractAction {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 6108379470565819605L;
 
 	public ExitAction() {

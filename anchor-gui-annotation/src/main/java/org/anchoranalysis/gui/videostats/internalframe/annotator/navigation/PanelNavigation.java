@@ -1,10 +1,8 @@
-package org.anchoranalysis.gui.videostats.internalframe.annotator.navigation;
-
-/*
+/*-
  * #%L
- * anchor-gui
+ * anchor-gui-annotation
  * %%
- * Copyright (C) 2016 ETH Zurich, University of Zurich, Owen Feehan
+ * Copyright (C) 2010 - 2020 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann-La Roche
  * %%
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -25,6 +23,8 @@ package org.anchoranalysis.gui.videostats.internalframe.annotator.navigation;
  * THE SOFTWARE.
  * #L%
  */
+package org.anchoranalysis.gui.videostats.internalframe.annotator.navigation;
+
 
 
 import java.awt.GridBagConstraints;
@@ -39,11 +39,6 @@ public class PanelNavigation {
 
 	private PanelWithLabel panelWithError;
 	
-	/**
-	 * A navigation panel encapsulating a single panel
-	 * 
-	 * @param singlePanel
-	 */
 	public PanelNavigation(	PanelWithLabel singlePanel ) {
 		super();
 		commonConstructorSetup(singlePanel);

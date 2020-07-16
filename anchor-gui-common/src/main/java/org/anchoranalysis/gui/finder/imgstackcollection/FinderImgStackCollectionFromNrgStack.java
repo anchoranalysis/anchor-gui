@@ -1,10 +1,8 @@
-package org.anchoranalysis.gui.finder.imgstackcollection;
-
-/*
+/*-
  * #%L
- * anchor-image-io
+ * anchor-gui-common
  * %%
- * Copyright (C) 2016 ETH Zurich, University of Zurich, Owen Feehan
+ * Copyright (C) 2010 - 2020 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann-La Roche
  * %%
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -25,6 +23,8 @@ package org.anchoranalysis.gui.finder.imgstackcollection;
  * THE SOFTWARE.
  * #L%
  */
+package org.anchoranalysis.gui.finder.imgstackcollection;
+
 
 
 import org.anchoranalysis.core.cache.WrapOperationWithProgressReporterAsCached;
@@ -40,7 +40,6 @@ import org.anchoranalysis.image.stack.NamedImgStackCollection;
 import org.anchoranalysis.image.stack.Stack;
 import org.anchoranalysis.io.manifest.ManifestRecorder;
 
-/** Finds an image stack collection */
 public class FinderImgStackCollectionFromNrgStack implements FinderImgStackCollection {
 	
 	private FinderNrgStack delegate = null;

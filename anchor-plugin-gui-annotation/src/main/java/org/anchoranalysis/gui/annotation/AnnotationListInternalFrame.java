@@ -1,10 +1,8 @@
-package org.anchoranalysis.gui.annotation;
-
-/*
+/*-
  * #%L
- * anchor-gui
+ * anchor-plugin-gui-annotation
  * %%
- * Copyright (C) 2016 ETH Zurich, University of Zurich, Owen Feehan
+ * Copyright (C) 2010 - 2020 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann-La Roche
  * %%
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -25,6 +23,8 @@ package org.anchoranalysis.gui.annotation;
  * THE SOFTWARE.
  * #L%
  */
+package org.anchoranalysis.gui.annotation;
+
 
 
 import java.awt.BorderLayout;
@@ -62,17 +62,6 @@ public class AnnotationListInternalFrame {
 		delegate = new InteractiveFileListInternalFrame(name);
 	}
 
-	/**
-	 * 
-	 * @param inputManager
-	 * @param adder
-	 * @param fileOpenManager
-	 * @param markEvaluatorManager
-	 * @param mpg
-	 * @param progressReporter
-	 * @param widthDescriptionColumn 1 indicates small, larger numbers make it bigger
-	 * @throws InitException
-	 */
 	public <T extends AnnotatorStrategy> void init(
 		AnnotationInputManager<ProvidesStackInput,T> inputManager,
 		IAddVideoStatsModule adder,

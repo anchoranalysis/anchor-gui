@@ -1,10 +1,8 @@
-package org.anchoranalysis.gui.cfgnrg;
-
-/*
+/*-
  * #%L
- * anchor-gui
+ * anchor-gui-common
  * %%
- * Copyright (C) 2016 ETH Zurich, University of Zurich, Owen Feehan
+ * Copyright (C) 2010 - 2020 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann-La Roche
  * %%
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -25,14 +23,13 @@ package org.anchoranalysis.gui.cfgnrg;
  * THE SOFTWARE.
  * #L%
  */
+package org.anchoranalysis.gui.cfgnrg;
+
 
 import org.anchoranalysis.core.error.AnchorCheckedException;
 
 public class StatePanelUpdateException extends AnchorCheckedException {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 8514917190449094812L;
 
 	public StatePanelUpdateException(String string) {

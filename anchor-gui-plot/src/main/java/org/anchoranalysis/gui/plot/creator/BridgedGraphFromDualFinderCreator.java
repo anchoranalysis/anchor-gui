@@ -1,17 +1,8 @@
-package org.anchoranalysis.gui.plot.creator;
-
-import org.anchoranalysis.anchor.mpp.feature.instantstate.CfgNRGInstantState;
-import org.anchoranalysis.core.error.CreateException;
-import org.anchoranalysis.core.functional.function.FunctionWithException;
-import org.anchoranalysis.core.index.GetOperationFailedException;
-import org.anchoranalysis.core.index.container.BoundedIndexContainer;
-import org.anchoranalysis.core.index.container.bridge.BoundedIndexContainerBridgeWithoutIndex;
-
-/*
+/*-
  * #%L
- * anchor-gui
+ * anchor-gui-plot
  * %%
- * Copyright (C) 2016 ETH Zurich, University of Zurich, Owen Feehan
+ * Copyright (C) 2010 - 2020 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann-La Roche
  * %%
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -32,18 +23,21 @@ import org.anchoranalysis.core.index.container.bridge.BoundedIndexContainerBridg
  * THE SOFTWARE.
  * #L%
  */
+package org.anchoranalysis.gui.plot.creator;
+
+import org.anchoranalysis.anchor.mpp.feature.instantstate.CfgNRGInstantState;
+import org.anchoranalysis.core.error.CreateException;
+import org.anchoranalysis.core.functional.function.FunctionWithException;
+import org.anchoranalysis.core.index.GetOperationFailedException;
+import org.anchoranalysis.core.index.container.BoundedIndexContainer;
+import org.anchoranalysis.core.index.container.bridge.BoundedIndexContainerBridgeWithoutIndex;
+
 
 
 import org.anchoranalysis.gui.io.loader.manifest.finder.FinderCSVStats;
 import org.anchoranalysis.gui.io.loader.manifest.finder.csvstatistic.CSVStatistic;
 import org.anchoranalysis.gui.io.loader.manifest.finder.historyfolder.FinderHistoryFolder;
 
-/**
- * 
- * @author Owen Feehan
- *
- * @param <T> destination-type
- */
 public abstract class BridgedGraphFromDualFinderCreator<T> implements GraphFromDualFinderCreator<T> {
 
 	@Override

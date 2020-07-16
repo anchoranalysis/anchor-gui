@@ -1,13 +1,8 @@
-package org.anchoranalysis.plugin.gui.bean.exporttask;
-
-import org.anchoranalysis.core.error.OperationFailedException;
-import org.anchoranalysis.core.functional.function.FunctionWithException;
-
-/*
+/*-
  * #%L
- * anchor-gui
+ * anchor-plugin-gui-export
  * %%
- * Copyright (C) 2016 ETH Zurich, University of Zurich, Owen Feehan
+ * Copyright (C) 2010 - 2020 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann-La Roche
  * %%
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -28,6 +23,11 @@ import org.anchoranalysis.core.functional.function.FunctionWithException;
  * THE SOFTWARE.
  * #L%
  */
+package org.anchoranalysis.plugin.gui.bean.exporttask;
+
+import org.anchoranalysis.core.error.OperationFailedException;
+import org.anchoranalysis.core.functional.function.FunctionWithException;
+
 
 
 import org.anchoranalysis.core.index.GetOperationFailedException;

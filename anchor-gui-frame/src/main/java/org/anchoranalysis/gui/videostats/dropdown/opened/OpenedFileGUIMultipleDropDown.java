@@ -1,10 +1,8 @@
-package org.anchoranalysis.gui.videostats.dropdown.opened;
-
-/*
+/*-
  * #%L
- * anchor-gui
+ * anchor-gui-frame
  * %%
- * Copyright (C) 2016 ETH Zurich, University of Zurich, Owen Feehan
+ * Copyright (C) 2010 - 2020 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann-La Roche
  * %%
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -25,6 +23,8 @@ package org.anchoranalysis.gui.videostats.dropdown.opened;
  * THE SOFTWARE.
  * #L%
  */
+package org.anchoranalysis.gui.videostats.dropdown.opened;
+
 
 
 import java.util.ArrayList;
@@ -194,12 +194,6 @@ public class OpenedFileGUIMultipleDropDown {
 	}
 	
 	
-	/**
-	 * Creates a "Multi Raster" for the operations that give Rasters but no Cfg or objects
-	 * 
-	 * @param listCombined
-	 * @param out
-	 */
 	private void addBackgroundSetAndNoObjects( List<IVideoStatsOperationCombine> listCombined, VideoStatsOperationMenu out ) {
 		
 		List<NamedRasterSet> list = new ArrayList<>();

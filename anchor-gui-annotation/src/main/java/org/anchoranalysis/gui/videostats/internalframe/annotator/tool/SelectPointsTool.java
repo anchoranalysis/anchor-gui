@@ -1,17 +1,8 @@
-package org.anchoranalysis.gui.videostats.internalframe.annotator.tool;
-
-import java.util.Optional;
-
-import org.anchoranalysis.anchor.mpp.bean.points.fitter.InsufficientPointsException;
-import org.anchoranalysis.anchor.mpp.bean.points.fitter.PointsFitter;
-import org.anchoranalysis.anchor.mpp.bean.points.fitter.PointsFitterException;
-import org.anchoranalysis.anchor.mpp.mark.Mark;
-
 /*-
  * #%L
  * anchor-gui-annotation
  * %%
- * Copyright (C) 2010 - 2019 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann la Roche
+ * Copyright (C) 2010 - 2020 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann-La Roche
  * %%
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -32,6 +23,15 @@ import org.anchoranalysis.anchor.mpp.mark.Mark;
  * THE SOFTWARE.
  * #L%
  */
+package org.anchoranalysis.gui.videostats.internalframe.annotator.tool;
+
+import java.util.Optional;
+
+import org.anchoranalysis.anchor.mpp.bean.points.fitter.InsufficientPointsException;
+import org.anchoranalysis.anchor.mpp.bean.points.fitter.PointsFitter;
+import org.anchoranalysis.anchor.mpp.bean.points.fitter.PointsFitterException;
+import org.anchoranalysis.anchor.mpp.mark.Mark;
+
 
 import org.anchoranalysis.core.geometry.Point3d;
 import org.anchoranalysis.gui.frame.overlays.ProposedCfg;

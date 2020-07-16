@@ -1,10 +1,8 @@
-package org.anchoranalysis.gui.cfgnrgtable;
-
-/*
+/*-
  * #%L
- * anchor-gui
+ * anchor-gui-common
  * %%
- * Copyright (C) 2016 ETH Zurich, University of Zurich, Owen Feehan
+ * Copyright (C) 2010 - 2020 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann-La Roche
  * %%
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -25,6 +23,8 @@ package org.anchoranalysis.gui.cfgnrgtable;
  * THE SOFTWARE.
  * #L%
  */
+package org.anchoranalysis.gui.cfgnrgtable;
+
 
 
 import java.util.ArrayList;
@@ -35,9 +35,6 @@ import org.anchoranalysis.anchor.mpp.feature.instantstate.CfgNRGInstantState;
 
 public class TitleValueTableModel extends AbstractTableModel {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 4158592575997677838L;
 	
 	private CfgNRGInstantState crnt;

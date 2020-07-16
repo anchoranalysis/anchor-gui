@@ -1,10 +1,8 @@
-package org.anchoranalysis.plugin.gui.bean.createrastergenerator.csvstatistic;
-
 /*-
  * #%L
  * anchor-plugin-gui-export
  * %%
- * Copyright (C) 2010 - 2019 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann la Roche
+ * Copyright (C) 2010 - 2020 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann-La Roche
  * %%
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -25,6 +23,8 @@ package org.anchoranalysis.plugin.gui.bean.createrastergenerator.csvstatistic;
  * THE SOFTWARE.
  * #L%
  */
+package org.anchoranalysis.plugin.gui.bean.createrastergenerator.csvstatistic;
+
 
 import org.anchoranalysis.anchor.plot.GraphInstance;
 import org.anchoranalysis.core.error.CreateException;
@@ -39,12 +39,6 @@ import org.anchoranalysis.plugin.gui.bean.createrastergenerator.CreateRasterGrap
 import org.anchoranalysis.plugin.gui.bean.exporttask.MappedFrom;
 
 
-/**
- * 
- * @author feehano
- *
- * @param <T> graph-item type
- */
 public class GraphDynamicallyDrawnFromCSVStatistic<T> extends CreateRasterGraph<T,CSVStatistic> {
 
 	private FunctionWithException<CSVStatistic,T,CreateException> elementBridge;

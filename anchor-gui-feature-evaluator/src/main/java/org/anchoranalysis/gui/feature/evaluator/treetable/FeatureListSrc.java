@@ -1,14 +1,8 @@
-package org.anchoranalysis.gui.feature.evaluator.treetable;
-
-import org.anchoranalysis.anchor.mpp.feature.input.memo.FeatureInputAllMemo;
-import org.anchoranalysis.anchor.mpp.feature.input.memo.FeatureInputPairMemo;
-import org.anchoranalysis.anchor.mpp.feature.input.memo.FeatureInputSingleMemo;
-
 /*-
  * #%L
  * anchor-gui-feature-evaluator
  * %%
- * Copyright (C) 2010 - 2019 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann la Roche
+ * Copyright (C) 2010 - 2020 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann-La Roche
  * %%
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,6 +23,12 @@ import org.anchoranalysis.anchor.mpp.feature.input.memo.FeatureInputSingleMemo;
  * THE SOFTWARE.
  * #L%
  */
+package org.anchoranalysis.gui.feature.evaluator.treetable;
+
+import org.anchoranalysis.anchor.mpp.feature.input.memo.FeatureInputAllMemo;
+import org.anchoranalysis.anchor.mpp.feature.input.memo.FeatureInputPairMemo;
+import org.anchoranalysis.anchor.mpp.feature.input.memo.FeatureInputSingleMemo;
+
 
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.feature.nrg.NRGStackWithParams;
@@ -45,16 +45,5 @@ public abstract class FeatureListSrc {
 	
 	public abstract SharedFeatureMulti sharedFeatures();
 	
-	/**
-	 * Maybe adds additional KeyValueParams to a stack
-	 * 
-	 * Note that if the params are changed, the input-stack should first be copied
-	 *  so to keep the input-object unchanged
-	 * 
-	 * If params are unchanged, it's safe to return the same object as is passed in
-	 * 
-	 * @param in
-	 * @return
-	 */
 	public abstract NRGStackWithParams maybeAugmentParams( NRGStackWithParams in ) throws OperationFailedException;
 }

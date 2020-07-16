@@ -1,10 +1,8 @@
-package org.anchoranalysis.gui.videostats.dropdown.common;
-
 /*-
  * #%L
  * anchor-gui-common
  * %%
- * Copyright (C) 2010 - 2020 Owen Feehan
+ * Copyright (C) 2010 - 2020 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann-La Roche
  * %%
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -25,6 +23,8 @@ package org.anchoranalysis.gui.videostats.dropdown.common;
  * THE SOFTWARE.
  * #L%
  */
+package org.anchoranalysis.gui.videostats.dropdown.common;
+
 
 import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.error.OperationFailedException;
@@ -44,14 +44,6 @@ import org.anchoranalysis.gui.videostats.dropdown.OperationCreateBackgroundSet;
 import org.anchoranalysis.image.stack.Stack;
 import org.anchoranalysis.image.stack.wrap.WrapStackAsTimeSequence;
 
-/** 
- * NRGStack and background together
- * 
- * A background will always exist
- * 
- * An nrg-stack may not be defined, in which case a *guess* can be made, if necessary.
- * 
- */
 public class NRGBackground {
 
 	private OperationWithProgressReporter<BackgroundSet,GetOperationFailedException> opBackgroundSet;

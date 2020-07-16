@@ -1,10 +1,8 @@
-package org.anchoranalysis.gui.frame.details;
-
 /*-
  * #%L
  * anchor-gui-frame
  * %%
- * Copyright (C) 2010 - 2019 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann la Roche
+ * Copyright (C) 2010 - 2020 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann-La Roche
  * %%
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -25,6 +23,8 @@ package org.anchoranalysis.gui.frame.details;
  * THE SOFTWARE.
  * #L%
  */
+package org.anchoranalysis.gui.frame.details;
+
 
 import java.awt.event.ActionEvent;
 
@@ -35,9 +35,6 @@ import org.anchoranalysis.gui.frame.details.canvas.InternalFrameCanvas;
 
 class ZoomInAction extends AbstractAction {
 	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
 	private InternalFrameCanvas internalFrameCanvas;

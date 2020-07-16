@@ -1,10 +1,8 @@
-package org.anchoranalysis.gui.videostats.internalframe;
-
-/*
+/*-
  * #%L
- * anchor-gui
+ * anchor-plugin-gui-import
  * %%
- * Copyright (C) 2016 ETH Zurich, University of Zurich, Owen Feehan
+ * Copyright (C) 2010 - 2020 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann-La Roche
  * %%
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -25,6 +23,8 @@ package org.anchoranalysis.gui.videostats.internalframe;
  * THE SOFTWARE.
  * #L%
  */
+package org.anchoranalysis.gui.videostats.internalframe;
+
 
 
 import java.awt.FlowLayout;
@@ -63,9 +63,6 @@ public class OutputPanel {
 	
 	private class StartAction extends AbstractAction {
 
-		/**
-		 * 
-		 */
 		private static final long serialVersionUID = 6082901454998007224L;
 
 		public StartAction() {

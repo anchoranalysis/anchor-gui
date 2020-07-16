@@ -1,10 +1,8 @@
-package org.anchoranalysis.gui.videostats.internalframe.annotator.undoredo;
-
 /*-
  * #%L
  * anchor-gui-annotation
  * %%
- * Copyright (C) 2010 - 2019 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann la Roche
+ * Copyright (C) 2010 - 2020 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann-La Roche
  * %%
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -25,6 +23,8 @@ package org.anchoranalysis.gui.videostats.internalframe.annotator.undoredo;
  * THE SOFTWARE.
  * #L%
  */
+package org.anchoranalysis.gui.videostats.internalframe.annotator.undoredo;
+
 
 import java.util.function.Consumer;
 
@@ -37,7 +37,6 @@ import com.google.common.base.Supplier;
 public class UndoRedoRecorder<T> implements IUndoRedo, IRecordSnapshot {
 
 
-	/** Shows the current state */
 	private Runnable showCurrentState;
 	
 	/** Copy from current state */

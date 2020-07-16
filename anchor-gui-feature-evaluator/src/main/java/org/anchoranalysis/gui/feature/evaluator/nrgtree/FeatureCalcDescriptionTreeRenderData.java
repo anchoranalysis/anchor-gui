@@ -1,10 +1,8 @@
-package org.anchoranalysis.gui.feature.evaluator.nrgtree;
-
-/*
+/*-
  * #%L
- * anchor-gui
+ * anchor-gui-feature-evaluator
  * %%
- * Copyright (C) 2016 ETH Zurich, University of Zurich, Owen Feehan
+ * Copyright (C) 2010 - 2020 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann-La Roche
  * %%
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -25,14 +23,12 @@ package org.anchoranalysis.gui.feature.evaluator.nrgtree;
  * THE SOFTWARE.
  * #L%
  */
+package org.anchoranalysis.gui.feature.evaluator.nrgtree;
+
 
 import org.anchoranalysis.core.error.reporter.ErrorReporter;
 import org.netbeans.swing.outline.RenderDataProvider;
 
-/**
- *
- * @author Owen Feehan
- */
  public class FeatureCalcDescriptionTreeRenderData implements RenderDataProvider {
 
 	private ErrorReporter errorReporter;

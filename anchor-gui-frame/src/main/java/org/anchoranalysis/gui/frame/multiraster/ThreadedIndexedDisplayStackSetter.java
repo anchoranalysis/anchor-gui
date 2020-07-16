@@ -1,13 +1,8 @@
-package org.anchoranalysis.gui.frame.multiraster;
-
-import org.anchoranalysis.core.error.InitException;
-import org.anchoranalysis.core.error.OperationFailedException;
-
-/*
+/*-
  * #%L
- * anchor-gui
+ * anchor-gui-frame
  * %%
- * Copyright (C) 2016 ETH Zurich, University of Zurich, Owen Feehan
+ * Copyright (C) 2010 - 2020 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann-La Roche
  * %%
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -28,6 +23,11 @@ import org.anchoranalysis.core.error.OperationFailedException;
  * THE SOFTWARE.
  * #L%
  */
+package org.anchoranalysis.gui.frame.multiraster;
+
+import org.anchoranalysis.core.error.InitException;
+import org.anchoranalysis.core.error.OperationFailedException;
+
 
 import org.anchoranalysis.core.error.reporter.ErrorReporter;
 import org.anchoranalysis.core.functional.function.FunctionWithException;
@@ -44,7 +44,6 @@ import org.anchoranalysis.image.stack.DisplayStack;
 import org.anchoranalysis.io.generator.IterableObjectGenerator;
 import org.anchoranalysis.io.generator.IterableObjectGeneratorBridge;
 
-/** Provides a method for updating a display stack in response to index changes, or setImageStackCntr() */
 public class ThreadedIndexedDisplayStackSetter implements IBackgroundSetter, IThreadedProducer {
 
 	private ThreadedDisplayUpdateConsumer delegate;

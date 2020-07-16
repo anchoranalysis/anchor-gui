@@ -1,14 +1,8 @@
-package org.anchoranalysis.plugin.gui.bean.graphdefinition.line;
-
-import org.anchoranalysis.anchor.plot.bean.colorscheme.GraphColorScheme;
-import org.anchoranalysis.anchor.plot.index.LinePlot.YValGetter;
-import org.anchoranalysis.core.index.GetOperationFailedException;
-
-/*
+/*-
  * #%L
- * anchor-gui
+ * anchor-plugin-gui-import
  * %%
- * Copyright (C) 2016 ETH Zurich, University of Zurich, Owen Feehan
+ * Copyright (C) 2010 - 2020 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann-La Roche
  * %%
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,6 +23,12 @@ import org.anchoranalysis.core.index.GetOperationFailedException;
  * THE SOFTWARE.
  * #L%
  */
+package org.anchoranalysis.plugin.gui.bean.graphdefinition.line;
+
+import org.anchoranalysis.anchor.plot.bean.colorscheme.GraphColorScheme;
+import org.anchoranalysis.anchor.plot.index.LinePlot.YValGetter;
+import org.anchoranalysis.core.index.GetOperationFailedException;
+
 
 
 import org.anchoranalysis.gui.io.loader.manifest.finder.csvstatistic.CSVStatistic;

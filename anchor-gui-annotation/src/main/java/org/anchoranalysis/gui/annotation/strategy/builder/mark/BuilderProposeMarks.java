@@ -1,12 +1,8 @@
-package org.anchoranalysis.gui.annotation.strategy.builder.mark;
-
-
-
 /*-
  * #%L
  * anchor-gui-annotation
  * %%
- * Copyright (C) 2010 - 2019 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann la Roche
+ * Copyright (C) 2010 - 2020 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann-La Roche
  * %%
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -27,6 +23,10 @@ package org.anchoranalysis.gui.annotation.strategy.builder.mark;
  * THE SOFTWARE.
  * #L%
  */
+package org.anchoranalysis.gui.annotation.strategy.builder.mark;
+
+
+
 
 import java.nio.file.Path;
 import java.util.Optional;
@@ -118,7 +118,6 @@ public class BuilderProposeMarks extends AnnotationGuiBuilderWithDelegate<InitPa
 	}
 	
 
-	/** Creates a PanelNavigation to support the annotation */
 	@Override
 	public PanelNavigation createInitPanelNavigation(
 		InitParamsProposeMarks paramsInit,

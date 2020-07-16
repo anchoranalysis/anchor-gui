@@ -1,19 +1,8 @@
-package org.anchoranalysis.gui.videostats.internalframe.evaluator;
-
-import org.anchoranalysis.anchor.mpp.bean.cfg.CfgGen;
-import org.anchoranalysis.anchor.mpp.bean.proposer.MarkProposer;
-import org.anchoranalysis.anchor.mpp.cfg.Cfg;
-import org.anchoranalysis.anchor.mpp.mark.Mark;
-import org.anchoranalysis.anchor.mpp.proposer.ProposalAbnormalFailureException;
-import org.anchoranalysis.anchor.mpp.proposer.ProposerContext;
-import org.anchoranalysis.anchor.mpp.proposer.error.ErrorNode;
-import org.anchoranalysis.anchor.mpp.pxlmark.memo.VoxelizedMarkMemo;
-
-/*
+/*-
  * #%L
- * anchor-gui
+ * anchor-plugin-gui-import
  * %%
- * Copyright (C) 2016 ETH Zurich, University of Zurich, Owen Feehan
+ * Copyright (C) 2010 - 2020 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann-La Roche
  * %%
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -34,6 +23,17 @@ import org.anchoranalysis.anchor.mpp.pxlmark.memo.VoxelizedMarkMemo;
  * THE SOFTWARE.
  * #L%
  */
+package org.anchoranalysis.gui.videostats.internalframe.evaluator;
+
+import org.anchoranalysis.anchor.mpp.bean.cfg.CfgGen;
+import org.anchoranalysis.anchor.mpp.bean.proposer.MarkProposer;
+import org.anchoranalysis.anchor.mpp.cfg.Cfg;
+import org.anchoranalysis.anchor.mpp.mark.Mark;
+import org.anchoranalysis.anchor.mpp.proposer.ProposalAbnormalFailureException;
+import org.anchoranalysis.anchor.mpp.proposer.ProposerContext;
+import org.anchoranalysis.anchor.mpp.proposer.error.ErrorNode;
+import org.anchoranalysis.anchor.mpp.pxlmark.memo.VoxelizedMarkMemo;
+
 
 
 import org.anchoranalysis.core.error.OperationFailedException;

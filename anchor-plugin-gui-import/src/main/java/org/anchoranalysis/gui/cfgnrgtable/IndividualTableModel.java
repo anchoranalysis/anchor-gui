@@ -1,10 +1,8 @@
-package org.anchoranalysis.gui.cfgnrgtable;
-
-/*
+/*-
  * #%L
- * anchor-gui
+ * anchor-plugin-gui-import
  * %%
- * Copyright (C) 2016 ETH Zurich, University of Zurich, Owen Feehan
+ * Copyright (C) 2010 - 2020 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann-La Roche
  * %%
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -25,6 +23,8 @@ package org.anchoranalysis.gui.cfgnrgtable;
  * THE SOFTWARE.
  * #L%
  */
+package org.anchoranalysis.gui.cfgnrgtable;
+
 
 
 import javax.swing.table.AbstractTableModel;
@@ -39,9 +39,6 @@ import org.anchoranalysis.core.error.friendly.AnchorImpossibleSituationException
 
 public class IndividualTableModel extends AbstractTableModel implements IUpdateTableData {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 7882539188914833799L;
 
 	private Cfg cfg;

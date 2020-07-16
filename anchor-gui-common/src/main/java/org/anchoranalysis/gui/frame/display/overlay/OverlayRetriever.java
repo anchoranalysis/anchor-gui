@@ -1,10 +1,8 @@
-package org.anchoranalysis.gui.frame.display.overlay;
-
 /*-
  * #%L
  * anchor-gui-common
  * %%
- * Copyright (C) 2010 - 2020 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann la Roche
+ * Copyright (C) 2010 - 2020 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann-La Roche
  * %%
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -25,6 +23,8 @@ package org.anchoranalysis.gui.frame.display.overlay;
  * THE SOFTWARE.
  * #L%
  */
+package org.anchoranalysis.gui.frame.display.overlay;
+
 
 import org.anchoranalysis.anchor.overlay.collection.OverlayCollection;
 import org.anchoranalysis.core.geometry.Point3i;

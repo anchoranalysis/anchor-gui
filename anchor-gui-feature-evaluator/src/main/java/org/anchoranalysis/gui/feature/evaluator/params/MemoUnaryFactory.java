@@ -1,15 +1,8 @@
-package org.anchoranalysis.gui.feature.evaluator.params;
-
-import java.util.Optional;
-
-import org.anchoranalysis.anchor.mpp.feature.input.memo.FeatureInputSingleMemo;
-import org.anchoranalysis.anchor.mpp.pxlmark.memo.VoxelizedMarkMemo;
-
 /*-
  * #%L
  * anchor-gui-feature-evaluator
  * %%
- * Copyright (C) 2010 - 2019 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann la Roche
+ * Copyright (C) 2010 - 2020 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann-La Roche
  * %%
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -30,6 +23,13 @@ import org.anchoranalysis.anchor.mpp.pxlmark.memo.VoxelizedMarkMemo;
  * THE SOFTWARE.
  * #L%
  */
+package org.anchoranalysis.gui.feature.evaluator.params;
+
+import java.util.Optional;
+
+import org.anchoranalysis.anchor.mpp.feature.input.memo.FeatureInputSingleMemo;
+import org.anchoranalysis.anchor.mpp.pxlmark.memo.VoxelizedMarkMemo;
+
 
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.feature.input.FeatureInput;

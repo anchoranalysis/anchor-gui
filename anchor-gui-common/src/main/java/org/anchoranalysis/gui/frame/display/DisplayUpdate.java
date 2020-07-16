@@ -1,10 +1,8 @@
-package org.anchoranalysis.gui.frame.display;
-
-/*
+/*-
  * #%L
- * anchor-mpp-io
+ * anchor-gui-common
  * %%
- * Copyright (C) 2016 ETH Zurich, University of Zurich, Owen Feehan
+ * Copyright (C) 2010 - 2020 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann-La Roche
  * %%
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -25,23 +23,13 @@ package org.anchoranalysis.gui.frame.display;
  * THE SOFTWARE.
  * #L%
  */
+package org.anchoranalysis.gui.frame.display;
 
 
 import java.util.List;
 
 import org.anchoranalysis.image.extent.BoundingBox;
 
-/**
- * A command that:
- *   1. Updates parts of the display, while keeping an underlying OverlayedDisplayedStack the same
- *   2. Changes the OverlayedDisplayStack that is being shown
- * 
- * At least one of the two fields should be non-null. If both are non-null, then we change the displayStack
- *   while only refreshing particular parts of the image.
- * 
- * @author Owen Feehan
- *
- */
 public class DisplayUpdate {
 
 	/**

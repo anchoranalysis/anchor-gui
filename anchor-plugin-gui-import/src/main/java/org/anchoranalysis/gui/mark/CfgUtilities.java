@@ -1,13 +1,8 @@
-package org.anchoranalysis.gui.mark;
-
-import org.anchoranalysis.anchor.mpp.cfg.Cfg;
-import org.anchoranalysis.anchor.mpp.mark.Mark;
-
 /*-
  * #%L
  * anchor-plugin-gui-import
  * %%
- * Copyright (C) 2010 - 2019 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann la Roche
+ * Copyright (C) 2010 - 2020 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann-La Roche
  * %%
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -28,6 +23,11 @@ import org.anchoranalysis.anchor.mpp.mark.Mark;
  * THE SOFTWARE.
  * #L%
  */
+package org.anchoranalysis.gui.mark;
+
+import org.anchoranalysis.anchor.mpp.cfg.Cfg;
+import org.anchoranalysis.anchor.mpp.mark.Mark;
+
 
 import org.anchoranalysis.core.index.IndicesSelection;
 

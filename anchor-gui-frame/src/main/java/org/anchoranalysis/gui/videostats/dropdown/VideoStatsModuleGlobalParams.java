@@ -1,17 +1,8 @@
-package org.anchoranalysis.gui.videostats.dropdown;
-
-import java.awt.GraphicsConfiguration;
-import java.nio.file.Path;
-
-import org.anchoranalysis.anchor.mpp.bean.regionmap.RegionMap;
-import org.anchoranalysis.anchor.mpp.regionmap.RegionMapSingleton;
-import org.anchoranalysis.anchor.plot.bean.colorscheme.GraphColorScheme;
-
-/*
+/*-
  * #%L
- * anchor-gui
+ * anchor-gui-frame
  * %%
- * Copyright (C) 2016 ETH Zurich, University of Zurich, Owen Feehan
+ * Copyright (C) 2010 - 2020 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann-La Roche
  * %%
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -32,6 +23,15 @@ import org.anchoranalysis.anchor.plot.bean.colorscheme.GraphColorScheme;
  * THE SOFTWARE.
  * #L%
  */
+package org.anchoranalysis.gui.videostats.dropdown;
+
+import java.awt.GraphicsConfiguration;
+import java.nio.file.Path;
+
+import org.anchoranalysis.anchor.mpp.bean.regionmap.RegionMap;
+import org.anchoranalysis.anchor.mpp.regionmap.RegionMapSingleton;
+import org.anchoranalysis.anchor.plot.bean.colorscheme.GraphColorScheme;
+
 
 
 import org.anchoranalysis.core.color.ColorIndex;

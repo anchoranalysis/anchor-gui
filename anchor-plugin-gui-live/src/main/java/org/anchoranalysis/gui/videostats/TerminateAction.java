@@ -1,10 +1,8 @@
-package org.anchoranalysis.gui.videostats;
-
-/*
+/*-
  * #%L
- * anchor-gui
+ * anchor-plugin-gui-live
  * %%
- * Copyright (C) 2016 ETH Zurich, University of Zurich, Owen Feehan
+ * Copyright (C) 2010 - 2020 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann-La Roche
  * %%
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -25,6 +23,8 @@ package org.anchoranalysis.gui.videostats;
  * THE SOFTWARE.
  * #L%
  */
+package org.anchoranalysis.gui.videostats;
+
 
 
 import java.awt.event.ActionEvent;
@@ -36,9 +36,6 @@ import org.anchoranalysis.mpp.sgmn.bean.optscheme.termination.TriggerTermination
 
 public class TerminateAction extends AbstractAction {
 	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -6983742220291326020L;
 
 	private TriggerTerminationCondition terminationCondition;

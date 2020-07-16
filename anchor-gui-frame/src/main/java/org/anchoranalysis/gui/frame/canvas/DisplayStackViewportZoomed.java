@@ -1,10 +1,8 @@
-package org.anchoranalysis.gui.frame.canvas;
-
-/*
+/*-
  * #%L
- * anchor-gui
+ * anchor-gui-frame
  * %%
- * Copyright (C) 2016 ETH Zurich, University of Zurich, Owen Feehan
+ * Copyright (C) 2010 - 2020 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann-La Roche
  * %%
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -25,6 +23,8 @@ package org.anchoranalysis.gui.frame.canvas;
  * THE SOFTWARE.
  * #L%
  */
+package org.anchoranalysis.gui.frame.canvas;
+
 
 
 import java.awt.image.BufferedImage;
@@ -42,14 +42,6 @@ import org.anchoranalysis.image.extent.ImageResolution;
 import org.anchoranalysis.image.scale.ScaleFactor;
 import org.anchoranalysis.image.voxel.datatype.VoxelDataType;
 
-/**
- * A DisplayStackViewport zoomed by the factor zoomScale
- * 
- * Values here are in terms of a scaled-space (the space of delegate * zoomFactor)
- * 
- * @author Owen Feehan
- *
- */
 class DisplayStackViewportZoomed {
 
 	private DisplayStackViewport delegate;

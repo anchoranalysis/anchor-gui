@@ -1,10 +1,8 @@
-package org.anchoranalysis.gui.mdi;
-
-/*
+/*-
  * #%L
- * anchor-gui
+ * anchor-gui-mdi
  * %%
- * Copyright (C) 2016 ETH Zurich, University of Zurich, Owen Feehan
+ * Copyright (C) 2010 - 2020 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann-La Roche
  * %%
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -25,6 +23,8 @@ package org.anchoranalysis.gui.mdi;
  * THE SOFTWARE.
  * #L%
  */
+package org.anchoranalysis.gui.mdi;
+
 
 
 import javax.swing.*;
@@ -35,17 +35,6 @@ import org.anchoranalysis.core.error.reporter.ErrorReporter;
 import java.awt.event.*;
 import java.beans.*;
 
-/**
- * WindowMenu.java
- *
- * Menu component that handles the functionality expected of a standard
- * "Windows" menu for MDI applications.
- * <p>
- * Thanks to <em>Gerald Nunn</em> for his article:
- * <a href="http://www.javaworld.com/javaworld/jw-05-2001/jw-0525-mdi.html">Conquer Swing deficiencies in MDI development</a>.<br>
- *
- * @author Gerald Nunn 
- */
 
 public class WindowMenu extends JMenu {
     /**

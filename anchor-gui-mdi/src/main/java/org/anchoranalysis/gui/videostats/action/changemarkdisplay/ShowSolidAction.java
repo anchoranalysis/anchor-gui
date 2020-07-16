@@ -1,10 +1,8 @@
-package org.anchoranalysis.gui.videostats.action.changemarkdisplay;
-
-/*
+/*-
  * #%L
- * anchor-gui
+ * anchor-gui-mdi
  * %%
- * Copyright (C) 2016 ETH Zurich, University of Zurich, Owen Feehan
+ * Copyright (C) 2010 - 2020 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann-La Roche
  * %%
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -25,6 +23,8 @@ package org.anchoranalysis.gui.videostats.action.changemarkdisplay;
  * THE SOFTWARE.
  * #L%
  */
+package org.anchoranalysis.gui.videostats.action.changemarkdisplay;
+
 
 
 import java.util.List;
@@ -36,9 +36,6 @@ import org.anchoranalysis.gui.mark.MarkDisplaySettings;
 
 public class ShowSolidAction extends ChangeMarkDisplayToggleAction {
 	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -163506205817469710L;
 
 	public ShowSolidAction( List<IChangeMarkDisplaySendable> updateList, MarkDisplaySettings lastMarkDisplaySettings, ImageIcon icon ) {

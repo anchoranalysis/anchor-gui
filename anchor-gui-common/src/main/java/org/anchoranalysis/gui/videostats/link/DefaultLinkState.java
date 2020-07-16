@@ -1,10 +1,8 @@
-package org.anchoranalysis.gui.videostats.link;
-
 /*-
  * #%L
  * anchor-gui-common
  * %%
- * Copyright (C) 2010 - 2020 Owen Feehan
+ * Copyright (C) 2010 - 2020 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann-La Roche
  * %%
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -25,6 +23,8 @@ package org.anchoranalysis.gui.videostats.link;
  * THE SOFTWARE.
  * #L%
  */
+package org.anchoranalysis.gui.videostats.link;
+
 
 import org.anchoranalysis.anchor.overlay.collection.OverlayCollection;
 import org.anchoranalysis.core.functional.function.FunctionWithException;
@@ -33,7 +33,6 @@ import org.anchoranalysis.gui.image.OverlayCollectionWithImgStack;
 import org.anchoranalysis.image.stack.DisplayStack;
 import org.apache.commons.lang.ArrayUtils;
 
-/** Default values for all the linked variables */
 public class DefaultLinkState {
 	
 	private int frameIndex;

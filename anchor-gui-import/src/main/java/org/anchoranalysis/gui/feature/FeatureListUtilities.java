@@ -1,17 +1,8 @@
-package org.anchoranalysis.gui.feature;
-
-import java.util.function.Function;
-
-import org.anchoranalysis.anchor.mpp.bean.regionmap.RegionMap;
-import org.anchoranalysis.anchor.mpp.feature.nrg.scheme.NRGScheme;
-import org.anchoranalysis.anchor.mpp.feature.nrg.scheme.NamedNRGSchemeSet;
-
-
-/*
+/*-
  * #%L
- * anchor-gui
+ * anchor-gui-import
  * %%
- * Copyright (C) 2016 ETH Zurich, University of Zurich, Owen Feehan
+ * Copyright (C) 2010 - 2020 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann-La Roche
  * %%
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -32,6 +23,15 @@ import org.anchoranalysis.anchor.mpp.feature.nrg.scheme.NamedNRGSchemeSet;
  * THE SOFTWARE.
  * #L%
  */
+package org.anchoranalysis.gui.feature;
+
+import java.util.function.Function;
+
+import org.anchoranalysis.anchor.mpp.bean.regionmap.RegionMap;
+import org.anchoranalysis.anchor.mpp.feature.nrg.scheme.NRGScheme;
+import org.anchoranalysis.anchor.mpp.feature.nrg.scheme.NamedNRGSchemeSet;
+
+
 
 import org.anchoranalysis.core.name.value.SimpleNameValue;
 import org.anchoranalysis.feature.bean.Feature;
@@ -43,14 +43,6 @@ public class FeatureListUtilities {
 
 	// Creates a feature list for showing Individual Elems
 	
-	/**
-	 * Creates a FeatureList for a NamedNRGSchemeSet by extracting a particular clique-size
-	 * 
-	 * @param elemSet  
-	 * @param cliqueSize 1 for pairwise, 0 for unary, -1 for all
-	 * @param includeLastExecution
-	 * @return
-	 */
 	public static <T extends FeatureInput> FeatureListWithRegionMap<T> createFeatureList(
 		NamedNRGSchemeSet elemSet,
 		Function<NRGScheme,FeatureList<T>> funcExtractList,

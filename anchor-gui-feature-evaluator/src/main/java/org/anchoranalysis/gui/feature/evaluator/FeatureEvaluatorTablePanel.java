@@ -1,10 +1,8 @@
-package org.anchoranalysis.gui.feature.evaluator;
-
-/*
+/*-
  * #%L
- * anchor-gui
+ * anchor-gui-feature-evaluator
  * %%
- * Copyright (C) 2016 ETH Zurich, University of Zurich, Owen Feehan
+ * Copyright (C) 2010 - 2020 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann-La Roche
  * %%
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -25,6 +23,8 @@ package org.anchoranalysis.gui.feature.evaluator;
  * THE SOFTWARE.
  * #L%
  */
+package org.anchoranalysis.gui.feature.evaluator;
+
 
 
 import java.awt.BorderLayout;
@@ -46,10 +46,6 @@ import org.anchoranalysis.gui.cfgnrg.StatePanelUpdateException;
 import org.anchoranalysis.gui.feature.evaluator.treetable.FeatureListSrc;
 import org.anchoranalysis.gui.image.OverlayCollectionWithImgStack;
 
-/**
- * The panel shown in the "Feature Evaluator" frame
- * 
- */
 public class FeatureEvaluatorTablePanel extends StatePanel<OverlayCollectionWithImgStack> {
 
 	private JPanel delegate;

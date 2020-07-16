@@ -1,10 +1,8 @@
-package org.anchoranalysis.gui.videostats.internalframe.annotator;
-
-/*
+/*-
  * #%L
- * anchor-gui
+ * anchor-gui-annotation
  * %%
- * Copyright (C) 2016 ETH Zurich, University of Zurich, Owen Feehan
+ * Copyright (C) 2010 - 2020 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann-La Roche
  * %%
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -25,6 +23,8 @@ package org.anchoranalysis.gui.videostats.internalframe.annotator;
  * THE SOFTWARE.
  * #L%
  */
+package org.anchoranalysis.gui.videostats.internalframe.annotator;
+
 
 
 import java.awt.Component;
@@ -38,7 +38,6 @@ import org.anchoranalysis.annotation.Annotation;
 import org.anchoranalysis.annotation.io.AnnotationWriter;
 import org.anchoranalysis.gui.annotation.AnnotationRefresher;
 
-/** Writes an annotation to the file-system */
 public class AnnotationWriterGUI<T extends Annotation> {
 	
 	private AnnotationRefresher annotationRefresher;

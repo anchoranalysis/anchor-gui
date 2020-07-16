@@ -1,10 +1,8 @@
-package org.anchoranalysis.gui.annotation.state;
-
 /*-
  * #%L
  * anchor-gui-annotation
  * %%
- * Copyright (C) 2010 - 2019 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann la Roche
+ * Copyright (C) 2010 - 2020 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann-La Roche
  * %%
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -25,14 +23,13 @@ package org.anchoranalysis.gui.annotation.state;
  * THE SOFTWARE.
  * #L%
  */
+package org.anchoranalysis.gui.annotation.state;
+
 
 import java.awt.Color;
 
 public class AnnotationSummary {
 	
-	/**
-	 * Iff TRUE, it indicates the annotation exists in a finished state
-	 */
 	private boolean existsFinished = false;
 	
 	/** A short string used to describe the state of the annotation succinctly */

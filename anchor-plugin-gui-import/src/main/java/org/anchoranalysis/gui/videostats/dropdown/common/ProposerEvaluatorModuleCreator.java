@@ -1,12 +1,8 @@
-package org.anchoranalysis.gui.videostats.dropdown.common;
-
-import org.anchoranalysis.core.error.InitException;
-
-/*
+/*-
  * #%L
- * anchor-gui
+ * anchor-plugin-gui-import
  * %%
- * Copyright (C) 2016 ETH Zurich, University of Zurich, Owen Feehan
+ * Copyright (C) 2010 - 2020 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann-La Roche
  * %%
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -27,6 +23,10 @@ import org.anchoranalysis.core.error.InitException;
  * THE SOFTWARE.
  * #L%
  */
+package org.anchoranalysis.gui.videostats.dropdown.common;
+
+import org.anchoranalysis.core.error.InitException;
+
 
 
 import org.anchoranalysis.gui.image.frame.ISliderState;

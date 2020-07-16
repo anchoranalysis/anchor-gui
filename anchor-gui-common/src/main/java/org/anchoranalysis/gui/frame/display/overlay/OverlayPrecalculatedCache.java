@@ -1,10 +1,8 @@
-package org.anchoranalysis.gui.frame.display.overlay;
-
-/*
+/*-
  * #%L
- * anchor-mpp-io
+ * anchor-gui-common
  * %%
- * Copyright (C) 2016 ETH Zurich, University of Zurich, Owen Feehan
+ * Copyright (C) 2010 - 2020 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann-La Roche
  * %%
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -25,6 +23,7 @@ package org.anchoranalysis.gui.frame.display.overlay;
  * THE SOFTWARE.
  * #L%
  */
+package org.anchoranalysis.gui.frame.display.overlay;
 
 
 import java.util.Collections;
@@ -49,23 +48,6 @@ import org.anchoranalysis.image.index.BoundingBoxRTree;
 import org.anchoranalysis.image.object.properties.ObjectWithProperties;
 import org.anchoranalysis.image.scale.ScaleFactor;
 
-/**
- * Caches several operations associated with an OverlayCollection, and allows the creation of subsets.
- * 
- * The class is used in @see{CfgOverlayBridgeFromGenerator} to prevent repeated calculating of objmasks
- *   from cfgs, including at different zoom levels
- * 
- * The following are saved:
- * 	overlayCollection:   		A collection of colored-overlays, the main data item.  No nulls.
- *  generatedObjects:			obj-masks generated from overlayCollection.  No nulls.
- *  listBoundingBox:			bounding-boxes derived from overlayCollection.  No nulls.
- *  generatedObjectsZoomed:		obj-masks at different zoomlevel. Can contain nulls (meaning not yet calculated)
- * 
- * They should all contain the same number of elements (generatedObjectsZoomed can also be null).
- * 
- * @author Owen Feehan
- *
- */
 public class OverlayPrecalculatedCache implements OverlayRetriever {
 
 	private PrecalculatedOverlayList overlayList;
