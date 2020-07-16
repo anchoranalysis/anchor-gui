@@ -130,10 +130,10 @@ public class MarkMergeProposerEvaluator implements ProposalOperationCreator {
 		return cfgOut;
 	}
 	
-	private static void addToOut( Optional<List<Point3f>> pts, Color color, ColoredCfg cfgOut ) {
-		if (pts.isPresent()) {
+	private static void addToOut( Optional<List<Point3f>> points, Color color, ColoredCfg cfgOut ) {
+		if (points.isPresent()) {
 			cfgOut.addChangeID(
-				MarkPointListFactory.createMarkFromPoints3f(pts.get()),
+				MarkPointListFactory.createMarkFromPoints3f(points.get()),
 				new RGBColor(color)
 			);	// 1 is just to give us a different color
 		}

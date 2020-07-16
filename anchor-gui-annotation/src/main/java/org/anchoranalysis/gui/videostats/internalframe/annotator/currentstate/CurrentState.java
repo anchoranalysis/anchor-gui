@@ -176,11 +176,11 @@ class CurrentState implements IQuerySelectedPoints {
 		
 		Cfg toDelete = new Cfg();
 		
-		for( Point3i p : points ) {
-			int index = indexOfSelectedPoints(p);
+		points.forEach( point-> {
+			int index = indexOfSelectedPoints(point);
 			toDelete.add( currentSelectedPointsCfg.get(index) );
 			currentSelectedPointsCfg.remove(index);
-		}
+		});
 		
 		currentProposedCfg = new Cfg();
 		currentCfgDisplayed = null;
@@ -320,7 +320,7 @@ class CurrentState implements IQuerySelectedPoints {
 		public void dispose() {
 			listeners = null;
 		}
-	};
+	}
 	
 
 }

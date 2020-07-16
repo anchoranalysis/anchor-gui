@@ -93,7 +93,7 @@ public class DeleteTool extends AnnotationTool {
 	public void confirm(boolean accepted) {
 		switcher.switchToGuessOrSelectPoints();
 		
-		// We implement the same behaviour as the Guess tool as its not so clear what else it could mean
+		// We implement the same behavior as the Guess tool as its not so clear what else it could mean
 		//GuessTool.confirmOnCurrentStateDisplayer(currentStateDisplayer);
 	}
 
