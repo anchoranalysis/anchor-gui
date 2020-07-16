@@ -45,24 +45,24 @@ class MouseEventCreator {
 	}
 
 	private Point2i cnvrtCrnrPoint( int x, int y) {
-		Point2i crnrPnt = imageCanvas.getImageCrnrPoint();
+		Point2i crnrPoint = imageCanvas.getImageCrnrPoint();
 		
-		int xNew = displayStackViewport.cnvrtCanvasXToImage( x - crnrPnt.getX() ); 
-		int yNew = displayStackViewport.cnvrtCanvasYToImage( y - crnrPnt.getY() );
+		int xNew = displayStackViewport.cnvrtCanvasXToImage( x - crnrPoint.getX() ); 
+		int yNew = displayStackViewport.cnvrtCanvasYToImage( y - crnrPoint.getY() );
 		return new Point2i(xNew,yNew);
 	}
 
 	public MouseEvent mouseEventNew( MouseEvent evOld ) {
 		
-		Point2i pntNew = cnvrtCrnrPoint( evOld.getX(), evOld.getY() );
+		Point2i pointNew = cnvrtCrnrPoint( evOld.getX(), evOld.getY() );
 			
 		MouseEvent evNew = new MouseEvent(
 			((Component) evOld.getSource()),
 			evOld.getID(),
 			evOld.getWhen(),
 			evOld.getModifiers(),
-			pntNew.getX(),
-			pntNew.getY(),
+			pointNew.getX(),
+			pointNew.getY(),
 			evOld.getClickCount(),
 			evOld.isPopupTrigger()
 		);

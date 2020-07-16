@@ -37,7 +37,7 @@ import org.anchoranalysis.core.geometry.Point2i;
 class MouseMotionListenerDragView extends MouseInputAdapter {
 
 	private UpdateThread updateThread;
-	private Point2i origPnt = null;
+	private Point2i origPoint = null;
 	
 	private DisplayStackViewportZoomed displayStackViewport;
 			
@@ -52,7 +52,7 @@ class MouseMotionListenerDragView extends MouseInputAdapter {
 	public void mouseDragged(MouseEvent e) {
 		super.mouseDragged(e);
 			
-		if (origPnt!=null) {
+		if (origPoint!=null) {
 			
 			if (updateThread.isRunning()==false) {
 				//System.out.println("Mouse dragging");
@@ -71,15 +71,15 @@ class MouseMotionListenerDragView extends MouseInputAdapter {
 			
 			//System.out.println("capturing");
 			
-			origPnt = new Point2i();
-			origPnt.setX( e.getX() );
-			origPnt.setY( e.getY() );
+			origPoint = new Point2i();
+			origPoint.setX( e.getX() );
+			origPoint.setY( e.getY() );
 		}
 	}
 
 	private void doShift( MouseEvent e, boolean enforceTolerance ) {
-		int shiftX = origPnt.getX() - e.getX();
-		int shiftY = origPnt.getY() - e.getY();
+		int shiftX = origPoint.getX() - e.getX();
+		int shiftY = origPoint.getY() - e.getY();
 		
 		// We construct a new mouse point with the shift
 		
@@ -100,8 +100,8 @@ class MouseMotionListenerDragView extends MouseInputAdapter {
 		updateThread.setShift( new Point2i(shiftX,shiftY) );
 		new Thread(updateThread).start();
 					
-		origPnt.setX( e.getX() );
-		origPnt.setY( e.getY() );
+		origPoint.setX( e.getX() );
+		origPoint.setY( e.getY() );
 		
 	}
 	
@@ -111,13 +111,13 @@ class MouseMotionListenerDragView extends MouseInputAdapter {
 		super.mouseReleased(e);
 		
 		
-		if (origPnt!=null) {
+		if (origPoint!=null) {
 		
 			//System.out.println("Mouse released doing it");
 			doShift(e,false);
 			
 			
-			origPnt = null;	
+			origPoint = null;	
 		}
 	}
 }

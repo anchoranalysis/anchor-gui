@@ -151,11 +151,11 @@ class CurrentState implements IQuerySelectedPoints {
 		confirmReset.triggerConfirmResetStateChangedEvent();
 	}
 	
-	public void removeAcceptedMarksAndSelectedPoints( Cfg cfg, List<Point3i> pnts ) {
+	public void removeAcceptedMarksAndSelectedPoints( Cfg cfg, List<Point3i> points ) {
 		for (Mark m : cfg) {
 			removeAcceptedMark(m);
 		}
-		removeSelectedPoints(pnts);
+		removeSelectedPoints(points);
 	}
 	
 	// NB This is not the most efficient, as we have to search a linked list each time to find the mark
@@ -172,11 +172,11 @@ class CurrentState implements IQuerySelectedPoints {
 	
 	// NB This is not the most efficient, as we have to search a linked list each time to find the mark
 	//  but as we don't call it often, it shouldn't be so bad
-	private void removeSelectedPoints( List<Point3i> pnts ) {
+	private void removeSelectedPoints( List<Point3i> points ) {
 		
 		Cfg toDelete = new Cfg();
 		
-		for( Point3i p : pnts ) {
+		for( Point3i p : points ) {
 			int index = indexOfSelectedPoints(p);
 			toDelete.add( currentSelectedPointsCfg.get(index) );
 			currentSelectedPointsCfg.remove(index);
@@ -199,12 +199,12 @@ class CurrentState implements IQuerySelectedPoints {
 		 return refreshList;
 	}
 	
-	public int indexOfSelectedPoints( Point3i pnt ) {
+	public int indexOfSelectedPoints( Point3i point ) {
 		for(int i=0; i<currentSelectedPointsCfg.size(); i++) {
 			Mark m = currentSelectedPointsCfg.get(i);
 			
 			Point3d cp = m.centerPoint();
-			if(cp.getX()==pnt.getX() && cp.getY()==pnt.getY() && cp.getZ()==pnt.getZ()) {
+			if(cp.getX()==point.getX() && cp.getY()==point.getY() && cp.getZ()==point.getZ()) {
 				return i;
 			}
 		}

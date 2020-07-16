@@ -38,5 +38,5 @@ public interface IReplaceRemove {
 	
 	void replaceCurrentProposedCfg(Cfg cfgCore, ColoredCfg cfgDisplayed, int sliceZ);
 	
-	void removeAcceptedMarksAndSelectedPoints( Cfg cfg, List<Point3i> pnts );
+	void removeAcceptedMarksAndSelectedPoints( Cfg cfg, List<Point3i> points );
 }

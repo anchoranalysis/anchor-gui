@@ -126,10 +126,10 @@ public class ZoomScale {
 		return (int) (val*scale);
 	}
 		
-	public Point2i applyScale( Point2i pnt ) {
+	public Point2i applyScale( Point2i point ) {
 		Point2i out = new Point2i();
-		out.setX( applyScale( pnt.getX() ) );
-		out.setY( applyScale( pnt.getY() ) );
+		out.setX( applyScale( point.getX() ) );
+		out.setY( applyScale( point.getY() ) );
 		return out;
 	}
 	
@@ -146,10 +146,10 @@ public class ZoomScale {
 	}
 	
 	
-	public Point2i removeScale( Point2i pnt ) {
+	public Point2i removeScale( Point2i point ) {
 		Point2i out = new Point2i();
-		out.setX( removeScale( pnt.getX() ) );
-		out.setY( removeScale( pnt.getY() ) );
+		out.setX( removeScale( point.getX() ) );
+		out.setY( removeScale( point.getY() ) );
 		return out;
 	}
 	

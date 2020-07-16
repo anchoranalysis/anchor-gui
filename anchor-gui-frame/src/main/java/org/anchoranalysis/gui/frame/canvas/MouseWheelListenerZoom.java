@@ -57,9 +57,9 @@ class MouseWheelListenerZoom implements MouseWheelListener {
 			
 			if (!e.isPopupTrigger() && (e.isControlDown()||e.isShiftDown())) {
 				
-				//Point2i pnt = cnvrtCrnrPoint( e.getX(), e.getY() );
-				Point2i pnt = new Point2i( e.getX(), e.getY() );
-				changeZoom( notches, pnt );
+				//Point2i point = cnvrtCrnrPoint( e.getX(), e.getY() );
+				Point2i point = new Point2i( e.getX(), e.getY() );
+				changeZoom( notches, point );
 			}
 		       
 		       

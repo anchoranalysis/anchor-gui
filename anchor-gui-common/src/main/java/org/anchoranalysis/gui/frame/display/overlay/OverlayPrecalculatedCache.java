@@ -241,16 +241,16 @@ public class OverlayPrecalculatedCache implements OverlayRetriever {
 	
 	// Finds all the overlays at a given point
 	@Override
-	public OverlayCollection overlaysAt( Point3i pnt) {
+	public OverlayCollection overlaysAt( Point3i point) {
 		OverlayCollection out = new OverlayCollection();
-		List<Integer> ids = rTree.contains(pnt);
+		List<Integer> ids = rTree.contains(point);
 		
 		for( Integer id : ids ) {
 			
 			Overlay ol = overlayList.getOverlay(id);
 			
 			// Check if it's actually inside
-			if (ol.isPointInside(overlayWriter, pnt)) {
+			if (ol.isPointInside(overlayWriter, point)) {
 				out.add( ol );
 			}
 		}

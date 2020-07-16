@@ -91,19 +91,19 @@ class DisplayStackViewport {
 		int xNew = crnrMin.getX() + shift.getX();
 		int yNew = crnrMin.getY() + shift.getY();
 		
-		Point2i pnt = new Point2i(xNew,yNew);
-		pnt = DisplayStackViewportUtilities.clipToImage(pnt, bboxViewport.extent(), getDimensionsEntire() );
-		pnt = DisplayStackViewportUtilities.clipToImage(pnt, canvasExtent, getDimensionsEntire());
-		assert(pnt.getX() >= 0);
-		assert(pnt.getY() >= 0);
+		Point2i point = new Point2i(xNew,yNew);
+		point = DisplayStackViewportUtilities.clipToImage(point, bboxViewport.extent(), getDimensionsEntire() );
+		point = DisplayStackViewportUtilities.clipToImage(point, canvasExtent, getDimensionsEntire());
+		assert(point.getX() >= 0);
+		assert(point.getY() >= 0);
 		// We need to clip
 		
-		Point3i pnt3 = new Point3i(pnt.getX(),pnt.getY(),this.bboxViewport.cornerMin().getZ());
+		Point3i point3 = new Point3i(point.getX(),point.getY(),this.bboxViewport.cornerMin().getZ());
 		
-		assert( pnt3.getX() >= 0 );
-		assert( pnt3.getY() >= 0 );
+		assert( point3.getX() >= 0 );
+		assert( point3.getY() >= 0 );
 		
-		return new BoundingBox(pnt3, bboxViewport.extent());
+		return new BoundingBox(point3, bboxViewport.extent());
 	}
 	
 	// Either updates the view and creates a new BufferedImage, or returns null if nothing changes

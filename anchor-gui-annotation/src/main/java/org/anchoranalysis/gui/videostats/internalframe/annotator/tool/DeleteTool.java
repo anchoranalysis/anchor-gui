@@ -68,15 +68,15 @@ public class DeleteTool extends AnnotationTool {
 	}
 			
 	@Override
-	public void leftMouseClickedAtPoint(Point3d pnt) {
+	public void leftMouseClickedAtPoint(Point3d point) {
 		
 		Cfg cfg = new Cfg();
 		cfg.addAll( queryAcceptReject.getCfgAccepted() );
 		cfg.addAll( queryAcceptReject.getCfgRejected() );
 		
-		Cfg marksToRemove = FindPoints.findMarksContainingPnt(cfg, pnt, regionMap, regionID);
+		Cfg marksToRemove = FindPoints.findMarksContainingPoint(cfg, point, regionMap, regionID);
 		
-		List<Point3i> selectedPointsToRemove = FindPoints.findSelectedPointsNear(pnt, selectedPoints);
+		List<Point3i> selectedPointsToRemove = FindPoints.findSelectedPointsNear(point, selectedPoints);
 		
 		if (!marksToRemove.isEmpty() || !selectedPointsToRemove.isEmpty()) {
 			replaceRemove.removeAcceptedMarksAndSelectedPoints(marksToRemove,selectedPointsToRemove);

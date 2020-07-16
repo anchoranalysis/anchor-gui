@@ -16,7 +16,7 @@ public abstract class AnnotationTool {
 	//
 	// So for most purposes one would specify either leftMouseClicked or evaluatorWithContextGetter but not both
 	//
-	public abstract void leftMouseClickedAtPoint( Point3d pnt );
+	public abstract void leftMouseClickedAtPoint( Point3d point );
 	
 	public abstract void proposed(ProposedCfg proposedCfg);
 	

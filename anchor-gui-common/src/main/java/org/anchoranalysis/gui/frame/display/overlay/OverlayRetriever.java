@@ -31,5 +31,5 @@ import org.anchoranalysis.core.geometry.Point3i;
 
 public interface OverlayRetriever extends GetOverlayCollection {
 
-	OverlayCollection overlaysAt( Point3i pnt);
+	OverlayCollection overlaysAt( Point3i point);
 }

@@ -88,7 +88,7 @@ public class GuessTool extends AnnotationTool {
 	}
 
 	@Override
-	public void leftMouseClickedAtPoint(Point3d pnt) {
+	public void leftMouseClickedAtPoint(Point3d point) {
 		// NOTHING TO DO
 	}
 

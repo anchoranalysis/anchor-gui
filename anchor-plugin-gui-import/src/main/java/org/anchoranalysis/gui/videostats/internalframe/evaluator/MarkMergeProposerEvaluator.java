@@ -115,14 +115,14 @@ public class MarkMergeProposerEvaluator implements ProposalOperationCreator {
 		
 		// Allows us to associate a list of points with  the mark
 		addToOut(
-			markMergeProposer.getLastPnts1(),
+			markMergeProposer.getLastPoints1(),
 			Color.GREEN,
 			cfgOut
 		);
 		
 		// Allows us to associate a list of points with  the mark
 		addToOut(
-			markMergeProposer.getLastPnts2(),
+			markMergeProposer.getLastPoints2(),
 			Color.YELLOW,
 			cfgOut
 		);

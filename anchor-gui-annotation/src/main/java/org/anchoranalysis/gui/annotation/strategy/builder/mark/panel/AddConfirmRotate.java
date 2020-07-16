@@ -92,12 +92,12 @@ public class AddConfirmRotate {
 				
 				// Left-Mouse
 				e -> {
-					Point3d pnt = new Point3d(
+					Point3d point = new Point3d(
 						e.getX(),
 						e.getY(),
 						sliderState.getSliceNum()
 					);
-					panelTool.getTool().leftMouseClickedAtPoint( pnt );
+					panelTool.getTool().leftMouseClickedAtPoint( point );
 				}
 			),
 			false

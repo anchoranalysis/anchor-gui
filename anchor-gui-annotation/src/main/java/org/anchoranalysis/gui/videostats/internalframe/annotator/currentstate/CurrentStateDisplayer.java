@@ -139,8 +139,8 @@ public class CurrentStateDisplayer {
 		}
 				
 		@Override
-		public void removeAcceptedMarksAndSelectedPoints( Cfg cfg, List<Point3i> pnts ) {
-			currentState.removeAcceptedMarksAndSelectedPoints(cfg,pnts);
+		public void removeAcceptedMarksAndSelectedPoints( Cfg cfg, List<Point3i> points ) {
+			currentState.removeAcceptedMarksAndSelectedPoints(cfg,points);
 			cfgShower.show( currentState );
 			alreadyConfirmedOnce = false;
 		}

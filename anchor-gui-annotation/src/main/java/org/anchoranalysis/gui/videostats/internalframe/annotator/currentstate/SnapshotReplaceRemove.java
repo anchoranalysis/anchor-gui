@@ -57,9 +57,9 @@ class SnapshotReplaceRemove implements IReplaceRemove {
 	}
 
 	@Override
-	public void removeAcceptedMarksAndSelectedPoints(Cfg cfg, List<Point3i> pnts) {
+	public void removeAcceptedMarksAndSelectedPoints(Cfg cfg, List<Point3i> points) {
 		recorder.recordSnapshot();
-		delegate.removeAcceptedMarksAndSelectedPoints(cfg, pnts);
+		delegate.removeAcceptedMarksAndSelectedPoints(cfg, points);
 	}
 
 }

@@ -73,10 +73,10 @@ class ClickAdapter extends MouseAdapter {
 			return;
 		}
 		
-		Point3i pnt = new Point3i( e.getX(), e.getY(), sliceNumGetter.getSliceNum() );
+		Point3i point = new Point3i( e.getX(), e.getY(), sliceNumGetter.getSliceNum() );
 		
 		// This our current
-		OverlayCollection selectedOverlays = overlaysGetter.overlaysAt(pnt);
+		OverlayCollection selectedOverlays = overlaysGetter.overlaysAt(point);
 
 		int[] ids = idArrayFromOverlayCollection(selectedOverlays);
 		if (e.isControlDown()) {

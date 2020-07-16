@@ -39,7 +39,7 @@ import org.anchoranalysis.gui.videostats.internalframe.annotator.currentstate.IQ
 
 class FindPoints {
 
-	public static Cfg findMarksContainingPnt( Cfg cfg, Point3d pnt, RegionMap regionMap, int regionID ) {
+	public static Cfg findMarksContainingPoint( Cfg cfg, Point3d point, RegionMap regionMap, int regionID ) {
 		
 		Cfg cfgOut = new Cfg();
 		
@@ -47,7 +47,7 @@ class FindPoints {
 		
 		// Find marks that contain the point x, y
 		for( Mark m : cfg ) {
-			byte membership = m.evalPntInside(pnt);
+			byte membership = m.evalPointInside(point);
 			if (rm.isMemberFlag(membership)) {
 				cfgOut.add(m);
 			}
@@ -56,12 +56,12 @@ class FindPoints {
 		return cfgOut;
 	}
 	
-	public static List<Point3i> findSelectedPointsNear( Point3d pnt, IQuerySelectedPoints selectedPoints ) {
-		Point3i pntInt = new Point3i((int)pnt.getX(), (int)pnt.getY(), (int)pnt.getZ());
-		return findSelectedPointsNear(pntInt, selectedPoints);
+	public static List<Point3i> findSelectedPointsNear( Point3d point, IQuerySelectedPoints selectedPoints ) {
+		Point3i pointInt = new Point3i((int)point.getX(), (int)point.getY(), (int)point.getZ());
+		return findSelectedPointsNear(pointInt, selectedPoints);
 	}
 
-	private static List<Point3i> findSelectedPointsNear( Point3i pnt, IQuerySelectedPoints selectedPoints ) {
+	private static List<Point3i> findSelectedPointsNear( Point3i point, IQuerySelectedPoints selectedPoints ) {
 		
 		List<Point3i> listPoints = selectedPoints.selectedPointsAsIntegers();
 		
@@ -73,7 +73,7 @@ class FindPoints {
 		
 		// Find marks that contain the point x, y
 		for( Point3i p : listPoints ) {
-			int distSq = distFromPoints(p,pnt);
+			int distSq = distFromPoints(p,point);
 			if( distSq<distThrshldSq) {
 				nearPoints.add(p);
 			}

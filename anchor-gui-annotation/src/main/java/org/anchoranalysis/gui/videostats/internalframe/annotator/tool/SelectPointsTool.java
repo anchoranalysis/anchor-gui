@@ -56,7 +56,7 @@ public class SelectPointsTool extends AnnotationTool {
 	private ImageDimensions dim;
 	
 	@Override
-	public void leftMouseClickedAtPoint(Point3d pnt) {
+	public void leftMouseClickedAtPoint(Point3d point) {
 		// NOTHING TO DO
 	}
 

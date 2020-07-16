@@ -158,14 +158,14 @@ class DisplayStackViewportZoomed {
 		Point2i imgPointNewGlobal = zoomScale.applyScale(imgPointOld);
 		
 		// Corner point
-		Point2i crnrPnt = new Point2i();
-		crnrPnt.setX( imgPointNewGlobal.getX() - mousePoint.getX() );
-		crnrPnt.setY( imgPointNewGlobal.getY() - mousePoint.getY() );
+		Point2i crnrPoint = new Point2i();
+		crnrPoint.setX( imgPointNewGlobal.getX() - mousePoint.getX() );
+		crnrPoint.setY( imgPointNewGlobal.getY() - mousePoint.getY() );
 		
 		// But if they are less than 0, then we need to adjust
-		crnrPnt.setX( Math.max( crnrPnt.getX(), 0 ) );
-		crnrPnt.setY( Math.max( crnrPnt.getY(), 0 ) );
-		return crnrPnt;
+		crnrPoint.setX( Math.max( crnrPoint.getX(), 0 ) );
+		crnrPoint.setY( Math.max( crnrPoint.getY(), 0 ) );
+		return crnrPoint;
 	}
 	
 	public Point2i calcNewCrnrPosAfterChangeInZoom(Extent canvasExtentOld, ZoomScale zoomScaleOld,
@@ -179,8 +179,8 @@ class DisplayStackViewportZoomed {
 		return zoomScale.applyScale(scaleFree); 
 	}
 
-	public Point2i removeScale(Point2i pnt) {
-		return zoomScale.removeScale(pnt);
+	public Point2i removeScale(Point2i point) {
+		return zoomScale.removeScale(point);
 	}
 
 	public BoundingBox getBBox() {
