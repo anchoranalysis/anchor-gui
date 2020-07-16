@@ -37,6 +37,10 @@ import org.anchoranalysis.core.geometry.Point3d;
 import org.anchoranalysis.core.geometry.Point3i;
 import org.anchoranalysis.gui.videostats.internalframe.annotator.currentstate.IQuerySelectedPoints;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+
+@NoArgsConstructor(access=AccessLevel.PRIVATE)
 class FindPoints {
 
 	public static Cfg findMarksContainingPoint( Cfg cfg, Point3d point, RegionMap regionMap, int regionID ) {
@@ -68,20 +72,20 @@ class FindPoints {
 		List<Point3i> nearPoints = new ArrayList<>();
 		
 		// 5 pixels
-		int distThrshld = 5;
-		int distThrshldSq = distThrshld*distThrshld;
+		int distanceThreshold = 5;
+		int distanceThresholdSquared = distanceThreshold*distanceThreshold;
 		
 		// Find marks that contain the point x, y
 		for( Point3i p : listPoints ) {
-			int distSq = distFromPoints(p,point);
-			if( distSq<distThrshldSq) {
+			int distanceSquared = distanceFromPoints(p,point);
+			if( distanceSquared<distanceThresholdSquared) {
 				nearPoints.add(p);
 			}
 		}
 		return nearPoints;
 	}
 	
-	private static int distFromPoints( Point3i p1, Point3i p2 ) {
+	private static int distanceFromPoints( Point3i p1, Point3i p2 ) {
 		int px = p1.getX() - p2.getX();
 		int py = p1.getY() - p2.getY();
 		int pz = p1.getZ() - p2.getZ();
