@@ -1,10 +1,8 @@
-package org.anchoranalysis.gui.annotation.builder;
-
 /*-
  * #%L
  * anchor-gui-annotation
  * %%
- * Copyright (C) 2010 - 2019 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann la Roche
+ * Copyright (C) 2010 - 2020 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann-La Roche
  * %%
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -12,10 +10,10 @@ package org.anchoranalysis.gui.annotation.builder;
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -26,10 +24,11 @@ package org.anchoranalysis.gui.annotation.builder;
  * #L%
  */
 
+package org.anchoranalysis.gui.annotation.builder;
+
 import java.io.File;
 import java.nio.file.Path;
 import java.util.Optional;
-
 import org.anchoranalysis.core.cache.CachedOperation;
 import org.anchoranalysis.core.cache.CachedOperationWrap;
 import org.anchoranalysis.core.error.CreateException;
@@ -48,78 +47,68 @@ import org.anchoranalysis.gui.videostats.internalframe.annotator.AnnotationPanel
 import org.anchoranalysis.gui.videostats.internalframe.annotator.navigation.PanelNavigation;
 import org.anchoranalysis.image.stack.Stack;
 
-/** Builds the GUI components to support a strategy */
 public abstract class AnnotationGuiBuilder<T extends AnnotationInitParams> {
-		
-	private CachedOperation<AnnotationSummary,CreateException> queryAnnotationStatus;
-	
-	public AnnotationGuiBuilder() {
-		super();
-		this.queryAnnotationStatus = createCachedSummary();
-	}
-	
-	/** Should the user be prompted to use a default annotation? */
-	public abstract boolean isUseDefaultPromptNeeded();
-	
-	public abstract T createInitParams(
-		ProgressReporterMultiple prm,
-		AnnotationGuiContext context,
-		Logger logger,
-		boolean useDefaultCfg
-	) throws CreateException;
-	
-	/**
-	 * A mechanism for exporting annotations
-	 * 
-	 * @return mechanism or NULL if it isn't supported
-	 */
-	public abstract ExportAnnotation exportAnnotation();
-	
-	public abstract PanelNavigation createInitPanelNavigation(
-		T paramsInit,
-		AnnotationPanelParams params,
-		AnnotationFrameControllers controllers
-	);
-	
-	public abstract void showAllAdditional(
-		T paramsInit,
-		AdditionalFramesContext context
-	) throws OperationFailedException;
-	
 
-	/** A cached annotation-summary for the annotation
-	 * 
-	 * The cache should be reset of the annotation is changed by the user
-	 **/
-	public CachedOperation<AnnotationSummary,CreateException> queryAnnotationSummary() {
-		return queryAnnotationStatus;
-	}
-	
-	public abstract ChangeableBackgroundDefinition backgroundDefinition( AnnotationBackground annotationBackground );
-	
-	/** A path that is used to allow the user to delete an annotation */
-	public abstract Path deletePath();
-		
-	// Cached-operation
-	public abstract OperationWithProgressReporter<
-		NamedProvider<Stack>,
-		CreateException
-	> stacks();
-	
-	public abstract String descriptiveName();
-	
-	public abstract Optional<File> associatedFile();
-	
-	/** Height in pixels of the panel that isn't the 'image' section of the frame */
-	public abstract int heightNonImagePanel();
-	
-	/** Creates an annotation summary for the current-annotation */
-	protected abstract AnnotationSummary createSummary() throws CreateException;
-	
-	/** Creates a cached version of the createSummary() method */
-	private CachedOperation<AnnotationSummary,CreateException> createCachedSummary() {
-		return new CachedOperationWrap<>(
-			() -> createSummary()
-		);
-	}
+    private CachedOperation<AnnotationSummary, CreateException> queryAnnotationStatus;
+
+    public AnnotationGuiBuilder() {
+        super();
+        this.queryAnnotationStatus = createCachedSummary();
+    }
+
+    /** Should the user be prompted to use a default annotation? */
+    public abstract boolean isUseDefaultPromptNeeded();
+
+    public abstract T createInitParams(
+            ProgressReporterMultiple prm,
+            AnnotationGuiContext context,
+            Logger logger,
+            boolean useDefaultCfg)
+            throws CreateException;
+
+    /**
+     * A mechanism for exporting annotations
+     *
+     * @return mechanism or NULL if it isn't supported
+     */
+    public abstract ExportAnnotation exportAnnotation();
+
+    public abstract PanelNavigation createInitPanelNavigation(
+            T paramsInit, AnnotationPanelParams params, AnnotationFrameControllers controllers);
+
+    public abstract void showAllAdditional(T paramsInit, AdditionalFramesContext context)
+            throws OperationFailedException;
+
+    /**
+     * A cached annotation-summary for the annotation
+     *
+     * <p>The cache should be reset of the annotation is changed by the user
+     */
+    public CachedOperation<AnnotationSummary, CreateException> queryAnnotationSummary() {
+        return queryAnnotationStatus;
+    }
+
+    public abstract ChangeableBackgroundDefinition backgroundDefinition(
+            AnnotationBackground annotationBackground);
+
+    /** A path that is used to allow the user to delete an annotation */
+    public abstract Path deletePath();
+
+    // Cached-operation
+    public abstract OperationWithProgressReporter<NamedProvider<Stack>, CreateException> stacks();
+
+    public abstract String descriptiveName();
+
+    public abstract Optional<File> associatedFile();
+
+    /** Height in pixels of the panel that isn't the 'image' section of the frame */
+    public abstract int heightNonImagePanel();
+
+    /** Creates an annotation summary for the current-annotation */
+    protected abstract AnnotationSummary createSummary() throws CreateException;
+
+    /** Creates a cached version of the createSummary() method */
+    private CachedOperation<AnnotationSummary, CreateException> createCachedSummary() {
+        return new CachedOperationWrap<>(() -> createSummary());
+    }
 }

@@ -1,10 +1,8 @@
-package org.anchoranalysis.gui.feature.evaluator;
-
 /*-
  * #%L
  * anchor-gui-feature-evaluator
  * %%
- * Copyright (C) 2010 - 2019 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann la Roche
+ * Copyright (C) 2010 - 2020 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann-La Roche
  * %%
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -12,10 +10,10 @@ package org.anchoranalysis.gui.feature.evaluator;
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -26,34 +24,37 @@ package org.anchoranalysis.gui.feature.evaluator;
  * #L%
  */
 
-import javax.swing.JPanel;
+package org.anchoranalysis.gui.feature.evaluator;
 
+import javax.swing.JPanel;
 import org.anchoranalysis.anchor.overlay.collection.OverlayCollection;
 import org.anchoranalysis.gui.cfgnrgtable.TablePanel;
 import org.anchoranalysis.gui.feature.evaluator.singlepair.IUpdatableSinglePair;
 
 class OverlayDescriptionPanel {
 
-	private OverlayDescription markDescription = new OverlayDescription();
-	private DescriptionTopPanel descriptionTopPanel = new DescriptionTopPanel();
-	
-	public void updateDescriptionTop(OverlayCollection overlays) {
-		descriptionTopPanel.updateDescriptionTop(overlays);
-	}
-	public boolean isFrozen() {
-		return descriptionTopPanel.isFrozen();
-	}
-	public IUpdatableSinglePair getMarkDescription() {
-		return markDescription;
-	}
-	
-	public JPanel getPanel() {
-		return descriptionTopPanel.getPanel();
-	}
-	
-	public JPanel createSummaryPanel() {
-		TablePanel summaryPanel = new TablePanel("Summary", markDescription, true );
-		summaryPanel.getTable().setTableHeader(null);
-		return summaryPanel.getPanel();
-	}
+    private OverlayDescription markDescription = new OverlayDescription();
+    private DescriptionTopPanel descriptionTopPanel = new DescriptionTopPanel();
+
+    public void updateDescriptionTop(OverlayCollection overlays) {
+        descriptionTopPanel.updateDescriptionTop(overlays);
+    }
+
+    public boolean isFrozen() {
+        return descriptionTopPanel.isFrozen();
+    }
+
+    public IUpdatableSinglePair getMarkDescription() {
+        return markDescription;
+    }
+
+    public JPanel getPanel() {
+        return descriptionTopPanel.getPanel();
+    }
+
+    public JPanel createSummaryPanel() {
+        TablePanel summaryPanel = new TablePanel("Summary", markDescription, true);
+        summaryPanel.getTable().setTableHeader(null);
+        return summaryPanel.getPanel();
+    }
 }

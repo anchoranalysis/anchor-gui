@@ -1,10 +1,8 @@
-package org.anchoranalysis.plugin.gui.bean.exporttask;
-
-/*
+/*-
  * #%L
- * anchor-gui
+ * anchor-plugin-gui-export
  * %%
- * Copyright (C) 2016 ETH Zurich, University of Zurich, Owen Feehan
+ * Copyright (C) 2010 - 2020 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann-La Roche
  * %%
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -12,10 +10,10 @@ package org.anchoranalysis.plugin.gui.bean.exporttask;
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -26,94 +24,94 @@ package org.anchoranalysis.plugin.gui.bean.exporttask;
  * #L%
  */
 
+package org.anchoranalysis.plugin.gui.bean.exporttask;
 
 import javax.swing.ProgressMonitor;
-
 import org.anchoranalysis.bean.annotation.BeanField;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.OperationFailedException;
-import org.anchoranalysis.core.functional.FunctionWithException;
+import org.anchoranalysis.core.functional.function.FunctionWithException;
 import org.anchoranalysis.core.index.container.BoundedIndexContainer;
 import org.anchoranalysis.gui.bean.exporttask.ExportTaskFailedException;
 import org.anchoranalysis.gui.bean.exporttask.ExportTaskParams;
 
-/**
- * Exports a rasters in sequence, as generated from a BoundedIndexContainer for some type
- *  
- * @author feehano
- *
- * @param <T> iterable-type
- */
-public abstract class ExportTaskRasterGeneratorFromBoundedIndexContainer<T> extends ExportTaskRasterGeneratorSequence<T> {
+public abstract class ExportTaskRasterGeneratorFromBoundedIndexContainer<T>
+        extends ExportTaskRasterGeneratorSequence<T> {
 
-	// START BEAN PROPERTIES
-	@BeanField
-	private ExportTaskBoundedIndexContainerGeneratorSeries<T> delegate;
-	// END BEAN PROPERTIES
-	
-	public ExportTaskRasterGeneratorFromBoundedIndexContainer() {
-		delegate = new ExportTaskBoundedIndexContainerGeneratorSeries<>();
-	}
+    // START BEAN PROPERTIES
+    @BeanField private ExportTaskBoundedIndexContainerGeneratorSeries<T> delegate;
+    // END BEAN PROPERTIES
 
-	public void setBridge( FunctionWithException<ExportTaskParams,BoundedIndexContainer<T>,OperationFailedException> containerBridge ) {
-		delegate.setContainerBridge(containerBridge);
-	}
-	
-	@Override
-	public int getMinProgress(ExportTaskParams params) throws ExportTaskFailedException {
-		return delegate.getMinProgress(params);
-	}
+    public ExportTaskRasterGeneratorFromBoundedIndexContainer() {
+        delegate = new ExportTaskBoundedIndexContainerGeneratorSeries<>();
+    }
 
-	@Override
-	public int getMaxProgress(ExportTaskParams params) throws ExportTaskFailedException {
-		return delegate.getMaxProgress(params);
-	}
+    public void setBridge(
+            FunctionWithException<
+                            ExportTaskParams, BoundedIndexContainer<T>, OperationFailedException>
+                    containerBridge) {
+        delegate.setContainerBridge(containerBridge);
+    }
 
-	public int getIncrementSize() {
-		return delegate.getIncrementSize();
-	}
+    @Override
+    public int getMinProgress(ExportTaskParams params) throws ExportTaskFailedException {
+        return delegate.getMinProgress(params);
+    }
 
-	public void setIncrementSize(int incrementSize) {
-		delegate.setIncrementSize(incrementSize);
-	}
+    @Override
+    public int getMaxProgress(ExportTaskParams params) throws ExportTaskFailedException {
+        return delegate.getMaxProgress(params);
+    }
 
-	public String getDscrContrib() {
-		return delegate.getDscrContrib();
-	}
-	
-	@Override
-	public boolean execute(ExportTaskParams params,
-			ProgressMonitor progressMonitor) throws ExportTaskFailedException {
-		
-		try {
-			return delegate.execute( params, progressMonitor, createGeneratorSequenceWriter(params), params.getOutputManager(), getOutputName() );
-		} catch (CreateException e) {
-			throw new ExportTaskFailedException(e);
-		}
-	}
+    public int getIncrementSize() {
+        return delegate.getIncrementSize();
+    }
 
-	public boolean isStartAtEnd() {
-		return delegate.isStartAtEnd();
-	}
+    public void setIncrementSize(int incrementSize) {
+        delegate.setIncrementSize(incrementSize);
+    }
 
-	public void setStartAtEnd(boolean startAtEnd) {
-		delegate.setStartAtEnd(startAtEnd);
-	}
+    public String getDscrContrib() {
+        return delegate.getDscrContrib();
+    }
 
-	public int getLimitIterations() {
-		return delegate.getLimitIterations();
-	}
+    @Override
+    public boolean execute(ExportTaskParams params, ProgressMonitor progressMonitor)
+            throws ExportTaskFailedException {
 
-	public void setLimitIterations(int limitIterations) {
-		delegate.setLimitIterations(limitIterations);
-	}
+        try {
+            return delegate.execute(
+                    params,
+                    progressMonitor,
+                    createGeneratorSequenceWriter(params),
+                    params.getOutputManager(),
+                    getOutputName());
+        } catch (CreateException e) {
+            throw new ExportTaskFailedException(e);
+        }
+    }
 
-	public ExportTaskBoundedIndexContainerGeneratorSeries<T> getDelegate() {
-		return delegate;
-	}
+    public boolean isStartAtEnd() {
+        return delegate.isStartAtEnd();
+    }
 
-	public void setDelegate(
-			ExportTaskBoundedIndexContainerGeneratorSeries<T> delegate) {
-		this.delegate = delegate;
-	}
+    public void setStartAtEnd(boolean startAtEnd) {
+        delegate.setStartAtEnd(startAtEnd);
+    }
+
+    public int getLimitIterations() {
+        return delegate.getLimitIterations();
+    }
+
+    public void setLimitIterations(int limitIterations) {
+        delegate.setLimitIterations(limitIterations);
+    }
+
+    public ExportTaskBoundedIndexContainerGeneratorSeries<T> getDelegate() {
+        return delegate;
+    }
+
+    public void setDelegate(ExportTaskBoundedIndexContainerGeneratorSeries<T> delegate) {
+        this.delegate = delegate;
+    }
 }

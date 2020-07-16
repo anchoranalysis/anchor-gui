@@ -1,10 +1,8 @@
-package org.anchoranalysis.gui.videostats.modulecreator;
-
-/*
+/*-
  * #%L
- * anchor-gui
+ * anchor-gui-common
  * %%
- * Copyright (C) 2016 ETH Zurich, University of Zurich, Owen Feehan
+ * Copyright (C) 2010 - 2020 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann-La Roche
  * %%
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -12,10 +10,10 @@ package org.anchoranalysis.gui.videostats.modulecreator;
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -26,10 +24,10 @@ package org.anchoranalysis.gui.videostats.modulecreator;
  * #L%
  */
 
+package org.anchoranalysis.gui.videostats.modulecreator;
 
 import java.awt.Component;
 import java.util.Optional;
-
 import org.anchoranalysis.core.progress.ProgressReporter;
 import org.anchoranalysis.gui.videostats.dropdown.IAddVideoStatsModule;
 import org.anchoranalysis.gui.videostats.module.VideoStatsModuleCreateException;
@@ -37,15 +35,18 @@ import org.anchoranalysis.gui.videostats.operation.combine.IVideoStatsOperationC
 
 // Responsible only for creating a module
 public abstract class VideoStatsModuleCreator {
-	
-	public void beforeBackground( Component parentComponent ) {};
-	
-	public abstract void createAndAddVideoStatsModule(IAddVideoStatsModule adder) throws VideoStatsModuleCreateException;
 
-	public void doInBackground(ProgressReporter progressReporter) throws VideoStatsModuleCreateException {}
-	
-	// If it returns empty(), no combining is possible. Override with operations
-	public Optional<IVideoStatsOperationCombine> getCombiner() {
-		return Optional.empty();
-	}
+    public void beforeBackground(Component parentComponent) {}
+    ;
+
+    public abstract void createAndAddVideoStatsModule(IAddVideoStatsModule adder)
+            throws VideoStatsModuleCreateException;
+
+    public void doInBackground(ProgressReporter progressReporter)
+            throws VideoStatsModuleCreateException {}
+
+    // If it returns empty(), no combining is possible. Override with operations
+    public Optional<IVideoStatsOperationCombine> getCombiner() {
+        return Optional.empty();
+    }
 }

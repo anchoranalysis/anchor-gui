@@ -1,10 +1,8 @@
-package org.anchoranalysis.gui.videostats.internalframe.annotator;
-
 /*-
  * #%L
  * anchor-gui-annotation
  * %%
- * Copyright (C) 2010 - 2019 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann la Roche
+ * Copyright (C) 2010 - 2020 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann-La Roche
  * %%
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -12,10 +10,10 @@ package org.anchoranalysis.gui.videostats.internalframe.annotator;
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -26,41 +24,46 @@ package org.anchoranalysis.gui.videostats.internalframe.annotator;
  * #L%
  */
 
+package org.anchoranalysis.gui.videostats.internalframe.annotator;
+
 import org.anchoranalysis.gui.frame.details.canvas.ControllerAction;
-import org.anchoranalysis.gui.frame.overlays.IExtractOverlays;
+import org.anchoranalysis.gui.frame.overlays.ExtractOverlays;
 import org.anchoranalysis.gui.frame.overlays.IShowOverlays;
 import org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.ControllerPopupMenuWithBackground;
 
 public class AnnotationFrameControllers {
 
-	private IExtractOverlays extractOverlays;
-	private IShowOverlays showOverlays;
-	
-	private ControllerPopupMenuWithBackground popup;
-	private ControllerAction action;
-	
-	public AnnotationFrameControllers(IExtractOverlays extractOverlays, IShowOverlays showOverlays,
-			ControllerPopupMenuWithBackground popup, ControllerAction action) {
-		super();
-		this.extractOverlays = extractOverlays;
-		this.showOverlays = showOverlays;
-		this.popup = popup;
-		this.action = action;
-	}
+    private ExtractOverlays extractOverlays;
+    private IShowOverlays showOverlays;
 
-	public IExtractOverlays extractOverlays() {
-		return extractOverlays;
-	}
+    private ControllerPopupMenuWithBackground popup;
+    private ControllerAction action;
 
-	public IShowOverlays showOverlays() {
-		return showOverlays;
-	}
+    public AnnotationFrameControllers(
+            ExtractOverlays extractOverlays,
+            IShowOverlays showOverlays,
+            ControllerPopupMenuWithBackground popup,
+            ControllerAction action) {
+        super();
+        this.extractOverlays = extractOverlays;
+        this.showOverlays = showOverlays;
+        this.popup = popup;
+        this.action = action;
+    }
 
-	public ControllerPopupMenuWithBackground popup() {
-		return popup;
-	}
+    public ExtractOverlays extractOverlays() {
+        return extractOverlays;
+    }
 
-	public ControllerAction action() {
-		return action;
-	}	
+    public IShowOverlays showOverlays() {
+        return showOverlays;
+    }
+
+    public ControllerPopupMenuWithBackground popup() {
+        return popup;
+    }
+
+    public ControllerAction action() {
+        return action;
+    }
 }

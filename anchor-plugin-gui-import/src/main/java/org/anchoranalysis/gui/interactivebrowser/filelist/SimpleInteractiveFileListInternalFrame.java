@@ -1,10 +1,8 @@
-package org.anchoranalysis.gui.interactivebrowser.filelist;
-
-/*
+/*-
  * #%L
- * anchor-gui
+ * anchor-plugin-gui-import
  * %%
- * Copyright (C) 2016 ETH Zurich, University of Zurich, Owen Feehan
+ * Copyright (C) 2010 - 2020 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann-La Roche
  * %%
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -12,10 +10,10 @@ package org.anchoranalysis.gui.interactivebrowser.filelist;
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -26,9 +24,9 @@ package org.anchoranalysis.gui.interactivebrowser.filelist;
  * #L%
  */
 
+package org.anchoranalysis.gui.interactivebrowser.filelist;
 
 import java.util.List;
-
 import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.progress.OperationWithProgressReporter;
@@ -45,37 +43,36 @@ import org.anchoranalysis.gui.videostats.module.VideoStatsModuleCreateException;
 
 public class SimpleInteractiveFileListInternalFrame {
 
-	private InteractiveFileListInternalFrame delegate;
-	
-	public SimpleInteractiveFileListInternalFrame( String name ) {
-		delegate = new InteractiveFileListInternalFrame(name);
-	}
+    private InteractiveFileListInternalFrame delegate;
 
-	public void init(
-		IAddVideoStatsModule adder,
-		OperationWithProgressReporter<List<InteractiveFile>,OperationFailedException> opListFile,
-		IOpenFile fileOpenManager,
-		VideoStatsModuleGlobalParams mpg,
-		MarkDisplaySettings markDisplaySettings,
-		ProgressReporter progressReporter
-	) throws InitException {
-		
-		try {
-			delegate.init(
-				adder,
-				new SimpleVideoStatsFileListTableModel(opListFile, progressReporter),
-				fileOpenManager,
-				mpg,
-				markDisplaySettings
-			);
-		} catch (OperationFailedException e) {
-			throw new InitException(e);
-		}
-	}
+    public SimpleInteractiveFileListInternalFrame(String name) {
+        delegate = new InteractiveFileListInternalFrame(name);
+    }
 
-	public VideoStatsModule createVideoStatsModule(
-			DefaultModuleState defaultFrameState)
-			throws VideoStatsModuleCreateException {
-		return delegate.moduleCreator().createVideoStatsModule(defaultFrameState);
-	}
+    public void init(
+            IAddVideoStatsModule adder,
+            OperationWithProgressReporter<List<InteractiveFile>, OperationFailedException>
+                    opListFile,
+            IOpenFile fileOpenManager,
+            VideoStatsModuleGlobalParams mpg,
+            MarkDisplaySettings markDisplaySettings,
+            ProgressReporter progressReporter)
+            throws InitException {
+
+        try {
+            delegate.init(
+                    adder,
+                    new SimpleVideoStatsFileListTableModel(opListFile, progressReporter),
+                    fileOpenManager,
+                    mpg,
+                    markDisplaySettings);
+        } catch (OperationFailedException e) {
+            throw new InitException(e);
+        }
+    }
+
+    public VideoStatsModule createVideoStatsModule(DefaultModuleState defaultFrameState)
+            throws VideoStatsModuleCreateException {
+        return delegate.moduleCreator().createVideoStatsModule(defaultFrameState);
+    }
 }

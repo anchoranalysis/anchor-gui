@@ -1,10 +1,8 @@
-package org.anchoranalysis.gui.videostats.dropdown;
-
-/*
+/*-
  * #%L
- * anchor-gui
+ * anchor-gui-frame
  * %%
- * Copyright (C) 2016 ETH Zurich, University of Zurich, Owen Feehan
+ * Copyright (C) 2010 - 2020 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann-La Roche
  * %%
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -12,10 +10,10 @@ package org.anchoranalysis.gui.videostats.dropdown;
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -26,12 +24,11 @@ package org.anchoranalysis.gui.videostats.dropdown;
  * #L%
  */
 
+package org.anchoranalysis.gui.videostats.dropdown;
 
 import java.awt.Component;
 import java.util.concurrent.ExecutionException;
-
 import javax.swing.JOptionPane;
-
 import org.anchoranalysis.core.log.Logger;
 import org.anchoranalysis.core.progress.OperationWithProgressReporter;
 import org.anchoranalysis.core.progress.ProgressReporter;
@@ -43,106 +40,96 @@ import org.anchoranalysis.gui.videostats.modulecreator.VideoStatsModuleCreator;
 import org.anchoranalysis.gui.videostats.threading.InteractiveThreadPool;
 import org.anchoranalysis.gui.videostats.threading.InteractiveWorker;
 
-/**
- * Responsible for creating a module and adding it somewhere
- * 
- * @author Owen Feehan
- *
- */
 public class VideoStatsModuleCreatorAndAdder {
 
-	private OperationWithProgressReporter<IAddVideoStatsModule,? extends Throwable> adderOperation;
-	private VideoStatsModuleCreator creator;
-	
-	public VideoStatsModuleCreatorAndAdder(
-		OperationWithProgressReporter<IAddVideoStatsModule,? extends Throwable> adderOperation,
-		VideoStatsModuleCreator creator
-	) {
-		this.adderOperation = adderOperation;
-		this.creator = creator;
-		
-	}
-	
-	public void createVideoStatsModuleForAdder(
-		InteractiveThreadPool threadPool,
-		Component parentComponent,
-		Logger logger
-	) {
-		Worker worker = new Worker( logger );
-		worker.beforeBackground(parentComponent);
-		threadPool.submitWithProgressMonitor(worker, "Create module");
-	}
-	
-	private class Worker extends InteractiveWorker<IAddVideoStatsModule, Void> {
+    private OperationWithProgressReporter<IAddVideoStatsModule, ? extends Throwable> adderOperation;
+    private VideoStatsModuleCreator creator;
 
-		private Throwable exceptionRecorded;
-		private Logger logger;
-		
-		public Worker(Logger logger) {
-			super();
-			this.logger = logger;
-		}
+    public VideoStatsModuleCreatorAndAdder(
+            OperationWithProgressReporter<IAddVideoStatsModule, ? extends Throwable> adderOperation,
+            VideoStatsModuleCreator creator) {
+        this.adderOperation = adderOperation;
+        this.creator = creator;
+    }
 
+    public void createVideoStatsModuleForAdder(
+            InteractiveThreadPool threadPool, Component parentComponent, Logger logger) {
+        Worker worker = new Worker(logger);
+        worker.beforeBackground(parentComponent);
+        threadPool.submitWithProgressMonitor(worker, "Create module");
+    }
 
-		public void beforeBackground(Component parentComponent) {
-			creator.beforeBackground(parentComponent);
-		}
-		
-		
-		@Override
-		protected IAddVideoStatsModule doInBackground() {
-			
-			exceptionRecorded = null;
-			
-			try {
-				try (ProgressReporter progressReporter = new ProgressReporterInteractiveWorker(this)) {
-					
-					try (ProgressReporterMultiple prm = new ProgressReporterMultiple(progressReporter, 2)) {
-						IAddVideoStatsModule adder = adderOperation.doOperation(
-							new ProgressReporterOneOfMany(prm)
-						);
-						prm.incrWorker();
-						
-						creator.doInBackground( new ProgressReporterOneOfMany(prm) );
-						
-						return adder;
-					}
-				}
-			} catch (Throwable e) {
-				exceptionRecorded = e;
-				return null;
-			}
-		}
+    private class Worker extends InteractiveWorker<IAddVideoStatsModule, Void> {
 
-		@Override
-		protected void done() {
-			
-			if (exceptionRecorded!=null) {
-				displayErrorDialog(exceptionRecorded);
-				return;
-			}
-			
-			try {
-				creator.createAndAddVideoStatsModule( get() );
-			} catch (InterruptedException | ExecutionException | VideoStatsModuleCreateException e) {
-				displayErrorDialog(e);
-			}
-		}
-		
-		
-		private void displayErrorDialog( Throwable e ) {
-			
-			logger.errorReporter().recordError( VideoStatsModuleCreatorAndAdder.class, e);
-			
-			//custom title, error icon
-			JOptionPane.showMessageDialog(null,
-				"An error occurred creating the module. Please see log file.",
-			    "An error occurred creating the module",
-			    JOptionPane.ERROR_MESSAGE);
-		}
-	}
+        private Throwable exceptionRecorded;
+        private Logger logger;
 
-	public VideoStatsModuleCreator getCreator() {
-		return creator;
-	}
+        public Worker(Logger logger) {
+            super();
+            this.logger = logger;
+        }
+
+        public void beforeBackground(Component parentComponent) {
+            creator.beforeBackground(parentComponent);
+        }
+
+        @Override
+        protected IAddVideoStatsModule doInBackground() {
+
+            exceptionRecorded = null;
+
+            try {
+                try (ProgressReporter progressReporter =
+                        new ProgressReporterInteractiveWorker(this)) {
+
+                    try (ProgressReporterMultiple prm =
+                            new ProgressReporterMultiple(progressReporter, 2)) {
+                        IAddVideoStatsModule adder =
+                                adderOperation.doOperation(new ProgressReporterOneOfMany(prm));
+                        prm.incrWorker();
+
+                        creator.doInBackground(new ProgressReporterOneOfMany(prm));
+
+                        return adder;
+                    }
+                }
+            } catch (Throwable e) {
+                exceptionRecorded = e;
+                return null;
+            }
+        }
+
+        @Override
+        protected void done() {
+
+            if (exceptionRecorded != null) {
+                displayErrorDialog(exceptionRecorded);
+                return;
+            }
+
+            try {
+                creator.createAndAddVideoStatsModule(get());
+            } catch (InterruptedException
+                    | ExecutionException
+                    | VideoStatsModuleCreateException e) {
+                displayErrorDialog(e);
+            }
+        }
+
+        private void displayErrorDialog(Throwable e) {
+
+            logger.errorReporter().recordError(VideoStatsModuleCreatorAndAdder.class, e);
+
+            // custom title, error icon
+            JOptionPane.showMessageDialog(
+                    null,
+                    "An error occurred creating the module. Please see log file.",
+                    "An error occurred creating the module",
+                    JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    public VideoStatsModuleCreator getCreator() {
+        return creator;
+    }
 }

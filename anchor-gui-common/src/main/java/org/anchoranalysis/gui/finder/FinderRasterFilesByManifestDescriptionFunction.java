@@ -1,12 +1,8 @@
-package org.anchoranalysis.gui.finder;
-
-import java.nio.file.Path;
-
-/*
+/*-
  * #%L
- * anchor-image-io
+ * anchor-gui-common
  * %%
- * Copyright (C) 2016 ETH Zurich, University of Zurich, Owen Feehan
+ * Copyright (C) 2010 - 2020 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann-La Roche
  * %%
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -14,10 +10,10 @@ import java.nio.file.Path;
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -28,9 +24,10 @@ import java.nio.file.Path;
  * #L%
  */
 
+package org.anchoranalysis.gui.finder;
 
+import java.nio.file.Path;
 import java.util.List;
-
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.progress.CachedOperationWithProgressReporter;
 import org.anchoranalysis.core.progress.ProgressReporter;
@@ -50,74 +47,71 @@ import org.anchoranalysis.io.manifest.match.ManifestDescriptionTypeMatch;
 
 public class FinderRasterFilesByManifestDescriptionFunction implements Finder {
 
-	private String function;
-	
-	private List<FileWrite> list;
-	
-	private RasterReader rasterReader;
-	
-	public FinderRasterFilesByManifestDescriptionFunction(RasterReader rasterReader, String function ) {
+    private String function;
 
-		this.function = function;
-		this.rasterReader = rasterReader;
-	}
+    private List<FileWrite> list;
 
+    private RasterReader rasterReader;
 
-	@Override
-	public boolean doFind(ManifestRecorder manifestRecorder) {
+    public FinderRasterFilesByManifestDescriptionFunction(
+            RasterReader rasterReader, String function) {
 
-		ManifestDescriptionMatchAnd matchManifest = new ManifestDescriptionMatchAnd();
-		matchManifest.addCondition( new ManifestDescriptionFunctionMatch(function));
-		matchManifest.addCondition( new ManifestDescriptionTypeMatch("raster"));
-		
-		list = FinderUtilities.findListFile(manifestRecorder,  new FileWriteManifestMatch(matchManifest) );
-		return exists();
-	}
+        this.function = function;
+        this.rasterReader = rasterReader;
+    }
 
-	@Override
-	public boolean exists() {
-		return list!=null && !list.isEmpty();
-	}
-	
-	public NamedImgStackCollection createStackCollection() {
-		
-		 NamedImgStackCollection out = new  NamedImgStackCollection();
-		 for( FileWrite fileWrite : list) {
-			 	String name = fileWrite.getIndex();
-			 
-				// Assume single series, single channel
-				Path filePath = fileWrite.calcPath();
-								
-				out.addImageStack(
-					name,
-					new CachedOpenStackOp(filePath, rasterReader)
-				);
-		 }
-		 return out;
-	}
-	
-	
-	private static class CachedOpenStackOp extends CachedOperationWithProgressReporter<Stack,OperationFailedException> {
+    @Override
+    public boolean doFind(ManifestRecorder manifestRecorder) {
 
-		private Path filePath;
-		private RasterReader rasterReader;
-				
-		public CachedOpenStackOp(Path filePath, RasterReader rasterReader) {
-			super();
-			this.filePath = filePath;
-			this.rasterReader = rasterReader;
-		}
+        ManifestDescriptionMatchAnd matchManifest = new ManifestDescriptionMatchAnd();
+        matchManifest.addCondition(new ManifestDescriptionFunctionMatch(function));
+        matchManifest.addCondition(new ManifestDescriptionTypeMatch("raster"));
 
-		@Override
-		protected Stack execute(ProgressReporter progressReporter) throws OperationFailedException {
-			try (OpenedRaster openedRaster = rasterReader.openFile(filePath)) {
-				return openedRaster.open(0, progressReporter).get(0);
-				
-			} catch (RasterIOException e) {
-				throw new OperationFailedException(e);
-			}
-		}
-		
-	}
-	
+        list =
+                FinderUtilities.findListFile(
+                        manifestRecorder, new FileWriteManifestMatch(matchManifest));
+        return exists();
+    }
+
+    @Override
+    public boolean exists() {
+        return list != null && !list.isEmpty();
+    }
+
+    public NamedImgStackCollection createStackCollection() {
+
+        NamedImgStackCollection out = new NamedImgStackCollection();
+        for (FileWrite fileWrite : list) {
+            String name = fileWrite.getIndex();
+
+            // Assume single series, single channel
+            Path filePath = fileWrite.calcPath();
+
+            out.addImageStack(name, new CachedOpenStackOp(filePath, rasterReader));
+        }
+        return out;
+    }
+
+    private static class CachedOpenStackOp
+            extends CachedOperationWithProgressReporter<Stack, OperationFailedException> {
+
+        private Path filePath;
+        private RasterReader rasterReader;
+
+        public CachedOpenStackOp(Path filePath, RasterReader rasterReader) {
+            super();
+            this.filePath = filePath;
+            this.rasterReader = rasterReader;
+        }
+
+        @Override
+        protected Stack execute(ProgressReporter progressReporter) throws OperationFailedException {
+            try (OpenedRaster openedRaster = rasterReader.openFile(filePath)) {
+                return openedRaster.open(0, progressReporter).get(0);
+
+            } catch (RasterIOException e) {
+                throw new OperationFailedException(e);
+            }
+        }
+    }
 }

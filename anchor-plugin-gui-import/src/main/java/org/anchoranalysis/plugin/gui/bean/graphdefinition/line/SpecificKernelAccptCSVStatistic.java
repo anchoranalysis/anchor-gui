@@ -1,13 +1,8 @@
-package org.anchoranalysis.plugin.gui.bean.graphdefinition.line;
-
-import org.anchoranalysis.anchor.plot.index.LinePlot.YValGetter;
-import org.anchoranalysis.core.index.GetOperationFailedException;
-
-/*
+/*-
  * #%L
- * anchor-gui
+ * anchor-plugin-gui-import
  * %%
- * Copyright (C) 2016 ETH Zurich, University of Zurich, Owen Feehan
+ * Copyright (C) 2010 - 2020 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann-La Roche
  * %%
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -15,10 +10,10 @@ import org.anchoranalysis.core.index.GetOperationFailedException;
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -29,20 +24,23 @@ import org.anchoranalysis.core.index.GetOperationFailedException;
  * #L%
  */
 
+package org.anchoranalysis.plugin.gui.bean.graphdefinition.line;
 
+import org.anchoranalysis.anchor.plot.index.LinePlot.YValGetter;
+import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.gui.io.loader.manifest.finder.csvstatistic.CSVStatistic;
 
 public class SpecificKernelAccptCSVStatistic implements YValGetter<CSVStatistic> {
-	
-	private int index;
-	
-	public SpecificKernelAccptCSVStatistic(int index) {
-		super();
-		this.index = index;
-	}
 
-	@Override
-	public double getYVal(CSVStatistic item, int yIndex) throws GetOperationFailedException {
-		return item.getKernelAccpt()[index];
-	}
+    private int index;
+
+    public SpecificKernelAccptCSVStatistic(int index) {
+        super();
+        this.index = index;
+    }
+
+    @Override
+    public double getYVal(CSVStatistic item, int yIndex) throws GetOperationFailedException {
+        return item.getKernelAccpt()[index];
+    }
 }

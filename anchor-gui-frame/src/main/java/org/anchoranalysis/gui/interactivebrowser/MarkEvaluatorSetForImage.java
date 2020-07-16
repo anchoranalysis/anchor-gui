@@ -1,14 +1,8 @@
-package org.anchoranalysis.gui.interactivebrowser;
-
-
-
-import java.io.IOException;
-
-/*
+/*-
  * #%L
- * anchor-gui
+ * anchor-gui-frame
  * %%
- * Copyright (C) 2016 ETH Zurich, University of Zurich, Owen Feehan
+ * Copyright (C) 2010 - 2020 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann-La Roche
  * %%
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -16,10 +10,10 @@ import java.io.IOException;
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -30,12 +24,14 @@ import java.io.IOException;
  * #L%
  */
 
+package org.anchoranalysis.gui.interactivebrowser;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
-
+import lombok.RequiredArgsConstructor;
 import org.anchoranalysis.anchor.mpp.feature.bean.mark.MarkEvaluator;
 import org.anchoranalysis.core.cache.CachedOperation;
 import org.anchoranalysis.core.error.CreateException;
@@ -49,98 +45,89 @@ import org.anchoranalysis.core.progress.OperationWithProgressReporter;
 import org.anchoranalysis.image.stack.Stack;
 import org.anchoranalysis.io.output.bound.BoundIOContext;
 
+@RequiredArgsConstructor
 public class MarkEvaluatorSetForImage {
 
-	private Map<String,Operation<MarkEvaluatorRslvd,OperationFailedException>> map = new HashMap<>(); 
+    // START REQUIRED ARGUMENTS
+    private final OperationWithProgressReporter<NamedProvider<Stack>, ? extends Throwable>
+            namedImgStackCollection;
+    private final Operation<Optional<KeyValueParams>, IOException> keyParams;
+    private final BoundIOContext context;
+    // END REQUIRED ARGUMENTS
 
-	private OperationWithProgressReporter<NamedProvider<Stack>,? extends Throwable> namedImgStackCollection;
-	private Operation<Optional<KeyValueParams>,IOException> keyParams;
-	private BoundIOContext context;
+    private Map<String, Operation<MarkEvaluatorResolved, OperationFailedException>> map =
+            new HashMap<>();
 
-	public MarkEvaluatorSetForImage(
-		OperationWithProgressReporter<NamedProvider<Stack>,? extends Throwable> namedImgStackCollection,
-		Operation<Optional<KeyValueParams>,IOException> keyParams,
-		BoundIOContext context
-	) {
-		super();
-		this.keyParams = keyParams;
-		this.namedImgStackCollection = namedImgStackCollection;
-		this.context = context;
-	}
+    private class Resolved
+            extends CachedOperation<MarkEvaluatorResolved, OperationFailedException> {
 
-	private class Rslv extends CachedOperation<MarkEvaluatorRslvd,OperationFailedException> {
+        private OperationInitParams operationProposerSharedObjects;
+        private MarkEvaluator me;
 
-		private OperationInitParams operationProposerSharedObjects;
-		private MarkEvaluator me;
-		
-		public Rslv( MarkEvaluator me ) throws CreateException {
-			this.me = me;
-			operationProposerSharedObjects =
-				new OperationInitParams(
-					namedImgStackCollection,
-					keyParams,
-					/// TODO Do we need this duplication?
-					me.getDefine().duplicateBean(),
-					context
-				);
-			
-			try {
-				// TODO owen, this is causing a bug in the annotorator, we need to get our feature params from somewhere else
-				//  i.e. where they are being passed around
-				me.initRecursive(
-					operationProposerSharedObjects.doOperation().getFeature(),
-					context.getLogger()
-				);
-			} catch (InitException e) {
-				throw new CreateException(e);
-			}
-			
-		}
-		
-		@Override
-		protected MarkEvaluatorRslvd execute() throws OperationFailedException {
-			try {
-				return new MarkEvaluatorRslvd(
-					operationProposerSharedObjects,
-					me.getCfgGen(),
-					me.getNrgSchemeCreator().create(),
-					keyParams.doOperation().get()
-				);
-			} catch (CreateException | IOException e) {
-				throw new OperationFailedException(e);
-			}
-		}
-		
-	}
-	
-	public void add( String key, MarkEvaluator me ) throws OperationFailedException {
-		try {
-			map.put(key, new Rslv(me) );
-		} catch (CreateException e) {
-			throw new OperationFailedException(e);
-		}
-	}
+        public Resolved(MarkEvaluator me) throws CreateException {
+            this.me = me;
+            operationProposerSharedObjects =
+                    new OperationInitParams(
+                            namedImgStackCollection,
+                            keyParams,
+                            /// TODO Do we need this duplication?
+                            me.getDefine().duplicateBean(),
+                            context);
 
-	public Set<String> keySet() {
-		return map.keySet();
-	}
-	
-	public MarkEvaluatorRslvd get(String key) throws GetOperationFailedException {
-		try {
-			Operation<MarkEvaluatorRslvd,OperationFailedException> op = map.get(key); 
-			
-			if (op==null) {
-				throw new GetOperationFailedException( String.format("Cannot find markEvaluator '%s'", key) );
-			}
-			
-			return op.doOperation(); 
-		} catch (OperationFailedException e) {
-			throw new GetOperationFailedException(e);
-		}
-	}
-	
-	public boolean hasItems() {
-		return map.size() > 0;
-	}
+            try {
+                // TODO owen, this is causing a bug in the annotorator, we need to get our feature
+                // params from somewhere else
+                //  i.e. where they are being passed around
+                me.initRecursive(
+                        operationProposerSharedObjects.doOperation().getFeature(),
+                        context.getLogger());
+            } catch (InitException e) {
+                throw new CreateException(e);
+            }
+        }
 
+        @Override
+        protected MarkEvaluatorResolved execute() throws OperationFailedException {
+            try {
+                return new MarkEvaluatorResolved(
+                        operationProposerSharedObjects,
+                        me.getCfgGen(),
+                        me.getNrgSchemeCreator().create(),
+                        keyParams.doOperation().get());
+            } catch (CreateException | IOException e) {
+                throw new OperationFailedException(e);
+            }
+        }
+    }
+
+    public void add(String key, MarkEvaluator me) throws OperationFailedException {
+        try {
+            map.put(key, new Resolved(me));
+        } catch (CreateException e) {
+            throw new OperationFailedException(e);
+        }
+    }
+
+    public Set<String> keySet() {
+        return map.keySet();
+    }
+
+    public MarkEvaluatorResolved get(String key) throws GetOperationFailedException {
+        try {
+            Operation<MarkEvaluatorResolved, OperationFailedException> op = map.get(key);
+
+            if (op == null) {
+                throw new GetOperationFailedException(
+                        String.format("Cannot find markEvaluator '%s'", key));
+            }
+
+            return op.doOperation();
+        } catch (OperationFailedException e) {
+            throw new GetOperationFailedException(e);
+        }
+    }
+
+    public boolean hasItems() {
+        return map.size() > 0;
+    }
 }

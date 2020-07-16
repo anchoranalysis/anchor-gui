@@ -1,10 +1,8 @@
-package org.anchoranalysis.gui.plot.visualvm;
-
-/*
+/*-
  * #%L
- * anchor-plot
+ * anchor-gui-plot
  * %%
- * Copyright (C) 2016 ETH Zurich, University of Zurich, Owen Feehan
+ * Copyright (C) 2010 - 2020 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann-La Roche
  * %%
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -12,10 +10,10 @@ package org.anchoranalysis.gui.plot.visualvm;
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -26,28 +24,29 @@ package org.anchoranalysis.gui.plot.visualvm;
  * #L%
  */
 
+package org.anchoranalysis.gui.plot.visualvm;
 
 import javax.swing.JInternalFrame;
 import javax.swing.JPanel;
 
 class InternalFrameWithPanel {
 
-	private JInternalFrame frame;
-	
-	public InternalFrameWithPanel( String title, JPanel panel ) {
-		
-		frame = new JInternalFrame(title);
-		
-		frame.setResizable(true);
-		frame.setMaximizable(true);
-		frame.setIconifiable(true);
-		frame.setClosable(true);
-        
+    private JInternalFrame frame;
+
+    public InternalFrameWithPanel(String title, JPanel panel) {
+
+        frame = new JInternalFrame(title);
+
+        frame.setResizable(true);
+        frame.setMaximizable(true);
+        frame.setIconifiable(true);
+        frame.setClosable(true);
+
         // add it to our application
-        frame.setContentPane( panel );
-	}
-	
-	public JInternalFrame getFrame() {
-		return frame;
-	}
+        frame.setContentPane(panel);
+    }
+
+    public JInternalFrame getFrame() {
+        return frame;
+    }
 }

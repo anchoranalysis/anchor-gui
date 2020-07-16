@@ -1,15 +1,8 @@
-package org.anchoranalysis.gui.annotation.mark;
-
-import java.util.Optional;
-
-import org.anchoranalysis.anchor.mpp.bean.init.MPPInitParams;
-import org.anchoranalysis.anchor.mpp.bean.points.fitter.PointsFitter;
-
 /*-
  * #%L
  * anchor-gui-annotation
  * %%
- * Copyright (C) 2010 - 2019 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann la Roche
+ * Copyright (C) 2010 - 2020 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann-La Roche
  * %%
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -17,10 +10,10 @@ import org.anchoranalysis.anchor.mpp.bean.points.fitter.PointsFitter;
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -31,6 +24,11 @@ import org.anchoranalysis.anchor.mpp.bean.points.fitter.PointsFitter;
  * #L%
  */
 
+package org.anchoranalysis.gui.annotation.mark;
+
+import java.util.Optional;
+import org.anchoranalysis.anchor.mpp.bean.init.MPPInitParams;
+import org.anchoranalysis.anchor.mpp.bean.points.fitter.PointsFitter;
 import org.anchoranalysis.anchor.mpp.bean.proposer.MarkProposer;
 import org.anchoranalysis.anchor.mpp.bean.regionmap.RegionMap;
 import org.anchoranalysis.core.error.CreateException;
@@ -40,7 +38,7 @@ import org.anchoranalysis.core.log.Logger;
 import org.anchoranalysis.core.name.provider.NamedProviderGetException;
 import org.anchoranalysis.core.name.store.NamedProviderStore;
 import org.anchoranalysis.gui.annotation.AnnotatorModuleCreator;
-import org.anchoranalysis.gui.interactivebrowser.MarkEvaluatorRslvd;
+import org.anchoranalysis.gui.interactivebrowser.MarkEvaluatorResolved;
 import org.anchoranalysis.gui.interactivebrowser.MarkEvaluatorSetForImage;
 import org.anchoranalysis.gui.videostats.internalframe.annotator.tool.ToolErrorReporter;
 import org.anchoranalysis.gui.videostats.internalframe.evaluator.EvaluatorWithContext;
@@ -50,97 +48,97 @@ import org.anchoranalysis.plugin.annotation.bean.strategy.MarkProposerStrategy;
 
 public class MarkAnnotator {
 
-	private MarkEvaluatorRslvd markEvaluatorRslvd;
-	private MarkProposer markProposerGuess;
-	private PointsFitter pointsFitterSelectPoints;
+    private MarkEvaluatorResolved markEvaluatorResolved;
+    private MarkProposer markProposerGuess;
+    private PointsFitter pointsFitterSelectPoints;
 
-	private NamedProviderStore<Stack> backgroundStacks;
-	
-	public MarkAnnotator(
-		MarkProposerStrategy annotationStrategy,
-		MarkEvaluatorSetForImage markEvaluatorSet,
-		Logger logger
-	) throws CreateException {
-		
-		markEvaluatorRslvd = setupMarkEvaluator( annotationStrategy, markEvaluatorSet );
-		
-		MPPInitParams soMPP = setupEvaluatorAndPointsFitter(markEvaluatorRslvd, annotationStrategy);
-		
-		pointsFitterSelectPoints = extractPointsFitter(annotationStrategy, soMPP);
-		
-		// Nullable
-		markProposerGuess = setupGuess( soMPP, annotationStrategy, logger );
-		
-		this.backgroundStacks = soMPP.getImage().getStackCollection();
-	}
-	
-	public RegionMap getRegionMap() {
-		return markEvaluatorRslvd.getNrgScheme().getRegionMap();
-	}
+    private NamedProviderStore<Stack> backgroundStacks;
 
-	public NamedProviderStore<Stack> getBackgroundStacks() {
-		return backgroundStacks;
-	}
-	
-	public Optional<EvaluatorWithContext> createGuessEvaluator(ToolErrorReporter errorReporter) {
-		return EvaluatorFactory.createGuessEvaluator(
-			markProposerGuess,
-			markEvaluatorRslvd,
-			getRegionMap(),
-			errorReporter	
-		);
-	}
-		
-	public Optional<EvaluatorWithContext> createSelectPointsEvaluator(
-		ImageDimensions dimViewer,
-		ToolErrorReporter errorReporter
-	) {
-		return EvaluatorFactory.createSelectPointsEvaluator(
-			dimViewer,
-			markEvaluatorRslvd,
-			getRegionMap(),
-			errorReporter
-		);
-	}
+    public MarkAnnotator(
+            MarkProposerStrategy annotationStrategy,
+            MarkEvaluatorSetForImage markEvaluatorSet,
+            Logger logger)
+            throws CreateException {
 
-	public PointsFitter getPointsFitterSelectPoints() {
-		return pointsFitterSelectPoints;
-	}
+        markEvaluatorResolved = setupMarkEvaluator(annotationStrategy, markEvaluatorSet);
 
-	private static MPPInitParams setupEvaluatorAndPointsFitter( MarkEvaluatorRslvd markEvaluator, MarkProposerStrategy annotationStrategy ) throws CreateException {
-		return markEvaluator.getProposerSharedObjectsOperation().doOperation();
-	}
-	
-	private static PointsFitter extractPointsFitter( MarkProposerStrategy annotationStrategy, MPPInitParams soMPP ) throws CreateException {
-		try {
-			return soMPP.getPoints().getPointsFitterSet().getException(annotationStrategy.getPointsFitterName());
-		} catch (NamedProviderGetException e) {
-			throw new CreateException(e);
-		}
-	}
-	
-	private static MarkProposer setupGuess( MPPInitParams soMPP, MarkProposerStrategy annotationStrategy, Logger logger ) {
-		try {
-			return soMPP.getMarkProposerSet().getException(annotationStrategy.getMarkProposerName());
-		} catch (NamedProviderGetException e) {
-			logger.messageLogger().log("Proceeding without 'Guess Tool' as an error occured");
-			logger.errorReporter().recordError(AnnotatorModuleCreator.class, e.summarize().toString());
-			return null;
-		}
-	}
+        MPPInitParams soMPP =
+                setupEvaluatorAndPointsFitter(markEvaluatorResolved, annotationStrategy);
 
-	private static MarkEvaluatorRslvd setupMarkEvaluator( MarkProposerStrategy annotationStrategy, MarkEvaluatorSetForImage markEvaluatorSet ) throws CreateException {
-		try {
-			if (annotationStrategy.getMarkEvaluator()!=null) {
-				markEvaluatorSet.add(
-					annotationStrategy.getMarkEvaluatorName(),
-					annotationStrategy.getMarkEvaluator()
-				);
-			}
-			
-			return markEvaluatorSet.get(annotationStrategy.getMarkEvaluatorName());
-		} catch (GetOperationFailedException | OperationFailedException e1) {
-			throw new CreateException(e1);
-		}		
-	}
+        pointsFitterSelectPoints = extractPointsFitter(annotationStrategy, soMPP);
+
+        // Nullable
+        markProposerGuess = setupGuess(soMPP, annotationStrategy, logger);
+
+        this.backgroundStacks = soMPP.getImage().getStackCollection();
+    }
+
+    public RegionMap getRegionMap() {
+        return markEvaluatorResolved.getNrgScheme().getRegionMap();
+    }
+
+    public NamedProviderStore<Stack> getBackgroundStacks() {
+        return backgroundStacks;
+    }
+
+    public Optional<EvaluatorWithContext> createGuessEvaluator(ToolErrorReporter errorReporter) {
+        return EvaluatorFactory.createGuessEvaluator(
+                markProposerGuess, markEvaluatorResolved, getRegionMap(), errorReporter);
+    }
+
+    public Optional<EvaluatorWithContext> createSelectPointsEvaluator(
+            ImageDimensions dimViewer, ToolErrorReporter errorReporter) {
+        return EvaluatorFactory.createSelectPointsEvaluator(
+                dimViewer, markEvaluatorResolved, getRegionMap(), errorReporter);
+    }
+
+    public PointsFitter getPointsFitterSelectPoints() {
+        return pointsFitterSelectPoints;
+    }
+
+    private static MPPInitParams setupEvaluatorAndPointsFitter(
+            MarkEvaluatorResolved markEvaluator, MarkProposerStrategy annotationStrategy)
+            throws CreateException {
+        return markEvaluator.getProposerSharedObjectsOperation().doOperation();
+    }
+
+    private static PointsFitter extractPointsFitter(
+            MarkProposerStrategy annotationStrategy, MPPInitParams soMPP) throws CreateException {
+        try {
+            return soMPP.getPoints()
+                    .getPointsFitterSet()
+                    .getException(annotationStrategy.getPointsFitterName());
+        } catch (NamedProviderGetException e) {
+            throw new CreateException(e);
+        }
+    }
+
+    private static MarkProposer setupGuess(
+            MPPInitParams soMPP, MarkProposerStrategy annotationStrategy, Logger logger) {
+        try {
+            return soMPP.getMarkProposerSet()
+                    .getException(annotationStrategy.getMarkProposerName());
+        } catch (NamedProviderGetException e) {
+            logger.messageLogger().log("Proceeding without 'Guess Tool' as an error occured");
+            logger.errorReporter()
+                    .recordError(AnnotatorModuleCreator.class, e.summarize().toString());
+            return null;
+        }
+    }
+
+    private static MarkEvaluatorResolved setupMarkEvaluator(
+            MarkProposerStrategy annotationStrategy, MarkEvaluatorSetForImage markEvaluatorSet)
+            throws CreateException {
+        try {
+            if (annotationStrategy.getMarkEvaluator() != null) {
+                markEvaluatorSet.add(
+                        annotationStrategy.getMarkEvaluatorName(),
+                        annotationStrategy.getMarkEvaluator());
+            }
+
+            return markEvaluatorSet.get(annotationStrategy.getMarkEvaluatorName());
+        } catch (GetOperationFailedException | OperationFailedException e1) {
+            throw new CreateException(e1);
+        }
+    }
 }

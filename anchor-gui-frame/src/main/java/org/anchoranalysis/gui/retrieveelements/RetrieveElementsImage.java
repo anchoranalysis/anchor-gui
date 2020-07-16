@@ -1,10 +1,8 @@
-package org.anchoranalysis.gui.retrieveelements;
-
-/*
+/*-
  * #%L
- * anchor-gui
+ * anchor-gui-frame
  * %%
- * Copyright (C) 2016 ETH Zurich, University of Zurich, Owen Feehan
+ * Copyright (C) 2010 - 2020 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann-La Roche
  * %%
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -12,10 +10,10 @@ package org.anchoranalysis.gui.retrieveelements;
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -26,6 +24,7 @@ package org.anchoranalysis.gui.retrieveelements;
  * #L%
  */
 
+package org.anchoranalysis.gui.retrieveelements;
 
 import org.anchoranalysis.core.cache.CachedOperation;
 import org.anchoranalysis.core.cache.WrapOperationAsCached;
@@ -39,82 +38,74 @@ import org.anchoranalysis.image.stack.Stack;
 // When a function returns NULL, that element doesn't exist
 public class RetrieveElementsImage extends RetrieveElements {
 
-	private DisplayStack stack;
-	
-	private DisplayStack slice;
-	
-	public RetrieveElementsImage() {
-	}
+    private DisplayStack stack;
 
-	public DisplayStack getStack() {
-		return stack;
-	}
+    private DisplayStack slice;
 
-	public void setStack(DisplayStack stack) {
-		this.stack = stack;
-	}
+    public RetrieveElementsImage() {}
 
-	public DisplayStack getSlice() {
-		return slice;
-	}
+    public DisplayStack getStack() {
+        return stack;
+    }
 
-	public void setSlice(DisplayStack slice) {
-		this.slice = slice;
-	}
-	
-	@Override
-	public void addToPopUp( IAddToExportSubMenu popUp) {
-		
-    	if (getStack()!=null) {
-    		
-    		final DisplayStack currentStack = getStack();
-        	
-    		CachedOperation<Stack,AnchorNeverOccursException> opCreateStack = cachedOpFromDisplayStack( currentStack );
-    		
-    		try {
-				popUp.addExportItemStackGenerator(
-					"selectedStack",
-					"Stack",
-					opCreateStack
-				);
-			} catch (OperationFailedException e) {
-				assert false;
-			}
-    		
-    		if (currentStack.getDimensions().getZ() > 1) {
-    			MIPGenerator generatorMIP =  new MIPGenerator(true, "selectedStackMIP");
-    			
-    			OperationGenerator<Stack,Stack> generator = new OperationGenerator<Stack,Stack>( generatorMIP );
-    			popUp.addExportItem(
-    				generator,
-    				opCreateStack,
-    				"selectedStackMIP",
-    				"MIP",
-    				generator.createManifestDescription(),
-    				1
-    			);
-    		}
-    	}
-        
-    	if (getSlice()!=null) {
-    		
-    		final DisplayStack currentSlice = getSlice();
+    public void setStack(DisplayStack stack) {
+        this.stack = stack;
+    }
 
-    		try {
-				popUp.addExportItemStackGenerator(
-					"selectedSlice",
-					"Slice",
-					cachedOpFromDisplayStack(currentSlice)
-				);
-			} catch (OperationFailedException e) {
-				assert false;
-			}
-    	}
-	}
-	
-	private CachedOperation<Stack,AnchorNeverOccursException> cachedOpFromDisplayStack( DisplayStack stack ) {
-		return new WrapOperationAsCached<>(
-			() -> stack.createImgStack(false)
-		);
-	}
+    public DisplayStack getSlice() {
+        return slice;
+    }
+
+    public void setSlice(DisplayStack slice) {
+        this.slice = slice;
+    }
+
+    @Override
+    public void addToPopUp(AddToExportSubMenu popUp) {
+
+        if (getStack() != null) {
+
+            final DisplayStack currentStack = getStack();
+
+            CachedOperation<Stack, AnchorNeverOccursException> opCreateStack =
+                    cachedOpFromDisplayStack(currentStack);
+
+            try {
+                popUp.addExportItemStackGenerator("selectedStack", "Stack", opCreateStack);
+            } catch (OperationFailedException e) {
+                assert false;
+            }
+
+            if (currentStack.getDimensions().getZ() > 1) {
+                MIPGenerator generatorMIP = new MIPGenerator(true, "selectedStackMIP");
+
+                OperationGenerator<Stack, Stack> generator =
+                        new OperationGenerator<Stack, Stack>(generatorMIP);
+                popUp.addExportItem(
+                        generator,
+                        opCreateStack,
+                        "selectedStackMIP",
+                        "MIP",
+                        generator.createManifestDescription(),
+                        1);
+            }
+        }
+
+        if (getSlice() != null) {
+
+            final DisplayStack currentSlice = getSlice();
+
+            try {
+                popUp.addExportItemStackGenerator(
+                        "selectedSlice", "Slice", cachedOpFromDisplayStack(currentSlice));
+            } catch (OperationFailedException e) {
+                assert false;
+            }
+        }
+    }
+
+    private CachedOperation<Stack, AnchorNeverOccursException> cachedOpFromDisplayStack(
+            DisplayStack stack) {
+        return new WrapOperationAsCached<>(() -> stack.createImgStack(false));
+    }
 }

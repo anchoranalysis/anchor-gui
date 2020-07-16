@@ -1,10 +1,8 @@
-package org.anchoranalysis.plugin.gui.bean.graphdefinition.line;
-
-/*
+/*-
  * #%L
- * anchor-gui
+ * anchor-plugin-gui-import
  * %%
- * Copyright (C) 2016 ETH Zurich, University of Zurich, Owen Feehan
+ * Copyright (C) 2010 - 2020 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann-La Roche
  * %%
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -12,10 +10,10 @@ package org.anchoranalysis.plugin.gui.bean.graphdefinition.line;
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -26,10 +24,10 @@ package org.anchoranalysis.plugin.gui.bean.graphdefinition.line;
  * #L%
  */
 
+package org.anchoranalysis.plugin.gui.bean.graphdefinition.line;
 
 import java.util.Iterator;
 import java.util.Optional;
-
 import org.anchoranalysis.anchor.plot.AxisLimits;
 import org.anchoranalysis.anchor.plot.GraphInstance;
 import org.anchoranalysis.anchor.plot.bean.GraphDefinition;
@@ -41,42 +39,52 @@ import org.anchoranalysis.gui.io.loader.manifest.finder.csvstatistic.CSVStatisti
 
 public abstract class GraphDefinitionLineIterVsCSVStatistic extends GraphDefinition<CSVStatistic> {
 
-	private LinePlot<CSVStatistic> delegate;
-	
-	private String title;
-	private String shortTitle;
-	
-	public GraphDefinitionLineIterVsCSVStatistic( String title, String[] seriesName, String yAxisLabel, YValGetter<CSVStatistic> yValGetter, GraphColorScheme graphColorScheme ) {
-		this( title, title, seriesName, yAxisLabel, yValGetter, graphColorScheme );
-	}
-	
-	public GraphDefinitionLineIterVsCSVStatistic( String title, String shortTitle, String[] seriesName, String yAxisLabel, YValGetter<CSVStatistic> yValGetter, GraphColorScheme graphColorScheme ) {
-		this.title = title;
-		this.shortTitle = shortTitle;
-		
-		delegate = new LinePlot<>(
-			getTitle(),
-			seriesName,
-			yValGetter
-		);
-		delegate.getLabels().setX("Iteration");
-		delegate.getLabels().setY(yAxisLabel);
-		delegate.setGraphColorScheme(graphColorScheme);
-	}
-	
+    private LinePlot<CSVStatistic> delegate;
 
-	@Override
-	public GraphInstance create( Iterator<CSVStatistic> items, Optional<AxisLimits> domainLimits, Optional<AxisLimits> rangeLimits ) throws CreateException {
-		return delegate.create(items, domainLimits, rangeLimits);
-	}
+    private String title;
+    private String shortTitle;
 
-	@Override
-	public String getTitle() {
-		return title;
-	}
-	
-	@Override
-	public String getShortTitle() {
-		return shortTitle;
-	}
+    public GraphDefinitionLineIterVsCSVStatistic(
+            String title,
+            String[] seriesName,
+            String yAxisLabel,
+            YValGetter<CSVStatistic> yValGetter,
+            GraphColorScheme graphColorScheme) {
+        this(title, title, seriesName, yAxisLabel, yValGetter, graphColorScheme);
+    }
+
+    public GraphDefinitionLineIterVsCSVStatistic(
+            String title,
+            String shortTitle,
+            String[] seriesName,
+            String yAxisLabel,
+            YValGetter<CSVStatistic> yValGetter,
+            GraphColorScheme graphColorScheme) {
+        this.title = title;
+        this.shortTitle = shortTitle;
+
+        delegate = new LinePlot<>(getTitle(), seriesName, yValGetter);
+        delegate.getLabels().setX("Iteration");
+        delegate.getLabels().setY(yAxisLabel);
+        delegate.setGraphColorScheme(graphColorScheme);
+    }
+
+    @Override
+    public GraphInstance create(
+            Iterator<CSVStatistic> items,
+            Optional<AxisLimits> domainLimits,
+            Optional<AxisLimits> rangeLimits)
+            throws CreateException {
+        return delegate.create(items, domainLimits, rangeLimits);
+    }
+
+    @Override
+    public String getTitle() {
+        return title;
+    }
+
+    @Override
+    public String getShortTitle() {
+        return shortTitle;
+    }
 }

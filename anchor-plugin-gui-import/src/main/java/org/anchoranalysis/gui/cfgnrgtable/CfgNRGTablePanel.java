@@ -1,10 +1,8 @@
-package org.anchoranalysis.gui.cfgnrgtable;
-
-/*
+/*-
  * #%L
- * anchor-gui
+ * anchor-plugin-gui-import
  * %%
- * Copyright (C) 2016 ETH Zurich, University of Zurich, Owen Feehan
+ * Copyright (C) 2010 - 2020 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann-La Roche
  * %%
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -12,10 +10,10 @@ package org.anchoranalysis.gui.cfgnrgtable;
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -26,6 +24,7 @@ package org.anchoranalysis.gui.cfgnrgtable;
  * #L%
  */
 
+package org.anchoranalysis.gui.cfgnrgtable;
 
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
@@ -33,10 +32,8 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Optional;
-
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
-
 import org.anchoranalysis.anchor.mpp.bean.regionmap.RegionMembershipWithFlags;
 import org.anchoranalysis.anchor.mpp.cfg.Cfg;
 import org.anchoranalysis.anchor.mpp.feature.instantstate.CfgNRGInstantState;
@@ -61,177 +58,185 @@ import org.anchoranalysis.gui.propertyvalue.PropertyValueChangeListenerList;
 
 public class CfgNRGTablePanel extends StatePanel<CfgNRGInstantState> {
 
-	private JPanel panelBig;
-	
-	private ArrayList<IUpdateTableData> updateList = new ArrayList<>();
-	private PairTablePanel pairPanel;
-	private IndividualTablePanel individualPanel;
+    private JPanel panelBig;
 
-	private DualIndicesSelection selectionIndices = new DualIndicesSelection();
-	
-	private CfgNRGInstantState state;
-	
-	private NRGStackWithParams associatedRaster;
-	
-	private PropertyValueChangeListenerList<OverlayCollection> eventListenerListOverlayCollection = new PropertyValueChangeListenerList<>();
-	private PropertyValueChangeListenerList<OverlayCollectionWithImgStack> eventListenerListOverlayCollectionWithStack = new PropertyValueChangeListenerList<>();
-	
-	private class ClickAdapterIndividual extends MouseAdapter {
+    private ArrayList<IUpdateTableData> updateList = new ArrayList<>();
+    private PairTablePanel pairPanel;
+    private IndividualTablePanel individualPanel;
 
-		@Override
-		public void mouseReleased(MouseEvent arg0) {
-			super.mouseReleased(arg0);
-			
-			// This event always seems to happen after any ListSelection events, so we rely
-			//   on it to occur, on each occasion we want to send a ObjChangeEvent for clicking
-			// on a mark
-			
-			selectionIndices.updateBoth( individualPanel.getSelectedIDs() );
-			pairPanel.getSelectMarksSendable().selectIndicesOnly(  individualPanel.getSelectedIDs() );
-			
-			//System.out.println( "Setting current selection (Ind)" + selectionIndices.toString() );
-			
-			// Crucially the selectionIndices must be updated with the ListSelection change, before it occurs
-			//  we assume this happens
-			triggerEvent();
-		}
-	}
-	
-	private class ClickAdapterPair extends MouseAdapter {
+    private DualIndicesSelection selectionIndices = new DualIndicesSelection();
 
-		@Override
-		public void mouseReleased(MouseEvent arg0) {
-			super.mouseReleased(arg0);
-			
-			// This event always seems to happen after any ListSelection events, so we rely
-			//   on it to occur, on each occasion we want to send a ObjChangeEvent for clicking
-			// on a mark
-			
-			selectionIndices.updateBoth( pairPanel.getSelectedIDs() );
-			individualPanel.getSelectMarksSendable().selectIndicesOnly(  pairPanel.getSelectedIDs() );
-			//System.out.println( "Setting current selection (Pair)" + selectionIndices.toString() );
-			
-			// Crucially the selectionIndices must be updated with the ListSelection change, before it occurs
-			//  we assume this happens
-			triggerEvent();
-		}
-	}
+    private CfgNRGInstantState state;
 
-		
-	
-	public CfgNRGTablePanel(
-		ColorIndex colorIndex,
-		NRGStackWithParams associatedRaster
-	) {
-		super();
-		
-		this.associatedRaster = associatedRaster;
-		
-		final SummaryTablePanel summaryPanel = new SummaryTablePanel();
-		individualPanel = new IndividualTablePanel(colorIndex, selectionIndices.getCurrentSelection() );
-		pairPanel = new PairTablePanel(colorIndex, selectionIndices.getCurrentSelection() );
-		
-		ClickAdapterIndividual ca = new ClickAdapterIndividual();
-		individualPanel.addMouseListener(ca);
-		pairPanel.addMouseListener( new ClickAdapterPair() );
-		
-		this.panelBig = new JPanel();
-		
-		panelBig.setBorder( BorderFactory.createEmptyBorder(2, 0, 2, 0) );
-		panelBig.setLayout( new BorderLayout() );
-		
-		panelBig.add( summaryPanel.getPanel(), BorderLayout.NORTH);
-		
-		JPanel panelScroll = new JPanel();
-		panelScroll.setBorder( BorderFactory.createEmptyBorder(2, 0, 2, 0) );
-		
-		panelScroll.setLayout( new GridLayout(2,1) );
-		panelScroll.add( individualPanel.getPanel() );
-		panelScroll.add( pairPanel.getPanel() );
-		
-		panelBig.add(panelScroll, BorderLayout.CENTER);
-		
-		updateList.add( summaryPanel.getUpdateTableData() );
-		updateList.add( individualPanel.getUpdateTableData() );
-		updateList.add( pairPanel.getUpdateTableData() );
-	}
-	
-	
-	private void triggerEvent() {
-		Cfg cfg = state.getCfgNRG() != null ? state.getCfgNRG().getCfg() : null;
-		if (cfg!=null) {
-			Cfg cfgSubset = CfgUtilities.createCfgSubset( cfg, selectionIndices.getCurrentSelection() );
-			RegionMembershipWithFlags regionMembership = RegionMapSingleton.instance().membershipWithFlagsForIndex( GlobalRegionIdentifiers.SUBMARK_INSIDE );
-			OverlayCollection overlaySubset = OverlayCollectionMarkFactory.createWithoutColor(
-				cfgSubset,
-				regionMembership
-			);
-			triggerObjectChangeEvent( overlaySubset );
-		}
-	}
-	
-	@Override
-	public JPanel getPanel() {
-		return panelBig;
-	}
-	
-	@Override
-	public void updateState( CfgNRGInstantState state ) throws StatePanelUpdateException {
-		
-		this.state = state;
-		
-		// We do this before updateTableData as it will change the selection
-		//int[] selectionPrevious = selectionIndices.getSelectedIDs();
-		
-		for (IUpdateTableData updater : updateList) {
-			updater.updateTableData(state);
-		}
-		
-		individualPanel.getSelectMarksSendable().selectIndicesOnly( selectionIndices.getCurrentSelection().getCurrentSelection() );
-		pairPanel.getSelectMarksSendable().selectIndicesOnly( selectionIndices.getCurrentSelection().getCurrentSelection() );
-	}
-	
-	
-	private void triggerObjectChangeEvent( OverlayCollection state ) {
-		for ( PropertyValueChangeListener<OverlayCollection> l : eventListenerListOverlayCollection) {
-			l.propertyValueChanged( new PropertyValueChangeEvent<>(this, state, false) );
-		}
-		
-		for ( PropertyValueChangeListener<OverlayCollectionWithImgStack> l : eventListenerListOverlayCollectionWithStack) {
-			l.propertyValueChanged( new PropertyValueChangeEvent<>(this, new OverlayCollectionWithImgStack(state, associatedRaster), false) );
-		}
+    private NRGStackWithParams associatedRaster;
 
-	}
-	
-	@Override
-	public Optional<IPropertyValueSendable<IntArray>> getSelectMarksSendable() {
-		return Optional.of(
-			(IntArray value, boolean adjusting ) -> {
-				int[] ids = value.getArr();
-				selectionIndices.setCurrentSelection(ids);
-				
-				individualPanel.getSelectMarksSendable().selectIndicesOnly( ids );
-				pairPanel.getSelectMarksSendable().selectIndicesOnly( ids );
-			}
-		);
-	}
-	
-	@Override
-	public Optional<IPropertyValueReceivable<OverlayCollection>> getSelectOverlayCollectionReceivable() {
-		return Optional.of(
-			eventListenerListOverlayCollection.createPropertyValueReceivable()
-		);
-	}
+    private PropertyValueChangeListenerList<OverlayCollection> eventListenerListOverlayCollection =
+            new PropertyValueChangeListenerList<>();
+    private PropertyValueChangeListenerList<OverlayCollectionWithImgStack>
+            eventListenerListOverlayCollectionWithStack = new PropertyValueChangeListenerList<>();
 
-	@Override
-	public Optional<IPropertyValueReceivable<IntArray>> getSelectMarksReceivable() {
-		return Optional.of(
-			new PropertyValueReceivableFromIndicesSelection(selectionIndices.getLastExplicitSelection())
-		);
-	}
+    private class ClickAdapterIndividual extends MouseAdapter {
 
-	@Override
-	public Optional<IPropertyValueReceivable<Integer>> getSelectIndexReceivable() {
-		return Optional.empty();
-	}
+        @Override
+        public void mouseReleased(MouseEvent arg0) {
+            super.mouseReleased(arg0);
+
+            // This event always seems to happen after any ListSelection events, so we rely
+            //   on it to occur, on each occasion we want to send a ObjChangeEvent for clicking
+            // on a mark
+
+            selectionIndices.updateBoth(individualPanel.getSelectedIDs());
+            pairPanel.getSelectMarksSendable().selectIndicesOnly(individualPanel.getSelectedIDs());
+
+            // System.out.println( "Setting current selection (Ind)" + selectionIndices.toString()
+            // );
+
+            // Crucially the selectionIndices must be updated with the ListSelection change, before
+            // it occurs
+            //  we assume this happens
+            triggerEvent();
+        }
+    }
+
+    private class ClickAdapterPair extends MouseAdapter {
+
+        @Override
+        public void mouseReleased(MouseEvent arg0) {
+            super.mouseReleased(arg0);
+
+            // This event always seems to happen after any ListSelection events, so we rely
+            //   on it to occur, on each occasion we want to send a ObjChangeEvent for clicking
+            // on a mark
+
+            selectionIndices.updateBoth(pairPanel.getSelectedIDs());
+            individualPanel.getSelectMarksSendable().selectIndicesOnly(pairPanel.getSelectedIDs());
+            // System.out.println( "Setting current selection (Pair)" + selectionIndices.toString()
+            // );
+
+            // Crucially the selectionIndices must be updated with the ListSelection change, before
+            // it occurs
+            //  we assume this happens
+            triggerEvent();
+        }
+    }
+
+    public CfgNRGTablePanel(ColorIndex colorIndex, NRGStackWithParams associatedRaster) {
+        super();
+
+        this.associatedRaster = associatedRaster;
+
+        final SummaryTablePanel summaryPanel = new SummaryTablePanel();
+        individualPanel =
+                new IndividualTablePanel(colorIndex, selectionIndices.getCurrentSelection());
+        pairPanel = new PairTablePanel(colorIndex, selectionIndices.getCurrentSelection());
+
+        ClickAdapterIndividual ca = new ClickAdapterIndividual();
+        individualPanel.addMouseListener(ca);
+        pairPanel.addMouseListener(new ClickAdapterPair());
+
+        this.panelBig = new JPanel();
+
+        panelBig.setBorder(BorderFactory.createEmptyBorder(2, 0, 2, 0));
+        panelBig.setLayout(new BorderLayout());
+
+        panelBig.add(summaryPanel.getPanel(), BorderLayout.NORTH);
+
+        JPanel panelScroll = new JPanel();
+        panelScroll.setBorder(BorderFactory.createEmptyBorder(2, 0, 2, 0));
+
+        panelScroll.setLayout(new GridLayout(2, 1));
+        panelScroll.add(individualPanel.getPanel());
+        panelScroll.add(pairPanel.getPanel());
+
+        panelBig.add(panelScroll, BorderLayout.CENTER);
+
+        updateList.add(summaryPanel.getUpdateTableData());
+        updateList.add(individualPanel.getUpdateTableData());
+        updateList.add(pairPanel.getUpdateTableData());
+    }
+
+    private void triggerEvent() {
+        Cfg cfg = state.getCfgNRG() != null ? state.getCfgNRG().getCfg() : null;
+        if (cfg != null) {
+            Cfg cfgSubset =
+                    CfgUtilities.createCfgSubset(cfg, selectionIndices.getCurrentSelection());
+            RegionMembershipWithFlags regionMembership =
+                    RegionMapSingleton.instance()
+                            .membershipWithFlagsForIndex(GlobalRegionIdentifiers.SUBMARK_INSIDE);
+            OverlayCollection overlaySubset =
+                    OverlayCollectionMarkFactory.createWithoutColor(cfgSubset, regionMembership);
+            triggerObjectChangeEvent(overlaySubset);
+        }
+    }
+
+    @Override
+    public JPanel getPanel() {
+        return panelBig;
+    }
+
+    @Override
+    public void updateState(CfgNRGInstantState state) throws StatePanelUpdateException {
+
+        this.state = state;
+
+        // We do this before updateTableData as it will change the selection
+        // int[] selectionPrevious = selectionIndices.getSelectedIDs();
+
+        for (IUpdateTableData updater : updateList) {
+            updater.updateTableData(state);
+        }
+
+        individualPanel
+                .getSelectMarksSendable()
+                .selectIndicesOnly(selectionIndices.getCurrentSelection().getCurrentSelection());
+        pairPanel
+                .getSelectMarksSendable()
+                .selectIndicesOnly(selectionIndices.getCurrentSelection().getCurrentSelection());
+    }
+
+    private void triggerObjectChangeEvent(OverlayCollection state) {
+        for (PropertyValueChangeListener<OverlayCollection> l :
+                eventListenerListOverlayCollection) {
+            l.propertyValueChanged(new PropertyValueChangeEvent<>(this, state, false));
+        }
+
+        for (PropertyValueChangeListener<OverlayCollectionWithImgStack> l :
+                eventListenerListOverlayCollectionWithStack) {
+            l.propertyValueChanged(
+                    new PropertyValueChangeEvent<>(
+                            this,
+                            new OverlayCollectionWithImgStack(state, associatedRaster),
+                            false));
+        }
+    }
+
+    @Override
+    public Optional<IPropertyValueSendable<IntArray>> getSelectMarksSendable() {
+        return Optional.of(
+                (IntArray value, boolean adjusting) -> {
+                    int[] ids = value.getArr();
+                    selectionIndices.setCurrentSelection(ids);
+
+                    individualPanel.getSelectMarksSendable().selectIndicesOnly(ids);
+                    pairPanel.getSelectMarksSendable().selectIndicesOnly(ids);
+                });
+    }
+
+    @Override
+    public Optional<IPropertyValueReceivable<OverlayCollection>>
+            getSelectOverlayCollectionReceivable() {
+        return Optional.of(eventListenerListOverlayCollection.createPropertyValueReceivable());
+    }
+
+    @Override
+    public Optional<IPropertyValueReceivable<IntArray>> getSelectMarksReceivable() {
+        return Optional.of(
+                new PropertyValueReceivableFromIndicesSelection(
+                        selectionIndices.getLastExplicitSelection()));
+    }
+
+    @Override
+    public Optional<IPropertyValueReceivable<Integer>> getSelectIndexReceivable() {
+        return Optional.empty();
+    }
 }

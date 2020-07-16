@@ -1,12 +1,8 @@
-package org.anchoranalysis.gui.frame.display;
-
-import java.util.Optional;
-
-/*
+/*-
  * #%L
- * anchor-mpp-io
+ * anchor-gui-common
  * %%
- * Copyright (C) 2016 ETH Zurich, University of Zurich, Owen Feehan
+ * Copyright (C) 2010 - 2020 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann-La Roche
  * %%
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -14,10 +10,10 @@ import java.util.Optional;
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -28,7 +24,9 @@ import java.util.Optional;
  * #L%
  */
 
+package org.anchoranalysis.gui.frame.display;
 
+import java.util.Optional;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.image.extent.BoundingBox;
 import org.anchoranalysis.image.extent.ImageDimensions;
@@ -38,58 +36,59 @@ import org.anchoranalysis.image.voxel.datatype.VoxelDataType;
 
 public class BoundOverlayedDisplayStack {
 
-	private DisplayStack background;
-	private BoundColoredOverlayCollection overlay;
-	private RegionExtracter regionExtracter;
-		
-	public BoundOverlayedDisplayStack(DisplayStack background) {
-		super();
-		this.background = background;
-	}
+    private DisplayStack background;
+    private BoundColoredOverlayCollection overlay;
+    private RegionExtracter regionExtracter;
 
-	public BoundOverlayedDisplayStack(DisplayStack background, BoundColoredOverlayCollection overlay) {
-		super();
-		this.background = background;
-		this.overlay = overlay;
-	}
-	
-	public void initRegionExtracter() {
-		if (overlay==null) {
-			this.regionExtracter = background.createRegionExtracter();	
-		} else {
-			RegionExtracter reBackground = background.createRegionExtracter();
-			this.regionExtracter = new RegionExtracterFromOverlay(reBackground, overlay);
-		}
-	}
+    public BoundOverlayedDisplayStack(DisplayStack background) {
+        super();
+        this.background = background;
+    }
 
-	public ImageDimensions getDimensions() {
-		return background.getDimensions();
-	}
-	
-	// Creates a new DisplayStack after imposing the overlay on the background
-	public DisplayStack extractFullyOverlayed() throws OperationFailedException {
-		RegionExtracter re = background.createRegionExtracter();
-		return re.extractRegionFrom( new BoundingBox( background.getDimensions().getExtent() ), 1.0 );
-	}
+    public BoundOverlayedDisplayStack(
+            DisplayStack background, BoundColoredOverlayCollection overlay) {
+        super();
+        this.background = background;
+        this.overlay = overlay;
+    }
 
-	public final int getNumChnl() {
-		return background.getNumChnl();
-	}
+    public void initRegionExtracter() {
+        if (overlay == null) {
+            this.regionExtracter = background.createRegionExtracter();
+        } else {
+            RegionExtracter reBackground = background.createRegionExtracter();
+            this.regionExtracter = new RegionExtracterFromOverlay(reBackground, overlay);
+        }
+    }
 
-	public Optional<VoxelDataType> unconvertedDataType() {
-		return background.unconvertedDataType();
-	}
+    public ImageDimensions getDimensions() {
+        return background.getDimensions();
+    }
 
-	public int getUnconvertedVoxelAt(int c, int x, int y, int z) {
-		return background.getUnconvertedVoxelAt(c, x, y, z);
-	}
+    // Creates a new DisplayStack after imposing the overlay on the background
+    public DisplayStack extractFullyOverlayed() throws OperationFailedException {
+        RegionExtracter re = background.createRegionExtracter();
+        return re.extractRegionFrom(new BoundingBox(background.getDimensions().getExtent()), 1.0);
+    }
 
-	public RegionExtracter createRegionExtracter() {
-		initRegionExtracter();
-		return regionExtracter;
-	}
+    public final int getNumChnl() {
+        return background.getNumChnl();
+    }
 
-	public DisplayStack getBackground() {
-		return background;
-	}
+    public Optional<VoxelDataType> unconvertedDataType() {
+        return background.unconvertedDataType();
+    }
+
+    public int getUnconvertedVoxelAt(int c, int x, int y, int z) {
+        return background.getUnconvertedVoxelAt(c, x, y, z);
+    }
+
+    public RegionExtracter createRegionExtracter() {
+        initRegionExtracter();
+        return regionExtracter;
+    }
+
+    public DisplayStack getBackground() {
+        return background;
+    }
 }

@@ -1,16 +1,8 @@
-package org.anchoranalysis.gui.frame.overlays;
-
-import java.util.Optional;
-
-import org.anchoranalysis.anchor.overlay.collection.OverlayCollection;
-import org.anchoranalysis.core.error.InitException;
-import org.anchoranalysis.core.index.GetOperationFailedException;
-
-/*
+/*-
  * #%L
- * anchor-gui
+ * anchor-gui-frame
  * %%
- * Copyright (C) 2016 ETH Zurich, University of Zurich, Owen Feehan
+ * Copyright (C) 2010 - 2020 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann-La Roche
  * %%
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -18,10 +10,10 @@ import org.anchoranalysis.core.index.GetOperationFailedException;
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -32,7 +24,12 @@ import org.anchoranalysis.core.index.GetOperationFailedException;
  * #L%
  */
 
+package org.anchoranalysis.gui.frame.overlays;
 
+import java.util.Optional;
+import org.anchoranalysis.anchor.overlay.collection.OverlayCollection;
+import org.anchoranalysis.core.error.InitException;
+import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.progress.OperationWithProgressReporter;
 import org.anchoranalysis.core.property.change.PropertyValueChangeEvent;
 import org.anchoranalysis.core.property.change.PropertyValueChangeListener;
@@ -51,110 +48,100 @@ import org.anchoranalysis.gui.videostats.module.VideoStatsModule;
 import org.anchoranalysis.image.stack.DisplayStack;
 import org.anchoranalysis.io.output.bean.OutputWriteSettings;
 
-
 // A frame that supports quickly drawing marks on top of existing images based upon a mouse-click
 //  at a particular point
 public class InternalFrameOverlaysRedraw {
-	
-	private InternalFrameEditableOverlays delegate;
-	
-	private DisplayStack background;
-	
-	private PropertyValueChangeListenerList<OverlayCollection> eventListenerList = new PropertyValueChangeListenerList<>();
 
-	
-	public InternalFrameOverlaysRedraw( String title ) {
-		this.delegate = new InternalFrameEditableOverlays(title);
-		this.delegate.controllerImageView().setEnforceMinimumSizeAfterGuessZoom(true);
-	}
-		
-	public ISliderState init(
-		DefaultModuleState defaultState,
-		OperationWithProgressReporter<BackgroundSet,GetOperationFailedException> operationBackgroundSet,
-		OutputWriteSettings outputWriteSettings,
-		VideoStatsModuleGlobalParams mpg
-	) throws InitException {
+    private InternalFrameEditableOverlays delegate;
 
-		
-		ISliderState sliderState = delegate.init(defaultState, mpg);
-		
-		// For now we keep background as it is
-		try {
-			background = defaultState.getLinkState().getBackground().apply(0) ;
-		} catch (GetOperationFailedException e) {
-			throw new InitException(e);
-		}
-		
-		return sliderState;
-	}
+    private DisplayStack background;
 
-	// Note due to synchronisation issues, should only be called once per frame
-	public IShowOverlays showOverlays( ISliderState sliderState ) {
-		return (redrawUpdate) -> {
-			synchronized(this) {
-			
-				delegate.applyUpdate(
-					redrawUpdate.getUpdate()
-				);
-						
-				maybeChangeSlice( sliderState, redrawUpdate.getSuggestedSliceNum() );
-				
-				triggerPropertyValueChanged( redrawUpdate.getOverlaysForTrigger() );
-				
-			}
-		};
-	}
-			
-	public IModuleCreatorDefaultStateSliderState moduleCreator() {
-		return (DefaultModuleState defaultFrameState, ISliderState sliderState ) -> {
-			VideoStatsModule module = delegate.moduleCreator(sliderState).createVideoStatsModule(defaultFrameState);
-			
-			LinkModules link = new LinkModules(module);
-			link.getOverlays().add(
-				Optional.of(
-					eventListenerList.createPropertyValueReceivable()
-				)
-			);
-			return module;
-		};
-	}
+    private PropertyValueChangeListenerList<OverlayCollection> eventListenerList =
+            new PropertyValueChangeListenerList<>();
 
-	public InternalFrameEditableOverlays getDelegate() {
-		return delegate;
-	}
+    public InternalFrameOverlaysRedraw(String title) {
+        this.delegate = new InternalFrameEditableOverlays(title);
+        this.delegate.controllerImageView().setEnforceMinimumSizeAfterGuessZoom(true);
+    }
 
-	public DisplayStack getBackground() {
-		return background;
-	}
+    public ISliderState init(
+            DefaultModuleState defaultState,
+            OperationWithProgressReporter<BackgroundSet, GetOperationFailedException>
+                    operationBackgroundSet,
+            OutputWriteSettings outputWriteSettings,
+            VideoStatsModuleGlobalParams mpg)
+            throws InitException {
 
-	public ControllerPopupMenuWithBackground controllerBackgroundMenu() {
-		return delegate.controllerBackgroundMenu();
-	}
+        ISliderState sliderState = delegate.init(defaultState, mpg);
 
-	public ControllerImageView controllerImageView() {
-		return delegate.controllerImageView();
-	}
+        // For now we keep background as it is
+        try {
+            background = defaultState.getLinkState().getBackground().apply(0);
+        } catch (GetOperationFailedException e) {
+            throw new InitException(e);
+        }
 
-	public IExtractOverlays extractOverlays() {
-		return delegate.extractOverlays();
-	}
+        return sliderState;
+    }
 
-	public ControllerAction controllerAction() {
-		return delegate.controllerAction();
-	}
-	
-	private static void maybeChangeSlice( ISliderState sliderState, int suggestedSliceNum ) {
-		if (suggestedSliceNum!=-1) {
-			sliderState.setSliceNum( suggestedSliceNum );
-		}				
-	}
-	
-	private void triggerPropertyValueChanged( OverlayCollection oc ) {
-		
-		for (PropertyValueChangeListener<OverlayCollection> l : eventListenerList) {
-			l.propertyValueChanged(
-				new PropertyValueChangeEvent<>(this, oc, false)
-			);
-		}		
-	}
+    // Note due to synchronisation issues, should only be called once per frame
+    public IShowOverlays showOverlays(ISliderState sliderState) {
+        return (redrawUpdate) -> {
+            synchronized (this) {
+                delegate.applyUpdate(redrawUpdate.getUpdate());
+
+                maybeChangeSlice(sliderState, redrawUpdate.getSuggestedSliceNum());
+
+                triggerPropertyValueChanged(redrawUpdate.getOverlaysForTrigger());
+            }
+        };
+    }
+
+    public IModuleCreatorDefaultStateSliderState moduleCreator() {
+        return (DefaultModuleState defaultFrameState, ISliderState sliderState) -> {
+            VideoStatsModule module =
+                    delegate.moduleCreator(sliderState).createVideoStatsModule(defaultFrameState);
+
+            LinkModules link = new LinkModules(module);
+            link.getOverlays().add(Optional.of(eventListenerList.createPropertyValueReceivable()));
+            return module;
+        };
+    }
+
+    public InternalFrameEditableOverlays getDelegate() {
+        return delegate;
+    }
+
+    public DisplayStack getBackground() {
+        return background;
+    }
+
+    public ControllerPopupMenuWithBackground controllerBackgroundMenu() {
+        return delegate.controllerBackgroundMenu();
+    }
+
+    public ControllerImageView controllerImageView() {
+        return delegate.controllerImageView();
+    }
+
+    public ExtractOverlays extractOverlays() {
+        return delegate.extractOverlays();
+    }
+
+    public ControllerAction controllerAction() {
+        return delegate.controllerAction();
+    }
+
+    private static void maybeChangeSlice(ISliderState sliderState, int suggestedSliceNum) {
+        if (suggestedSliceNum != -1) {
+            sliderState.setSliceNum(suggestedSliceNum);
+        }
+    }
+
+    private void triggerPropertyValueChanged(OverlayCollection oc) {
+
+        for (PropertyValueChangeListener<OverlayCollection> l : eventListenerList) {
+            l.propertyValueChanged(new PropertyValueChangeEvent<>(this, oc, false));
+        }
+    }
 }

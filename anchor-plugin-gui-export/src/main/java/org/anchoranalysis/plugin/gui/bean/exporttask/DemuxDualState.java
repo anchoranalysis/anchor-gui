@@ -1,10 +1,8 @@
-package org.anchoranalysis.plugin.gui.bean.exporttask;
-
 /*-
  * #%L
  * anchor-plugin-gui-export
  * %%
- * Copyright (C) 2010 - 2019 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann la Roche
+ * Copyright (C) 2010 - 2020 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann-La Roche
  * %%
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -12,10 +10,10 @@ package org.anchoranalysis.plugin.gui.bean.exporttask;
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -26,6 +24,10 @@ package org.anchoranalysis.plugin.gui.bean.exporttask;
  * #L%
  */
 
+package org.anchoranalysis.plugin.gui.bean.exporttask;
+
+import lombok.Getter;
+import lombok.Setter;
 import org.anchoranalysis.bean.annotation.BeanField;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.gui.bean.exporttask.ExportTaskParams;
@@ -36,52 +38,32 @@ import org.anchoranalysis.plugin.gui.bean.createrastergenerator.CreateRasterGene
 
 public class DemuxDualState<T> extends CreateRasterGenerator<DualStateWithoutIndex<T>> {
 
-	// START BEAN PROPERTIES
-	@BeanField
-	private int index = 0;
-	
-	@BeanField
-	private CreateRasterGenerator<T> item;
-	// END BEAN PROPERTIES
+    // START BEAN PROPERTIES
+    @BeanField @Getter @Setter private int index = 0;
 
-	private T demux(DualStateWithoutIndex<T> in) {
-		return in.getItem(index);
-	}
-	
-	@Override
-	public IterableObjectGenerator<MappedFrom<DualStateWithoutIndex<T>>, Stack> createGenerator(ExportTaskParams params)
-			throws CreateException {
-		
-		IterableObjectGenerator<MappedFrom<T>, Stack> generator = item.createGenerator(params);
-		
-		return new IterableObjectGeneratorBridge<Stack,MappedFrom<DualStateWithoutIndex<T>>,MappedFrom<T>>(
-			generator,
-			sourceObject -> new MappedFrom<>(
-				sourceObject.getOriginalIter(),
-				demux( sourceObject.getObj() )
-			)
-		);
-	}
+    @BeanField @Getter @Setter private CreateRasterGenerator<T> item;
+    // END BEAN PROPERTIES
 
-	@Override
-	public boolean hasNecessaryParams(ExportTaskParams params) {
-		return true;
-	}
+    private T demux(DualStateWithoutIndex<T> in) {
+        return in.getItem(index);
+    }
 
-	public CreateRasterGenerator<T> getItem() {
-		return item;
-	}
+    @Override
+    public IterableObjectGenerator<MappedFrom<DualStateWithoutIndex<T>>, Stack> createGenerator(
+            ExportTaskParams params) throws CreateException {
 
-	public void setItem(CreateRasterGenerator<T> item) {
-		this.item = item;
-	}
+        IterableObjectGenerator<MappedFrom<T>, Stack> generator = item.createGenerator(params);
 
-	public int getIndex() {
-		return index;
-	}
+        return new IterableObjectGeneratorBridge<
+                Stack, MappedFrom<DualStateWithoutIndex<T>>, MappedFrom<T>>(
+                generator,
+                sourceObject ->
+                        new MappedFrom<>(
+                                sourceObject.getOriginalIter(), demux(sourceObject.getObj())));
+    }
 
-	public void setIndex(int index) {
-		this.index = index;
-	}
-
+    @Override
+    public boolean hasNecessaryParams(ExportTaskParams params) {
+        return true;
+    }
 }

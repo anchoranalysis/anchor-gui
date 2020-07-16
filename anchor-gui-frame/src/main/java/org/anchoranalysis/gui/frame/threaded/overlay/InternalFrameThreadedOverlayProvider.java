@@ -1,10 +1,8 @@
-package org.anchoranalysis.gui.frame.threaded.overlay;
-
 /*-
  * #%L
  * anchor-gui-frame
  * %%
- * Copyright (C) 2010 - 2020 Owen Feehan
+ * Copyright (C) 2010 - 2020 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann-La Roche
  * %%
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -12,10 +10,10 @@ package org.anchoranalysis.gui.frame.threaded.overlay;
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -26,9 +24,11 @@ package org.anchoranalysis.gui.frame.threaded.overlay;
  * #L%
  */
 
+package org.anchoranalysis.gui.frame.threaded.overlay;
+
 import org.anchoranalysis.anchor.overlay.Overlay;
 import org.anchoranalysis.core.error.InitException;
-import org.anchoranalysis.core.functional.FunctionWithException;
+import org.anchoranalysis.core.functional.function.FunctionWithException;
 import org.anchoranalysis.core.idgetter.IDGetter;
 import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.index.IIndexGettableSettable;
@@ -53,109 +53,109 @@ import org.anchoranalysis.image.extent.ImageDimensions;
 
 public class InternalFrameThreadedOverlayProvider {
 
-	private InternalFrameThreadedProvider delegate;
-	
-	private MarkDisplaySettingsWrapper markDisplaySettingsWrapper;
-	private ThreadedOverlayUpdateProducer threadedImageStackProvider;
-	
-	public InternalFrameThreadedOverlayProvider( String title, boolean indexesAreFrames ) {
-		delegate = new InternalFrameThreadedProvider(title, indexesAreFrames);
-	}
+    private InternalFrameThreadedProvider delegate;
 
-	public void beforeInit(
-		FunctionWithException<Integer, OverlayedDisplayStack,GetOperationFailedException> bridge,
-		IDGetter<Overlay> idGetter,
-		int defaultIndex,
-		MarkDisplaySettingsWrapper markDisplaySettingsWrapper,
-		VideoStatsModuleGlobalParams mpg
-	) throws InitException {
-		
-		this.markDisplaySettingsWrapper = markDisplaySettingsWrapper;
-				
-		threadedImageStackProvider = new ThreadedOverlayUpdateProducer(	idGetter, mpg.getLogger()	);
-		threadedImageStackProvider.init(
-			bridge,
-			markDisplaySettingsWrapper,
-			defaultIndex,
-			mpg.getThreadPool(),
-			mpg.getLogger().errorReporter()
-		);
-	}
+    private MarkDisplaySettingsWrapper markDisplaySettingsWrapper;
+    private ThreadedOverlayUpdateProducer threadedImageStackProvider;
 
-	public ISliderState init(
-		BoundedRangeIncompleteDynamic indexBounds,
-		boolean includeFrameAdjusting,
-		DefaultModuleState initialState,
-		IRetrieveElements elementRetriever,
-		VideoStatsModuleGlobalParams mpg
-	) throws InitException {
-		return delegate.init(
-			threadedImageStackProvider,
-			indexBounds,
-			includeFrameAdjusting,
-			initialState,
-			elementRetriever,
-			mpg
-		);
-	}
+    public InternalFrameThreadedOverlayProvider(String title, boolean indexesAreFrames) {
+        delegate = new InternalFrameThreadedProvider(title, indexesAreFrames);
+    }
 
-	public int defaultIndex(DefaultModuleState initialState) {
-		return delegate.defaultIndex(initialState);
-	}
+    public void beforeInit(
+            FunctionWithException<Integer, OverlayedDisplayStack, GetOperationFailedException>
+                    bridge,
+            IDGetter<Overlay> idGetter,
+            int defaultIndex,
+            MarkDisplaySettingsWrapper markDisplaySettingsWrapper,
+            VideoStatsModuleGlobalParams mpg)
+            throws InitException {
 
-	public IModuleCreatorDefaultState moduleCreator(ISliderState sliderState) {
-		return defaultFrameState -> {
-			VideoStatsModule module = delegate.moduleCreator(sliderState).createVideoStatsModule(defaultFrameState);
-			module.setChangeMarkDisplaySendable( markDisplaySettingsWrapper );
-			return module;
-		};
-	}
+        this.markDisplaySettingsWrapper = markDisplaySettingsWrapper;
 
-	public ControllerPopupMenu controllerPopupMenu() {
-		return delegate.controllerPopupMenu();
-	}
+        threadedImageStackProvider = new ThreadedOverlayUpdateProducer(idGetter, mpg.getLogger());
+        threadedImageStackProvider.init(
+                bridge,
+                markDisplaySettingsWrapper,
+                defaultIndex,
+                mpg.getThreadPool(),
+                mpg.getLogger().errorReporter());
+    }
 
-	public InternalFrameCanvas getFrameCanvas() {
-		return delegate.getFrameCanvas();
-	}
+    public ISliderState init(
+            BoundedRangeIncompleteDynamic indexBounds,
+            boolean includeFrameAdjusting,
+            DefaultModuleState initialState,
+            IRetrieveElements elementRetriever,
+            VideoStatsModuleGlobalParams mpg)
+            throws InitException {
+        return delegate.init(
+                threadedImageStackProvider,
+                indexBounds,
+                includeFrameAdjusting,
+                initialState,
+                elementRetriever,
+                mpg);
+    }
 
-	public IRetrieveElements getElementRetriever() {
-		return delegate.getElementRetriever();
-	}
+    public int defaultIndex(DefaultModuleState initialState) {
+        return delegate.defaultIndex(initialState);
+    }
 
-	public ControllerAction controllerAction() {
-		return delegate.controllerAction();
-	}
+    public IModuleCreatorDefaultState moduleCreator(ISliderState sliderState) {
+        return defaultFrameState -> {
+            VideoStatsModule module =
+                    delegate.moduleCreator(sliderState).createVideoStatsModule(defaultFrameState);
+            module.setChangeMarkDisplaySendable(markDisplaySettingsWrapper);
+            return module;
+        };
+    }
 
-	public void setIndexSliderVisible(boolean visibility) {
-		delegate.setIndexSliderVisible(visibility);
-	}
+    public ControllerPopupMenu controllerPopupMenu() {
+        return delegate.controllerPopupMenu();
+    }
 
-	public boolean addAdditionalDetails(IGenerateExtraDetail arg0) {
-		return delegate.addAdditionalDetails(arg0);
-	}
+    public InternalFrameCanvas getFrameCanvas() {
+        return delegate.getFrameCanvas();
+    }
 
-	public ControllerImageView controllerImageView() {
-		return delegate.controllerImageView();
-	}
+    public IRetrieveElements getElementRetriever() {
+        return delegate.getElementRetriever();
+    }
 
-	public void flush() {
-		delegate.flush();
-	}
+    public ControllerAction controllerAction() {
+        return delegate.controllerAction();
+    }
 
-	public ImageDimensions getDimensions() {
-		return delegate.getDimensions();
-	}
+    public void setIndexSliderVisible(boolean visibility) {
+        delegate.setIndexSliderVisible(visibility);
+    }
 
-	public IIndexGettableSettable getIndexGettableSettable() {
-		return delegate.getIndexGettableSettable();
-	}
-	
-	public IRedrawable getRedrawable() {
-		return threadedImageStackProvider;
-	}
-	
-	public OverlayRetriever getOverlayRetriever() {
-		return threadedImageStackProvider.getOverlayRetriever();
-	}
+    public boolean addAdditionalDetails(IGenerateExtraDetail arg0) {
+        return delegate.addAdditionalDetails(arg0);
+    }
+
+    public ControllerImageView controllerImageView() {
+        return delegate.controllerImageView();
+    }
+
+    public void flush() {
+        delegate.flush();
+    }
+
+    public ImageDimensions getDimensions() {
+        return delegate.getDimensions();
+    }
+
+    public IIndexGettableSettable getIndexGettableSettable() {
+        return delegate.getIndexGettableSettable();
+    }
+
+    public IRedrawable getRedrawable() {
+        return threadedImageStackProvider;
+    }
+
+    public OverlayRetriever getOverlayRetriever() {
+        return threadedImageStackProvider.getOverlayRetriever();
+    }
 }

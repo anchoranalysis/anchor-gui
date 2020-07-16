@@ -1,10 +1,8 @@
-package org.anchoranalysis.gui.plot.definition.line;
-
-/*
+/*-
  * #%L
- * anchor-gui
+ * anchor-gui-plot
  * %%
- * Copyright (C) 2016 ETH Zurich, University of Zurich, Owen Feehan
+ * Copyright (C) 2010 - 2020 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann-La Roche
  * %%
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -12,10 +10,10 @@ package org.anchoranalysis.gui.plot.definition.line;
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -26,10 +24,14 @@ package org.anchoranalysis.gui.plot.definition.line;
  * #L%
  */
 
+package org.anchoranalysis.gui.plot.definition.line;
 
 import java.util.Iterator;
 import java.util.Optional;
-
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.anchoranalysis.anchor.plot.AxisLimits;
 import org.anchoranalysis.anchor.plot.GraphInstance;
 import org.anchoranalysis.anchor.plot.bean.GraphDefinition;
@@ -39,84 +41,55 @@ import org.anchoranalysis.bean.annotation.BeanField;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.index.IIndexGetter;
 
-public class GraphDefinitionLineIterVsCfgSize extends GraphDefinition<GraphDefinitionLineIterVsCfgSize.Item> {
+public class GraphDefinitionLineIterVsCfgSize
+        extends GraphDefinition<GraphDefinitionLineIterVsCfgSize.Item> {
 
-	// START BEAN PROPERITES
-	@BeanField
-	private GraphColorScheme graphColorScheme = new GraphColorScheme();
-	// END BEAN PROPERTIES
-	
-	// Item
-	public static class Item implements IIndexGetter {
-		private int iter;
-		private double cfgSize;
-		
-		public Item() {
-			
-		}
-		
-		public Item(int iter, double cfgSize) {
-			super();
-			this.iter = iter;
-			this.cfgSize = cfgSize;
-		}
+    // START BEAN PROPERITES
+    @BeanField @Getter @Setter private GraphColorScheme graphColorScheme = new GraphColorScheme();
+    // END BEAN PROPERTIES
 
-		public int getIter() {
-			return iter;
-		}
-		public void setIter(int iter) {
-			this.iter = iter;
-		}
+    // Item
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class Item implements IIndexGetter {
+        private int iter;
 
+        @Getter private double cfgSize;
 
-		@Override
-		public int getIndex() {
-			return iter;
-		}
+        @Override
+        public int getIndex() {
+            return iter;
+        }
+    }
 
-		public double getCfgSize() {
-			return cfgSize;
-		}
+    @Override
+    public GraphInstance create(
+            Iterator<GraphDefinitionLineIterVsCfgSize.Item> items,
+            Optional<AxisLimits> domainLimits,
+            Optional<AxisLimits> rangeLimits)
+            throws CreateException {
+        LinePlot<GraphDefinitionLineIterVsCfgSize.Item> delegate =
+                new LinePlot<>(
+                        getTitle(),
+                        new String[] {"Cfg Size"},
+                        (Item item, int yIndex) -> item.getCfgSize());
+        delegate.getLabels().setXY("Iteration", "Number of Marks");
+        delegate.setGraphColorScheme(graphColorScheme);
+        return delegate.create(items, domainLimits, rangeLimits);
+    }
 
-		public void setCfgSize(double cfgSize) {
-			this.cfgSize = cfgSize;
-		}
-		
-	}
+    @Override
+    public String getTitle() {
+        return "Configuration Size";
+    }
 
-	@Override
-	public GraphInstance create(Iterator<GraphDefinitionLineIterVsCfgSize.Item> items, Optional<AxisLimits> domainLimits, Optional<AxisLimits> rangeLimits ) throws CreateException {
-		LinePlot<GraphDefinitionLineIterVsCfgSize.Item> delegate = new LinePlot<>(
-			getTitle(),
-			new String[]{"Cfg Size"},
-			(Item item, int yIndex) -> item.getCfgSize()
-		);
-		delegate.getLabels().setXY("Iteration", "Number of Marks");
-		delegate.setGraphColorScheme(graphColorScheme);
-		return delegate.create(items, domainLimits, rangeLimits);
-	}
+    @Override
+    public boolean isItemAccepted(Item item) {
+        return true;
+    }
 
-	@Override
-	public String getTitle() {
-		return "Configuration Size";
-	}
-
-	@Override
-	public boolean isItemAccepted(Item item) {
-		return true;
-	}
-	
-	@Override
-	public String getShortTitle() {
-		return getTitle();
-	}
-
-	public GraphColorScheme getGraphColorScheme() {
-		return graphColorScheme;
-	}
-
-	public void setGraphColorScheme(GraphColorScheme graphColorScheme) {
-		this.graphColorScheme = graphColorScheme;
-	}
-
+    @Override
+    public String getShortTitle() {
+        return getTitle();
+    }
 }

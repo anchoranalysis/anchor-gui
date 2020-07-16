@@ -1,10 +1,8 @@
-package org.anchoranalysis.gui.frame.overlays.onrgb;
-
 /*-
  * #%L
  * anchor-gui-frame
  * %%
- * Copyright (C) 2010 - 2020 Owen Feehan
+ * Copyright (C) 2010 - 2020 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann-La Roche
  * %%
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -12,10 +10,10 @@ package org.anchoranalysis.gui.frame.overlays.onrgb;
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -26,24 +24,26 @@ package org.anchoranalysis.gui.frame.overlays.onrgb;
  * #L%
  */
 
+package org.anchoranalysis.gui.frame.overlays.onrgb;
 
-
-import org.anchoranalysis.core.functional.FunctionWithException;
+import org.anchoranalysis.core.functional.function.FunctionWithException;
 import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.index.container.SingleContainer;
 import org.anchoranalysis.gui.displayupdate.OverlayedDisplayStack;
 
-class CfgCntrBridge implements FunctionWithException<Integer,OverlayedDisplayStack, GetOperationFailedException> {
-	
-	private SingleContainer<OverlayedDisplayStack> cfgCntr;
-	
-	public CfgCntrBridge(SingleContainer<OverlayedDisplayStack> cfgCntr) {
-		super();
-		this.cfgCntr = cfgCntr;
-	}
+class CfgCntrBridge
+        implements FunctionWithException<
+                Integer, OverlayedDisplayStack, GetOperationFailedException> {
 
-	@Override
-	public OverlayedDisplayStack apply(Integer sourceObject) throws GetOperationFailedException {
-		return cfgCntr.get(0);
-	}
+    private SingleContainer<OverlayedDisplayStack> cfgCntr;
+
+    public CfgCntrBridge(SingleContainer<OverlayedDisplayStack> cfgCntr) {
+        super();
+        this.cfgCntr = cfgCntr;
+    }
+
+    @Override
+    public OverlayedDisplayStack apply(Integer sourceObject) throws GetOperationFailedException {
+        return cfgCntr.get(0);
+    }
 }

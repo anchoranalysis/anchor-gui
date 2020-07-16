@@ -1,10 +1,8 @@
-package org.anchoranalysis.gui.file.opened;
-
-/*
+/*-
  * #%L
- * anchor-gui
+ * anchor-gui-frame
  * %%
- * Copyright (C) 2016 ETH Zurich, University of Zurich, Owen Feehan
+ * Copyright (C) 2010 - 2020 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann-La Roche
  * %%
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -12,10 +10,10 @@ package org.anchoranalysis.gui.file.opened;
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -26,28 +24,27 @@ package org.anchoranalysis.gui.file.opened;
  * #L%
  */
 
+package org.anchoranalysis.gui.file.opened;
 
 import org.anchoranalysis.gui.file.interactive.InteractiveFile;
 
 public class OpenedFileGUI extends OpenedFile {
 
-	private IOpenedFileGUI openedFileGUI;
-	private InteractiveFile file;
-	
-	public OpenedFileGUI(InteractiveFile file, IOpenedFileGUI openedFileGUI) {
-		super();
-		this.openedFileGUI = openedFileGUI;
-		this.file = file;
-	}
+    private IOpenedFileGUI openedFileGUI;
+    private InteractiveFile file;
 
-	@Override
-	public IOpenedFileGUI getGUI() {
-		return openedFileGUI;
-	}
+    public OpenedFileGUI(InteractiveFile file, IOpenedFileGUI openedFileGUI) {
+        super();
+        this.openedFileGUI = openedFileGUI;
+        this.file = file;
+    }
 
-	public InteractiveFile getFile() {
-		return file;
-	}
-	
-	
+    @Override
+    public IOpenedFileGUI getGUI() {
+        return openedFileGUI;
+    }
+
+    public InteractiveFile getFile() {
+        return file;
+    }
 }

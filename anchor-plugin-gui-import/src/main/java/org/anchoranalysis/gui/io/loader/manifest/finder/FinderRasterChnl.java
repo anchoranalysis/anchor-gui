@@ -1,15 +1,8 @@
-package org.anchoranalysis.gui.io.loader.manifest.finder;
-
-import java.nio.file.Path;
-import java.util.Optional;
-
-import org.anchoranalysis.core.error.CreateException;
-
-/*
+/*-
  * #%L
- * anchor-gui
+ * anchor-plugin-gui-import
  * %%
- * Copyright (C) 2016 ETH Zurich, University of Zurich, Owen Feehan
+ * Copyright (C) 2010 - 2020 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann-La Roche
  * %%
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -17,10 +10,10 @@ import org.anchoranalysis.core.error.CreateException;
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -31,6 +24,11 @@ import org.anchoranalysis.core.error.CreateException;
  * #L%
  */
 
+package org.anchoranalysis.gui.io.loader.manifest.finder;
+
+import java.nio.file.Path;
+import java.util.Optional;
+import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.reporter.ErrorReporter;
 import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.progress.ProgressReporterNull;
@@ -45,63 +43,62 @@ import org.anchoranalysis.io.manifest.finder.FinderSingleFile;
 
 public abstract class FinderRasterChnl extends FinderSingleFile implements FinderRasterSingleChnl {
 
-	private Optional<Channel> result = Optional.empty();
-	
-	private RasterReader rasterReader;
+    private Optional<Channel> result = Optional.empty();
 
-	private boolean normalizeChnl;
-	
-	public FinderRasterChnl( RasterReader rasterReader, boolean normalizeChnl, ErrorReporter errorReporter ) {
-		super( errorReporter );
-		this.rasterReader = rasterReader;
-		this.normalizeChnl = normalizeChnl;
-	}
-	
-	public Channel get() throws GetOperationFailedException {
-		assert(exists());
-		if (!result.isPresent()) {
-			try {
-				result = Optional.of(
-					createChnl( getFoundFile() )
-				);
-			} catch (RasterIOException | CreateException e) {
-				throw new GetOperationFailedException(e);
-			}
-		}
-		return result.get();
-	}
+    private RasterReader rasterReader;
 
-	@Override
-	public Channel getFirstChnl() throws GetOperationFailedException {
-		return get();
-	}
-		
-	@Override
-	public int getNumChnl() throws GetOperationFailedException {
-		return 1;
-	}
-	
-	private Channel createChnl( FileWrite fileWrite ) throws RasterIOException, CreateException {
-		
-		// Assume single series, single channel
-		Path filePath = fileWrite.calcPath();
-		
-		try (OpenedRaster openedRaster = rasterReader.openFile(filePath)) {
-			if (openedRaster.numSeries()!=1) {
-				throw new CreateException("there must be exactly one series");
-			}
-			
-			Stack stack = openedRaster.open(0, ProgressReporterNull.get() ).get(0);
-			
-			if (stack.getNumChnl()!=1) {
-				throw new CreateException("there must be exactly one channel");
-			}
-			
-			if (normalizeChnl) {
-				stack.getChnl(0).getVoxelBox().any().multiplyBy(255);
-			}
-		
-			return stack.getChnl(0);
-		}
-	}
+    private boolean normalizeChnl;
+
+    public FinderRasterChnl(
+            RasterReader rasterReader, boolean normalizeChnl, ErrorReporter errorReporter) {
+        super(errorReporter);
+        this.rasterReader = rasterReader;
+        this.normalizeChnl = normalizeChnl;
+    }
+
+    public Channel get() throws GetOperationFailedException {
+        assert (exists());
+        if (!result.isPresent()) {
+            try {
+                result = Optional.of(createChnl(getFoundFile()));
+            } catch (RasterIOException | CreateException e) {
+                throw new GetOperationFailedException(e);
+            }
+        }
+        return result.get();
+    }
+
+    @Override
+    public Channel getFirstChnl() throws GetOperationFailedException {
+        return get();
+    }
+
+    @Override
+    public int getNumChnl() throws GetOperationFailedException {
+        return 1;
+    }
+
+    private Channel createChnl(FileWrite fileWrite) throws RasterIOException, CreateException {
+
+        // Assume single series, single channel
+        Path filePath = fileWrite.calcPath();
+
+        try (OpenedRaster openedRaster = rasterReader.openFile(filePath)) {
+            if (openedRaster.numSeries() != 1) {
+                throw new CreateException("there must be exactly one series");
+            }
+
+            Stack stack = openedRaster.open(0, ProgressReporterNull.get()).get(0);
+
+            if (stack.getNumChnl() != 1) {
+                throw new CreateException("there must be exactly one channel");
+            }
+
+            if (normalizeChnl) {
+                stack.getChnl(0).getVoxelBox().any().multiplyBy(255);
+            }
+
+            return stack.getChnl(0);
+        }
+    }
 }

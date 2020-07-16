@@ -1,10 +1,8 @@
-package org.anchoranalysis.gui.interactivebrowser.launch;
-
-/*
+/*-
  * #%L
- * anchor-gui
+ * anchor-gui-browser
  * %%
- * Copyright (C) 2016 ETH Zurich, University of Zurich, Owen Feehan
+ * Copyright (C) 2010 - 2020 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann-La Roche
  * %%
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -12,10 +10,10 @@ package org.anchoranalysis.gui.interactivebrowser.launch;
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -26,10 +24,12 @@ package org.anchoranalysis.gui.interactivebrowser.launch;
  * #L%
  */
 
+package org.anchoranalysis.gui.interactivebrowser.launch;
 
 import java.util.ArrayList;
 import java.util.List;
-
+import lombok.Getter;
+import lombok.Setter;
 import org.anchoranalysis.anchor.mpp.feature.bean.mark.MarkEvaluator;
 import org.anchoranalysis.anchor.mpp.feature.bean.nrgscheme.NRGSchemeCreator;
 import org.anchoranalysis.bean.NamedBean;
@@ -48,122 +48,52 @@ import org.anchoranalysis.io.bean.input.InputManager;
 import org.anchoranalysis.io.bean.input.InputManagerParams;
 import org.anchoranalysis.io.error.AnchorIOException;
 
-public class InteractiveBrowserInputManager extends InputManager<InteractiveBrowserInput>  {
+public class InteractiveBrowserInputManager extends InputManager<InteractiveBrowserInput> {
 
-	// START BEAN PROPERTIES
-	@BeanField
-	private List<FileCreator> listFileCreators = new ArrayList<>();
-	
-	@BeanField @DefaultInstance
-	private RasterReader rasterReader;
-	
-	@BeanField @OptionalBean
-	private NRGSchemeCreator nrgSchemeCreator;
-	
-	@BeanField
-	private List<NamedBean<FeatureListProvider<FeatureInput>>> namedItemSharedFeatureList = new ArrayList<>();
-	
-	@BeanField
-	private List<NamedBean<MarkEvaluator>> namedItemMarkEvaluatorList = new ArrayList<>();
-	
-	@BeanField @OptionalBean
-	private List<NamedBean<KeyValueParamsProvider>> namedItemKeyValueParamsProviderList = new ArrayList<>();
-	
-	@BeanField @OptionalBean
-	private List<NamedBean<FilePathProvider>> namedItemFilePathProviderList = new ArrayList<>();
-	
-	@BeanField
-	private ImporterSettings importerSettings;
-	// END BEAN PROPERTIES
+    // START BEAN PROPERTIES
+    @BeanField @Getter @Setter private List<FileCreator> listFileCreators = new ArrayList<>();
 
-	@Override
-	public List<InteractiveBrowserInput> inputObjects(InputManagerParams params)
-			throws AnchorIOException {
-		
-		InteractiveBrowserInput ibi = new InteractiveBrowserInput();
-		ibi.setListFileCreators( listFileCreators );
-		ibi.setRasterReader( rasterReader );
-		ibi.setNrgSchemeCreator( nrgSchemeCreator );
-		ibi.setNamedItemSharedFeatureList( namedItemSharedFeatureList );
-		ibi.setNamedItemMarkEvaluatorList(namedItemMarkEvaluatorList);
-		ibi.setNamedItemKeyValueParamsProviderList(namedItemKeyValueParamsProviderList);
-		ibi.setNamedItemFilePathProviderList(namedItemFilePathProviderList);
-		ibi.setImporterSettings(importerSettings);
-		
-		return singletonList(ibi);
-	}
-	
-	public RasterReader getRasterReader() {
-		return rasterReader;
-	}
+    @BeanField @DefaultInstance @Getter @Setter private RasterReader rasterReader;
 
-	public void setRasterReader(RasterReader rasterReader) {
-		this.rasterReader = rasterReader;
-	}
-	
-	public List<FileCreator> getListFileCreators() {
-		return listFileCreators;
-	}
+    @BeanField @OptionalBean @Getter @Setter private NRGSchemeCreator nrgSchemeCreator;
 
-	public void setListFileCreators(List<FileCreator> listFileCreators) {
-		this.listFileCreators = listFileCreators;
-	}
+    @BeanField @Getter @Setter
+    private List<NamedBean<FeatureListProvider<FeatureInput>>> namedItemSharedFeatureList =
+            new ArrayList<>();
 
-	public NRGSchemeCreator getNrgSchemeCreator() {
-		return nrgSchemeCreator;
-	}
+    @BeanField @Getter @Setter
+    private List<NamedBean<MarkEvaluator>> namedItemMarkEvaluatorList = new ArrayList<>();
 
-	public void setNrgSchemeCreator(NRGSchemeCreator nrgSchemeCreator) {
-		this.nrgSchemeCreator = nrgSchemeCreator;
-	}
+    @BeanField @OptionalBean @Getter @Setter
+    private List<NamedBean<KeyValueParamsProvider>> namedItemKeyValueParamsProviderList =
+            new ArrayList<>();
 
-	public List<NamedBean<FeatureListProvider<FeatureInput>>> getNamedItemSharedFeatureList() {
-		return namedItemSharedFeatureList;
-	}
+    @BeanField @OptionalBean @Getter @Setter
+    private List<NamedBean<FilePathProvider>> namedItemFilePathProviderList = new ArrayList<>();
 
-	public void setNamedItemSharedFeatureList(
-			List<NamedBean<FeatureListProvider<FeatureInput>>> namedItemSharedFeatureList) {
-		this.namedItemSharedFeatureList = namedItemSharedFeatureList;
-	}
+    @BeanField @Getter @Setter private ImporterSettings importerSettings;
+    // END BEAN PROPERTIES
 
-	public List<NamedBean<MarkEvaluator>> getNamedItemMarkEvaluatorList() {
-		return namedItemMarkEvaluatorList;
-	}
+    @Override
+    public List<InteractiveBrowserInput> inputObjects(InputManagerParams params)
+            throws AnchorIOException {
 
-	public void setNamedItemMarkEvaluatorList(
-			List<NamedBean<MarkEvaluator>> namedItemMarkEvaluatorList) {
-		this.namedItemMarkEvaluatorList = namedItemMarkEvaluatorList;
-	}
+        InteractiveBrowserInput ibi = new InteractiveBrowserInput();
+        ibi.setListFileCreators(listFileCreators);
+        ibi.setRasterReader(rasterReader);
+        ibi.setNrgSchemeCreator(nrgSchemeCreator);
+        ibi.setNamedItemSharedFeatureList(namedItemSharedFeatureList);
+        ibi.setNamedItemMarkEvaluatorList(namedItemMarkEvaluatorList);
+        ibi.setNamedItemKeyValueParamsProviderList(namedItemKeyValueParamsProviderList);
+        ibi.setNamedItemFilePathProviderList(namedItemFilePathProviderList);
+        ibi.setImporterSettings(importerSettings);
 
-	public List<NamedBean<KeyValueParamsProvider>> getNamedItemKeyValueParamsProviderList() {
-		return namedItemKeyValueParamsProviderList;
-	}
+        return singletonList(ibi);
+    }
 
-	public void setNamedItemKeyValueParamsProviderList(
-			List<NamedBean<KeyValueParamsProvider>> namedItemKeyValueParamsProviderList) {
-		this.namedItemKeyValueParamsProviderList = namedItemKeyValueParamsProviderList;
-	}
-	public List<NamedBean<FilePathProvider>> getNamedItemFilePathProviderList() {
-		return namedItemFilePathProviderList;
-	}
-
-	public void setNamedItemFilePathProviderList(
-			List<NamedBean<FilePathProvider>> namedItemFilePathProviderList) {
-		this.namedItemFilePathProviderList = namedItemFilePathProviderList;
-	}
-		
-	private static <T> List<T> singletonList( T elem ) {
-		List<T> singletonList = new ArrayList<>();
-		singletonList.add(elem);
-		return singletonList;
-	}
-
-	public ImporterSettings getImporterSettings() {
-		return importerSettings;
-	}
-
-	public void setImporterSettings(ImporterSettings importerSettings) {
-		this.importerSettings = importerSettings;
-	}
-
+    private static <T> List<T> singletonList(T elem) {
+        List<T> singletonList = new ArrayList<>();
+        singletonList.add(elem);
+        return singletonList;
+    }
 }

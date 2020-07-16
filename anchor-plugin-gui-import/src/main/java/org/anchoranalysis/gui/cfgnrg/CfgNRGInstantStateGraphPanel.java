@@ -1,12 +1,8 @@
-package org.anchoranalysis.gui.cfgnrg;
-
-import java.util.Optional;
-
-/*
+/*-
  * #%L
- * anchor-gui
+ * anchor-plugin-gui-import
  * %%
- * Copyright (C) 2016 ETH Zurich, University of Zurich, Owen Feehan
+ * Copyright (C) 2010 - 2020 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann-La Roche
  * %%
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -14,10 +10,10 @@ import java.util.Optional;
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -28,13 +24,14 @@ import java.util.Optional;
  * #L%
  */
 
+package org.anchoranalysis.gui.cfgnrg;
 
+import java.util.Optional;
 import javax.swing.JPanel;
-
 import org.anchoranalysis.anchor.mpp.feature.instantstate.CfgNRGInstantState;
 import org.anchoranalysis.anchor.overlay.collection.OverlayCollection;
 import org.anchoranalysis.core.error.OperationFailedException;
-import org.anchoranalysis.core.functional.FunctionWithException;
+import org.anchoranalysis.core.functional.function.FunctionWithException;
 import org.anchoranalysis.core.index.IntArray;
 import org.anchoranalysis.core.property.IPropertyValueReceivable;
 import org.anchoranalysis.core.property.IPropertyValueSendable;
@@ -43,54 +40,58 @@ import org.anchoranalysis.gui.plot.panel.GraphPanel;
 
 public class CfgNRGInstantStateGraphPanel extends StatePanel<CfgNRGInstantState> {
 
-	private GraphPanel graphPanel;
+    private GraphPanel graphPanel;
 
-	private FunctionWithException<CfgNRGInstantState,ClickableGraphInstance,OperationFailedException> graphGenerator;
-	
-	public CfgNRGInstantStateGraphPanel( FunctionWithException<CfgNRGInstantState,ClickableGraphInstance,OperationFailedException> graphGenerator ) {
-		this.graphGenerator = graphGenerator;
+    private FunctionWithException<
+                    CfgNRGInstantState, ClickableGraphInstance, OperationFailedException>
+            graphGenerator;
 
-	}
-	
-	
-	@Override
-	public JPanel getPanel() {
-		return graphPanel.getPanel();
-	}
+    public CfgNRGInstantStateGraphPanel(
+            FunctionWithException<
+                            CfgNRGInstantState, ClickableGraphInstance, OperationFailedException>
+                    graphGenerator) {
+        this.graphGenerator = graphGenerator;
+    }
 
-	@Override
-	public void updateState(CfgNRGInstantState state) throws StatePanelUpdateException {
-		
-		try {
-			ClickableGraphInstance graphInstance = graphGenerator.apply(state);
-			
-			if (graphPanel==null) {
-				this.graphPanel = new GraphPanel( graphInstance );
-			} else {
-				this.graphPanel.updateGraph(graphInstance);
-			}
-		} catch (OperationFailedException e) {
-			throw new StatePanelUpdateException(e);
-		}
-	}
+    @Override
+    public JPanel getPanel() {
+        return graphPanel.getPanel();
+    }
 
-	@Override
-	public Optional<IPropertyValueSendable<IntArray>> getSelectMarksSendable() {
-		return Optional.empty();
-	}
+    @Override
+    public void updateState(CfgNRGInstantState state) throws StatePanelUpdateException {
 
-	@Override
-	public Optional<IPropertyValueReceivable<IntArray>> getSelectMarksReceivable() {
-		return Optional.empty();
-	}
+        try {
+            ClickableGraphInstance graphInstance = graphGenerator.apply(state);
 
-	@Override
-	public Optional<IPropertyValueReceivable<OverlayCollection>> getSelectOverlayCollectionReceivable() {
-		return Optional.empty();
-	}
+            if (graphPanel == null) {
+                this.graphPanel = new GraphPanel(graphInstance);
+            } else {
+                this.graphPanel.updateGraph(graphInstance);
+            }
+        } catch (OperationFailedException e) {
+            throw new StatePanelUpdateException(e);
+        }
+    }
 
-	@Override
-	public Optional<IPropertyValueReceivable<Integer>> getSelectIndexReceivable() {
-		return Optional.empty();
-	}
+    @Override
+    public Optional<IPropertyValueSendable<IntArray>> getSelectMarksSendable() {
+        return Optional.empty();
+    }
+
+    @Override
+    public Optional<IPropertyValueReceivable<IntArray>> getSelectMarksReceivable() {
+        return Optional.empty();
+    }
+
+    @Override
+    public Optional<IPropertyValueReceivable<OverlayCollection>>
+            getSelectOverlayCollectionReceivable() {
+        return Optional.empty();
+    }
+
+    @Override
+    public Optional<IPropertyValueReceivable<Integer>> getSelectIndexReceivable() {
+        return Optional.empty();
+    }
 }

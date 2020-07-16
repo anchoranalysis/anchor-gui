@@ -1,10 +1,8 @@
-package org.anchoranalysis.gui.feature.evaluator;
-
-/*
+/*-
  * #%L
- * anchor-gui
+ * anchor-gui-feature-evaluator
  * %%
- * Copyright (C) 2016 ETH Zurich, University of Zurich, Owen Feehan
+ * Copyright (C) 2010 - 2020 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann-La Roche
  * %%
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -12,10 +10,10 @@ package org.anchoranalysis.gui.feature.evaluator;
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -26,9 +24,9 @@ package org.anchoranalysis.gui.feature.evaluator;
  * #L%
  */
 
+package org.anchoranalysis.gui.feature.evaluator;
 
 import javax.swing.SwingUtilities;
-
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.error.reporter.ErrorReporter;
 import org.anchoranalysis.core.log.Logger;
@@ -44,56 +42,58 @@ import org.anchoranalysis.gui.videostats.module.VideoStatsModule;
 
 public class FeatureEvaluatorTableFrame {
 
-	private StatePanelFrame<OverlayCollectionWithImgStack> delegate;
-	
-	private ErrorReporter errorReporter;
-	private FeatureListSrc featureListSrc;
-	
-	public FeatureEvaluatorTableFrame( DefaultModuleState defaultFrameState, FeatureListSrc featureListSrc, boolean defaultKeepLastValid, Logger logger ) throws StatePanelUpdateException {
-		this.featureListSrc = featureListSrc;
-		delegate = new StatePanelFrame<>(
-			"Feature Evaluator",
-			defaultFrameState.getLinkState().getCfgWithStack(),
-			new FeatureEvaluatorTablePanel( featureListSrc, defaultKeepLastValid, logger )
-		);
-		delegate.controllerSize().configureSize(200, 200, 650, 800);
-		this.errorReporter = logger.errorReporter();
-	}
-		
-	public IModuleCreatorDefaultState moduleCreator() {
-		return defaultFrameState-> {
-			VideoStatsModule module = delegate.moduleCreator().createVideoStatsModule(defaultFrameState);
-			
-			LinkModules link = new LinkModules(module);
-			link.getOverlaysWithStack().add(
-				(value,adjusting) -> showIncomingState(value)
-			);
-							
-			return module;
-		};
-	}
-	
-	private void showIncomingState( final OverlayCollectionWithImgStack value ) {
-		SwingUtilities.invokeLater( () -> {
-			try {
-				delegate.updateState(
-					maybeAugmentParams(value)
-				);
-				
-			} catch (StatePanelUpdateException | OperationFailedException e) {
-				errorReporter.recordError(FeatureEvaluatorTableFrame.class, e);
-			}
-		});
-	}
-	
-	private OverlayCollectionWithImgStack maybeAugmentParams( OverlayCollectionWithImgStack oc ) throws OperationFailedException {
-		return oc.copyChangeStack(
-			featureListSrc.maybeAugmentParams( oc.getStack() )
-		);
-	}
+    private StatePanelFrame<OverlayCollectionWithImgStack> delegate;
 
-	public ControllerSize controllerSize() {
-		return delegate.controllerSize();
-	}
-	
+    private ErrorReporter errorReporter;
+    private FeatureListSrc featureListSrc;
+
+    public FeatureEvaluatorTableFrame(
+            DefaultModuleState defaultFrameState,
+            FeatureListSrc featureListSrc,
+            boolean defaultKeepLastValid,
+            Logger logger)
+            throws StatePanelUpdateException {
+        this.featureListSrc = featureListSrc;
+        delegate =
+                new StatePanelFrame<>(
+                        "Feature Evaluator",
+                        defaultFrameState.getLinkState().getCfgWithStack(),
+                        new FeatureEvaluatorTablePanel(
+                                featureListSrc, defaultKeepLastValid, logger));
+        delegate.controllerSize().configureSize(200, 200, 650, 800);
+        this.errorReporter = logger.errorReporter();
+    }
+
+    public IModuleCreatorDefaultState moduleCreator() {
+        return defaultFrameState -> {
+            VideoStatsModule module =
+                    delegate.moduleCreator().createVideoStatsModule(defaultFrameState);
+
+            LinkModules link = new LinkModules(module);
+            link.getOverlaysWithStack().add((value, adjusting) -> showIncomingState(value));
+
+            return module;
+        };
+    }
+
+    private void showIncomingState(final OverlayCollectionWithImgStack value) {
+        SwingUtilities.invokeLater(
+                () -> {
+                    try {
+                        delegate.updateState(maybeAugmentParams(value));
+
+                    } catch (StatePanelUpdateException | OperationFailedException e) {
+                        errorReporter.recordError(FeatureEvaluatorTableFrame.class, e);
+                    }
+                });
+    }
+
+    private OverlayCollectionWithImgStack maybeAugmentParams(OverlayCollectionWithImgStack oc)
+            throws OperationFailedException {
+        return oc.copyChangeStack(featureListSrc.maybeAugmentParams(oc.getStack()));
+    }
+
+    public ControllerSize controllerSize() {
+        return delegate.controllerSize();
+    }
 }

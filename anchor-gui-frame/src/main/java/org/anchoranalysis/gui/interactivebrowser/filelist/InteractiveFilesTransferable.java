@@ -1,10 +1,8 @@
-package org.anchoranalysis.gui.interactivebrowser.filelist;
-
-/*
+/*-
  * #%L
- * anchor-gui
+ * anchor-gui-frame
  * %%
- * Copyright (C) 2016 ETH Zurich, University of Zurich, Owen Feehan
+ * Copyright (C) 2010 - 2020 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann-La Roche
  * %%
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -12,10 +10,10 @@ package org.anchoranalysis.gui.interactivebrowser.filelist;
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -26,6 +24,7 @@ package org.anchoranalysis.gui.interactivebrowser.filelist;
  * #L%
  */
 
+package org.anchoranalysis.gui.interactivebrowser.filelist;
 
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.ClipboardOwner;
@@ -39,105 +38,101 @@ import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
 import org.anchoranalysis.gui.file.interactive.InteractiveFile;
 
 // Copies from web. For copying a string onto both internal and external clipboard
 //  On internal clipboard it can stay as a String, on external clipboard it is changed appropriately
 class InteractiveFilesTransferable implements Transferable, ClipboardOwner {
-	
-	@SuppressWarnings("deprecation")
-	private static final DataFlavor plainTextFlavor = DataFlavor.plainTextFlavor;
-	private static final DataFlavor localStringFlavor = DataFlavor.stringFlavor;
-	private static final DataFlavor fileListFlavor = DataFlavor.javaFileListFlavor;
-	
 
-	private static final DataFlavor[] flavors = {
-	    InteractiveFilesTransferable.plainTextFlavor,
-	    InteractiveFilesTransferable.localStringFlavor,
-	    InteractiveFilesTransferable.fileListFlavor
-	};
+    @SuppressWarnings("deprecation")
+    private static final DataFlavor plainTextFlavor = DataFlavor.plainTextFlavor;
 
-	private static final List<DataFlavor> flavorList = Arrays.asList( flavors );
+    private static final DataFlavor localStringFlavor = DataFlavor.stringFlavor;
+    private static final DataFlavor fileListFlavor = DataFlavor.javaFileListFlavor;
 
-	private InteractiveFile[] interactiveFiles;
-	  
-	  
-	  
-	  
-	public InteractiveFilesTransferable(InteractiveFile[] interactiveFiles) {
-		super();
-		this.interactiveFiles = interactiveFiles;
-	}
-	
-	@Override
-	public synchronized DataFlavor[] getTransferDataFlavors() {
-		return flavors;
-	}
-	
-	@Override
-	public boolean isDataFlavorSupported( DataFlavor flavor ) {
-		return (flavorList.contains(flavor));
-	}
-	
-	private String identiferStringFromMultiple( InteractiveFile[] files ) {
-		
-		boolean first = true;
-		
-		StringBuilder sb = new StringBuilder();
-		for( InteractiveFile f : files ) {
-			sb.append( f.identifier() );
-			
-			if (first) {
-				first = false;
-			} else {
-				sb.append(",");
-			}
-		}
-		return sb.toString();
-	}
-	
-	private ByteArrayInputStream decideString( String str, DataFlavor flavor ) throws UnsupportedEncodingException {
-		String charset = flavor.getParameter("charset").trim();
-		if(charset.equalsIgnoreCase("unicode")) {
-			//System.out.println("returning unicode charset");
-			// uppercase U in Unicode here!
-		    return new ByteArrayInputStream( str.getBytes("Unicode"));
-		} else {
-    	  //System.out.println("returning latin-1 charset");    
-    	  return new ByteArrayInputStream( str.getBytes("iso8859-1"));
-		}
-	}
-	
-	@Override
-	public synchronized Object getTransferData(DataFlavor flavor) throws UnsupportedFlavorException, IOException {
+    private static final DataFlavor[] flavors = {
+        InteractiveFilesTransferable.plainTextFlavor,
+        InteractiveFilesTransferable.localStringFlavor,
+        InteractiveFilesTransferable.fileListFlavor
+    };
 
-		if (flavor.equals(InteractiveFilesTransferable.fileListFlavor)) {
-			return buildListOfAssociatedFiles();
-			
-		} else if (flavor.equals(InteractiveFilesTransferable.plainTextFlavor)) {
-			return decideString( identiferStringFromMultiple(interactiveFiles) , flavor);
-			
-	    } else if (InteractiveFilesTransferable.localStringFlavor.equals(flavor)) {
-	    	return identiferStringFromMultiple(interactiveFiles);
-	    	
-	    } else {
-	      throw new UnsupportedFlavorException(flavor);
-	    }
-	}
-	
-	@Override
-	public void lostOwnership(Clipboard arg0, Transferable arg1) {
-		// NOTHING TO DO
-	}
-	
-	private List<File> buildListOfAssociatedFiles() {
-		List<File> fileListOut = new ArrayList<>();
-		for( InteractiveFile f : interactiveFiles ) {
-			f.associatedFile().ifPresent( associatedFile->
-				fileListOut.add(associatedFile)
-			);
-		}
-		return fileListOut;
-	}	
+    private static final List<DataFlavor> flavorList = Arrays.asList(flavors);
+
+    private InteractiveFile[] interactiveFiles;
+
+    public InteractiveFilesTransferable(InteractiveFile[] interactiveFiles) {
+        super();
+        this.interactiveFiles = interactiveFiles;
+    }
+
+    @Override
+    public synchronized DataFlavor[] getTransferDataFlavors() {
+        return flavors;
+    }
+
+    @Override
+    public boolean isDataFlavorSupported(DataFlavor flavor) {
+        return (flavorList.contains(flavor));
+    }
+
+    private String identiferStringFromMultiple(InteractiveFile[] files) {
+
+        boolean first = true;
+
+        StringBuilder sb = new StringBuilder();
+        for (InteractiveFile f : files) {
+            sb.append(f.identifier());
+
+            if (first) {
+                first = false;
+            } else {
+                sb.append(",");
+            }
+        }
+        return sb.toString();
+    }
+
+    private ByteArrayInputStream decideString(String str, DataFlavor flavor)
+            throws UnsupportedEncodingException {
+        String charset = flavor.getParameter("charset").trim();
+        if (charset.equalsIgnoreCase("unicode")) {
+            // System.out.println("returning unicode charset");
+            // uppercase U in Unicode here!
+            return new ByteArrayInputStream(str.getBytes("Unicode"));
+        } else {
+            // System.out.println("returning latin-1 charset");
+            return new ByteArrayInputStream(str.getBytes("iso8859-1"));
+        }
+    }
+
+    @Override
+    public synchronized Object getTransferData(DataFlavor flavor)
+            throws UnsupportedFlavorException, IOException {
+
+        if (flavor.equals(InteractiveFilesTransferable.fileListFlavor)) {
+            return buildListOfAssociatedFiles();
+
+        } else if (flavor.equals(InteractiveFilesTransferable.plainTextFlavor)) {
+            return decideString(identiferStringFromMultiple(interactiveFiles), flavor);
+
+        } else if (InteractiveFilesTransferable.localStringFlavor.equals(flavor)) {
+            return identiferStringFromMultiple(interactiveFiles);
+
+        } else {
+            throw new UnsupportedFlavorException(flavor);
+        }
+    }
+
+    @Override
+    public void lostOwnership(Clipboard arg0, Transferable arg1) {
+        // NOTHING TO DO
+    }
+
+    private List<File> buildListOfAssociatedFiles() {
+        List<File> fileListOut = new ArrayList<>();
+        for (InteractiveFile f : interactiveFiles) {
+            f.associatedFile().ifPresent(associatedFile -> fileListOut.add(associatedFile));
+        }
+        return fileListOut;
+    }
 }

@@ -1,10 +1,8 @@
-package org.anchoranalysis.gui.finder;
-
 /*-
  * #%L
  * anchor-gui-common
  * %%
- * Copyright (C) 2010 - 2019 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann la Roche
+ * Copyright (C) 2010 - 2020 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann-La Roche
  * %%
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -12,10 +10,10 @@ package org.anchoranalysis.gui.finder;
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -26,8 +24,9 @@ package org.anchoranalysis.gui.finder;
  * #L%
  */
 
-import java.nio.file.Path;
+package org.anchoranalysis.gui.finder;
 
+import java.nio.file.Path;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.progress.ProgressReporterNull;
 import org.anchoranalysis.image.io.RasterIOException;
@@ -39,28 +38,26 @@ import org.anchoranalysis.io.manifest.folder.SequencedFolder;
 
 class SequencedFolderRasterReader extends SequencedFolderCntrCreator<Stack> {
 
-	private RasterReader rasterReader;
-	
-	public SequencedFolderRasterReader(SequencedFolder rootFolder, RasterReader rasterReader) {
-		super(rootFolder);
-		this.rasterReader = rasterReader;
-	}
-	
-	@Override
-	protected Stack createFromFilePath( Path path ) throws CreateException {
-		 // We don't support multiple series for now
-		try {
-			OpenedRaster or = rasterReader.openFile(path);
-			try {
-				Stack stack = or.open(0, ProgressReporterNull.get() ).get(0);
-				return stack.duplicate();
-			} finally {
-				or.close();
-			}
-		} catch (RasterIOException e) {
-			throw new CreateException(e);
-		}
-	}
+    private RasterReader rasterReader;
 
-	
+    public SequencedFolderRasterReader(SequencedFolder rootFolder, RasterReader rasterReader) {
+        super(rootFolder);
+        this.rasterReader = rasterReader;
+    }
+
+    @Override
+    protected Stack createFromFilePath(Path path) throws CreateException {
+        // We don't support multiple series for now
+        try {
+            OpenedRaster or = rasterReader.openFile(path);
+            try {
+                Stack stack = or.open(0, ProgressReporterNull.get()).get(0);
+                return stack.duplicate();
+            } finally {
+                or.close();
+            }
+        } catch (RasterIOException e) {
+            throw new CreateException(e);
+        }
+    }
 }

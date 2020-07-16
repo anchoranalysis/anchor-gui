@@ -1,10 +1,8 @@
-package org.anchoranalysis.gui.videostats.dropdown;
-
-/*
+/*-
  * #%L
- * anchor-gui
+ * anchor-gui-frame
  * %%
- * Copyright (C) 2016 ETH Zurich, University of Zurich, Owen Feehan
+ * Copyright (C) 2010 - 2020 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann-La Roche
  * %%
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -12,10 +10,10 @@ package org.anchoranalysis.gui.videostats.dropdown;
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -26,41 +24,48 @@ package org.anchoranalysis.gui.videostats.dropdown;
  * #L%
  */
 
+package org.anchoranalysis.gui.videostats.dropdown;
 
 public class NamedModule {
-	private String title;
-	private VideoStatsModuleCreatorAndAdder creatorAndAdder;
-	
-	// Distinguishes modules of the same type from each other
-	private String shortTitle;
-	
-	public NamedModule(String title, VideoStatsModuleCreatorAndAdder creatorAndAdder) {
-		this( title, creatorAndAdder, title );
-	}
-	
-	public NamedModule(String title, VideoStatsModuleCreatorAndAdder creatorAndAdder, String shortTitle) {
-		super();
-		this.title = title;
-		this.creatorAndAdder = creatorAndAdder;
-		this.shortTitle = shortTitle;
-	}
-	
-	public String getTitle() {
-		return title;
-	}
-	public void setTitle(String title) {
-		this.title = title;
-	}
-	public VideoStatsModuleCreatorAndAdder getCreator() {
-		return creatorAndAdder;
-	}
-	public void setCreator(VideoStatsModuleCreatorAndAdder creator) {
-		this.creatorAndAdder = creator;
-	}
-	public String getShortTitle() {
-		return shortTitle;
-	}
-	public void setShortTitle(String shortTitle) {
-		this.shortTitle = shortTitle;
-	}
+    private String title;
+    private VideoStatsModuleCreatorAndAdder creatorAndAdder;
+
+    // Distinguishes modules of the same type from each other
+    private String shortTitle;
+
+    public NamedModule(String title, VideoStatsModuleCreatorAndAdder creatorAndAdder) {
+        this(title, creatorAndAdder, title);
+    }
+
+    public NamedModule(
+            String title, VideoStatsModuleCreatorAndAdder creatorAndAdder, String shortTitle) {
+        super();
+        this.title = title;
+        this.creatorAndAdder = creatorAndAdder;
+        this.shortTitle = shortTitle;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public VideoStatsModuleCreatorAndAdder getCreator() {
+        return creatorAndAdder;
+    }
+
+    public void setCreator(VideoStatsModuleCreatorAndAdder creator) {
+        this.creatorAndAdder = creator;
+    }
+
+    public String getShortTitle() {
+        return shortTitle;
+    }
+
+    public void setShortTitle(String shortTitle) {
+        this.shortTitle = shortTitle;
+    }
 }

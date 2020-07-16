@@ -1,10 +1,8 @@
-package org.anchoranalysis.gui.interactivebrowser.openfile.importer;
-
 /*-
  * #%L
  * anchor-plugin-gui-annotation
  * %%
- * Copyright (C) 2010 - 2019 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann la Roche
+ * Copyright (C) 2010 - 2020 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann-La Roche
  * %%
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -12,10 +10,10 @@ package org.anchoranalysis.gui.interactivebrowser.openfile.importer;
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -26,9 +24,10 @@ package org.anchoranalysis.gui.interactivebrowser.openfile.importer;
  * #L%
  */
 
+package org.anchoranalysis.gui.interactivebrowser.openfile.importer;
+
 import java.io.File;
 import java.util.Optional;
-
 import org.anchoranalysis.annotation.io.bean.input.AnnotationInputManager;
 import org.anchoranalysis.annotation.io.bean.strategy.AnnotatorStrategy;
 import org.anchoranalysis.gui.bean.filecreator.AnnotationCreator;
@@ -37,32 +36,28 @@ import org.anchoranalysis.image.io.input.ProvidesStackInput;
 
 public class ImporterFromAnnotation extends ImporterFromBean {
 
-	@Override
-	public boolean isApplicable(Object bean) {
-		return bean instanceof AnnotationInputManager;
-	}
+    @Override
+    public boolean isApplicable(Object bean) {
+        return bean instanceof AnnotationInputManager;
+    }
 
-	@SuppressWarnings("unchecked")
-	@Override
-	public Optional<FileCreator> create(Object bean, File file) {
-		return Optional.of(
-			createAnnotation(
-				(AnnotationInputManager<ProvidesStackInput,AnnotatorStrategy>) bean,
-				file
-			)
-		);
-	}
-	
+    @SuppressWarnings("unchecked")
+    @Override
+    public Optional<FileCreator> create(Object bean, File file) {
+        return Optional.of(
+                createAnnotation(
+                        (AnnotationInputManager<ProvidesStackInput, AnnotatorStrategy>) bean,
+                        file));
+    }
 
-	// For now we assume we are always dealing with NamedChnlCollectionInputObject
-	private static FileCreator createAnnotation( AnnotationInputManager<ProvidesStackInput,?> inputManager, File f) {
-		return CreatorFactory.create(
-			new AnnotationCreator( inputManager.getAnnotatorStrategy().weightWidthDescription() ),				
-			inputManager,
-			(creator,input)-> creator.setInput(inputManager),			
-			f,
-			"annotation"
-		);
-	}
-
+    // For now we assume we are always dealing with NamedChnlCollectionInputObject
+    private static FileCreator createAnnotation(
+            AnnotationInputManager<ProvidesStackInput, ?> inputManager, File f) {
+        return CreatorFactory.create(
+                new AnnotationCreator(inputManager.getAnnotatorStrategy().weightWidthDescription()),
+                inputManager,
+                (creator, input) -> creator.setInput(inputManager),
+                f,
+                "annotation");
+    }
 }

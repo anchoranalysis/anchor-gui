@@ -1,10 +1,8 @@
-package org.anchoranalysis.gui.feature.evaluator.nrgtree;
-
-/*
+/*-
  * #%L
- * anchor-gui
+ * anchor-gui-feature-evaluator
  * %%
- * Copyright (C) 2016 ETH Zurich, University of Zurich, Owen Feehan
+ * Copyright (C) 2010 - 2020 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann-La Roche
  * %%
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -12,10 +10,10 @@ package org.anchoranalysis.gui.feature.evaluator.nrgtree;
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -26,23 +24,20 @@ package org.anchoranalysis.gui.feature.evaluator.nrgtree;
  * #L%
  */
 
+package org.anchoranalysis.gui.feature.evaluator.nrgtree;
 
 import org.netbeans.swing.outline.RowModel;
 
-/**
- *
- * @author Owen Feehan
- */
 public class FeatureCalcDescriptionTreeRowModel implements RowModel {
 
     @SuppressWarnings("rawtypes")
-	@Override
+    @Override
     public Class getColumnClass(int column) {
         switch (column) {
             case 0:
                 return String.class;
-            //case 1:
-            //   return Long.class;
+                // case 1:
+                //   return Long.class;
             default:
                 assert false;
         }
@@ -56,28 +51,28 @@ public class FeatureCalcDescriptionTreeRowModel implements RowModel {
 
     @Override
     public String getColumnName(int column) {
-    	 switch (column) {
-         case 0:
-             return "Value";
-         //case 1:
-         //   return Long.class;
-         default:
-             assert false;
-    	 }
-    	 return "untitled";
+        switch (column) {
+            case 0:
+                return "Value";
+                // case 1:
+                //   return Long.class;
+            default:
+                assert false;
+        }
+        return "untitled";
     }
 
     @Override
     public Object getValueFor(Object node, int column) {
-    	
-    	Node nodeC = (Node) node; 
-    	
-        //File f = (File) node;
+
+        Node nodeC = (Node) node;
+
+        // File f = (File) node;
         switch (column) {
             case 0:
                 return nodeC.getValue();
-            //case 1:
-            //    return new Long(45);
+                // case 1:
+                //    return new Long(45);
             default:
                 assert false;
         }
@@ -91,7 +86,6 @@ public class FeatureCalcDescriptionTreeRowModel implements RowModel {
 
     @Override
     public void setValueFor(Object node, int column, Object value) {
-        //do nothing for now
+        // do nothing for now
     }
-
 }

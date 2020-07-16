@@ -1,14 +1,8 @@
-package org.anchoranalysis.gui.interactivebrowser;
-
-
-
-import java.io.IOException;
-
-/*
+/*-
  * #%L
- * anchor-gui
+ * anchor-gui-frame
  * %%
- * Copyright (C) 2016 ETH Zurich, University of Zurich, Owen Feehan
+ * Copyright (C) 2010 - 2020 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann-La Roche
  * %%
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -16,10 +10,10 @@ import java.io.IOException;
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -30,12 +24,13 @@ import java.io.IOException;
  * #L%
  */
 
+package org.anchoranalysis.gui.interactivebrowser;
 
+import java.io.IOException;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
-
 import org.anchoranalysis.anchor.mpp.bean.init.MPPInitParams;
 import org.anchoranalysis.bean.AnchorBean;
 import org.anchoranalysis.bean.NamedBean;
@@ -52,78 +47,71 @@ import org.anchoranalysis.image.stack.Stack;
 import org.anchoranalysis.io.output.bound.BoundIOContext;
 import org.anchoranalysis.mpp.io.input.MPPInitParamsFactory;
 
-public class OperationInitParams extends CachedOperation<MPPInitParams,CreateException> {
+public class OperationInitParams extends CachedOperation<MPPInitParams, CreateException> {
 
-	private OperationWithProgressReporter<NamedProvider<Stack>,? extends Throwable> namedImgStackCollection;
-	private Operation<Optional<KeyValueParams>,IOException> keyParams;
-	
-	private Define define;
-	
-	private BoundIOContext context;
-	
-	public OperationInitParams(
-			OperationWithProgressReporter<NamedProvider<Stack>,? extends Throwable> namedImgStackCollection,
-			Operation<Optional<KeyValueParams>,IOException> keyParams,
-			Define define,
-			BoundIOContext context
-			) {
-		super();
-		this.namedImgStackCollection = namedImgStackCollection;
-		this.context = context;
-		this.define = define;
-		this.keyParams = keyParams;
-	}
+    private OperationWithProgressReporter<NamedProvider<Stack>, ? extends Throwable>
+            namedImgStackCollection;
+    private Operation<Optional<KeyValueParams>, IOException> keyParams;
 
-	// If we've created the proposerShared objects, then we return the names of the available stacks
-	// If not, we simply return all possible names
-	public Set<String> namesStackCollection() {
-		
-		if (isDone()) {
-			return this.getResult().getImage().getStackCollection().keys();
-		} else {
-			Set<String> out = new HashSet<>();
-			out.addAll( namesFromListNamedItems( define.getList(StackProvider.class) ));
-			
-			try {
-				out.addAll(
-					namedImgStackCollection.doOperation( ProgressReporterNull.get() ).keys()
-				);
-			} catch (Throwable e) {
-				context.getErrorReporter().recordError(
-					OperationInitParams.class,
-					e
-				);
-			}
-			return out;
-		}
-	}
-	
-	@Override
-	protected MPPInitParams execute() throws CreateException {
+    private Define define;
 
-		// We initialise the markEvaluator
-		try {
-			return MPPInitParamsFactory.createFromExistingCollections(
-				context,
-				Optional.ofNullable(define),
-				Optional.of(
-					namedImgStackCollection.doOperation( ProgressReporterNull.get() )
-				),
-				Optional.empty(),
-				keyParams.doOperation()
-			);
+    private BoundIOContext context;
 
-		} catch (Throwable e) {
-			throw new CreateException(e);
-		}
-	}
+    public OperationInitParams(
+            OperationWithProgressReporter<NamedProvider<Stack>, ? extends Throwable>
+                    namedImgStackCollection,
+            Operation<Optional<KeyValueParams>, IOException> keyParams,
+            Define define,
+            BoundIOContext context) {
+        super();
+        this.namedImgStackCollection = namedImgStackCollection;
+        this.context = context;
+        this.define = define;
+        this.keyParams = keyParams;
+    }
 
-	private static Set<String> namesFromListNamedItems( List<NamedBean<AnchorBean<?>>> list) {
-		
-		HashSet<String> out = new HashSet<>();
-		for( NamedBean<?> item : list ) {
-			out.add( item.getName() );
-		}
-		return out;
-	}
+    // If we've created the proposerShared objects, then we return the names of the available stacks
+    // If not, we simply return all possible names
+    public Set<String> namesStackCollection() {
+
+        if (isDone()) {
+            return this.getResult().getImage().getStackCollection().keys();
+        } else {
+            Set<String> out = new HashSet<>();
+            out.addAll(namesFromListNamedItems(define.getList(StackProvider.class)));
+
+            try {
+                out.addAll(namedImgStackCollection.doOperation(ProgressReporterNull.get()).keys());
+            } catch (Throwable e) {
+                context.getErrorReporter().recordError(OperationInitParams.class, e);
+            }
+            return out;
+        }
+    }
+
+    @Override
+    protected MPPInitParams execute() throws CreateException {
+
+        // We initialise the markEvaluator
+        try {
+            return MPPInitParamsFactory.createFromExistingCollections(
+                    context,
+                    Optional.ofNullable(define),
+                    Optional.of(namedImgStackCollection.doOperation(ProgressReporterNull.get())),
+                    Optional.empty(),
+                    keyParams.doOperation());
+
+        } catch (Throwable e) {
+            throw new CreateException(e);
+        }
+    }
+
+    private static Set<String> namesFromListNamedItems(List<NamedBean<AnchorBean<?>>> list) {
+
+        HashSet<String> out = new HashSet<>();
+        for (NamedBean<?> item : list) {
+            out.add(item.getName());
+        }
+        return out;
+    }
 }

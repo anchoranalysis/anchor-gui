@@ -1,10 +1,8 @@
-package org.anchoranalysis.plugin.gui.bean.exporttask;
-
-/*
+/*-
  * #%L
- * anchor-gui
+ * anchor-plugin-gui-export
  * %%
- * Copyright (C) 2016 ETH Zurich, University of Zurich, Owen Feehan
+ * Copyright (C) 2010 - 2020 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann-La Roche
  * %%
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -12,10 +10,10 @@ package org.anchoranalysis.plugin.gui.bean.exporttask;
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -26,7 +24,10 @@ package org.anchoranalysis.plugin.gui.bean.exporttask;
  * #L%
  */
 
+package org.anchoranalysis.plugin.gui.bean.exporttask;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.anchoranalysis.bean.annotation.BeanField;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.gui.bean.exporttask.ExportTaskBean;
@@ -36,62 +37,34 @@ import org.anchoranalysis.io.generator.bean.sequence.factory.SubfolderGeneratorS
 import org.anchoranalysis.io.generator.sequence.GeneratorSequenceNonIncremental;
 import org.anchoranalysis.plugin.gui.bean.createrastergenerator.CreateRasterGenerator;
 
-/**
- * 
- * @author feehano
- *
- * @param <T> iterable-type
- */
 public abstract class ExportTaskRasterGeneratorSequence<T> extends ExportTaskBean {
 
-	// START BEAN PARAMETERS
-	@BeanField
-	private GeneratorSequenceFactory sequenceFactory = new SubfolderGeneratorSequenceFactory();
-	
-	@BeanField
-	private CreateRasterGenerator<T> createRasterGenerator;
+    // START BEAN PARAMETERS
+    @BeanField @Getter @Setter
+    private GeneratorSequenceFactory sequenceFactory = new SubfolderGeneratorSequenceFactory();
 
-	@BeanField
-	private String outputName = "defaultOutputName";
-	// END BEAN PARAMETERS
-	
-	@Override
-	public boolean hasNecessaryParams(ExportTaskParams params) {
-		return createRasterGenerator.hasNecessaryParams(params) ;
-	}
-	
-	protected GeneratorSequenceNonIncremental<MappedFrom<T>> createGeneratorSequenceWriter( ExportTaskParams params ) throws CreateException {
-		
-		return getSequenceFactory().createGeneratorSequenceNonIncremental(
-			params.getOutputManager(),
-			getOutputName(),
-			getCreateRasterGenerator().createGenerator(params)
-		);
-	}
-	
-	public GeneratorSequenceFactory getSequenceFactory() {
-		return sequenceFactory;
-	}
+    @BeanField @Getter @Setter private CreateRasterGenerator<T> createRasterGenerator;
 
-	public void setSequenceFactory(GeneratorSequenceFactory sequenceFactory) {
-		this.sequenceFactory = sequenceFactory;
-	}
+    @BeanField @Setter private String outputName = "defaultOutputName";
+    // END BEAN PARAMETERS
 
-	public CreateRasterGenerator<T> getCreateRasterGenerator() {
-		return createRasterGenerator;
-	}
+    @Override
+    public boolean hasNecessaryParams(ExportTaskParams params) {
+        return createRasterGenerator.hasNecessaryParams(params);
+    }
 
-	public void setCreateRasterGenerator(
-			CreateRasterGenerator<T> createRasterGenerator) {
-		this.createRasterGenerator = createRasterGenerator;
-	}
-	
-	@Override
-	public String getOutputName() {
-		return outputName;
-	}
+    protected GeneratorSequenceNonIncremental<MappedFrom<T>> createGeneratorSequenceWriter(
+            ExportTaskParams params) throws CreateException {
 
-	public void setOutputName(String outputName) {
-		this.outputName = outputName;
-	}
+        return getSequenceFactory()
+                .createGeneratorSequenceNonIncremental(
+                        params.getOutputManager(),
+                        getOutputName(),
+                        getCreateRasterGenerator().createGenerator(params));
+    }
+
+    @Override
+    public String getOutputName() {
+        return outputName;
+    }
 }

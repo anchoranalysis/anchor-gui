@@ -1,10 +1,8 @@
-package org.anchoranalysis.gui.interactivebrowser;
-
-/*
+/*-
  * #%L
- * anchor-gui
+ * anchor-gui-mdi
  * %%
- * Copyright (C) 2016 ETH Zurich, University of Zurich, Owen Feehan
+ * Copyright (C) 2010 - 2020 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann-La Roche
  * %%
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -12,10 +10,10 @@ package org.anchoranalysis.gui.interactivebrowser;
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -26,9 +24,9 @@ package org.anchoranalysis.gui.interactivebrowser;
  * #L%
  */
 
+package org.anchoranalysis.gui.interactivebrowser;
 
 import javax.swing.JFrame;
-
 import org.anchoranalysis.gui.videostats.dropdown.IAddVideoStatsModule;
 import org.anchoranalysis.gui.videostats.frame.VideoStatsFrame;
 import org.anchoranalysis.gui.videostats.module.DefaultModuleState;
@@ -37,35 +35,36 @@ import org.anchoranalysis.gui.videostats.module.VideoStatsModuleSubgroup;
 
 public class SubgrouppedAdder implements IAddVideoStatsModule {
 
-	private VideoStatsModuleSubgroup subgroup;
-	private VideoStatsFrame videoStatsFrame;
-	
-	public SubgrouppedAdder(VideoStatsFrame videoStatsFrame, DefaultModuleState defaultModuleState ) {
-		super();
-		assert( defaultModuleState != null );
-		assert( videoStatsFrame != null );
-		this.videoStatsFrame = videoStatsFrame;
-		this.subgroup = new VideoStatsModuleSubgroup( defaultModuleState );
-	}
-	
-	// Creates an Adder attached to a new subgroup which inherits from the current
-	@Override
-	public IAddVideoStatsModule createChild() {
-		return new SubgrouppedAdder(this.videoStatsFrame, subgroup.getDefaultModuleState().copy() );
-	}
+    private VideoStatsModuleSubgroup subgroup;
+    private VideoStatsFrame videoStatsFrame;
 
-	@Override
-	public void addVideoStatsModule(VideoStatsModule module) {
-		videoStatsFrame.addVideoStatsModuleVisible( module, subgroup );
-	}
+    public SubgrouppedAdder(
+            VideoStatsFrame videoStatsFrame, DefaultModuleState defaultModuleState) {
+        super();
+        assert (defaultModuleState != null);
+        assert (videoStatsFrame != null);
+        this.videoStatsFrame = videoStatsFrame;
+        this.subgroup = new VideoStatsModuleSubgroup(defaultModuleState);
+    }
 
-	@Override
-	public VideoStatsModuleSubgroup getSubgroup() {
-		return subgroup;
-	}
+    // Creates an Adder attached to a new subgroup which inherits from the current
+    @Override
+    public IAddVideoStatsModule createChild() {
+        return new SubgrouppedAdder(this.videoStatsFrame, subgroup.getDefaultModuleState().copy());
+    }
 
-	@Override
-	public JFrame getParentFrame() {
-		return videoStatsFrame;
-	}
+    @Override
+    public void addVideoStatsModule(VideoStatsModule module) {
+        videoStatsFrame.addVideoStatsModuleVisible(module, subgroup);
+    }
+
+    @Override
+    public VideoStatsModuleSubgroup getSubgroup() {
+        return subgroup;
+    }
+
+    @Override
+    public JFrame getParentFrame() {
+        return videoStatsFrame;
+    }
 }

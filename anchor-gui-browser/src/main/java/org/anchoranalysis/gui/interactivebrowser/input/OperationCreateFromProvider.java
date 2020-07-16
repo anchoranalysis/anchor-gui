@@ -1,12 +1,8 @@
-package org.anchoranalysis.gui.interactivebrowser.input;
-
-import org.anchoranalysis.bean.Provider;
-
-/*
+/*-
  * #%L
- * anchor-gui
+ * anchor-gui-browser
  * %%
- * Copyright (C) 2016 ETH Zurich, University of Zurich, Owen Feehan
+ * Copyright (C) 2010 - 2020 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann-La Roche
  * %%
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -14,10 +10,10 @@ import org.anchoranalysis.bean.Provider;
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -28,27 +24,29 @@ import org.anchoranalysis.bean.Provider;
  * #L%
  */
 
+package org.anchoranalysis.gui.interactivebrowser.input;
 
+import org.anchoranalysis.bean.Provider;
 import org.anchoranalysis.core.cache.CachedOperation;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.OperationFailedException;
 
-class OperationCreateFromProvider<ProviderType> extends CachedOperation<ProviderType,OperationFailedException> {
+class OperationCreateFromProvider<ProviderType>
+        extends CachedOperation<ProviderType, OperationFailedException> {
 
-	private Provider<ProviderType> provider;
-		
-	public OperationCreateFromProvider(Provider<ProviderType> provider) {
-		super();
-		this.provider = provider;
-	}
+    private Provider<ProviderType> provider;
 
-	@Override
-	protected ProviderType execute() throws OperationFailedException {
-		try {
-			return provider.create();
-		} catch (CreateException e) {
-			throw new OperationFailedException(e);
-		}
-	}
+    public OperationCreateFromProvider(Provider<ProviderType> provider) {
+        super();
+        this.provider = provider;
+    }
 
+    @Override
+    protected ProviderType execute() throws OperationFailedException {
+        try {
+            return provider.create();
+        } catch (CreateException e) {
+            throw new OperationFailedException(e);
+        }
+    }
 }

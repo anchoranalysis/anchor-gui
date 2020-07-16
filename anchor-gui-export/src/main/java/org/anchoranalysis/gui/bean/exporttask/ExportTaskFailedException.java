@@ -1,10 +1,8 @@
-package org.anchoranalysis.gui.bean.exporttask;
-
-/*
+/*-
  * #%L
- * anchor-gui
+ * anchor-gui-export
  * %%
- * Copyright (C) 2016 ETH Zurich, University of Zurich, Owen Feehan
+ * Copyright (C) 2010 - 2020 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann-La Roche
  * %%
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -12,10 +10,10 @@ package org.anchoranalysis.gui.bean.exporttask;
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -26,20 +24,19 @@ package org.anchoranalysis.gui.bean.exporttask;
  * #L%
  */
 
+package org.anchoranalysis.gui.bean.exporttask;
+
 import org.anchoranalysis.core.error.AnchorCheckedException;
 
 public class ExportTaskFailedException extends AnchorCheckedException {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -7375672476538506254L;
+    private static final long serialVersionUID = -7375672476538506254L;
 
-	public ExportTaskFailedException(String string) {
-		super(string);
-	}
+    public ExportTaskFailedException(String string) {
+        super(string);
+    }
 
-	public ExportTaskFailedException( Exception exc ) {
-		super( exc );
-	}
+    public ExportTaskFailedException(Exception exc) {
+        super(exc);
+    }
 }

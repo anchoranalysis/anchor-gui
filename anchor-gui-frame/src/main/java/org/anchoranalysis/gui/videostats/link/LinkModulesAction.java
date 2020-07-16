@@ -1,10 +1,8 @@
-package org.anchoranalysis.gui.videostats.link;
-
-/*
+/*-
  * #%L
- * anchor-gui
+ * anchor-gui-frame
  * %%
- * Copyright (C) 2016 ETH Zurich, University of Zurich, Owen Feehan
+ * Copyright (C) 2010 - 2020 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann-La Roche
  * %%
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -12,10 +10,10 @@ package org.anchoranalysis.gui.videostats.link;
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -26,6 +24,7 @@ package org.anchoranalysis.gui.videostats.link;
  * #L%
  */
 
+package org.anchoranalysis.gui.videostats.link;
 
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
@@ -34,32 +33,27 @@ import javax.swing.ImageIcon;
 
 class LinkModulesAction<PropertyValueType> extends AbstractAction {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 4270644785528612411L;
+    private static final long serialVersionUID = 4270644785528612411L;
 
-	private LinkedPropertyModuleSet<PropertyValueType> linkedModuleSet;
-		
-	public LinkModulesAction( String title, LinkedPropertyModuleSet<PropertyValueType> linkedModuleSet, ImageIcon icon ) {
-		super("", icon);
-		
-		this.linkedModuleSet = linkedModuleSet;
+    private LinkedPropertyModuleSet<PropertyValueType> linkedModuleSet;
 
-		putValue( Action.SELECTED_KEY, true);
-		
-		putValue(SHORT_DESCRIPTION, title);
-	}
-	
-	
-	@Override
-	public void actionPerformed(ActionEvent arg0) {
-		
-		boolean selected = (Boolean) getValue(Action.SELECTED_KEY);
-		linkedModuleSet.setEnabled(selected);
-	}
-	
-	
+    public LinkModulesAction(
+            String title,
+            LinkedPropertyModuleSet<PropertyValueType> linkedModuleSet,
+            ImageIcon icon) {
+        super("", icon);
 
+        this.linkedModuleSet = linkedModuleSet;
 
+        putValue(Action.SELECTED_KEY, true);
+
+        putValue(SHORT_DESCRIPTION, title);
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent arg0) {
+
+        boolean selected = (Boolean) getValue(Action.SELECTED_KEY);
+        linkedModuleSet.setEnabled(selected);
+    }
 }

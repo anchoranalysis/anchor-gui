@@ -1,10 +1,8 @@
-package org.anchoranalysis.gui.videostats.link;
-
-/*
+/*-
  * #%L
- * anchor-gui
+ * anchor-gui-frame
  * %%
- * Copyright (C) 2016 ETH Zurich, University of Zurich, Owen Feehan
+ * Copyright (C) 2010 - 2020 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann-La Roche
  * %%
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -12,10 +10,10 @@ package org.anchoranalysis.gui.videostats.link;
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -26,164 +24,173 @@ package org.anchoranalysis.gui.videostats.link;
  * #L%
  */
 
+package org.anchoranalysis.gui.videostats.link;
 
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
-
 import org.anchoranalysis.core.event.IRoutableEventSourceObject;
 import org.anchoranalysis.core.event.RoutableEvent;
 import org.anchoranalysis.core.event.RoutableListener;
 import org.anchoranalysis.core.property.IPropertyValueSendable;
 import org.anchoranalysis.core.property.change.PropertyValueChangeEvent;
 import org.anchoranalysis.gui.videostats.ModuleEventRouter;
+import org.anchoranalysis.gui.videostats.ModuleEventRouter.RouterStyle;
 import org.anchoranalysis.gui.videostats.SubgroupRetriever;
 import org.anchoranalysis.gui.videostats.module.VideoStatsModule;
-import org.anchoranalysis.gui.videostats.module.VideoStatsModuleSubgroup;
 import org.anchoranalysis.gui.videostats.module.VideoStatsModule.ReceivableSendablePair;
-import org.anchoranalysis.gui.videostats.ModuleEventRouter.RouterStyle;
+import org.anchoranalysis.gui.videostats.module.VideoStatsModuleSubgroup;
 
 // A set of modules are linked on the basis of some common property
 //  which can be kept synchronized between the modules
 class LinkedPropertyModuleSet<PropertyValueType> {
 
-	private ModuleEventRouter moduleEventRouter;
+    private ModuleEventRouter moduleEventRouter;
 
-	private PropertyValueType lastPropertyValue;
-	
-	private RoutableListener<PropertyValueChangeEvent<PropertyValueType>> routableListener;
-	
-	private SubgroupRetriever subgroupRetriever;
-	
-	private String pairKey;
+    private PropertyValueType lastPropertyValue;
 
-	private boolean enabled = true;
-	
-	private boolean sendGlobalEvents = false;		// If true, we send events to all modules (excluding the source module)
-													// If false, we send events only locally (the subgroup, excluding the source module)
-	
-	private class Listener implements RoutableListener<PropertyValueChangeEvent<PropertyValueType>> {
+    private RoutableListener<PropertyValueChangeEvent<PropertyValueType>> routableListener;
 
-		@Override
-		public void eventOccurred(RoutableEvent<PropertyValueChangeEvent<PropertyValueType>> evt) {
-			
-			if (enabled!=true) {
-				return;
-			}
-			
-			setPropertyValue( evt.getEvent().getValue(), evt.getEvent().getAdjusting(), evt.getRoutableSource() );
-		}
-	}
-	
-	
-	public LinkedPropertyModuleSet(
-			String pairKey,
-			ModuleEventRouter moduleEventRouter,
-			SubgroupRetriever subgroupRetriever,
-			PropertyValueType lastPropertyValue	) {
-		super();
-		this.moduleEventRouter = moduleEventRouter;
-		this.lastPropertyValue = lastPropertyValue;
-		this.pairKey = pairKey;
-		this.subgroupRetriever = subgroupRetriever;
+    private SubgroupRetriever subgroupRetriever;
 
-		this.routableListener = new Listener();
-	}
+    private String pairKey;
 
-	public void addModule( VideoStatsModule module ) {
-		@SuppressWarnings("unchecked")
-		ReceivableSendablePair<PropertyValueType> pair = module.getReceivableSendablePairMap().get(pairKey); 
-		if (pair!=null && pair.getReceivable()!=null) {
-			pair.getReceivable().addRoutableListener(routableListener);
-		}
-	}
-	
-	public void removeModule( VideoStatsModule module ) {
+    private boolean enabled = true;
 
-		@SuppressWarnings("unchecked")
-		ReceivableSendablePair<PropertyValueType> pair = module.getReceivableSendablePairMap().get(pairKey);
-		
-		if (pair!=null && pair.getReceivable()!=null) {
-			pair.getReceivable().removeRoutableListener(routableListener);
-		}
-	}
-	
+    private boolean sendGlobalEvents =
+            false; // If true, we send events to all modules (excluding the source module)
+    // If false, we send events only locally (the subgroup, excluding the source module)
 
-	public PropertyValueType getLastPropertyValueSent() {
-		return lastPropertyValue;
-	}
-	
-	public void setPropertyValue( PropertyValueType value, boolean adjusting ) {
-		setPropertyValue(value, adjusting, null);
-	}
-	
-	@SuppressWarnings("unchecked")
-	public void setPropertyValue( PropertyValueType value, boolean adjusting, IRoutableEventSourceObject exclude ) {
+    private class Listener
+            implements RoutableListener<PropertyValueChangeEvent<PropertyValueType>> {
 
-		// For recording the subgroup associated with each module
-		Set<VideoStatsModuleSubgroup> subgroupSet = new HashSet<>();
-		
-		// Add the subgroup of what we are excluding
-		{
-			VideoStatsModuleSubgroup subgroup = subgroupRetriever.get(exclude);
-			if (subgroup!=null) {
-				subgroupSet.add(subgroup);
-			}
-		}
-		
-		
-		RouterStyle rs = sendGlobalEvents ? RouterStyle.GLOBAL : RouterStyle.LOCAL;
-		
-		Iterator<VideoStatsModule> itr = moduleEventRouter.destinationModules( exclude, rs );
-		while( itr.hasNext()) {
-			
-			VideoStatsModule module = itr.next();
-			
-			ReceivableSendablePair<PropertyValueType> pair = module.getReceivableSendablePairMap().get(pairKey);
+        @Override
+        public void eventOccurred(RoutableEvent<PropertyValueChangeEvent<PropertyValueType>> evt) {
 
-			// Get a subgroup from the module 
-			VideoStatsModuleSubgroup subgroup = subgroupRetriever.get(module);
-			if (subgroup!=null) {
-				subgroupSet.add(subgroup);
-			}
-			
-			if (pair==null) {
-				continue;
-			}
+            if (enabled != true) {
+                return;
+            }
 
-			if (pair.getSendable()!=null) {
-				//System.out.printf("Setting sendable value %s on %s for key '%s'\n", value, module, pairKey );
-				pair.getSendable().setPropertyValue( value, adjusting );
-			}
-		}
+            setPropertyValue(
+                    evt.getEvent().getValue(),
+                    evt.getEvent().getAdjusting(),
+                    evt.getRoutableSource());
+        }
+    }
 
-		// For every subgroup associated with the module, we also update then with our property value, so long as they
-		//  contain the same pair, that we do
-		for( VideoStatsModuleSubgroup subgroup : subgroupSet ) {
-			// Is there an associated sendable property value
-			
-			IPropertyValueSendable<PropertyValueType> sendable = subgroup.getDefaultModuleState().getLinkStateManager().getSendable(pairKey);
-			if (sendable!=null) {
-				sendable.setPropertyValue(value, adjusting);
-			}
-		}
-		
-		this.lastPropertyValue = value;
-	}
+    public LinkedPropertyModuleSet(
+            String pairKey,
+            ModuleEventRouter moduleEventRouter,
+            SubgroupRetriever subgroupRetriever,
+            PropertyValueType lastPropertyValue) {
+        super();
+        this.moduleEventRouter = moduleEventRouter;
+        this.lastPropertyValue = lastPropertyValue;
+        this.pairKey = pairKey;
+        this.subgroupRetriever = subgroupRetriever;
 
-	public boolean isEnabled() {
-		return enabled;
-	}
+        this.routableListener = new Listener();
+    }
 
-	public void setEnabled(boolean enabled) {
-		this.enabled = enabled;
-	}
+    public void addModule(VideoStatsModule module) {
+        @SuppressWarnings("unchecked")
+        ReceivableSendablePair<PropertyValueType> pair =
+                module.getReceivableSendablePairMap().get(pairKey);
+        if (pair != null && pair.getReceivable() != null) {
+            pair.getReceivable().addRoutableListener(routableListener);
+        }
+    }
 
-	public boolean isSendGlobalEvents() {
-		return sendGlobalEvents;
-	}
+    public void removeModule(VideoStatsModule module) {
 
-	public void setSendGlobalEvents(boolean sendGlobalEvents) {
-		this.sendGlobalEvents = sendGlobalEvents;
-	}
+        @SuppressWarnings("unchecked")
+        ReceivableSendablePair<PropertyValueType> pair =
+                module.getReceivableSendablePairMap().get(pairKey);
+
+        if (pair != null && pair.getReceivable() != null) {
+            pair.getReceivable().removeRoutableListener(routableListener);
+        }
+    }
+
+    public PropertyValueType getLastPropertyValueSent() {
+        return lastPropertyValue;
+    }
+
+    public void setPropertyValue(PropertyValueType value, boolean adjusting) {
+        setPropertyValue(value, adjusting, null);
+    }
+
+    @SuppressWarnings("unchecked")
+    public void setPropertyValue(
+            PropertyValueType value, boolean adjusting, IRoutableEventSourceObject exclude) {
+
+        // For recording the subgroup associated with each module
+        Set<VideoStatsModuleSubgroup> subgroupSet = new HashSet<>();
+
+        // Add the subgroup of what we are excluding
+        {
+            VideoStatsModuleSubgroup subgroup = subgroupRetriever.get(exclude);
+            if (subgroup != null) {
+                subgroupSet.add(subgroup);
+            }
+        }
+
+        RouterStyle rs = sendGlobalEvents ? RouterStyle.GLOBAL : RouterStyle.LOCAL;
+
+        Iterator<VideoStatsModule> itr = moduleEventRouter.destinationModules(exclude, rs);
+        while (itr.hasNext()) {
+
+            VideoStatsModule module = itr.next();
+
+            ReceivableSendablePair<PropertyValueType> pair =
+                    module.getReceivableSendablePairMap().get(pairKey);
+
+            // Get a subgroup from the module
+            VideoStatsModuleSubgroup subgroup = subgroupRetriever.get(module);
+            if (subgroup != null) {
+                subgroupSet.add(subgroup);
+            }
+
+            if (pair == null) {
+                continue;
+            }
+
+            if (pair.getSendable() != null) {
+                // System.out.printf("Setting sendable value %s on %s for key '%s'\n", value,
+                // module, pairKey );
+                pair.getSendable().setPropertyValue(value, adjusting);
+            }
+        }
+
+        // For every subgroup associated with the module, we also update then with our property
+        // value, so long as they
+        //  contain the same pair, that we do
+        for (VideoStatsModuleSubgroup subgroup : subgroupSet) {
+            // Is there an associated sendable property value
+
+            IPropertyValueSendable<PropertyValueType> sendable =
+                    subgroup.getDefaultModuleState().getLinkStateManager().getSendable(pairKey);
+            if (sendable != null) {
+                sendable.setPropertyValue(value, adjusting);
+            }
+        }
+
+        this.lastPropertyValue = value;
+    }
+
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
+
+    public boolean isSendGlobalEvents() {
+        return sendGlobalEvents;
+    }
+
+    public void setSendGlobalEvents(boolean sendGlobalEvents) {
+        this.sendGlobalEvents = sendGlobalEvents;
+    }
 }

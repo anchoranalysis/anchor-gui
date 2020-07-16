@@ -1,10 +1,8 @@
-package org.anchoranalysis.gui.frame.details;
-
 /*-
  * #%L
  * anchor-gui-frame
  * %%
- * Copyright (C) 2010 - 2019 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann la Roche
+ * Copyright (C) 2010 - 2020 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann-La Roche
  * %%
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -12,10 +10,10 @@ package org.anchoranalysis.gui.frame.details;
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -26,34 +24,30 @@ package org.anchoranalysis.gui.frame.details;
  * #L%
  */
 
+package org.anchoranalysis.gui.frame.details;
+
 import java.awt.event.ActionEvent;
-
 import javax.swing.AbstractAction;
-
 import org.anchoranalysis.gui.IconFactory;
 import org.anchoranalysis.gui.frame.details.canvas.InternalFrameCanvas;
 
 class ZoomOutAction extends AbstractAction {
-	
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-	
-	private InternalFrameCanvas internalFrameCanvas;
 
-	public ZoomOutAction( InternalFrameCanvas internalFrameCanvas ) {
-		super("", new IconFactory().icon("/dialogIcon/zoom_out.png") );
-		this.internalFrameCanvas = internalFrameCanvas;
-	}
+    private static final long serialVersionUID = 1L;
 
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		internalFrameCanvas.zoomOut();
-	}
-	
-	public void dispose() {
-		internalFrameCanvas = null;
-	}
-	
+    private InternalFrameCanvas internalFrameCanvas;
+
+    public ZoomOutAction(InternalFrameCanvas internalFrameCanvas) {
+        super("", new IconFactory().icon("/dialogIcon/zoom_out.png"));
+        this.internalFrameCanvas = internalFrameCanvas;
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        internalFrameCanvas.zoomOut();
+    }
+
+    public void dispose() {
+        internalFrameCanvas = null;
+    }
 }

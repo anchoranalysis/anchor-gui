@@ -1,10 +1,8 @@
-package org.anchoranalysis.gui.annotation;
-
 /*-
  * #%L
  * anchor-gui-annotation
  * %%
- * Copyright (C) 2010 - 2019 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann la Roche
+ * Copyright (C) 2010 - 2020 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann-La Roche
  * %%
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -12,10 +10,10 @@ package org.anchoranalysis.gui.annotation;
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -26,36 +24,31 @@ package org.anchoranalysis.gui.annotation;
  * #L%
  */
 
+package org.anchoranalysis.gui.annotation;
+
 import java.awt.event.ActionEvent;
 import java.util.function.Consumer;
-
 import javax.swing.AbstractAction;
 
-/**
- * Wraps a simple lambda as an action
- */
 public class WrapAction extends AbstractAction {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
+    /** */
+    private static final long serialVersionUID = 1L;
 
-	private Consumer<ActionEvent> consumer;
-	
-	public WrapAction( Consumer<ActionEvent> consumer) {
-		super();
-		this.consumer = consumer;
-	}
-	
-	public WrapAction( String name, Consumer<ActionEvent> consumer) {
-		super(name);
-		this.consumer = consumer;
-	}
-	
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		consumer.accept(e);
-	}
-	
+    private Consumer<ActionEvent> consumer;
+
+    public WrapAction(Consumer<ActionEvent> consumer) {
+        super();
+        this.consumer = consumer;
+    }
+
+    public WrapAction(String name, Consumer<ActionEvent> consumer) {
+        super(name);
+        this.consumer = consumer;
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        consumer.accept(e);
+    }
 }

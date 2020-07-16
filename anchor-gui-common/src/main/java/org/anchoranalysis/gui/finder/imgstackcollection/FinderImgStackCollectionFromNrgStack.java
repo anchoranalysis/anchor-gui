@@ -1,10 +1,8 @@
-package org.anchoranalysis.gui.finder.imgstackcollection;
-
-/*
+/*-
  * #%L
- * anchor-image-io
+ * anchor-gui-common
  * %%
- * Copyright (C) 2016 ETH Zurich, University of Zurich, Owen Feehan
+ * Copyright (C) 2010 - 2020 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann-La Roche
  * %%
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -12,10 +10,10 @@ package org.anchoranalysis.gui.finder.imgstackcollection;
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -26,6 +24,7 @@ package org.anchoranalysis.gui.finder.imgstackcollection;
  * #L%
  */
 
+package org.anchoranalysis.gui.finder.imgstackcollection;
 
 import org.anchoranalysis.core.cache.WrapOperationWithProgressReporterAsCached;
 import org.anchoranalysis.core.error.OperationFailedException;
@@ -40,66 +39,73 @@ import org.anchoranalysis.image.stack.NamedImgStackCollection;
 import org.anchoranalysis.image.stack.Stack;
 import org.anchoranalysis.io.manifest.ManifestRecorder;
 
-/** Finds an image stack collection */
 public class FinderImgStackCollectionFromNrgStack implements FinderImgStackCollection {
-	
-	private FinderNrgStack delegate = null;
 
-	private OperationWithProgressReporter<Stack,OperationFailedException> operationExtractUntilThreeChnls = 
-			new WrapOperationWithProgressReporterAsCached<>(
-				pr -> {
-					NRGStackWithParams nrgStackWithParams = delegate.operationNrgStackWithProgressReporter().doOperation(pr); 
-					return nrgStackWithParams.getNrgStack().asStack().extractUpToThreeChnls();
-				}
-			);
-	
-	private CachedOperationWithProgressReporter<NamedProvider<Stack>,OperationFailedException> operationImgStackCollection =
-		new WrapOperationWithProgressReporterAsCached<>(
-			pr -> {
-				NamedImgStackCollection stackCollection = new NamedImgStackCollection(); 
-				
-				// finder NRG stack
-				if (delegate!=null && delegate.exists()) {
-					
-					// Should we mention when we only have the first 3?
-					stackCollection.addImageStack("nrgStack", operationExtractUntilThreeChnls );
-					
-					try {
-						stackCollection.addFromWithPrefix( delegate.getNamedImgStackCollection(), "nrgChnl-" );
-					} catch (GetOperationFailedException e) {
-						throw new OperationFailedException(e);
-					}
+    private FinderNrgStack delegate = null;
 
-				}
-				return stackCollection;
-			}
-		);
-	
-	public FinderImgStackCollectionFromNrgStack( FinderNrgStack finderNrgStack ) {
-		this.delegate = finderNrgStack;
-	}
+    private OperationWithProgressReporter<Stack, OperationFailedException>
+            operationExtractUntilThreeChnls =
+                    new WrapOperationWithProgressReporterAsCached<>(
+                            pr -> {
+                                NRGStackWithParams nrgStackWithParams =
+                                        delegate.operationNrgStackWithProgressReporter()
+                                                .doOperation(pr);
+                                return nrgStackWithParams
+                                        .getNrgStack()
+                                        .asStack()
+                                        .extractUpToThreeChnls();
+                            });
 
-	@Override
-	public NamedProvider<Stack> getImgStackCollection() throws GetOperationFailedException {
-		try {
-			return operationImgStackCollection.doOperation( ProgressReporterNull.get() );
-		} catch (OperationFailedException e) {
-			throw new GetOperationFailedException(e);
-		}
-	}
-	
-	@Override
-	public OperationWithProgressReporter<NamedProvider<Stack>,OperationFailedException> getImgStackCollectionAsOperationWithProgressReporter() {
-		return operationImgStackCollection;
-	}
+    private CachedOperationWithProgressReporter<NamedProvider<Stack>, OperationFailedException>
+            operationImgStackCollection =
+                    new WrapOperationWithProgressReporterAsCached<>(
+                            pr -> {
+                                NamedImgStackCollection stackCollection =
+                                        new NamedImgStackCollection();
 
-	@Override
-	public boolean doFind(ManifestRecorder manifestRecorder) {
-		return delegate.doFind(manifestRecorder);
-	}
+                                // finder NRG stack
+                                if (delegate != null && delegate.exists()) {
 
-	@Override
-	public boolean exists() {
-		return delegate.exists();
-	}
+                                    // Should we mention when we only have the first 3?
+                                    stackCollection.addImageStack(
+                                            "nrgStack", operationExtractUntilThreeChnls);
+
+                                    try {
+                                        stackCollection.addFromWithPrefix(
+                                                delegate.getNamedImgStackCollection(), "nrgChnl-");
+                                    } catch (GetOperationFailedException e) {
+                                        throw new OperationFailedException(e);
+                                    }
+                                }
+                                return stackCollection;
+                            });
+
+    public FinderImgStackCollectionFromNrgStack(FinderNrgStack finderNrgStack) {
+        this.delegate = finderNrgStack;
+    }
+
+    @Override
+    public NamedProvider<Stack> getImgStackCollection() throws GetOperationFailedException {
+        try {
+            return operationImgStackCollection.doOperation(ProgressReporterNull.get());
+        } catch (OperationFailedException e) {
+            throw new GetOperationFailedException(e);
+        }
+    }
+
+    @Override
+    public OperationWithProgressReporter<NamedProvider<Stack>, OperationFailedException>
+            getImgStackCollectionAsOperationWithProgressReporter() {
+        return operationImgStackCollection;
+    }
+
+    @Override
+    public boolean doFind(ManifestRecorder manifestRecorder) {
+        return delegate.doFind(manifestRecorder);
+    }
+
+    @Override
+    public boolean exists() {
+        return delegate.exists();
+    }
 }

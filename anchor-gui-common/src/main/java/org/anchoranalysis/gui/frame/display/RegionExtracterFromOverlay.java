@@ -1,12 +1,8 @@
-package org.anchoranalysis.gui.frame.display;
-
-import org.anchoranalysis.core.error.CreateException;
-
-/*
+/*-
  * #%L
- * anchor-mpp-io
+ * anchor-gui-common
  * %%
- * Copyright (C) 2016 ETH Zurich, University of Zurich, Owen Feehan
+ * Copyright (C) 2010 - 2020 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann-La Roche
  * %%
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -14,10 +10,10 @@ import org.anchoranalysis.core.error.CreateException;
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -28,7 +24,9 @@ import org.anchoranalysis.core.error.CreateException;
  * #L%
  */
 
+package org.anchoranalysis.gui.frame.display;
 
+import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.image.extent.BoundingBox;
 import org.anchoranalysis.image.io.stack.ConvertDisplayStackToRGB;
@@ -38,26 +36,27 @@ import org.anchoranalysis.image.stack.rgb.RGBStack;
 
 class RegionExtracterFromOverlay implements RegionExtracter {
 
-	private RegionExtracter regionExtracter;
-	private BoundColoredOverlayCollection overlay;
-		
-	public RegionExtracterFromOverlay( RegionExtracter regionExtracter, BoundColoredOverlayCollection overlay ) {
-		super();
-		this.regionExtracter = regionExtracter;
-		this.overlay = overlay;
-	}
+    private RegionExtracter regionExtracter;
+    private BoundColoredOverlayCollection overlay;
 
-	@Override
-	public DisplayStack extractRegionFrom(BoundingBox bbox, double zoomFactor) throws OperationFailedException {
-		DisplayStack ds = regionExtracter.extractRegionFrom(bbox, zoomFactor);
-		
-		try {
-			RGBStack rgbStack = ConvertDisplayStackToRGB.convert(ds);
-			overlay.drawRGB( rgbStack, bbox, zoomFactor );
-			return DisplayStack.create(rgbStack);
-		} catch (CreateException e) {
-			throw new OperationFailedException(e);
-		}
-	}
+    public RegionExtracterFromOverlay(
+            RegionExtracter regionExtracter, BoundColoredOverlayCollection overlay) {
+        super();
+        this.regionExtracter = regionExtracter;
+        this.overlay = overlay;
+    }
 
+    @Override
+    public DisplayStack extractRegionFrom(BoundingBox bbox, double zoomFactor)
+            throws OperationFailedException {
+        DisplayStack ds = regionExtracter.extractRegionFrom(bbox, zoomFactor);
+
+        try {
+            RGBStack rgbStack = ConvertDisplayStackToRGB.convert(ds);
+            overlay.drawRGB(rgbStack, bbox, zoomFactor);
+            return DisplayStack.create(rgbStack);
+        } catch (CreateException e) {
+            throw new OperationFailedException(e);
+        }
+    }
 }

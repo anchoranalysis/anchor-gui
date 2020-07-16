@@ -1,10 +1,8 @@
-package org.anchoranalysis.gui.frame.threaded.indexable;
-
 /*-
  * #%L
  * anchor-gui-frame
  * %%
- * Copyright (C) 2010 - 2019 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann la Roche
+ * Copyright (C) 2010 - 2020 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann-La Roche
  * %%
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -12,10 +10,10 @@ package org.anchoranalysis.gui.frame.threaded.indexable;
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -25,6 +23,8 @@ package org.anchoranalysis.gui.frame.threaded.indexable;
  * THE SOFTWARE.
  * #L%
  */
+
+package org.anchoranalysis.gui.frame.threaded.indexable;
 
 import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.index.IndexBridge;
@@ -41,73 +41,69 @@ import org.anchoranalysis.gui.videostats.dropdown.VideoStatsModuleGlobalParams;
 import org.anchoranalysis.gui.videostats.module.DefaultModuleState;
 import org.anchoranalysis.image.stack.DisplayStack;
 
-/** A frame that allows for an indexable DisplayRaster */
 public class InternalFrameThreadedIndexableRaster {
 
-	private InternalFrameThreadedProvider delegate;
-	
-	private ThreadedIndexedDisplayStackSetter threadedProvider;
-	
-	public InternalFrameThreadedIndexableRaster( String frameName ) {
-		delegate = new InternalFrameThreadedProvider( frameName, false );
-	}
+    private InternalFrameThreadedProvider delegate;
 
-	public ControllerPopupMenu controllerPopupMenu() {
-		return delegate.controllerPopupMenu();
-	}
+    private ThreadedIndexedDisplayStackSetter threadedProvider;
 
-	public boolean addAdditionalDetails(IGenerateExtraDetail arg0) {
-		return delegate.addAdditionalDetails(arg0);
-	}
+    public InternalFrameThreadedIndexableRaster(String frameName) {
+        delegate = new InternalFrameThreadedProvider(frameName, false);
+    }
 
-	public ISliderState init(
-			BoundedIndexContainer<DisplayStack> cntr,
-			DefaultModuleState initialState,
-			boolean includeFrameAdjusting,
-			IRetrieveElements elementRetriever,
-			VideoStatsModuleGlobalParams mpg
-		) throws InitException {
+    public ControllerPopupMenu controllerPopupMenu() {
+        return delegate.controllerPopupMenu();
+    }
 
-		threadedProvider = setupProvider( cntr, mpg );
-		
-		ISliderState sliderState = delegate.init(
-			threadedProvider,
-			cntr,
-			includeFrameAdjusting,
-			initialState,
-			elementRetriever,
-			mpg
-		);
-		delegate.setIndexSliderVisible(true);
-		return sliderState;
-	}
-	
-	public IBackgroundSetter backgroundSetter() {
-		return threadedProvider;
-	}
+    public boolean addAdditionalDetails(IGenerateExtraDetail arg0) {
+        return delegate.addAdditionalDetails(arg0);
+    }
 
-	public IModuleCreatorDefaultState moduleCreator(ISliderState sliderState) {
-		return delegate.moduleCreator(sliderState);
-	}
+    public ISliderState init(
+            BoundedIndexContainer<DisplayStack> cntr,
+            DefaultModuleState initialState,
+            boolean includeFrameAdjusting,
+            IRetrieveElements elementRetriever,
+            VideoStatsModuleGlobalParams mpg)
+            throws InitException {
 
-	public IRetrieveElements getElementRetriever() {
-		return delegate.getElementRetriever();
-	}
+        threadedProvider = setupProvider(cntr, mpg);
 
-	public void setIndexSliderVisible(boolean visibility) {
-		delegate.setIndexSliderVisible(visibility);
-	}
-	
-	private static ThreadedIndexedDisplayStackSetter setupProvider(
-			BoundedIndexContainer<DisplayStack> cntr,
-			VideoStatsModuleGlobalParams mpg
-		) throws InitException {
-			ThreadedIndexedDisplayStackSetter threadedProvider = new ThreadedIndexedDisplayStackSetter();
-			threadedProvider.init(
-				new IndexBridge<>(cntr),
-				mpg.getThreadPool(),
-				mpg.getLogger().errorReporter()
-			);
-			return threadedProvider;
-		}
+        ISliderState sliderState =
+                delegate.init(
+                        threadedProvider,
+                        cntr,
+                        includeFrameAdjusting,
+                        initialState,
+                        elementRetriever,
+                        mpg);
+        delegate.setIndexSliderVisible(true);
+        return sliderState;
+    }
+
+    public IBackgroundSetter backgroundSetter() {
+        return threadedProvider;
+    }
+
+    public IModuleCreatorDefaultState moduleCreator(ISliderState sliderState) {
+        return delegate.moduleCreator(sliderState);
+    }
+
+    public IRetrieveElements getElementRetriever() {
+        return delegate.getElementRetriever();
+    }
+
+    public void setIndexSliderVisible(boolean visibility) {
+        delegate.setIndexSliderVisible(visibility);
+    }
+
+    private static ThreadedIndexedDisplayStackSetter setupProvider(
+            BoundedIndexContainer<DisplayStack> cntr, VideoStatsModuleGlobalParams mpg)
+            throws InitException {
+        ThreadedIndexedDisplayStackSetter threadedProvider =
+                new ThreadedIndexedDisplayStackSetter();
+        threadedProvider.init(
+                new IndexBridge<>(cntr), mpg.getThreadPool(), mpg.getLogger().errorReporter());
+        return threadedProvider;
+    }
 }

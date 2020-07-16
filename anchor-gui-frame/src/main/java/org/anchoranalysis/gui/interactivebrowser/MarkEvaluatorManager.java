@@ -1,14 +1,8 @@
-package org.anchoranalysis.gui.interactivebrowser;
-
-
-
-import java.io.IOException;
-
-/*
+/*-
  * #%L
- * anchor-gui
+ * anchor-gui-frame
  * %%
- * Copyright (C) 2016 ETH Zurich, University of Zurich, Owen Feehan
+ * Copyright (C) 2010 - 2020 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann-La Roche
  * %%
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -16,10 +10,10 @@ import java.io.IOException;
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -30,12 +24,13 @@ import java.io.IOException;
  * #L%
  */
 
+package org.anchoranalysis.gui.interactivebrowser;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
-
 import org.anchoranalysis.anchor.mpp.feature.bean.mark.MarkEvaluator;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.OperationFailedException;
@@ -49,48 +44,45 @@ import org.anchoranalysis.io.output.bound.BoundIOContext;
 // Manages the various MarkEvaluators that are available in the application
 public class MarkEvaluatorManager {
 
-	private Map<String,MarkEvaluator> map = new HashMap<>(); 
+    private Map<String, MarkEvaluator> map = new HashMap<>();
 
-	private BoundIOContext context;
-	
-	public MarkEvaluatorManager( BoundIOContext context ) {
-		super();
-		this.context = context;
-	}
+    private BoundIOContext context;
 
-	public Set<String> keySet() {
-		return map.keySet();
-	}
-	
-	public MarkEvaluatorSetForImage createSetForStackCollection(
-		OperationWithProgressReporter<NamedProvider<Stack>,? extends Throwable> namedImgStackCollection,
-		Operation<Optional<KeyValueParams>,IOException> keyParams
-	) throws CreateException {
-		
-		try {
-			MarkEvaluatorSetForImage out = new MarkEvaluatorSetForImage(
-				namedImgStackCollection,
-				keyParams,
-				context
-			);
-			
-			for( String key : map.keySet()) {
-				MarkEvaluator me = map.get(key);
-				out.add( key, me.duplicateBean() );
-			}
-			return out;
-			
-		} catch (OperationFailedException e) {
-			throw new CreateException(e);
-		}
-	}
-	
-	public void add( String key, MarkEvaluator item ) {
-		map.put( key, item );
-	}
+    public MarkEvaluatorManager(BoundIOContext context) {
+        super();
+        this.context = context;
+    }
 
-	public boolean hasItems() {
-		return map.size() > 0;
-	}
+    public Set<String> keySet() {
+        return map.keySet();
+    }
 
+    public MarkEvaluatorSetForImage createSetForStackCollection(
+            OperationWithProgressReporter<NamedProvider<Stack>, ? extends Throwable>
+                    namedImgStackCollection,
+            Operation<Optional<KeyValueParams>, IOException> keyParams)
+            throws CreateException {
+
+        try {
+            MarkEvaluatorSetForImage out =
+                    new MarkEvaluatorSetForImage(namedImgStackCollection, keyParams, context);
+
+            for (String key : map.keySet()) {
+                MarkEvaluator me = map.get(key);
+                out.add(key, me.duplicateBean());
+            }
+            return out;
+
+        } catch (OperationFailedException e) {
+            throw new CreateException(e);
+        }
+    }
+
+    public void add(String key, MarkEvaluator item) {
+        map.put(key, item);
+    }
+
+    public boolean hasItems() {
+        return map.size() > 0;
+    }
 }

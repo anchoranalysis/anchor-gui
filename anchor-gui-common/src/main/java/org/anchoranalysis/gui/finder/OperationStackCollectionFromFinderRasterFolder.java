@@ -1,10 +1,8 @@
-package org.anchoranalysis.gui.finder;
-
-/*
+/*-
  * #%L
- * anchor-image-io
+ * anchor-gui-common
  * %%
- * Copyright (C) 2016 ETH Zurich, University of Zurich, Owen Feehan
+ * Copyright (C) 2010 - 2020 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann-La Roche
  * %%
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -12,10 +10,10 @@ package org.anchoranalysis.gui.finder;
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -26,6 +24,7 @@ package org.anchoranalysis.gui.finder;
  * #L%
  */
 
+package org.anchoranalysis.gui.finder;
 
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.name.provider.NamedProvider;
@@ -33,19 +32,20 @@ import org.anchoranalysis.core.progress.CachedOperationWithProgressReporter;
 import org.anchoranalysis.core.progress.ProgressReporter;
 import org.anchoranalysis.image.stack.Stack;
 
-class OperationStackCollectionFromFinderRasterFolder extends CachedOperationWithProgressReporter<NamedProvider<Stack>,OperationFailedException> {
+class OperationStackCollectionFromFinderRasterFolder
+        extends CachedOperationWithProgressReporter<
+                NamedProvider<Stack>, OperationFailedException> {
 
-	private FinderRasterFolder finderRasterFolder;
-	
-	public OperationStackCollectionFromFinderRasterFolder(
-			FinderRasterFolder finderRasterFolder) {
-		super();
-		this.finderRasterFolder = finderRasterFolder;
-	}
+    private FinderRasterFolder finderRasterFolder;
 
-	@Override
-	protected NamedProvider<Stack> execute( ProgressReporter progressReporter ) throws OperationFailedException {
-		return finderRasterFolder.createStackCollection(true);
-	}
-	
+    public OperationStackCollectionFromFinderRasterFolder(FinderRasterFolder finderRasterFolder) {
+        super();
+        this.finderRasterFolder = finderRasterFolder;
+    }
+
+    @Override
+    protected NamedProvider<Stack> execute(ProgressReporter progressReporter)
+            throws OperationFailedException {
+        return finderRasterFolder.createStackCollection(true);
+    }
 }

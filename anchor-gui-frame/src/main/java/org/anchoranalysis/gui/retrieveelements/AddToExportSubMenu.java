@@ -1,10 +1,8 @@
-package org.anchoranalysis.gui.retrieveelements;
-
 /*-
  * #%L
  * anchor-gui-frame
  * %%
- * Copyright (C) 2010 - 2020 Owen Feehan
+ * Copyright (C) 2010 - 2020 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann-La Roche
  * %%
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -12,10 +10,10 @@ package org.anchoranalysis.gui.retrieveelements;
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -26,8 +24,9 @@ package org.anchoranalysis.gui.retrieveelements;
  * #L%
  */
 
-import java.util.Optional;
+package org.anchoranalysis.gui.retrieveelements;
 
+import java.util.Optional;
 import org.anchoranalysis.core.error.AnchorNeverOccursException;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.functional.Operation;
@@ -36,11 +35,19 @@ import org.anchoranalysis.io.generator.IterableGenerator;
 import org.anchoranalysis.io.manifest.ManifestDescription;
 import org.anchoranalysis.io.output.bound.BoundOutputManagerRouteErrors;
 
-public interface IAddToExportSubMenu {
+public interface AddToExportSubMenu {
 
-	void addExportItemStackGenerator( String outputName, String label, Operation<Stack,AnchorNeverOccursException> stack ) throws OperationFailedException;
-	
-	<T> void addExportItem( IterableGenerator<T> generator, T itemToGenerate, String outputName, String label, Optional<ManifestDescription> md, int numItems );
-	
-	BoundOutputManagerRouteErrors getOutputManager();
+    void addExportItemStackGenerator(
+            String outputName, String label, Operation<Stack, AnchorNeverOccursException> stack)
+            throws OperationFailedException;
+
+    <T> void addExportItem(
+            IterableGenerator<T> generator,
+            T itemToGenerate,
+            String outputName,
+            String label,
+            Optional<ManifestDescription> md,
+            int numItems);
+
+    BoundOutputManagerRouteErrors getOutputManager();
 }

@@ -1,10 +1,8 @@
-package org.anchoranalysis.gui.frame.threaded.stack;
-
 /*-
  * #%L
  * anchor-gui-frame
  * %%
- * Copyright (C) 2010 - 2019 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann la Roche
+ * Copyright (C) 2010 - 2020 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann-La Roche
  * %%
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -12,10 +10,10 @@ package org.anchoranalysis.gui.frame.threaded.stack;
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -25,6 +23,8 @@ package org.anchoranalysis.gui.frame.threaded.stack;
  * THE SOFTWARE.
  * #L%
  */
+
+package org.anchoranalysis.gui.frame.threaded.stack;
 
 import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.index.IIndexGettableSettable;
@@ -45,120 +45,110 @@ import org.anchoranalysis.gui.videostats.module.DefaultModuleState;
 import org.anchoranalysis.gui.videostats.module.VideoStatsModule;
 import org.anchoranalysis.image.extent.ImageDimensions;
 
-/** 
- * 
- * A helper class when the image in the internal-frame is updated frequently
- *   and benefits from a threaded update
- *
- * @author feehano
- *
- */
 public class InternalFrameThreadedProvider {
-	
-	private InternalFrameWithDetailsTopPanel delegate;
-	
-	private boolean indexesAreFrames = false;
-	
-	private IThreadedProducer producer;
-	
-	public InternalFrameThreadedProvider( String title, boolean indexesAreFrames ) {
-		delegate = new InternalFrameWithDetailsTopPanel(title);
-		this.indexesAreFrames = indexesAreFrames;
-	}
-	
-	public ISliderState init(
-		IThreadedProducer producer,
-		BoundedRangeIncompleteDynamic indexBounds,
-		boolean includeFrameAdjusting,
-		DefaultModuleState initialState,
-		IRetrieveElements elementRetriever,
-		VideoStatsModuleGlobalParams mpg
-	) throws InitException {
-		
-		this.producer = producer;
-		
-		// We assume all channels have the same number of slices
-		return delegate.init(
-			indexBounds,
-			producer.getIndexGettableSettable(),
-			producer.getStackProvider(),
-			new InitialSliderState(
-				includeFrameAdjusting,
-				defaultIndex(initialState),
-				initialState.getLinkState().getSliceNum(),
-				true
-			),
-			elementRetriever,
-			mpg
-		);
-	}
-	
-	public int defaultIndex(DefaultModuleState initialState) {
-		return indexesAreFrames ? initialState.getLinkState().getFrameIndex() : 0;
-	}
-		
-	public IModuleCreatorDefaultState moduleCreator( ISliderState sliderState ) {
-		return defaultFrameState -> {
-			VideoStatsModule module = new VideoStatsModule();
-			
-			module.setComponent( delegate.controllerAction().frame().getFrame() );
-			module.setFixedSize(true);
-			
-			configureLink(module, sliderState);
-		
-			module.addModuleClosedListener( new EndThreadedImageStackProvider(producer) );
-			
-			return module;
-		};
-	}
-	
-	private void configureLink( VideoStatsModule module, ISliderState sliderState ) {
-		LinkModules link = new LinkModules(module);
-		
-		if (indexesAreFrames) {
-			sliderState.addIndexTo( link.getFrameIndex() );
-		}
-	
-		sliderState.addSliceTo( link.getSliceNum() );
-	}
 
-	public ControllerPopupMenu controllerPopupMenu() {
-		return delegate.controllerPopupMenu();
-	}
+    private InternalFrameWithDetailsTopPanel delegate;
 
-	public InternalFrameCanvas getFrameCanvas() {
-		return delegate.getFrameCanvas();
-	}
+    private boolean indexesAreFrames = false;
 
-	public IRetrieveElements getElementRetriever() {
-		return delegate.getElementRetriever();
-	}
+    private IThreadedProducer producer;
 
-	public ControllerAction controllerAction() {
-		return delegate.controllerAction();
-	}
+    public InternalFrameThreadedProvider(String title, boolean indexesAreFrames) {
+        delegate = new InternalFrameWithDetailsTopPanel(title);
+        this.indexesAreFrames = indexesAreFrames;
+    }
 
-	public void setIndexSliderVisible(boolean visibility) {
-		delegate.setIndexSliderVisible(visibility);
-	}
+    public ISliderState init(
+            IThreadedProducer producer,
+            BoundedRangeIncompleteDynamic indexBounds,
+            boolean includeFrameAdjusting,
+            DefaultModuleState initialState,
+            IRetrieveElements elementRetriever,
+            VideoStatsModuleGlobalParams mpg)
+            throws InitException {
 
-	public boolean addAdditionalDetails(IGenerateExtraDetail arg0) {
-		return delegate.addAdditionalDetails(arg0);
-	}
+        this.producer = producer;
 
-	public ControllerImageView controllerImageView() {
-		return delegate.controllerImageView();
-	}
+        // We assume all channels have the same number of slices
+        return delegate.init(
+                indexBounds,
+                producer.getIndexGettableSettable(),
+                producer.getStackProvider(),
+                new InitialSliderState(
+                        includeFrameAdjusting,
+                        defaultIndex(initialState),
+                        initialState.getLinkState().getSliceNum(),
+                        true),
+                elementRetriever,
+                mpg);
+    }
 
-	public void flush() {
-		delegate.flush();
-	}
+    public int defaultIndex(DefaultModuleState initialState) {
+        return indexesAreFrames ? initialState.getLinkState().getFrameIndex() : 0;
+    }
 
-	public ImageDimensions getDimensions() {
-		return delegate.getDimensions();
-	}
-	
-	public IIndexGettableSettable getIndexGettableSettable() {
-		return producer.getIndexGettableSettable();
-	}
+    public IModuleCreatorDefaultState moduleCreator(ISliderState sliderState) {
+        return defaultFrameState -> {
+            VideoStatsModule module = new VideoStatsModule();
+
+            module.setComponent(delegate.controllerAction().frame().getFrame());
+            module.setFixedSize(true);
+
+            configureLink(module, sliderState);
+
+            module.addModuleClosedListener(new EndThreadedImageStackProvider(producer));
+
+            return module;
+        };
+    }
+
+    private void configureLink(VideoStatsModule module, ISliderState sliderState) {
+        LinkModules link = new LinkModules(module);
+
+        if (indexesAreFrames) {
+            sliderState.addIndexTo(link.getFrameIndex());
+        }
+
+        sliderState.addSliceTo(link.getSliceNum());
+    }
+
+    public ControllerPopupMenu controllerPopupMenu() {
+        return delegate.controllerPopupMenu();
+    }
+
+    public InternalFrameCanvas getFrameCanvas() {
+        return delegate.getFrameCanvas();
+    }
+
+    public IRetrieveElements getElementRetriever() {
+        return delegate.getElementRetriever();
+    }
+
+    public ControllerAction controllerAction() {
+        return delegate.controllerAction();
+    }
+
+    public void setIndexSliderVisible(boolean visibility) {
+        delegate.setIndexSliderVisible(visibility);
+    }
+
+    public boolean addAdditionalDetails(IGenerateExtraDetail arg0) {
+        return delegate.addAdditionalDetails(arg0);
+    }
+
+    public ControllerImageView controllerImageView() {
+        return delegate.controllerImageView();
+    }
+
+    public void flush() {
+        delegate.flush();
+    }
+
+    public ImageDimensions getDimensions() {
+        return delegate.getDimensions();
+    }
+
+    public IIndexGettableSettable getIndexGettableSettable() {
+        return producer.getIndexGettableSettable();
+    }
 }

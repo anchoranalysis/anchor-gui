@@ -1,10 +1,8 @@
-package org.anchoranalysis.gui.videostats.dropdown;
-
-/*
+/*-
  * #%L
- * anchor-gui
+ * anchor-gui-frame
  * %%
- * Copyright (C) 2016 ETH Zurich, University of Zurich, Owen Feehan
+ * Copyright (C) 2010 - 2020 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann-La Roche
  * %%
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -12,10 +10,10 @@ package org.anchoranalysis.gui.videostats.dropdown;
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -26,6 +24,7 @@ package org.anchoranalysis.gui.videostats.dropdown;
  * #L%
  */
 
+package org.anchoranalysis.gui.videostats.dropdown;
 
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.index.GetOperationFailedException;
@@ -35,32 +34,34 @@ import org.anchoranalysis.feature.nrg.NRGStackWithParams;
 import org.anchoranalysis.gui.interactivebrowser.MarkEvaluatorSetForImage;
 
 public class OperationNRGStackFromMarkEvaluatorSet
-	implements OperationWithProgressReporter<NRGStackWithParams,OperationFailedException>, IUpdatableMarkEvaluator {
+        implements OperationWithProgressReporter<NRGStackWithParams, OperationFailedException>,
+                IUpdatableMarkEvaluator {
 
-	private MarkEvaluatorSetForImage markEvaluatorSet;
-	private String markEvaluatorIdentifier;
-	
-	public OperationNRGStackFromMarkEvaluatorSet( MarkEvaluatorSetForImage markEvaluatorSet ) {
-		super();
-		this.markEvaluatorSet = markEvaluatorSet;
-	}
+    private MarkEvaluatorSetForImage markEvaluatorSet;
+    private String markEvaluatorIdentifier;
 
-	@Override
-	public NRGStackWithParams doOperation( ProgressReporter progressReporter ) throws OperationFailedException {
-		
-		if (markEvaluatorIdentifier==null || markEvaluatorIdentifier.isEmpty()) {
-			return null;
-		}
-		
-		try {
-			return markEvaluatorSet.get( markEvaluatorIdentifier ).getNRGStack();
-		} catch (IllegalArgumentException | GetOperationFailedException e) {
-			throw new OperationFailedException(e);
-		}
-	}
+    public OperationNRGStackFromMarkEvaluatorSet(MarkEvaluatorSetForImage markEvaluatorSet) {
+        super();
+        this.markEvaluatorSet = markEvaluatorSet;
+    }
 
-	@Override
-	public void setMarkEvaluatorIdentifier(String markEvaluatorIdentifier) {
-		this.markEvaluatorIdentifier = markEvaluatorIdentifier;
-	}
+    @Override
+    public NRGStackWithParams doOperation(ProgressReporter progressReporter)
+            throws OperationFailedException {
+
+        if (markEvaluatorIdentifier == null || markEvaluatorIdentifier.isEmpty()) {
+            return null;
+        }
+
+        try {
+            return markEvaluatorSet.get(markEvaluatorIdentifier).getNRGStack();
+        } catch (IllegalArgumentException | GetOperationFailedException e) {
+            throw new OperationFailedException(e);
+        }
+    }
+
+    @Override
+    public void setMarkEvaluatorIdentifier(String markEvaluatorIdentifier) {
+        this.markEvaluatorIdentifier = markEvaluatorIdentifier;
+    }
 }

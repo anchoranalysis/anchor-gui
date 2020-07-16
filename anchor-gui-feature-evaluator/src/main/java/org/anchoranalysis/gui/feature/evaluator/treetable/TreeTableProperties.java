@@ -1,10 +1,8 @@
-package org.anchoranalysis.gui.feature.evaluator.treetable;
-
 /*-
  * #%L
  * anchor-gui-feature-evaluator
  * %%
- * Copyright (C) 2010 - 2019 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann la Roche
+ * Copyright (C) 2010 - 2020 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann-La Roche
  * %%
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -12,10 +10,10 @@ package org.anchoranalysis.gui.feature.evaluator.treetable;
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -26,40 +24,41 @@ package org.anchoranalysis.gui.feature.evaluator.treetable;
  * #L%
  */
 
+package org.anchoranalysis.gui.feature.evaluator.treetable;
+
 import org.anchoranalysis.core.log.Logger;
 import org.netbeans.swing.outline.RenderDataProvider;
 import org.netbeans.swing.outline.RowModel;
 
 public class TreeTableProperties {
 
-	private RowModel rowModel;
-	private RenderDataProvider renderDataProvider;
-	private String title;
-	private Logger logger;
+    private RowModel rowModel;
+    private RenderDataProvider renderDataProvider;
+    private String title;
+    private Logger logger;
 
-	public TreeTableProperties(RowModel rowModel, RenderDataProvider renderDataProvider, String title,
-			Logger logger) {
-		super();
-		this.rowModel = rowModel;
-		this.renderDataProvider = renderDataProvider;
-		this.title = title;
-		this.logger = logger;
-	}
+    public TreeTableProperties(
+            RowModel rowModel, RenderDataProvider renderDataProvider, String title, Logger logger) {
+        super();
+        this.rowModel = rowModel;
+        this.renderDataProvider = renderDataProvider;
+        this.title = title;
+        this.logger = logger;
+    }
 
-	public RowModel getRowModel() {
-		return rowModel;
-	}
+    public RowModel getRowModel() {
+        return rowModel;
+    }
 
-	public RenderDataProvider getRenderDataProvider() {
-		return renderDataProvider;
-	}
+    public RenderDataProvider getRenderDataProvider() {
+        return renderDataProvider;
+    }
 
-	public String getTitle() {
-		return title;
-	}
+    public String getTitle() {
+        return title;
+    }
 
-	public Logger getLogErrorReporter() {
-		return logger;
-	}
-	
+    public Logger getLogErrorReporter() {
+        return logger;
+    }
 }

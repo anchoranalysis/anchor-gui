@@ -1,10 +1,8 @@
-package org.anchoranalysis.gui.videostats.operation;
-
-/*
+/*-
  * #%L
- * anchor-gui
+ * anchor-gui-frame
  * %%
- * Copyright (C) 2016 ETH Zurich, University of Zurich, Owen Feehan
+ * Copyright (C) 2010 - 2020 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann-La Roche
  * %%
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -12,10 +10,10 @@ package org.anchoranalysis.gui.videostats.operation;
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -26,52 +24,51 @@ package org.anchoranalysis.gui.videostats.operation;
  * #L%
  */
 
+package org.anchoranalysis.gui.videostats.operation;
 
 public class VideoStatsOperationOrMenu {
-	
-	private boolean separator = false;
 
-	private VideoStatsOperation operation = null;
-	private VideoStatsOperationMenu menu = null;
-	
-	// This constructor means it's a separator
-	private VideoStatsOperationOrMenu() {
-		
-	}
-	
-	public static VideoStatsOperationOrMenu createAsSeparator() {
-		VideoStatsOperationOrMenu out = new VideoStatsOperationOrMenu();
-		out.separator = true;
-		return out;
-	}
-	
-	public VideoStatsOperationOrMenu(VideoStatsOperationMenu menu) {
-		super();
-		this.menu = menu;
-	}
+    private boolean separator = false;
 
-	public VideoStatsOperationOrMenu(VideoStatsOperation operation) {
-		super();
-		this.operation = operation;
-	}
-	
-	public boolean isOperation() {
-		return operation!=null;
-	}
-	
-	public boolean isMenu() {
-		return menu!=null;
-	}
+    private VideoStatsOperation operation = null;
+    private VideoStatsOperationMenu menu = null;
 
-	public VideoStatsOperation getOperation() {
-		return operation;
-	}
+    // This constructor means it's a separator
+    private VideoStatsOperationOrMenu() {}
 
-	public VideoStatsOperationMenu getMenu() {
-		return menu;
-	}
-	
-	public boolean isSeparator() {
-		return separator;
-	}
+    public static VideoStatsOperationOrMenu createAsSeparator() {
+        VideoStatsOperationOrMenu out = new VideoStatsOperationOrMenu();
+        out.separator = true;
+        return out;
+    }
+
+    public VideoStatsOperationOrMenu(VideoStatsOperationMenu menu) {
+        super();
+        this.menu = menu;
+    }
+
+    public VideoStatsOperationOrMenu(VideoStatsOperation operation) {
+        super();
+        this.operation = operation;
+    }
+
+    public boolean isOperation() {
+        return operation != null;
+    }
+
+    public boolean isMenu() {
+        return menu != null;
+    }
+
+    public VideoStatsOperation getOperation() {
+        return operation;
+    }
+
+    public VideoStatsOperationMenu getMenu() {
+        return menu;
+    }
+
+    public boolean isSeparator() {
+        return separator;
+    }
 }

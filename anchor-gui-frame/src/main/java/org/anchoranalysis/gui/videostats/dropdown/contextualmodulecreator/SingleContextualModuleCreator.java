@@ -1,12 +1,8 @@
-package org.anchoranalysis.gui.videostats.dropdown.contextualmodulecreator;
-
-import java.util.Optional;
-
 /*-
  * #%L
  * anchor-gui-frame
  * %%
- * Copyright (C) 2010 - 2019 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann la Roche
+ * Copyright (C) 2010 - 2020 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann-La Roche
  * %%
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -14,10 +10,10 @@ import java.util.Optional;
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -28,6 +24,9 @@ import java.util.Optional;
  * #L%
  */
 
+package org.anchoranalysis.gui.videostats.dropdown.contextualmodulecreator;
+
+import java.util.Optional;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.progress.OperationWithProgressReporter;
 import org.anchoranalysis.gui.videostats.dropdown.IAddVideoStatsModule;
@@ -38,50 +37,46 @@ import org.anchoranalysis.gui.videostats.modulecreator.VideoStatsModuleCreatorCo
 
 public class SingleContextualModuleCreator extends ContextualModuleCreator {
 
-	private VideoStatsModuleCreatorContext moduleCreator;
-	
-	public SingleContextualModuleCreator(VideoStatsModuleCreatorContext moduleCreator) {
-		super();
-		this.moduleCreator = moduleCreator;
-	}
-	
-	@Override
-	public NamedModule[] create(
-		String namePrefix,
-		OperationWithProgressReporter<IAddVideoStatsModule,? extends Throwable> adder,
-		VideoStatsModuleGlobalParams mpg
-	)
-			throws CreateException {
+    private VideoStatsModuleCreatorContext moduleCreator;
 
-		NamedModule namedModuleSingle = createSingle(namePrefix, adder, mpg );
-		
-		if (namedModuleSingle==null) {
-			return new NamedModule[]{}; 
-		}
-		
-		return new NamedModule[]{
-			namedModuleSingle
-		};
-	}
-	
-	public NamedModule createSingle(String namePrefix, OperationWithProgressReporter<IAddVideoStatsModule,? extends Throwable> adder,
-			VideoStatsModuleGlobalParams mpg) {
+    public SingleContextualModuleCreator(VideoStatsModuleCreatorContext moduleCreator) {
+        super();
+        this.moduleCreator = moduleCreator;
+    }
 
-		if (!moduleCreator.precondition()) {
-			return null;
-		}
-				
-		VideoStatsModuleCreatorAndAdder creatorAndAdder = new VideoStatsModuleCreatorAndAdder(
-			adder,
-			moduleCreator.resolve(namePrefix, mpg)
-		);
-		
-		Optional<String> shortTitle = moduleCreator.shortTitle();
-		if (shortTitle.isPresent()) {
-			return new NamedModule(moduleCreator.title(), creatorAndAdder, shortTitle.get());
-		} else {
-			return new NamedModule(moduleCreator.title(), creatorAndAdder);
-		}
-	}
+    @Override
+    public NamedModule[] create(
+            String namePrefix,
+            OperationWithProgressReporter<IAddVideoStatsModule, ? extends Throwable> adder,
+            VideoStatsModuleGlobalParams mpg)
+            throws CreateException {
 
+        NamedModule namedModuleSingle = createSingle(namePrefix, adder, mpg);
+
+        if (namedModuleSingle == null) {
+            return new NamedModule[] {};
+        }
+
+        return new NamedModule[] {namedModuleSingle};
+    }
+
+    public NamedModule createSingle(
+            String namePrefix,
+            OperationWithProgressReporter<IAddVideoStatsModule, ? extends Throwable> adder,
+            VideoStatsModuleGlobalParams mpg) {
+
+        if (!moduleCreator.precondition()) {
+            return null;
+        }
+
+        VideoStatsModuleCreatorAndAdder creatorAndAdder =
+                new VideoStatsModuleCreatorAndAdder(adder, moduleCreator.resolve(namePrefix, mpg));
+
+        Optional<String> shortTitle = moduleCreator.shortTitle();
+        if (shortTitle.isPresent()) {
+            return new NamedModule(moduleCreator.title(), creatorAndAdder, shortTitle.get());
+        } else {
+            return new NamedModule(moduleCreator.title(), creatorAndAdder);
+        }
+    }
 }

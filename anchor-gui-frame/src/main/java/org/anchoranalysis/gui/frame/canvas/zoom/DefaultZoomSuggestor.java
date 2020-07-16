@@ -1,10 +1,8 @@
-package org.anchoranalysis.gui.frame.canvas.zoom;
-
 /*-
  * #%L
  * anchor-gui-frame
  * %%
- * Copyright (C) 2010 - 2019 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann la Roche
+ * Copyright (C) 2010 - 2020 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann-La Roche
  * %%
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -12,10 +10,10 @@ package org.anchoranalysis.gui.frame.canvas.zoom;
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -26,30 +24,28 @@ package org.anchoranalysis.gui.frame.canvas.zoom;
  * #L%
  */
 
+package org.anchoranalysis.gui.frame.canvas.zoom;
+
+import lombok.AllArgsConstructor;
 import org.anchoranalysis.image.extent.ImageDimensions;
 
+@AllArgsConstructor
 public class DefaultZoomSuggestor {
 
-	private int maxX;
-	private int maxY;
-	
-	public DefaultZoomSuggestor(int maxX, int maxY) {
-		super();
-		this.maxX = maxX;
-		this.maxY = maxY;
-	}
+    private final int maxX;
+    private final int maxY;
 
-	public ZoomScale suggestDefaultZoomFor( ImageDimensions sd ) {
-		int maxExpX = getMaxExpForDim( maxX, sd.getX() );
-		int maxExpY = getMaxExpForDim( maxY, sd.getY() );
-		int exp = Math.min( maxExpX, maxExpY );
-		return new ZoomScale(exp);
-	}
-	
-	private static int getMaxExpForDim( int maxWidthAllowed, int currentWidth ) {
-		
-		double ratio = ((double) maxWidthAllowed) / currentWidth;
-		double log = Math.log(ratio)/Math.log(2);
-		return (int) Math.floor( log );
-	}
+    public ZoomScale suggestDefaultZoomFor(ImageDimensions dimensions) {
+        int maxExpX = getMaxExpForDim(maxX, dimensions.getX());
+        int maxExpY = getMaxExpForDim(maxY, dimensions.getY());
+        int exp = Math.min(maxExpX, maxExpY);
+        return new ZoomScale(exp);
+    }
+
+    private static int getMaxExpForDim(int maxWidthAllowed, int currentWidth) {
+
+        double ratio = ((double) maxWidthAllowed) / currentWidth;
+        double log = Math.log(ratio) / Math.log(2);
+        return (int) Math.floor(log);
+    }
 }

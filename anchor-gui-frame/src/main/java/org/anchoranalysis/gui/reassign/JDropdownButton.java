@@ -1,10 +1,8 @@
-package org.anchoranalysis.gui.reassign;
-
-/*
+/*-
  * #%L
- * anchor-gui
+ * anchor-gui-frame
  * %%
- * Copyright (C) 2016 ETH Zurich, University of Zurich, Owen Feehan
+ * Copyright (C) 2010 - 2020 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann-La Roche
  * %%
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -12,10 +10,10 @@ package org.anchoranalysis.gui.reassign;
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -26,45 +24,46 @@ package org.anchoranalysis.gui.reassign;
  * #L%
  */
 
+package org.anchoranalysis.gui.reassign;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPopupMenu;
 
 public class JDropdownButton {
 
-	private JButton button;
-	
-	private JPopupMenu popup;
+    private JButton button;
 
-	public JDropdownButton( String name, ImageIcon icon ) {
+    private JPopupMenu popup;
 
-		popup = new JPopupMenu();
-		
-		button = new JButton(name, icon);
-		//add(button);
-		
-		button.addActionListener( new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				popup.show(button, 0, button.getHeight());
-			}
-		});
-	}
-	
-	public int getNumItems() {
-		return popup.getSubElements().length;
-	}
-	
-	public JButton getButton() {
-		return button;
-	}
-	
-	public JPopupMenu getPopup() {
-		return popup;
-	}
+    public JDropdownButton(String name, ImageIcon icon) {
+
+        popup = new JPopupMenu();
+
+        button = new JButton(name, icon);
+        // add(button);
+
+        button.addActionListener(
+                new ActionListener() {
+
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        popup.show(button, 0, button.getHeight());
+                    }
+                });
+    }
+
+    public int getNumItems() {
+        return popup.getSubElements().length;
+    }
+
+    public JButton getButton() {
+        return button;
+    }
+
+    public JPopupMenu getPopup() {
+        return popup;
+    }
 }

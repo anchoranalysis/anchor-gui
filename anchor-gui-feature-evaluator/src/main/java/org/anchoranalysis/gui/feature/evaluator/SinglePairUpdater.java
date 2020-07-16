@@ -1,14 +1,8 @@
-package org.anchoranalysis.gui.feature.evaluator;
-
-import org.anchoranalysis.anchor.mpp.pair.Pair;
-import org.anchoranalysis.anchor.overlay.Overlay;
-import org.anchoranalysis.anchor.overlay.collection.OverlayCollection;
-
 /*-
  * #%L
  * anchor-gui-feature-evaluator
  * %%
- * Copyright (C) 2010 - 2019 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann la Roche
+ * Copyright (C) 2010 - 2020 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann-La Roche
  * %%
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -16,10 +10,10 @@ import org.anchoranalysis.anchor.overlay.collection.OverlayCollection;
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -30,6 +24,11 @@ import org.anchoranalysis.anchor.overlay.collection.OverlayCollection;
  * #L%
  */
 
+package org.anchoranalysis.gui.feature.evaluator;
+
+import org.anchoranalysis.anchor.mpp.pair.Pair;
+import org.anchoranalysis.anchor.overlay.Overlay;
+import org.anchoranalysis.anchor.overlay.collection.OverlayCollection;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.feature.nrg.NRGStackWithParams;
 import org.anchoranalysis.gui.feature.evaluator.singlepair.IUpdatableSinglePair;
@@ -38,69 +37,73 @@ import org.anchoranalysis.gui.image.OverlayCollectionWithImgStack;
 
 class SinglePairUpdater {
 
-	private UpdatableSinglePairList updatableMarkPairList = new UpdatableSinglePairList();
-	
-	private OverlayDescriptionPanel overlayDescriptionPanel;
+    private UpdatableSinglePairList updatableMarkPairList = new UpdatableSinglePairList();
 
-	private FinderEvaluator finder;
-		
-	public SinglePairUpdater(OverlayDescriptionPanel overlayDescriptionPanel, FinderEvaluator finder, IUpdatableSinglePair secondInitialItem ) {
-		super();
-		this.overlayDescriptionPanel = overlayDescriptionPanel;
-		this.finder = finder;
-		updatableMarkPairList.add(overlayDescriptionPanel.getMarkDescription());
-		updatableMarkPairList.add(secondInitialItem);
-	}
+    private OverlayDescriptionPanel overlayDescriptionPanel;
 
-	public void updateModel( OverlayCollectionWithImgStack cws ) throws CreateException {
-		
-		if (overlayDescriptionPanel.isFrozen()) {
-			return;
-		}
-		
-		if (cws!=null && cws.getOverlayCollection()!=null && cws.getStack()!=null) {
-		
-			assert(cws.getStack()!=null);
-			
-			NRGStackWithParams nrgStack = cws.getStack();
-		
-			updateOverlays( cws.getOverlayCollection(), nrgStack );
-			 
-		} else {
-			overlayDescriptionPanel.updateDescriptionTop(null);
-			updateSingle(null,null);
-		}
-	}
-	
-	private void updateOverlays( OverlayCollection overlays, NRGStackWithParams nrgStack ) throws CreateException {
-		
-		//Cfg cfg = OverlayCollectionMarkFactory.cfgFromOverlays( cws.getOverlayCollection() );
-		overlayDescriptionPanel.updateDescriptionTop( overlays );	
-		
-		assert( nrgStack!=null );
-		
-		Pair<Overlay> pair = finder.findPairFromCurrentSelection( overlays, nrgStack );
-		
-		if (pair!=null) {
-			
-			// if we have a valid pair, we update with the pair
-			updatePair(pair, nrgStack );
-		} else {
-			Overlay ol = FinderEvaluator.findOverlayFromCurrentSelection( overlays );
-			if (ol!=null) {
-				updateSingle(ol, nrgStack );
-			} else {
-				overlayDescriptionPanel.updateDescriptionTop(null);
-				updateSingle(null, nrgStack);
-			}
-		}
-	}
+    private FinderEvaluator finder;
 
-	private void updateSingle(Overlay overlay, NRGStackWithParams raster) {
-		updatableMarkPairList.updateSingle(overlay, raster);
-	}
+    public SinglePairUpdater(
+            OverlayDescriptionPanel overlayDescriptionPanel,
+            FinderEvaluator finder,
+            IUpdatableSinglePair secondInitialItem) {
+        super();
+        this.overlayDescriptionPanel = overlayDescriptionPanel;
+        this.finder = finder;
+        updatableMarkPairList.add(overlayDescriptionPanel.getMarkDescription());
+        updatableMarkPairList.add(secondInitialItem);
+    }
 
-	private void updatePair(Pair<Overlay> pair, NRGStackWithParams raster) {
-		updatableMarkPairList.updatePair(pair, raster);
-	}
+    public void updateModel(OverlayCollectionWithImgStack cws) throws CreateException {
+
+        if (overlayDescriptionPanel.isFrozen()) {
+            return;
+        }
+
+        if (cws != null && cws.getOverlayCollection() != null && cws.getStack() != null) {
+
+            assert (cws.getStack() != null);
+
+            NRGStackWithParams nrgStack = cws.getStack();
+
+            updateOverlays(cws.getOverlayCollection(), nrgStack);
+
+        } else {
+            overlayDescriptionPanel.updateDescriptionTop(null);
+            updateSingle(null, null);
+        }
+    }
+
+    private void updateOverlays(OverlayCollection overlays, NRGStackWithParams nrgStack)
+            throws CreateException {
+
+        // Cfg cfg = OverlayCollectionMarkFactory.cfgFromOverlays( cws.getOverlayCollection() );
+        overlayDescriptionPanel.updateDescriptionTop(overlays);
+
+        assert (nrgStack != null);
+
+        Pair<Overlay> pair = finder.findPairFromCurrentSelection(overlays, nrgStack);
+
+        if (pair != null) {
+
+            // if we have a valid pair, we update with the pair
+            updatePair(pair, nrgStack);
+        } else {
+            Overlay ol = FinderEvaluator.findOverlayFromCurrentSelection(overlays);
+            if (ol != null) {
+                updateSingle(ol, nrgStack);
+            } else {
+                overlayDescriptionPanel.updateDescriptionTop(null);
+                updateSingle(null, nrgStack);
+            }
+        }
+    }
+
+    private void updateSingle(Overlay overlay, NRGStackWithParams raster) {
+        updatableMarkPairList.updateSingle(overlay, raster);
+    }
+
+    private void updatePair(Pair<Overlay> pair, NRGStackWithParams raster) {
+        updatableMarkPairList.updatePair(pair, raster);
+    }
 }

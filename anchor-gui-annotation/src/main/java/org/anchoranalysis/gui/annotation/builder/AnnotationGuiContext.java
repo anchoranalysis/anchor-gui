@@ -1,10 +1,8 @@
-package org.anchoranalysis.gui.annotation.builder;
-
 /*-
  * #%L
  * anchor-gui-annotation
  * %%
- * Copyright (C) 2010 - 2019 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann la Roche
+ * Copyright (C) 2010 - 2020 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann-La Roche
  * %%
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -12,10 +10,10 @@ package org.anchoranalysis.gui.annotation.builder;
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -26,25 +24,28 @@ package org.anchoranalysis.gui.annotation.builder;
  * #L%
  */
 
+package org.anchoranalysis.gui.annotation.builder;
+
 import org.anchoranalysis.gui.annotation.AnnotationRefresher;
 import org.anchoranalysis.gui.interactivebrowser.MarkEvaluatorManager;
 
 public class AnnotationGuiContext {
 
-	private AnnotationRefresher annotationRefresher;
-	private MarkEvaluatorManager markEvaluatorManager;
-	
-	public AnnotationGuiContext(AnnotationRefresher annotationRefresher, MarkEvaluatorManager markEvaluatorManager) {
-		super();
-		this.annotationRefresher = annotationRefresher;
-		this.markEvaluatorManager = markEvaluatorManager;
-	}
+    private AnnotationRefresher annotationRefresher;
+    private MarkEvaluatorManager markEvaluatorManager;
 
-	public AnnotationRefresher getAnnotationRefresher() {
-		return annotationRefresher;
-	}
+    public AnnotationGuiContext(
+            AnnotationRefresher annotationRefresher, MarkEvaluatorManager markEvaluatorManager) {
+        super();
+        this.annotationRefresher = annotationRefresher;
+        this.markEvaluatorManager = markEvaluatorManager;
+    }
 
-	public MarkEvaluatorManager getMarkEvaluatorManager() {
-		return markEvaluatorManager;
-	}	
+    public AnnotationRefresher getAnnotationRefresher() {
+        return annotationRefresher;
+    }
+
+    public MarkEvaluatorManager getMarkEvaluatorManager() {
+        return markEvaluatorManager;
+    }
 }

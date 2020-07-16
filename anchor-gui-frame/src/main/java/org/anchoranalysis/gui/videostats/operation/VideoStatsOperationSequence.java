@@ -1,10 +1,8 @@
-package org.anchoranalysis.gui.videostats.operation;
-
-/*
+/*-
  * #%L
- * anchor-gui
+ * anchor-gui-frame
  * %%
- * Copyright (C) 2016 ETH Zurich, University of Zurich, Owen Feehan
+ * Copyright (C) 2010 - 2020 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann-La Roche
  * %%
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -12,10 +10,10 @@ package org.anchoranalysis.gui.videostats.operation;
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -26,51 +24,51 @@ package org.anchoranalysis.gui.videostats.operation;
  * #L%
  */
 
+package org.anchoranalysis.gui.videostats.operation;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
 import org.anchoranalysis.gui.videostats.operation.combine.IVideoStatsOperationCombine;
 
 public class VideoStatsOperationSequence implements VideoStatsOperation {
 
-	private List<VideoStatsOperation> delegate = new ArrayList<>();
-	
-	private String name;
+    private List<VideoStatsOperation> delegate = new ArrayList<>();
 
-	public VideoStatsOperationSequence(String name) {
-		super();
-		this.name = name;
-	}
-	
-	@Override
-	public String getName() {
-		return name;
-	}
+    private String name;
 
-	public void add( VideoStatsOperation operation ) {
-		delegate.add(operation);
-	}
-	
-	public void addAll( List<VideoStatsOperation> list ) {
-		delegate.addAll(list);
-	}
+    public VideoStatsOperationSequence(String name) {
+        super();
+        this.name = name;
+    }
 
-	public List<VideoStatsOperation> getList() {
-		return delegate;
-	}
+    @Override
+    public String getName() {
+        return name;
+    }
 
-	@Override
-	public void execute(boolean withMessages) {
-		
-		for( VideoStatsOperation op : delegate ) {
-			op.execute(withMessages);
-		}
-	}
+    public void add(VideoStatsOperation operation) {
+        delegate.add(operation);
+    }
 
-	@Override
-	public Optional<IVideoStatsOperationCombine> getCombiner() {
-		return Optional.empty();
-	}
+    public void addAll(List<VideoStatsOperation> list) {
+        delegate.addAll(list);
+    }
+
+    public List<VideoStatsOperation> getList() {
+        return delegate;
+    }
+
+    @Override
+    public void execute(boolean withMessages) {
+
+        for (VideoStatsOperation op : delegate) {
+            op.execute(withMessages);
+        }
+    }
+
+    @Override
+    public Optional<IVideoStatsOperationCombine> getCombiner() {
+        return Optional.empty();
+    }
 }

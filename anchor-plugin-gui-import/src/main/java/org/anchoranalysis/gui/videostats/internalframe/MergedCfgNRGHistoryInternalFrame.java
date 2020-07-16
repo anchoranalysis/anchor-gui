@@ -1,18 +1,8 @@
-package org.anchoranalysis.gui.videostats.internalframe;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import org.anchoranalysis.anchor.mpp.cfg.Cfg;
-import org.anchoranalysis.anchor.mpp.feature.instantstate.CfgNRGInstantState;
-import org.anchoranalysis.anchor.overlay.OverlayedInstantState;
-import org.anchoranalysis.anchor.overlay.id.IDGetterOverlayID;
-
-/*
+/*-
  * #%L
- * anchor-gui
+ * anchor-plugin-gui-import
  * %%
- * Copyright (C) 2016 ETH Zurich, University of Zurich, Owen Feehan
+ * Copyright (C) 2010 - 2020 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann-La Roche
  * %%
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -20,10 +10,10 @@ import org.anchoranalysis.anchor.overlay.id.IDGetterOverlayID;
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -34,8 +24,14 @@ import org.anchoranalysis.anchor.overlay.id.IDGetterOverlayID;
  * #L%
  */
 
+package org.anchoranalysis.gui.videostats.internalframe;
 
-
+import java.util.ArrayList;
+import java.util.List;
+import org.anchoranalysis.anchor.mpp.cfg.Cfg;
+import org.anchoranalysis.anchor.mpp.feature.instantstate.CfgNRGInstantState;
+import org.anchoranalysis.anchor.overlay.OverlayedInstantState;
+import org.anchoranalysis.anchor.overlay.id.IDGetterOverlayID;
 import org.anchoranalysis.core.color.ColorIndex;
 import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.idgetter.IDGetterIter;
@@ -55,69 +51,62 @@ import org.anchoranalysis.io.manifest.deserializer.folder.LoadContainer;
 
 public class MergedCfgNRGHistoryInternalFrame {
 
-	private InternalFrameOverlayedInstantStateToRGBSelectable delegate;
+    private InternalFrameOverlayedInstantStateToRGBSelectable delegate;
 
-	public MergedCfgNRGHistoryInternalFrame( String title ) {
-		this.delegate = new InternalFrameOverlayedInstantStateToRGBSelectable(title,true, true);
-	}
-	
-	public ISliderState init(
-		LoadContainer<CfgNRGInstantState> selectedHistory,
-		LoadContainer<CfgNRGInstantState> proposalHistory,
-		DefaultModuleState defaultState,
-		VideoStatsModuleGlobalParams mpg
-	) throws InitException {
+    public MergedCfgNRGHistoryInternalFrame(String title) {
+        this.delegate = new InternalFrameOverlayedInstantStateToRGBSelectable(title, true, true);
+    }
 
-		// A container that supplies DualCfgInstantState
-		DualCfgNRGContainer<Cfg> dualHistory = new DualCfgNRGContainer<>(
-				createInputList(selectedHistory,proposalHistory),
-				new TransformToCfg()
-			);
-		
-		dualHistory.init();
+    public ISliderState init(
+            LoadContainer<CfgNRGInstantState> selectedHistory,
+            LoadContainer<CfgNRGInstantState> proposalHistory,
+            DefaultModuleState defaultState,
+            VideoStatsModuleGlobalParams mpg)
+            throws InitException {
 
-		
-		MergeCfgBridge mergeCfgBridge = new MergeCfgBridge(
-			() -> defaultState.getMarkDisplaySettings().regionMembership()
-		);
-		
-		// We map each DualCfgInstantState
-		BoundedIndexContainer<OverlayedInstantState> cfgCntnr = new BoundedIndexContainerBridgeWithoutIndex<>(
-			dualHistory,
-			mergeCfgBridge
-		);
-		
-		boolean eitherExpensiveLoad = selectedHistory.isExpensiveLoad() || proposalHistory.isExpensiveLoad();
-		
-		ColorIndex mergedColorIndex = new MergedColorIndex(mergeCfgBridge);
-	
-		return this.delegate.init(
-			cfgCntnr,
-			mergedColorIndex,
-			new IDGetterOverlayID(),
-			new IDGetterIter<>(),
-			!eitherExpensiveLoad,
-			defaultState,
-			mpg
-		);
-	}
+        // A container that supplies DualCfgInstantState
+        DualCfgNRGContainer<Cfg> dualHistory =
+                new DualCfgNRGContainer<>(
+                        createInputList(selectedHistory, proposalHistory), new TransformToCfg());
 
-	public IModuleCreatorDefaultState moduleCreator(ISliderState sliderState) {
-		return delegate.moduleCreator(sliderState);
-	}
+        dualHistory.init();
 
-	public ControllerPopupMenuWithBackground controllerBackgroundMenu(ISliderState sliderState) {
-		return delegate.controllerBackgroundMenu(sliderState);
-	}
+        MergeCfgBridge mergeCfgBridge =
+                new MergeCfgBridge(() -> defaultState.getMarkDisplaySettings().regionMembership());
 
-	private static List<BoundedIndexContainer<CfgNRGInstantState>> createInputList(
-		LoadContainer<CfgNRGInstantState> selectedHistory,
-		LoadContainer<CfgNRGInstantState> proposalHistory
-	) {
-		List<BoundedIndexContainer<CfgNRGInstantState>> out = new ArrayList<>();
-		out.add(selectedHistory.getCntr());
-		out.add(proposalHistory.getCntr());
-		return out;
-	}
+        // We map each DualCfgInstantState
+        BoundedIndexContainer<OverlayedInstantState> cfgCntnr =
+                new BoundedIndexContainerBridgeWithoutIndex<>(dualHistory, mergeCfgBridge);
 
+        boolean eitherExpensiveLoad =
+                selectedHistory.isExpensiveLoad() || proposalHistory.isExpensiveLoad();
+
+        ColorIndex mergedColorIndex = new MergedColorIndex(mergeCfgBridge);
+
+        return this.delegate.init(
+                cfgCntnr,
+                mergedColorIndex,
+                new IDGetterOverlayID(),
+                new IDGetterIter<>(),
+                !eitherExpensiveLoad,
+                defaultState,
+                mpg);
+    }
+
+    public IModuleCreatorDefaultState moduleCreator(ISliderState sliderState) {
+        return delegate.moduleCreator(sliderState);
+    }
+
+    public ControllerPopupMenuWithBackground controllerBackgroundMenu(ISliderState sliderState) {
+        return delegate.controllerBackgroundMenu(sliderState);
+    }
+
+    private static List<BoundedIndexContainer<CfgNRGInstantState>> createInputList(
+            LoadContainer<CfgNRGInstantState> selectedHistory,
+            LoadContainer<CfgNRGInstantState> proposalHistory) {
+        List<BoundedIndexContainer<CfgNRGInstantState>> out = new ArrayList<>();
+        out.add(selectedHistory.getCntr());
+        out.add(proposalHistory.getCntr());
+        return out;
+    }
 }

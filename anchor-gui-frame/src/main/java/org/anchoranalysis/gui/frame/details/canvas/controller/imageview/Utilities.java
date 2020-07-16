@@ -1,10 +1,8 @@
-package org.anchoranalysis.gui.frame.details.canvas.controller.imageview;
-
 /*-
  * #%L
  * anchor-gui-frame
  * %%
- * Copyright (C) 2010 - 2019 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann la Roche
+ * Copyright (C) 2010 - 2020 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann-La Roche
  * %%
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -12,10 +10,10 @@ package org.anchoranalysis.gui.frame.details.canvas.controller.imageview;
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -26,31 +24,30 @@ package org.anchoranalysis.gui.frame.details.canvas.controller.imageview;
  * #L%
  */
 
+package org.anchoranalysis.gui.frame.details.canvas.controller.imageview;
+
 import java.awt.GraphicsConfiguration;
 import java.awt.Rectangle;
-
 import org.anchoranalysis.image.extent.Extent;
 
 class Utilities {
 
-	public static Extent addXY( Extent e, int addX, int addY ) {
-		return new Extent(
-			e.getX() + addX,
-			e.getY() + addY,
-			e.getZ()
-		);
-	}
-	
-	public static Extent fractionScreenBounds( double widthFractionScreen,
-			double heightFractionScreen, GraphicsConfiguration graphicsConfiguration ) {
-		Rectangle screenBounds = graphicsConfiguration.getBounds();
-		
-		int desiredWidth = intFraction(screenBounds.getWidth(), widthFractionScreen);
-		int desiredHeight = intFraction(screenBounds.getHeight(), heightFractionScreen);
-		return new Extent(desiredWidth, desiredHeight, 0);
-	}
+    public static Extent addXY(Extent e, int addX, int addY) {
+        return new Extent(e.getX() + addX, e.getY() + addY, e.getZ());
+    }
 
-	private static int intFraction( double total, double fraction ) {
-		return (int) (total * fraction);
-	}
+    public static Extent fractionScreenBounds(
+            double widthFractionScreen,
+            double heightFractionScreen,
+            GraphicsConfiguration graphicsConfiguration) {
+        Rectangle screenBounds = graphicsConfiguration.getBounds();
+
+        int desiredWidth = intFraction(screenBounds.getWidth(), widthFractionScreen);
+        int desiredHeight = intFraction(screenBounds.getHeight(), heightFractionScreen);
+        return new Extent(desiredWidth, desiredHeight, 0);
+    }
+
+    private static int intFraction(double total, double fraction) {
+        return (int) (total * fraction);
+    }
 }

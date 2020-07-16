@@ -1,18 +1,8 @@
-package org.anchoranalysis.gui.videostats.dropdown.modulecreator.graph;
-
-import java.util.Optional;
-
-import org.anchoranalysis.anchor.mpp.feature.instantstate.CfgNRGInstantState;
-import org.anchoranalysis.anchor.mpp.plot.NRGGraphItem;
-import org.anchoranalysis.anchor.plot.bean.GraphDefinition;
-import org.anchoranalysis.core.color.ColorIndex;
-import org.anchoranalysis.core.error.InitException;
-
-/*
+/*-
  * #%L
- * anchor-gui
+ * anchor-plugin-gui-import
  * %%
- * Copyright (C) 2016 ETH Zurich, University of Zurich, Owen Feehan
+ * Copyright (C) 2010 - 2020 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann-La Roche
  * %%
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -20,10 +10,10 @@ import org.anchoranalysis.core.error.InitException;
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -34,6 +24,14 @@ import org.anchoranalysis.core.error.InitException;
  * #L%
  */
 
+package org.anchoranalysis.gui.videostats.dropdown.modulecreator.graph;
+
+import java.util.Optional;
+import org.anchoranalysis.anchor.mpp.feature.instantstate.CfgNRGInstantState;
+import org.anchoranalysis.anchor.mpp.plot.NRGGraphItem;
+import org.anchoranalysis.anchor.plot.bean.GraphDefinition;
+import org.anchoranalysis.core.color.ColorIndex;
+import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.error.reporter.ErrorReporter;
 import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.gui.cfgnrg.CfgNRGInstantStateGraphPanel;
@@ -49,64 +47,66 @@ import org.anchoranalysis.gui.videostats.modulecreator.VideoStatsModuleCreatorCo
 
 public class GraphNRGBreakdownModuleCreator extends VideoStatsModuleCreatorContext {
 
-	private final GraphDefinition<NRGGraphItem> definition;
-	private final FinderHistoryFolder<CfgNRGInstantState> finderCfgNRGHistory;
-	private final ColorIndex colorIndex;
-	
-	public GraphNRGBreakdownModuleCreator(GraphDefinition<NRGGraphItem> definition,
-			FinderHistoryFolder<CfgNRGInstantState> finderCfgNRGHistory, ColorIndex colorIndex) {
-		super();
-		this.definition = definition;
-		this.finderCfgNRGHistory = finderCfgNRGHistory;
-		this.colorIndex = colorIndex;
-	}
+    private final GraphDefinition<NRGGraphItem> definition;
+    private final FinderHistoryFolder<CfgNRGInstantState> finderCfgNRGHistory;
+    private final ColorIndex colorIndex;
 
-	@Override
-	public boolean precondition() {
-		return finderCfgNRGHistory.exists();
-	}
+    public GraphNRGBreakdownModuleCreator(
+            GraphDefinition<NRGGraphItem> definition,
+            FinderHistoryFolder<CfgNRGInstantState> finderCfgNRGHistory,
+            ColorIndex colorIndex) {
+        super();
+        this.definition = definition;
+        this.finderCfgNRGHistory = finderCfgNRGHistory;
+        this.colorIndex = colorIndex;
+    }
 
-	@Override
-	public Optional<IModuleCreatorDefaultState> moduleCreator(DefaultModuleStateManager defaultStateManager, String namePrefix,
-			VideoStatsModuleGlobalParams mpg) throws VideoStatsModuleCreateException {
+    @Override
+    public boolean precondition() {
+        return finderCfgNRGHistory.exists();
+    }
 
-		ErrorReporter errorReporter = mpg.getLogger().errorReporter();
-		GenerateGraphNRGBreakdownFromInstantState generator = new GenerateGraphNRGBreakdownFromInstantState( definition, colorIndex );
-		
-		String graphFrameTitle = new FrameTitleGenerator().genFramePrefix( namePrefix, definition.getTitle() );
-		
-		try {
-			CfgNRGInstantStateGraphPanel tablePanel = new CfgNRGInstantStateGraphPanel(generator);
-			
-			StatePanelFrameHistoryCfgNRGInstantState frame = new StatePanelFrameHistoryCfgNRGInstantState(graphFrameTitle, true);
-			frame.init(
-				defaultStateManager.getState().getLinkState().getFrameIndex(),
-				finderCfgNRGHistory.get(),
-				tablePanel,
-				errorReporter
-			);
-			
-			return Optional.of(
-				frame.moduleCreator()
-			);
+    @Override
+    public Optional<IModuleCreatorDefaultState> moduleCreator(
+            DefaultModuleStateManager defaultStateManager,
+            String namePrefix,
+            VideoStatsModuleGlobalParams mpg)
+            throws VideoStatsModuleCreateException {
 
-		} catch (GetOperationFailedException e) {
-			throw new VideoStatsModuleCreateException(e);
-		} catch (InitException e) {
-			throw new VideoStatsModuleCreateException(e);
-		}
-		
-	}
+        ErrorReporter errorReporter = mpg.getLogger().errorReporter();
+        GenerateGraphNRGBreakdownFromInstantState generator =
+                new GenerateGraphNRGBreakdownFromInstantState(definition, colorIndex);
 
-	@Override
-	public String title() {
-		return definition.getTitle();
-	}
+        String graphFrameTitle =
+                new FrameTitleGenerator().genFramePrefix(namePrefix, definition.getTitle());
 
-	@Override
-	public Optional<String> shortTitle() {
-		return Optional.of(
-			definition.getShortTitle()
-		);
-	}
+        try {
+            CfgNRGInstantStateGraphPanel tablePanel = new CfgNRGInstantStateGraphPanel(generator);
+
+            StatePanelFrameHistoryCfgNRGInstantState frame =
+                    new StatePanelFrameHistoryCfgNRGInstantState(graphFrameTitle, true);
+            frame.init(
+                    defaultStateManager.getState().getLinkState().getFrameIndex(),
+                    finderCfgNRGHistory.get(),
+                    tablePanel,
+                    errorReporter);
+
+            return Optional.of(frame.moduleCreator());
+
+        } catch (GetOperationFailedException e) {
+            throw new VideoStatsModuleCreateException(e);
+        } catch (InitException e) {
+            throw new VideoStatsModuleCreateException(e);
+        }
+    }
+
+    @Override
+    public String title() {
+        return definition.getTitle();
+    }
+
+    @Override
+    public Optional<String> shortTitle() {
+        return Optional.of(definition.getShortTitle());
+    }
 }

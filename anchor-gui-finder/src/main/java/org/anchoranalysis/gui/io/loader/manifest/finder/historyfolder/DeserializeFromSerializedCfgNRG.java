@@ -1,13 +1,8 @@
-package org.anchoranalysis.gui.io.loader.manifest.finder.historyfolder;
-
-import org.anchoranalysis.anchor.mpp.feature.instantstate.CfgNRGInstantState;
-import org.anchoranalysis.anchor.mpp.feature.nrg.cfg.CfgNRG;
-
 /*-
  * #%L
- * anchor-mpp-io
+ * anchor-gui-finder
  * %%
- * Copyright (C) 2010 - 2019 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann la Roche
+ * Copyright (C) 2010 - 2020 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann-La Roche
  * %%
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -15,10 +10,10 @@ import org.anchoranalysis.anchor.mpp.feature.nrg.cfg.CfgNRG;
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -29,6 +24,10 @@ import org.anchoranalysis.anchor.mpp.feature.nrg.cfg.CfgNRG;
  * #L%
  */
 
+package org.anchoranalysis.gui.io.loader.manifest.finder.historyfolder;
+
+import org.anchoranalysis.anchor.mpp.feature.instantstate.CfgNRGInstantState;
+import org.anchoranalysis.anchor.mpp.feature.nrg.cfg.CfgNRG;
 import org.anchoranalysis.core.index.ITypedGetFromIndex;
 import org.anchoranalysis.core.index.TypedGetFromIndexBridge;
 import org.anchoranalysis.io.bean.deserializer.Deserializer;
@@ -38,19 +37,18 @@ import org.anchoranalysis.io.manifest.folder.SequencedFolder;
 
 class DeserializeFromSerializedCfgNRG extends DeserializeFromFolder<CfgNRGInstantState> {
 
-	private Deserializer<CfgNRG> deserializer;
-	public DeserializeFromSerializedCfgNRG(Deserializer<CfgNRG> deserializer,
-			SequencedFolder folder) {
-		super(folder);
-		this.deserializer = deserializer;
-	}
-	
-	@Override
-	protected ITypedGetFromIndex<CfgNRGInstantState> createCtnr( SequencedFolder folder ) {
-		return new TypedGetFromIndexBridge<>(
-			new SequencedFolderDeserializer<>(folder, deserializer),
-			new CfgNRGInstantStateFromCfgNRGBridge()
-		);
-	}
+    private Deserializer<CfgNRG> deserializer;
 
+    public DeserializeFromSerializedCfgNRG(
+            Deserializer<CfgNRG> deserializer, SequencedFolder folder) {
+        super(folder);
+        this.deserializer = deserializer;
+    }
+
+    @Override
+    protected ITypedGetFromIndex<CfgNRGInstantState> createCtnr(SequencedFolder folder) {
+        return new TypedGetFromIndexBridge<>(
+                new SequencedFolderDeserializer<>(folder, deserializer),
+                new CfgNRGInstantStateFromCfgNRGBridge());
+    }
 }

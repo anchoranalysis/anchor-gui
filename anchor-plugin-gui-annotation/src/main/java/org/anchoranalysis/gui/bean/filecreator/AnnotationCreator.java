@@ -1,12 +1,8 @@
-package org.anchoranalysis.gui.bean.filecreator;
-
-import org.anchoranalysis.annotation.io.bean.input.AnnotationInputManager;
-
-/*
+/*-
  * #%L
- * anchor-gui
+ * anchor-plugin-gui-annotation
  * %%
- * Copyright (C) 2016 ETH Zurich, University of Zurich, Owen Feehan
+ * Copyright (C) 2010 - 2020 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann-La Roche
  * %%
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -14,10 +10,10 @@ import org.anchoranalysis.annotation.io.bean.input.AnnotationInputManager;
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -28,7 +24,12 @@ import org.anchoranalysis.annotation.io.bean.input.AnnotationInputManager;
  * #L%
  */
 
+package org.anchoranalysis.gui.bean.filecreator;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.anchoranalysis.annotation.io.bean.input.AnnotationInputManager;
 import org.anchoranalysis.bean.annotation.BeanField;
 import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.progress.ProgressReporter;
@@ -42,61 +43,53 @@ import org.anchoranalysis.gui.videostats.module.VideoStatsModuleCreateException;
 import org.anchoranalysis.image.io.input.ProvidesStackInput;
 
 // A named channel collection derived from a file
+@NoArgsConstructor
 public class AnnotationCreator extends FileCreator {
 
-	private int weightWidthDescription;
+    // START BEAN PROPERTIES
+    private int weightWidthDescription = 0;
 
-	public AnnotationCreator(int weightWidthDescription) {
-		super();
-		this.weightWidthDescription = weightWidthDescription;
-	}
-	
-	// START BEAN PROPERTIES
-	@BeanField
-	private AnnotationInputManager<ProvidesStackInput,?> input;
-	// END BEAN PROPERTIES
-	
-	//private static Log log = LogFactory.getLog(NamedChnlCollectionCreator.class);
+    @BeanField @Getter @Setter private AnnotationInputManager<ProvidesStackInput, ?> input;
+    // END BEAN PROPERTIES
 
-	@Override
-	public VideoStatsModule createModule(String name, FileCreatorParams params,
-			VideoStatsModuleGlobalParams mpg, IAddVideoStatsModule adder,
-			IOpenFile fileOpenManager, ProgressReporter progressReporter)
-			throws VideoStatsModuleCreateException {
+    public AnnotationCreator(int weightWidthDescription) {
+        this.weightWidthDescription = weightWidthDescription;
+    }
 
-		AnnotationListInternalFrame listFrame = new AnnotationListInternalFrame( name );
-		
-		try {
-			listFrame.init(
-				input,
-				adder,
-				fileOpenManager,
-				params.getMarkCreatorParams(),
-				progressReporter,
-				weightWidthDescription
-			);
-		} catch (InitException e) {
-			throw new VideoStatsModuleCreateException(e);
-		}
-		
-		return listFrame.moduleCreator().createVideoStatsModule(new DefaultModuleState());
-	}	
+    @Override
+    public VideoStatsModule createModule(
+            String name,
+            FileCreatorParams params,
+            VideoStatsModuleGlobalParams mpg,
+            IAddVideoStatsModule adder,
+            IOpenFile fileOpenManager,
+            ProgressReporter progressReporter)
+            throws VideoStatsModuleCreateException {
 
-	@Override
-	public String suggestName() {
-				
-		if (hasCustomName()) {
-			return getCustomName();
-		}
-		
-		return "untitled raster set";
-	}
+        AnnotationListInternalFrame listFrame = new AnnotationListInternalFrame(name);
 
-	public AnnotationInputManager<ProvidesStackInput,?> getInput() {
-		return input;
-	}
+        try {
+            listFrame.init(
+                    input,
+                    adder,
+                    fileOpenManager,
+                    params.getMarkCreatorParams(),
+                    progressReporter,
+                    weightWidthDescription);
+        } catch (InitException e) {
+            throw new VideoStatsModuleCreateException(e);
+        }
 
-	public void setInput(AnnotationInputManager<ProvidesStackInput,?> input) {
-		this.input = input;
-	}
+        return listFrame.moduleCreator().createVideoStatsModule(new DefaultModuleState());
+    }
+
+    @Override
+    public String suggestName() {
+
+        if (hasCustomName()) {
+            return getCustomName();
+        }
+
+        return "untitled raster set";
+    }
 }

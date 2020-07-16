@@ -1,10 +1,8 @@
-package org.anchoranalysis.gui.plot.definition.line;
-
-/*
+/*-
  * #%L
- * anchor-gui
+ * anchor-gui-plot
  * %%
- * Copyright (C) 2016 ETH Zurich, University of Zurich, Owen Feehan
+ * Copyright (C) 2010 - 2020 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann-La Roche
  * %%
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -12,10 +10,10 @@ package org.anchoranalysis.gui.plot.definition.line;
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -26,10 +24,12 @@ package org.anchoranalysis.gui.plot.definition.line;
  * #L%
  */
 
+package org.anchoranalysis.gui.plot.definition.line;
 
 import java.util.Iterator;
 import java.util.Optional;
-
+import lombok.Getter;
+import lombok.Setter;
 import org.anchoranalysis.anchor.plot.AxisLimits;
 import org.anchoranalysis.anchor.plot.GraphInstance;
 import org.anchoranalysis.anchor.plot.bean.GraphDefinition;
@@ -40,86 +40,76 @@ import org.anchoranalysis.bean.annotation.BeanField;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.gui.plot.creator.IterAndExecutionTime;
 
-public class GraphDefinitionLineIterVsKernelExecutionTime extends GraphDefinition<IterAndExecutionTime> {
+public class GraphDefinitionLineIterVsKernelExecutionTime
+        extends GraphDefinition<IterAndExecutionTime> {
 
-	// START BEAN PROPERITES
-	@BeanField
-	private GraphColorScheme graphColorScheme = new GraphColorScheme();
-	// END BEAN PROPERTIES
-	
-	private String subTitle;
-	private String title;
-	private String yAxisLabel;
-	private boolean ignoreRangeOutside;
-	private String[] seriesTitles;
-	private YValGetter<IterAndExecutionTime> yValGetter;
+    // START BEAN PROPERITES
+    @BeanField @Getter @Setter private GraphColorScheme graphColorScheme = new GraphColorScheme();
+    // END BEAN PROPERTIES
 
-	
-	public GraphDefinitionLineIterVsKernelExecutionTime( String title, String subTitle, String yAxisLabel, final YValGetter<IterAndExecutionTime> yValGetter, boolean ignoreRangeOutside ) {
-		this( title, subTitle, yAxisLabel, new String[]{ subTitle }, yValGetter, ignoreRangeOutside );
-	}
-	
-	public GraphDefinitionLineIterVsKernelExecutionTime( String title, String subTitle, String yAxisLabel, String[] seriesTitles, final YValGetter<IterAndExecutionTime> yValGetter, boolean ignoreRangeOutside ) {
+    private String subTitle;
+    private String title;
 
-		// We need to do this first, so that getTitle() will work
-		this.title = title;
-		this.subTitle = subTitle;
-		this.yAxisLabel = yAxisLabel;
-		this.seriesTitles = seriesTitles;
-		this.ignoreRangeOutside = ignoreRangeOutside;
-		this.yValGetter = yValGetter;
-	}
+    @Getter private String yAxisLabel;
 
-	@Override
-	public GraphInstance create( Iterator<IterAndExecutionTime> itr, Optional<AxisLimits> domainLimits, Optional<AxisLimits> rangeLimits ) throws CreateException {
-		LinePlot<IterAndExecutionTime> delegate = new LinePlot<>(
-			getTitle(),
-			seriesTitles,
-			yValGetter
-		);
-		delegate.setIgnoreRangeAxisOutside( ignoreRangeOutside );
-		delegate.getLabels().setXY("Iteration", yAxisLabel);
-		delegate.setGraphColorScheme(graphColorScheme);
-		return delegate.create(itr, domainLimits, rangeLimits);
-	}
+    @Getter private boolean ignoreRangeOutside;
 
-	@Override
-	public String getTitle() {
-		return title;
-	}
+    @Getter private String[] seriesTitles;
 
-	@Override
-	public boolean isItemAccepted(IterAndExecutionTime item) {
-		return true;
-	}
-	
-	@Override
-	public String getShortTitle() {
-		return subTitle;
-	}
+    @Getter private YValGetter<IterAndExecutionTime> yValGetter;
 
-	public String[] getSeriesTitles() {
-		return seriesTitles;
-	}
+    public GraphDefinitionLineIterVsKernelExecutionTime(
+            String title,
+            String subTitle,
+            String yAxisLabel,
+            final YValGetter<IterAndExecutionTime> yValGetter,
+            boolean ignoreRangeOutside) {
+        this(title, subTitle, yAxisLabel, new String[] {subTitle}, yValGetter, ignoreRangeOutside);
+    }
 
-	public YValGetter<IterAndExecutionTime> getyValGetter() {
-		return yValGetter;
-	}
+    public GraphDefinitionLineIterVsKernelExecutionTime(
+            String title,
+            String subTitle,
+            String yAxisLabel,
+            String[] seriesTitles,
+            final YValGetter<IterAndExecutionTime> yValGetter,
+            boolean ignoreRangeOutside) {
 
-	public String getyAxisLabel() {
-		return yAxisLabel;
-	}
+        // We need to do this first, so that getTitle() will work
+        this.title = title;
+        this.subTitle = subTitle;
+        this.yAxisLabel = yAxisLabel;
+        this.seriesTitles = seriesTitles;
+        this.ignoreRangeOutside = ignoreRangeOutside;
+        this.yValGetter = yValGetter;
+    }
 
-	public boolean isIgnoreRangeOutside() {
-		return ignoreRangeOutside;
-	}
+    @Override
+    public GraphInstance create(
+            Iterator<IterAndExecutionTime> itr,
+            Optional<AxisLimits> domainLimits,
+            Optional<AxisLimits> rangeLimits)
+            throws CreateException {
+        LinePlot<IterAndExecutionTime> delegate =
+                new LinePlot<>(getTitle(), seriesTitles, yValGetter);
+        delegate.setIgnoreRangeAxisOutside(ignoreRangeOutside);
+        delegate.getLabels().setXY("Iteration", yAxisLabel);
+        delegate.setGraphColorScheme(graphColorScheme);
+        return delegate.create(itr, domainLimits, rangeLimits);
+    }
 
-	public GraphColorScheme getGraphColorScheme() {
-		return graphColorScheme;
-	}
+    @Override
+    public String getTitle() {
+        return title;
+    }
 
-	public void setGraphColorScheme(GraphColorScheme graphColorScheme) {
-		this.graphColorScheme = graphColorScheme;
-	}
+    @Override
+    public boolean isItemAccepted(IterAndExecutionTime item) {
+        return true;
+    }
 
+    @Override
+    public String getShortTitle() {
+        return subTitle;
+    }
 }

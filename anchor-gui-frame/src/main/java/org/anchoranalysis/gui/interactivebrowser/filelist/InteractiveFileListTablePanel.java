@@ -1,10 +1,8 @@
-package org.anchoranalysis.gui.interactivebrowser.filelist;
-
-/*
+/*-
  * #%L
- * anchor-gui
+ * anchor-gui-frame
  * %%
- * Copyright (C) 2016 ETH Zurich, University of Zurich, Owen Feehan
+ * Copyright (C) 2010 - 2020 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann-La Roche
  * %%
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -12,10 +10,10 @@ package org.anchoranalysis.gui.interactivebrowser.filelist;
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -26,68 +24,67 @@ package org.anchoranalysis.gui.interactivebrowser.filelist;
  * #L%
  */
 
+package org.anchoranalysis.gui.interactivebrowser.filelist;
 
 import java.awt.event.MouseListener;
-
 import javax.swing.JPanel;
 import javax.swing.TransferHandler;
 import javax.swing.border.Border;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableModel;
-
 import org.anchoranalysis.gui.cfgnrgtable.CellSelectedListener;
 import org.anchoranalysis.gui.cfgnrgtable.TablePanel;
 
 public class InteractiveFileListTablePanel {
 
-	private TablePanel delegate;
-	
-	public InteractiveFileListTablePanel( TableModel tableModel ) {
-		
-		delegate = new TablePanel("", tableModel, true);
-	}
+    private TablePanel delegate;
 
-	public JPanel getPanel() {
-		return delegate.getPanel();
-	}
-	
-	public void addRowDoubleClickListener(CellSelectedListener l) {
-		delegate.addRowDoubleClickListener(l);
-	}
+    public InteractiveFileListTablePanel(TableModel tableModel) {
 
-	public void removeRowDoubleClickListener(CellSelectedListener l) {
-		delegate.removeRowDoubleClickListener(l);
-	}
+        delegate = new TablePanel("", tableModel, true);
+    }
 
-	public void addMouseListener(MouseListener l) {
-		delegate.addMouseListener(l);
-	}
+    public JPanel getPanel() {
+        return delegate.getPanel();
+    }
 
-	public void setHeaderVisible(boolean visible) {
-		delegate.setHeaderVisible(visible);
-	}
+    public void addRowDoubleClickListener(CellSelectedListener l) {
+        delegate.addRowDoubleClickListener(l);
+    }
 
-	public void selectAll() {
-		delegate.selectAll();
-	}
+    public void removeRowDoubleClickListener(CellSelectedListener l) {
+        delegate.removeRowDoubleClickListener(l);
+    }
 
-	public void clearSelection() {
-		delegate.clearSelection();
-	}	
-	
-	public void setColumnWidth( int columnIndex, int width ) {
-		delegate.getTable().getColumnModel().getColumn(columnIndex).setPreferredWidth(width);
-	}
+    public void addMouseListener(MouseListener l) {
+        delegate.addMouseListener(l);
+    }
 
-	public void setColumnRenderer( int columnIndex, TableCellRenderer renderer ) {
-		delegate.getTable().getColumnModel().getColumn(columnIndex).setCellRenderer( renderer );
-	}
+    public void setHeaderVisible(boolean visible) {
+        delegate.setHeaderVisible(visible);
+    }
 
-	public void setBorder(Border border) {
-		delegate.setBorder(border);
-	}
+    public void selectAll() {
+        delegate.selectAll();
+    }
 
-	public void addTransferHandler(boolean dragEnabled, TransferHandler handler) {
-		delegate.addTransferHandler(dragEnabled, handler);
-	}
+    public void clearSelection() {
+        delegate.clearSelection();
+    }
+
+    public void setColumnWidth(int columnIndex, int width) {
+        delegate.getTable().getColumnModel().getColumn(columnIndex).setPreferredWidth(width);
+    }
+
+    public void setColumnRenderer(int columnIndex, TableCellRenderer renderer) {
+        delegate.getTable().getColumnModel().getColumn(columnIndex).setCellRenderer(renderer);
+    }
+
+    public void setBorder(Border border) {
+        delegate.setBorder(border);
+    }
+
+    public void addTransferHandler(boolean dragEnabled, TransferHandler handler) {
+        delegate.addTransferHandler(dragEnabled, handler);
+    }
 }

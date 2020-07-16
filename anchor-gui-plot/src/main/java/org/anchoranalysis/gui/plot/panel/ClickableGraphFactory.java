@@ -1,10 +1,8 @@
-package org.anchoranalysis.gui.plot.panel;
-
 /*-
  * #%L
  * anchor-gui-plot
  * %%
- * Copyright (C) 2010 - 2019 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann la Roche
+ * Copyright (C) 2010 - 2020 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann-La Roche
  * %%
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -12,10 +10,10 @@ package org.anchoranalysis.gui.plot.panel;
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -26,9 +24,10 @@ package org.anchoranalysis.gui.plot.panel;
  * #L%
  */
 
+package org.anchoranalysis.gui.plot.panel;
+
 import java.util.Iterator;
 import java.util.Optional;
-
 import org.anchoranalysis.anchor.plot.AxisLimits;
 import org.anchoranalysis.anchor.plot.GraphInstance;
 import org.anchoranalysis.anchor.plot.bean.GraphDefinition;
@@ -37,49 +36,32 @@ import org.jfree.data.general.Dataset;
 
 public class ClickableGraphFactory {
 
+    public static <T> ClickableGraphInstance create(
+            GraphDefinition<T> definition,
+            Iterator<T> items,
+            Optional<AxisLimits> domainLimits,
+            Optional<AxisLimits> rangeLimits)
+            throws CreateException {
+        GraphInstance instance = definition.create(items, domainLimits, rangeLimits);
+        return createWithXAxisIndex(instance, domainLimits);
+    }
 
-	/**
-	 * Creates an instance of a line graph can be listened to (if domainLimits are non-NULL)
-	 * 
-	 * @param <T> container-type
-	 * @param graphIndex
-	 * @param itr
-	 * @param domainLimits
-	 * @param rangeLimits
-	 * @return
-	 * @throws CreateException
-	 */
-	public static <T> ClickableGraphInstance create(
-		GraphDefinition<T> definition,
-		Iterator<T> items,
-		Optional<AxisLimits> domainLimits,
-		Optional<AxisLimits> rangeLimits
-	) throws CreateException {
-		GraphInstance instance = definition.create(items, domainLimits, rangeLimits);
-		return createWithXAxisIndex(instance, domainLimits);
-	}
+    private static <T, S extends Dataset> ClickableGraphInstance createWithXAxisIndex(
+            GraphInstance graphInstance, Optional<AxisLimits> domainLimits) throws CreateException {
 
-	private static <T,S extends Dataset> ClickableGraphInstance createWithXAxisIndex(
-		GraphInstance graphInstance,
-		Optional<AxisLimits> domainLimits
-	) throws CreateException {
-        
         ClickableGraphInstance gl = new ClickableGraphInstance(graphInstance);
-        
-        if (domainLimits.isPresent()) {
-	        gl.addXAxisIndexListener(
-	        	minAxis(domainLimits.get()),
-	        	maxAxis(domainLimits.get())
-	        );
-        }
-		return gl;
-	}
 
-	private static int minAxis( AxisLimits domainLimits ) {
-		return (int) domainLimits.getAxisMin();
-	}
-	
-	private static int maxAxis( AxisLimits domainLimits ) {
-		return (int) domainLimits.getAxisMax();
-	}
+        if (domainLimits.isPresent()) {
+            gl.addXAxisIndexListener(minAxis(domainLimits.get()), maxAxis(domainLimits.get()));
+        }
+        return gl;
+    }
+
+    private static int minAxis(AxisLimits domainLimits) {
+        return (int) domainLimits.getAxisMin();
+    }
+
+    private static int maxAxis(AxisLimits domainLimits) {
+        return (int) domainLimits.getAxisMax();
+    }
 }

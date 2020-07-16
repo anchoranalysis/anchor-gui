@@ -1,10 +1,8 @@
-package org.anchoranalysis.gui.annotation.builder;
-
 /*-
  * #%L
  * anchor-gui-annotation
  * %%
- * Copyright (C) 2010 - 2019 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann la Roche
+ * Copyright (C) 2010 - 2020 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann-La Roche
  * %%
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -12,10 +10,10 @@ package org.anchoranalysis.gui.annotation.builder;
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -26,6 +24,10 @@ package org.anchoranalysis.gui.annotation.builder;
  * #L%
  */
 
+package org.anchoranalysis.gui.annotation.builder;
+
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import org.anchoranalysis.annotation.io.bean.background.AnnotationBackgroundDefinition;
 import org.anchoranalysis.bean.shared.StringMap;
 import org.anchoranalysis.gui.annotation.AnnotationBackground;
@@ -34,37 +36,27 @@ import org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.definition.C
 import org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.definition.ChangeableBackgroundDefinitionMapped;
 import org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.definition.ChangeableBackgroundDefinitionSimple;
 
-import lombok.AccessLevel;
-import lombok.NoArgsConstructor;
-
-@NoArgsConstructor(access=AccessLevel.PRIVATE)
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 class BackgroundDefinitionCreator {
 
-	/**
-	 * Creates a changeable-background from an existing background and an AnnotationBackgroundDefinition
-	 * 
-	 * @param existingBackground current background to the annotation
-	 * @param abd defines how to construct set of multiple backgrounds to choose from
-	 * @return
-	 */
-	public static ChangeableBackgroundDefinition create( AnnotationBackground existingBackground, AnnotationBackgroundDefinition abd ) {
-		ChangeableBackgroundDefinition def = backgroundDefinition(existingBackground, abd.getBackgroundStackMap());
-		
-		if (!abd.getIgnoreContains().isEmpty()) {
-			return new ChangeableBackgroundDefinitionIgnoreContains(def, abd.getIgnoreContains());
-		} else {
-			return def;
-		}
-	}
-	
-	private static ChangeableBackgroundDefinition backgroundDefinition( AnnotationBackground background, StringMap map ) {
-		if (map!=null) {
-			return new ChangeableBackgroundDefinitionMapped(
-				background.getBackgroundSetOp(),
-				map
-			);
-		} else {
-			return new ChangeableBackgroundDefinitionSimple( background.getBackgroundSetOp() );
-		}
-	}
+    public static ChangeableBackgroundDefinition create(
+            AnnotationBackground existingBackground, AnnotationBackgroundDefinition abd) {
+        ChangeableBackgroundDefinition def =
+                backgroundDefinition(existingBackground, abd.getBackgroundStackMap());
+
+        if (!abd.getIgnoreContains().isEmpty()) {
+            return new ChangeableBackgroundDefinitionIgnoreContains(def, abd.getIgnoreContains());
+        } else {
+            return def;
+        }
+    }
+
+    private static ChangeableBackgroundDefinition backgroundDefinition(
+            AnnotationBackground background, StringMap map) {
+        if (map != null) {
+            return new ChangeableBackgroundDefinitionMapped(background.getBackgroundSetOp(), map);
+        } else {
+            return new ChangeableBackgroundDefinitionSimple(background.getBackgroundSetOp());
+        }
+    }
 }

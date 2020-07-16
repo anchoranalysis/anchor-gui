@@ -1,10 +1,8 @@
-package org.anchoranalysis.gui.interactivebrowser.openfile.type;
-
-/*
+/*-
  * #%L
- * anchor-gui
+ * anchor-plugin-gui-import
  * %%
- * Copyright (C) 2016 ETH Zurich, University of Zurich, Owen Feehan
+ * Copyright (C) 2010 - 2020 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann-La Roche
  * %%
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -12,10 +10,10 @@ package org.anchoranalysis.gui.interactivebrowser.openfile.type;
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -26,11 +24,11 @@ package org.anchoranalysis.gui.interactivebrowser.openfile.type;
  * #L%
  */
 
+package org.anchoranalysis.gui.interactivebrowser.openfile.type;
 
 import java.io.File;
 import java.util.List;
 import java.util.Optional;
-
 import org.anchoranalysis.bean.xml.BeanXmlLoader;
 import org.anchoranalysis.bean.xml.error.BeanXmlException;
 import org.anchoranalysis.core.error.CreateException;
@@ -38,38 +36,39 @@ import org.anchoranalysis.gui.bean.filecreator.FileCreator;
 import org.anchoranalysis.gui.interactivebrowser.openfile.importer.ImporterFromBean;
 import org.anchoranalysis.gui.interactivebrowser.openfile.importer.ImporterSettings;
 
-
 public class XMLBean extends OpenFileTypeSingle {
-	
-	@Override
-	public String[] getExtensions() {
-		return new String[] { "xml" };
-	}
 
-	@Override
-	public String getDescription() {
-		return "Bean XML File";		
-	}
+    @Override
+    public String[] getExtensions() {
+        return new String[] {"xml"};
+    }
 
-	@Override
-	protected Optional<FileCreator> creatorForSingleFile( File f, ImporterSettings importerSettings ) throws CreateException {
+    @Override
+    public String getDescription() {
+        return "Bean XML File";
+    }
 
-		try {
-			Object bean = BeanXmlLoader.loadBean( f.toPath() );
-			return importBean(bean, f, importerSettings.getBeanImporters());
-			
-		} catch (BeanXmlException e) {
-			throw new CreateException(e);
-		}		
-	}
+    @Override
+    protected Optional<FileCreator> creatorForSingleFile(File f, ImporterSettings importerSettings)
+            throws CreateException {
 
-	private static Optional<FileCreator> importBean( Object bean, File file, List<ImporterFromBean> creators ) throws CreateException {
-		for( ImporterFromBean creator : creators ) {
-			if (creator.isApplicable(bean)) {
-				return creator.create(bean, file);
-			}
-		}
-		
-		throw new CreateException("Bean type unsupported: " + bean.getClass().toGenericString() );
-	}
+        try {
+            Object bean = BeanXmlLoader.loadBean(f.toPath());
+            return importBean(bean, f, importerSettings.getBeanImporters());
+
+        } catch (BeanXmlException e) {
+            throw new CreateException(e);
+        }
+    }
+
+    private static Optional<FileCreator> importBean(
+            Object bean, File file, List<ImporterFromBean> creators) throws CreateException {
+        for (ImporterFromBean creator : creators) {
+            if (creator.isApplicable(bean)) {
+                return creator.create(bean, file);
+            }
+        }
+
+        throw new CreateException("Bean type unsupported: " + bean.getClass().toGenericString());
+    }
 }

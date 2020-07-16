@@ -1,10 +1,8 @@
-package org.anchoranalysis.gui.container.background;
-
 /*-
  * #%L
  * anchor-gui-common
  * %%
- * Copyright (C) 2010 - 2019 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann la Roche
+ * Copyright (C) 2010 - 2020 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann-La Roche
  * %%
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -12,10 +10,10 @@ package org.anchoranalysis.gui.container.background;
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -25,6 +23,8 @@ package org.anchoranalysis.gui.container.background;
  * THE SOFTWARE.
  * #L%
  */
+
+package org.anchoranalysis.gui.container.background;
 
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.InitException;
@@ -41,205 +41,197 @@ import org.anchoranalysis.image.voxel.datatype.VoxelDataTypeUnsignedByte;
 
 public class CombineRGBBoundedIndexContainer implements BoundedIndexContainer<DisplayStack> {
 
-	private BoundedIndexContainer<DisplayStack> red;
-	private BoundedIndexContainer<DisplayStack> blue;
-	private BoundedIndexContainer<DisplayStack> green;
-	
-	private int min;
-	private int max;
-	
-	private ImageDimensions dim;
-	
-	// We assume we will never have an index above this number
-	private static int MAX_NEVER_REACHED = 1000000;
-	
-	private void setDimensionsIfNeeded( BoundedIndexContainer<DisplayStack> cntr ) throws GetOperationFailedException {
-		if (cntr!=null && dim==null) {
-			dim = cntr.get( cntr.getMinimumIndex()).getDimensions();
-		}
-	}
-	
-	public void init() throws InitException {
-		
-		assert( red!=null || green!=null || blue!=null );
-		
-		// We calculate minimum of the three channels
-		try {
-		
-			min = MAX_NEVER_REACHED;
-			max = 0;
-			
-			if (red!=null) {
-				min = Math.min(min, red.getMinimumIndex());
-				max = Math.max(max, red.getMaximumIndex());
-				setDimensionsIfNeeded(red);
-			} 
-	
-			if (green!=null) {
-				min = Math.min(min, green.getMinimumIndex());
-				max = Math.max(max, green.getMaximumIndex());
-				setDimensionsIfNeeded(green);
-			}
-			
-			if (blue!=null) {
-				min = Math.min(min, blue.getMinimumIndex());
-				max = Math.max(max, blue.getMaximumIndex());
-				setDimensionsIfNeeded(blue);
-			}
-	
-		} catch (GetOperationFailedException e) {
-			throw new InitException(e);
-		}
-	}
-	
-	// GETTERS AND SETTERS
-	
-	public BoundedIndexContainer<DisplayStack> getRed() {
-		return red;
-	}
+    private BoundedIndexContainer<DisplayStack> red;
+    private BoundedIndexContainer<DisplayStack> blue;
+    private BoundedIndexContainer<DisplayStack> green;
 
-	public void setRed(BoundedIndexContainer<DisplayStack> red) {
-		this.red = red;
-	}
+    private int min;
+    private int max;
 
-	public BoundedIndexContainer<DisplayStack> getBlue() {
-		return blue;
-	}
+    private ImageDimensions dimensions;
 
-	public void setBlue(BoundedIndexContainer<DisplayStack> blue) {
-		this.blue = blue;
-	}
+    // We assume we will never have an index above this number
+    private static int MAX_NEVER_REACHED = 1000000;
 
-	public BoundedIndexContainer<DisplayStack> getGreen() {
-		return green;
-	}
+    private void setDimensionsIfNeeded(BoundedIndexContainer<DisplayStack> cntr)
+            throws GetOperationFailedException {
+        if (cntr != null && dimensions == null) {
+            dimensions = cntr.get(cntr.getMinimumIndex()).getDimensions();
+        }
+    }
 
-	public void setGreen(BoundedIndexContainer<DisplayStack> green) {
-		this.green = green;
-	}
+    public void init() throws InitException {
 
+        assert (red != null || green != null || blue != null);
 
+        // We calculate minimum of the three channels
+        try {
 
-	@Override
-	public void addBoundChangeListener(BoundChangeListener cl) {
-		// WE ASSUME BOUNDS don't change		
-	}
+            min = MAX_NEVER_REACHED;
+            max = 0;
 
+            if (red != null) {
+                min = Math.min(min, red.getMinimumIndex());
+                max = Math.max(max, red.getMaximumIndex());
+                setDimensionsIfNeeded(red);
+            }
 
+            if (green != null) {
+                min = Math.min(min, green.getMinimumIndex());
+                max = Math.max(max, green.getMaximumIndex());
+                setDimensionsIfNeeded(green);
+            }
 
-	@Override
-	public int nextIndex(int index) {
-		
-		// We find the previousEqual of each cntr, and take the highest
-		int indexOut = MAX_NEVER_REACHED;
-		
-		if( red!=null) {
-			indexOut = Math.min( indexOut, red.nextIndex(index) );
-		}
-		
-		if( green!=null) {
-			indexOut = Math.min( indexOut, green.nextIndex(index) );
-		}
-		
-		if( blue!=null) {
-			indexOut = Math.min( indexOut, blue.nextIndex(index) );
-		}
-		
-		return indexOut;
-	}
+            if (blue != null) {
+                min = Math.min(min, blue.getMinimumIndex());
+                max = Math.max(max, blue.getMaximumIndex());
+                setDimensionsIfNeeded(blue);
+            }
 
+        } catch (GetOperationFailedException e) {
+            throw new InitException(e);
+        }
+    }
 
+    // GETTERS AND SETTERS
 
-	@Override
-	public int previousIndex(int index) {
+    public BoundedIndexContainer<DisplayStack> getRed() {
+        return red;
+    }
 
-		// We find the previousEqual of each cntr, and take the highest
-		int indexOut = 0;
-		
-		if( red!=null) {
-			indexOut = Math.max( indexOut, red.previousIndex(index) );
-		}
-		
-		if( green!=null) {
-			indexOut = Math.max( indexOut, green.previousIndex(index) );
-		}
-		
-		if( blue!=null) {
-			indexOut = Math.max( indexOut, blue.previousIndex(index) );
-		}
-		
-		return indexOut;
-	}
+    public void setRed(BoundedIndexContainer<DisplayStack> red) {
+        this.red = red;
+    }
 
+    public BoundedIndexContainer<DisplayStack> getBlue() {
+        return blue;
+    }
 
+    public void setBlue(BoundedIndexContainer<DisplayStack> blue) {
+        this.blue = blue;
+    }
 
-	@Override
-	public int previousEqualIndex(int index) {
-		
-		// We find the previousEqual of each cntr, and take the highest
-		int indexOut = 0;
-		
-		if( red!=null) {
-			indexOut = Math.max( indexOut, red.previousEqualIndex(index) );
-		}
-		
-		if( green!=null) {
-			indexOut = Math.max( indexOut, green.previousEqualIndex(index) );
-		}
-		
-		if( blue!=null) {
-			indexOut = Math.max( indexOut, blue.previousEqualIndex(index) );
-		}
-		
-		return indexOut;
-	}
+    public BoundedIndexContainer<DisplayStack> getGreen() {
+        return green;
+    }
 
+    public void setGreen(BoundedIndexContainer<DisplayStack> green) {
+        this.green = green;
+    }
 
+    @Override
+    public void addBoundChangeListener(BoundChangeListener cl) {
+        // WE ASSUME BOUNDS don't change
+    }
 
-	@Override
-	public int getMinimumIndex() {
-		return min;
-	}
+    @Override
+    public int nextIndex(int index) {
 
+        // We find the previousEqual of each cntr, and take the highest
+        int indexOut = MAX_NEVER_REACHED;
 
+        if (red != null) {
+            indexOut = Math.min(indexOut, red.nextIndex(index));
+        }
 
-	@Override
-	public int getMaximumIndex() {
-		return max;
-	}
+        if (green != null) {
+            indexOut = Math.min(indexOut, green.nextIndex(index));
+        }
 
+        if (blue != null) {
+            indexOut = Math.min(indexOut, blue.nextIndex(index));
+        }
 
-	private void addChnlToStack(Stack stackNew, BoundedIndexContainer<DisplayStack> cntr, int index ) throws GetOperationFailedException {
-		
-		try {
-			if (cntr!=null) {
-				stackNew.addChnl( cntr.get( cntr.previousEqualIndex(index) ).createChnl(0, false) );
-			} else {
-				// TODO, why do we create an empty initialised here
-				assert(dim!=null);
-				Channel chnlNew = ChannelFactory.instance().createEmptyInitialised(dim, VoxelDataTypeUnsignedByte.INSTANCE);
-				stackNew.addChnl( chnlNew );
-			}
-		} catch (IncorrectImageSizeException e) {
-			throw new GetOperationFailedException(e);
-		}
-	}
-	
-	@Override
-	public DisplayStack get(int index) throws GetOperationFailedException {
-		
-		// We create a new image composed of the first channel from each of the underlying containers
-		Stack stackNew = new Stack();
-		
-		addChnlToStack( stackNew, red, index );
-		addChnlToStack( stackNew, green, index );
-		addChnlToStack( stackNew, blue, index );
-		
-		try {
-			return DisplayStack.create( stackNew );
-		} catch (CreateException e) {
-			throw new GetOperationFailedException(e);
-		}
-	}
+        return indexOut;
+    }
 
+    @Override
+    public int previousIndex(int index) {
+
+        // We find the previousEqual of each cntr, and take the highest
+        int indexOut = 0;
+
+        if (red != null) {
+            indexOut = Math.max(indexOut, red.previousIndex(index));
+        }
+
+        if (green != null) {
+            indexOut = Math.max(indexOut, green.previousIndex(index));
+        }
+
+        if (blue != null) {
+            indexOut = Math.max(indexOut, blue.previousIndex(index));
+        }
+
+        return indexOut;
+    }
+
+    @Override
+    public int previousEqualIndex(int index) {
+
+        // We find the previousEqual of each cntr, and take the highest
+        int indexOut = 0;
+
+        if (red != null) {
+            indexOut = Math.max(indexOut, red.previousEqualIndex(index));
+        }
+
+        if (green != null) {
+            indexOut = Math.max(indexOut, green.previousEqualIndex(index));
+        }
+
+        if (blue != null) {
+            indexOut = Math.max(indexOut, blue.previousEqualIndex(index));
+        }
+
+        return indexOut;
+    }
+
+    @Override
+    public int getMinimumIndex() {
+        return min;
+    }
+
+    @Override
+    public int getMaximumIndex() {
+        return max;
+    }
+
+    private void addChnlToStack(Stack stackNew, BoundedIndexContainer<DisplayStack> cntr, int index)
+            throws GetOperationFailedException {
+
+        try {
+            if (cntr != null) {
+                stackNew.addChnl(cntr.get(cntr.previousEqualIndex(index)).createChnl(0, false));
+            } else {
+                // TODO, why do we create an empty initialised here
+                assert (dimensions != null);
+                Channel chnlNew =
+                        ChannelFactory.instance()
+                                .createEmptyInitialised(
+                                        dimensions, VoxelDataTypeUnsignedByte.INSTANCE);
+                stackNew.addChnl(chnlNew);
+            }
+        } catch (IncorrectImageSizeException e) {
+            throw new GetOperationFailedException(e);
+        }
+    }
+
+    @Override
+    public DisplayStack get(int index) throws GetOperationFailedException {
+
+        // We create a new image composed of the first channel from each of the underlying
+        // containers
+        Stack stackNew = new Stack();
+
+        addChnlToStack(stackNew, red, index);
+        addChnlToStack(stackNew, green, index);
+        addChnlToStack(stackNew, blue, index);
+
+        try {
+            return DisplayStack.create(stackNew);
+        } catch (CreateException e) {
+            throw new GetOperationFailedException(e);
+        }
+    }
 }

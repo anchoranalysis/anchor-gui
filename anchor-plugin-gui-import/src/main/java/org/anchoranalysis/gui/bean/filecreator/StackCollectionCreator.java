@@ -1,10 +1,8 @@
-package org.anchoranalysis.gui.bean.filecreator;
-
-/*
+/*-
  * #%L
- * anchor-gui
+ * anchor-plugin-gui-import
  * %%
- * Copyright (C) 2016 ETH Zurich, University of Zurich, Owen Feehan
+ * Copyright (C) 2010 - 2020 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann-La Roche
  * %%
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -12,10 +10,10 @@ package org.anchoranalysis.gui.bean.filecreator;
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -26,10 +24,12 @@ package org.anchoranalysis.gui.bean.filecreator;
  * #L%
  */
 
+package org.anchoranalysis.gui.bean.filecreator;
 
 import java.util.Iterator;
 import java.util.List;
-
+import lombok.Getter;
+import lombok.Setter;
 import org.anchoranalysis.bean.annotation.BeanField;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.progress.ProgressReporter;
@@ -43,55 +43,47 @@ import org.anchoranalysis.plugin.io.bean.input.stack.StackSequenceInput;
 // A named channel collection derived from a file
 public class StackCollectionCreator extends FileCreatorGeneralList {
 
-	// START BEAN PROPERTIES
-	@BeanField
-	private InputManager<StackSequenceInput> input;
-	// END BEAN PROPERTIES
-	
-	@Override
-	public void addFilesToList(List<InteractiveFile> listFiles,
-			FileCreatorParams params, ProgressReporter progressReporter) throws OperationFailedException {
-		
-		try {
-			Iterator<StackSequenceInput> itr = input.inputObjects(
-				new InputManagerParams(
-					params.createInputContext(),
-					progressReporter,
-					params.getLogErrorReporter()
-				)
-			).iterator();
-			
-			while ( itr.hasNext() ) {
-			
-				StackSequenceInput obj = itr.next();	
-				
-				FileStackCollection file = new FileStackCollection(
-					obj,
-					params.getMarkCreatorParams()
-				);
-				listFiles.add(file);
-			}
-			
-		} catch (AnchorIOException e) {
-			throw new OperationFailedException(e);
-		}
-	}
+    // START BEAN PROPERTIES
+    @BeanField @Getter @Setter private InputManager<StackSequenceInput> input;
+    // END BEAN PROPERTIES
 
-	@Override
-	public String suggestName() {
-				
-		if (hasCustomName()) {
-			return getCustomName();
-		}
-		
-		return "untitled raster set";
-	}
+    @Override
+    public void addFilesToList(
+            List<InteractiveFile> listFiles,
+            FileCreatorParams params,
+            ProgressReporter progressReporter)
+            throws OperationFailedException {
 
-	public InputManager<StackSequenceInput> getInput() {
-		return input;
-	}
+        try {
+            Iterator<StackSequenceInput> itr =
+                    input.inputObjects(
+                                    new InputManagerParams(
+                                            params.createInputContext(),
+                                            progressReporter,
+                                            params.getLogErrorReporter()))
+                            .iterator();
 
-	public void setInput(InputManager<StackSequenceInput> input) {
-		this.input = input;
-	}
+            while (itr.hasNext()) {
+
+                StackSequenceInput obj = itr.next();
+
+                FileStackCollection file =
+                        new FileStackCollection(obj, params.getMarkCreatorParams());
+                listFiles.add(file);
+            }
+
+        } catch (AnchorIOException e) {
+            throw new OperationFailedException(e);
+        }
+    }
+
+    @Override
+    public String suggestName() {
+
+        if (hasCustomName()) {
+            return getCustomName();
+        }
+
+        return "untitled raster set";
+    }
 }
