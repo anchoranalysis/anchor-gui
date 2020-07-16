@@ -207,7 +207,7 @@ public class ImageCanvas {
 	
 	// if absCoord out listener returns the absolute coordinates
 	public void addMouseMotionListener(MouseMotionListener l, boolean absCoord ) {
-		// We use our own listeners, which instead use co-ordinates which take account of the zoom factor
+		// We use our own listeners, which instead use coordinates which take account of the zoom factor
 		if (absCoord) {
 			imageCanvas.addMouseMotionListener(l);
 		} else {
@@ -216,7 +216,7 @@ public class ImageCanvas {
 	}
 	
 	public void addMouseListener(MouseListener l, boolean absCoord) {
-		// We use our own listeners, which instead use co-ordinates which take account of the zoom factor
+		// We use our own listeners, which instead use coordinates which take account of the zoom factor
 		if (absCoord) {
 			imageCanvas.addMouseListener(l);	
 		} else {

@@ -74,8 +74,8 @@ public class DisplayUpdate {
 		return new DisplayUpdate( null, null );
 	}
 
-	// Note that the bounding boxes are always in the original image co-ordinates, not the
-	//   co-ordinates of the zoomed displays
+	// Note that the bounding boxes are always in the original image coordinates, not the
+	//   coordinates of the zoomed displays
 	public List<BoundingBox> getRedrawParts() {
 		return redrawParts;
 	}

@@ -71,7 +71,7 @@ class ImageCanvasSwing extends JPanel{
     	return image!=null; 
     }
     
-    // Imposes an image at particular X and Y co-ordinates within the image
+    // Imposes an image at particular X and Y coordinates within the image
     public void updatePart( BufferedImage subImage, int x, int y) {
    	
     	assert ((x + subImage.getWidth())<=dimension.getWidth() );

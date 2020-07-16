@@ -161,7 +161,7 @@ public class ZoomScale {
 		);
 	}
 	
-	// Resolves a value expressed in scaled co-ordinates into image-ocordinates
+	// Resolves a value expressed in scaled coordinates into image-ocordinates
 	public int removeScale( int val ) {
 		return (int) (val/scale);
 	}
