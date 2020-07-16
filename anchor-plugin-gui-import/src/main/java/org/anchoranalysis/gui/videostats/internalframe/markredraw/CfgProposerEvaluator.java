@@ -104,7 +104,7 @@ public class CfgProposerEvaluator implements ProposalOperationCreator {
 		ColorList colorList = new ColorList();
 		colorList.add( new RGBColor(Color.BLUE) );		//  0 is the mark added
 		colorList.add( new RGBColor(Color.RED) );		//  1 is any debug marks
-		colorList.add( new RGBColor(Color.GREEN) );		//  2 centre point
+		colorList.add( new RGBColor(Color.GREEN) );		//  2 center point
 		colorList.add( new RGBColor(Color.YELLOW) );
 		return colorList;
 	}
