@@ -1,6 +1,9 @@
 /* (C)2020 */
 package org.anchoranalysis.gui.bean.filecreator;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.anchoranalysis.annotation.io.bean.input.AnnotationInputManager;
 import org.anchoranalysis.bean.annotation.BeanField;
 import org.anchoranalysis.core.error.InitException;
@@ -15,20 +18,18 @@ import org.anchoranalysis.gui.videostats.module.VideoStatsModuleCreateException;
 import org.anchoranalysis.image.io.input.ProvidesStackInput;
 
 // A named channel collection derived from a file
+@NoArgsConstructor
 public class AnnotationCreator extends FileCreator {
 
-    private int weightWidthDescription;
-
-    public AnnotationCreator(int weightWidthDescription) {
-        super();
-        this.weightWidthDescription = weightWidthDescription;
-    }
-
     // START BEAN PROPERTIES
-    @BeanField private AnnotationInputManager<ProvidesStackInput, ?> input;
+    private int weightWidthDescription = 0;
+
+    @BeanField @Getter @Setter private AnnotationInputManager<ProvidesStackInput, ?> input;
     // END BEAN PROPERTIES
 
-    // private static Log log = LogFactory.getLog(NamedChnlCollectionCreator.class);
+    public AnnotationCreator(int weightWidthDescription) {
+        this.weightWidthDescription = weightWidthDescription;
+    }
 
     @Override
     public VideoStatsModule createModule(
@@ -65,13 +66,5 @@ public class AnnotationCreator extends FileCreator {
         }
 
         return "untitled raster set";
-    }
-
-    public AnnotationInputManager<ProvidesStackInput, ?> getInput() {
-        return input;
-    }
-
-    public void setInput(AnnotationInputManager<ProvidesStackInput, ?> input) {
-        this.input = input;
     }
 }

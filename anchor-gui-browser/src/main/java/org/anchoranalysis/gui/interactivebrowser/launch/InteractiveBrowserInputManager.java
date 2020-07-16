@@ -3,6 +3,8 @@ package org.anchoranalysis.gui.interactivebrowser.launch;
 
 import java.util.ArrayList;
 import java.util.List;
+import lombok.Getter;
+import lombok.Setter;
 import org.anchoranalysis.anchor.mpp.feature.bean.mark.MarkEvaluator;
 import org.anchoranalysis.anchor.mpp.feature.bean.nrgscheme.NRGSchemeCreator;
 import org.anchoranalysis.bean.NamedBean;
@@ -24,27 +26,27 @@ import org.anchoranalysis.io.error.AnchorIOException;
 public class InteractiveBrowserInputManager extends InputManager<InteractiveBrowserInput> {
 
     // START BEAN PROPERTIES
-    @BeanField private List<FileCreator> listFileCreators = new ArrayList<>();
+    @BeanField @Getter @Setter private List<FileCreator> listFileCreators = new ArrayList<>();
 
-    @BeanField @DefaultInstance private RasterReader rasterReader;
+    @BeanField @DefaultInstance @Getter @Setter private RasterReader rasterReader;
 
-    @BeanField @OptionalBean private NRGSchemeCreator nrgSchemeCreator;
+    @BeanField @OptionalBean @Getter @Setter private NRGSchemeCreator nrgSchemeCreator;
 
-    @BeanField
+    @BeanField @Getter @Setter
     private List<NamedBean<FeatureListProvider<FeatureInput>>> namedItemSharedFeatureList =
             new ArrayList<>();
 
-    @BeanField
+    @BeanField @Getter @Setter
     private List<NamedBean<MarkEvaluator>> namedItemMarkEvaluatorList = new ArrayList<>();
 
-    @BeanField @OptionalBean
+    @BeanField @OptionalBean @Getter @Setter
     private List<NamedBean<KeyValueParamsProvider>> namedItemKeyValueParamsProviderList =
             new ArrayList<>();
 
-    @BeanField @OptionalBean
+    @BeanField @OptionalBean @Getter @Setter
     private List<NamedBean<FilePathProvider>> namedItemFilePathProviderList = new ArrayList<>();
 
-    @BeanField private ImporterSettings importerSettings;
+    @BeanField @Getter @Setter private ImporterSettings importerSettings;
     // END BEAN PROPERTIES
 
     @Override
@@ -64,77 +66,9 @@ public class InteractiveBrowserInputManager extends InputManager<InteractiveBrow
         return singletonList(ibi);
     }
 
-    public RasterReader getRasterReader() {
-        return rasterReader;
-    }
-
-    public void setRasterReader(RasterReader rasterReader) {
-        this.rasterReader = rasterReader;
-    }
-
-    public List<FileCreator> getListFileCreators() {
-        return listFileCreators;
-    }
-
-    public void setListFileCreators(List<FileCreator> listFileCreators) {
-        this.listFileCreators = listFileCreators;
-    }
-
-    public NRGSchemeCreator getNrgSchemeCreator() {
-        return nrgSchemeCreator;
-    }
-
-    public void setNrgSchemeCreator(NRGSchemeCreator nrgSchemeCreator) {
-        this.nrgSchemeCreator = nrgSchemeCreator;
-    }
-
-    public List<NamedBean<FeatureListProvider<FeatureInput>>> getNamedItemSharedFeatureList() {
-        return namedItemSharedFeatureList;
-    }
-
-    public void setNamedItemSharedFeatureList(
-            List<NamedBean<FeatureListProvider<FeatureInput>>> namedItemSharedFeatureList) {
-        this.namedItemSharedFeatureList = namedItemSharedFeatureList;
-    }
-
-    public List<NamedBean<MarkEvaluator>> getNamedItemMarkEvaluatorList() {
-        return namedItemMarkEvaluatorList;
-    }
-
-    public void setNamedItemMarkEvaluatorList(
-            List<NamedBean<MarkEvaluator>> namedItemMarkEvaluatorList) {
-        this.namedItemMarkEvaluatorList = namedItemMarkEvaluatorList;
-    }
-
-    public List<NamedBean<KeyValueParamsProvider>> getNamedItemKeyValueParamsProviderList() {
-        return namedItemKeyValueParamsProviderList;
-    }
-
-    public void setNamedItemKeyValueParamsProviderList(
-            List<NamedBean<KeyValueParamsProvider>> namedItemKeyValueParamsProviderList) {
-        this.namedItemKeyValueParamsProviderList = namedItemKeyValueParamsProviderList;
-    }
-
-    public List<NamedBean<FilePathProvider>> getNamedItemFilePathProviderList() {
-        return namedItemFilePathProviderList;
-    }
-
-    public void setNamedItemFilePathProviderList(
-            List<NamedBean<FilePathProvider>> namedItemFilePathProviderList) {
-        this.namedItemFilePathProviderList = namedItemFilePathProviderList;
-    }
-
     private static <T> List<T> singletonList(T elem) {
         List<T> singletonList = new ArrayList<>();
         singletonList.add(elem);
         return singletonList;
-    }
-
-    public ImporterSettings getImporterSettings() {
-        return importerSettings;
-    }
-
-    public void setImporterSettings(ImporterSettings importerSettings) {
-        this.importerSettings = importerSettings;
     }
 }

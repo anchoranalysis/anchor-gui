@@ -1,6 +1,8 @@
 /* (C)2020 */
 package org.anchoranalysis.plugin.gui.bean.exporttask;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.anchoranalysis.bean.annotation.BeanField;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.gui.bean.exporttask.ExportTaskParams;
@@ -12,9 +14,9 @@ import org.anchoranalysis.plugin.gui.bean.createrastergenerator.CreateRasterGene
 public class DemuxDualState<T> extends CreateRasterGenerator<DualStateWithoutIndex<T>> {
 
     // START BEAN PROPERTIES
-    @BeanField private int index = 0;
+    @BeanField @Getter @Setter private int index = 0;
 
-    @BeanField private CreateRasterGenerator<T> item;
+    @BeanField @Getter @Setter private CreateRasterGenerator<T> item;
     // END BEAN PROPERTIES
 
     private T demux(DualStateWithoutIndex<T> in) {
@@ -38,21 +40,5 @@ public class DemuxDualState<T> extends CreateRasterGenerator<DualStateWithoutInd
     @Override
     public boolean hasNecessaryParams(ExportTaskParams params) {
         return true;
-    }
-
-    public CreateRasterGenerator<T> getItem() {
-        return item;
-    }
-
-    public void setItem(CreateRasterGenerator<T> item) {
-        this.item = item;
-    }
-
-    public int getIndex() {
-        return index;
-    }
-
-    public void setIndex(int index) {
-        this.index = index;
     }
 }

@@ -3,6 +3,8 @@ package org.anchoranalysis.gui.bean.filecreator;
 
 import java.util.Iterator;
 import java.util.List;
+import lombok.Getter;
+import lombok.Setter;
 import org.anchoranalysis.bean.annotation.BeanField;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.progress.ProgressReporter;
@@ -17,7 +19,7 @@ import org.anchoranalysis.io.error.AnchorIOException;
 public class NamedSingleStackCreator extends FileCreatorGeneralList {
 
     // START BEAN PROPERTIES
-    @BeanField private InputManager<? extends ProvidesStackInput> input;
+    @BeanField @Getter @Setter private InputManager<? extends ProvidesStackInput> input;
     // END BEAN PROPERTIES
 
     @Override
@@ -58,13 +60,5 @@ public class NamedSingleStackCreator extends FileCreatorGeneralList {
         }
 
         return "untitled raster set";
-    }
-
-    public InputManager<? extends ProvidesStackInput> getInput() {
-        return input;
-    }
-
-    public void setInput(InputManager<? extends ProvidesStackInput> input) {
-        this.input = input;
     }
 }

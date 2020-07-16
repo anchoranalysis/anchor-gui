@@ -89,7 +89,7 @@ class MDIDesktopManager extends DefaultDesktopManager {
         Insets scrollInsets = getScrollPaneInsets();
 
         if (scrollPane != null) {
-            JInternalFrame allFrames[] = desktop.getAllFrames();
+            JInternalFrame[] allFrames = desktop.getAllFrames();
 
             for (int i = 0; i < allFrames.length; i++) {
                 if (allFrames[i].getX() + allFrames[i].getWidth() > x) {

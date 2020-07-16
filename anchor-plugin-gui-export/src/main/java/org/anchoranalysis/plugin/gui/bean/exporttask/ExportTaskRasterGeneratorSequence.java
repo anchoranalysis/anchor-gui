@@ -1,6 +1,8 @@
 /* (C)2020 */
 package org.anchoranalysis.plugin.gui.bean.exporttask;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.anchoranalysis.bean.annotation.BeanField;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.gui.bean.exporttask.ExportTaskBean;
@@ -13,12 +15,12 @@ import org.anchoranalysis.plugin.gui.bean.createrastergenerator.CreateRasterGene
 public abstract class ExportTaskRasterGeneratorSequence<T> extends ExportTaskBean {
 
     // START BEAN PARAMETERS
-    @BeanField
+    @BeanField @Getter @Setter
     private GeneratorSequenceFactory sequenceFactory = new SubfolderGeneratorSequenceFactory();
 
-    @BeanField private CreateRasterGenerator<T> createRasterGenerator;
+    @BeanField @Getter @Setter private CreateRasterGenerator<T> createRasterGenerator;
 
-    @BeanField private String outputName = "defaultOutputName";
+    @BeanField @Setter private String outputName = "defaultOutputName";
     // END BEAN PARAMETERS
 
     @Override
@@ -36,28 +38,8 @@ public abstract class ExportTaskRasterGeneratorSequence<T> extends ExportTaskBea
                         getCreateRasterGenerator().createGenerator(params));
     }
 
-    public GeneratorSequenceFactory getSequenceFactory() {
-        return sequenceFactory;
-    }
-
-    public void setSequenceFactory(GeneratorSequenceFactory sequenceFactory) {
-        this.sequenceFactory = sequenceFactory;
-    }
-
-    public CreateRasterGenerator<T> getCreateRasterGenerator() {
-        return createRasterGenerator;
-    }
-
-    public void setCreateRasterGenerator(CreateRasterGenerator<T> createRasterGenerator) {
-        this.createRasterGenerator = createRasterGenerator;
-    }
-
     @Override
     public String getOutputName() {
         return outputName;
-    }
-
-    public void setOutputName(String outputName) {
-        this.outputName = outputName;
     }
 }

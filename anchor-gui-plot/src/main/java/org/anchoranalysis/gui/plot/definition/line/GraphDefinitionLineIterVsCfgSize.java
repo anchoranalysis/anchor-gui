@@ -3,6 +3,10 @@ package org.anchoranalysis.gui.plot.definition.line;
 
 import java.util.Iterator;
 import java.util.Optional;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.anchoranalysis.anchor.plot.AxisLimits;
 import org.anchoranalysis.anchor.plot.GraphInstance;
 import org.anchoranalysis.anchor.plot.bean.GraphDefinition;
@@ -16,41 +20,20 @@ public class GraphDefinitionLineIterVsCfgSize
         extends GraphDefinition<GraphDefinitionLineIterVsCfgSize.Item> {
 
     // START BEAN PROPERITES
-    @BeanField private GraphColorScheme graphColorScheme = new GraphColorScheme();
+    @BeanField @Getter @Setter private GraphColorScheme graphColorScheme = new GraphColorScheme();
     // END BEAN PROPERTIES
 
     // Item
+    @NoArgsConstructor
+    @AllArgsConstructor
     public static class Item implements IIndexGetter {
         private int iter;
-        private double cfgSize;
 
-        public Item() {}
-
-        public Item(int iter, double cfgSize) {
-            super();
-            this.iter = iter;
-            this.cfgSize = cfgSize;
-        }
-
-        public int getIter() {
-            return iter;
-        }
-
-        public void setIter(int iter) {
-            this.iter = iter;
-        }
+        @Getter private double cfgSize;
 
         @Override
         public int getIndex() {
             return iter;
-        }
-
-        public double getCfgSize() {
-            return cfgSize;
-        }
-
-        public void setCfgSize(double cfgSize) {
-            this.cfgSize = cfgSize;
         }
     }
 
@@ -83,13 +66,5 @@ public class GraphDefinitionLineIterVsCfgSize
     @Override
     public String getShortTitle() {
         return getTitle();
-    }
-
-    public GraphColorScheme getGraphColorScheme() {
-        return graphColorScheme;
-    }
-
-    public void setGraphColorScheme(GraphColorScheme graphColorScheme) {
-        this.graphColorScheme = graphColorScheme;
     }
 }

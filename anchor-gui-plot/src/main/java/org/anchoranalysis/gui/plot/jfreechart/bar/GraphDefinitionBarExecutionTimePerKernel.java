@@ -2,12 +2,11 @@
 package org.anchoranalysis.gui.plot.jfreechart.bar;
 
 import org.anchoranalysis.anchor.mpp.plot.execution.KernelExecutionTime;
-import org.anchoranalysis.core.error.InitException;
 
 public class GraphDefinitionBarExecutionTimePerKernel
         extends GraphDefinitionBarKernelExecutionTime {
 
-    public GraphDefinitionBarExecutionTimePerKernel(final String title) throws InitException {
+    public GraphDefinitionBarExecutionTimePerKernel(final String title) {
 
         super(
                 title,

@@ -4,6 +4,8 @@ package org.anchoranalysis.gui.bean.filecreator;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import lombok.Getter;
+import lombok.Setter;
 import org.anchoranalysis.anchor.mpp.feature.nrg.scheme.NRGScheme;
 import org.anchoranalysis.bean.annotation.BeanField;
 import org.anchoranalysis.core.error.OperationFailedException;
@@ -22,19 +24,10 @@ import org.anchoranalysis.plugin.io.manifest.ManifestCouplingDefinition;
 public class ExecutedExperimentFileCreator extends FileCreatorGeneralList {
 
     // START BEANS
-    @BeanField private CoupledManifestsInputManager coupledManifestsInputManager;
+    @BeanField @Getter @Setter private CoupledManifestsInputManager coupledManifestsInputManager;
     // END BEANS
 
     private List<String> experimentNames;
-
-    public CoupledManifestsInputManager getCoupledManifestsInputManager() {
-        return coupledManifestsInputManager;
-    }
-
-    public void setCoupledManifestsInputManager(
-            CoupledManifestsInputManager coupledManifestsInputManager) {
-        this.coupledManifestsInputManager = coupledManifestsInputManager;
-    }
 
     @Override
     public void addFilesToList(

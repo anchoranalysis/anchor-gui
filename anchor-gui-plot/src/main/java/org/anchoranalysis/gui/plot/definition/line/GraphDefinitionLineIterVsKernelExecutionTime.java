@@ -3,6 +3,8 @@ package org.anchoranalysis.gui.plot.definition.line;
 
 import java.util.Iterator;
 import java.util.Optional;
+import lombok.Getter;
+import lombok.Setter;
 import org.anchoranalysis.anchor.plot.AxisLimits;
 import org.anchoranalysis.anchor.plot.GraphInstance;
 import org.anchoranalysis.anchor.plot.bean.GraphDefinition;
@@ -17,15 +19,19 @@ public class GraphDefinitionLineIterVsKernelExecutionTime
         extends GraphDefinition<IterAndExecutionTime> {
 
     // START BEAN PROPERITES
-    @BeanField private GraphColorScheme graphColorScheme = new GraphColorScheme();
+    @BeanField @Getter @Setter private GraphColorScheme graphColorScheme = new GraphColorScheme();
     // END BEAN PROPERTIES
 
     private String subTitle;
     private String title;
-    private String yAxisLabel;
-    private boolean ignoreRangeOutside;
-    private String[] seriesTitles;
-    private YValGetter<IterAndExecutionTime> yValGetter;
+
+    @Getter private String yAxisLabel;
+
+    @Getter private boolean ignoreRangeOutside;
+
+    @Getter private String[] seriesTitles;
+
+    @Getter private YValGetter<IterAndExecutionTime> yValGetter;
 
     public GraphDefinitionLineIterVsKernelExecutionTime(
             String title,
@@ -80,29 +86,5 @@ public class GraphDefinitionLineIterVsKernelExecutionTime
     @Override
     public String getShortTitle() {
         return subTitle;
-    }
-
-    public String[] getSeriesTitles() {
-        return seriesTitles;
-    }
-
-    public YValGetter<IterAndExecutionTime> getyValGetter() {
-        return yValGetter;
-    }
-
-    public String getyAxisLabel() {
-        return yAxisLabel;
-    }
-
-    public boolean isIgnoreRangeOutside() {
-        return ignoreRangeOutside;
-    }
-
-    public GraphColorScheme getGraphColorScheme() {
-        return graphColorScheme;
-    }
-
-    public void setGraphColorScheme(GraphColorScheme graphColorScheme) {
-        this.graphColorScheme = graphColorScheme;
     }
 }

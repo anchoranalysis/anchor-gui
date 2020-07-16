@@ -26,7 +26,6 @@ import org.anchoranalysis.image.object.ObjectCollection;
 import org.anchoranalysis.image.stack.wrap.WrapTimeSequenceAsStack;
 import org.anchoranalysis.io.output.bound.BoundOutputManagerRouteErrors;
 
-@SuppressWarnings("unused")
 public class MultiCollectionDropDown {
 
     private BoundVideoStatsModuleDropDown delegate;

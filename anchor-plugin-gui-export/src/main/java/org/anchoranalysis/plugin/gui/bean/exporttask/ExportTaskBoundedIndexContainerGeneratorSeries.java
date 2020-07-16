@@ -2,6 +2,8 @@
 package org.anchoranalysis.plugin.gui.bean.exporttask;
 
 import javax.swing.ProgressMonitor;
+import lombok.Getter;
+import lombok.Setter;
 import org.anchoranalysis.bean.AnchorBean;
 import org.anchoranalysis.bean.annotation.BeanField;
 import org.anchoranalysis.core.error.OperationFailedException;
@@ -19,14 +21,15 @@ public class ExportTaskBoundedIndexContainerGeneratorSeries<T>
         extends AnchorBean<ExportTaskBoundedIndexContainerGeneratorSeries<T>> {
 
     // START BEAN PARAMETERS
-    @BeanField private int incrementSize = 1000;
+    @BeanField @Getter @Setter private int incrementSize = 1000;
 
-    @BeanField
-    private boolean startAtEnd =
-            false; // We start at the end, and move to the front (should be set with a negative
-    // incrementSize)
+    /**
+     * We start at the end, and move to the front (should be set with a negative // incrementSize)
+     */
+    @BeanField @Getter @Setter private boolean startAtEnd = false;
 
-    @BeanField private int limitIterations = -1; // -1 disables
+    /** A limit on the number of iterations (not applied if equal to -1) */
+    @BeanField @Getter @Setter private int limitIterations = -1;
     // END BEAN PARAMETERS
 
     private FunctionWithException<
@@ -168,29 +171,5 @@ public class ExportTaskBoundedIndexContainerGeneratorSeries<T>
                             ExportTaskParams, BoundedIndexContainer<T>, OperationFailedException>
                     containerBridge) {
         this.containerBridge = containerBridge;
-    }
-
-    public int getIncrementSize() {
-        return incrementSize;
-    }
-
-    public void setIncrementSize(int incrementSize) {
-        this.incrementSize = incrementSize;
-    }
-
-    public boolean isStartAtEnd() {
-        return startAtEnd;
-    }
-
-    public void setStartAtEnd(boolean startAtEnd) {
-        this.startAtEnd = startAtEnd;
-    }
-
-    public int getLimitIterations() {
-        return limitIterations;
-    }
-
-    public void setLimitIterations(int limitIterations) {
-        this.limitIterations = limitIterations;
     }
 }

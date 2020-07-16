@@ -9,7 +9,7 @@ public class MDIDesktopPane extends JDesktopPane {
 
     private static final long serialVersionUID = 9172020038228310956L;
 
-    private static int FRAME_OFFSET = 20;
+    private static final int FRAME_OFFSET = 20;
     private MDIDesktopManager manager;
 
     public MDIDesktopPane() {
@@ -45,7 +45,7 @@ public class MDIDesktopPane extends JDesktopPane {
 
     /** Return the topmost frame of the specified type */
     public JInternalFrame getTopmostFrame(Class<Object> soughtClass) {
-        JInternalFrame allFrames[] = getAllFrames();
+        JInternalFrame[] allFrames = getAllFrames();
         for (int i = 0; i < allFrames.length; i++) {
             if (allFrames[i].getClass().equals(soughtClass)) {
                 return allFrames[i];
@@ -56,7 +56,7 @@ public class MDIDesktopPane extends JDesktopPane {
 
     /** Cascade all internal frames */
     public void cascadeFrames() {
-        JInternalFrame allFrames[] = getAllFrames();
+        JInternalFrame[] allFrames = getAllFrames();
 
         if (allFrames.length == 0) {
             return;
@@ -84,7 +84,7 @@ public class MDIDesktopPane extends JDesktopPane {
 
     /** Tile all internal frames */
     public void tileFrames() {
-        java.awt.Component allFrames[] = getAllFrames();
+        java.awt.Component[] allFrames = getAllFrames();
 
         if (allFrames.length == 0) {
             return;
@@ -188,7 +188,7 @@ public class MDIDesktopPane extends JDesktopPane {
             Insets scrollInsets = getScrollPaneInsets();
 
             if (scrollPane != null) {
-                JInternalFrame allFrames[] = desktop.getAllFrames();
+                JInternalFrame[] allFrames = desktop.getAllFrames();
                 for (int i = 0; i < allFrames.length; i++) {
                     if (allFrames[i].getX() + allFrames[i].getWidth() > x) {
                         x = allFrames[i].getX() + allFrames[i].getWidth();

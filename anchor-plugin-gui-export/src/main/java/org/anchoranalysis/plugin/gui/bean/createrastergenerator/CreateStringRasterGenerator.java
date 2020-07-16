@@ -1,6 +1,8 @@
 /* (C)2020 */
 package org.anchoranalysis.plugin.gui.bean.createrastergenerator;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.anchoranalysis.anchor.mpp.feature.instantstate.CfgNRGInstantState;
 import org.anchoranalysis.anchor.mpp.feature.nrg.cfg.CfgNRG;
 import org.anchoranalysis.bean.annotation.BeanField;
@@ -16,7 +18,7 @@ public abstract class CreateStringRasterGenerator
         extends CreateRasterGenerator<CfgNRGInstantState> {
 
     // START BEAN PROPERTIES
-    @BeanField private StringRasterGenerator stringGenerator;
+    @BeanField @Getter @Setter private StringRasterGenerator stringGenerator;
     // END BEAN PROPERTIES
 
     @Override
@@ -33,13 +35,5 @@ public abstract class CreateStringRasterGenerator
     @Override
     public boolean hasNecessaryParams(ExportTaskParams params) {
         return true;
-    }
-
-    public StringRasterGenerator getStringGenerator() {
-        return stringGenerator;
-    }
-
-    public void setStringGenerator(StringRasterGenerator stringGenerator) {
-        this.stringGenerator = stringGenerator;
     }
 }

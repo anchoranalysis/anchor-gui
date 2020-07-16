@@ -3,6 +3,8 @@ package org.anchoranalysis.gui.plot.definition.line;
 
 import java.util.Iterator;
 import java.util.Optional;
+import lombok.Getter;
+import lombok.Setter;
 import org.anchoranalysis.anchor.plot.AxisLimits;
 import org.anchoranalysis.anchor.plot.GraphInstance;
 import org.anchoranalysis.anchor.plot.bean.GraphDefinition;
@@ -16,9 +18,9 @@ public class GraphDefinitionLineIterVsNRG
         extends GraphDefinition<GraphDefinitionLineIterVsNRG.Item> {
 
     // START BEAN PROPERITES
-    @BeanField private GraphColorScheme graphColorScheme = new GraphColorScheme();
+    @BeanField @Getter @Setter private GraphColorScheme graphColorScheme = new GraphColorScheme();
 
-    @BeanField private int minMaxIgnoreBeforeIndex = 0;
+    @BeanField @Getter @Setter private int minMaxIgnoreBeforeIndex = 0;
     // END BEAN PROPERTIES
 
     // Item
@@ -55,8 +57,6 @@ public class GraphDefinitionLineIterVsNRG
             return iter;
         }
     }
-
-    public GraphDefinitionLineIterVsNRG() {}
 
     @Override
     public GraphInstance create(
@@ -104,21 +104,5 @@ public class GraphDefinitionLineIterVsNRG
     @Override
     public String getShortTitle() {
         return getTitle();
-    }
-
-    public GraphColorScheme getGraphColorScheme() {
-        return graphColorScheme;
-    }
-
-    public void setGraphColorScheme(GraphColorScheme graphColorScheme) {
-        this.graphColorScheme = graphColorScheme;
-    }
-
-    public int getMinMaxIgnoreBeforeIndex() {
-        return minMaxIgnoreBeforeIndex;
-    }
-
-    public void setMinMaxIgnoreBeforeIndex(int minMaxIgnoreBeforeIndex) {
-        this.minMaxIgnoreBeforeIndex = minMaxIgnoreBeforeIndex;
     }
 }

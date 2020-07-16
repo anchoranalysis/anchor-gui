@@ -3,6 +3,8 @@ package org.anchoranalysis.gui.bean.filecreator;
 
 import java.util.Iterator;
 import java.util.List;
+import lombok.Getter;
+import lombok.Setter;
 import org.anchoranalysis.bean.annotation.BeanField;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.progress.ProgressReporter;
@@ -16,7 +18,7 @@ import org.anchoranalysis.mpp.io.input.MultiInput;
 public class NamedMultiCollectionCreator extends FileCreatorGeneralList {
 
     // START BEAN PROPERTIES
-    @BeanField private InputManager<MultiInput> input;
+    @BeanField @Getter @Setter private InputManager<MultiInput> input;
     // END BEAN PROPERTIES
 
     @Override
@@ -57,13 +59,5 @@ public class NamedMultiCollectionCreator extends FileCreatorGeneralList {
         }
 
         return "untitled stack/cfg collection";
-    }
-
-    public InputManager<MultiInput> getInput() {
-        return input;
-    }
-
-    public void setInput(InputManager<MultiInput> input) {
-        this.input = input;
     }
 }

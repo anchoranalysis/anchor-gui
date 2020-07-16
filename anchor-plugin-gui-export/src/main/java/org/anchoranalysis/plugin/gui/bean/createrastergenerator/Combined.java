@@ -2,6 +2,8 @@
 package org.anchoranalysis.plugin.gui.bean.createrastergenerator;
 
 import java.util.List;
+import lombok.Getter;
+import lombok.Setter;
 import org.anchoranalysis.bean.annotation.BeanField;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.gui.bean.exporttask.ExportTaskParams;
@@ -14,9 +16,9 @@ import org.anchoranalysis.plugin.gui.bean.exporttask.MappedFrom;
 public class Combined<T> extends CreateRasterGenerator<T> {
 
     // START BEAN PROPERTIES
-    @BeanField private List<CreateRasterGenerator<T>> createRasterGeneratorList;
+    @BeanField @Getter @Setter private List<CreateRasterGenerator<T>> createRasterGeneratorList;
 
-    @BeanField private ArrangeRasterBean arrangeRaster;
+    @BeanField @Getter @Setter private ArrangeRasterBean arrangeRaster;
     // END BEAN PROPERTIES
 
     @Override
@@ -49,22 +51,5 @@ public class Combined<T> extends CreateRasterGenerator<T> {
     @Override
     public String getBeanDscr() {
         return getBeanName();
-    }
-
-    public List<CreateRasterGenerator<T>> getCreateRasterGeneratorList() {
-        return createRasterGeneratorList;
-    }
-
-    public void setCreateRasterGeneratorList(
-            List<CreateRasterGenerator<T>> createRasterGeneratorList) {
-        this.createRasterGeneratorList = createRasterGeneratorList;
-    }
-
-    public ArrangeRasterBean getArrangeRaster() {
-        return arrangeRaster;
-    }
-
-    public void setArrangeRaster(ArrangeRasterBean arrangeRaster) {
-        this.arrangeRaster = arrangeRaster;
     }
 }

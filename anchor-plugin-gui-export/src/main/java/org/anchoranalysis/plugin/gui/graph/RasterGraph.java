@@ -3,11 +3,16 @@ package org.anchoranalysis.plugin.gui.graph;
 
 import org.anchoranalysis.anchor.plot.bean.GraphDefinition;
 
-public interface RasterGraph<GraphItem, SourceType> {
+/**
+ * @author Owen Feehan
+ * @param <T> graph-item
+ * @param <S> source-type
+ */
+public interface RasterGraph<T, S> {
 
-    GraphDefinition<GraphItem> getGraphDefinition();
+    GraphDefinition<T> getGraphDefinition();
 
-    void setGraphDefinition(GraphDefinition<GraphItem> graphDefinition);
+    void setGraphDefinition(GraphDefinition<T> graphDefinition);
 
     int getWidth();
 
