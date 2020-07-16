@@ -30,7 +30,6 @@ import java.io.File;
 import java.nio.file.Path;
 
 import org.anchoranalysis.core.error.OperationFailedException;
-import org.anchoranalysis.core.functional.Operation;
 import org.anchoranalysis.core.log.Logger;
 import org.anchoranalysis.core.name.store.LazyEvaluationStore;
 import org.anchoranalysis.image.io.objects.ObjectCollectionReader;
@@ -86,14 +85,11 @@ class CreateObjectStoreFromDirectory {
 		String name,
 		Path path
 	) throws OperationFailedException {
-		
-		Operation<Path,OperationFailedException> pathOp = () -> {
-			return path;
-		};
-		
 		out.add(
 			name,
-			ObjectCollectionReader.createFromPathCached(pathOp)
+			ObjectCollectionReader.createFromPathCached(
+				() -> path
+			)
 		);
 	}
 	

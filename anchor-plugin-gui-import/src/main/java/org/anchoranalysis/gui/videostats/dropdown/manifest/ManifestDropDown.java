@@ -397,7 +397,7 @@ public class ManifestDropDown {
 			defaultAdded = true;
 		}
 				
-		addCfgSubMenu( operationBwsaWithNRG, finderNrgStack, mpg );
+		addCfgSubMenu( operationBwsaWithNRG, mpg );
 		return defaultAdded;
 	}
 	
@@ -463,7 +463,7 @@ public class ManifestDropDown {
 	}
 	
 	
-	private void addCfgSubMenu( OperationCreateBackgroundSetWithAdder operationBwsaWithNRG, FinderNrgStack finderNrgStack, VideoStatsModuleGlobalParams mpg ) {
+	private void addCfgSubMenu( OperationCreateBackgroundSetWithAdder operationBwsaWithNRG, VideoStatsModuleGlobalParams mpg ) {
 		try {
 			FinderCfgFolder finder = new FinderCfgFolder("cfgCollection", "cfg");
 			finder.doFind(manifests.getFileManifest().doOperation());

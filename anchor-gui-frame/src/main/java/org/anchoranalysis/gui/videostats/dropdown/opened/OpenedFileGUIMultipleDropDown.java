@@ -55,8 +55,11 @@ import org.anchoranalysis.gui.videostats.operation.VideoStatsOperationOrMenu;
 import org.anchoranalysis.gui.videostats.operation.VideoStatsOperationSequence;
 import org.anchoranalysis.gui.videostats.operation.combine.IVideoStatsOperationCombine;
 
+import lombok.Getter;
+
 public class OpenedFileGUIMultipleDropDown {
 
+	@Getter
 	private JPopupMenu popupMenu = new JPopupMenu();
 	private IAddVideoStatsModule adder;
 	private VideoStatsModuleGlobalParams mpg;
@@ -68,17 +71,13 @@ public class OpenedFileGUIMultipleDropDown {
 		VideoStatsModuleGlobalParams moduleParamsGlobal,
 		MarkDisplaySettings markDisplaySettings
 	) {
-		
-		if (listOpenedGUI.size()==0) {
+		if (listOpenedGUI.isEmpty()) {
 			return;
 		}
 		
 		this.adder = adder;
 		this.mpg = moduleParamsGlobal;
 		this.markDisplaySettings = markDisplaySettings;
-		
-		//@SuppressWarnings("unused")
-		//ManifestDropDown first = listManifestDropDown.get(0);
 		
 		List<VideoStatsOperationMenu> firstList = new ArrayList<>(); 
 		for( IOpenedFileGUI mdd : listOpenedGUI ) {
@@ -140,11 +139,7 @@ public class OpenedFileGUIMultipleDropDown {
 		all.add(or);
 		
 		List<IVideoStatsOperationCombine> listCombined = new ArrayList<>();
-		if (or.getCombiner().isPresent()) {
-			listCombined.add(
-				or.getCombiner().get()
-			);
-		}
+		or.getCombiner().ifPresent(listCombined::add);
 		
 		// We loop through all the other menus, looking to see if they have the same item. We accept an item if they
 		//  all have it.  We skip the first one, as it's not necessary.
@@ -155,13 +150,11 @@ public class OpenedFileGUIMultipleDropDown {
 			}
 			all.add(sameNameItem);
 			
-			if (sameNameItem.getCombiner().isPresent()) {
-				listCombined.add(sameNameItem.getCombiner().get());
-			}
+			sameNameItem.getCombiner().ifPresent(listCombined::add);
 		}
 		outIndividually.add( all );
 		
-		if (listCombined.size()>0) {
+		if (!listCombined.isEmpty()) {
 			addCombinedOperations(
 				listCombined,
 				outCombined,
@@ -297,11 +290,11 @@ public class OpenedFileGUIMultipleDropDown {
 		// We loop through all the other menus, looking to see if they have the same item. We accept an item if they
 		//  all have it.  We skip the first one, as it's not necessary.
 		for( int i=1; i<list.size(); i++) {
-			VideoStatsOperationMenu sameNameItem = findMenuOfSameNameOrNull(menu, list.get(i));
-			if (sameNameItem==null) {
+			Optional<VideoStatsOperationMenu> sameNameItem = findMenuOfSameNameOrNull(menu, list.get(i));
+			if (!sameNameItem.isPresent()) {
 				return;
 			}
-			menuIn.add(sameNameItem);
+			menuIn.add(sameNameItem.get());
 		}
 		
 		VideoStatsOperationMenu menuNew = out.createSubMenu(menu.getName(), true);
@@ -320,7 +313,7 @@ public class OpenedFileGUIMultipleDropDown {
 		return null;
 	}
 	
-	private static VideoStatsOperationMenu findMenuOfSameNameOrNull( VideoStatsOperationMenu src, VideoStatsOperationMenu menu) {
+	private static Optional<VideoStatsOperationMenu> findMenuOfSameNameOrNull( VideoStatsOperationMenu src, VideoStatsOperationMenu menu) {
 		
 		for(VideoStatsOperationOrMenu vsoom : menu.getListOperations()) {
 			if (vsoom.isMenu()) {
@@ -328,27 +321,17 @@ public class OpenedFileGUIMultipleDropDown {
 				// As names can also be null
 				if (src.getName()==null) {
 					if (vsoom.getMenu().getName()==null) {
-						return vsoom.getMenu();
+						return Optional.of(vsoom.getMenu());
 					} else {
 						continue;
 					}
 				}
 				
-				if (vsoom.getMenu().getName()==null) {
-					continue;
-				}
-				
-				if (src.getName().equals(vsoom.getMenu().getName())) {
-					return vsoom.getMenu();
+				if (vsoom.getMenu().getName()!=null && src.getName().equals(vsoom.getMenu().getName())) {
+					return Optional.of( vsoom.getMenu() );
 				}
 			}
 		}
-		return null;
+		return Optional.empty();
 	}
-	
-	public JPopupMenu getPopupMenu() {
-		return popupMenu;
-	}
-	
-	
 }
