@@ -43,7 +43,7 @@ import org.anchoranalysis.image.extent.ImageDimensions;
 
 public class MarkProposerEvaluatorUtilities {
 
-	public static Mark createMarkFromPosition( Point3d position, Mark templateMark, final ImageDimensions dim, final RandomNumberGenerator re ) {
+	public static Mark createMarkFromPosition( Point3d position, Mark templateMark, final ImageDimensions dim, final RandomNumberGenerator randomNumberGenerator ) {
 		
 		final Mark me = templateMark.duplicate();
 

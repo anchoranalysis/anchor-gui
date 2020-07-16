@@ -49,25 +49,19 @@ import org.anchoranalysis.core.progress.OperationWithProgressReporter;
 import org.anchoranalysis.image.stack.Stack;
 import org.anchoranalysis.io.output.bound.BoundIOContext;
 
+import lombok.RequiredArgsConstructor;
+
+@RequiredArgsConstructor
 public class MarkEvaluatorSetForImage {
-
-	private Map<String,Operation<MarkEvaluatorResolved,OperationFailedException>> map = new HashMap<>(); 
-
-	private OperationWithProgressReporter<NamedProvider<Stack>,? extends Throwable> namedImgStackCollection;
-	private Operation<Optional<KeyValueParams>,IOException> keyParams;
-	private BoundIOContext context;
-
-	public MarkEvaluatorSetForImage(
-		OperationWithProgressReporter<NamedProvider<Stack>,? extends Throwable> namedImgStackCollection,
-		Operation<Optional<KeyValueParams>,IOException> keyParams,
-		BoundIOContext context
-	) {
-		super();
-		this.keyParams = keyParams;
-		this.namedImgStackCollection = namedImgStackCollection;
-		this.context = context;
-	}
-
+	 
+	// START REQUIRED ARGUMENTS
+	private final OperationWithProgressReporter<NamedProvider<Stack>,? extends Throwable> namedImgStackCollection;
+	private final Operation<Optional<KeyValueParams>,IOException> keyParams;
+	private final BoundIOContext context;
+	// END REQUIRED ARGUMENTS
+	
+	private Map<String,Operation<MarkEvaluatorResolved,OperationFailedException>> map = new HashMap<>();
+	
 	private class Resolved extends CachedOperation<MarkEvaluatorResolved,OperationFailedException> {
 
 		private OperationInitParams operationProposerSharedObjects;

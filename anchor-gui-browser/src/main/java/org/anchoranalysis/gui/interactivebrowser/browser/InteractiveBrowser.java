@@ -248,12 +248,12 @@ public class InteractiveBrowser {
 		return popUpParams;
 	}
 
-	private VideoStatsModuleGlobalParams createModuleParams( ExportPopupParams popUpParams, ColorIndex colorIndex, RandomNumberGenerator re ) {
+	private VideoStatsModuleGlobalParams createModuleParams( ExportPopupParams popUpParams, ColorIndex colorIndex, RandomNumberGenerator randomNumberGenerator ) {
 		return new VideoStatsModuleGlobalParams(
 			popUpParams,
 			context.common(),
 			videoStatsFrame.getThreadPool(),
-			re,
+			randomNumberGenerator,
 			exportTaskList,
 			colorIndex,
 			videoStatsFrame.getGraphicsConfiguration()

@@ -30,35 +30,14 @@ import org.anchoranalysis.core.random.RandomNumberGenerator;
 import org.anchoranalysis.gui.image.frame.ISliderState;
 import org.anchoranalysis.gui.videostats.internalframe.annotator.tool.ToolErrorReporter;
 
+import lombok.AllArgsConstructor;
+import lombok.Value;
+
+@Value @AllArgsConstructor
 public class AnnotationPanelParams {
 
 	private SaveMonitor saveMonitor;
 	private RandomNumberGenerator randomNumberGenerator;
 	private ISliderState sliderState;
 	private ToolErrorReporter errorReporter;
-
-	public AnnotationPanelParams(SaveMonitor saveMonitor, RandomNumberGenerator randomNumberGenerator,
-			ISliderState sliderState, ToolErrorReporter errorReporter) {
-		super();
-		this.saveMonitor = saveMonitor;
-		this.randomNumberGenerator = randomNumberGenerator;
-		this.sliderState = sliderState;
-		this.errorReporter = errorReporter;
-	}
-
-	public SaveMonitor getSaveMonitor() {
-		return saveMonitor;
-	}
-
-	public RandomNumberGenerator getRandomNumberGenerator() {
-		return randomNumberGenerator;
-	}
-
-	public ISliderState getSliderState() {
-		return sliderState;
-	}
-
-	public ToolErrorReporter getErrorReporter() {
-		return errorReporter;
-	}	
 }

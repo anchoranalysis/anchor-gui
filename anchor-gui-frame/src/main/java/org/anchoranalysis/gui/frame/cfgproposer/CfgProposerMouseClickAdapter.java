@@ -53,31 +53,21 @@ import org.anchoranalysis.gui.videostats.internalframe.evaluator.EvaluatorWithCo
 import org.anchoranalysis.gui.videostats.internalframe.evaluator.EvaluatorWithContextGetter;
 import org.anchoranalysis.gui.videostats.internalframe.evaluator.ProposalOperationCreator;
 
+import lombok.RequiredArgsConstructor;
+
+@RequiredArgsConstructor
 public class CfgProposerMouseClickAdapter extends MouseAdapter {
 
-	private ExtractOverlays extractOverlays;
-	private ISliderState sliderState;
-	private EvaluatorWithContextGetter evaluatorGetter;
-	private RandomNumberGenerator re;
-	private ErrorReporter errorReporter;
+	// START REQUIRED ARGUMENTS
+	private final ExtractOverlays extractOverlays;
+	private final ISliderState sliderState;
+	private final EvaluatorWithContextGetter evaluatorGetter;
+	private final RandomNumberGenerator randomNumberGenerator;
+	private final ErrorReporter errorReporter;
+	// END REQUIRED ARGUMENTS
 	
 	private EventListenerList eventListeners = new EventListenerList();
 	
-	public CfgProposerMouseClickAdapter(
-		ExtractOverlays extractOverlays,
-		ISliderState sliderState,
-		EvaluatorWithContextGetter evaluatorGetter,
-		RandomNumberGenerator re,
-		ErrorReporter errorReporter
-	) {
-		super();
-		this.extractOverlays = extractOverlays;
-		this.evaluatorGetter = evaluatorGetter;
-		this.re = re;
-		this.errorReporter = errorReporter;
-		this.sliderState = sliderState;
-	}
-
 	@Override
 	public void mouseReleased(MouseEvent arg0) {
 		super.mouseReleased(arg0);
@@ -149,7 +139,7 @@ public class CfgProposerMouseClickAdapter extends MouseAdapter {
 			
 			try {
 				ProposerContext context = new ProposerContext(
-					re,
+					randomNumberGenerator,
 					evaluatorWithContext.getNrgStack(),
 					evaluatorWithContext.getRegionMap(),
 					ErrorNodeNull.instance()
