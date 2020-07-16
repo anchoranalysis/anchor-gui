@@ -34,12 +34,14 @@ import org.anchoranalysis.core.functional.function.FunctionWithException;
 import org.anchoranalysis.core.index.container.BoundedIndexContainer;
 import org.anchoranalysis.gui.bean.exporttask.ExportTaskFailedException;
 import org.anchoranalysis.gui.bean.exporttask.ExportTaskParams;
+import lombok.Getter;
+import lombok.Setter;
 
 public abstract class ExportTaskRasterGeneratorFromBoundedIndexContainer<T>
         extends ExportTaskRasterGeneratorSequence<T> {
 
     // START BEAN PROPERTIES
-    @BeanField private ExportTaskBoundedIndexContainerGeneratorSeries<T> delegate;
+    @BeanField @Getter @Setter private ExportTaskBoundedIndexContainerGeneratorSeries<T> delegate;
     // END BEAN PROPERTIES
 
     public ExportTaskRasterGeneratorFromBoundedIndexContainer() {
@@ -105,13 +107,5 @@ public abstract class ExportTaskRasterGeneratorFromBoundedIndexContainer<T>
 
     public void setLimitIterations(int limitIterations) {
         delegate.setLimitIterations(limitIterations);
-    }
-
-    public ExportTaskBoundedIndexContainerGeneratorSeries<T> getDelegate() {
-        return delegate;
-    }
-
-    public void setDelegate(ExportTaskBoundedIndexContainerGeneratorSeries<T> delegate) {
-        this.delegate = delegate;
     }
 }

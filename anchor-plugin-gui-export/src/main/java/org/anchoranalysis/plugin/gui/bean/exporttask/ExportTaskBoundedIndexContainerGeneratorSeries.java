@@ -61,8 +61,6 @@ public class ExportTaskBoundedIndexContainerGeneratorSeries<T>
                     ExportTaskParams, BoundedIndexContainer<T>, OperationFailedException>
             containerBridge;
 
-    public ExportTaskBoundedIndexContainerGeneratorSeries() {}
-
     public boolean execute(
             ExportTaskParams params,
             ProgressMonitor progressMonitor,
