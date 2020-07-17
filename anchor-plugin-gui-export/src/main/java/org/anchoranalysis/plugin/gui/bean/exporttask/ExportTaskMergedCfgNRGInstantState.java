@@ -28,7 +28,7 @@ package org.anchoranalysis.plugin.gui.bean.exporttask;
 
 import org.anchoranalysis.anchor.mpp.feature.instantstate.CfgNRGInstantState;
 import org.anchoranalysis.anchor.mpp.mark.GlobalRegionIdentifiers;
-import org.anchoranalysis.anchor.mpp.regionmap.RegionMapSingleton;
+import org.anchoranalysis.anchor.mpp.mark.conic.RegionMapSingleton;
 
 public class ExportTaskMergedCfgNRGInstantState
         extends ExportTaskRasterGeneratorFromBoundedIndexContainer<CfgNRGInstantState> {
