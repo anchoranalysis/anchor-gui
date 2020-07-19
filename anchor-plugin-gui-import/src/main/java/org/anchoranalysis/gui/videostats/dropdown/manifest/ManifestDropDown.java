@@ -431,7 +431,7 @@ public class ManifestDropDown {
 
             if (finderFinalCfgNRG.exists()) {
 
-                CachedOperation<LoadContainer<CfgNRGInstantState>, GetOperationFailedException> op =
+                CachedOperation<LoadContainer<CfgNRGInstantState>, OperationFailedException> op =
                         new WrapOperationAsCached<>(
                                 () -> {
                                     CfgNRGInstantState instantState;
@@ -440,7 +440,7 @@ public class ManifestDropDown {
                                                 new CfgNRGNonHandleInstantState(
                                                         0, finderFinalCfgNRG.get());
                                     } catch (IOException e) {
-                                        throw new GetOperationFailedException(e);
+                                        throw new OperationFailedException(e);
                                     }
 
                                     LoadContainer<CfgNRGInstantState> lc = new LoadContainer<>();

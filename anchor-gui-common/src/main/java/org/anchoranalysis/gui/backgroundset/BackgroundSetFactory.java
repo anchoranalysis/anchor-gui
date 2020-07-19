@@ -38,7 +38,7 @@ import org.anchoranalysis.core.name.provider.NamedProvider;
 import org.anchoranalysis.core.name.provider.NamedProviderGetException;
 import org.anchoranalysis.core.progress.ProgressReporter;
 import org.anchoranalysis.core.progress.ProgressReporterIncrement;
-import org.anchoranalysis.gui.container.background.BackgroundStackCntr;
+import org.anchoranalysis.gui.container.background.BackgroundStackContainer;
 import org.anchoranalysis.gui.container.background.SingleBackgroundStackCntr;
 import org.anchoranalysis.gui.serializedobjectset.MarkWithRaster;
 import org.anchoranalysis.image.channel.factory.ChannelFactory;
@@ -129,16 +129,12 @@ public class BackgroundSetFactory {
                 cntr.getCntr(),
                 sourceObject -> {
                     assert (sourceObject != null);
-                    try {
-                        return sourceObject.getBackgroundSet().singleStack(name);
-                    } catch (GetOperationFailedException e) {
-                        throw new OperationFailedException(e);
-                    }
+                    return sourceObject.getBackgroundSet().singleStack(name);
                 });
     }
 
     private static class AddBackgroundSetItem
-            extends CachedOperation<BackgroundStackCntr, OperationFailedException> {
+            extends CachedOperation<BackgroundStackContainer, GetOperationFailedException> {
 
         private NamedProvider<TimeSequence> imageStackCollection;
         private String id;
@@ -150,7 +146,7 @@ public class BackgroundSetFactory {
         }
 
         @Override
-        protected BackgroundStackCntr execute() throws OperationFailedException {
+        protected BackgroundStackContainer execute() throws GetOperationFailedException {
 
             try {
                 TimeSequence seq = imageStackCollection.getException(id);
@@ -161,18 +157,18 @@ public class BackgroundSetFactory {
                     return createBackgroundNotTimeSeries(seq.get(0));
                 }
 
-            } catch (NamedProviderGetException e) {
-                throw new OperationFailedException(e);
+            } catch (NamedProviderGetException | OperationFailedException e) {
+                throw new GetOperationFailedException(e);
             }
         }
     }
 
-    private static BackgroundStackCntr createBackgroundTimeSeries(TimeSequence seq)
+    private static BackgroundStackContainer createBackgroundTimeSeries(TimeSequence seq)
             throws OperationFailedException {
         return BackgroundStackCntrFactory.convertedSequence(seq);
     }
 
-    private static BackgroundStackCntr createBackgroundNotTimeSeries(Stack img)
+    private static BackgroundStackContainer createBackgroundNotTimeSeries(Stack img)
             throws OperationFailedException {
         return BackgroundStackCntrFactory.singleSavedStack(img);
     }
@@ -189,15 +185,18 @@ public class BackgroundSetFactory {
     }
 
     public static void addEmpty(
-            BackgroundSet backgroundSet, NamedProvider<TimeSequence> imageStackCollection)
-            throws OperationFailedException {
+            BackgroundSet backgroundSet, NamedProvider<TimeSequence> imageStackCollection) {
 
         backgroundSet.addItem(
                 "blank (all black)",
                 () -> {
-                    ImageDimensions sd = guessDimensions(imageStackCollection);
-                    Stack stack = createEmptyStack(sd);
-                    return BackgroundStackCntrFactory.singleSavedStack(stack);
+                    try {
+                        ImageDimensions sd = guessDimensions(imageStackCollection);
+                        Stack stack = createEmptyStack(sd);
+                        return BackgroundStackCntrFactory.singleSavedStack(stack);
+                    } catch (OperationFailedException e) {
+                        throw new GetOperationFailedException("blank", e);
+                    }
                 });
     }
 
@@ -246,7 +245,7 @@ public class BackgroundSetFactory {
             // The way we handle this means we cannot add the (only first three) brackets on the
             // name, as the image has not yet been evaluated
             for (String id : keys) {
-                Operation<BackgroundStackCntr, OperationFailedException> operation =
+                Operation<BackgroundStackContainer, GetOperationFailedException> operation =
                         new AddBackgroundSetItem(imageStackCollection, id);
                 backgroundSet.addItem(id, operation);
                 pri.update();

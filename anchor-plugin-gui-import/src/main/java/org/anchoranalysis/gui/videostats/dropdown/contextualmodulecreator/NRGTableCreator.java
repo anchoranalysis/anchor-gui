@@ -42,23 +42,15 @@ import org.anchoranalysis.gui.videostats.module.DefaultModuleStateManager;
 import org.anchoranalysis.gui.videostats.module.VideoStatsModuleCreateException;
 import org.anchoranalysis.gui.videostats.modulecreator.VideoStatsModuleCreatorContext;
 import org.anchoranalysis.io.manifest.deserializer.folder.LoadContainer;
+import lombok.AllArgsConstructor;
 
+@AllArgsConstructor
 public class NRGTableCreator extends VideoStatsModuleCreatorContext {
 
     private final Operation<LoadContainer<CfgNRGInstantState>, GetOperationFailedException>
             operation;
     private final ColorIndex colorIndex;
-    private final Operation<NRGStackWithParams, OperationFailedException> nrgStackWithParams;
-
-    public NRGTableCreator(
-            Operation<LoadContainer<CfgNRGInstantState>, GetOperationFailedException> operation,
-            Operation<NRGStackWithParams, OperationFailedException> nrgStackWithParams,
-            ColorIndex colorIndex) {
-        super();
-        this.operation = operation;
-        this.colorIndex = colorIndex;
-        this.nrgStackWithParams = nrgStackWithParams;
-    }
+    private final Operation<NRGStackWithParams, GetOperationFailedException> nrgStackWithParams;
 
     @Override
     public boolean precondition() {
@@ -88,8 +80,7 @@ public class NRGTableCreator extends VideoStatsModuleCreatorContext {
 
         } catch (IllegalArgumentException
                 | InitException
-                | GetOperationFailedException
-                | OperationFailedException e) {
+                | GetOperationFailedException e) {
             throw new VideoStatsModuleCreateException(e);
         }
     }

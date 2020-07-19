@@ -28,6 +28,7 @@ package org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.definition;
 
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.error.reporter.ErrorReporter;
 import org.anchoranalysis.core.functional.FunctionalList;
 import org.anchoranalysis.core.index.GetOperationFailedException;
@@ -45,13 +46,13 @@ public class ChangeableBackgroundDefinitionIgnoreContains extends ChangeableBack
 
     @Override
     public void update(
-            OperationWithProgressReporter<BackgroundSet, GetOperationFailedException>
+            OperationWithProgressReporter<BackgroundSet, OperationFailedException>
                     backgroundSet) {
         background.update(backgroundSet);
     }
 
     @Override
-    public IImageStackCntrFromName stackCntrFromName(ErrorReporter errorReporter) {
+    public ImageStackContainerFromName stackCntrFromName(ErrorReporter errorReporter) {
         return background.stackCntrFromName(errorReporter);
     }
 

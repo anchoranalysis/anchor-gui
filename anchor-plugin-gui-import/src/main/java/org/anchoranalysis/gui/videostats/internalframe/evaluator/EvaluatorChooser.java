@@ -36,6 +36,7 @@ import javax.swing.JPanel;
 import javax.swing.event.EventListenerList;
 import org.anchoranalysis.anchor.mpp.bean.init.MPPInitParams;
 import org.anchoranalysis.core.error.CreateException;
+import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.error.friendly.AnchorImpossibleSituationException;
 import org.anchoranalysis.core.error.reporter.ErrorReporter;
 import org.anchoranalysis.core.index.GetOperationFailedException;
@@ -168,7 +169,7 @@ public class EvaluatorChooser {
 
         try {
             markEvaluatorSelected = markEvaluatorSet.get(evaluatorName);
-        } catch (GetOperationFailedException e1) {
+        } catch (OperationFailedException e1) {
             errorReporter.recordError(EvaluatorChooser.class, e1);
         }
 

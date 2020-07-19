@@ -160,10 +160,10 @@ public class ThreadedDisplayUpdateConsumer
     }
 
     @Override
-    public DisplayUpdate get() throws GetOperationFailedException {
+    public DisplayUpdate get() throws OperationFailedException {
 
         if (currentUpdate == null) {
-            throw new GetOperationFailedException("currentImage is null. No update to return");
+            throw new OperationFailedException("currentImage is null. No update to return");
         }
 
         return currentUpdate;
@@ -203,7 +203,7 @@ public class ThreadedDisplayUpdateConsumer
     }
 
     @Override
-    public BoundOverlayedDisplayStack getCurrentDisplayStack() throws GetOperationFailedException {
+    public BoundOverlayedDisplayStack getCurrentDisplayStack() {
         return currentDisplayStack;
     }
 }

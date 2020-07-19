@@ -27,6 +27,7 @@
 package org.anchoranalysis.gui.interactivebrowser.backgroundset.menu;
 
 import javax.swing.JMenu;
+import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.error.reporter.ErrorReporter;
 import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.progress.OperationWithProgressReporter;
@@ -34,24 +35,19 @@ import org.anchoranalysis.gui.backgroundset.BackgroundSet;
 import org.anchoranalysis.gui.frame.details.ControllerPopupMenu;
 import org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.definition.ChangeableBackgroundDefinition;
 import org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.definition.ChangeableBackgroundDefinitionSimple;
-import org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.definition.IImageStackCntrFromName;
+import org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.definition.ImageStackContainerFromName;
 import org.anchoranalysis.gui.videostats.dropdown.VideoStatsModuleGlobalParams;
+import lombok.AllArgsConstructor;
 
+@AllArgsConstructor
 public class ControllerPopupMenuWithBackground {
 
     private ControllerPopupMenu delegate;
     private IBackgroundSetter backgroundSetter;
 
-    public ControllerPopupMenuWithBackground(
-            ControllerPopupMenu delegate, IBackgroundSetter backgroundSetter) {
-        super();
-        this.delegate = delegate;
-        this.backgroundSetter = backgroundSetter;
-    }
-
     public void add(
             IGetNames nameGetter,
-            IImageStackCntrFromName stackCntrFromName,
+            ImageStackContainerFromName stackCntrFromName,
             VideoStatsModuleGlobalParams mpg) {
         BackgroundSetMenu menu =
                 new BackgroundSetMenu(
@@ -62,8 +58,7 @@ public class ControllerPopupMenuWithBackground {
 
     public IBackgroundUpdater add(
             VideoStatsModuleGlobalParams mpg,
-            OperationWithProgressReporter<BackgroundSet, GetOperationFailedException>
-                    backgroundSet) {
+            OperationWithProgressReporter<BackgroundSet, OperationFailedException> backgroundSet) {
         return addDefinition(mpg, new ChangeableBackgroundDefinitionSimple(backgroundSet));
     }
 

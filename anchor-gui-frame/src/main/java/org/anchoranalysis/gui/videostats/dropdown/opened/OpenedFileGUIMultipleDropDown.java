@@ -229,7 +229,7 @@ public class OpenedFileGUIMultipleDropDown {
             }
         }
 
-        if (list.size() > 0) {
+        if (!list.isEmpty()) {
             VideoStatsOperationMenu subMenu = outMenu.getOrCreateSubMenu(subMenuName, true);
 
             RasterMultiCreator<T> creator =

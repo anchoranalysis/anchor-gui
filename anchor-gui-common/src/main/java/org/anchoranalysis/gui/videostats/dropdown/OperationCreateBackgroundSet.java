@@ -26,6 +26,7 @@
 
 package org.anchoranalysis.gui.videostats.dropdown;
 
+import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.name.provider.NamedProvider;
 import org.anchoranalysis.core.progress.CachedOperationWithProgressReporter;
@@ -34,43 +35,33 @@ import org.anchoranalysis.core.progress.ProgressReporter;
 import org.anchoranalysis.core.progress.ProgressReporterNull;
 import org.anchoranalysis.gui.backgroundset.BackgroundSet;
 import org.anchoranalysis.gui.backgroundset.BackgroundSetFactory;
+import org.anchoranalysis.gui.container.background.BackgroundStackContainerException;
 import org.anchoranalysis.gui.series.TimeSequenceProvider;
 import org.anchoranalysis.image.stack.Stack;
 import org.anchoranalysis.image.stack.TimeSequence;
 import org.anchoranalysis.image.stack.wrap.WrapStackAsTimeSequence;
+import lombok.AllArgsConstructor;
 
-public class OperationCreateBackgroundSet
-        extends CachedOperationWithProgressReporter<BackgroundSet, GetOperationFailedException> {
+@AllArgsConstructor
+public class OperationCreateBackgroundSet extends CachedOperationWithProgressReporter<BackgroundSet, BackgroundStackContainerException> {
 
-    private OperationWithProgressReporter<TimeSequenceProvider, ? extends Throwable>
-            namedImgStackCollection;
+    private final OperationWithProgressReporter<TimeSequenceProvider, ? extends Throwable> namedImgStackCollection;
 
     public OperationCreateBackgroundSet(NamedProvider<Stack> namedProvider) {
         this(
-                progressReporter ->
-                        new TimeSequenceProvider(new WrapStackAsTimeSequence(namedProvider), 1));
-    }
-
-    public OperationCreateBackgroundSet(
-            OperationWithProgressReporter<TimeSequenceProvider, ? extends Throwable>
-                    namedImgStackCollection) {
-        super();
-        this.namedImgStackCollection = namedImgStackCollection;
+           progressReporter -> new TimeSequenceProvider(new WrapStackAsTimeSequence(namedProvider), 1)
+        );
     }
 
     @Override
-    protected BackgroundSet execute(ProgressReporter progressReporter)
-            throws GetOperationFailedException {
+    protected BackgroundSet execute(ProgressReporter progressReporter) throws BackgroundStackContainerException {
         try {
             NamedProvider<TimeSequence> stacks =
                     namedImgStackCollection.doOperation(progressReporter).sequence();
 
-            BackgroundSet backgroundSet =
-                    BackgroundSetFactory.createBackgroundSet(stacks, ProgressReporterNull.get());
-
-            return backgroundSet;
-        } catch (Throwable e) {
-            throw new GetOperationFailedException(e);
+            return BackgroundSetFactory.createBackgroundSet(stacks, ProgressReporterNull.get());
+        } catch (Exception e) {
+            throw new BackgroundStackContainerException(e);
         }
     }
 }

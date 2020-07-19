@@ -112,7 +112,7 @@ public class InternalFrameMarkProposerEvaluator {
                 mpg.getDefaultColorIndexForMarks(), mpg.getExportPopupParams().getOutputManager());
 
         ISliderState sliderState =
-                delegate.init(defaultState, operationBackgroundSet, outputWriteSettings, mpg);
+                delegate.init(defaultState, mpg);
 
         setupHistoryNavigator(sliderState);
 

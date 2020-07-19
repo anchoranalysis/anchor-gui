@@ -32,6 +32,7 @@ import org.anchoranalysis.core.error.reporter.ErrorReporter;
 import org.anchoranalysis.core.functional.function.FunctionWithException;
 import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.index.IIndexGettableSettable;
+import org.anchoranalysis.gui.container.background.BackgroundStackContainerException;
 import org.anchoranalysis.gui.displayupdate.IDisplayUpdateRememberStack;
 import org.anchoranalysis.gui.frame.display.DisplayUpdate;
 import org.anchoranalysis.gui.frame.threaded.stack.IThreadedProducer;
@@ -53,7 +54,7 @@ public class ThreadedIndexedDisplayStackSetter implements IBackgroundSetter, ITh
             FunctionWithException<Integer, DisplayStack, ? extends Throwable> cntrDisplayStack,
             InteractiveThreadPool threadPool,
             ErrorReporter errorReporter)
-            throws InitException {
+    {
 
         stackGenerator = new DisplayStackGenerator("display");
 
@@ -78,7 +79,7 @@ public class ThreadedIndexedDisplayStackSetter implements IBackgroundSetter, ITh
 
     @Override
     public void setImageStackCntr(
-            FunctionWithException<Integer, DisplayStack, GetOperationFailedException>
+            FunctionWithException<Integer, DisplayStack, BackgroundStackContainerException>
                     imageStackCntr) {
 
         delegate.setImageStackGenerator(ensure8bit(imageStackCntr));

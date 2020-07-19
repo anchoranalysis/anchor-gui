@@ -43,9 +43,10 @@ import org.anchoranalysis.anchor.mpp.pair.Pair;
 import org.anchoranalysis.anchor.overlay.Overlay;
 import org.anchoranalysis.anchor.overlay.collection.OverlayCollection;
 import org.anchoranalysis.core.error.CreateException;
+import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.log.Logger;
 import org.anchoranalysis.feature.bean.list.FeatureList;
-import org.anchoranalysis.feature.calc.FeatureCalcException;
+import org.anchoranalysis.feature.calc.FeatureCalculationException;
 import org.anchoranalysis.feature.calc.FeatureInitParams;
 import org.anchoranalysis.feature.nrg.NRGStackWithParams;
 import org.anchoranalysis.feature.session.FeatureSession;
@@ -193,7 +194,7 @@ class FinderEvaluator {
                                     new FeatureInitParams(raster.getParams()),
                                     sharedFeatureList,
                                     logger));
-                } catch (FeatureCalcException e) {
+                } catch (InitException e) {
                     throw new CreateException(e);
                 }
 

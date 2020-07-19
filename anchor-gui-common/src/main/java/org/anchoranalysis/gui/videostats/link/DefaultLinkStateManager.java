@@ -32,6 +32,7 @@ import org.anchoranalysis.core.functional.function.FunctionWithException;
 import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.index.IntArray;
 import org.anchoranalysis.core.property.IPropertyValueSendable;
+import org.anchoranalysis.gui.container.background.BackgroundStackContainerException;
 import org.anchoranalysis.gui.image.OverlayCollectionWithImgStack;
 import org.anchoranalysis.image.stack.DisplayStack;
 
@@ -80,7 +81,7 @@ public class DefaultLinkStateManager {
     }
 
     public void setBackground(
-            FunctionWithException<Integer, DisplayStack, GetOperationFailedException> background) {
+            FunctionWithException<Integer, DisplayStack, BackgroundStackContainerException> background) {
         getState().setBackground(background);
     }
 
@@ -97,7 +98,7 @@ public class DefaultLinkStateManager {
 
     /** Provides a copy of the default module state with a changed background */
     public DefaultLinkState copyChangeBackground(
-            FunctionWithException<Integer, DisplayStack, GetOperationFailedException> background) {
+            FunctionWithException<Integer, DisplayStack, BackgroundStackContainerException> background) {
         DefaultLinkState dup = delegate.duplicate();
         dup.setBackground(background);
         return dup;

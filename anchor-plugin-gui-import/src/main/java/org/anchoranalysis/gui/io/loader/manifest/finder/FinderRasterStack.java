@@ -28,11 +28,13 @@ package org.anchoranalysis.gui.io.loader.manifest.finder;
 
 import java.util.Optional;
 import org.anchoranalysis.core.error.CreateException;
+import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.error.reporter.ErrorReporter;
 import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.index.container.BoundedIndexContainer;
 import org.anchoranalysis.core.index.container.SingleContainer;
-import org.anchoranalysis.gui.container.background.BackgroundStackCntr;
+import org.anchoranalysis.gui.container.background.BackgroundStackContainer;
+import org.anchoranalysis.gui.container.background.BackgroundStackContainerException;
 import org.anchoranalysis.gui.finder.FinderRasterSingleChnl;
 import org.anchoranalysis.image.channel.Channel;
 import org.anchoranalysis.image.io.RasterIOException;
@@ -44,7 +46,7 @@ import org.anchoranalysis.io.manifest.file.FileWrite;
 import org.anchoranalysis.io.manifest.finder.FinderSingleFile;
 
 public abstract class FinderRasterStack extends FinderSingleFile
-        implements FinderRasterSingleChnl, BackgroundStackCntr {
+        implements FinderRasterSingleChnl, BackgroundStackContainer {
 
     private Optional<Stack> result;
 
@@ -60,38 +62,37 @@ public abstract class FinderRasterStack extends FinderSingleFile
         return RasterReaderUtilities.openStackFromPath(rasterReader, fileWrite.calcPath());
     }
 
-    public Stack get() throws GetOperationFailedException {
+    public Stack get() throws OperationFailedException {
         assert (exists());
         if (!result.isPresent()) {
             try {
                 result = Optional.of(createStack(getFoundFile()));
             } catch (RasterIOException e) {
-                throw new GetOperationFailedException(e);
+                throw new OperationFailedException(e);
             }
         }
         return result.get();
     }
 
     @Override
-    public Channel getFirstChnl() throws GetOperationFailedException {
+    public Channel getFirstChnl() throws OperationFailedException {
         return get().getChnl(0);
     }
 
     @Override
-    public BoundedIndexContainer<DisplayStack> backgroundStackCntr()
-            throws GetOperationFailedException {
-        Stack resultNormalized = get().duplicate();
-
+    public BoundedIndexContainer<DisplayStack> container() throws BackgroundStackContainerException {
         try {
+            Stack resultNormalized = get().duplicate();
+            
             DisplayStack bgStack = DisplayStack.create(resultNormalized);
             return new SingleContainer<>(bgStack, 0, true);
-        } catch (CreateException e) {
-            throw new GetOperationFailedException(e);
+        } catch (CreateException | OperationFailedException e) {
+            throw new BackgroundStackContainerException(e);
         }
     }
 
     @Override
-    public int getNumChnl() throws GetOperationFailedException {
+    public int getNumChnl() throws OperationFailedException {
         return get().getNumChnl();
     }
 }

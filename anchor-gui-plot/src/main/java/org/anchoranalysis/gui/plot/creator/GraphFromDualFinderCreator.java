@@ -45,7 +45,7 @@ import org.anchoranalysis.gui.videostats.modulecreator.VideoStatsModuleCreator;
 
 public interface GraphFromDualFinderCreator<T> {
 
-    BoundedIndexContainer<T> createCntr(final FinderCSVStats finderCSVStats) throws CreateException;
+    BoundedIndexContainer<T> createContainer(final FinderCSVStats finderCSVStats) throws CreateException;
 
     BoundedIndexContainer<T> createCntr(
             final FinderHistoryFolder<CfgNRGInstantState> finderCfgNRGHistory)
@@ -71,7 +71,7 @@ public interface GraphFromDualFinderCreator<T> {
                     // We calculate our container
                     BoundedIndexContainer<T> cntr;
                     if (useCSV && finderCSVStats.exists()) {
-                        cntr = createCntr(finderCSVStats);
+                        cntr = createContainer(finderCSVStats);
                     } else if (finderCfgNRGHistory.exists()) {
                         cntr = createCntr(finderCfgNRGHistory);
                     } else {

@@ -53,12 +53,8 @@ public class FinderImgStackCollectionFromRootFiles implements FinderImgStackColl
     }
 
     @Override
-    public NamedProvider<Stack> getImgStackCollection() throws GetOperationFailedException {
-        try {
-            return operationImgStackCollection.doOperation(ProgressReporterNull.get());
-        } catch (OperationFailedException e) {
-            throw new GetOperationFailedException(e);
-        }
+    public NamedProvider<Stack> getImgStackCollection() throws OperationFailedException {
+        return operationImgStackCollection.doOperation(ProgressReporterNull.get());
     }
 
     @Override

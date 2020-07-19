@@ -30,6 +30,7 @@ import org.anchoranalysis.anchor.overlay.collection.ColoredOverlayCollection;
 import org.anchoranalysis.anchor.overlay.id.IDGetterOverlayID;
 import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.index.GetOperationFailedException;
+import org.anchoranalysis.gui.container.background.BackgroundStackContainerException;
 import org.anchoranalysis.gui.displayupdate.OverlayedDisplayStack;
 import org.anchoranalysis.gui.frame.details.canvas.ControllerAction;
 import org.anchoranalysis.gui.frame.details.canvas.controller.imageview.ControllerImageView;
@@ -77,7 +78,7 @@ public class InternalFrameEditableOverlays implements IColoredCfgUpdater {
             this.delegate.setIndexSliderVisible(false);
             return sliderState;
 
-        } catch (GetOperationFailedException e) {
+        } catch (BackgroundStackContainerException e) {
             throw new InitException(e);
         }
     }

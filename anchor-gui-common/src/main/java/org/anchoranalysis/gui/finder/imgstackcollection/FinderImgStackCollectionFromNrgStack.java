@@ -43,7 +43,7 @@ public class FinderImgStackCollectionFromNrgStack implements FinderImgStackColle
 
     private FinderNrgStack delegate = null;
 
-    private OperationWithProgressReporter<Stack, OperationFailedException>
+    private OperationWithProgressReporter<Stack, GetOperationFailedException>
             operationExtractUntilThreeChnls =
                     new WrapOperationWithProgressReporterAsCached<>(
                             pr -> {
@@ -68,14 +68,12 @@ public class FinderImgStackCollectionFromNrgStack implements FinderImgStackColle
 
                                     // Should we mention when we only have the first 3?
                                     stackCollection.addImageStack(
-                                            "nrgStack", operationExtractUntilThreeChnls);
+                                        "nrgStack",
+                                        operationExtractUntilThreeChnls
+                                    );
 
-                                    try {
-                                        stackCollection.addFromWithPrefix(
-                                                delegate.getNamedImgStackCollection(), "nrgChnl-");
-                                    } catch (GetOperationFailedException e) {
-                                        throw new OperationFailedException(e);
-                                    }
+                                    stackCollection.addFromWithPrefix(
+                                            delegate.getNamedImgStackCollection(), "nrgChnl-");
                                 }
                                 return stackCollection;
                             });
@@ -85,12 +83,8 @@ public class FinderImgStackCollectionFromNrgStack implements FinderImgStackColle
     }
 
     @Override
-    public NamedProvider<Stack> getImgStackCollection() throws GetOperationFailedException {
-        try {
-            return operationImgStackCollection.doOperation(ProgressReporterNull.get());
-        } catch (OperationFailedException e) {
-            throw new GetOperationFailedException(e);
-        }
+    public NamedProvider<Stack> getImgStackCollection() throws OperationFailedException {
+        return operationImgStackCollection.doOperation(ProgressReporterNull.get());
     }
 
     @Override

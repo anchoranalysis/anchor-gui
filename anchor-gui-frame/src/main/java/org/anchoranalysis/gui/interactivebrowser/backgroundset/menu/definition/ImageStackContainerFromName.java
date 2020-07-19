@@ -1,6 +1,6 @@
 /*-
  * #%L
- * anchor-gui-common
+ * anchor-gui-frame
  * %%
  * Copyright (C) 2010 - 2020 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann-La Roche
  * %%
@@ -24,15 +24,17 @@
  * #L%
  */
 
-package org.anchoranalysis.gui.container.background;
+package org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.definition;
 
+import org.anchoranalysis.core.error.OperationFailedException;
+import org.anchoranalysis.core.functional.function.FunctionWithException;
 import org.anchoranalysis.core.index.GetOperationFailedException;
-import org.anchoranalysis.core.index.container.BoundedIndexContainer;
+import org.anchoranalysis.gui.container.background.BackgroundStackContainerException;
 import org.anchoranalysis.image.stack.DisplayStack;
 
-public interface BackgroundStackCntr {
+@FunctionalInterface
+public interface ImageStackContainerFromName {
 
-    boolean exists();
-
-    BoundedIndexContainer<DisplayStack> backgroundStackCntr() throws GetOperationFailedException;
+    FunctionWithException<Integer, DisplayStack, BackgroundStackContainerException>
+            imageStackCntrFromName(String name) throws BackgroundStackContainerException;
 }

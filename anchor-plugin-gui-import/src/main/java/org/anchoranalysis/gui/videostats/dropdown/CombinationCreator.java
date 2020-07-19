@@ -38,26 +38,15 @@ import org.anchoranalysis.gui.videostats.internalframe.MergedCfgNRGHistoryIntern
 import org.anchoranalysis.gui.videostats.module.DefaultModuleStateManager;
 import org.anchoranalysis.gui.videostats.module.VideoStatsModuleCreateException;
 import org.anchoranalysis.gui.videostats.modulecreator.VideoStatsModuleCreatorContext;
+import lombok.AllArgsConstructor;
 
+@AllArgsConstructor
 class CombinationCreator extends VideoStatsModuleCreatorContext {
 
     private FinderCfgNRGSet finderFirst;
     private FinderCfgNRGSet finderSecond;
     private String combinationName;
     private OperationWithProgressReporter<BackgroundSet, GetOperationFailedException> backgroundSet;
-
-    public CombinationCreator(
-            FinderCfgNRGSet finderFirst,
-            FinderCfgNRGSet finderSecond,
-            String combinationName,
-            OperationWithProgressReporter<BackgroundSet, GetOperationFailedException>
-                    backgroundSet) {
-        super();
-        this.finderFirst = finderFirst;
-        this.finderSecond = finderSecond;
-        this.combinationName = combinationName;
-        this.backgroundSet = backgroundSet;
-    }
 
     @Override
     public boolean precondition() {

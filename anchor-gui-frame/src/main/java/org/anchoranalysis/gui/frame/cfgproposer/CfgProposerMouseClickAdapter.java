@@ -85,7 +85,7 @@ public class CfgProposerMouseClickAdapter extends MouseAdapter {
                 // If we have no evaluatorWithCotnext we ignored it
                 return;
             }
-        } catch (GetOperationFailedException e) {
+        } catch (OperationFailedException e) {
             errorReporter.recordError(CfgProposerMouseClickAdapter.class, e);
             return;
         }

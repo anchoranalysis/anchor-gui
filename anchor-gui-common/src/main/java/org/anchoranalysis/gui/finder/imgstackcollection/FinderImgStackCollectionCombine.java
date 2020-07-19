@@ -51,23 +51,15 @@ public class FinderImgStackCollectionCombine implements FinderImgStackCollection
                                 NamedImgStackCollection out = new NamedImgStackCollection();
 
                                 for (FinderImgStackCollection finder : list) {
-                                    try {
-                                        out.addFrom(finder.getImgStackCollection());
-                                    } catch (GetOperationFailedException e) {
-                                        throw new OperationFailedException(e);
-                                    }
+                                    out.addFrom(finder.getImgStackCollection());
                                 }
 
                                 return out;
                             });
 
     @Override
-    public NamedProvider<Stack> getImgStackCollection() throws GetOperationFailedException {
-        try {
-            return operation.doOperation(ProgressReporterNull.get());
-        } catch (OperationFailedException e) {
-            throw new GetOperationFailedException(e);
-        }
+    public NamedProvider<Stack> getImgStackCollection() throws OperationFailedException {
+        return operation.doOperation(ProgressReporterNull.get());
     }
 
     @Override

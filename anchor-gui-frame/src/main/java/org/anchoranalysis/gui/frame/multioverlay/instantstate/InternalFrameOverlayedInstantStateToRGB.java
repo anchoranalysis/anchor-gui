@@ -35,6 +35,7 @@ import org.anchoranalysis.core.index.IIndexGettableSettable;
 import org.anchoranalysis.core.index.SetOperationFailedException;
 import org.anchoranalysis.core.index.container.BoundedIndexContainer;
 import org.anchoranalysis.core.property.IPropertyValueSendable;
+import org.anchoranalysis.gui.container.background.BackgroundStackContainerException;
 import org.anchoranalysis.gui.frame.details.IGenerateExtraDetail;
 import org.anchoranalysis.gui.frame.details.canvas.ControllerAction;
 import org.anchoranalysis.gui.frame.details.canvas.InternalFrameCanvas;
@@ -196,7 +197,7 @@ class InternalFrameOverlayedInstantStateToRGB {
                 delegate.getRedrawable()
                         .applyRedrawUpdate(
                                 OverlayedDisplayStackUpdate.assignBackground(backgroundNew));
-            } catch (GetOperationFailedException e) {
+            } catch (BackgroundStackContainerException e) {
                 throw new SetOperationFailedException(e);
             }
         };

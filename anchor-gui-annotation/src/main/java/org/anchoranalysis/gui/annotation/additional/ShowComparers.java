@@ -94,14 +94,9 @@ public class ShowComparers {
         return String.format("%s: %s", name, rasterName);
     }
 
-    private static BackgroundSet createBackgroundSet(Stack stack)
-            throws GetOperationFailedException {
+    private static BackgroundSet createBackgroundSet(Stack stack) throws OperationFailedException {
         BackgroundSet backgroundSet = new BackgroundSet();
-        try {
-            backgroundSet.addItem("Associated Raster", stack);
-        } catch (OperationFailedException e) {
-            throw new GetOperationFailedException(e);
-        }
+        backgroundSet.addItem("Associated Raster", stack);
         return backgroundSet;
     }
 }

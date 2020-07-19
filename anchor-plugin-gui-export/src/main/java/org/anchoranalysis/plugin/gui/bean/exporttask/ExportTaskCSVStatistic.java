@@ -45,18 +45,9 @@ public class ExportTaskCSVStatistic
         @Override
         public BoundedIndexContainer<CSVStatistic> apply(ExportTaskParams sourceObject)
                 throws OperationFailedException {
-            try {
-                return sourceObject.getFinderCsvStatistics().get();
-            } catch (GetOperationFailedException e) {
-                throw new OperationFailedException(e);
-            }
+            return sourceObject.getFinderCsvStatistics().get();
         }
     }
-
-    public ExportTaskCSVStatistic() {
-        super();
-    }
-
     @Override
     public void init() {
         setBridge(new ExportTaskParamsCSVStatisticContainerBridge());

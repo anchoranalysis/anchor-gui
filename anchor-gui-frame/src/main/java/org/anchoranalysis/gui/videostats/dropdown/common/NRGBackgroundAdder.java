@@ -28,24 +28,15 @@ package org.anchoranalysis.gui.videostats.dropdown.common;
 
 import org.anchoranalysis.core.progress.OperationWithProgressReporter;
 import org.anchoranalysis.gui.videostats.dropdown.IAddVideoStatsModule;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 
+@AllArgsConstructor
 public class NRGBackgroundAdder<E extends Exception> {
 
+    @Getter
     private NRGBackground delegate;
+    
+    @Getter
     private OperationWithProgressReporter<IAddVideoStatsModule, E> adder;
-
-    public NRGBackgroundAdder(
-            NRGBackground delegate, OperationWithProgressReporter<IAddVideoStatsModule, E> adder) {
-        super();
-        this.delegate = delegate;
-        this.adder = adder;
-    }
-
-    public NRGBackground getNRGBackground() {
-        return delegate;
-    }
-
-    public OperationWithProgressReporter<IAddVideoStatsModule, E> getAdder() {
-        return adder;
-    }
 }

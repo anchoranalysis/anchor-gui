@@ -112,19 +112,15 @@ public class MarkEvaluatorSetForImage {
         return map.keySet();
     }
 
-    public MarkEvaluatorResolved get(String key) throws GetOperationFailedException {
-        try {
-            Operation<MarkEvaluatorResolved, OperationFailedException> op = map.get(key);
+    public MarkEvaluatorResolved get(String key) throws OperationFailedException {
+        Operation<MarkEvaluatorResolved, OperationFailedException> op = map.get(key);
 
-            if (op == null) {
-                throw new GetOperationFailedException(
-                        String.format("Cannot find markEvaluator '%s'", key));
-            }
-
-            return op.doOperation();
-        } catch (OperationFailedException e) {
-            throw new GetOperationFailedException(e);
+        if (op == null) {
+            throw new OperationFailedException(
+                    String.format("Cannot find markEvaluator '%s'", key));
         }
+
+        return op.doOperation();
     }
 
     public boolean hasItems() {

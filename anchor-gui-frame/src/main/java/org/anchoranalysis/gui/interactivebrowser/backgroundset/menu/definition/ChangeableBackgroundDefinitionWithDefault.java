@@ -26,28 +26,22 @@
 
 package org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.definition;
 
+import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.progress.OperationWithProgressReporter;
 import org.anchoranalysis.gui.backgroundset.BackgroundSet;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 
+@AllArgsConstructor
 public abstract class ChangeableBackgroundDefinitionWithDefault
         extends ChangeableBackgroundDefinition {
 
-    private OperationWithProgressReporter<BackgroundSet, GetOperationFailedException> backgroundSet;
-
-    public ChangeableBackgroundDefinitionWithDefault(
-            OperationWithProgressReporter<BackgroundSet, GetOperationFailedException>
-                    backgroundSet) {
-        this.backgroundSet = backgroundSet;
-    }
-
-    public OperationWithProgressReporter<BackgroundSet, GetOperationFailedException>
-            getBackgroundSet() {
-        return backgroundSet;
-    }
+    @Getter
+    private OperationWithProgressReporter<BackgroundSet, OperationFailedException> backgroundSet;
 
     public void update(
-            OperationWithProgressReporter<BackgroundSet, GetOperationFailedException>
+            OperationWithProgressReporter<BackgroundSet, OperationFailedException>
                     backgroundSet) {
         this.backgroundSet = backgroundSet;
     }

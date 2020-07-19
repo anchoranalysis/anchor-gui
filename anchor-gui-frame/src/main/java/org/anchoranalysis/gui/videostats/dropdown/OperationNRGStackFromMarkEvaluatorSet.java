@@ -55,7 +55,7 @@ public class OperationNRGStackFromMarkEvaluatorSet
 
         try {
             return markEvaluatorSet.get(markEvaluatorIdentifier).getNRGStack();
-        } catch (IllegalArgumentException | GetOperationFailedException e) {
+        } catch (IllegalArgumentException e) {
             throw new OperationFailedException(e);
         }
     }

@@ -154,7 +154,7 @@ public class ObjectWriterFromCfgNRGInstantState extends CreateRasterGenerator<Cf
                     OverlayCollectionMarkFactory.createColor(coloredCfg, regionMembership);
             return OverlayedDisplayStackUpdate.assignOverlaysAndBackground(oc, backgroundStack);
 
-        } catch (CreateException | GetOperationFailedException e) {
+        } catch (CreateException e) {
             throw new OperationFailedException(e);
         } catch (NamedProviderGetException e) {
             throw new OperationFailedException(e.summarize());

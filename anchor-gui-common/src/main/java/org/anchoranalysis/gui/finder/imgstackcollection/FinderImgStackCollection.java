@@ -35,7 +35,7 @@ import org.anchoranalysis.io.manifest.finder.Finder;
 
 public interface FinderImgStackCollection extends Finder {
 
-    NamedProvider<Stack> getImgStackCollection() throws GetOperationFailedException;
+    NamedProvider<Stack> getImgStackCollection() throws OperationFailedException;
 
     OperationWithProgressReporter<NamedProvider<Stack>, OperationFailedException>
             getImgStackCollectionAsOperationWithProgressReporter();

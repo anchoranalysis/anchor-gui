@@ -28,6 +28,7 @@ package org.anchoranalysis.gui.io.loader.manifest.finder;
 
 import org.anchoranalysis.anchor.mpp.feature.instantstate.CfgNRGInstantState;
 import org.anchoranalysis.core.error.InitException;
+import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.index.container.BoundedIndexContainer;
 import org.anchoranalysis.gui.container.ContainerGetter;
@@ -122,7 +123,7 @@ public class FinderCfgNRGSet implements Finder, ContainerGetter<CfgNRGInstantSta
         return dropDown;
     }
 
-    public LoadContainer<CfgNRGInstantState> getHistory() throws GetOperationFailedException {
+    public LoadContainer<CfgNRGInstantState> getHistory() throws OperationFailedException {
         return finderCfgNRGHistory.get();
     }
 
@@ -147,7 +148,7 @@ public class FinderCfgNRGSet implements Finder, ContainerGetter<CfgNRGInstantSta
     }
 
     @Override
-    public BoundedIndexContainer<CfgNRGInstantState> getCntr() throws GetOperationFailedException {
+    public BoundedIndexContainer<CfgNRGInstantState> getCntr() throws OperationFailedException {
         return getHistory().getCntr();
     }
 }

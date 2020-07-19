@@ -29,6 +29,7 @@ package org.anchoranalysis.gui.io.loader.manifest.finder;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.error.reporter.ErrorReporter;
 import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.index.container.BoundedIndexContainer;
@@ -51,7 +52,7 @@ import org.anchoranalysis.io.manifest.match.ManifestDescriptionTypeMatch;
 
 public class FinderCSVStats extends FinderSingleFile {
 
-    private String outputName;
+    private final String outputName;
 
     private Optional<BoundedIndexContainer<CSVStatistic>> statsCntr = Optional.empty();
 
@@ -60,7 +61,7 @@ public class FinderCSVStats extends FinderSingleFile {
         this.outputName = outputName;
     }
 
-    public BoundedIndexContainer<CSVStatistic> get() throws GetOperationFailedException {
+    public BoundedIndexContainer<CSVStatistic> get() throws OperationFailedException {
 
         assert (exists());
 
@@ -112,8 +113,7 @@ public class FinderCSVStats extends FinderSingleFile {
         return foundList;
     }
 
-    private BoundedIndexContainer<CSVStatistic> createContainer(FileWrite fileWrite)
-            throws GetOperationFailedException {
+    private BoundedIndexContainer<CSVStatistic> createContainer(FileWrite fileWrite) throws OperationFailedException {
 
         try {
             CSVStatisticLoader loader =
@@ -121,18 +121,18 @@ public class FinderCSVStats extends FinderSingleFile {
             return loader.createContainerFromCSV(fileWrite.calcPath());
 
         } catch (CSVReaderException e) {
-            throw new GetOperationFailedException(e);
+            throw new OperationFailedException(e);
         }
     }
 
     private CSVStatisticLoader createStatisticLoader(String function)
-            throws GetOperationFailedException {
+            throws OperationFailedException {
         if (function.equals("event_aggregate_stats")) {
             return new CSVStatisticLoaderEventAggregate();
         } else if (function.equals("interval_aggregate_stats")) {
             return new CSVStatisticLoaderIntervalAggregate();
         } else {
-            throw new GetOperationFailedException(
+            throw new OperationFailedException(
                     "Cannot determine which CSVStatisticLoader to use");
         }
     }

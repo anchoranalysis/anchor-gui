@@ -77,18 +77,14 @@ class TitleBoundsUpdater implements ChangeListener {
 
     // Maybe this gets called before init
     public void updateSliceBounds() throws OperationFailedException {
-        try {
-            BoundOverlayedDisplayStack initialStack = this.stackProvider.getCurrentDisplayStack();
-            ChnlSliceRange sliceBounds = new ChnlSliceRange(initialStack.getDimensions());
+        BoundOverlayedDisplayStack initialStack = this.stackProvider.getCurrentDisplayStack();
+        ChnlSliceRange sliceBounds = new ChnlSliceRange(initialStack.getDimensions());
 
-            if (slider == null) {
-                return;
-            }
-
-            slider.setSliceBounds(sliceBounds);
-        } catch (GetOperationFailedException e) {
-            throw new OperationFailedException(e);
+        if (slider == null) {
+            return;
         }
+
+        slider.setSliceBounds(sliceBounds);
     }
 
     private String genTitle(int iter) {

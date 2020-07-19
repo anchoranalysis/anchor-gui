@@ -38,27 +38,19 @@ import org.anchoranalysis.feature.nrg.NRGStackWithParams;
 import org.anchoranalysis.image.stack.Stack;
 import org.anchoranalysis.io.manifest.finder.FinderKeyValueParams;
 import org.anchoranalysis.io.manifest.finder.FinderSerializedObject;
+import lombok.AllArgsConstructor;
 
+@AllArgsConstructor
 class OperationStackWithParams
-        extends CachedOperationWithProgressReporter<NRGStackWithParams, OperationFailedException> {
+        extends CachedOperationWithProgressReporter<NRGStackWithParams, GetOperationFailedException> {
 
-    private OperationFindNrgStackFromStackCollection nrgStackOperation;
-    private FinderKeyValueParams finderImageParams;
-    private FinderSerializedObject<NRGElemParamsFromImage> finderImageParamsLegacy;
-
-    public OperationStackWithParams(
-            OperationFindNrgStackFromStackCollection nrgStackOperation,
-            FinderKeyValueParams finderImageParams,
-            FinderSerializedObject<NRGElemParamsFromImage> finderImageParamsLegacy) {
-        super();
-        this.nrgStackOperation = nrgStackOperation;
-        this.finderImageParams = finderImageParams;
-        this.finderImageParamsLegacy = finderImageParamsLegacy;
-    }
+    private final OperationFindNrgStackFromStackCollection nrgStackOperation;
+    private final FinderKeyValueParams finderImageParams;
+    private final FinderSerializedObject<NRGElemParamsFromImage> finderImageParamsLegacy;
 
     @Override
     protected NRGStackWithParams execute(ProgressReporter progressReporter)
-            throws OperationFailedException {
+            throws GetOperationFailedException {
 
         try {
             NRGStackWithParams nrgStackWithParams = nrgStackOperation.doOperation();
@@ -72,8 +64,8 @@ class OperationStackWithParams
 
             return nrgStackWithParams;
 
-        } catch (GetOperationFailedException | IOException e) {
-            throw new OperationFailedException(e);
+        } catch (IOException | OperationFailedException e) {
+            throw new GetOperationFailedException(e);
         }
     }
 

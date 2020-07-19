@@ -27,6 +27,7 @@
 package org.anchoranalysis.gui.interactivebrowser.backgroundset.menu;
 
 import javax.swing.JMenu;
+import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.error.reporter.ErrorReporter;
 import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.progress.OperationWithProgressReporter;
@@ -55,7 +56,7 @@ class BackgroundSetMenuWithMap implements IBackgroundUpdater {
 
     @Override
     public void update(
-            OperationWithProgressReporter<BackgroundSet, GetOperationFailedException>
+            OperationWithProgressReporter<BackgroundSet, OperationFailedException>
                     backgroundSet) {
         backgroundDefinition.update(backgroundSet);
         delegate.update(

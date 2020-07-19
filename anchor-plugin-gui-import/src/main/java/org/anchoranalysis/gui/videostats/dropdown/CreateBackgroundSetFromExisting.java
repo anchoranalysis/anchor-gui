@@ -28,6 +28,7 @@ package org.anchoranalysis.gui.videostats.dropdown;
 
 import org.anchoranalysis.anchor.mpp.bean.init.MPPInitParams;
 import org.anchoranalysis.core.error.CreateException;
+import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.progress.CachedOperationWithProgressReporter;
 import org.anchoranalysis.core.progress.OperationWithProgressReporter;
@@ -39,28 +40,20 @@ import org.anchoranalysis.image.bean.nonbean.init.CreateCombinedStack;
 import org.anchoranalysis.image.bean.nonbean.init.ImageInitParams;
 import org.anchoranalysis.image.stack.wrap.WrapStackAsTimeSequence;
 import org.anchoranalysis.io.output.bean.OutputWriteSettings;
+import lombok.AllArgsConstructor;
 
+@AllArgsConstructor
 public class CreateBackgroundSetFromExisting
-        extends CachedOperationWithProgressReporter<BackgroundSet, GetOperationFailedException> {
+        extends CachedOperationWithProgressReporter<BackgroundSet, OperationFailedException> {
 
-    private final OperationWithProgressReporter<BackgroundSet, GetOperationFailedException>
+    private final OperationWithProgressReporter<BackgroundSet, OperationFailedException>
             existingBackgroundSet;
     private OperationInitParams pso;
     private OutputWriteSettings ows;
 
-    public CreateBackgroundSetFromExisting(
-            OperationWithProgressReporter<BackgroundSet, GetOperationFailedException> backgroundSet,
-            OperationInitParams pso,
-            OutputWriteSettings ows) {
-        super();
-        this.existingBackgroundSet = backgroundSet;
-        this.pso = pso;
-        this.ows = ows;
-    }
-
     @Override
     protected BackgroundSet execute(ProgressReporter progressReporter)
-            throws GetOperationFailedException {
+            throws OperationFailedException {
 
         BackgroundSet bsExisting = existingBackgroundSet.doOperation(progressReporter);
         try {
@@ -74,7 +67,7 @@ public class CreateBackgroundSetFromExisting
                     progressReporter);
 
         } catch (CreateException e) {
-            throw new GetOperationFailedException(e);
+            throw new OperationFailedException(e);
         }
     }
 }

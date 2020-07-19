@@ -71,7 +71,7 @@ public class InternalFrameAnnotator {
 
         ISliderState sliderState =
                 delegate.init(
-                        defaultState, paramsInit.getBackgroundSetOp(), outputWriteSettings, mpg);
+                        defaultState, mpg);
 
         SaveMonitor saveMonitor = new SaveMonitor();
 

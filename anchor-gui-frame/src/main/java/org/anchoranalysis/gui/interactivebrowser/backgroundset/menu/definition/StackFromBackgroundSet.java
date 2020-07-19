@@ -26,33 +26,29 @@
 
 package org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.definition;
 
+import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.error.reporter.ErrorReporter;
 import org.anchoranalysis.core.functional.function.FunctionWithException;
 import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.progress.OperationWithProgressReporter;
 import org.anchoranalysis.core.progress.ProgressReporterNull;
 import org.anchoranalysis.gui.backgroundset.BackgroundSet;
+import org.anchoranalysis.gui.container.background.BackgroundStackContainerException;
 import org.anchoranalysis.image.stack.DisplayStack;
+import lombok.AllArgsConstructor;
 
-class StackFromBackgroundSet implements IImageStackCntrFromName {
+@AllArgsConstructor
+class StackFromBackgroundSet implements ImageStackContainerFromName {
 
-    private OperationWithProgressReporter<BackgroundSet, ? extends Throwable> backgroundSet;
-    private ErrorReporter errorReporter;
-
-    public StackFromBackgroundSet(
-            OperationWithProgressReporter<BackgroundSet, ? extends Throwable> backgroundSet,
-            ErrorReporter errorReporter) {
-        super();
-        this.backgroundSet = backgroundSet;
-        this.errorReporter = errorReporter;
-    }
+    private final OperationWithProgressReporter<BackgroundSet, ? extends Throwable> backgroundSet;
+    private final ErrorReporter errorReporter;
 
     @Override
-    public FunctionWithException<Integer, DisplayStack, GetOperationFailedException>
+    public FunctionWithException<Integer, DisplayStack, BackgroundStackContainerException>
             imageStackCntrFromName(String name) {
         try {
             return backgroundSet.doOperation(ProgressReporterNull.get()).stackCntr(name);
-        } catch (Throwable e) {
+        } catch (Exception e) {
             errorReporter.recordError(NamesFromBackgroundSet.class, e);
             return null;
         }

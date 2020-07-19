@@ -26,6 +26,7 @@
 
 package org.anchoranalysis.gui.finder;
 
+import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.image.channel.Channel;
 
@@ -33,7 +34,7 @@ public interface FinderRasterSingleChnl {
 
     boolean exists();
 
-    Channel getFirstChnl() throws GetOperationFailedException;
+    Channel getFirstChnl() throws OperationFailedException;
 
-    int getNumChnl() throws GetOperationFailedException;
+    int getNumChnl() throws OperationFailedException;
 }

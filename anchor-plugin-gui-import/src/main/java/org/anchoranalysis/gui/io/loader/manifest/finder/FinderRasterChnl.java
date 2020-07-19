@@ -29,6 +29,7 @@ package org.anchoranalysis.gui.io.loader.manifest.finder;
 import java.nio.file.Path;
 import java.util.Optional;
 import org.anchoranalysis.core.error.CreateException;
+import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.error.reporter.ErrorReporter;
 import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.progress.ProgressReporterNull;
@@ -56,25 +57,25 @@ public abstract class FinderRasterChnl extends FinderSingleFile implements Finde
         this.normalizeChnl = normalizeChnl;
     }
 
-    public Channel get() throws GetOperationFailedException {
+    public Channel get() throws OperationFailedException {
         assert (exists());
         if (!result.isPresent()) {
             try {
                 result = Optional.of(createChnl(getFoundFile()));
             } catch (RasterIOException | CreateException e) {
-                throw new GetOperationFailedException(e);
+                throw new OperationFailedException(e);
             }
         }
         return result.get();
     }
 
     @Override
-    public Channel getFirstChnl() throws GetOperationFailedException {
+    public Channel getFirstChnl() throws OperationFailedException {
         return get();
     }
 
     @Override
-    public int getNumChnl() throws GetOperationFailedException {
+    public int getNumChnl() {
         return 1;
     }
 

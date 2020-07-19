@@ -26,6 +26,7 @@
 
 package org.anchoranalysis.gui.annotation;
 
+import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.functional.function.FunctionWithException;
 import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.name.provider.NamedProvider;
@@ -33,57 +34,49 @@ import org.anchoranalysis.core.progress.OperationWithProgressReporter;
 import org.anchoranalysis.core.progress.ProgressReporterMultiple;
 import org.anchoranalysis.core.progress.ProgressReporterOneOfMany;
 import org.anchoranalysis.gui.backgroundset.BackgroundSet;
+import org.anchoranalysis.gui.container.background.BackgroundStackContainerException;
 import org.anchoranalysis.gui.videostats.dropdown.OperationCreateBackgroundSet;
 import org.anchoranalysis.gui.videostats.link.DefaultLinkStateManager;
 import org.anchoranalysis.image.extent.ImageDimensions;
 import org.anchoranalysis.image.stack.DisplayStack;
 import org.anchoranalysis.image.stack.Stack;
+import lombok.Getter;
 
 public class AnnotationBackground {
 
-    private OperationWithProgressReporter<BackgroundSet, GetOperationFailedException>
-            backgroundSetOp;
-    private FunctionWithException<Integer, DisplayStack, GetOperationFailedException>
-            defaultBackground;
-    private ImageDimensions dimViewer;
+    @Getter
+    private OperationWithProgressReporter<BackgroundSet, BackgroundStackContainerException> backgroundSetOp;
+    
+    @Getter
+    private FunctionWithException<Integer, DisplayStack, BackgroundStackContainerException> defaultBackground;
+    
+    @Getter
+    private ImageDimensions dimensionsViewer;
 
     public AnnotationBackground(
             ProgressReporterMultiple prm,
             NamedProvider<Stack> backgroundStacks,
             String stackNameVisualOriginal)
-            throws GetOperationFailedException {
+            throws BackgroundStackContainerException {
         backgroundSetOp = new OperationCreateBackgroundSet(backgroundStacks);
-        {
-            defaultBackground =
-                    backgroundSetOp
-                            .doOperation(new ProgressReporterOneOfMany(prm))
-                            .stackCntr(stackNameVisualOriginal);
-
+        try {
+            defaultBackground = backgroundSetOp
+                .doOperation(new ProgressReporterOneOfMany(prm))
+                .stackCntr(stackNameVisualOriginal);
+                
             if (defaultBackground == null) {
-                throw new GetOperationFailedException(
+                throw new BackgroundStackContainerException(
                         String.format("Cannot find stackName '%s'", stackNameVisualOriginal));
             }
 
-            dimViewer = defaultBackground.apply(0).getDimensions();
+            dimensionsViewer = defaultBackground.apply(0).getDimensions();
+        } catch (GetOperationFailedException e) {
+            throw new BackgroundStackContainerException(e);
         }
     }
 
     public void configureLinkManager(DefaultLinkStateManager linkStateManager) {
         linkStateManager.setBackground(defaultBackground);
-        linkStateManager.setSliceNum(dimViewer.getZ() / 2);
-    }
-
-    public ImageDimensions getDimensionsViewer() {
-        return dimViewer;
-    }
-
-    public FunctionWithException<Integer, DisplayStack, GetOperationFailedException>
-            getDefaultBackground() {
-        return defaultBackground;
-    }
-
-    public OperationWithProgressReporter<BackgroundSet, GetOperationFailedException>
-            getBackgroundSetOp() {
-        return backgroundSetOp;
+        linkStateManager.setSliceNum(dimensionsViewer.getZ() / 2);
     }
 }

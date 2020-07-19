@@ -200,7 +200,7 @@ public class InternalFrameCanvas {
         BoundOverlayedDisplayStack initialStack;
         try {
             initialStack = this.stackProvider.getCurrentDisplayStack();
-        } catch (GetOperationFailedException e1) {
+        } catch (OperationFailedException e1) {
             throw new InitException(e1);
         }
         ChnlSliceRange sliceBounds = new ChnlSliceRange(initialStack.getDimensions());
@@ -343,7 +343,7 @@ public class InternalFrameCanvas {
                 DisplayStack stack = stackProvider.getCurrentDisplayStack().extractFullyOverlayed();
                 rei.setStack(stack);
                 rei.setSlice(stack.extractSlice(canvas.getSlice()));
-            } catch (GetOperationFailedException | CreateException | OperationFailedException e) {
+            } catch (CreateException | OperationFailedException e) {
                 errorReporter.recordError(InternalFrameCanvas.class, e);
                 rei.setStack(null);
                 rei.setSlice(null);

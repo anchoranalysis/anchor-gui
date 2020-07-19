@@ -26,6 +26,7 @@
 
 package org.anchoranalysis.gui.interactivebrowser.backgroundset.menu;
 
+import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.progress.OperationWithProgressReporter;
 import org.anchoranalysis.gui.backgroundset.BackgroundSet;
@@ -34,6 +35,6 @@ import org.anchoranalysis.gui.backgroundset.BackgroundSet;
 public interface IBackgroundUpdater {
 
     void update(
-            OperationWithProgressReporter<BackgroundSet, GetOperationFailedException>
+            OperationWithProgressReporter<BackgroundSet, OperationFailedException>
                     backgroundSet);
 }

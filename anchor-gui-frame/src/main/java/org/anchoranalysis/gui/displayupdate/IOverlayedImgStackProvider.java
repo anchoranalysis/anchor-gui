@@ -26,10 +26,11 @@
 
 package org.anchoranalysis.gui.displayupdate;
 
+import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.gui.frame.display.BoundOverlayedDisplayStack;
 
 public interface IOverlayedImgStackProvider {
 
-    BoundOverlayedDisplayStack getCurrentDisplayStack() throws GetOperationFailedException;
+    BoundOverlayedDisplayStack getCurrentDisplayStack() throws OperationFailedException;
 }

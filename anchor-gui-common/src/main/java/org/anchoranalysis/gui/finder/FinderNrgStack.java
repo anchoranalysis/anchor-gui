@@ -76,28 +76,20 @@ public class FinderNrgStack implements Finder {
     }
 
     public NRGStackWithParams getNrgStack() throws GetOperationFailedException {
-        try {
-            return operationCombined.doOperation();
-        } catch (OperationFailedException e) {
-            throw new GetOperationFailedException(e);
-        }
+        return operationCombined.doOperation();
     }
 
-    public NamedProvider<Stack> getNamedImgStackCollection() throws GetOperationFailedException {
-        try {
-            return operationCombined
-                    .getOperationStackCollection()
-                    .doOperation(ProgressReporterNull.get());
-        } catch (OperationFailedException e) {
-            throw new GetOperationFailedException(e);
-        }
+    public NamedProvider<Stack> getNamedImgStackCollection() throws OperationFailedException {
+        return operationCombined
+                .getOperationStackCollection()
+                .doOperation(ProgressReporterNull.get());
     }
 
-    public Operation<NRGStackWithParams, OperationFailedException> operationNrgStack() {
+    public Operation<NRGStackWithParams, GetOperationFailedException> operationNrgStack() {
         return operationCombined;
     }
 
-    public OperationWithProgressReporter<NRGStackWithParams, OperationFailedException>
+    public OperationWithProgressReporter<NRGStackWithParams, GetOperationFailedException>
             operationNrgStackWithProgressReporter() {
         return operationCombined;
     }

@@ -44,7 +44,9 @@ import org.anchoranalysis.gui.videostats.internalframe.InternalFrameStaticOverla
 import org.anchoranalysis.gui.videostats.module.VideoStatsModuleCreateException;
 import org.anchoranalysis.gui.videostats.operation.combine.IVideoStatsOperationCombine;
 import org.anchoranalysis.image.object.ObjectCollection;
+import lombok.AllArgsConstructor;
 
+@AllArgsConstructor
 public class CfgModuleCreator extends VideoStatsModuleCreator {
 
     private String fileIdentifier;
@@ -53,22 +55,6 @@ public class CfgModuleCreator extends VideoStatsModuleCreator {
     private NRGBackground nrgBackground;
     private VideoStatsModuleGlobalParams mpg;
     private MarkDisplaySettings markDisplaySettings;
-
-    public CfgModuleCreator(
-            String fileIdentifier,
-            String name,
-            Operation<Cfg, OperationFailedException> opCfg,
-            NRGBackground nrgBackground,
-            VideoStatsModuleGlobalParams mpg,
-            MarkDisplaySettings markDisplaySettings) {
-        super();
-        this.fileIdentifier = fileIdentifier;
-        this.name = name;
-        this.opCfg = opCfg;
-        this.nrgBackground = nrgBackground;
-        this.mpg = mpg;
-        this.markDisplaySettings = markDisplaySettings;
-    }
 
     @Override
     public void createAndAddVideoStatsModule(IAddVideoStatsModule adder)

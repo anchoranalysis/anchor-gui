@@ -460,7 +460,7 @@ public class ImageCanvas {
                 }
             }
 
-        } catch (GetOperationFailedException | SetOperationFailedException e) {
+        } catch (SetOperationFailedException e) {
             throw new OperationFailedException(e);
         }
     }

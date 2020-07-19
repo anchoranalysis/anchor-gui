@@ -32,7 +32,7 @@ import org.anchoranalysis.anchor.mpp.mark.Mark;
 import org.anchoranalysis.anchor.mpp.mark.voxelized.memo.VoxelizedMarkMemo;
 import org.anchoranalysis.anchor.mpp.overlap.OverlapUtilities;
 import org.anchoranalysis.core.error.OperationFailedException;
-import org.anchoranalysis.feature.calc.FeatureCalcException;
+import org.anchoranalysis.feature.calc.FeatureCalculationException;
 import org.anchoranalysis.feature.nrg.NRGStack;
 import org.anchoranalysis.gui.videostats.internalframe.annotator.tool.ToolErrorReporter;
 import org.anchoranalysis.image.extent.ImageDimensions;
@@ -58,7 +58,7 @@ class OverlapChecker {
 
     public static double calcOverlapRatio(
             VoxelizedMarkMemo obj1, VoxelizedMarkMemo obj2, double overlap, int regionID)
-            throws FeatureCalcException {
+            throws FeatureCalculationException {
         return overlap / calcMinVolume(obj1, obj2, regionID);
     }
 
@@ -93,7 +93,7 @@ class OverlapChecker {
             double overlap = OverlapUtilities.overlapWith(pmProp1, pmProp2, 0);
             double overlapRatio = calcOverlapRatio(pmProp1, pmProp2, overlap, 0);
             return (overlapRatio > largeOverlapThreshold);
-        } catch (FeatureCalcException e) {
+        } catch (FeatureCalculationException e) {
             throw new OperationFailedException(e);
         }
     }
@@ -108,7 +108,7 @@ class OverlapChecker {
 
     private static double calcMinVolume(
             VoxelizedMarkMemo obj1, VoxelizedMarkMemo obj2, int regionID)
-            throws FeatureCalcException {
+            throws FeatureCalculationException {
         return Math.min(obj1.getMark().volume(0), obj2.getMark().volume(0));
     }
 }

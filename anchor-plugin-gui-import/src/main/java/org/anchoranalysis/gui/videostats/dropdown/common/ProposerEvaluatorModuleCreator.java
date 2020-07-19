@@ -39,7 +39,9 @@ import org.anchoranalysis.gui.videostats.internalframe.evaluator.InternalFrameMa
 import org.anchoranalysis.gui.videostats.module.VideoStatsModuleCreateException;
 import org.anchoranalysis.gui.videostats.modulecreator.VideoStatsModuleCreator;
 import org.anchoranalysis.io.output.bean.OutputWriteSettings;
+import lombok.AllArgsConstructor;
 
+@AllArgsConstructor
 class ProposerEvaluatorModuleCreator extends VideoStatsModuleCreator {
 
     private MarkEvaluatorSetForImage markEvaluatorSet;
@@ -47,21 +49,7 @@ class ProposerEvaluatorModuleCreator extends VideoStatsModuleCreator {
     private OutputWriteSettings outputWriteSettings;
     private IUpdatableMarkEvaluator markEvaluatorUpdater;
     private VideoStatsModuleGlobalParams mpg;
-
-    public ProposerEvaluatorModuleCreator(
-            MarkEvaluatorSetForImage markEvaluatorSet,
-            NRGBackground nrgBackground,
-            OutputWriteSettings outputWriteSettings,
-            IUpdatableMarkEvaluator markEvaluatorUpdater,
-            VideoStatsModuleGlobalParams mpg) {
-        super();
-        this.markEvaluatorSet = markEvaluatorSet;
-        this.nrgBackground = nrgBackground;
-        this.outputWriteSettings = outputWriteSettings;
-        this.mpg = mpg;
-        this.markEvaluatorUpdater = markEvaluatorUpdater;
-    }
-
+    
     @Override
     public void createAndAddVideoStatsModule(IAddVideoStatsModule adder)
             throws VideoStatsModuleCreateException {
@@ -109,9 +97,7 @@ class ProposerEvaluatorModuleCreator extends VideoStatsModuleCreator {
 
             ModuleAddUtilities.add(adder, imageFrame.moduleCreator(), sliderState);
 
-        } catch (VideoStatsModuleCreateException e) {
-            mpg.getLogger().errorReporter().recordError(ProposerEvaluatorModuleCreator.class, e);
-        } catch (InitException e) {
+        } catch (VideoStatsModuleCreateException | InitException e) {
             mpg.getLogger().errorReporter().recordError(ProposerEvaluatorModuleCreator.class, e);
         }
     }

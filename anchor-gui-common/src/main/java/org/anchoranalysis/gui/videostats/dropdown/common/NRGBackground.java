@@ -43,7 +43,9 @@ import org.anchoranalysis.gui.videostats.dropdown.IAddVideoStatsModule;
 import org.anchoranalysis.gui.videostats.dropdown.OperationCreateBackgroundSet;
 import org.anchoranalysis.image.stack.Stack;
 import org.anchoranalysis.image.stack.wrap.WrapStackAsTimeSequence;
+import lombok.AllArgsConstructor;
 
+@AllArgsConstructor
 public class NRGBackground {
 
     private OperationWithProgressReporter<BackgroundSet, GetOperationFailedException>
@@ -52,19 +54,7 @@ public class NRGBackground {
     private OperationWithProgressReporter<Integer, OperationFailedException> opNumFrames;
 
     private NRGBackground(
-            OperationWithProgressReporter<BackgroundSet, GetOperationFailedException>
-                    opBackgroundSet,
-            Operation<NRGStackWithParams, OperationFailedException> opNrgStack,
-            OperationWithProgressReporter<Integer, OperationFailedException> opNumFrames) {
-        super();
-        this.opBackgroundSet = opBackgroundSet;
-        this.opNrgStack = opNrgStack;
-        this.opNumFrames = opNumFrames;
-    }
-
-    private NRGBackground(
-            OperationWithProgressReporter<BackgroundSet, GetOperationFailedException>
-                    opBackgroundSet,
+            OperationWithProgressReporter<BackgroundSet, GetOperationFailedException> opBackgroundSet,
             OperationWithProgressReporter<NRGStackWithParams, OperationFailedException> opNrgStack,
             OperationWithProgressReporter<Integer, OperationFailedException> opNumFrames) {
         super();
@@ -75,25 +65,24 @@ public class NRGBackground {
     }
 
     public static NRGBackground createFromBackground(
-            OperationWithProgressReporter<BackgroundSet, GetOperationFailedException>
-                    opBackgroundSet,
-            OperationWithProgressReporter<NRGStackWithParams, OperationFailedException>
-                    opNrgStack) {
+            OperationWithProgressReporter<BackgroundSet, OperationFailedException> opBackgroundSet,
+            OperationWithProgressReporter<NRGStackWithParams, OperationFailedException> opNrgStack
+    ) {
         return new NRGBackground(
                 opBackgroundSet, opNrgStack, new IdentityOperationWithProgressReporter<>(1));
     }
 
     public static <E extends Exception> NRGBackground createStack(
             OperationWithProgressReporter<NamedProvider<Stack>, E> opBackgroundSet,
-            OperationWithProgressReporter<NRGStackWithParams, OperationFailedException>
+            OperationWithProgressReporter<NRGStackWithParams, GetOperationFailedException>
                     opNrgStack) {
         OperationWithProgressReporter<TimeSequenceProvider, E> opConvert =
-                progressReporter -> {
-                    return new TimeSequenceProvider(
-                            new WrapStackAsTimeSequence(
-                                    opBackgroundSet.doOperation(progressReporter)),
-                            1);
-                };
+                progressReporter -> new TimeSequenceProvider(
+                    new WrapStackAsTimeSequence(
+                        opBackgroundSet.doOperation(progressReporter)),
+                        1
+                    );
+                
         return createStackSequence(opConvert, opNrgStack);
     }
 
@@ -108,7 +97,7 @@ public class NRGBackground {
                 progress -> {
                     try {
                         return opBackgroundSet.doOperation(progress).getNumFrames();
-                    } catch (Throwable e) {
+                    } catch (Exception e) {
                         throw new OperationFailedException(e);
                     }
                 });

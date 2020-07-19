@@ -42,11 +42,12 @@ import org.anchoranalysis.core.index.container.BoundedIndexContainer;
 import org.anchoranalysis.core.index.container.BoundedIndexContainerFromList;
 import org.anchoranalysis.core.index.container.bridge.BoundedIndexContainerBridgeWithIndex;
 import org.anchoranalysis.core.progress.ProgressReporterNull;
+import org.anchoranalysis.gui.container.background.BackgroundStackContainerException;
 import org.anchoranalysis.gui.frame.multioverlay.instantstate.InternalFrameOverlayedInstantStateToRGBSelectable;
 import org.anchoranalysis.gui.image.frame.ISliderState;
 import org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.ControllerPopupMenuWithBackground;
 import org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.IGetNames;
-import org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.definition.IImageStackCntrFromName;
+import org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.definition.ImageStackContainerFromName;
 import org.anchoranalysis.gui.retrieveelements.IRetrieveElements;
 import org.anchoranalysis.gui.videostats.IModuleCreatorDefaultState;
 import org.anchoranalysis.gui.videostats.dropdown.VideoStatsModuleGlobalParams;
@@ -70,7 +71,7 @@ class InternalFrameMultiOverlay<T> {
             final VideoStatsModuleGlobalParams mpg)
             throws InitException {
 
-        IImageStackCntrFromName imageStackCntrFromName = createImageStackCntr(list);
+        ImageStackContainerFromName imageStackCntrFromName = createImageStackCntr(list);
 
         // We assume all NRGBackgrounds have the same stack-names, so it doesn't
         //  matter which is picked
@@ -98,15 +99,20 @@ class InternalFrameMultiOverlay<T> {
         return new SliderNRGState(sliderState, nrgBackground);
     }
 
-    private static <T> IImageStackCntrFromName createImageStackCntr(
+    private static <T> ImageStackContainerFromName createImageStackCntr(
             final List<MultiInput<T>> list) {
         return name ->
-                sourceObject ->
-                        list.get(sourceObject)
+                sourceObject -> {
+                    try {
+                        return list.get(sourceObject)
                                 .getNrgBackground()
                                 .getBackgroundSet()
                                 .doOperation(ProgressReporterNull.get())
                                 .singleStack(name);
+                    } catch (GetOperationFailedException e) {
+                        throw new BackgroundStackContainerException(e);
+                    }
+                };
     }
 
     private static <T> BoundedIndexContainer<OverlayedInstantState> bridgeList(
@@ -119,7 +125,7 @@ class InternalFrameMultiOverlay<T> {
     private static DefaultModuleState assignInitialBackground(
             DefaultModuleStateManager defaultState,
             String stackName,
-            IImageStackCntrFromName imageStackCntrFromName)
+            ImageStackContainerFromName imageStackCntrFromName)
             throws InitException {
 
         // We always set an initial background
@@ -127,7 +133,7 @@ class InternalFrameMultiOverlay<T> {
             return defaultState.copyChangeBackground(
                     imageStackCntrFromName.imageStackCntrFromName(stackName));
 
-        } catch (GetOperationFailedException e) {
+        } catch (BackgroundStackContainerException e) {
             throw new InitException(e);
         }
     }
@@ -135,7 +141,7 @@ class InternalFrameMultiOverlay<T> {
     private void addBackgroundMenu(
             List<MultiInput<T>> list,
             ISliderState sliderState,
-            IImageStackCntrFromName imageStackCntrFromName,
+            ImageStackContainerFromName imageStackCntrFromName,
             VideoStatsModuleGlobalParams mpg) {
         ControllerPopupMenuWithBackground controller =
                 delegate.controllerBackgroundMenu(sliderState);

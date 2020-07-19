@@ -29,30 +29,28 @@ package org.anchoranalysis.gui.frame.overlays.onrgb;
 import org.anchoranalysis.core.functional.function.FunctionWithException;
 import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.index.SetOperationFailedException;
+import org.anchoranalysis.gui.container.background.BackgroundStackContainerException;
 import org.anchoranalysis.gui.frame.display.IRedrawable;
 import org.anchoranalysis.gui.frame.display.OverlayedDisplayStackUpdate;
 import org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.IBackgroundSetter;
 import org.anchoranalysis.image.stack.DisplayStack;
+import lombok.AllArgsConstructor;
 
+@AllArgsConstructor
 class BackgroundSetterLocal implements IBackgroundSetter {
 
     private IRedrawable redrawable;
 
-    public BackgroundSetterLocal(IRedrawable redrawable) {
-        super();
-        this.redrawable = redrawable;
-    }
-
     @Override
     public void setImageStackCntr(
-            FunctionWithException<Integer, DisplayStack, GetOperationFailedException>
+            FunctionWithException<Integer, DisplayStack, BackgroundStackContainerException>
                     imageStackCntr)
             throws SetOperationFailedException {
 
         DisplayStack stack;
         try {
             stack = imageStackCntr.apply(0);
-        } catch (GetOperationFailedException e) {
+        } catch (BackgroundStackContainerException e) {
             throw new SetOperationFailedException(e);
         }
 

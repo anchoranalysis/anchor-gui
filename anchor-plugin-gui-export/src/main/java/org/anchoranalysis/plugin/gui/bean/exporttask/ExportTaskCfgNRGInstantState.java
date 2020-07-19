@@ -47,13 +47,13 @@ public class ExportTaskCfgNRGInstantState
     }
 
     private BoundedIndexContainer<DualStateWithoutIndex<CfgNRGInstantState>> createPrimaryOnly(
-            ExportTaskParams sourceObject) throws GetOperationFailedException {
+            ExportTaskParams sourceObject) throws OperationFailedException {
         return new BoundedIndexContainerBridgeWithoutIndex<>(
                 sourceObject.getFinderCfgNRGHistory().getCntr(), DualStateWithoutIndex::new);
     }
 
     private static DualCfgNRGContainer<CfgNRGInstantState> combine(
-            List<ContainerGetter<CfgNRGInstantState>> cntrs) throws GetOperationFailedException {
+            List<ContainerGetter<CfgNRGInstantState>> cntrs) throws OperationFailedException {
 
         DualCfgNRGContainer<CfgNRGInstantState> dualHistory =
                 new DualCfgNRGContainer<>(ContainerUtilities.listCntrs(cntrs), a -> a);
@@ -63,12 +63,12 @@ public class ExportTaskCfgNRGInstantState
     }
 
     private DualCfgNRGContainer<CfgNRGInstantState> mergedHistory(ExportTaskParams sourceObject)
-            throws GetOperationFailedException {
+            throws OperationFailedException {
         return combine(sourceObject.getAllFinderCfgNRGHistory());
     }
 
     private BoundedIndexContainer<DualStateWithoutIndex<CfgNRGInstantState>> createMergedBridge(
-            ExportTaskParams sourceObject) throws GetOperationFailedException {
+            ExportTaskParams sourceObject) throws OperationFailedException {
 
         // Otherwise we merge
 
@@ -83,14 +83,10 @@ public class ExportTaskCfgNRGInstantState
             ExportTaskParams sourceObject) throws OperationFailedException {
         assert (sourceObject.numCfgNRGHistory() > 0);
 
-        try {
-            if (sourceObject.numCfgNRGHistory() == 1) {
-                return createPrimaryOnly(sourceObject);
-            } else {
-                return createMergedBridge(sourceObject);
-            }
-        } catch (GetOperationFailedException e) {
-            throw new OperationFailedException(e);
+        if (sourceObject.numCfgNRGHistory() == 1) {
+            return createPrimaryOnly(sourceObject);
+        } else {
+            return createMergedBridge(sourceObject);
         }
     }
 }

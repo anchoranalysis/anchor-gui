@@ -28,10 +28,11 @@ package org.anchoranalysis.gui.feature.evaluator.treetable;
 
 import org.anchoranalysis.anchor.mpp.feature.nrg.scheme.KeyValueParamsForImageCreator;
 import org.anchoranalysis.anchor.mpp.feature.nrg.scheme.NRGScheme;
+import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.log.Logger;
 import org.anchoranalysis.core.params.KeyValueParams;
-import org.anchoranalysis.feature.calc.FeatureCalcException;
+import org.anchoranalysis.feature.calc.FeatureCalculationException;
 import org.anchoranalysis.feature.nrg.NRGStackWithParams;
 import org.anchoranalysis.feature.shared.SharedFeatureMulti;
 
@@ -59,7 +60,7 @@ public class KeyValueParamsAugmenter {
 
             return addParams(in, kpvNew);
 
-        } catch (FeatureCalcException e) {
+        } catch (CreateException e) {
             throw new OperationFailedException(e);
         }
     }

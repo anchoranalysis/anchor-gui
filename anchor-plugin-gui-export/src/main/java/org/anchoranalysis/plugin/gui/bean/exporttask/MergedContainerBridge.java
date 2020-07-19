@@ -36,6 +36,7 @@ import org.anchoranalysis.anchor.mpp.feature.nrg.cfg.CfgNRG;
 import org.anchoranalysis.anchor.mpp.feature.nrg.cfg.CfgWithNRGTotal;
 import org.anchoranalysis.anchor.mpp.overlay.OverlayCollectionMarkFactory;
 import org.anchoranalysis.anchor.overlay.OverlayedInstantState;
+import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.error.friendly.AnchorImpossibleSituationException;
 import org.anchoranalysis.core.functional.function.FunctionWithException;
@@ -71,19 +72,14 @@ class MergedContainerBridge
         // TODO fix
         if (retBridge == null) {
 
-            DualCfgNRGContainer<Cfg> dualHistory;
+            DualCfgNRGContainer<Cfg> dualHistory =
+                    new DualCfgNRGContainer<>(
+                            ContainerUtilities.listCntrs(
+                                    sourceObject.getAllFinderCfgNRGHistory()),
+                            new TransformToCfg());
 
-            try {
-                dualHistory =
-                        new DualCfgNRGContainer<>(
-                                ContainerUtilities.listCntrs(
-                                        sourceObject.getAllFinderCfgNRGHistory()),
-                                new TransformToCfg());
-
-                dualHistory.init();
-            } catch (GetOperationFailedException e) {
-                throw new OperationFailedException(e);
-            }
+            dualHistory.init();
+ 
 
             MergeCfgBridge mergeCfgBridge = new MergeCfgBridge(regionMembership);
 

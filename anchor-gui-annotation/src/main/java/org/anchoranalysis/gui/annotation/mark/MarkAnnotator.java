@@ -137,7 +137,7 @@ public class MarkAnnotator {
             }
 
             return markEvaluatorSet.get(annotationStrategy.getMarkEvaluatorName());
-        } catch (GetOperationFailedException | OperationFailedException e1) {
+        } catch (OperationFailedException e1) {
             throw new CreateException(e1);
         }
     }

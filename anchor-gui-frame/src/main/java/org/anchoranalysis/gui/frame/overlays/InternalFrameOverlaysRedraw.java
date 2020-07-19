@@ -34,6 +34,7 @@ import org.anchoranalysis.core.progress.OperationWithProgressReporter;
 import org.anchoranalysis.core.property.change.PropertyValueChangeEvent;
 import org.anchoranalysis.core.property.change.PropertyValueChangeListener;
 import org.anchoranalysis.gui.backgroundset.BackgroundSet;
+import org.anchoranalysis.gui.container.background.BackgroundStackContainerException;
 import org.anchoranalysis.gui.frame.details.canvas.ControllerAction;
 import org.anchoranalysis.gui.frame.details.canvas.controller.imageview.ControllerImageView;
 import org.anchoranalysis.gui.frame.overlays.onrgb.InternalFrameEditableOverlays;
@@ -66,9 +67,6 @@ public class InternalFrameOverlaysRedraw {
 
     public ISliderState init(
             DefaultModuleState defaultState,
-            OperationWithProgressReporter<BackgroundSet, GetOperationFailedException>
-                    operationBackgroundSet,
-            OutputWriteSettings outputWriteSettings,
             VideoStatsModuleGlobalParams mpg)
             throws InitException {
 
@@ -77,7 +75,7 @@ public class InternalFrameOverlaysRedraw {
         // For now we keep background as it is
         try {
             background = defaultState.getLinkState().getBackground().apply(0);
-        } catch (GetOperationFailedException e) {
+        } catch (BackgroundStackContainerException e) {
             throw new InitException(e);
         }
 
