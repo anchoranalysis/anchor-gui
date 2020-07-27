@@ -31,9 +31,9 @@ import org.anchoranalysis.anchor.overlay.collection.ColoredOverlayCollection;
 import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.functional.function.FunctionWithException;
 import org.anchoranalysis.core.idgetter.IDGetter;
-import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.index.IIndexGettableSettable;
 import org.anchoranalysis.core.index.container.SingleContainer;
+import org.anchoranalysis.gui.container.background.BackgroundStackContainerException;
 import org.anchoranalysis.gui.displayupdate.OverlayedDisplayStack;
 import org.anchoranalysis.gui.frame.details.IGenerateExtraDetail;
 import org.anchoranalysis.gui.frame.details.canvas.ControllerAction;
@@ -85,7 +85,7 @@ class InternalFrameOverlaysOnRGB {
 
         cntr.setItem(overlayedDisplayStack, 0);
 
-        FunctionWithException<Integer, OverlayedDisplayStack, GetOperationFailedException> bridge =
+        FunctionWithException<Integer, OverlayedDisplayStack, BackgroundStackContainerException> bridge =
                 new CfgCntrBridge(cntr);
 
         delegate.beforeInit(bridge, idGetter, 0, markDisplaySettingsWrapper, mpg);

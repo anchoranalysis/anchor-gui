@@ -35,7 +35,7 @@ import lombok.Getter;
 public class NRGBackgroundAdder<E extends Exception> {
 
     @Getter
-    private NRGBackground delegate;
+    private NRGBackground background;
     
     @Getter
     private OperationWithProgressReporter<IAddVideoStatsModule, E> adder;

@@ -26,8 +26,6 @@
 
 package org.anchoranalysis.gui.videostats.internalframe.annotator;
 
-import org.anchoranalysis.core.error.OperationFailedException;
-import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.progress.OperationWithProgressReporter;
 import org.anchoranalysis.gui.annotation.AnnotationBackground;
 import org.anchoranalysis.gui.backgroundset.BackgroundSet;

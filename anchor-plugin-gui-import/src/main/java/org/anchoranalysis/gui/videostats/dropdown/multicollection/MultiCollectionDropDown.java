@@ -86,7 +86,9 @@ public class MultiCollectionDropDown {
         OperationCreateBackgroundSetWithAdder operationBwsa =
                 new OperationCreateBackgroundSetWithAdder(
                         NRGBackground.createStackSequence(
-                                rasterProvider, new GuessNRGStackFromStacks(rasterProvider)),
+                                rasterProvider,
+                                new GuessNRGStackFromStacks(rasterProvider)
+                        ),
                         adder,
                         params.getModuleParams().getThreadPool(),
                         params.getModuleParams().getLogger().errorReporter());
@@ -163,7 +165,7 @@ public class MultiCollectionDropDown {
                 DropDownUtilities.addAllProposerEvaluator(
                         delegate,
                         operationBwsa.operationAdder(),
-                        operationBwsa.nrgBackground().getNRGBackground().getBackgroundSet(),
+                        operationBwsa.nrgBackground().getBackground().getBackgroundSet(),
                         markEvaluatorSet,
                         outputManagerSub.getOutputWriteSettings(),
                         true,

@@ -34,11 +34,11 @@ import org.anchoranalysis.annotation.AnnotationWithCfg;
 import org.anchoranalysis.annotation.io.bean.comparer.MultipleComparer;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.functional.function.FunctionWithException;
-import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.log.Logger;
 import org.anchoranalysis.core.name.value.NameValue;
 import org.anchoranalysis.gui.annotation.AnnotatorModuleCreator;
 import org.anchoranalysis.gui.backgroundset.BackgroundSet;
+import org.anchoranalysis.gui.container.background.BackgroundStackContainerException;
 import org.anchoranalysis.image.stack.DisplayStack;
 import org.anchoranalysis.image.stack.Stack;
 import org.anchoranalysis.io.bean.color.generator.ColorSetGenerator;
@@ -94,9 +94,13 @@ public class ShowComparers {
         return String.format("%s: %s", name, rasterName);
     }
 
-    private static BackgroundSet createBackgroundSet(Stack stack) throws OperationFailedException {
+    private static BackgroundSet createBackgroundSet(Stack stack) throws BackgroundStackContainerException {
         BackgroundSet backgroundSet = new BackgroundSet();
-        backgroundSet.addItem("Associated Raster", stack);
+        try {
+            backgroundSet.addItem("Associated Raster", stack);
+        } catch (OperationFailedException e) {
+            throw new BackgroundStackContainerException(e);
+        }
         return backgroundSet;
     }
 }

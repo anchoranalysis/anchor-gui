@@ -26,7 +26,6 @@
 
 package org.anchoranalysis.gui.annotation;
 
-import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.functional.function.FunctionWithException;
 import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.name.provider.NamedProvider;

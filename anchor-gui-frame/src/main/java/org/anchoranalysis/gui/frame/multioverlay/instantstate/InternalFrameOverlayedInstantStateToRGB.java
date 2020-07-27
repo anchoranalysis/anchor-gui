@@ -30,7 +30,6 @@ import org.anchoranalysis.anchor.overlay.Overlay;
 import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.functional.function.FunctionWithException;
 import org.anchoranalysis.core.idgetter.IDGetter;
-import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.index.IIndexGettableSettable;
 import org.anchoranalysis.core.index.SetOperationFailedException;
 import org.anchoranalysis.core.index.container.BoundedIndexContainer;
@@ -57,12 +56,9 @@ import org.anchoranalysis.gui.videostats.module.DefaultModuleState;
 import org.anchoranalysis.gui.videostats.module.VideoStatsModule;
 import org.anchoranalysis.image.extent.ImageDimensions;
 import org.anchoranalysis.image.stack.DisplayStack;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import lombok.AllArgsConstructor;
 
 class InternalFrameOverlayedInstantStateToRGB {
-
-    private static Log log = LogFactory.getLog(InternalFrameOverlayedInstantStateToRGB.class);
 
     private InternalFrameThreadedOverlayProvider delegate;
 
@@ -117,29 +113,20 @@ class InternalFrameOverlayedInstantStateToRGB {
         };
     }
 
+    @AllArgsConstructor
     private static class BackgroundSendable
             implements IPropertyValueSendable<
-                    FunctionWithException<Integer, DisplayStack, GetOperationFailedException>> {
+                    FunctionWithException<Integer, DisplayStack, BackgroundStackContainerException>> {
 
         private IndexToRedrawUpdate indexToRedrawUpdate;
         private IRedrawable redrawable;
 
-        public BackgroundSendable(IndexToRedrawUpdate indexToRedrawUpdate, IRedrawable redrawable) {
-            super();
-            this.indexToRedrawUpdate = indexToRedrawUpdate;
-            this.redrawable = redrawable;
-        }
-
         @Override
         public void setPropertyValue(
-                FunctionWithException<Integer, DisplayStack, GetOperationFailedException> value,
+                FunctionWithException<Integer, DisplayStack, BackgroundStackContainerException> value,
                 boolean adjusting) {
-            try {
-                indexToRedrawUpdate.setImageStackCntr(value);
-                redrawable.applyRedrawUpdate(OverlayedDisplayStackUpdate.redrawAll());
-            } catch (SetOperationFailedException e) {
-                log.error(e.toString());
-            }
+            indexToRedrawUpdate.setImageStackCntr(value);
+            redrawable.applyRedrawUpdate(OverlayedDisplayStackUpdate.redrawAll());
         }
     }
 

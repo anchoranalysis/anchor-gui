@@ -34,6 +34,7 @@ import org.anchoranalysis.core.progress.OperationWithProgressReporter;
 import org.anchoranalysis.core.progress.ProgressReporterNull;
 import org.anchoranalysis.gui.annotation.AnnotatorModuleCreator;
 import org.anchoranalysis.gui.backgroundset.BackgroundSet;
+import org.anchoranalysis.gui.container.background.BackgroundStackContainerException;
 import org.anchoranalysis.gui.frame.singleraster.InternalFrameSingleRaster;
 import org.anchoranalysis.gui.image.frame.ISliderState;
 import org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.definition.ChangeableBackgroundDefinitionSimple;
@@ -69,7 +70,7 @@ public class ShowRaster {
                     return backgroundSet;
 
                 } catch (RasterIOException | OperationFailedException e) {
-                    throw new OperationFailedException(rasterName, e);
+                    throw new BackgroundStackContainerException(rasterName, e);
                 }
             },
            rasterName
@@ -77,7 +78,7 @@ public class ShowRaster {
     }
 
     public void show(
-            OperationWithProgressReporter<BackgroundSet, OperationFailedException>
+            OperationWithProgressReporter<BackgroundSet, BackgroundStackContainerException>
                     opCreateBackgroundSet,
             String rasterName) {
         try {
@@ -103,7 +104,7 @@ public class ShowRaster {
                             .createVideoStatsModule(
                                     adder.getSubgroup().getDefaultModuleState().getState()));
 
-        } catch (InitException | VideoStatsModuleCreateException | OperationFailedException | GetOperationFailedException e) {
+        } catch (InitException | VideoStatsModuleCreateException | BackgroundStackContainerException | GetOperationFailedException e) {
             mpg.getLogger().errorReporter().recordError(AnnotatorModuleCreator.class, e);
         }
     }

@@ -28,9 +28,10 @@ package org.anchoranalysis.gui.videostats.dropdown;
 
 import java.util.Optional;
 import org.anchoranalysis.core.error.InitException;
-import org.anchoranalysis.core.index.GetOperationFailedException;
+import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.progress.OperationWithProgressReporter;
 import org.anchoranalysis.gui.backgroundset.BackgroundSet;
+import org.anchoranalysis.gui.container.background.BackgroundStackContainerException;
 import org.anchoranalysis.gui.image.frame.ISliderState;
 import org.anchoranalysis.gui.io.loader.manifest.finder.FinderCfgNRGSet;
 import org.anchoranalysis.gui.videostats.IModuleCreatorDefaultState;
@@ -46,7 +47,7 @@ class CombinationCreator extends VideoStatsModuleCreatorContext {
     private FinderCfgNRGSet finderFirst;
     private FinderCfgNRGSet finderSecond;
     private String combinationName;
-    private OperationWithProgressReporter<BackgroundSet, GetOperationFailedException> backgroundSet;
+    private OperationWithProgressReporter<BackgroundSet, BackgroundStackContainerException> backgroundSet;
 
     @Override
     public boolean precondition() {
@@ -81,7 +82,7 @@ class CombinationCreator extends VideoStatsModuleCreatorContext {
                 throw new VideoStatsModuleCreateException(e);
             }
 
-        } catch (GetOperationFailedException e) {
+        } catch (OperationFailedException e) {
             throw new VideoStatsModuleCreateException(e);
         }
     }

@@ -30,7 +30,6 @@ import org.anchoranalysis.anchor.mpp.bean.cfg.CfgGen;
 import org.anchoranalysis.anchor.mpp.feature.nrg.scheme.NRGScheme;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.OperationFailedException;
-import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.params.KeyValueParams;
 import org.anchoranalysis.feature.nrg.NRGStackWithParams;
 import lombok.Getter;

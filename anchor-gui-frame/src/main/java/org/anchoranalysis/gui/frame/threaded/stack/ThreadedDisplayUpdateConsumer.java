@@ -33,8 +33,8 @@ import javax.swing.event.EventListenerList;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.error.reporter.ErrorReporter;
 import org.anchoranalysis.core.functional.function.FunctionWithException;
-import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.index.IIndexGettableSettable;
+import org.anchoranalysis.gui.container.background.BackgroundStackContainerException;
 import org.anchoranalysis.gui.displayupdate.IDisplayUpdateRememberStack;
 import org.anchoranalysis.gui.frame.display.BoundOverlayedDisplayStack;
 import org.anchoranalysis.gui.frame.display.DisplayUpdate;
@@ -73,7 +73,7 @@ public class ThreadedDisplayUpdateConsumer
 
     private UpdateImage updateImage;
 
-    private FunctionWithException<Integer, DisplayUpdate, OperationFailedException>
+    private FunctionWithException<Integer, DisplayUpdate, BackgroundStackContainerException>
             displayUpdateBridge;
 
     private ErrorReporter errorReporter;
@@ -119,7 +119,7 @@ public class ThreadedDisplayUpdateConsumer
                     currentDisplayStack = currentUpdate.getDisplayStack();
                 }
 
-            } catch (OperationFailedException e) {
+            } catch (BackgroundStackContainerException e) {
                 currentUpdate = null;
                 errorReporter.recordError(ThreadedDisplayUpdateConsumer.class, e);
             } finally {
@@ -136,7 +136,7 @@ public class ThreadedDisplayUpdateConsumer
     }
 
     public ThreadedDisplayUpdateConsumer(
-            FunctionWithException<Integer, DisplayUpdate, OperationFailedException>
+            FunctionWithException<Integer, DisplayUpdate, BackgroundStackContainerException>
                     displayUpdateBridge,
             int defaultIndex,
             InteractiveThreadPool threadPool,
@@ -154,7 +154,7 @@ public class ThreadedDisplayUpdateConsumer
     }
 
     public synchronized void setImageStackGenerator(
-            FunctionWithException<Integer, DisplayUpdate, OperationFailedException>
+            FunctionWithException<Integer, DisplayUpdate, BackgroundStackContainerException>
                     displayUpdateBridge) {
         this.displayUpdateBridge = displayUpdateBridge;
     }

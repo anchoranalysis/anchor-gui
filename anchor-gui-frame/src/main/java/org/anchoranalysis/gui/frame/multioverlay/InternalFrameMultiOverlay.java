@@ -37,7 +37,6 @@ import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.error.reporter.ErrorReporter;
 import org.anchoranalysis.core.idgetter.IDGetter;
-import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.index.container.BoundedIndexContainer;
 import org.anchoranalysis.core.index.container.BoundedIndexContainerFromList;
 import org.anchoranalysis.core.index.container.bridge.BoundedIndexContainerBridgeWithIndex;
@@ -103,15 +102,11 @@ class InternalFrameMultiOverlay<T> {
             final List<MultiInput<T>> list) {
         return name ->
                 sourceObject -> {
-                    try {
-                        return list.get(sourceObject)
-                                .getNrgBackground()
-                                .getBackgroundSet()
-                                .doOperation(ProgressReporterNull.get())
-                                .singleStack(name);
-                    } catch (GetOperationFailedException e) {
-                        throw new BackgroundStackContainerException(e);
-                    }
+                    return list.get(sourceObject)
+                            .getNrgBackground()
+                            .getBackgroundSet()
+                            .doOperation(ProgressReporterNull.get())
+                            .singleStack(name);
                 };
     }
 
@@ -163,7 +158,7 @@ class InternalFrameMultiOverlay<T> {
                                 .names();
                 return new ArrayList<>(names);
 
-            } catch (GetOperationFailedException e) {
+            } catch (BackgroundStackContainerException e) {
                 errorReporter.recordError(InternalFrameMultiOverlay.class, e);
                 return new ArrayList<>();
             }

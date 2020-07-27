@@ -39,6 +39,7 @@ import org.anchoranalysis.core.name.provider.NamedProviderGetException;
 import org.anchoranalysis.core.progress.ProgressReporter;
 import org.anchoranalysis.core.progress.ProgressReporterIncrement;
 import org.anchoranalysis.gui.container.background.BackgroundStackContainer;
+import org.anchoranalysis.gui.container.background.BackgroundStackContainerException;
 import org.anchoranalysis.gui.container.background.SingleBackgroundStackCntr;
 import org.anchoranalysis.gui.serializedobjectset.MarkWithRaster;
 import org.anchoranalysis.image.channel.factory.ChannelFactory;
@@ -51,6 +52,7 @@ import org.anchoranalysis.image.stack.TimeSequence;
 import org.anchoranalysis.image.voxel.datatype.VoxelDataTypeUnsignedByte;
 import org.anchoranalysis.io.manifest.deserializer.folder.LoadContainer;
 import org.anchoranalysis.io.output.bean.OutputWriteSettings;
+import lombok.AllArgsConstructor;
 
 public class BackgroundSetFactory {
 
@@ -133,20 +135,15 @@ public class BackgroundSetFactory {
                 });
     }
 
+    @AllArgsConstructor
     private static class AddBackgroundSetItem
-            extends CachedOperation<BackgroundStackContainer, GetOperationFailedException> {
+            extends CachedOperation<BackgroundStackContainer, BackgroundStackContainerException> {
 
         private NamedProvider<TimeSequence> imageStackCollection;
         private String id;
 
-        public AddBackgroundSetItem(NamedProvider<TimeSequence> imageStackCollection, String id) {
-            super();
-            this.imageStackCollection = imageStackCollection;
-            this.id = id;
-        }
-
         @Override
-        protected BackgroundStackContainer execute() throws GetOperationFailedException {
+        protected BackgroundStackContainer execute() throws BackgroundStackContainerException {
 
             try {
                 TimeSequence seq = imageStackCollection.getException(id);
@@ -158,7 +155,7 @@ public class BackgroundSetFactory {
                 }
 
             } catch (NamedProviderGetException | OperationFailedException e) {
-                throw new GetOperationFailedException(e);
+                throw new BackgroundStackContainerException(e);
             }
         }
     }
@@ -195,7 +192,7 @@ public class BackgroundSetFactory {
                         Stack stack = createEmptyStack(sd);
                         return BackgroundStackCntrFactory.singleSavedStack(stack);
                     } catch (OperationFailedException e) {
-                        throw new GetOperationFailedException("blank", e);
+                        throw new BackgroundStackContainerException("blank", e);
                     }
                 });
     }
@@ -245,7 +242,7 @@ public class BackgroundSetFactory {
             // The way we handle this means we cannot add the (only first three) brackets on the
             // name, as the image has not yet been evaluated
             for (String id : keys) {
-                Operation<BackgroundStackContainer, GetOperationFailedException> operation =
+                Operation<BackgroundStackContainer, BackgroundStackContainerException> operation =
                         new AddBackgroundSetItem(imageStackCollection, id);
                 backgroundSet.addItem(id, operation);
                 pri.update();

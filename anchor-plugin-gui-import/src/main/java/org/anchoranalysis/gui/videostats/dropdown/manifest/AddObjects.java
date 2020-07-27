@@ -35,7 +35,6 @@ import org.anchoranalysis.anchor.mpp.feature.nrg.cfg.CfgNRG;
 import org.anchoranalysis.core.cache.CachedOperation;
 import org.anchoranalysis.core.cache.WrapOperationAsCached;
 import org.anchoranalysis.core.error.OperationFailedException;
-import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.index.container.SingleContainer;
 import org.anchoranalysis.core.name.provider.NamedProvider;
 import org.anchoranalysis.gui.finder.FinderNrgStack;

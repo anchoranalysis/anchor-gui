@@ -45,7 +45,7 @@ public class DropDownUtilitiesRaster {
             boolean addAsDefault) {
         RasterModuleCreator creator =
                 new RasterModuleCreator(
-                        nrgBackground.getNRGBackground(), delegate.getName(), name, mpg);
+                        nrgBackground.getBackground(), delegate.getName(), name, mpg);
 
         VideoStatsModuleCreatorAndAdder creatorAndAdder =
                 new VideoStatsModuleCreatorAndAdder(nrgBackground.getAdder(), creator);

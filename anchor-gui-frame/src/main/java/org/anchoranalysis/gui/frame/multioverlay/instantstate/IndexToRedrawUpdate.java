@@ -27,9 +27,7 @@
 package org.anchoranalysis.gui.frame.multioverlay.instantstate;
 
 import org.anchoranalysis.core.functional.function.FunctionWithException;
-import org.anchoranalysis.core.index.BoundedIndexBridge;
 import org.anchoranalysis.core.index.GetOperationFailedException;
-import org.anchoranalysis.core.index.SetOperationFailedException;
 import org.anchoranalysis.core.index.container.BoundedIndexContainer;
 import org.anchoranalysis.gui.container.background.BackgroundStackContainerException;
 import org.anchoranalysis.gui.displayupdate.OverlayedDisplayStack;

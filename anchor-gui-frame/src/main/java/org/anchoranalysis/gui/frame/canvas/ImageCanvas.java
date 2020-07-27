@@ -49,7 +49,6 @@ import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.error.reporter.ErrorReporter;
 import org.anchoranalysis.core.geometry.Point2i;
 import org.anchoranalysis.core.geometry.Point3i;
-import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.index.SetOperationFailedException;
 import org.anchoranalysis.gui.displayupdate.IDisplayUpdateProvider;
 import org.anchoranalysis.gui.frame.canvas.zoom.DefaultZoomSuggestor;

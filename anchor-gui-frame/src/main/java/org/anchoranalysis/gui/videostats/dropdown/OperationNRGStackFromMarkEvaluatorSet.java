@@ -34,7 +34,7 @@ import org.anchoranalysis.feature.nrg.NRGStackWithParams;
 import org.anchoranalysis.gui.interactivebrowser.MarkEvaluatorSetForImage;
 
 public class OperationNRGStackFromMarkEvaluatorSet
-        implements OperationWithProgressReporter<NRGStackWithParams, OperationFailedException>,
+        implements OperationWithProgressReporter<NRGStackWithParams, GetOperationFailedException>,
                 IUpdatableMarkEvaluator {
 
     private MarkEvaluatorSetForImage markEvaluatorSet;
@@ -47,7 +47,7 @@ public class OperationNRGStackFromMarkEvaluatorSet
 
     @Override
     public NRGStackWithParams doOperation(ProgressReporter progressReporter)
-            throws OperationFailedException {
+            throws GetOperationFailedException {
 
         if (markEvaluatorIdentifier == null || markEvaluatorIdentifier.isEmpty()) {
             return null;
@@ -55,8 +55,8 @@ public class OperationNRGStackFromMarkEvaluatorSet
 
         try {
             return markEvaluatorSet.get(markEvaluatorIdentifier).getNRGStack();
-        } catch (IllegalArgumentException e) {
-            throw new OperationFailedException(e);
+        } catch (IllegalArgumentException | OperationFailedException e) {
+            throw new GetOperationFailedException(e);
         }
     }
 

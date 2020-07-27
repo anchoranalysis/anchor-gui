@@ -30,9 +30,9 @@ import java.util.Optional;
 import org.anchoranalysis.anchor.mpp.feature.instantstate.CfgNRGInstantState;
 import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.error.OperationFailedException;
-import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.progress.OperationWithProgressReporter;
 import org.anchoranalysis.gui.backgroundset.BackgroundSet;
+import org.anchoranalysis.gui.container.background.BackgroundStackContainerException;
 import org.anchoranalysis.gui.image.frame.ISliderState;
 import org.anchoranalysis.gui.io.loader.manifest.finder.historyfolder.FinderHistoryFolder;
 import org.anchoranalysis.gui.videostats.IModuleCreatorDefaultState;
@@ -47,7 +47,7 @@ import lombok.AllArgsConstructor;
 public class ColoredOutlineCreator extends VideoStatsModuleCreatorContext {
 
     private final FinderHistoryFolder<CfgNRGInstantState> finderCfgNRGHistory;
-    private final OperationWithProgressReporter<BackgroundSet, OperationFailedException>
+    private final OperationWithProgressReporter<BackgroundSet, BackgroundStackContainerException>
             backgroundSet;
 
     @Override

@@ -106,7 +106,7 @@ public class ManifestDropDown {
 
         // We try to read a nrgStack from the manifest. If none exists, we guess instead from the
         // image-stacks.
-        OperationWithProgressReporter<NRGStackWithParams, OperationFailedException> opNrg =
+        OperationWithProgressReporter<NRGStackWithParams, GetOperationFailedException> opNrg =
                 new OperationReplaceNull<>(
                         finderNrgStack.operationNrgStackWithProgressReporter(),
                         new GuessNRGStackFromStacks(asSequence(opStacks)));
@@ -329,7 +329,7 @@ public class ManifestDropDown {
         DropDownUtilities.addAllProposerEvaluator(
                 delegate,
                 operationBwsa.operationAdder(),
-                operationBwsa.nrgBackground().getNRGBackground().getBackgroundSet(),
+                operationBwsa.nrgBackground().getBackground().getBackgroundSet(),
                 markEvaluatorSet,
                 outputManager.getOutputWriteSettings(),
                 true,

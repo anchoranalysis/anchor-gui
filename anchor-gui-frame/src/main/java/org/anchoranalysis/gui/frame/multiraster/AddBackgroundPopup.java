@@ -29,9 +29,7 @@ package org.anchoranalysis.gui.frame.multiraster;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
-import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.progress.ProgressReporterNull;
-import org.anchoranalysis.gui.container.background.BackgroundStackContainerException;
 import org.anchoranalysis.gui.frame.details.ControllerPopupMenu;
 import org.anchoranalysis.gui.image.frame.ISliderState;
 import org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.ControllerPopupMenuWithBackground;
@@ -59,14 +57,10 @@ class AddBackgroundPopup {
     private static ImageStackContainerFromName stackCntrFromName(List<NamedRasterSet> list) {
         return name ->
                 sourceObject -> {
-                    try {
-                        return list.get(sourceObject)
-                                .getBackgroundSet()
-                                .doOperation(ProgressReporterNull.get())
-                                .singleStack(name);
-                    } catch (GetOperationFailedException e) {
-                        throw new BackgroundStackContainerException(e);
-                    }
+                    return list.get(sourceObject)
+                            .getBackgroundSet()
+                            .doOperation(ProgressReporterNull.get())
+                            .singleStack(name);
                 };
     }
 

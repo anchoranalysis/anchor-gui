@@ -29,7 +29,6 @@ package org.anchoranalysis.gui.frame.overlays.onrgb;
 import org.anchoranalysis.anchor.overlay.collection.ColoredOverlayCollection;
 import org.anchoranalysis.anchor.overlay.id.IDGetterOverlayID;
 import org.anchoranalysis.core.error.InitException;
-import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.gui.container.background.BackgroundStackContainerException;
 import org.anchoranalysis.gui.displayupdate.OverlayedDisplayStack;
 import org.anchoranalysis.gui.frame.details.canvas.ControllerAction;

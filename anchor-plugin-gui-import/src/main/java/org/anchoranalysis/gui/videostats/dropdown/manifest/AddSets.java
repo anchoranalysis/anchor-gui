@@ -158,7 +158,7 @@ class AddSets {
         combinedDropDown.addCombination(
                 finderFirst,
                 finderSecond,
-                operationBwsa.nrgBackground().getNRGBackground().getBackgroundSet(),
+                operationBwsa.nrgBackground().getBackground().getBackgroundSet(),
                 finderContext.getContext());
     }
 }

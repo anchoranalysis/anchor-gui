@@ -27,7 +27,6 @@
 package org.anchoranalysis.gui.videostats.module;
 
 import org.anchoranalysis.core.functional.function.FunctionWithException;
-import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.gui.container.background.BackgroundStackContainerException;
 import org.anchoranalysis.gui.mark.MarkDisplaySettings;
 import org.anchoranalysis.gui.videostats.link.DefaultLinkState;

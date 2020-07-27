@@ -28,7 +28,6 @@ package org.anchoranalysis.gui.container.background;
 
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.InitException;
-import org.anchoranalysis.core.error.OperationFailedException;
 import lombok.Getter;
 import lombok.Setter;
 

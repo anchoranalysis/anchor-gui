@@ -32,11 +32,11 @@ import java.util.Optional;
 import org.anchoranalysis.annotation.io.bean.strategy.AnnotatorStrategy;
 import org.anchoranalysis.annotation.io.input.AnnotationWithStrategy;
 import org.anchoranalysis.core.error.CreateException;
-import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.name.provider.NamedProvider;
 import org.anchoranalysis.core.progress.OperationWithProgressReporter;
 import org.anchoranalysis.core.progress.ProgressReporterMultiple;
 import org.anchoranalysis.gui.annotation.AnnotationBackground;
+import org.anchoranalysis.gui.container.background.BackgroundStackContainerException;
 import org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.definition.ChangeableBackgroundDefinition;
 import org.anchoranalysis.gui.videostats.internalframe.annotator.AnnotationInitParams;
 import org.anchoranalysis.image.stack.Stack;
@@ -105,7 +105,7 @@ public abstract class AnnotationGuiBuilderWithDelegate<
                     prm,
                     backgroundStacks,
                     getStrategy().getBackground().getStackNameVisualOriginal());
-        } catch (GetOperationFailedException e) {
+        } catch (BackgroundStackContainerException e) {
             throw new CreateException(e);
         }
     }

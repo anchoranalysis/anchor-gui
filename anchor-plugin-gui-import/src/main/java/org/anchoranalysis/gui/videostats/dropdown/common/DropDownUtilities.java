@@ -33,12 +33,12 @@ import org.anchoranalysis.core.cache.WrapOperationWithProgressReporterAsCached;
 import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.functional.Operation;
-import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.name.provider.NamedProvider;
 import org.anchoranalysis.core.name.provider.NamedProviderGetException;
 import org.anchoranalysis.core.progress.CachedOperationWithProgressReporter;
 import org.anchoranalysis.core.progress.OperationWithProgressReporter;
 import org.anchoranalysis.gui.backgroundset.BackgroundSet;
+import org.anchoranalysis.gui.container.background.BackgroundStackContainerException;
 import org.anchoranalysis.gui.interactivebrowser.MarkEvaluatorSetForImage;
 import org.anchoranalysis.gui.mark.MarkDisplaySettings;
 import org.anchoranalysis.gui.videostats.dropdown.BoundVideoStatsModuleDropDown;
@@ -64,7 +64,7 @@ public class DropDownUtilities {
             BoundVideoStatsModuleDropDown dropDown,
             OperationWithProgressReporter<IAddVideoStatsModule, ? extends Throwable>
                     adderOpWithoutNRG,
-            OperationWithProgressReporter<BackgroundSet, GetOperationFailedException> backgroundSet,
+            OperationWithProgressReporter<BackgroundSet, BackgroundStackContainerException> backgroundSet,
             MarkEvaluatorSetForImage markEvaluatorSet,
             OutputWriteSettings outputWriteSettings,
             boolean addNRGAdder,
@@ -121,7 +121,7 @@ public class DropDownUtilities {
                         delegate.getName(),
                         name,
                         op,
-                        nrgBackground.getNRGBackground(),
+                        nrgBackground.getBackground(),
                         mpg,
                         markDisplaySettings);
         addModule(module, menu, nrgBackground.getAdder(), name, mpg, addAsDefault);
@@ -137,7 +137,7 @@ public class DropDownUtilities {
             boolean addAsDefault) {
         VideoStatsModuleCreator module =
                 new ObjectCollectionModuleCreator(
-                        delegate.getName(), name, op, nrgBackground.getNRGBackground(), mpg);
+                        delegate.getName(), name, op, nrgBackground.getBackground(), mpg);
         addModule(module, menu, nrgBackground.getAdder(), name, mpg, addAsDefault);
     }
 

@@ -26,10 +26,9 @@
 
 package org.anchoranalysis.gui.frame.multiraster;
 
-import org.anchoranalysis.core.error.OperationFailedException;
-import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.progress.OperationWithProgressReporter;
 import org.anchoranalysis.gui.backgroundset.BackgroundSet;
+import org.anchoranalysis.gui.container.background.BackgroundStackContainerException;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -41,5 +40,5 @@ public class NamedRasterSet {
     private String name;
     
     @Getter @Setter
-    private OperationWithProgressReporter<BackgroundSet, GetOperationFailedException> backgroundSet;
+    private OperationWithProgressReporter<BackgroundSet, BackgroundStackContainerException> backgroundSet;
 }

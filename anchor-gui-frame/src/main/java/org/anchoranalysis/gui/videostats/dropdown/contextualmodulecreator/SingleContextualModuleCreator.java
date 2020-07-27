@@ -34,15 +34,12 @@ import org.anchoranalysis.gui.videostats.dropdown.NamedModule;
 import org.anchoranalysis.gui.videostats.dropdown.VideoStatsModuleCreatorAndAdder;
 import org.anchoranalysis.gui.videostats.dropdown.VideoStatsModuleGlobalParams;
 import org.anchoranalysis.gui.videostats.modulecreator.VideoStatsModuleCreatorContext;
+import lombok.AllArgsConstructor;
 
+@AllArgsConstructor
 public class SingleContextualModuleCreator extends ContextualModuleCreator {
 
     private VideoStatsModuleCreatorContext moduleCreator;
-
-    public SingleContextualModuleCreator(VideoStatsModuleCreatorContext moduleCreator) {
-        super();
-        this.moduleCreator = moduleCreator;
-    }
 
     @Override
     public NamedModule[] create(

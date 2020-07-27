@@ -1,8 +1,10 @@
+package org.anchoranalysis.gui.frame.multioverlay.instantstate;
+
 /*-
  * #%L
- * anchor-gui-frame
+ * anchor-core
  * %%
- * Copyright (C) 2010 - 2020 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann-La Roche
+ * Copyright (C) 2010 - 2020 Owen Feehan
  * %%
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -24,24 +26,26 @@
  * #L%
  */
 
-package org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.definition;
-
-import org.anchoranalysis.core.progress.OperationWithProgressReporter;
-import org.anchoranalysis.gui.backgroundset.BackgroundSet;
-import org.anchoranalysis.gui.container.background.BackgroundStackContainerException;
+import org.anchoranalysis.core.functional.function.FunctionWithException;
+import org.anchoranalysis.core.index.GetOperationFailedException;
+import org.anchoranalysis.core.index.container.BoundedIndexContainer;
 import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.Setter;
 
 @AllArgsConstructor
-public abstract class ChangeableBackgroundDefinitionWithDefault
-        implements ChangeableBackgroundDefinition {
+class BoundedIndexBridge<T>
+        implements FunctionWithException<Integer, T, GetOperationFailedException> {
 
-    @Getter
-    private OperationWithProgressReporter<BackgroundSet, BackgroundStackContainerException> backgroundSet;
+    /** The container associated with the bridge */
+    @Setter
+    private BoundedIndexContainer<T> container;
 
-    public void update(
-            OperationWithProgressReporter<BackgroundSet, BackgroundStackContainerException>
-                    backgroundSet) {
-        this.backgroundSet = backgroundSet;
+    @Override
+    public T apply(Integer sourceObject) throws GetOperationFailedException {
+        int index = container.previousEqualIndex(sourceObject);
+        if (index == -1) {
+            throw new GetOperationFailedException(sourceObject, "Cannot find a previousEqualIndex in the cntr");
+        }
+        return container.get(index);
     }
 }

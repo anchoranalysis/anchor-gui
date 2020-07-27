@@ -30,7 +30,6 @@ import java.util.List;
 import java.util.Optional;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.functional.Operation;
-import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.index.container.BoundedIndexContainer;
 import org.anchoranalysis.gui.container.ContainerGetter;
 import org.anchoranalysis.io.deserializer.DeserializationFailedException;

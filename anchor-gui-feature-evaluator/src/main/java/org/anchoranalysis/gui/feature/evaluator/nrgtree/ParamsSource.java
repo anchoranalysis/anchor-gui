@@ -29,7 +29,6 @@ package org.anchoranalysis.gui.feature.evaluator.nrgtree;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.feature.bean.Feature;
 import org.anchoranalysis.feature.bean.list.FeatureListFactory;
-import org.anchoranalysis.feature.calc.FeatureCalculationException;
 import org.anchoranalysis.feature.calc.NamedFeatureCalculationException;
 import org.anchoranalysis.feature.input.FeatureInput;
 import org.anchoranalysis.feature.session.CreateFeatureInput;

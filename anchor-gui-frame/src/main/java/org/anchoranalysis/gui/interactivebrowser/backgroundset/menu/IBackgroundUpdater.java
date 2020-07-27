@@ -26,15 +26,14 @@
 
 package org.anchoranalysis.gui.interactivebrowser.backgroundset.menu;
 
-import org.anchoranalysis.core.error.OperationFailedException;
-import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.progress.OperationWithProgressReporter;
 import org.anchoranalysis.gui.backgroundset.BackgroundSet;
+import org.anchoranalysis.gui.container.background.BackgroundStackContainerException;
 
 @FunctionalInterface
 public interface IBackgroundUpdater {
 
     void update(
-            OperationWithProgressReporter<BackgroundSet, OperationFailedException>
+            OperationWithProgressReporter<BackgroundSet, BackgroundStackContainerException>
                     backgroundSet);
 }

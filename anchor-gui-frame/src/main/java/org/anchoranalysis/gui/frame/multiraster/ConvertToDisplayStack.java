@@ -26,7 +26,6 @@
 
 package org.anchoranalysis.gui.frame.multiraster;
 
-import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.index.container.BoundedIndexContainer;
 import org.anchoranalysis.core.progress.ProgressReporterNull;
@@ -44,11 +43,7 @@ class ConvertToDisplayStack {
     }
 
     private static BackgroundSet backgroundFromSet(NamedRasterSet set) throws BackgroundStackContainerException {
-        try {
-            return set.getBackgroundSet().doOperation(ProgressReporterNull.get());
-        } catch (GetOperationFailedException e) {
-            throw new BackgroundStackContainerException("Cannot create background-set", e.getCause());
-        }
+        return set.getBackgroundSet().doOperation(ProgressReporterNull.get());
     }
 
     private static BoundedIndexContainer<DisplayStack> convertBackgroundSet(BackgroundSet bg)

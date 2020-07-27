@@ -26,11 +26,8 @@
 
 package org.anchoranalysis.gui.frame.multiraster;
 
-import org.anchoranalysis.core.error.InitException;
-import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.error.reporter.ErrorReporter;
 import org.anchoranalysis.core.functional.function.FunctionWithException;
-import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.index.IIndexGettableSettable;
 import org.anchoranalysis.gui.container.background.BackgroundStackContainerException;
 import org.anchoranalysis.gui.displayupdate.IDisplayUpdateRememberStack;
@@ -91,7 +88,7 @@ public class ThreadedIndexedDisplayStackSetter implements IBackgroundSetter, ITh
         delegate.dispose();
     }
 
-    private FunctionWithException<Integer, DisplayUpdate, OperationFailedException> ensure8bit(
+    private FunctionWithException<Integer, DisplayUpdate, BackgroundStackContainerException> ensure8bit(
             FunctionWithException<Integer, DisplayStack, ? extends Throwable> cntr) {
         return new NoOverlayBridgeFromGenerator(
                 new IterableObjectGeneratorBridge<>(

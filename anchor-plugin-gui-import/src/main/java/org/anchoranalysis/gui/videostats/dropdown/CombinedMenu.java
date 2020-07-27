@@ -30,11 +30,11 @@ import javax.swing.JFrame;
 import org.anchoranalysis.bean.error.BeanDuplicateException;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.error.reporter.ErrorReporter;
-import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.progress.OperationWithProgressReporter;
 import org.anchoranalysis.gui.backgroundset.BackgroundSet;
 import org.anchoranalysis.gui.bean.exporttask.ExportTaskBean;
 import org.anchoranalysis.gui.bean.exporttask.ExportTaskParams;
+import org.anchoranalysis.gui.container.background.BackgroundStackContainerException;
 import org.anchoranalysis.gui.finder.imgstackcollection.FinderImgStackCollection;
 import org.anchoranalysis.gui.io.loader.manifest.finder.CfgNRGFinderContext;
 import org.anchoranalysis.gui.io.loader.manifest.finder.FinderCfgNRGSet;
@@ -58,7 +58,7 @@ public class CombinedMenu {
     public void addCombination(
             FinderCfgNRGSet finderFirst,
             FinderCfgNRGSet finderSecond,
-            OperationWithProgressReporter<BackgroundSet, GetOperationFailedException> backgroundSet,
+            OperationWithProgressReporter<BackgroundSet, BackgroundStackContainerException> backgroundSet,
             CfgNRGFinderContext context)
             throws MenuAddException {
 

@@ -28,13 +28,12 @@ package org.anchoranalysis.gui.videostats.dropdown;
 
 import org.anchoranalysis.anchor.mpp.bean.init.MPPInitParams;
 import org.anchoranalysis.core.error.CreateException;
-import org.anchoranalysis.core.error.OperationFailedException;
-import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.progress.CachedOperationWithProgressReporter;
 import org.anchoranalysis.core.progress.OperationWithProgressReporter;
 import org.anchoranalysis.core.progress.ProgressReporter;
 import org.anchoranalysis.gui.backgroundset.BackgroundSet;
 import org.anchoranalysis.gui.backgroundset.BackgroundSetFactory;
+import org.anchoranalysis.gui.container.background.BackgroundStackContainerException;
 import org.anchoranalysis.gui.interactivebrowser.OperationInitParams;
 import org.anchoranalysis.image.bean.nonbean.init.CreateCombinedStack;
 import org.anchoranalysis.image.bean.nonbean.init.ImageInitParams;
@@ -44,19 +43,20 @@ import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
 public class CreateBackgroundSetFromExisting
-        extends CachedOperationWithProgressReporter<BackgroundSet, OperationFailedException> {
+        extends CachedOperationWithProgressReporter<BackgroundSet, BackgroundStackContainerException> {
 
-    private final OperationWithProgressReporter<BackgroundSet, OperationFailedException>
+    private final OperationWithProgressReporter<BackgroundSet, BackgroundStackContainerException>
             existingBackgroundSet;
     private OperationInitParams pso;
     private OutputWriteSettings ows;
 
     @Override
     protected BackgroundSet execute(ProgressReporter progressReporter)
-            throws OperationFailedException {
+            throws BackgroundStackContainerException {
 
-        BackgroundSet bsExisting = existingBackgroundSet.doOperation(progressReporter);
         try {
+            BackgroundSet bsExisting = existingBackgroundSet.doOperation(progressReporter);
+            
             MPPInitParams so = pso.doOperation();
             ImageInitParams soImage = so.getImage();
 
@@ -67,7 +67,7 @@ public class CreateBackgroundSetFromExisting
                     progressReporter);
 
         } catch (CreateException e) {
-            throw new OperationFailedException(e);
+            throw new BackgroundStackContainerException(e);
         }
     }
 }

@@ -26,20 +26,19 @@
 
 package org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.definition;
 
-import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.error.reporter.ErrorReporter;
-import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.progress.OperationWithProgressReporter;
 import org.anchoranalysis.gui.backgroundset.BackgroundSet;
+import org.anchoranalysis.gui.container.background.BackgroundStackContainerException;
 import org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.IGetNames;
 
-public abstract class ChangeableBackgroundDefinition {
+public interface ChangeableBackgroundDefinition {
 
-    public abstract void update(
-            OperationWithProgressReporter<BackgroundSet, OperationFailedException>
+    void update(
+            OperationWithProgressReporter<BackgroundSet, BackgroundStackContainerException>
                     backgroundSet);
 
-    public abstract IGetNames names(ErrorReporter errorReporter);
+    IGetNames names(ErrorReporter errorReporter);
 
-    public abstract ImageStackContainerFromName stackCntrFromName(ErrorReporter errorReporter);
+    ImageStackContainerFromName stackCntrFromName(ErrorReporter errorReporter);
 }

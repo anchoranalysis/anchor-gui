@@ -26,9 +26,7 @@
 
 package org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.definition;
 
-import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.functional.function.FunctionWithException;
-import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.gui.container.background.BackgroundStackContainerException;
 import org.anchoranalysis.image.stack.DisplayStack;
 

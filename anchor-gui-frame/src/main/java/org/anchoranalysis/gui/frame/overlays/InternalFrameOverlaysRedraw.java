@@ -29,11 +29,8 @@ package org.anchoranalysis.gui.frame.overlays;
 import java.util.Optional;
 import org.anchoranalysis.anchor.overlay.collection.OverlayCollection;
 import org.anchoranalysis.core.error.InitException;
-import org.anchoranalysis.core.index.GetOperationFailedException;
-import org.anchoranalysis.core.progress.OperationWithProgressReporter;
 import org.anchoranalysis.core.property.change.PropertyValueChangeEvent;
 import org.anchoranalysis.core.property.change.PropertyValueChangeListener;
-import org.anchoranalysis.gui.backgroundset.BackgroundSet;
 import org.anchoranalysis.gui.container.background.BackgroundStackContainerException;
 import org.anchoranalysis.gui.frame.details.canvas.ControllerAction;
 import org.anchoranalysis.gui.frame.details.canvas.controller.imageview.ControllerImageView;
@@ -47,7 +44,6 @@ import org.anchoranalysis.gui.videostats.link.LinkModules;
 import org.anchoranalysis.gui.videostats.module.DefaultModuleState;
 import org.anchoranalysis.gui.videostats.module.VideoStatsModule;
 import org.anchoranalysis.image.stack.DisplayStack;
-import org.anchoranalysis.io.output.bean.OutputWriteSettings;
 
 // A frame that supports quickly drawing marks on top of existing images based upon a mouse-click
 //  at a particular point

@@ -31,12 +31,12 @@ import java.util.function.Function;
 import org.anchoranalysis.anchor.overlay.collection.OverlayCollection;
 import org.anchoranalysis.core.event.IRoutableReceivable;
 import org.anchoranalysis.core.functional.function.FunctionWithException;
-import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.index.IntArray;
 import org.anchoranalysis.core.property.IPropertyValueReceivable;
 import org.anchoranalysis.core.property.IPropertyValueSendable;
 import org.anchoranalysis.core.property.PropertyValueReceivableAdapter;
 import org.anchoranalysis.core.property.change.PropertyValueChangeEvent;
+import org.anchoranalysis.gui.container.background.BackgroundStackContainerException;
 import org.anchoranalysis.gui.image.OverlayCollectionWithImgStack;
 import org.anchoranalysis.gui.videostats.module.VideoStatsModule;
 import org.anchoranalysis.gui.videostats.module.VideoStatsModule.ReceivableSendablePair;
@@ -57,7 +57,7 @@ public class LinkModules {
     private Adder<Integer> frameIndex = new Adder<>(LinkFramesUniqueID.FRAME_INDEX);
     private Adder<IntArray> markIndices = new Adder<>(LinkFramesUniqueID.MARK_INDICES);
     private Adder<Integer> sliceNum = new Adder<>(LinkFramesUniqueID.SLICE_NUM);
-    private Adder<FunctionWithException<Integer, DisplayStack, GetOperationFailedException>>
+    private Adder<FunctionWithException<Integer, DisplayStack, BackgroundStackContainerException>>
             background = new Adder<>(LinkFramesUniqueID.BACKGROUND);
 
     public class Adder<T> {
@@ -155,7 +155,7 @@ public class LinkModules {
         return overlaysWithStack;
     }
 
-    public Adder<FunctionWithException<Integer, DisplayStack, GetOperationFailedException>>
+    public Adder<FunctionWithException<Integer, DisplayStack, BackgroundStackContainerException>>
             getBackground() {
         return background;
     }

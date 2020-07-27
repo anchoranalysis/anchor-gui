@@ -26,8 +26,6 @@
 
 package org.anchoranalysis.gui.container.background;
 
-import org.anchoranalysis.core.error.OperationFailedException;
-import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.index.container.BoundedIndexContainer;
 import org.anchoranalysis.image.stack.DisplayStack;
 

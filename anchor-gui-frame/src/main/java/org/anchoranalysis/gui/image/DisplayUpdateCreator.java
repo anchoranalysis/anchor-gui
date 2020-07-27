@@ -32,8 +32,8 @@ import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.functional.function.FunctionWithException;
 import org.anchoranalysis.core.idgetter.IDGetter;
-import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.index.SetOperationFailedException;
+import org.anchoranalysis.gui.container.background.BackgroundStackContainerException;
 import org.anchoranalysis.gui.frame.display.BoundColoredOverlayCollection;
 import org.anchoranalysis.gui.frame.display.DisplayUpdate;
 import org.anchoranalysis.gui.frame.display.OverlayedDisplayStackUpdate;
@@ -41,9 +41,9 @@ import org.anchoranalysis.gui.frame.display.overlay.OverlayRetriever;
 import org.anchoranalysis.image.stack.DisplayStack;
 
 public class DisplayUpdateCreator
-        implements FunctionWithException<Integer, DisplayUpdate, OperationFailedException> {
+        implements FunctionWithException<Integer, DisplayUpdate, BackgroundStackContainerException> {
 
-    private FunctionWithException<Integer, OverlayedDisplayStackUpdate, GetOperationFailedException>
+    private FunctionWithException<Integer, OverlayedDisplayStackUpdate, BackgroundStackContainerException>
             src;
     private DrawOverlay maskWriter;
     private IDGetter<Overlay> idGetter;
@@ -52,7 +52,7 @@ public class DisplayUpdateCreator
     private BoundColoredOverlayCollection boundOverlay = null;
 
     public DisplayUpdateCreator(
-            FunctionWithException<Integer, OverlayedDisplayStackUpdate, GetOperationFailedException>
+            FunctionWithException<Integer, OverlayedDisplayStackUpdate, BackgroundStackContainerException>
                     src,
             IDGetter<Overlay> idGetter) {
         super();
@@ -69,7 +69,7 @@ public class DisplayUpdateCreator
     }
 
     @Override
-    public DisplayUpdate apply(Integer sourceObject) throws OperationFailedException {
+    public DisplayUpdate apply(Integer sourceObject) throws BackgroundStackContainerException {
         try {
             OverlayedDisplayStackUpdate update = src.apply(sourceObject);
 
@@ -92,8 +92,8 @@ public class DisplayUpdateCreator
 
             return update.applyAndCreateDisplayUpdate(boundOverlay);
 
-        } catch (CreateException | GetOperationFailedException e) {
-            throw new OperationFailedException(e);
+        } catch (CreateException | OperationFailedException e) {
+            throw new BackgroundStackContainerException(e);
         }
     }
 

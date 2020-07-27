@@ -32,7 +32,6 @@ import lombok.NoArgsConstructor;
 import org.anchoranalysis.anchor.mpp.bean.proposer.MarkProposer;
 import org.anchoranalysis.anchor.mpp.bean.regionmap.RegionMap;
 import org.anchoranalysis.core.error.OperationFailedException;
-import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.gui.interactivebrowser.MarkEvaluatorResolved;
 import org.anchoranalysis.gui.videostats.internalframe.annotator.InternalFrameAnnotator;
 import org.anchoranalysis.gui.videostats.internalframe.annotator.tool.ToolErrorReporter;

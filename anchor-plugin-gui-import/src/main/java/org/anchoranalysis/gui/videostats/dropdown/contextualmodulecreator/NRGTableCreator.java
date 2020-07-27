@@ -47,10 +47,10 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class NRGTableCreator extends VideoStatsModuleCreatorContext {
 
-    private final Operation<LoadContainer<CfgNRGInstantState>, GetOperationFailedException>
+    private final Operation<LoadContainer<CfgNRGInstantState>, OperationFailedException>
             operation;
-    private final ColorIndex colorIndex;
     private final Operation<NRGStackWithParams, GetOperationFailedException> nrgStackWithParams;
+    private final ColorIndex colorIndex;
 
     @Override
     public boolean precondition() {
@@ -80,7 +80,7 @@ public class NRGTableCreator extends VideoStatsModuleCreatorContext {
 
         } catch (IllegalArgumentException
                 | InitException
-                | GetOperationFailedException e) {
+                | OperationFailedException | GetOperationFailedException e) {
             throw new VideoStatsModuleCreateException(e);
         }
     }

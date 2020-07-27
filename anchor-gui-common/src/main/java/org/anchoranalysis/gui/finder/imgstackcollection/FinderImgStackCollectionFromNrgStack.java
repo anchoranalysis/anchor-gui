@@ -43,17 +43,20 @@ public class FinderImgStackCollectionFromNrgStack implements FinderImgStackColle
 
     private FinderNrgStack delegate = null;
 
-    private OperationWithProgressReporter<Stack, GetOperationFailedException>
+    private OperationWithProgressReporter<Stack, OperationFailedException>
             operationExtractUntilThreeChnls =
                     new WrapOperationWithProgressReporterAsCached<>(
                             pr -> {
-                                NRGStackWithParams nrgStackWithParams =
-                                        delegate.operationNrgStackWithProgressReporter()
-                                                .doOperation(pr);
-                                return nrgStackWithParams
-                                        .getNrgStack()
-                                        .asStack()
-                                        .extractUpToThreeChnls();
+                                try {
+                                    NRGStackWithParams nrgStackWithParams = delegate.operationNrgStackWithProgressReporter()
+                                            .doOperation(pr);
+                                    return nrgStackWithParams
+                                            .getNrgStack()
+                                            .asStack()
+                                            .extractUpToThreeChnls();                                        
+                                } catch (GetOperationFailedException e) {
+                                    throw e.asOperationFailedException();
+                                }
                             });
 
     private CachedOperationWithProgressReporter<NamedProvider<Stack>, OperationFailedException>

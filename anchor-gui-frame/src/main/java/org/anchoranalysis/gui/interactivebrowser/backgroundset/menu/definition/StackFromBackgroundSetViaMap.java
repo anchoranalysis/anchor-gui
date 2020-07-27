@@ -28,10 +28,8 @@ package org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.definition;
 
 import java.util.Map;
 import org.anchoranalysis.bean.shared.StringMap;
-import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.error.reporter.ErrorReporter;
 import org.anchoranalysis.core.functional.function.FunctionWithException;
-import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.progress.OperationWithProgressReporter;
 import org.anchoranalysis.core.progress.ProgressReporterNull;
 import org.anchoranalysis.gui.backgroundset.BackgroundSet;

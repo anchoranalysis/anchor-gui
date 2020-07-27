@@ -29,20 +29,17 @@ package org.anchoranalysis.gui.backgroundset;
 import java.util.HashMap;
 import java.util.Set;
 import org.anchoranalysis.core.error.CreateException;
-import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.error.friendly.AnchorImpossibleSituationException;
 import org.anchoranalysis.core.functional.IdentityOperation;
 import org.anchoranalysis.core.functional.Operation;
 import org.anchoranalysis.core.functional.function.FunctionWithException;
-import org.anchoranalysis.core.index.BoundedIndexBridge;
 import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.gui.container.background.BackgroundStackContainer;
 import org.anchoranalysis.gui.container.background.BackgroundStackContainerException;
 import org.anchoranalysis.gui.container.background.CombineRGBBackgroundStackCntr;
 import org.anchoranalysis.image.stack.DisplayStack;
 import org.anchoranalysis.image.stack.Stack;
-import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
@@ -67,7 +64,7 @@ public class BackgroundSet {
 
     public void addItem(
             String name,
-            Operation<BackgroundStackContainer, GetOperationFailedException> rasterBackground) {
+            Operation<BackgroundStackContainer, BackgroundStackContainerException> rasterBackground) {
         map.put(name, rasterBackground);
     }
 
@@ -112,7 +109,7 @@ public class BackgroundSet {
                 return null;
             }
 
-            return new BoundedIndexBridge<>( e ->
+            return new BoundedIndexBridge<>(
                 backgroundStackCntr.container()
             );
         } catch (BackgroundStackContainerException e) {
