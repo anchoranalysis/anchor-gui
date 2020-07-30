@@ -86,7 +86,7 @@ class OperationNrgStack extends CachedOperation<NRGStackWithParams, CreateExcept
                 }
             }
 
-            if (stack.getNumChnl() > 0) {
+            if (stack.getNumberChannels() > 0) {
                 NRGStack nrgStack = new NRGStack(stack);
                 return new NRGStackWithParams(nrgStack, params);
             } else {

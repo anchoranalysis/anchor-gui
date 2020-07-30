@@ -53,7 +53,7 @@ public class FinderImgStackCollectionFromNrgStack implements FinderImgStackColle
                                     return nrgStackWithParams
                                             .getNrgStack()
                                             .asStack()
-                                            .extractUpToThreeChnls();                                        
+                                            .extractUpToThreeChannels();                                        
                                 } catch (GetOperationFailedException e) {
                                     throw e.asOperationFailedException();
                                 }

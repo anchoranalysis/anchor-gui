@@ -36,13 +36,15 @@ import org.anchoranalysis.gui.container.background.BackgroundStackContainer;
 import org.anchoranalysis.image.stack.DisplayStack;
 import org.anchoranalysis.image.stack.Stack;
 import org.anchoranalysis.image.stack.TimeSequence;
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 
-public class BackgroundStackCntrFactory {
+@AllArgsConstructor(access=AccessLevel.PRIVATE)
+public class BackgroundStackContainerFactory {
 
     private static DisplayStack convert(Stack s) throws CreateException {
-        if (s.getNumChnl() <= 3) {
-            s = s.extractUpToThreeChnls();
+        if (s.getNumberChannels() <= 3) {
+            s = s.extractUpToThreeChannels();
         }
         return DisplayStack.create(s);
     }

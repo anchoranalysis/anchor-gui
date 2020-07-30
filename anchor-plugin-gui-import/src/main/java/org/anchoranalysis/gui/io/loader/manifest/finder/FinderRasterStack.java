@@ -75,7 +75,7 @@ public abstract class FinderRasterStack extends FinderSingleFile
 
     @Override
     public Channel getFirstChnl() throws OperationFailedException {
-        return get().getChnl(0);
+        return get().getChannel(0);
     }
 
     @Override
@@ -92,6 +92,6 @@ public abstract class FinderRasterStack extends FinderSingleFile
 
     @Override
     public int getNumChnl() throws OperationFailedException {
-        return get().getNumChnl();
+        return get().getNumberChannels();
     }
 }

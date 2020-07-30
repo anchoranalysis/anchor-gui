@@ -106,6 +106,6 @@ public class RetrieveElementsImage extends RetrieveElements {
 
     private CachedOperation<Stack, AnchorNeverOccursException> cachedOpFromDisplayStack(
             DisplayStack stack) {
-        return new WrapOperationAsCached<>(() -> stack.createImgStack(false));
+        return new WrapOperationAsCached<>(() -> stack.deriveStack(false));
     }
 }

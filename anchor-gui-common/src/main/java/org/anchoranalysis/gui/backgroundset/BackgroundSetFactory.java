@@ -162,12 +162,12 @@ public class BackgroundSetFactory {
 
     private static BackgroundStackContainer createBackgroundTimeSeries(TimeSequence seq)
             throws OperationFailedException {
-        return BackgroundStackCntrFactory.convertedSequence(seq);
+        return BackgroundStackContainerFactory.convertedSequence(seq);
     }
 
     private static BackgroundStackContainer createBackgroundNotTimeSeries(Stack img)
             throws OperationFailedException {
-        return BackgroundStackCntrFactory.singleSavedStack(img);
+        return BackgroundStackContainerFactory.singleSavedStack(img);
     }
 
     private static void addFromImgStackCollection(
@@ -190,7 +190,7 @@ public class BackgroundSetFactory {
                     try {
                         ImageDimensions sd = guessDimensions(imageStackCollection);
                         Stack stack = createEmptyStack(sd);
-                        return BackgroundStackCntrFactory.singleSavedStack(stack);
+                        return BackgroundStackContainerFactory.singleSavedStack(stack);
                     } catch (OperationFailedException e) {
                         throw new BackgroundStackContainerException("blank", e);
                     }
@@ -212,7 +212,7 @@ public class BackgroundSetFactory {
             throws OperationFailedException {
         try {
             Stack stack = new Stack();
-            stack.addChnl(
+            stack.addChannel(
                     ChannelFactory.instance()
                             .createEmptyInitialised(
                                     dimensions, VoxelDataTypeUnsignedByte.INSTANCE));
@@ -273,10 +273,10 @@ public class BackgroundSetFactory {
             throws OperationFailedException {
 
         try {
-            for (int c = 0; c < stack.getNumChnl(); c++) {
+            for (int c = 0; c < stack.getNumberChannels(); c++) {
                 // We create a stack just with this channel
                 Stack stackSingle = new Stack();
-                stackSingle.addChnl(stack.getChnl(c));
+                stackSingle.addChannel(stack.getChannel(c));
 
                 backgroundSet.addItem(String.format("%s%d", prefix, c), stackSingle);
             }

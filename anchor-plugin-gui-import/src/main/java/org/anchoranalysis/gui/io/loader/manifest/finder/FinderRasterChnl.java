@@ -84,21 +84,21 @@ public abstract class FinderRasterChnl extends FinderSingleFile implements Finde
         Path filePath = fileWrite.calcPath();
 
         try (OpenedRaster openedRaster = rasterReader.openFile(filePath)) {
-            if (openedRaster.numSeries() != 1) {
+            if (openedRaster.numberSeries() != 1) {
                 throw new CreateException("there must be exactly one series");
             }
 
             Stack stack = openedRaster.open(0, ProgressReporterNull.get()).get(0);
 
-            if (stack.getNumChnl() != 1) {
+            if (stack.getNumberChannels() != 1) {
                 throw new CreateException("there must be exactly one channel");
             }
 
             if (normalizeChnl) {
-                stack.getChnl(0).getVoxelBox().any().multiplyBy(255);
+                stack.getChannel(0).getVoxelBox().any().multiplyBy(255);
             }
 
-            return stack.getChnl(0);
+            return stack.getChannel(0);
         }
     }
 }

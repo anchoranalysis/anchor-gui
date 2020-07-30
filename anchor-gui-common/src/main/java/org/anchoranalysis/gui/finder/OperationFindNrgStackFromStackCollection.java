@@ -81,7 +81,7 @@ public class OperationFindNrgStackFromStackCollection
         // We expects the keys to be the indexes
         Stack stack = populateStack(nic);
 
-        if (stack.getNumChnl() > 0) {
+        if (stack.getNumberChannels() > 0) {
             return new NRGStackWithParams(stack);
         } else {
             return null;
@@ -96,7 +96,7 @@ public class OperationFindNrgStackFromStackCollection
         for (int c = 0; c < size; c++) {
 
             try {
-                stack.addChnl(chnlFromStack(nic, c));
+                stack.addChannel(chnlFromStack(nic, c));
             } catch (IncorrectImageSizeException e) {
                 throw new OperationFailedException(e);
             }
@@ -111,11 +111,11 @@ public class OperationFindNrgStackFromStackCollection
         try {
             Stack chnlStack = stackProvider.getException(Integer.toString(c));
 
-            if (chnlStack.getNumChnl() != 1) {
+            if (chnlStack.getNumberChannels() != 1) {
                 throw new OperationFailedException("Stack should have only a single channel");
             }
 
-            return chnlStack.getChnl(0);
+            return chnlStack.getChannel(0);
         } catch (NamedProviderGetException e) {
             throw new OperationFailedException(e);
         }

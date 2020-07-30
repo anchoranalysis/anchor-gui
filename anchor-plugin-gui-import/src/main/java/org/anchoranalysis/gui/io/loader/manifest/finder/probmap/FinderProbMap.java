@@ -105,7 +105,7 @@ public class FinderProbMap implements BackgroundStackContainer, FinderRasterSing
         }
         if (isRasterSeries()) {
             try {
-                return rasterSeries.get().get(rasterSeries.get().previousEqualIndex(0)).getChnl(0);
+                return rasterSeries.get().get(rasterSeries.get().previousEqualIndex(0)).getChannel(0);
             } catch (GetOperationFailedException e) {
                 throw e.asOperationFailedException();
             }
@@ -123,9 +123,9 @@ public class FinderProbMap implements BackgroundStackContainer, FinderRasterSing
                 Channel chnl = singleRaster.get();
 
                 Stack stack = new Stack();
-                stack.addChnl(chnl);
-                stack.addBlankChnl();
-                stack.addBlankChnl();
+                stack.addChannel(chnl);
+                stack.addBlankChannel();
+                stack.addBlankChannel();
 
                 DisplayStack bgStack = DisplayStack.create(stack);
                 return new SingleContainer<>(bgStack, 0, true);

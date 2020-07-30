@@ -59,7 +59,7 @@ public class BackgroundSet {
     }
 
     public void addItem(String name, final Stack stack) throws OperationFailedException {
-        addItem(name, BackgroundStackCntrFactory.singleSavedStack(stack));
+        addItem(name, BackgroundStackContainerFactory.singleSavedStack(stack));
     }
 
     public void addItem(

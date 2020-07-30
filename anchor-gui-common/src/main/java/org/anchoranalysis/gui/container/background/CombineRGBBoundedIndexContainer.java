@@ -203,7 +203,7 @@ public class CombineRGBBoundedIndexContainer implements BoundedIndexContainer<Di
 
         try {
             if (cntr != null) {
-                stackNew.addChnl(cntr.get(cntr.previousEqualIndex(index)).createChnl(0, false));
+                stackNew.addChannel(cntr.get(cntr.previousEqualIndex(index)).createChannel(0, false));
             } else {
                 // TODO, why do we create an empty initialised here
                 assert (dimensions != null);
@@ -211,7 +211,7 @@ public class CombineRGBBoundedIndexContainer implements BoundedIndexContainer<Di
                         ChannelFactory.instance()
                                 .createEmptyInitialised(
                                         dimensions, VoxelDataTypeUnsignedByte.INSTANCE);
-                stackNew.addChnl(chnlNew);
+                stackNew.addChannel(chnlNew);
             }
         } catch (IncorrectImageSizeException | GetOperationFailedException e) {
             throw new OperationFailedException(e);

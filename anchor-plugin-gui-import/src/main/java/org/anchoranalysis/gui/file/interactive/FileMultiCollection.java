@@ -117,7 +117,7 @@ public class FileMultiCollection extends InteractiveFile {
     private TimeSequenceProvider createTimeSequenceProvider(
             LazyEvaluationStore<TimeSequence> stacks) throws CreateException {
         try {
-            return new TimeSequenceProvider(stacks, inputObject.numFrames());
+            return new TimeSequenceProvider(stacks, inputObject.numberFrames());
         } catch (OperationFailedException e) {
             throw new CreateException(e);
         }

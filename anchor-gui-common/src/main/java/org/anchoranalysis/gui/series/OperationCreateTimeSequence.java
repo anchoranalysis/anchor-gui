@@ -62,7 +62,7 @@ public class OperationCreateTimeSequence
         LazyEvaluationStore<TimeSequence> stackCollection =
                 new LazyEvaluationStore<>(
                         LogUtilities.createNullErrorReporter(), "createTimeSeries");
-        inputObject.addToStore(stackCollection, seriesNum, progressReporter);
-        return new TimeSequenceProvider(stackCollection, inputObject.numFrames());
+        inputObject.addToStoreInferNames(stackCollection, seriesNum, progressReporter);
+        return new TimeSequenceProvider(stackCollection, inputObject.numberFrames());
     }
 }

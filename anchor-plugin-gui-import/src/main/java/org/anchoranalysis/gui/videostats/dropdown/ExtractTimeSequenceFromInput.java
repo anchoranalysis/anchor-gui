@@ -69,7 +69,7 @@ public class ExtractTimeSequenceFromInput
 
             store.add("input_stack", new IdentityOperation<>(timeSeries));
 
-            return new TimeSequenceProvider(store, inputObject.numFrames());
+            return new TimeSequenceProvider(store, inputObject.numberFrames());
         } catch (RasterIOException | OperationFailedException e) {
             throw new CreateException(e);
         }
