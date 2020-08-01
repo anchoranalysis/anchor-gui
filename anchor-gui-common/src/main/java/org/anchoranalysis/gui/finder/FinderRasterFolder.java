@@ -34,7 +34,7 @@ import org.anchoranalysis.core.index.container.BoundedIndexContainer;
 import org.anchoranalysis.core.progress.CachedOperationWithProgressReporter;
 import org.anchoranalysis.core.progress.ProgressReporter;
 import org.anchoranalysis.image.io.bean.rasterreader.RasterReader;
-import org.anchoranalysis.image.stack.NamedImgStackCollection;
+import org.anchoranalysis.image.stack.NamedStackCollection;
 import org.anchoranalysis.image.stack.Stack;
 import org.anchoranalysis.io.manifest.ManifestRecorder;
 import org.anchoranalysis.io.manifest.deserializer.folder.BoundsFromSequenceType;
@@ -117,13 +117,13 @@ public class FinderRasterFolder extends FinderSingleFolder {
     }
 
     // If namesAsIndexes is true, we use the indexes as names instead of the existing names
-    public NamedImgStackCollection createStackCollection(boolean namesAsIndexes) {
+    public NamedStackCollection createStackCollection(boolean namesAsIndexes) {
 
         if (getFoundFolder() == null) {
-            return new NamedImgStackCollection();
+            return new NamedStackCollection();
         }
 
-        NamedImgStackCollection nisc = null;
+        NamedStackCollection nisc = null;
 
         SequencedFolderRasterReader sfrr =
                 new SequencedFolderRasterReader(getFoundFolder(), rasterReader);
@@ -135,7 +135,7 @@ public class FinderRasterFolder extends FinderSingleFolder {
             String name = st.indexStr(i);
 
             if (nisc == null) {
-                nisc = new NamedImgStackCollection();
+                nisc = new NamedStackCollection();
             }
 
             if (namesAsIndexes) {

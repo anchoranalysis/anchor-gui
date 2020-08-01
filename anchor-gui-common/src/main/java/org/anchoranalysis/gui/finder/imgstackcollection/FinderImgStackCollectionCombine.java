@@ -34,7 +34,7 @@ import org.anchoranalysis.core.name.provider.NamedProvider;
 import org.anchoranalysis.core.progress.CachedOperationWithProgressReporter;
 import org.anchoranalysis.core.progress.OperationWithProgressReporter;
 import org.anchoranalysis.core.progress.ProgressReporterNull;
-import org.anchoranalysis.image.stack.NamedImgStackCollection;
+import org.anchoranalysis.image.stack.NamedStackCollection;
 import org.anchoranalysis.image.stack.Stack;
 import org.anchoranalysis.io.manifest.ManifestRecorder;
 
@@ -47,7 +47,7 @@ public class FinderImgStackCollectionCombine implements FinderImgStackCollection
             operation =
                     new WrapOperationWithProgressReporterAsCached<>(
                             pr -> {
-                                NamedImgStackCollection out = new NamedImgStackCollection();
+                                NamedStackCollection out = new NamedStackCollection();
 
                                 for (FinderImgStackCollection finder : list) {
                                     out.addFrom(finder.getImgStackCollection());

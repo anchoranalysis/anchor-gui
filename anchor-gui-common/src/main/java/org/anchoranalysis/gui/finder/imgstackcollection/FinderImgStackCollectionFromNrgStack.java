@@ -35,7 +35,7 @@ import org.anchoranalysis.core.progress.OperationWithProgressReporter;
 import org.anchoranalysis.core.progress.ProgressReporterNull;
 import org.anchoranalysis.feature.nrg.NRGStackWithParams;
 import org.anchoranalysis.gui.finder.FinderNrgStack;
-import org.anchoranalysis.image.stack.NamedImgStackCollection;
+import org.anchoranalysis.image.stack.NamedStackCollection;
 import org.anchoranalysis.image.stack.Stack;
 import org.anchoranalysis.io.manifest.ManifestRecorder;
 
@@ -63,8 +63,8 @@ public class FinderImgStackCollectionFromNrgStack implements FinderImgStackColle
             operationImgStackCollection =
                     new WrapOperationWithProgressReporterAsCached<>(
                             pr -> {
-                                NamedImgStackCollection stackCollection =
-                                        new NamedImgStackCollection();
+                                NamedStackCollection stackCollection =
+                                        new NamedStackCollection();
 
                                 // finder NRG stack
                                 if (delegate != null && delegate.exists()) {
