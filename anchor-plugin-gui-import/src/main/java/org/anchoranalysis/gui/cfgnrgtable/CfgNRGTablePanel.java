@@ -51,7 +51,7 @@ import org.anchoranalysis.core.property.change.PropertyValueChangeListener;
 import org.anchoranalysis.feature.nrg.NRGStackWithParams;
 import org.anchoranalysis.gui.cfgnrg.StatePanel;
 import org.anchoranalysis.gui.cfgnrg.StatePanelUpdateException;
-import org.anchoranalysis.gui.image.OverlayCollectionWithImgStack;
+import org.anchoranalysis.gui.image.OverlayCollectionWithNrgStack;
 import org.anchoranalysis.gui.indices.DualIndicesSelection;
 import org.anchoranalysis.gui.mark.CfgUtilities;
 import org.anchoranalysis.gui.propertyvalue.PropertyValueChangeListenerList;
@@ -72,7 +72,7 @@ public class CfgNRGTablePanel extends StatePanel<CfgNRGInstantState> {
 
     private PropertyValueChangeListenerList<OverlayCollection> eventListenerListOverlayCollection =
             new PropertyValueChangeListenerList<>();
-    private PropertyValueChangeListenerList<OverlayCollectionWithImgStack>
+    private PropertyValueChangeListenerList<OverlayCollectionWithNrgStack>
             eventListenerListOverlayCollectionWithStack = new PropertyValueChangeListenerList<>();
 
     private class ClickAdapterIndividual extends MouseAdapter {
@@ -200,12 +200,12 @@ public class CfgNRGTablePanel extends StatePanel<CfgNRGInstantState> {
             l.propertyValueChanged(new PropertyValueChangeEvent<>(this, state, false));
         }
 
-        for (PropertyValueChangeListener<OverlayCollectionWithImgStack> l :
+        for (PropertyValueChangeListener<OverlayCollectionWithNrgStack> l :
                 eventListenerListOverlayCollectionWithStack) {
             l.propertyValueChanged(
                     new PropertyValueChangeEvent<>(
                             this,
-                            new OverlayCollectionWithImgStack(state, associatedRaster),
+                            new OverlayCollectionWithNrgStack(state, associatedRaster),
                             false));
         }
     }

@@ -38,7 +38,7 @@ import org.anchoranalysis.core.log.Logger;
 import org.anchoranalysis.core.property.change.PropertyValueChangeEvent;
 import org.anchoranalysis.core.property.change.PropertyValueChangeListener;
 import org.anchoranalysis.gui.container.background.BackgroundStackContainerException;
-import org.anchoranalysis.gui.displayupdate.IDisplayUpdateRememberStack;
+import org.anchoranalysis.gui.displayupdate.DisplayUpdateRememberStack;
 import org.anchoranalysis.gui.displayupdate.OverlayedDisplayStack;
 import org.anchoranalysis.gui.frame.display.IRedrawable;
 import org.anchoranalysis.gui.frame.display.OverlayedDisplayStackUpdate;
@@ -131,7 +131,7 @@ class ThreadedOverlayUpdateProducer implements IRedrawable, IThreadedProducer, I
 
     // How it provides stacks to other applications (the output)
     @Override
-    public IDisplayUpdateRememberStack getStackProvider() {
+    public DisplayUpdateRememberStack getStackProvider() {
         return consumer;
     }
 

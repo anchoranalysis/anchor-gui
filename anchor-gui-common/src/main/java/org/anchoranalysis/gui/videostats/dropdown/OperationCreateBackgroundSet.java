@@ -43,7 +43,7 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class OperationCreateBackgroundSet extends CachedOperationWithProgressReporter<BackgroundSet, BackgroundStackContainerException> {
 
-    private final OperationWithProgressReporter<TimeSequenceProvider, ? extends Throwable> namedImgStackCollection;
+    private final OperationWithProgressReporter<TimeSequenceProvider, ? extends Throwable> stacksOverTime;
 
     public OperationCreateBackgroundSet(NamedProvider<Stack> namedProvider) {
         this(
@@ -55,7 +55,7 @@ public class OperationCreateBackgroundSet extends CachedOperationWithProgressRep
     protected BackgroundSet execute(ProgressReporter progressReporter) throws BackgroundStackContainerException {
         try {
             NamedProvider<TimeSequence> stacks =
-                    namedImgStackCollection.doOperation(progressReporter).sequence();
+                    stacksOverTime.doOperation(progressReporter).sequence();
 
             return BackgroundSetFactory.createBackgroundSet(stacks, ProgressReporterNull.get());
         } catch (Exception e) {

@@ -32,7 +32,7 @@ import org.anchoranalysis.core.functional.function.FunctionWithException;
 import org.anchoranalysis.core.index.IntArray;
 import org.anchoranalysis.core.property.IPropertyValueSendable;
 import org.anchoranalysis.gui.container.background.BackgroundStackContainerException;
-import org.anchoranalysis.gui.image.OverlayCollectionWithImgStack;
+import org.anchoranalysis.gui.image.OverlayCollectionWithNrgStack;
 import org.anchoranalysis.image.stack.DisplayStack;
 
 public class DefaultLinkStateManager {
@@ -60,7 +60,7 @@ public class DefaultLinkStateManager {
                 LinkFramesUniqueID.OVERLAYS,
                 (value, adjusting) -> delegate.setOverlayCollection(value));
 
-        this.<OverlayCollectionWithImgStack>putMap(
+        this.<OverlayCollectionWithNrgStack>putMap(
                 LinkFramesUniqueID.OVERLAYS_WITH_STACK,
                 (value, adjusting) -> delegate.setCfgWithStack(value));
     }

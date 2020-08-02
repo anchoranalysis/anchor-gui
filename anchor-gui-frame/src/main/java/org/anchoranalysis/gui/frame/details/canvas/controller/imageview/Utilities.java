@@ -44,6 +44,7 @@ class Utilities {
 
         int desiredWidth = intFraction(screenBounds.getWidth(), widthFractionScreen);
         int desiredHeight = intFraction(screenBounds.getHeight(), heightFractionScreen);
+        // TODO this looks like the z dimension should be changed to 1. What are the implications?
         return new Extent(desiredWidth, desiredHeight, 0);
     }
 

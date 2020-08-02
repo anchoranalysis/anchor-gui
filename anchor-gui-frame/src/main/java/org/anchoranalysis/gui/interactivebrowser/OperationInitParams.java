@@ -46,33 +46,20 @@ import org.anchoranalysis.image.bean.provider.stack.StackProvider;
 import org.anchoranalysis.image.stack.Stack;
 import org.anchoranalysis.io.output.bound.BoundIOContext;
 import org.anchoranalysis.mpp.io.input.MPPInitParamsFactory;
+import lombok.AllArgsConstructor;
 
+@AllArgsConstructor
 public class OperationInitParams extends CachedOperation<MPPInitParams, CreateException> {
 
     private OperationWithProgressReporter<NamedProvider<Stack>, ? extends Throwable>
-            namedImgStackCollection;
+            namedStacks;
     private Operation<Optional<KeyValueParams>, IOException> keyParams;
-
     private Define define;
-
     private BoundIOContext context;
-
-    public OperationInitParams(
-            OperationWithProgressReporter<NamedProvider<Stack>, ? extends Throwable>
-                    namedImgStackCollection,
-            Operation<Optional<KeyValueParams>, IOException> keyParams,
-            Define define,
-            BoundIOContext context) {
-        super();
-        this.namedImgStackCollection = namedImgStackCollection;
-        this.context = context;
-        this.define = define;
-        this.keyParams = keyParams;
-    }
 
     // If we've created the proposerShared objects, then we return the names of the available stacks
     // If not, we simply return all possible names
-    public Set<String> namesStackCollection() {
+    public Set<String> namedAllAvailableStacks() {
 
         if (isDone()) {
             return this.getResult().getImage().getStackCollection().keys();
@@ -81,8 +68,8 @@ public class OperationInitParams extends CachedOperation<MPPInitParams, CreateEx
             out.addAll(namesFromListNamedItems(define.getList(StackProvider.class)));
 
             try {
-                out.addAll(namedImgStackCollection.doOperation(ProgressReporterNull.get()).keys());
-            } catch (Throwable e) {
+                out.addAll(namedStacks.doOperation(ProgressReporterNull.get()).keys());
+            } catch (Exception e) {
                 context.getErrorReporter().recordError(OperationInitParams.class, e);
             }
             return out;
@@ -97,11 +84,11 @@ public class OperationInitParams extends CachedOperation<MPPInitParams, CreateEx
             return MPPInitParamsFactory.createFromExistingCollections(
                     context,
                     Optional.ofNullable(define),
-                    Optional.of(namedImgStackCollection.doOperation(ProgressReporterNull.get())),
+                    Optional.of(namedStacks.doOperation(ProgressReporterNull.get())),
                     Optional.empty(),
                     keyParams.doOperation());
 
-        } catch (Throwable e) {
+        } catch (Exception e) {
             throw new CreateException(e);
         }
     }

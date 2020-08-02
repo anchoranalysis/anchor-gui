@@ -46,10 +46,10 @@ import org.anchoranalysis.core.progress.OperationWithProgressReporter;
 import org.anchoranalysis.feature.nrg.NRGStackWithParams;
 import org.anchoranalysis.gui.file.opened.IOpenedFileGUI;
 import org.anchoranalysis.gui.finder.FinderNrgStack;
-import org.anchoranalysis.gui.finder.imgstackcollection.FinderImgStackCollectionCombine;
-import org.anchoranalysis.gui.finder.imgstackcollection.FinderImgStackCollectionFromFolder;
-import org.anchoranalysis.gui.finder.imgstackcollection.FinderImgStackCollectionFromNrgStack;
-import org.anchoranalysis.gui.finder.imgstackcollection.FinderImgStackCollectionFromRootFiles;
+import org.anchoranalysis.gui.finder.imgstackcollection.FinderStacksCombine;
+import org.anchoranalysis.gui.finder.imgstackcollection.FinderStacksFromFolder;
+import org.anchoranalysis.gui.finder.imgstackcollection.FinderStacksFromNrgStack;
+import org.anchoranalysis.gui.finder.imgstackcollection.FinderStacksFromRootFiles;
 import org.anchoranalysis.gui.interactivebrowser.MarkEvaluatorManager;
 import org.anchoranalysis.gui.interactivebrowser.MarkEvaluatorSetForImage;
 import org.anchoranalysis.gui.io.loader.manifest.finder.CfgNRGFinderContext;
@@ -97,12 +97,12 @@ public class ManifestDropDown {
 
     private OperationCreateBackgroundSetWithAdder createBackgroundSetWithNRG(
             FinderNrgStack finderNrgStack,
-            FinderImgStackCollectionCombine finderImgStackCollection,
+            FinderStacksCombine finderStacks,
             IAddVideoStatsModule adder,
             VideoStatsModuleGlobalParams mpg) {
 
         OperationWithProgressReporter<NamedProvider<Stack>, OperationFailedException> opStacks =
-                finderImgStackCollection.getImgStackCollectionAsOperationWithProgressReporter();
+                finderStacks.getStacksAsOperation();
 
         // We try to read a nrgStack from the manifest. If none exists, we guess instead from the
         // image-stacks.
@@ -130,34 +130,34 @@ public class ManifestDropDown {
         };
     }
 
-    private FinderImgStackCollectionCombine createFinderImgStack(
+    private FinderStacksCombine createFinderStacks(
             FinderNrgStack finderNrgStack, RasterReader rasterReader) throws InitException {
         // Finders
-        FinderImgStackCollectionCombine finderImgStackCollection =
-                new FinderImgStackCollectionCombine();
-        finderImgStackCollection.add(
-                new FinderImgStackCollectionFromFolder(rasterReader, "stackCollection"));
-        finderImgStackCollection.add(
-                new FinderImgStackCollectionFromRootFiles(rasterReader, "out"));
-        finderImgStackCollection.add(
-                new FinderImgStackCollectionFromNrgStack(
+        FinderStacksCombine combined =
+                new FinderStacksCombine();
+        combined.add(
+                new FinderStacksFromFolder(rasterReader, "stackCollection"));
+        combined.add(
+                new FinderStacksFromRootFiles(rasterReader, "out"));
+        combined.add(
+                new FinderStacksFromNrgStack(
                         finderNrgStack)); // Adds the NRG stack to the input stack collection
 
         // Disabled, as they not be the same size as the existing image
-        finderImgStackCollection.add(
-                new FinderImgStackCollectionFromRootFiles(rasterReader, "stackFromCollection"));
-        finderImgStackCollection.add(
-                new FinderImgStackCollectionFromFolder(rasterReader, "chnlScaledCollection"));
+        combined.add(
+                new FinderStacksFromRootFiles(rasterReader, "stackFromCollection"));
+        combined.add(
+                new FinderStacksFromFolder(rasterReader, "chnlScaledCollection"));
 
         try {
-            if (!finderImgStackCollection.doFind(manifests.getFileManifest().doOperation())) {
+            if (!combined.doFind(manifests.getFileManifest().doOperation())) {
                 throw new InitException("cannot find image stack collection");
             }
         } catch (OperationFailedException e) {
             throw new InitException(e);
         }
 
-        return finderImgStackCollection;
+        return combined;
     }
 
     private FinderNrgStack createFinderNrgStack(
@@ -194,8 +194,7 @@ public class ManifestDropDown {
         return finderGroupParams;
     }
 
-    private FinderHistoryFolderKernelIterDescription createFinderKernelIterDescription(
-            VideoStatsModuleGlobalParams mpg) throws InitException {
+    private FinderHistoryFolderKernelIterDescription createFinderKernelIterDescription() throws InitException {
 
         final FinderHistoryFolderKernelIterDescription finderKernelIterDescription =
                 new FinderHistoryFolderKernelIterDescription("kernelIterDescription");
@@ -209,12 +208,12 @@ public class ManifestDropDown {
 
     private MarkEvaluatorSetForImage createMarkEvaluatorSet(
             MarkEvaluatorManager markEvaluatorManager,
-            FinderImgStackCollectionCombine finderImgStackCollection,
+            FinderStacksCombine finderStacks,
             FinderSerializedObject<KeyValueParams> finderGroupParams)
             throws InitException {
         try {
             return markEvaluatorManager.createSetForStackCollection(
-                    finderImgStackCollection.getImgStackCollectionAsOperationWithProgressReporter(),
+                    finderStacks.getStacksAsOperation(),
                     finderGroupParams.operation());
         } catch (CreateException e1) {
             throw new InitException(e1);
@@ -231,10 +230,10 @@ public class ManifestDropDown {
 
         // Some necessary Finders and Objects
         FinderNrgStack finderNrgStack = createFinderNrgStack(rasterReader, mpg);
-        FinderImgStackCollectionCombine finderImgStackCollection =
-                createFinderImgStack(finderNrgStack, rasterReader);
+        FinderStacksCombine finderStacks =
+                createFinderStacks(finderNrgStack, rasterReader);
         OperationCreateBackgroundSetWithAdder opBackgroundNRG =
-                createBackgroundSetWithNRG(finderNrgStack, finderImgStackCollection, adder, mpg);
+                createBackgroundSetWithNRG(finderNrgStack, finderStacks, adder, mpg);
 
         // Add: Cfgs, Rasters and object-masks
         boolean defaultAdded = addCfgs(opBackgroundNRG, finderNrgStack, mpg);
@@ -247,8 +246,7 @@ public class ManifestDropDown {
                 createFinderKernelProposer(mpg);
 
         FinderSerializedObject<KeyValueParams> finderGroupParams = createFinderGroupParams(mpg);
-        FinderHistoryFolderKernelIterDescription finderKernelIterDescription =
-                createFinderKernelIterDescription(mpg);
+        FinderHistoryFolderKernelIterDescription finderKernelIterDescription = createFinderKernelIterDescription();
 
         addKernelHistoryNavigator(
                 finderKernelIterDescription, finderKernelProposer, opBackgroundNRG, mpg);
@@ -260,9 +258,9 @@ public class ManifestDropDown {
         // Proposer Evaluators
         MarkEvaluatorSetForImage markEvaluatorSet =
                 createMarkEvaluatorSet(
-                        markEvaluatorManager, finderImgStackCollection, finderGroupParams);
+                        markEvaluatorManager, finderStacks, finderGroupParams);
         addProposerEvaluator(
-                finderImgStackCollection,
+                finderStacks,
                 finderNrgStack,
                 markEvaluatorSet,
                 outputManager,
@@ -273,7 +271,7 @@ public class ManifestDropDown {
 
         addSetsWrap(
                 finderNrgStack,
-                finderImgStackCollection,
+                finderStacks,
                 opBackgroundNRG,
                 finderKernelProposer,
                 outputManager,
@@ -283,7 +281,7 @@ public class ManifestDropDown {
 
     private void addSetsWrap(
             FinderNrgStack finderNrgStack,
-            FinderImgStackCollectionCombine finderImgStackCollection,
+            FinderStacksCombine finderStacks,
             OperationCreateBackgroundSetWithAdder opBackgroundNRG,
             FinderSerializedObject<KernelProposer<CfgNRGPixelized>> finderKernelProposer,
             BoundOutputManagerRouteErrors outputManager,
@@ -292,7 +290,7 @@ public class ManifestDropDown {
         try {
             CfgNRGFinderContext context =
                     new CfgNRGFinderContext(
-                            finderImgStackCollection,
+                            finderStacks,
                             finderKernelProposer,
                             adder.getParentFrame(),
                             outputManager,
@@ -308,7 +306,7 @@ public class ManifestDropDown {
     }
 
     private void addProposerEvaluator(
-            FinderImgStackCollectionCombine finderImgStackCollection,
+            FinderStacksCombine finderStacks,
             FinderNrgStack finderNrgStack,
             MarkEvaluatorSetForImage markEvaluatorSet,
             BoundOutputManagerRouteErrors outputManager,
@@ -317,8 +315,8 @@ public class ManifestDropDown {
         OperationCreateBackgroundSetWithAdder operationBwsa =
                 new OperationCreateBackgroundSetWithAdder(
                         NRGBackground.createStack(
-                                finderImgStackCollection
-                                        .getImgStackCollectionAsOperationWithProgressReporter(),
+                                finderStacks
+                                        .getStacksAsOperation(),
                                 finderNrgStack.operationNrgStackWithProgressReporter()),
                         adder,
                         mpg.getThreadPool(),

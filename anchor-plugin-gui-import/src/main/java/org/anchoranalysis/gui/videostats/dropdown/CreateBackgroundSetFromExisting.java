@@ -38,7 +38,6 @@ import org.anchoranalysis.gui.interactivebrowser.OperationInitParams;
 import org.anchoranalysis.image.bean.nonbean.init.CreateCombinedStack;
 import org.anchoranalysis.image.bean.nonbean.init.ImageInitParams;
 import org.anchoranalysis.image.stack.wrap.WrapStackAsTimeSequence;
-import org.anchoranalysis.io.output.bean.OutputWriteSettings;
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
@@ -48,7 +47,6 @@ public class CreateBackgroundSetFromExisting
     private final OperationWithProgressReporter<BackgroundSet, BackgroundStackContainerException>
             existingBackgroundSet;
     private OperationInitParams pso;
-    private OutputWriteSettings ows;
 
     @Override
     protected BackgroundSet execute(ProgressReporter progressReporter)
@@ -63,7 +61,6 @@ public class CreateBackgroundSetFromExisting
             return BackgroundSetFactory.createBackgroundSetFromExisting(
                     bsExisting,
                     new WrapStackAsTimeSequence(CreateCombinedStack.apply(soImage)),
-                    ows,
                     progressReporter);
 
         } catch (CreateException e) {

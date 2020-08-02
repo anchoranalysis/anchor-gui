@@ -84,8 +84,8 @@ class ProposerEvaluatorModuleCreator extends VideoStatsModuleCreator {
                                     new CreateBackgroundSetFromExisting(
                                             nrgBackground.getBackgroundSet(),
                                             e.getMarkEvaluator()
-                                                    .getProposerSharedObjectsOperation(),
-                                            outputWriteSettings));
+                                                    .getProposerSharedObjectsOperation()
+                                            ));
                             markEvaluatorUpdater.setMarkEvaluatorIdentifier(
                                     e.getMarkEvaluatorName());
                         } else {

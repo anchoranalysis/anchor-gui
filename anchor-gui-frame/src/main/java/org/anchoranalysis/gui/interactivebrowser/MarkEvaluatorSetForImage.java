@@ -49,7 +49,7 @@ public class MarkEvaluatorSetForImage {
 
     // START REQUIRED ARGUMENTS
     private final OperationWithProgressReporter<NamedProvider<Stack>, ? extends Throwable>
-            namedImgStackCollection;
+            namedStacks;
     private final Operation<Optional<KeyValueParams>, IOException> keyParams;
     private final BoundIOContext context;
     // END REQUIRED ARGUMENTS
@@ -67,7 +67,7 @@ public class MarkEvaluatorSetForImage {
             this.me = me;
             operationProposerSharedObjects =
                     new OperationInitParams(
-                            namedImgStackCollection,
+                            namedStacks,
                             keyParams,
                             /// TODO Do we need this duplication?
                             me.getDefine().duplicateBean(),

@@ -26,70 +26,49 @@
 
 package org.anchoranalysis.gui.finder.imgstackcollection;
 
-import java.util.ArrayList;
-import java.util.List;
 import org.anchoranalysis.core.cache.WrapOperationWithProgressReporterAsCached;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.name.provider.NamedProvider;
 import org.anchoranalysis.core.progress.CachedOperationWithProgressReporter;
 import org.anchoranalysis.core.progress.OperationWithProgressReporter;
 import org.anchoranalysis.core.progress.ProgressReporterNull;
-import org.anchoranalysis.image.stack.NamedStackCollection;
+import org.anchoranalysis.gui.finder.FinderRasterFolder;
+import org.anchoranalysis.image.io.bean.rasterreader.RasterReader;
 import org.anchoranalysis.image.stack.Stack;
 import org.anchoranalysis.io.manifest.ManifestRecorder;
 
-// Combines a number of other FinderImgStackCollection
-public class FinderImgStackCollectionCombine implements FinderImgStackCollection {
+// Finds an image stack collection
+public class FinderStacksFromFolder implements FinderStacks {
 
-    private List<FinderImgStackCollection> list = new ArrayList<>();
+    private FinderRasterFolder delegate;
 
     private CachedOperationWithProgressReporter<NamedProvider<Stack>, OperationFailedException>
-            operation =
+            operationStacks =
                     new WrapOperationWithProgressReporterAsCached<>(
-                            pr -> {
-                                NamedStackCollection out = new NamedStackCollection();
+                            pr -> delegate.createStackCollection(false));
 
-                                for (FinderImgStackCollection finder : list) {
-                                    out.addFrom(finder.getImgStackCollection());
-                                }
-
-                                return out;
-                            });
+    public FinderStacksFromFolder(RasterReader rasterReader, String folderName) {
+        delegate = new FinderRasterFolder(folderName, "stackFromCollection", rasterReader);
+    }
 
     @Override
-    public NamedProvider<Stack> getImgStackCollection() throws OperationFailedException {
-        return operation.doOperation(ProgressReporterNull.get());
+    public NamedProvider<Stack> getStacks() throws OperationFailedException {
+        return operationStacks.doOperation(ProgressReporterNull.get());
     }
 
     @Override
     public OperationWithProgressReporter<NamedProvider<Stack>, OperationFailedException>
-            getImgStackCollectionAsOperationWithProgressReporter() {
-        return operation;
+            getStacksAsOperation() {
+        return operationStacks;
     }
 
     @Override
     public boolean doFind(ManifestRecorder manifestRecorder) {
-        boolean result = false;
-        for (FinderImgStackCollection finder : list) {
-            if (finder.doFind(manifestRecorder)) {
-                result = true;
-            }
-        }
-        return result;
+        return delegate.doFind(manifestRecorder);
     }
 
-    // Uses OR behaviour, so returns TRUE if any of the elements exist
     @Override
     public boolean exists() {
-        for (FinderImgStackCollection finder : list) {
-            if (finder.exists()) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public void add(FinderImgStackCollection finder) {
-        list.add(finder);
+        return delegate.exists();
     }
 }

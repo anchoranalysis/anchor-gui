@@ -31,42 +31,21 @@ import java.util.List;
 import org.anchoranalysis.anchor.mpp.feature.instantstate.CfgNRGInstantState;
 import org.anchoranalysis.core.color.ColorIndex;
 import org.anchoranalysis.gui.container.ContainerGetter;
-import org.anchoranalysis.gui.finder.imgstackcollection.FinderImgStackCollection;
+import org.anchoranalysis.gui.finder.imgstackcollection.FinderStacks;
 import org.anchoranalysis.gui.io.loader.manifest.finder.FinderCSVStats;
 import org.anchoranalysis.io.output.bound.BoundOutputManagerRouteErrors;
+import lombok.Getter;
+import lombok.Setter;
 
 // Parameters an exportTask can draw itself from
 public class ExportTaskParams {
 
-    private ColorIndex colorIndexMarks;
-    private FinderImgStackCollection finderImgStackCollection;
-    private FinderCSVStats finderCsvStatistics;
+    @Getter @Setter private ColorIndex colorIndexMarks;
+    @Getter @Setter private FinderCSVStats finderCsvStatistics;
+    @Getter @Setter private FinderStacks finderStacks;
+    @Getter @Setter private BoundOutputManagerRouteErrors outputManager;
+
     private List<ContainerGetter<CfgNRGInstantState>> listFinderCfgNRGHistory = new ArrayList<>();
-    private BoundOutputManagerRouteErrors outputManager;
-
-    public ColorIndex getColorIndexMarks() {
-        return colorIndexMarks;
-    }
-
-    public void setColorIndexMarks(ColorIndex colorIndexMarks) {
-        this.colorIndexMarks = colorIndexMarks;
-    }
-
-    public FinderImgStackCollection getFinderImgStackCollection() {
-        return finderImgStackCollection;
-    }
-
-    public void setFinderImgStackCollection(FinderImgStackCollection finder) {
-        this.finderImgStackCollection = finder;
-    }
-
-    public FinderCSVStats getFinderCsvStatistics() {
-        return finderCsvStatistics;
-    }
-
-    public void setFinderCsvStatistics(FinderCSVStats csvStatistics) {
-        this.finderCsvStatistics = csvStatistics;
-    }
 
     public ContainerGetter<CfgNRGInstantState> getFinderCfgNRGHistory() {
         return listFinderCfgNRGHistory.get(0);
@@ -90,11 +69,4 @@ public class ExportTaskParams {
         }
     }
 
-    public BoundOutputManagerRouteErrors getOutputManager() {
-        return outputManager;
-    }
-
-    public void setOutputManager(BoundOutputManagerRouteErrors outputManager) {
-        this.outputManager = outputManager;
-    }
 }

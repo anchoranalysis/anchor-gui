@@ -33,7 +33,7 @@ import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.feature.nrg.NRGStackWithParams;
 import org.anchoranalysis.gui.feature.evaluator.singlepair.IUpdatableSinglePair;
 import org.anchoranalysis.gui.feature.evaluator.singlepair.UpdatableSinglePairList;
-import org.anchoranalysis.gui.image.OverlayCollectionWithImgStack;
+import org.anchoranalysis.gui.image.OverlayCollectionWithNrgStack;
 
 class SinglePairUpdater {
 
@@ -54,7 +54,7 @@ class SinglePairUpdater {
         updatableMarkPairList.add(secondInitialItem);
     }
 
-    public void updateModel(OverlayCollectionWithImgStack cws) throws CreateException {
+    public void updateModel(OverlayCollectionWithNrgStack cws) throws CreateException {
 
         if (overlayDescriptionPanel.isFrozen()) {
             return;

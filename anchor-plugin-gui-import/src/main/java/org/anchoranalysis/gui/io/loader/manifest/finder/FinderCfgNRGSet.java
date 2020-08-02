@@ -27,7 +27,6 @@
 package org.anchoranalysis.gui.io.loader.manifest.finder;
 
 import org.anchoranalysis.anchor.mpp.feature.instantstate.CfgNRGInstantState;
-import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.index.container.BoundedIndexContainer;
 import org.anchoranalysis.gui.container.ContainerGetter;
@@ -111,7 +110,7 @@ public class FinderCfgNRGSet implements Finder, ContainerGetter<CfgNRGInstantSta
                     context.getNrgBackground().getBackground(),
                     finderCSVStats,
                     context.getContext());
-        } catch (InitException | MenuAddException e) {
+        } catch (MenuAddException e) {
             context.getMpg().getLogger().errorReporter().recordError(FinderCfgNRGSet.class, e);
             return false;
         }

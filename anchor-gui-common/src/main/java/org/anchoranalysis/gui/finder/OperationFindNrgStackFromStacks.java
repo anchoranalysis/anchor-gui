@@ -37,30 +37,17 @@ import org.anchoranalysis.feature.nrg.NRGStackWithParams;
 import org.anchoranalysis.image.channel.Channel;
 import org.anchoranalysis.image.extent.IncorrectImageSizeException;
 import org.anchoranalysis.image.stack.Stack;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 
-public class OperationFindNrgStackFromStackCollection
+@AllArgsConstructor
+public class OperationFindNrgStackFromStacks
         extends CachedOperation<NRGStackWithParams, OperationFailedException>
         implements OperationWithProgressReporter<NRGStackWithParams, OperationFailedException> {
 
-    // We first retrieve a namedimgcollection which we use to contstruct our real NrgStack for
-    // purposes
-    //   of good caching
-    private OperationWithProgressReporter<NamedProvider<Stack>, OperationFailedException>
+    /** We first retrieve a namedimgcollection which we use to construct our real NrgStack for purposes of good caching */
+    @Getter private OperationWithProgressReporter<NamedProvider<Stack>, OperationFailedException>
             operationStackCollection;
-
-    // An operation to retrieve a stackCollection
-    //
-    public OperationFindNrgStackFromStackCollection(
-            OperationWithProgressReporter<NamedProvider<Stack>, OperationFailedException>
-                    operationStackCollection) {
-        super();
-        this.operationStackCollection = operationStackCollection;
-    }
-
-    public OperationWithProgressReporter<NamedProvider<Stack>, OperationFailedException>
-            getOperationStackCollection() {
-        return operationStackCollection;
-    }
 
     @Override
     public NRGStackWithParams doOperation(ProgressReporter progressReporter)
@@ -73,7 +60,7 @@ public class OperationFindNrgStackFromStackCollection
         return createNRGStack();
     }
 
-    // NB Note assumption about namedImgStackCollection ordering
+    // NB Note assumption about named-stack ordering
     private NRGStackWithParams createNRGStack() throws OperationFailedException {
 
         NamedProvider<Stack> nic = operationStackCollection.doOperation(ProgressReporterNull.get());

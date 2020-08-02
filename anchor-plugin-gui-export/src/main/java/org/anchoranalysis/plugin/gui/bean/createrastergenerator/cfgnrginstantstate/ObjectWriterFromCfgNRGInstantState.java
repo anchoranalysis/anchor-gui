@@ -103,7 +103,7 @@ public class ObjectWriterFromCfgNRGInstantState extends CreateRasterGenerator<Cf
 
     @Override
     public boolean hasNecessaryParams(ExportTaskParams params) {
-        return params.getFinderImgStackCollection() != null && params.getColorIndexMarks() != null;
+        return params.getFinderStacks() != null && params.getColorIndexMarks() != null;
     }
 
     @Override
@@ -133,8 +133,8 @@ public class ObjectWriterFromCfgNRGInstantState extends CreateRasterGenerator<Cf
             throws OperationFailedException {
         try {
             Stack backgroundStackSrc =
-                    params.getFinderImgStackCollection()
-                            .getImgStackCollection()
+                    params.getFinderStacks()
+                            .getStacks()
                             .getException(backgroundStackName);
 
             DisplayStack backgroundStack = DisplayStack.create(backgroundStackSrc);

@@ -30,7 +30,7 @@ import org.anchoranalysis.core.error.reporter.ErrorReporter;
 import org.anchoranalysis.core.functional.function.FunctionWithException;
 import org.anchoranalysis.core.index.IIndexGettableSettable;
 import org.anchoranalysis.gui.container.background.BackgroundStackContainerException;
-import org.anchoranalysis.gui.displayupdate.IDisplayUpdateRememberStack;
+import org.anchoranalysis.gui.displayupdate.DisplayUpdateRememberStack;
 import org.anchoranalysis.gui.frame.display.DisplayUpdate;
 import org.anchoranalysis.gui.frame.threaded.stack.IThreadedProducer;
 import org.anchoranalysis.gui.frame.threaded.stack.ThreadedDisplayUpdateConsumer;
@@ -61,7 +61,7 @@ public class ThreadedIndexedDisplayStackSetter implements IBackgroundSetter, ITh
     }
 
     // How it provides stacks to other applications (the output)
-    public IDisplayUpdateRememberStack getStackProvider() {
+    public DisplayUpdateRememberStack getStackProvider() {
         return delegate;
     }
 

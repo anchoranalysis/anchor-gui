@@ -1,6 +1,6 @@
 /*-
  * #%L
- * anchor-gui-frame
+ * anchor-gui-common
  * %%
  * Copyright (C) 2010 - 2020 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann-La Roche
  * %%
@@ -24,7 +24,18 @@
  * #L%
  */
 
-package org.anchoranalysis.gui.displayupdate;
+package org.anchoranalysis.gui.finder.imgstackcollection;
 
-public interface IDisplayUpdateRememberStack
-        extends IDisplayUpdateProvider, IOverlayedImgStackProvider {}
+import org.anchoranalysis.core.error.OperationFailedException;
+import org.anchoranalysis.core.name.provider.NamedProvider;
+import org.anchoranalysis.core.progress.OperationWithProgressReporter;
+import org.anchoranalysis.image.stack.Stack;
+import org.anchoranalysis.io.manifest.finder.Finder;
+
+public interface FinderStacks extends Finder {
+
+    NamedProvider<Stack> getStacks() throws OperationFailedException;
+
+    OperationWithProgressReporter<NamedProvider<Stack>, OperationFailedException>
+            getStacksAsOperation();
+}

@@ -44,7 +44,7 @@ import lombok.AllArgsConstructor;
 class OperationStackWithParams
         extends CachedOperationWithProgressReporter<NRGStackWithParams, GetOperationFailedException> {
 
-    private final OperationFindNrgStackFromStackCollection nrgStackOperation;
+    private final OperationFindNrgStackFromStacks nrgStackOperation;
     private final FinderKeyValueParams finderImageParams;
     private final FinderSerializedObject<NRGElemParamsFromImage> finderImageParamsLegacy;
 

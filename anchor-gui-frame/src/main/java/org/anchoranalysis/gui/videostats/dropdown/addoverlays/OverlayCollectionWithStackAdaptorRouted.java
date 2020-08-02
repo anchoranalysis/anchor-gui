@@ -36,16 +36,16 @@ import org.anchoranalysis.core.event.RoutableEvent;
 import org.anchoranalysis.core.event.RoutableListener;
 import org.anchoranalysis.core.property.change.PropertyValueChangeEvent;
 import org.anchoranalysis.feature.nrg.NRGStackWithParams;
-import org.anchoranalysis.gui.image.OverlayCollectionWithImgStack;
+import org.anchoranalysis.gui.image.OverlayCollectionWithNrgStack;
 import org.anchoranalysis.gui.videostats.INRGStackGetter;
 import org.anchoranalysis.gui.videostats.threading.InteractiveThreadPool;
 import org.anchoranalysis.gui.videostats.threading.InteractiveWorker;
 
 // Triggers a OverlayCollectionWithStack event, every time a OverlayCollection event occurs
 class OverlayCollectionWithStackAdaptorRouted
-        implements IRoutableReceivable<PropertyValueChangeEvent<OverlayCollectionWithImgStack>> {
+        implements IRoutableReceivable<PropertyValueChangeEvent<OverlayCollectionWithNrgStack>> {
 
-    private List<RoutableListener<PropertyValueChangeEvent<OverlayCollectionWithImgStack>>>
+    private List<RoutableListener<PropertyValueChangeEvent<OverlayCollectionWithNrgStack>>>
             listeners = new ArrayList<>();
 
     public OverlayCollectionWithStackAdaptorRouted(
@@ -94,18 +94,18 @@ class OverlayCollectionWithStackAdaptorRouted
 
             try {
 
-                for (RoutableListener<PropertyValueChangeEvent<OverlayCollectionWithImgStack>> l :
+                for (RoutableListener<PropertyValueChangeEvent<OverlayCollectionWithNrgStack>> l :
                         listeners) {
 
                     // get() gets the NrgStack
-                    PropertyValueChangeEvent<OverlayCollectionWithImgStack> evtNew =
+                    PropertyValueChangeEvent<OverlayCollectionWithNrgStack> evtNew =
                             new PropertyValueChangeEvent<>(
                                     evt.getSource(),
-                                    new OverlayCollectionWithImgStack(
+                                    new OverlayCollectionWithNrgStack(
                                             evt.getEvent().getValue(), get()),
                                     evt.getEvent().getAdjusting());
 
-                    RoutableEvent<PropertyValueChangeEvent<OverlayCollectionWithImgStack>>
+                    RoutableEvent<PropertyValueChangeEvent<OverlayCollectionWithNrgStack>>
                             routableEventNew = new RoutableEvent<>(evt.getRoutableSource(), evtNew);
 
                     l.eventOccurred(routableEventNew);
@@ -120,13 +120,13 @@ class OverlayCollectionWithStackAdaptorRouted
 
     @Override
     public void addRoutableListener(
-            RoutableListener<PropertyValueChangeEvent<OverlayCollectionWithImgStack>> l) {
+            RoutableListener<PropertyValueChangeEvent<OverlayCollectionWithNrgStack>> l) {
         listeners.add(l);
     }
 
     @Override
     public void removeRoutableListener(
-            RoutableListener<PropertyValueChangeEvent<OverlayCollectionWithImgStack>> l) {
+            RoutableListener<PropertyValueChangeEvent<OverlayCollectionWithNrgStack>> l) {
         listeners.remove(l);
     }
 }

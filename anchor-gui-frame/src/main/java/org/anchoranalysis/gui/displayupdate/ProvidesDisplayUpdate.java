@@ -1,6 +1,6 @@
 /*-
  * #%L
- * anchor-gui-common
+ * anchor-gui-frame
  * %%
  * Copyright (C) 2010 - 2020 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann-La Roche
  * %%
@@ -24,18 +24,15 @@
  * #L%
  */
 
-package org.anchoranalysis.gui.finder.imgstackcollection;
+package org.anchoranalysis.gui.displayupdate;
 
+import javax.swing.event.ChangeListener;
 import org.anchoranalysis.core.error.OperationFailedException;
-import org.anchoranalysis.core.name.provider.NamedProvider;
-import org.anchoranalysis.core.progress.OperationWithProgressReporter;
-import org.anchoranalysis.image.stack.Stack;
-import org.anchoranalysis.io.manifest.finder.Finder;
+import org.anchoranalysis.gui.frame.display.DisplayUpdate;
 
-public interface FinderImgStackCollection extends Finder {
+public interface ProvidesDisplayUpdate {
 
-    NamedProvider<Stack> getImgStackCollection() throws OperationFailedException;
+    DisplayUpdate get() throws OperationFailedException;
 
-    OperationWithProgressReporter<NamedProvider<Stack>, OperationFailedException>
-            getImgStackCollectionAsOperationWithProgressReporter();
+    void addChangeListener(ChangeListener cl);
 }

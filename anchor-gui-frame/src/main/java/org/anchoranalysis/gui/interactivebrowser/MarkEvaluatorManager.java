@@ -59,13 +59,13 @@ public class MarkEvaluatorManager {
 
     public MarkEvaluatorSetForImage createSetForStackCollection(
             OperationWithProgressReporter<NamedProvider<Stack>, ? extends Throwable>
-                    namedImgStackCollection,
+                    namedStacks,
             Operation<Optional<KeyValueParams>, IOException> keyParams)
             throws CreateException {
 
         try {
             MarkEvaluatorSetForImage out =
-                    new MarkEvaluatorSetForImage(namedImgStackCollection, keyParams, context);
+                    new MarkEvaluatorSetForImage(namedStacks, keyParams, context);
 
             for (String key : map.keySet()) {
                 MarkEvaluator me = map.get(key);

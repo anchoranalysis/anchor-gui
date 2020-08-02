@@ -35,16 +35,16 @@ import org.anchoranalysis.core.progress.OperationWithProgressReporter;
 import org.anchoranalysis.core.progress.ProgressReporterNull;
 import org.anchoranalysis.feature.nrg.NRGStackWithParams;
 import org.anchoranalysis.gui.finder.FinderNrgStack;
-import org.anchoranalysis.image.stack.NamedStackCollection;
+import org.anchoranalysis.image.stack.NamedStacks;
 import org.anchoranalysis.image.stack.Stack;
 import org.anchoranalysis.io.manifest.ManifestRecorder;
 
-public class FinderImgStackCollectionFromNrgStack implements FinderImgStackCollection {
+public class FinderStacksFromNrgStack implements FinderStacks {
 
     private FinderNrgStack delegate = null;
 
     private OperationWithProgressReporter<Stack, OperationFailedException>
-            operationExtractUntilThreeChnls =
+            operationExtractUntilThreeChannels =
                     new WrapOperationWithProgressReporterAsCached<>(
                             pr -> {
                                 try {
@@ -60,11 +60,11 @@ public class FinderImgStackCollectionFromNrgStack implements FinderImgStackColle
                             });
 
     private CachedOperationWithProgressReporter<NamedProvider<Stack>, OperationFailedException>
-            operationImgStackCollection =
+            operationStacks =
                     new WrapOperationWithProgressReporterAsCached<>(
                             pr -> {
-                                NamedStackCollection stackCollection =
-                                        new NamedStackCollection();
+                                NamedStacks stackCollection =
+                                        new NamedStacks();
 
                                 // finder NRG stack
                                 if (delegate != null && delegate.exists()) {
@@ -72,28 +72,28 @@ public class FinderImgStackCollectionFromNrgStack implements FinderImgStackColle
                                     // Should we mention when we only have the first 3?
                                     stackCollection.addImageStack(
                                         "nrgStack",
-                                        operationExtractUntilThreeChnls
+                                        operationExtractUntilThreeChannels
                                     );
 
                                     stackCollection.addFromWithPrefix(
-                                            delegate.getNamedImgStackCollection(), "nrgChnl-");
+                                            delegate.getNamedStacks(), "nrgChnl-");
                                 }
                                 return stackCollection;
                             });
 
-    public FinderImgStackCollectionFromNrgStack(FinderNrgStack finderNrgStack) {
+    public FinderStacksFromNrgStack(FinderNrgStack finderNrgStack) {
         this.delegate = finderNrgStack;
     }
 
     @Override
-    public NamedProvider<Stack> getImgStackCollection() throws OperationFailedException {
-        return operationImgStackCollection.doOperation(ProgressReporterNull.get());
+    public NamedProvider<Stack> getStacks() throws OperationFailedException {
+        return operationStacks.doOperation(ProgressReporterNull.get());
     }
 
     @Override
     public OperationWithProgressReporter<NamedProvider<Stack>, OperationFailedException>
-            getImgStackCollectionAsOperationWithProgressReporter() {
-        return operationImgStackCollection;
+            getStacksAsOperation() {
+        return operationStacks;
     }
 
     @Override

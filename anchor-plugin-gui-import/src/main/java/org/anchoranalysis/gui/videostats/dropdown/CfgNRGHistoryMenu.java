@@ -40,7 +40,7 @@ import org.anchoranalysis.core.error.reporter.ErrorReporter;
 import org.anchoranalysis.gui.bean.exporttask.ExportTaskBean;
 import org.anchoranalysis.gui.bean.exporttask.ExportTaskParams;
 import org.anchoranalysis.gui.container.ContainerGetter;
-import org.anchoranalysis.gui.finder.imgstackcollection.FinderImgStackCollection;
+import org.anchoranalysis.gui.finder.imgstackcollection.FinderStacks;
 import org.anchoranalysis.gui.io.loader.manifest.finder.CfgNRGFinderContext;
 import org.anchoranalysis.gui.io.loader.manifest.finder.FinderCSVStats;
 import org.anchoranalysis.gui.io.loader.manifest.finder.csvstatistic.CSVStatistic;
@@ -95,10 +95,10 @@ public class CfgNRGHistoryMenu {
             NRGBackground nrgBackground,
             FinderCSVStats finderCSVStats,
             CfgNRGFinderContext context)
-            throws InitException, MenuAddException {
+            throws MenuAddException {
 
         assert (finderCfgNRGHistory.exists());
-        assert (context.getFinderImgStackCollection().exists());
+        assert (context.getFinderStacks().exists());
 
         // Colored Outline
         creatorColoredOutline =
@@ -134,7 +134,7 @@ public class CfgNRGHistoryMenu {
 
         addExportTasks(
                 finderCfgNRGHistory,
-                context.getFinderImgStackCollection(),
+                context.getFinderStacks(),
                 finderSecondaryHistory,
                 finderTertiaryHistory,
                 finderCSVStats,
@@ -147,7 +147,7 @@ public class CfgNRGHistoryMenu {
 
     private void addExportTasks(
             FinderHistoryFolder<CfgNRGInstantState> finderCfgNRGHistory,
-            FinderImgStackCollection finderImgStackCollection,
+            FinderStacks finderStacks,
             ContainerGetter<CfgNRGInstantState> finderSecondaryHistory,
             ContainerGetter<CfgNRGInstantState> finderTertiaryHistory,
             FinderCSVStats finderCSVStats,
@@ -161,7 +161,7 @@ public class CfgNRGHistoryMenu {
         ExportTaskParams exportTaskParams = new ExportTaskParams();
         exportTaskParams.setColorIndexMarks(colorIndex);
         exportTaskParams.addFinderCfgNRGHistory(finderCfgNRGHistory);
-        exportTaskParams.setFinderImgStackCollection(finderImgStackCollection);
+        exportTaskParams.setFinderStacks(finderStacks);
         exportTaskParams.setFinderCsvStatistics(finderCSVStats);
         exportTaskParams.addFinderCfgNRGHistory(finderSecondaryHistory);
         exportTaskParams.addFinderCfgNRGHistory(finderTertiaryHistory);

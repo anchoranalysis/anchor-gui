@@ -48,9 +48,9 @@ import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.error.reporter.ErrorReporter;
 import org.anchoranalysis.core.index.IIndexGettableSettable;
 import org.anchoranalysis.core.index.container.BoundedRangeIncompleteDynamic;
-import org.anchoranalysis.gui.displayupdate.IDisplayUpdateProvider;
-import org.anchoranalysis.gui.displayupdate.IDisplayUpdateRememberStack;
-import org.anchoranalysis.gui.displayupdate.IOverlayedImgStackProvider;
+import org.anchoranalysis.gui.displayupdate.ProvidesDisplayUpdate;
+import org.anchoranalysis.gui.displayupdate.DisplayUpdateRememberStack;
+import org.anchoranalysis.gui.displayupdate.ProvidesOverlayedDisplayStack;
 import org.anchoranalysis.gui.frame.canvas.ImageCanvas;
 import org.anchoranalysis.gui.frame.canvas.zoom.DefaultZoomSuggestor;
 import org.anchoranalysis.gui.frame.canvas.zoom.ZoomScale;
@@ -78,7 +78,7 @@ public class InternalFrameCanvas {
 
     private WrappedSlider slider;
 
-    private IOverlayedImgStackProvider stackProvider;
+    private ProvidesOverlayedDisplayStack stackProvider;
 
     private InternalFrameIJPopupClickListener popUpListener;
 
@@ -187,7 +187,7 @@ public class InternalFrameCanvas {
     public ISliderState init(
             BoundedRangeIncompleteDynamic indexBounds,
             IIndexGettableSettable indexCntr,
-            IDisplayUpdateRememberStack stackProvider,
+            DisplayUpdateRememberStack stackProvider,
             InitialSliderState initialState,
             IRetrieveElements elementRetriever,
             final VideoStatsModuleGlobalParams mpg)
@@ -301,7 +301,7 @@ public class InternalFrameCanvas {
         return canvas.hashCode();
     }
 
-    public void init(IDisplayUpdateProvider imageProvider, ErrorReporter errorReporter)
+    public void init(ProvidesDisplayUpdate imageProvider, ErrorReporter errorReporter)
             throws InitException {
         canvas.init(imageProvider, errorReporter);
     }
@@ -438,7 +438,7 @@ public class InternalFrameCanvas {
     }
 
     private void addTitleBoundsUpdater(
-            IDisplayUpdateRememberStack stackProvider, IIndexGettableSettable indexCntr) {
+            DisplayUpdateRememberStack stackProvider, IIndexGettableSettable indexCntr) {
         this.titleBoundsUpdater =
                 new TitleBoundsUpdater(
                         errorReporter,

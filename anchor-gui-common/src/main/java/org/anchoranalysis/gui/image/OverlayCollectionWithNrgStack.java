@@ -1,6 +1,6 @@
 /*-
  * #%L
- * anchor-gui-frame
+ * anchor-gui-common
  * %%
  * Copyright (C) 2010 - 2020 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann-La Roche
  * %%
@@ -24,12 +24,40 @@
  * #L%
  */
 
-package org.anchoranalysis.gui.displayupdate;
+package org.anchoranalysis.gui.image;
 
-import org.anchoranalysis.core.error.OperationFailedException;
-import org.anchoranalysis.gui.frame.display.BoundOverlayedDisplayStack;
+import org.anchoranalysis.anchor.overlay.collection.OverlayCollection;
+import org.anchoranalysis.feature.nrg.NRGStackWithParams;
 
-public interface IOverlayedImgStackProvider {
+public class OverlayCollectionWithNrgStack {
 
-    BoundOverlayedDisplayStack getCurrentDisplayStack() throws OperationFailedException;
+    private OverlayCollection overlayCollection;
+    private NRGStackWithParams stack;
+
+    public OverlayCollectionWithNrgStack(
+            OverlayCollection overlayCollection, NRGStackWithParams stack) {
+        super();
+        this.overlayCollection = overlayCollection;
+        this.stack = stack;
+    }
+
+    public OverlayCollection getOverlayCollection() {
+        return overlayCollection;
+    }
+
+    public NRGStackWithParams getStack() {
+        return stack;
+    }
+
+    public void setStack(NRGStackWithParams stack) {
+        this.stack = stack;
+    }
+
+    public void setOverlayCollection(OverlayCollection overlayCollection) {
+        this.overlayCollection = overlayCollection;
+    }
+
+    public OverlayCollectionWithNrgStack copyChangeStack(NRGStackWithParams stack) {
+        return new OverlayCollectionWithNrgStack(overlayCollection, stack);
+    }
 }

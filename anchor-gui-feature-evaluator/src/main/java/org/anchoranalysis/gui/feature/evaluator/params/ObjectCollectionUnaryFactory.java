@@ -56,6 +56,6 @@ public class ObjectCollectionUnaryFactory extends UnaryFactory {
                         .getMask();
 
         return new FeatureInputObjectCollection(
-                ObjectCollectionFactory.from(object), Optional.of(nrgStack));
+                ObjectCollectionFactory.of(object), Optional.of(nrgStack));
     }
 }

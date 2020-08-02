@@ -36,7 +36,7 @@ import org.anchoranalysis.core.progress.OperationWithProgressReporter;
 import org.anchoranalysis.core.progress.ProgressReporter;
 import org.anchoranalysis.feature.nrg.NRGStack;
 import org.anchoranalysis.feature.nrg.NRGStackWithParams;
-import org.anchoranalysis.image.experiment.identifiers.ImgStackIdentifiers;
+import org.anchoranalysis.image.experiment.identifiers.StackIdentifiers;
 import org.anchoranalysis.image.stack.Stack;
 
 class OperationNrgStack extends CachedOperation<NRGStackWithParams, CreateException>
@@ -62,13 +62,12 @@ class OperationNrgStack extends CachedOperation<NRGStackWithParams, CreateExcept
         return creatergStack();
     }
 
-    // NB Note assumption about namedImgStackCollection ordering
+    // NB Note assumption about named-stack ordering
     private NRGStackWithParams creatergStack() throws CreateException {
 
-        // System.out.println("Start Creating NRG Stack");
         try {
 
-            Stack stack = new Stack();
+            Stack stack;
 
             MPPInitParams soMPP = operationProposerSharedObjects.doOperation();
 
@@ -79,21 +78,20 @@ class OperationNrgStack extends CachedOperation<NRGStackWithParams, CreateExcept
                 // We try to automatically detect which of the two cases it can be
                 // Either an NRG_STACK direct in the StackCollection or split amongst multiple
                 //   files (but only those should exist in the directory)
-                if (nic.keys().contains(ImgStackIdentifiers.NRG_STACK)) {
-                    stack = nic.getException(ImgStackIdentifiers.NRG_STACK);
+                if (nic.keys().contains(StackIdentifiers.NRG_STACK)) {
+                    stack = nic.getException(StackIdentifiers.NRG_STACK);
                 } else {
                     throw new CreateException("Cannot find NRG_STACK");
                 }
             }
 
             if (stack.getNumberChannels() > 0) {
-                NRGStack nrgStack = new NRGStack(stack);
-                return new NRGStackWithParams(nrgStack, params);
+                return new NRGStackWithParams(new NRGStack(stack), params);
             } else {
                 return null;
             }
 
-        } catch (Throwable e) {
+        } catch (Exception e) {
             throw new CreateException(e);
         }
     }

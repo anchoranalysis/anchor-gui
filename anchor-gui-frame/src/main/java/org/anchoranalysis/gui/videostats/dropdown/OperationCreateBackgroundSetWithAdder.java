@@ -40,7 +40,7 @@ import org.anchoranalysis.gui.videostats.dropdown.addoverlays.AdderAddOverlaysWi
 import org.anchoranalysis.gui.videostats.dropdown.common.NRGBackground;
 import org.anchoranalysis.gui.videostats.dropdown.common.NRGBackgroundAdder;
 import org.anchoranalysis.gui.videostats.threading.InteractiveThreadPool;
-import org.anchoranalysis.image.experiment.identifiers.ImgStackIdentifiers;
+import org.anchoranalysis.image.experiment.identifiers.StackIdentifiers;
 import org.anchoranalysis.image.stack.DisplayStack;
 
 public class OperationCreateBackgroundSetWithAdder
@@ -145,8 +145,8 @@ public class OperationCreateBackgroundSetWithAdder
     private static FunctionWithException<Integer, DisplayStack, BackgroundStackContainerException>
             initialBackground(BackgroundSet backgroundSet) throws GetOperationFailedException {
 
-        if (backgroundSet.names().contains(ImgStackIdentifiers.INPUT_IMAGE)) {
-            return backgroundSet.stackCntr(ImgStackIdentifiers.INPUT_IMAGE);
+        if (backgroundSet.names().contains(StackIdentifiers.INPUT_IMAGE)) {
+            return backgroundSet.stackCntr(StackIdentifiers.INPUT_IMAGE);
         } else {
             String first = backgroundSet.names().iterator().next();
             return backgroundSet.stackCntr(first);
