@@ -26,34 +26,30 @@
 
 package org.anchoranalysis.gui.videostats.link;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.anchoranalysis.anchor.overlay.collection.OverlayCollection;
 import org.anchoranalysis.core.functional.function.FunctionWithException;
 import org.anchoranalysis.gui.container.background.BackgroundStackContainerException;
 import org.anchoranalysis.gui.image.OverlayCollectionWithNrgStack;
 import org.anchoranalysis.image.stack.DisplayStack;
 import org.apache.commons.lang.ArrayUtils;
-import lombok.Getter;
-import lombok.Setter;
 
 public class DefaultLinkState {
 
+    @Getter @Setter private int frameIndex;
+
+    @Getter @Setter private int sliceNum;
+
+    @Getter @Setter private int[] objectIDs = new int[] {};
+
+    @Getter @Setter private OverlayCollection overlayCollection;
+
+    @Getter @Setter private OverlayCollectionWithNrgStack cfgWithStack;
+
     @Getter @Setter
-    private int frameIndex;
-    
-    @Getter @Setter    
-    private int sliceNum;
-    
-    @Getter @Setter    
-    private int[] objectIDs = new int[] {};
-    
-    @Getter @Setter    
-    private OverlayCollection overlayCollection;
-    
-    @Getter @Setter    
-    private OverlayCollectionWithNrgStack cfgWithStack;
-    
-    @Getter @Setter
-    private FunctionWithException<Integer, DisplayStack, BackgroundStackContainerException> background;
+    private FunctionWithException<Integer, DisplayStack, BackgroundStackContainerException>
+            background;
 
     DefaultLinkState duplicate() {
         DefaultLinkState dms = new DefaultLinkState();

@@ -28,11 +28,11 @@ package org.anchoranalysis.gui.annotation.additional;
 
 import java.nio.file.Path;
 import java.util.List;
+import lombok.AllArgsConstructor;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.image.io.bean.rasterreader.RasterReader;
 import org.anchoranalysis.io.bean.filepath.generator.FilePathGenerator;
 import org.anchoranalysis.io.error.AnchorIOException;
-import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
 public class ShowAdditionalRasters {

@@ -28,11 +28,12 @@ package org.anchoranalysis.gui.backgroundset;
 
 import java.util.HashMap;
 import java.util.Set;
+import lombok.NoArgsConstructor;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.error.friendly.AnchorImpossibleSituationException;
-import org.anchoranalysis.core.functional.IdentityOperation;
 import org.anchoranalysis.core.functional.CallableWithException;
+import org.anchoranalysis.core.functional.IdentityOperation;
 import org.anchoranalysis.core.functional.function.FunctionWithException;
 import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.gui.container.background.BackgroundStackContainer;
@@ -40,13 +41,15 @@ import org.anchoranalysis.gui.container.background.BackgroundStackContainerExcep
 import org.anchoranalysis.gui.container.background.CombineRGBBackgroundStackCntr;
 import org.anchoranalysis.image.stack.DisplayStack;
 import org.anchoranalysis.image.stack.Stack;
-import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
 public class BackgroundSet {
 
-    private HashMap<String, CallableWithException<BackgroundStackContainer, BackgroundStackContainerException>> map =
-            new HashMap<>();
+    private HashMap<
+                    String,
+                    CallableWithException<
+                            BackgroundStackContainer, BackgroundStackContainerException>>
+            map = new HashMap<>();
 
     public void addAll(BackgroundSet src) {
         for (String srcItem : src.map.keySet()) {
@@ -64,7 +67,8 @@ public class BackgroundSet {
 
     public void addItem(
             String name,
-            CallableWithException<BackgroundStackContainer, BackgroundStackContainerException> rasterBackground) {
+            CallableWithException<BackgroundStackContainer, BackgroundStackContainerException>
+                    rasterBackground) {
         map.put(name, rasterBackground);
     }
 
@@ -93,11 +97,12 @@ public class BackgroundSet {
 
     // Gives us a stack container for a particular name, or NULL if none exists
     // NOTE: There is only a mapping between 0 and a single image
-    public FunctionWithException<Integer, DisplayStack, BackgroundStackContainerException> stackCntr(
-            String name) throws GetOperationFailedException {
+    public FunctionWithException<Integer, DisplayStack, BackgroundStackContainerException>
+            stackCntr(String name) throws GetOperationFailedException {
         try {
 
-            CallableWithException<BackgroundStackContainer, BackgroundStackContainerException> op = map.get(name);
+            CallableWithException<BackgroundStackContainer, BackgroundStackContainerException> op =
+                    map.get(name);
 
             if (op == null) {
                 return null;
@@ -109,11 +114,9 @@ public class BackgroundSet {
                 return null;
             }
 
-            return new BoundedIndexBridge<>(
-                backgroundStackCntr.container()
-            );
+            return new BoundedIndexBridge<>(backgroundStackCntr.container());
         } catch (BackgroundStackContainerException e) {
-            throw new GetOperationFailedException(name,e);
+            throw new GetOperationFailedException(name, e);
         }
     }
 

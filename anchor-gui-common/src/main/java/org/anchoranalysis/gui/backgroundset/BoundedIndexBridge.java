@@ -26,26 +26,26 @@ package org.anchoranalysis.gui.backgroundset;
  * #L%
  */
 
+import lombok.AllArgsConstructor;
+import lombok.Setter;
 import org.anchoranalysis.core.functional.function.FunctionWithException;
 import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.index.container.BoundedIndexContainer;
 import org.anchoranalysis.gui.container.background.BackgroundStackContainerException;
-import lombok.AllArgsConstructor;
-import lombok.Setter;
 
 @AllArgsConstructor
 class BoundedIndexBridge<T>
         implements FunctionWithException<Integer, T, BackgroundStackContainerException> {
 
     /** The container associated with the bridge */
-    @Setter
-    private BoundedIndexContainer<T> container;
+    @Setter private BoundedIndexContainer<T> container;
 
     @Override
     public T apply(Integer sourceObject) throws BackgroundStackContainerException {
         int index = container.previousEqualIndex(sourceObject);
         if (index == -1) {
-            throw new BackgroundStackContainerException("Cannot find a previousEqualIndex in the cntr");
+            throw new BackgroundStackContainerException(
+                    "Cannot find a previousEqualIndex in the cntr");
         }
         try {
             return container.get(index);

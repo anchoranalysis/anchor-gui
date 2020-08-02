@@ -54,7 +54,8 @@ public class InternalFrameCfgNRGHistoryFolder {
     public ISliderState init(
             LoadContainer<CfgNRGInstantState> history,
             DefaultModuleState defaultState,
-            CallableWithProgressReporter<BackgroundSet, BackgroundStackContainerException> backgroundSet,
+            CallableWithProgressReporter<BackgroundSet, BackgroundStackContainerException>
+                    backgroundSet,
             VideoStatsModuleGlobalParams mpg)
             throws InitException {
 

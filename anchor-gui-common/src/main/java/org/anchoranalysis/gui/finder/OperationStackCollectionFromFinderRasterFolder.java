@@ -26,17 +26,16 @@
 
 package org.anchoranalysis.gui.finder;
 
+import lombok.AllArgsConstructor;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.name.provider.NamedProvider;
 import org.anchoranalysis.core.progress.CallableWithProgressReporter;
 import org.anchoranalysis.core.progress.ProgressReporter;
 import org.anchoranalysis.image.stack.Stack;
-import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
 class OperationStackCollectionFromFinderRasterFolder
-        implements CallableWithProgressReporter<
-                NamedProvider<Stack>, OperationFailedException> {
+        implements CallableWithProgressReporter<NamedProvider<Stack>, OperationFailedException> {
 
     private FinderRasterFolder finderRasterFolder;
 

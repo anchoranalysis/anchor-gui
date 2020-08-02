@@ -42,9 +42,8 @@ public class FinderStacksFromFolder implements FinderStacks {
     private FinderRasterFolder delegate;
 
     private CallableWithProgressReporter<NamedProvider<Stack>, OperationFailedException>
-            operationStacks = 
-                    CacheCallWithProgressReporter.of(
-                            pr -> delegate.createStackCollection(false));
+            operationStacks =
+                    CacheCallWithProgressReporter.of(pr -> delegate.createStackCollection(false));
 
     public FinderStacksFromFolder(RasterReader rasterReader, String folderName) {
         delegate = new FinderRasterFolder(folderName, "stackFromCollection", rasterReader);

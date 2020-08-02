@@ -26,6 +26,7 @@
 
 package org.anchoranalysis.gui.finder;
 
+import lombok.AllArgsConstructor;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.functional.CallableWithException;
 import org.anchoranalysis.core.name.provider.NamedProvider;
@@ -36,13 +37,15 @@ import org.anchoranalysis.feature.nrg.NRGStackWithParams;
 import org.anchoranalysis.image.channel.Channel;
 import org.anchoranalysis.image.extent.IncorrectImageSizeException;
 import org.anchoranalysis.image.stack.Stack;
-import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
 public class OperationFindNrgStackFromStacks
         implements CallableWithException<NRGStackWithParams, OperationFailedException> {
 
-    /** We first retrieve a namedimgcollection which we use to construct our real NrgStack for purposes of good caching */
+    /**
+     * We first retrieve a namedimgcollection which we use to construct our real NrgStack for
+     * purposes of good caching
+     */
     private CallableWithProgressReporter<NamedProvider<Stack>, OperationFailedException>
             operationStackCollection;
 

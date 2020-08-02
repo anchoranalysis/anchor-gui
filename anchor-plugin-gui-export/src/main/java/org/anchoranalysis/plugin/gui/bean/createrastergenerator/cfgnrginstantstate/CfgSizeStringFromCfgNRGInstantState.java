@@ -26,12 +26,12 @@
 
 package org.anchoranalysis.plugin.gui.bean.createrastergenerator.cfgnrginstantstate;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.anchoranalysis.anchor.mpp.feature.nrg.cfg.CfgNRG;
 import org.anchoranalysis.bean.annotation.AllowEmpty;
 import org.anchoranalysis.bean.annotation.BeanField;
 import org.anchoranalysis.plugin.gui.bean.createrastergenerator.CreateStringRasterGenerator;
-import lombok.Getter;
-import lombok.Setter;
 
 public class CfgSizeStringFromCfgNRGInstantState extends CreateStringRasterGenerator {
 

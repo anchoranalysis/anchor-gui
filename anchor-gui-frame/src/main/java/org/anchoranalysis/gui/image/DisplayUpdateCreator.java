@@ -41,9 +41,11 @@ import org.anchoranalysis.gui.frame.display.overlay.OverlayRetriever;
 import org.anchoranalysis.image.stack.DisplayStack;
 
 public class DisplayUpdateCreator
-        implements FunctionWithException<Integer, DisplayUpdate, BackgroundStackContainerException> {
+        implements FunctionWithException<
+                Integer, DisplayUpdate, BackgroundStackContainerException> {
 
-    private FunctionWithException<Integer, OverlayedDisplayStackUpdate, BackgroundStackContainerException>
+    private FunctionWithException<
+                    Integer, OverlayedDisplayStackUpdate, BackgroundStackContainerException>
             src;
     private DrawOverlay maskWriter;
     private IDGetter<Overlay> idGetter;
@@ -52,7 +54,8 @@ public class DisplayUpdateCreator
     private BoundColoredOverlayCollection boundOverlay = null;
 
     public DisplayUpdateCreator(
-            FunctionWithException<Integer, OverlayedDisplayStackUpdate, BackgroundStackContainerException>
+            FunctionWithException<
+                            Integer, OverlayedDisplayStackUpdate, BackgroundStackContainerException>
                     src,
             IDGetter<Overlay> idGetter) {
         super();

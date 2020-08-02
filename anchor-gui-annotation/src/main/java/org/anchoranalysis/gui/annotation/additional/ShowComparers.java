@@ -94,7 +94,8 @@ public class ShowComparers {
         return String.format("%s: %s", name, rasterName);
     }
 
-    private static BackgroundSet createBackgroundSet(Stack stack) throws BackgroundStackContainerException {
+    private static BackgroundSet createBackgroundSet(Stack stack)
+            throws BackgroundStackContainerException {
         BackgroundSet backgroundSet = new BackgroundSet();
         try {
             backgroundSet.addItem("Associated Raster", stack);

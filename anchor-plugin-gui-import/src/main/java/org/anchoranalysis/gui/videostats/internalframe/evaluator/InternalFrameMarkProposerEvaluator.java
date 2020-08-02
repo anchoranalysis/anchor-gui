@@ -110,8 +110,7 @@ public class InternalFrameMarkProposerEvaluator {
         outputPanel.init(
                 mpg.getDefaultColorIndexForMarks(), mpg.getExportPopupParams().getOutputManager());
 
-        ISliderState sliderState =
-                delegate.init(defaultState, mpg);
+        ISliderState sliderState = delegate.init(defaultState, mpg);
 
         setupHistoryNavigator(sliderState);
 
@@ -128,9 +127,8 @@ public class InternalFrameMarkProposerEvaluator {
 
         final AddToHistoryNavigator showEvaluationResult = new AddToHistoryNavigator();
 
-        clickListener.addCfgProposedListener( proposedCfg->
-            showEvaluationResult.showEvaluationResult(proposedCfg, null)
-        );
+        clickListener.addCfgProposedListener(
+                proposedCfg -> showEvaluationResult.showEvaluationResult(proposedCfg, null));
         return sliderState;
     }
 

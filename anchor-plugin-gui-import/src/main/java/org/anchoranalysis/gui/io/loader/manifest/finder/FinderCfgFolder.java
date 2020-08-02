@@ -28,6 +28,7 @@ package org.anchoranalysis.gui.io.loader.manifest.finder;
 
 import java.util.List;
 import java.util.Optional;
+import lombok.RequiredArgsConstructor;
 import org.anchoranalysis.anchor.mpp.cfg.Cfg;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.name.provider.NameValueSet;
@@ -44,7 +45,6 @@ import org.anchoranalysis.io.manifest.folder.FolderWrite;
 import org.anchoranalysis.io.manifest.match.FolderWriteAnd;
 import org.anchoranalysis.io.manifest.match.FolderWritePath;
 import org.anchoranalysis.io.manifest.match.helper.folderwrite.FolderWriteFileFunctionType;
-import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 public class FinderCfgFolder extends FinderSingleFolder {
@@ -53,7 +53,7 @@ public class FinderCfgFolder extends FinderSingleFolder {
     private final String manifestFunction;
     private final String folderName;
     // END REQUIRED ARGUMENTS
-    
+
     private Deserializer<Cfg> deserializer = new XStreamDeserializer<>();
 
     @Override
@@ -73,7 +73,6 @@ public class FinderCfgFolder extends FinderSingleFolder {
         }
     }
 
-
     public NamedProvider<Cfg> createNamedProvider(boolean namesAsIndexes)
             throws OperationFailedException {
 
@@ -86,7 +85,8 @@ public class FinderCfgFolder extends FinderSingleFolder {
         SequencedFolderDeserializer<Cfg> sfrr =
                 new SequencedFolderDeserializer<>(getFoundFolder(), deserializer);
 
-        AddFromSequenceHelper.addFromSequence(getFoundFolder().getAssociatedSequence(), sfrr, out::add, namesAsIndexes);
+        AddFromSequenceHelper.addFromSequence(
+                getFoundFolder().getAssociatedSequence(), sfrr, out::add, namesAsIndexes);
         return out;
     }
 }

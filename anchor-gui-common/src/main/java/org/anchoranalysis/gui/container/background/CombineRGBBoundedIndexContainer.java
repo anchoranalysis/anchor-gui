@@ -203,7 +203,8 @@ public class CombineRGBBoundedIndexContainer implements BoundedIndexContainer<Di
 
         try {
             if (cntr != null) {
-                stackNew.addChannel(cntr.get(cntr.previousEqualIndex(index)).createChannel(0, false));
+                stackNew.addChannel(
+                        cntr.get(cntr.previousEqualIndex(index)).createChannel(0, false));
             } else {
                 // TODO, why do we create an empty initialised here
                 assert (dimensions != null);
@@ -229,7 +230,7 @@ public class CombineRGBBoundedIndexContainer implements BoundedIndexContainer<Di
             addChnlToStack(stackNew, red, index);
             addChnlToStack(stackNew, green, index);
             addChnlToStack(stackNew, blue, index);
-            
+
             return DisplayStack.create(stackNew);
         } catch (CreateException | OperationFailedException e) {
             throw new GetOperationFailedException(String.valueOf(index), e);

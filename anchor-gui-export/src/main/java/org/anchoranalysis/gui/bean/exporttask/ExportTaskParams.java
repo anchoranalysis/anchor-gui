@@ -28,14 +28,14 @@ package org.anchoranalysis.gui.bean.exporttask;
 
 import java.util.ArrayList;
 import java.util.List;
+import lombok.Getter;
+import lombok.Setter;
 import org.anchoranalysis.anchor.mpp.feature.instantstate.CfgNRGInstantState;
 import org.anchoranalysis.core.color.ColorIndex;
 import org.anchoranalysis.gui.container.ContainerGetter;
 import org.anchoranalysis.gui.finder.imgstackcollection.FinderStacks;
 import org.anchoranalysis.gui.io.loader.manifest.finder.FinderCSVStats;
 import org.anchoranalysis.io.output.bound.BoundOutputManagerRouteErrors;
-import lombok.Getter;
-import lombok.Setter;
 
 // Parameters an exportTask can draw itself from
 public class ExportTaskParams {
@@ -68,5 +68,4 @@ public class ExportTaskParams {
             this.listFinderCfgNRGHistory.add(finderCfgNRGHistory);
         }
     }
-
 }

@@ -26,6 +26,7 @@
 
 package org.anchoranalysis.gui.interactivebrowser;
 
+import lombok.AllArgsConstructor;
 import org.anchoranalysis.anchor.mpp.bean.init.MPPInitParams;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.functional.CallableWithException;
@@ -37,15 +38,16 @@ import org.anchoranalysis.feature.nrg.NRGStack;
 import org.anchoranalysis.feature.nrg.NRGStackWithParams;
 import org.anchoranalysis.image.experiment.identifiers.StackIdentifiers;
 import org.anchoranalysis.image.stack.Stack;
-import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
 class OperationNrgStack
-        implements CallableWithException<NRGStackWithParams, CreateException>, CallableWithProgressReporter<NRGStackWithParams, CreateException> {
+        implements CallableWithException<NRGStackWithParams, CreateException>,
+                CallableWithProgressReporter<NRGStackWithParams, CreateException> {
 
     // We first retrieve a NamedImgCollection which we use to construct our real NrgStack for
     // purposes of good caching
-    private CallableWithException<MPPInitParams, ? extends Throwable> operationProposerSharedObjects;
+    private CallableWithException<MPPInitParams, ? extends Throwable>
+            operationProposerSharedObjects;
     private KeyValueParams params;
 
     @Override
@@ -88,8 +90,7 @@ class OperationNrgStack
     }
 
     @Override
-    public NRGStackWithParams call(ProgressReporter progressReporter)
-            throws CreateException {
+    public NRGStackWithParams call(ProgressReporter progressReporter) throws CreateException {
         return call();
     }
 }

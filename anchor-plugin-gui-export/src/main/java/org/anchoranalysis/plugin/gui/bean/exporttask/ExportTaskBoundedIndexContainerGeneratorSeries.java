@@ -62,16 +62,12 @@ public class ExportTaskBoundedIndexContainerGeneratorSeries<T>
             containerBridge;
 
     public boolean execute(
-        ExportTaskParams params,
-        ProgressMonitor progressMonitor,
-        GeneratorSequenceNonIncremental<MappedFrom<T>> generatorSequenceWriter
-    ) throws ExportTaskFailedException {
+            ExportTaskParams params,
+            ProgressMonitor progressMonitor,
+            GeneratorSequenceNonIncremental<MappedFrom<T>> generatorSequenceWriter)
+            throws ExportTaskFailedException {
         try {
-            return execute(
-                containerBridge.apply(params),
-                progressMonitor,
-                generatorSequenceWriter
-            );
+            return execute(containerBridge.apply(params), progressMonitor, generatorSequenceWriter);
         } catch (OutputWriteFailedException
                 | OperationFailedException
                 | GetOperationFailedException e) {
@@ -106,10 +102,10 @@ public class ExportTaskBoundedIndexContainerGeneratorSeries<T>
     }
 
     private boolean execute(
-        BoundedIndexContainer<T> cfgNRGCntr,
-        ProgressMonitor progressMonitor,
-        GeneratorSequenceNonIncremental<MappedFrom<T>> generatorSequenceWriter
-    ) throws OutputWriteFailedException, GetOperationFailedException {
+            BoundedIndexContainer<T> cfgNRGCntr,
+            ProgressMonitor progressMonitor,
+            GeneratorSequenceNonIncremental<MappedFrom<T>> generatorSequenceWriter)
+            throws OutputWriteFailedException, GetOperationFailedException {
 
         int min = cfgNRGCntr.getMinimumIndex();
         int max = cfgNRGCntr.getMaximumIndex();

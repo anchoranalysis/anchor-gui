@@ -37,7 +37,7 @@ import org.anchoranalysis.gui.container.background.BackgroundStackContainerExcep
 import org.anchoranalysis.image.stack.DisplayStack;
 
 class StackFromBackgroundSetViaMap implements ImageStackContainerFromName {
-    
+
     private Map<String, String> map;
     private CallableWithProgressReporter<BackgroundSet, ? extends Throwable> backgroundSet;
     private ErrorReporter errorReporter;

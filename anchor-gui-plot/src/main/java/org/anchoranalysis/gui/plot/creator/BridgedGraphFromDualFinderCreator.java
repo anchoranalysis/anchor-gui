@@ -40,7 +40,8 @@ public abstract class BridgedGraphFromDualFinderCreator<T>
         implements GraphFromDualFinderCreator<T> {
 
     @Override
-    public BoundedIndexContainer<T> createContainer(FinderCSVStats finderCSVStats) throws CreateException {
+    public BoundedIndexContainer<T> createContainer(FinderCSVStats finderCSVStats)
+            throws CreateException {
 
         try {
             return new BoundedIndexContainerBridgeWithoutIndex<>(

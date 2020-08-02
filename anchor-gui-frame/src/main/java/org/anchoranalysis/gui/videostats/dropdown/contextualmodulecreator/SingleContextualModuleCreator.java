@@ -27,6 +27,7 @@
 package org.anchoranalysis.gui.videostats.dropdown.contextualmodulecreator;
 
 import java.util.Optional;
+import lombok.AllArgsConstructor;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.progress.CallableWithProgressReporter;
 import org.anchoranalysis.gui.videostats.dropdown.IAddVideoStatsModule;
@@ -34,7 +35,6 @@ import org.anchoranalysis.gui.videostats.dropdown.NamedModule;
 import org.anchoranalysis.gui.videostats.dropdown.VideoStatsModuleCreatorAndAdder;
 import org.anchoranalysis.gui.videostats.dropdown.VideoStatsModuleGlobalParams;
 import org.anchoranalysis.gui.videostats.modulecreator.VideoStatsModuleCreatorContext;
-import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
 public class SingleContextualModuleCreator extends ContextualModuleCreator {

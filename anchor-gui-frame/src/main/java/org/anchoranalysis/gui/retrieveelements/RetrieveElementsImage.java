@@ -27,13 +27,13 @@
 package org.anchoranalysis.gui.retrieveelements;
 
 import java.util.Optional;
+import lombok.AllArgsConstructor;
 import org.anchoranalysis.core.cache.CacheCall;
 import org.anchoranalysis.core.error.AnchorNeverOccursException;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.image.io.generator.raster.MIPGenerator;
 import org.anchoranalysis.image.stack.DisplayStack;
 import org.anchoranalysis.image.stack.Stack;
-import lombok.AllArgsConstructor;
 
 // An interface that allows receiving elements from a module
 // When a function returns NULL, that element doesn't exist
@@ -42,17 +42,13 @@ public class RetrieveElementsImage extends RetrieveElements {
 
     private Optional<DisplayStack> stack;
     private Optional<DisplayStack> slice;
-    
+
     @Override
     public void addToPopUp(AddToExportSubMenu popUp) {
 
-        stack.ifPresent(raster->
-            addFromStack(popUp, raster)
-        );
-    
-        slice.ifPresent(raster->
-            addFromSlice(popUp, raster)
-        );
+        stack.ifPresent(raster -> addFromStack(popUp, raster));
+
+        slice.ifPresent(raster -> addFromSlice(popUp, raster));
     }
 
     private void addFromStack(AddToExportSubMenu popUp, DisplayStack stack) {
@@ -68,8 +64,7 @@ public class RetrieveElementsImage extends RetrieveElements {
         if (stack.getDimensions().getZ() > 1) {
             MIPGenerator generatorMIP = new MIPGenerator(true, "selectedStackMIP");
 
-            OperationGenerator<Stack, Stack> generator =
-                    new OperationGenerator<>(generatorMIP);
+            OperationGenerator<Stack, Stack> generator = new OperationGenerator<>(generatorMIP);
             popUp.addExportItem(
                     generator,
                     opCreateStack,
@@ -88,7 +83,7 @@ public class RetrieveElementsImage extends RetrieveElements {
             assert false;
         }
     }
-    
+
     private CacheCall<Stack, AnchorNeverOccursException> cachedOpFromDisplayStack(
             DisplayStack stack) {
         return CacheCall.of(() -> stack.deriveStack(false));

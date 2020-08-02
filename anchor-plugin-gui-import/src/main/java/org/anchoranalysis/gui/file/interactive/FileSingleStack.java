@@ -75,7 +75,8 @@ public class FileSingleStack extends InteractiveFile {
 
         MultiCollectionDropDown dropDown =
                 new MultiCollectionDropDown(
-                        CacheCallWithProgressReporter.of( new OperationCreateTimeSequence(inputObject, 0) ),
+                        CacheCallWithProgressReporter.of(
+                                new OperationCreateTimeSequence(inputObject, 0)),
                         null,
                         null,
                         new EagerEvaluationStore<>(),

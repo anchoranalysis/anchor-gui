@@ -79,10 +79,11 @@ public abstract class FinderRasterStack extends FinderSingleFile
     }
 
     @Override
-    public BoundedIndexContainer<DisplayStack> container() throws BackgroundStackContainerException {
+    public BoundedIndexContainer<DisplayStack> container()
+            throws BackgroundStackContainerException {
         try {
             Stack resultNormalized = get().duplicate();
-            
+
             DisplayStack bgStack = DisplayStack.create(resultNormalized);
             return new SingleContainer<>(bgStack, 0, true);
         } catch (CreateException | OperationFailedException e) {

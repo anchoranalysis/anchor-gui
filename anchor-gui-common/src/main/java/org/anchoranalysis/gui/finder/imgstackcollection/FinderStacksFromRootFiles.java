@@ -43,8 +43,7 @@ public class FinderStacksFromRootFiles implements FinderStacks {
 
     private CallableWithProgressReporter<NamedProvider<Stack>, OperationFailedException>
             operationStacks =
-                    CacheCallWithProgressReporter.of(
-                            pr -> delegate.createStackCollection());
+                    CacheCallWithProgressReporter.of(pr -> delegate.createStackCollection());
 
     public FinderStacksFromRootFiles(RasterReader rasterReader, String function) {
         delegate = new FinderRasterFilesByManifestDescriptionFunction(rasterReader, function);

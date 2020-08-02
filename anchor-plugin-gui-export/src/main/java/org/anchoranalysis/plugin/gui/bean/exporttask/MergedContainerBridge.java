@@ -72,12 +72,10 @@ class MergedContainerBridge
 
             DualCfgNRGContainer<Cfg> dualHistory =
                     new DualCfgNRGContainer<>(
-                            ContainerUtilities.listCntrs(
-                                    sourceObject.getAllFinderCfgNRGHistory()),
+                            ContainerUtilities.listCntrs(sourceObject.getAllFinderCfgNRGHistory()),
                             new TransformToCfg());
 
             dualHistory.init();
- 
 
             MergeCfgBridge mergeCfgBridge = new MergeCfgBridge(regionMembership);
 

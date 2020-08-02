@@ -100,13 +100,14 @@ class AddObjects {
                     DropDownUtilities.addObjectCollection(
                             subMenu,
                             delegate,
-                            CacheCall.of( () -> {
-                                try {
-                                    return providers.getException(key);
-                                } catch (NamedProviderGetException e) {
-                                    throw new OperationFailedException(e);
-                                }      
-                            }),
+                            CacheCall.of(
+                                    () -> {
+                                        try {
+                                            return providers.getException(key);
+                                        } catch (NamedProviderGetException e) {
+                                            throw new OperationFailedException(e);
+                                        }
+                                    }),
                             key,
                             operationBwsaWithNRG.nrgBackground(),
                             mpg,

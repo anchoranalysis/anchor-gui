@@ -27,6 +27,7 @@
 package org.anchoranalysis.gui.videostats.dropdown.contextualmodulecreator;
 
 import java.util.Optional;
+import lombok.AllArgsConstructor;
 import org.anchoranalysis.anchor.mpp.feature.instantstate.CfgNRGInstantState;
 import org.anchoranalysis.core.color.ColorIndex;
 import org.anchoranalysis.core.error.InitException;
@@ -42,14 +43,14 @@ import org.anchoranalysis.gui.videostats.module.DefaultModuleStateManager;
 import org.anchoranalysis.gui.videostats.module.VideoStatsModuleCreateException;
 import org.anchoranalysis.gui.videostats.modulecreator.VideoStatsModuleCreatorContext;
 import org.anchoranalysis.io.manifest.deserializer.folder.LoadContainer;
-import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
 public class NRGTableCreator extends VideoStatsModuleCreatorContext {
 
     private final CallableWithException<LoadContainer<CfgNRGInstantState>, OperationFailedException>
             operation;
-    private final CallableWithException<NRGStackWithParams, GetOperationFailedException> nrgStackWithParams;
+    private final CallableWithException<NRGStackWithParams, GetOperationFailedException>
+            nrgStackWithParams;
     private final ColorIndex colorIndex;
 
     @Override
@@ -80,7 +81,8 @@ public class NRGTableCreator extends VideoStatsModuleCreatorContext {
 
         } catch (IllegalArgumentException
                 | InitException
-                | OperationFailedException | GetOperationFailedException e) {
+                | OperationFailedException
+                | GetOperationFailedException e) {
             throw new VideoStatsModuleCreateException(e);
         }
     }

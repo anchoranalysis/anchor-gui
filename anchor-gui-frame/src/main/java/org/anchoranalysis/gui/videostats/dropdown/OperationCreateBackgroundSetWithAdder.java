@@ -56,9 +56,11 @@ public class OperationCreateBackgroundSetWithAdder {
 
     private CallableWithProgressReporter<BackgroundSet, BackgroundStackContainerException>
             operationBackgroundSet;
-    
-    private final CallableWithProgressReporter<BackgroundSetWithAdder, BackgroundStackContainerException> cachedOp;
-    
+
+    private final CallableWithProgressReporter<
+                    BackgroundSetWithAdder, BackgroundStackContainerException>
+            cachedOp;
+
     public OperationCreateBackgroundSetWithAdder(
             NRGBackground nrgBackground,
             IAddVideoStatsModule parentAdder,
@@ -75,26 +77,25 @@ public class OperationCreateBackgroundSetWithAdder {
                 new NRGBackgroundAdder<>(
                         nrgBackground.copyChangeOp(operationBackgroundSet),
                         operationIAddVideoStatsModule);
-        
+
         this.cachedOp = CacheCallWithProgressReporter.of(this::execute);
-        
+
         this.operationIAddVideoStatsModule =
                 CacheCallWithProgressReporter.of(
-                        progressReporter -> cachedOp.call(progressReporter).getAdder()
-                );
-        
+                        progressReporter -> cachedOp.call(progressReporter).getAdder());
+
         this.operationBackgroundSet =
                 CacheCallWithProgressReporter.of(
-                        progressReporter -> cachedOp.call(progressReporter).getBackgroundSet()
-                );
+                        progressReporter -> cachedOp.call(progressReporter).getBackgroundSet());
     }
 
-    private BackgroundSetWithAdder execute(ProgressReporter progressReporter) throws BackgroundStackContainerException {
+    private BackgroundSetWithAdder execute(ProgressReporter progressReporter)
+            throws BackgroundStackContainerException {
         BackgroundSetWithAdder bwsa = new BackgroundSetWithAdder();
 
         BackgroundSet backgroundSet;
         backgroundSet = nrgBackground.getBackgroundSet().call(progressReporter);
-        
+
         bwsa.setBackgroundSet(backgroundSet);
 
         IAddVideoStatsModule childAdder = parentAdder.createChild();
@@ -102,17 +103,16 @@ public class OperationCreateBackgroundSetWithAdder {
 
         childAdder = nrgBackground.addNrgStackToAdder(childAdder);
 
-        FunctionWithException<Integer, DisplayStack, BackgroundStackContainerException> initialBackground;
+        FunctionWithException<Integer, DisplayStack, BackgroundStackContainerException>
+                initialBackground;
         try {
             initialBackground = initialBackground(backgroundSet);
         } catch (GetOperationFailedException e) {
             throw new BackgroundStackContainerException(e);
         }
 
-
         // TODO For now we assume there is always an index 0 available as a minimum
         DisplayStack initialStack = initialBackground.apply(0);
-
 
         // TODO is this the right place?
         // Sets an appropriate default slice in the middle
@@ -137,7 +137,7 @@ public class OperationCreateBackgroundSetWithAdder {
     public NRGBackgroundAdder<BackgroundStackContainerException> nrgBackground() {
         return nrgBackgroundNew;
     }
-    
+
     private static FunctionWithException<Integer, DisplayStack, BackgroundStackContainerException>
             initialBackground(BackgroundSet backgroundSet) throws GetOperationFailedException {
 

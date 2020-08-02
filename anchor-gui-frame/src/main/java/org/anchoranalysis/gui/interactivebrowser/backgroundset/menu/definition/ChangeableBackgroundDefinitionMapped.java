@@ -33,16 +33,18 @@ import org.anchoranalysis.gui.backgroundset.BackgroundSet;
 import org.anchoranalysis.gui.container.background.BackgroundStackContainerException;
 import org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.IGetNames;
 
-public class ChangeableBackgroundDefinitionMapped extends ChangeableBackgroundDefinitionWithDefault {
+public class ChangeableBackgroundDefinitionMapped
+        extends ChangeableBackgroundDefinitionWithDefault {
 
     private final StringMap labelMap;
-    
+
     public ChangeableBackgroundDefinitionMapped(
-            CallableWithProgressReporter<BackgroundSet, BackgroundStackContainerException> backgroundSet,
+            CallableWithProgressReporter<BackgroundSet, BackgroundStackContainerException>
+                    backgroundSet,
             StringMap labelMap) {
         super(backgroundSet);
         this.labelMap = labelMap;
-    }    
+    }
 
     @Override
     public IGetNames names(ErrorReporter errorReporter) {

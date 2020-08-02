@@ -1,10 +1,8 @@
 package org.anchoranalysis.gui.container.background;
 
 public class BackgroundStackContainerException extends Exception {
-    
-    /**
-     * 
-     */
+
+    /** */
     private static final long serialVersionUID = 1L;
 
     public BackgroundStackContainerException(Throwable cause) {

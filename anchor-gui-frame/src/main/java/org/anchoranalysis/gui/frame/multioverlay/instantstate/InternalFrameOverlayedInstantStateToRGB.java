@@ -26,6 +26,7 @@
 
 package org.anchoranalysis.gui.frame.multioverlay.instantstate;
 
+import lombok.AllArgsConstructor;
 import org.anchoranalysis.anchor.overlay.Overlay;
 import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.functional.function.FunctionWithException;
@@ -56,7 +57,6 @@ import org.anchoranalysis.gui.videostats.module.DefaultModuleState;
 import org.anchoranalysis.gui.videostats.module.VideoStatsModule;
 import org.anchoranalysis.image.extent.ImageDimensions;
 import org.anchoranalysis.image.stack.DisplayStack;
-import lombok.AllArgsConstructor;
 
 class InternalFrameOverlayedInstantStateToRGB {
 
@@ -116,14 +116,16 @@ class InternalFrameOverlayedInstantStateToRGB {
     @AllArgsConstructor
     private static class BackgroundSendable
             implements IPropertyValueSendable<
-                    FunctionWithException<Integer, DisplayStack, BackgroundStackContainerException>> {
+                    FunctionWithException<
+                            Integer, DisplayStack, BackgroundStackContainerException>> {
 
         private IndexToRedrawUpdate indexToRedrawUpdate;
         private IRedrawable redrawable;
 
         @Override
         public void setPropertyValue(
-                FunctionWithException<Integer, DisplayStack, BackgroundStackContainerException> value,
+                FunctionWithException<Integer, DisplayStack, BackgroundStackContainerException>
+                        value,
                 boolean adjusting) {
             indexToRedrawUpdate.setImageStackCntr(value);
             redrawable.applyRedrawUpdate(OverlayedDisplayStackUpdate.redrawAll());

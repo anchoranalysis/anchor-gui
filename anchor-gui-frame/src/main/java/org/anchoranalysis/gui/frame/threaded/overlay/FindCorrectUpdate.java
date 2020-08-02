@@ -38,7 +38,8 @@ class FindCorrectUpdate
                 Integer, OverlayedDisplayStackUpdate, BackgroundStackContainerException> {
     private int oldIndex = -1;
 
-    private final FunctionWithException<Integer, OverlayedDisplayStack, BackgroundStackContainerException>
+    private final FunctionWithException<
+                    Integer, OverlayedDisplayStack, BackgroundStackContainerException>
             integerToOverlayedBridge;
 
     private Supplier<Boolean> funcHasBeenInit;

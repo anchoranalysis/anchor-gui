@@ -77,8 +77,7 @@ public class FileMultiCollection extends InteractiveFile {
             IAddVideoStatsModule globalSubgroupAdder, BoundOutputManagerRouteErrors outputManager)
             throws OperationFailedException {
 
-        LazyEvaluationStore<TimeSequence> stacks =
-                new LazyEvaluationStore<>("stacks");
+        LazyEvaluationStore<TimeSequence> stacks = new LazyEvaluationStore<>("stacks");
         inputObject.stack().addToStore(stacks);
 
         LazyEvaluationStore<Cfg> cfgs = new LazyEvaluationStore<>("cfg");

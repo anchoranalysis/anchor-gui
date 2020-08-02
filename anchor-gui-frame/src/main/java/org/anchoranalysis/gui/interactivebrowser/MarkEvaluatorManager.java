@@ -58,8 +58,7 @@ public class MarkEvaluatorManager {
     }
 
     public MarkEvaluatorSetForImage createSetForStackCollection(
-            CallableWithProgressReporter<NamedProvider<Stack>, ? extends Throwable>
-                    namedStacks,
+            CallableWithProgressReporter<NamedProvider<Stack>, ? extends Throwable> namedStacks,
             CallableWithException<Optional<KeyValueParams>, IOException> keyParams)
             throws CreateException {
 

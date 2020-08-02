@@ -27,6 +27,8 @@
 package org.anchoranalysis.plugin.gui.bean.exporttask;
 
 import javax.swing.ProgressMonitor;
+import lombok.Getter;
+import lombok.Setter;
 import org.anchoranalysis.bean.annotation.BeanField;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.OperationFailedException;
@@ -34,8 +36,6 @@ import org.anchoranalysis.core.functional.function.FunctionWithException;
 import org.anchoranalysis.core.index.container.BoundedIndexContainer;
 import org.anchoranalysis.gui.bean.exporttask.ExportTaskFailedException;
 import org.anchoranalysis.gui.bean.exporttask.ExportTaskParams;
-import lombok.Getter;
-import lombok.Setter;
 
 public abstract class ExportTaskRasterGeneratorFromBoundedIndexContainer<T>
         extends ExportTaskRasterGeneratorSequence<T> {
@@ -82,11 +82,7 @@ public abstract class ExportTaskRasterGeneratorFromBoundedIndexContainer<T>
             throws ExportTaskFailedException {
 
         try {
-            return delegate.execute(
-                    params,
-                    progressMonitor,
-                    createGeneratorSequenceWriter(params)
-            );
+            return delegate.execute(params, progressMonitor, createGeneratorSequenceWriter(params));
         } catch (CreateException e) {
             throw new ExportTaskFailedException(e);
         }

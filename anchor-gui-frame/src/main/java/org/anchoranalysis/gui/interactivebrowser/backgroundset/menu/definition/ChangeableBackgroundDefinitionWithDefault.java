@@ -26,18 +26,19 @@
 
 package org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.definition;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 import org.anchoranalysis.core.progress.CallableWithProgressReporter;
 import org.anchoranalysis.gui.backgroundset.BackgroundSet;
 import org.anchoranalysis.gui.container.background.BackgroundStackContainerException;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
 
 @AllArgsConstructor
 public abstract class ChangeableBackgroundDefinitionWithDefault
         implements ChangeableBackgroundDefinition {
 
     @Getter
-    private CallableWithProgressReporter<BackgroundSet, BackgroundStackContainerException> backgroundSet;
+    private CallableWithProgressReporter<BackgroundSet, BackgroundStackContainerException>
+            backgroundSet;
 
     public void update(
             CallableWithProgressReporter<BackgroundSet, BackgroundStackContainerException>

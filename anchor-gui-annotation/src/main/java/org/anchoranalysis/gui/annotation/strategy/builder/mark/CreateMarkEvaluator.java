@@ -74,8 +74,8 @@ class CreateMarkEvaluator {
                 stacks, opLoadKeyValueParams(pathForBinding, strategy));
     }
 
-    private static CallableWithException<Optional<KeyValueParams>, IOException> opLoadKeyValueParams(
-            Path pathForBinding, MarkProposerStrategy strategy) {
+    private static CallableWithException<Optional<KeyValueParams>, IOException>
+            opLoadKeyValueParams(Path pathForBinding, MarkProposerStrategy strategy) {
         return () -> paramsFromGenerator(pathForBinding, strategy.paramsFilePathGenerator());
     }
 

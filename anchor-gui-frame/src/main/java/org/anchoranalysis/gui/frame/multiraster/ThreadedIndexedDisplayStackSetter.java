@@ -50,8 +50,7 @@ public class ThreadedIndexedDisplayStackSetter implements IBackgroundSetter, ITh
     public void init(
             FunctionWithException<Integer, DisplayStack, ? extends Throwable> cntrDisplayStack,
             InteractiveThreadPool threadPool,
-            ErrorReporter errorReporter)
-    {
+            ErrorReporter errorReporter) {
 
         stackGenerator = new DisplayStackGenerator("display");
 
@@ -88,8 +87,8 @@ public class ThreadedIndexedDisplayStackSetter implements IBackgroundSetter, ITh
         delegate.dispose();
     }
 
-    private FunctionWithException<Integer, DisplayUpdate, BackgroundStackContainerException> ensure8bit(
-            FunctionWithException<Integer, DisplayStack, ? extends Throwable> cntr) {
+    private FunctionWithException<Integer, DisplayUpdate, BackgroundStackContainerException>
+            ensure8bit(FunctionWithException<Integer, DisplayStack, ? extends Throwable> cntr) {
         return new NoOverlayBridgeFromGenerator(
                 new IterableObjectGeneratorBridge<>(
                         stackGenerator, new EnsureUnsigned8Bit<>(cntr)));

@@ -61,9 +61,7 @@ public class InternalFrameOverlaysRedraw {
         this.delegate.controllerImageView().setEnforceMinimumSizeAfterGuessZoom(true);
     }
 
-    public ISliderState init(
-            DefaultModuleState defaultState,
-            VideoStatsModuleGlobalParams mpg)
+    public ISliderState init(DefaultModuleState defaultState, VideoStatsModuleGlobalParams mpg)
             throws InitException {
 
         ISliderState sliderState = delegate.init(defaultState, mpg);

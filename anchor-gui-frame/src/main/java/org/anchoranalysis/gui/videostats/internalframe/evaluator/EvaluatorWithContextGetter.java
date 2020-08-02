@@ -31,6 +31,5 @@ import org.anchoranalysis.core.error.OperationFailedException;
 
 @FunctionalInterface
 public interface EvaluatorWithContextGetter {
-    public Optional<EvaluatorWithContext> getEvaluatorWithContext()
-            throws OperationFailedException;
+    public Optional<EvaluatorWithContext> getEvaluatorWithContext() throws OperationFailedException;
 }

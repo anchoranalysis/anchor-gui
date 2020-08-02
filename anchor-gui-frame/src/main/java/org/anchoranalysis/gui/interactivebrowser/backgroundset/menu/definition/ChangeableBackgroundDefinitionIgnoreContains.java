@@ -36,7 +36,8 @@ import org.anchoranalysis.gui.container.background.BackgroundStackContainerExcep
 import org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.IGetNames;
 
 @RequiredArgsConstructor
-public class ChangeableBackgroundDefinitionIgnoreContains implements ChangeableBackgroundDefinition {
+public class ChangeableBackgroundDefinitionIgnoreContains
+        implements ChangeableBackgroundDefinition {
 
     // START REQUIRED ARGUMENTS
     private final ChangeableBackgroundDefinition background;

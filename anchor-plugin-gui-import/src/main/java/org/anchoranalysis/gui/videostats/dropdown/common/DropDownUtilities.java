@@ -63,7 +63,8 @@ public class DropDownUtilities {
             BoundVideoStatsModuleDropDown dropDown,
             CallableWithProgressReporter<IAddVideoStatsModule, ? extends Throwable>
                     adderOpWithoutNRG,
-            CallableWithProgressReporter<BackgroundSet, BackgroundStackContainerException> backgroundSet,
+            CallableWithProgressReporter<BackgroundSet, BackgroundStackContainerException>
+                    backgroundSet,
             MarkEvaluatorSetForImage markEvaluatorSet,
             OutputWriteSettings outputWriteSettings,
             boolean addNRGAdder,

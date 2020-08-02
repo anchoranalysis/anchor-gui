@@ -26,6 +26,7 @@
 
 package org.anchoranalysis.gui.annotation;
 
+import lombok.Getter;
 import org.anchoranalysis.core.functional.function.FunctionWithException;
 import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.name.provider.NamedProvider;
@@ -39,18 +40,18 @@ import org.anchoranalysis.gui.videostats.link.DefaultLinkStateManager;
 import org.anchoranalysis.image.extent.ImageDimensions;
 import org.anchoranalysis.image.stack.DisplayStack;
 import org.anchoranalysis.image.stack.Stack;
-import lombok.Getter;
 
 public class AnnotationBackground {
 
     @Getter
-    private CallableWithProgressReporter<BackgroundSet, BackgroundStackContainerException> backgroundSetOp;
-    
+    private CallableWithProgressReporter<BackgroundSet, BackgroundStackContainerException>
+            backgroundSetOp;
+
     @Getter
-    private FunctionWithException<Integer, DisplayStack, BackgroundStackContainerException> defaultBackground;
-    
-    @Getter
-    private ImageDimensions dimensionsViewer;
+    private FunctionWithException<Integer, DisplayStack, BackgroundStackContainerException>
+            defaultBackground;
+
+    @Getter private ImageDimensions dimensionsViewer;
 
     public AnnotationBackground(
             ProgressReporterMultiple prm,
@@ -59,10 +60,11 @@ public class AnnotationBackground {
             throws BackgroundStackContainerException {
         backgroundSetOp = CreateBackgroundSetFactory.createCached(backgroundStacks);
         try {
-            defaultBackground = backgroundSetOp
-                .call(new ProgressReporterOneOfMany(prm))
-                .stackCntr(stackNameVisualOriginal);
-                
+            defaultBackground =
+                    backgroundSetOp
+                            .call(new ProgressReporterOneOfMany(prm))
+                            .stackCntr(stackNameVisualOriginal);
+
             if (defaultBackground == null) {
                 throw new BackgroundStackContainerException(
                         String.format("Cannot find stackName '%s'", stackNameVisualOriginal));

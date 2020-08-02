@@ -59,7 +59,8 @@ public class DefaultModuleStateManager {
 
     /** Provides a copy of the default module state with a changed background */
     public DefaultModuleState copyChangeBackground(
-            FunctionWithException<Integer, DisplayStack, BackgroundStackContainerException> background) {
+            FunctionWithException<Integer, DisplayStack, BackgroundStackContainerException>
+                    background) {
         return new DefaultModuleState(
                 linkStateManager.copyChangeBackground(background), markDisplaySettings);
     }

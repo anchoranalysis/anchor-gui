@@ -26,6 +26,8 @@
 
 package org.anchoranalysis.plugin.gui.bean.createrastergenerator;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.anchoranalysis.anchor.plot.GraphInstance;
 import org.anchoranalysis.anchor.plot.bean.GraphDefinition;
 import org.anchoranalysis.bean.annotation.BeanField;
@@ -34,8 +36,6 @@ import org.anchoranalysis.gui.bean.exporttask.ExportTaskParams;
 import org.anchoranalysis.image.stack.Stack;
 import org.anchoranalysis.io.generator.IterableObjectGenerator;
 import org.anchoranalysis.plugin.gui.bean.exporttask.MappedFrom;
-import lombok.Getter;
-import lombok.Setter;
 
 public abstract class CreateRasterGraph<T, S> extends CreateRasterGenerator<S> {
 

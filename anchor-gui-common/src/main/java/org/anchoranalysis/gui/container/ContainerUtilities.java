@@ -37,8 +37,7 @@ public class ContainerUtilities {
     public static List<BoundedIndexContainer<CfgNRGInstantState>> listCntrs(
             List<ContainerGetter<CfgNRGInstantState>> cntrs) throws OperationFailedException {
 
-        List<BoundedIndexContainer<CfgNRGInstantState>> out =
-                new ArrayList<>();
+        List<BoundedIndexContainer<CfgNRGInstantState>> out = new ArrayList<>();
 
         for (ContainerGetter<CfgNRGInstantState> item : cntrs) {
             out.add(item.getCntr());

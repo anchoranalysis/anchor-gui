@@ -28,6 +28,7 @@ package org.anchoranalysis.gui.finder;
 
 import java.util.List;
 import java.util.Optional;
+import lombok.RequiredArgsConstructor;
 import org.anchoranalysis.core.index.container.BoundedIndexContainer;
 import org.anchoranalysis.image.io.bean.rasterreader.RasterReader;
 import org.anchoranalysis.image.stack.NamedStacks;
@@ -40,7 +41,6 @@ import org.anchoranalysis.io.manifest.folder.FolderWrite;
 import org.anchoranalysis.io.manifest.match.FolderWriteAnd;
 import org.anchoranalysis.io.manifest.match.FolderWritePath;
 import org.anchoranalysis.io.manifest.match.helper.folderwrite.FolderWriteFileFunctionType;
-import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 public class FinderRasterFolder extends FinderSingleFolder {
@@ -50,7 +50,7 @@ public class FinderRasterFolder extends FinderSingleFolder {
     private final String manifestFunction;
     private final RasterReader rasterReader;
     // END: REQUIRED ARGUMENTS
-    
+
     private BoundedIndexContainer<Stack> result;
 
     @Override
@@ -89,11 +89,15 @@ public class FinderRasterFolder extends FinderSingleFolder {
         SequencedFolderRasterReader sfrr =
                 new SequencedFolderRasterReader(getFoundFolder(), rasterReader);
 
-        AddFromSequenceHelper.addFromSequenceWithProgressReporter(getFoundFolder().getAssociatedSequence(), sfrr, nisc::addImageStack, namesAsIndexes);
+        AddFromSequenceHelper.addFromSequenceWithProgressReporter(
+                getFoundFolder().getAssociatedSequence(),
+                sfrr,
+                nisc::addImageStack,
+                namesAsIndexes);
 
         return nisc;
     }
-    
+
     private BoundedIndexContainer<Stack> createContainer(FolderWrite folder) {
         return new BoundsFromSequenceType<>(
                 new SequencedFolderRasterReader(folder, rasterReader),

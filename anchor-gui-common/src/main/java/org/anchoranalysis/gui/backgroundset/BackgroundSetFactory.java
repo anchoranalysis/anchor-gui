@@ -27,6 +27,9 @@
 package org.anchoranalysis.gui.backgroundset;
 
 import java.util.Set;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import org.anchoranalysis.core.cache.CacheCall;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.OperationFailedException;
@@ -51,11 +54,8 @@ import org.anchoranalysis.image.stack.Stack;
 import org.anchoranalysis.image.stack.TimeSequence;
 import org.anchoranalysis.image.voxel.datatype.VoxelDataTypeUnsignedByte;
 import org.anchoranalysis.io.manifest.deserializer.folder.LoadContainer;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 
-@NoArgsConstructor(access=AccessLevel.PRIVATE)
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class BackgroundSetFactory {
 
     public static BackgroundSet createBackgroundSet(
@@ -79,8 +79,7 @@ public class BackgroundSetFactory {
         BackgroundSet set = new BackgroundSet();
         set.addAll(existing);
         try {
-            BackgroundSetFactory.addFromStacks(
-                    set, stacks, progressReporter);
+            BackgroundSetFactory.addFromStacks(set, stacks, progressReporter);
         } catch (OperationFailedException e) {
             throw new CreateException(e);
         }
@@ -98,8 +97,7 @@ public class BackgroundSetFactory {
         BackgroundSet bsNew = new BackgroundSet();
         bsNew.addAll(existing);
         try {
-            BackgroundSetFactory.addFromStacks(
-                    bsNew, stacks, keys, progressReporter);
+            BackgroundSetFactory.addFromStacks(bsNew, stacks, keys, progressReporter);
         } catch (OperationFailedException e) {
             throw new CreateException(e);
         }
@@ -136,7 +134,9 @@ public class BackgroundSetFactory {
     }
 
     @AllArgsConstructor
-    private static class AddBackgroundSetItem implements CallableWithException<BackgroundStackContainer, BackgroundStackContainerException> {
+    private static class AddBackgroundSetItem
+            implements CallableWithException<
+                    BackgroundStackContainer, BackgroundStackContainerException> {
 
         private NamedProvider<TimeSequence> imageStackCollection;
         private String id;
@@ -241,9 +241,8 @@ public class BackgroundSetFactory {
             // The way we handle this means we cannot add the (only first three) brackets on the
             // name, as the image has not yet been evaluated
             for (String id : keys) {
-                CallableWithException<BackgroundStackContainer, BackgroundStackContainerException> operation = CacheCall.of(
-                        new AddBackgroundSetItem(namedStacks, id)
-                );
+                CallableWithException<BackgroundStackContainer, BackgroundStackContainerException>
+                        operation = CacheCall.of(new AddBackgroundSetItem(namedStacks, id));
                 backgroundSet.addItem(id, operation);
                 pri.update();
             }

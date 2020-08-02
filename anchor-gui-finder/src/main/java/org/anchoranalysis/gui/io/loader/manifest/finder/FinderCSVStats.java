@@ -112,7 +112,8 @@ public class FinderCSVStats extends FinderSingleFile {
         return foundList;
     }
 
-    private BoundedIndexContainer<CSVStatistic> createContainer(FileWrite fileWrite) throws OperationFailedException {
+    private BoundedIndexContainer<CSVStatistic> createContainer(FileWrite fileWrite)
+            throws OperationFailedException {
 
         try {
             CSVStatisticLoader loader =
@@ -131,8 +132,7 @@ public class FinderCSVStats extends FinderSingleFile {
         } else if (function.equals("interval_aggregate_stats")) {
             return new CSVStatisticLoaderIntervalAggregate();
         } else {
-            throw new OperationFailedException(
-                    "Cannot determine which CSVStatisticLoader to use");
+            throw new OperationFailedException("Cannot determine which CSVStatisticLoader to use");
         }
     }
 }

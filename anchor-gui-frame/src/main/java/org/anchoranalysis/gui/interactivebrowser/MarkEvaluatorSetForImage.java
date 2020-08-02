@@ -55,31 +55,32 @@ public class MarkEvaluatorSetForImage {
     private final BoundIOContext context;
     // END REQUIRED ARGUMENTS
 
-    private Map<String, CallableWithException<MarkEvaluatorResolved, OperationFailedException>> map =
-            new HashMap<>();
+    private Map<String, CallableWithException<MarkEvaluatorResolved, OperationFailedException>>
+            map = new HashMap<>();
 
-    private class Resolved implements CallableWithException<MarkEvaluatorResolved, OperationFailedException> {
+    private class Resolved
+            implements CallableWithException<MarkEvaluatorResolved, OperationFailedException> {
 
         private CacheCall<MPPInitParams, CreateException> operationProposerSharedObjects;
         private MarkEvaluator me;
 
         public Resolved(MarkEvaluator me) throws CreateException {
             this.me = me;
-            operationProposerSharedObjects = CacheCall.of(
-                    new OperationInitParams(
-                            namedStacks,
-                            keyParams,
-                            /// TODO Do we need this duplication?
-                            me.getDefine().duplicateBean(),
-                            context));
+            operationProposerSharedObjects =
+                    CacheCall.of(
+                            new OperationInitParams(
+                                    namedStacks,
+                                    keyParams,
+                                    /// TODO Do we need this duplication?
+                                    me.getDefine().duplicateBean(),
+                                    context));
 
             try {
                 // TODO owen, this is causing a bug in the annotorator, we need to get our feature
                 // params from somewhere else
                 //  i.e. where they are being passed around
                 me.initRecursive(
-                        operationProposerSharedObjects.call().getFeature(),
-                        context.getLogger());
+                        operationProposerSharedObjects.call().getFeature(), context.getLogger());
             } catch (InitException e) {
                 throw new CreateException(e);
             }
@@ -101,7 +102,7 @@ public class MarkEvaluatorSetForImage {
 
     public void add(String key, MarkEvaluator me) throws OperationFailedException {
         try {
-            map.put(key, CacheCall.of(new Resolved(me)) );
+            map.put(key, CacheCall.of(new Resolved(me)));
         } catch (CreateException e) {
             throw new OperationFailedException(e);
         }

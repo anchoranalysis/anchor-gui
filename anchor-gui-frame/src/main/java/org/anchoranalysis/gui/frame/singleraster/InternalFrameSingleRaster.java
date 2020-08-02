@@ -53,7 +53,8 @@ public class InternalFrameSingleRaster {
             throws InitException {
 
         // Create a sequence from 0 to numFrames -1, and map to our bridge
-        BoundedIndexContainerBridgeWithoutIndex<Integer, DisplayStack, BackgroundStackContainerException>
+        BoundedIndexContainerBridgeWithoutIndex<
+                        Integer, DisplayStack, BackgroundStackContainerException>
                 bridge =
                         new BoundedIndexContainerBridgeWithoutIndex<>(
                                 new IntegerSequenceContaner(numFrames),

@@ -28,6 +28,7 @@ package org.anchoranalysis.gui.retrieveelements;
 
 import java.nio.file.Path;
 import java.util.Optional;
+import lombok.RequiredArgsConstructor;
 import org.anchoranalysis.core.error.AnchorNeverOccursException;
 import org.anchoranalysis.core.functional.CallableWithException;
 import org.anchoranalysis.core.index.SetOperationFailedException;
@@ -36,11 +37,11 @@ import org.anchoranalysis.io.generator.ObjectGenerator;
 import org.anchoranalysis.io.manifest.ManifestDescription;
 import org.anchoranalysis.io.output.bean.OutputWriteSettings;
 import org.anchoranalysis.io.output.error.OutputWriteFailedException;
-import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 class OperationGenerator<S, T> extends ObjectGenerator<S>
-        implements IterableObjectGenerator<CallableWithException<T, AnchorNeverOccursException>, S> {
+        implements IterableObjectGenerator<
+                CallableWithException<T, AnchorNeverOccursException>, S> {
 
     // START REQUIRED ARGUMENTS
     private final IterableObjectGenerator<T, S> delegate;

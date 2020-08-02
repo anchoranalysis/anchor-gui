@@ -26,6 +26,7 @@
 
 package org.anchoranalysis.gui.frame.overlays.onrgb;
 
+import lombok.AllArgsConstructor;
 import org.anchoranalysis.core.functional.function.FunctionWithException;
 import org.anchoranalysis.core.index.SetOperationFailedException;
 import org.anchoranalysis.gui.container.background.BackgroundStackContainerException;
@@ -33,7 +34,6 @@ import org.anchoranalysis.gui.frame.display.IRedrawable;
 import org.anchoranalysis.gui.frame.display.OverlayedDisplayStackUpdate;
 import org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.IBackgroundSetter;
 import org.anchoranalysis.image.stack.DisplayStack;
-import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
 class BackgroundSetterLocal implements IBackgroundSetter {

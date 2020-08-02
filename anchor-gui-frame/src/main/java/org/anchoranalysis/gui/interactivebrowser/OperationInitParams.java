@@ -28,6 +28,7 @@ package org.anchoranalysis.gui.interactivebrowser;
 
 import java.io.IOException;
 import java.util.Optional;
+import lombok.AllArgsConstructor;
 import org.anchoranalysis.anchor.mpp.bean.init.MPPInitParams;
 import org.anchoranalysis.bean.define.Define;
 import org.anchoranalysis.core.error.CreateException;
@@ -39,13 +40,11 @@ import org.anchoranalysis.core.progress.ProgressReporterNull;
 import org.anchoranalysis.image.stack.Stack;
 import org.anchoranalysis.io.output.bound.BoundIOContext;
 import org.anchoranalysis.mpp.io.input.MPPInitParamsFactory;
-import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
 public class OperationInitParams implements CallableWithException<MPPInitParams, CreateException> {
 
-    private CallableWithProgressReporter<NamedProvider<Stack>, ? extends Throwable>
-            namedStacks;
+    private CallableWithProgressReporter<NamedProvider<Stack>, ? extends Throwable> namedStacks;
     private CallableWithException<Optional<KeyValueParams>, IOException> keyParams;
     private Define define;
     private BoundIOContext context;

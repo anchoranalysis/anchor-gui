@@ -26,6 +26,7 @@
 
 package org.anchoranalysis.gui.interactivebrowser;
 
+import lombok.Getter;
 import org.anchoranalysis.anchor.mpp.bean.cfg.CfgGen;
 import org.anchoranalysis.anchor.mpp.bean.init.MPPInitParams;
 import org.anchoranalysis.anchor.mpp.feature.nrg.scheme.NRGScheme;
@@ -34,7 +35,6 @@ import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.params.KeyValueParams;
 import org.anchoranalysis.feature.nrg.NRGStackWithParams;
-import lombok.Getter;
 
 // A MarkEvaluator after it has been resolved for usage by converting
 //  it into a ProposerSharedObjectsImageSpecific and other necessary components
@@ -42,12 +42,10 @@ public class MarkEvaluatorResolved {
 
     private final CacheCall<MPPInitParams, CreateException> operationCreateProposerSharedObjects;
     private final CacheCall<NRGStackWithParams, CreateException> operationCreateNrgStack;
-    
-    @Getter
-    private final CfgGen cfgGen;
-    
-    @Getter
-    private final NRGScheme nrgScheme;
+
+    @Getter private final CfgGen cfgGen;
+
+    @Getter private final NRGScheme nrgScheme;
 
     public MarkEvaluatorResolved(
             CacheCall<MPPInitParams, CreateException> proposerSharedObjects,
@@ -59,9 +57,8 @@ public class MarkEvaluatorResolved {
         this.cfgGen = cfgGen;
         this.nrgScheme = nrgScheme;
 
-        this.operationCreateNrgStack = CacheCall.of(
-                new OperationNrgStack(operationCreateProposerSharedObjects, params)
-        );
+        this.operationCreateNrgStack =
+                CacheCall.of(new OperationNrgStack(operationCreateProposerSharedObjects, params));
     }
 
     public CacheCall<MPPInitParams, CreateException> getProposerSharedObjectsOperation() {

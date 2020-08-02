@@ -85,19 +85,24 @@ public class FinderRasterFilesByManifestDescriptionFunction implements Finder {
             String name = fileWrite.getIndex();
 
             // Assume single series, single channel
-            out.addImageStack(name, CacheCallWithProgressReporter.of( progressReporter->
-                openStack(fileWrite.calcPath(), rasterReader, progressReporter)
-            ));
+            out.addImageStack(
+                    name,
+                    CacheCallWithProgressReporter.of(
+                            progressReporter ->
+                                    openStack(
+                                            fileWrite.calcPath(), rasterReader, progressReporter)));
         }
         return out;
     }
-    
-    private Stack openStack(Path filePath, RasterReader rasterReader, ProgressReporter progressReporter) throws OperationFailedException {
+
+    private Stack openStack(
+            Path filePath, RasterReader rasterReader, ProgressReporter progressReporter)
+            throws OperationFailedException {
         try (OpenedRaster openedRaster = rasterReader.openFile(filePath)) {
             return openedRaster.open(0, progressReporter).get(0);
 
         } catch (RasterIOException e) {
             throw new OperationFailedException(e);
-        }        
+        }
     }
 }

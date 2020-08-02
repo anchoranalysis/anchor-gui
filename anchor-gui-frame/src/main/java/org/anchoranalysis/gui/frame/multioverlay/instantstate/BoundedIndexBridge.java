@@ -26,25 +26,25 @@ package org.anchoranalysis.gui.frame.multioverlay.instantstate;
  * #L%
  */
 
+import lombok.AllArgsConstructor;
+import lombok.Setter;
 import org.anchoranalysis.core.functional.function.FunctionWithException;
 import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.index.container.BoundedIndexContainer;
-import lombok.AllArgsConstructor;
-import lombok.Setter;
 
 @AllArgsConstructor
 class BoundedIndexBridge<T>
         implements FunctionWithException<Integer, T, GetOperationFailedException> {
 
     /** The container associated with the bridge */
-    @Setter
-    private BoundedIndexContainer<T> container;
+    @Setter private BoundedIndexContainer<T> container;
 
     @Override
     public T apply(Integer sourceObject) throws GetOperationFailedException {
         int index = container.previousEqualIndex(sourceObject);
         if (index == -1) {
-            throw new GetOperationFailedException(sourceObject, "Cannot find a previousEqualIndex in the cntr");
+            throw new GetOperationFailedException(
+                    sourceObject, "Cannot find a previousEqualIndex in the cntr");
         }
         return container.get(index);
     }

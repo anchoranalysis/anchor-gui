@@ -186,8 +186,7 @@ public class OpenedFileGUIMultipleDropDown {
                     new RasterMultiModuleCreator(list, "multi-raster", mpg);
             VideoStatsModuleCreatorAndAdder creatorAndAdder =
                     new VideoStatsModuleCreatorAndAdder(
-                            progresssReporter->adder.createChild(),
-                            creator);
+                            progresssReporter -> adder.createChild(), creator);
             out.add(
                     new VideoStatsOperationFromCreatorAndAdder(
                             "Multi Raster", creatorAndAdder, mpg.getThreadPool(), mpg.getLogger()));
@@ -234,8 +233,7 @@ public class OpenedFileGUIMultipleDropDown {
             RasterMultiCreator<T> creator =
                     new RasterMultiCreator<>(list, rootOperation.getName(), mpg, bridge);
             VideoStatsModuleCreatorAndAdder creatorAndAdder =
-                    new VideoStatsModuleCreatorAndAdder(
-                            progresssReporter->adder, creator);
+                    new VideoStatsModuleCreatorAndAdder(progresssReporter -> adder, creator);
             subMenu.add(
                     new VideoStatsOperationFromCreatorAndAdder(
                             rootOperation.getName(),

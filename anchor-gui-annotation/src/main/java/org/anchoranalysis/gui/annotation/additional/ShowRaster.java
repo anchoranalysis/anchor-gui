@@ -27,6 +27,7 @@
 package org.anchoranalysis.gui.annotation.additional;
 
 import java.nio.file.Path;
+import lombok.AllArgsConstructor;
 import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.index.GetOperationFailedException;
@@ -47,7 +48,6 @@ import org.anchoranalysis.image.io.bean.rasterreader.RasterReader;
 import org.anchoranalysis.image.io.rasterreader.OpenedRaster;
 import org.anchoranalysis.image.stack.Stack;
 import org.anchoranalysis.image.stack.TimeSequence;
-import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
 public class ShowRaster {
@@ -56,25 +56,24 @@ public class ShowRaster {
     private final VideoStatsModuleGlobalParams mpg;
 
     public void openAndShow(String rasterName, final Path rasterPath, RasterReader rasterReader) {
-                        
+
         show(
-            pr -> {
-                try (OpenedRaster or = rasterReader.openFile(rasterPath)) {
-                    TimeSequence ts = or.open(0, pr);
+                pr -> {
+                    try (OpenedRaster or = rasterReader.openFile(rasterPath)) {
+                        TimeSequence ts = or.open(0, pr);
 
-                    Stack stack = ts.get(0);
+                        Stack stack = ts.get(0);
 
-                    BackgroundSet backgroundSet = new BackgroundSet();
-                    backgroundSet.addItem("Associated Raster", stack);
+                        BackgroundSet backgroundSet = new BackgroundSet();
+                        backgroundSet.addItem("Associated Raster", stack);
 
-                    return backgroundSet;
+                        return backgroundSet;
 
-                } catch (RasterIOException | OperationFailedException e) {
-                    throw new BackgroundStackContainerException(rasterName, e);
-                }
-            },
-           rasterName
-        );
+                    } catch (RasterIOException | OperationFailedException e) {
+                        throw new BackgroundStackContainerException(rasterName, e);
+                    }
+                },
+                rasterName);
     }
 
     public void show(
@@ -104,7 +103,10 @@ public class ShowRaster {
                             .createVideoStatsModule(
                                     adder.getSubgroup().getDefaultModuleState().getState()));
 
-        } catch (InitException | VideoStatsModuleCreateException | BackgroundStackContainerException | GetOperationFailedException e) {
+        } catch (InitException
+                | VideoStatsModuleCreateException
+                | BackgroundStackContainerException
+                | GetOperationFailedException e) {
             mpg.getLogger().errorReporter().recordError(AnnotatorModuleCreator.class, e);
         }
     }

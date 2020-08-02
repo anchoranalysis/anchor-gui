@@ -42,18 +42,17 @@ public class FinderStacksCombine implements FinderStacks {
 
     private List<FinderStacks> list = new ArrayList<>();
 
-    private CallableWithProgressReporter<NamedProvider<Stack>, OperationFailedException>
-            operation =
-                    CacheCallWithProgressReporter.of(
-                            pr -> {
-                                NamedStacks out = new NamedStacks();
+    private CallableWithProgressReporter<NamedProvider<Stack>, OperationFailedException> operation =
+            CacheCallWithProgressReporter.of(
+                    pr -> {
+                        NamedStacks out = new NamedStacks();
 
-                                for (FinderStacks finder : list) {
-                                    out.addFrom(finder.getStacks());
-                                }
+                        for (FinderStacks finder : list) {
+                            out.addFrom(finder.getStacks());
+                        }
 
-                                return out;
-                            });
+                        return out;
+                    });
 
     @Override
     public NamedProvider<Stack> getStacks() throws OperationFailedException {

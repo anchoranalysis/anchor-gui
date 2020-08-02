@@ -79,16 +79,14 @@ public class AnnotationDropDown {
     }
 
     private void addAnnotation(
-            IAddVideoStatsModule adder, OutputWriteSettings ows, VideoStatsModuleGlobalParams mpg)
-            {
+            IAddVideoStatsModule adder, OutputWriteSettings ows, VideoStatsModuleGlobalParams mpg) {
         String desc = String.format("Annotator: %s", name);
 
         VideoStatsModuleCreator moduleCreator =
                 new AnnotatorModuleCreator<>(desc, annotation, context, ows, mpg);
 
         VideoStatsModuleCreatorAndAdder creatorAndAdder =
-                new VideoStatsModuleCreatorAndAdder(
-                        progresssReporter->adder, moduleCreator);
+                new VideoStatsModuleCreatorAndAdder(progresssReporter -> adder, moduleCreator);
         delegate.getRootMenu()
                 .addAsDefault(
                         new VideoStatsOperationFromCreatorAndAdder(

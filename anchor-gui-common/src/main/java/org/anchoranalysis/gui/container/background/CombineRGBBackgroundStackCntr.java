@@ -26,21 +26,18 @@
 
 package org.anchoranalysis.gui.container.background;
 
-import org.anchoranalysis.core.error.CreateException;
-import org.anchoranalysis.core.error.InitException;
 import lombok.Getter;
 import lombok.Setter;
+import org.anchoranalysis.core.error.CreateException;
+import org.anchoranalysis.core.error.InitException;
 
 public class CombineRGBBackgroundStackCntr {
 
-    @Getter @Setter
-    private BackgroundStackContainer red;
-    
-    @Getter @Setter
-    private BackgroundStackContainer green;
-    
-    @Getter @Setter
-    private BackgroundStackContainer blue;
+    @Getter @Setter private BackgroundStackContainer red;
+
+    @Getter @Setter private BackgroundStackContainer green;
+
+    @Getter @Setter private BackgroundStackContainer blue;
 
     public BackgroundStackContainer create() throws CreateException {
 
@@ -52,19 +49,19 @@ public class CombineRGBBackgroundStackCntr {
             if (red != null) {
                 combinedCntr.setRed(red.container());
             }
-    
+
             if (green != null) {
                 combinedCntr.setGreen(green.container());
             }
-    
+
             if (blue != null) {
                 combinedCntr.setBlue(blue.container());
             }
-    
+
             combinedCntr.init();
-    
+
             return new SingleBackgroundStackCntr(combinedCntr);
-            
+
         } catch (BackgroundStackContainerException | InitException e) {
             throw new CreateException(e);
         }

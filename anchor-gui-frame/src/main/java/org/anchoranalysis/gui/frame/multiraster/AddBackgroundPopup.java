@@ -29,6 +29,8 @@ package org.anchoranalysis.gui.frame.multiraster;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import org.anchoranalysis.core.progress.ProgressReporterNull;
 import org.anchoranalysis.gui.frame.details.ControllerPopupMenu;
 import org.anchoranalysis.gui.image.frame.ISliderState;
@@ -37,10 +39,8 @@ import org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.IBackgroundS
 import org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.IGetNames;
 import org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.definition.ImageStackContainerFromName;
 import org.anchoranalysis.gui.videostats.dropdown.VideoStatsModuleGlobalParams;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
 
-@AllArgsConstructor(access=AccessLevel.PRIVATE)
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 class AddBackgroundPopup {
 
     public static void apply(
@@ -65,9 +65,7 @@ class AddBackgroundPopup {
     }
 
     private static IGetNames createGetNames(
-        List<NamedRasterSet> list,
-        ISliderState sliderState, VideoStatsModuleGlobalParams mpg
-    ) {
+            List<NamedRasterSet> list, ISliderState sliderState, VideoStatsModuleGlobalParams mpg) {
         return () -> {
             try {
                 Set<String> names =

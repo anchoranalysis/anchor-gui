@@ -27,6 +27,7 @@
 package org.anchoranalysis.gui.videostats.modulecreator;
 
 import java.util.Optional;
+import lombok.AllArgsConstructor;
 import org.anchoranalysis.anchor.mpp.cfg.Cfg;
 import org.anchoranalysis.anchor.mpp.overlay.OverlayCollectionMarkFactory;
 import org.anchoranalysis.anchor.overlay.collection.OverlayCollection;
@@ -44,7 +45,6 @@ import org.anchoranalysis.gui.videostats.internalframe.InternalFrameStaticOverla
 import org.anchoranalysis.gui.videostats.module.VideoStatsModuleCreateException;
 import org.anchoranalysis.gui.videostats.operation.combine.IVideoStatsOperationCombine;
 import org.anchoranalysis.image.object.ObjectCollection;
-import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
 public class CfgModuleCreator extends VideoStatsModuleCreator {
@@ -103,7 +103,9 @@ public class CfgModuleCreator extends VideoStatsModuleCreator {
                     }
 
                     @Override
-                    public Optional<CallableWithException<ObjectCollection, OperationFailedException>>
+                    public Optional<
+                                    CallableWithException<
+                                            ObjectCollection, OperationFailedException>>
                             getObjects() {
                         return Optional.empty();
                     }

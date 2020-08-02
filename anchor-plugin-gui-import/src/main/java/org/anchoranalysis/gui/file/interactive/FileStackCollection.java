@@ -29,6 +29,7 @@ package org.anchoranalysis.gui.file.interactive;
 import java.io.File;
 import java.nio.file.Path;
 import java.util.Optional;
+import lombok.AllArgsConstructor;
 import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.name.store.EagerEvaluationStore;
@@ -42,7 +43,6 @@ import org.anchoranalysis.gui.videostats.dropdown.multicollection.MultiCollectio
 import org.anchoranalysis.io.output.bound.BoundOutputManagerRouteErrors;
 import org.anchoranalysis.plugin.io.bean.input.stack.StackSequenceInput;
 import org.apache.commons.io.FilenameUtils;
-import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
 public class FileStackCollection extends InteractiveFile {
@@ -72,7 +72,8 @@ public class FileStackCollection extends InteractiveFile {
 
         MultiCollectionDropDown dropDown =
                 new MultiCollectionDropDown(
-                        CacheCallWithProgressReporter.of( new ExtractTimeSequenceFromInput(inputObject) ),
+                        CacheCallWithProgressReporter.of(
+                                new ExtractTimeSequenceFromInput(inputObject)),
                         null,
                         null,
                         new EagerEvaluationStore<>(),

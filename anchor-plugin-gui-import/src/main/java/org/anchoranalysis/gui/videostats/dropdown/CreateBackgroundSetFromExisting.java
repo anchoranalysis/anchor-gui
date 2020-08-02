@@ -26,6 +26,7 @@
 
 package org.anchoranalysis.gui.videostats.dropdown;
 
+import lombok.AllArgsConstructor;
 import org.anchoranalysis.anchor.mpp.bean.init.MPPInitParams;
 import org.anchoranalysis.core.cache.CacheCall;
 import org.anchoranalysis.core.error.CreateException;
@@ -37,7 +38,6 @@ import org.anchoranalysis.gui.container.background.BackgroundStackContainerExcep
 import org.anchoranalysis.image.bean.nonbean.init.CreateCombinedStack;
 import org.anchoranalysis.image.bean.nonbean.init.ImageInitParams;
 import org.anchoranalysis.image.stack.wrap.WrapStackAsTimeSequence;
-import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
 public class CreateBackgroundSetFromExisting
@@ -48,11 +48,12 @@ public class CreateBackgroundSetFromExisting
     private CacheCall<MPPInitParams, CreateException> pso;
 
     @Override
-    public BackgroundSet call(ProgressReporter progressReporter) throws BackgroundStackContainerException {
+    public BackgroundSet call(ProgressReporter progressReporter)
+            throws BackgroundStackContainerException {
 
         try {
             BackgroundSet bsExisting = existingBackgroundSet.call(progressReporter);
-            
+
             MPPInitParams so = pso.call();
             ImageInitParams soImage = so.getImage();
 

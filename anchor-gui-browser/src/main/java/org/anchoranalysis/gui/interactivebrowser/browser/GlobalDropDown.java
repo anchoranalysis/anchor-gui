@@ -51,7 +51,7 @@ class GlobalDropDown {
         try {
             delegate.addModule(
                     "Selected Mark Properties",
-                    progresssReporter->adder,
+                    progresssReporter -> adder,
                     new FeatureEvaluatorCreator(src, mpg.getLogger()),
                     mpg.getThreadPool(),
                     mpg.getLogger());

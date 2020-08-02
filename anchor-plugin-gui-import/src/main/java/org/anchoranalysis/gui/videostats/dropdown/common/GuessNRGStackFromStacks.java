@@ -26,6 +26,7 @@
 
 package org.anchoranalysis.gui.videostats.dropdown.common;
 
+import lombok.AllArgsConstructor;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.name.provider.NamedProvider;
@@ -37,7 +38,6 @@ import org.anchoranalysis.feature.nrg.NRGStackWithParams;
 import org.anchoranalysis.gui.series.TimeSequenceProvider;
 import org.anchoranalysis.image.stack.Stack;
 import org.anchoranalysis.image.stack.TimeSequence;
-import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
 public class GuessNRGStackFromStacks

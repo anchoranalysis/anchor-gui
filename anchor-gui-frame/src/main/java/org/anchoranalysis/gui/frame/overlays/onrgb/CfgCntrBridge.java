@@ -44,7 +44,8 @@ class CfgCntrBridge
     }
 
     @Override
-    public OverlayedDisplayStack apply(Integer sourceObject) throws BackgroundStackContainerException {
+    public OverlayedDisplayStack apply(Integer sourceObject)
+            throws BackgroundStackContainerException {
         try {
             return cfgCntr.get(0);
         } catch (GetOperationFailedException e) {

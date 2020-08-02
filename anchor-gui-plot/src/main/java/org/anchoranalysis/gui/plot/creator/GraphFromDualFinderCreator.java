@@ -45,7 +45,8 @@ import org.anchoranalysis.gui.videostats.modulecreator.VideoStatsModuleCreator;
 
 public interface GraphFromDualFinderCreator<T> {
 
-    BoundedIndexContainer<T> createContainer(final FinderCSVStats finderCSVStats) throws CreateException;
+    BoundedIndexContainer<T> createContainer(final FinderCSVStats finderCSVStats)
+            throws CreateException;
 
     BoundedIndexContainer<T> createCntr(
             final FinderHistoryFolder<CfgNRGInstantState> finderCfgNRGHistory)

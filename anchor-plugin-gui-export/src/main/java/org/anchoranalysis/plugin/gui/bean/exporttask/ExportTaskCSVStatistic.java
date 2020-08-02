@@ -47,6 +47,7 @@ public class ExportTaskCSVStatistic
             return sourceObject.getFinderCsvStatistics().get();
         }
     }
+
     @Override
     public void init() {
         setBridge(new ExportTaskParamsCSVStatisticContainerBridge());

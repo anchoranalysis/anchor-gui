@@ -26,6 +26,8 @@
 
 package org.anchoranalysis.gui.backgroundset;
 
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import org.anchoranalysis.core.bridge.BridgeElementException;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.OperationFailedException;
@@ -36,10 +38,8 @@ import org.anchoranalysis.gui.container.background.BackgroundStackContainer;
 import org.anchoranalysis.image.stack.DisplayStack;
 import org.anchoranalysis.image.stack.Stack;
 import org.anchoranalysis.image.stack.TimeSequence;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
 
-@AllArgsConstructor(access=AccessLevel.PRIVATE)
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class BackgroundStackContainerFactory {
 
     private static DisplayStack convert(Stack s) throws CreateException {

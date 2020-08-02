@@ -35,5 +35,7 @@ import org.anchoranalysis.image.stack.DisplayStack;
 public interface IBackgroundSetter {
 
     void setImageStackCntr(
-            FunctionWithException<Integer, DisplayStack, BackgroundStackContainerException> imageStackCntr) throws SetOperationFailedException;
+            FunctionWithException<Integer, DisplayStack, BackgroundStackContainerException>
+                    imageStackCntr)
+            throws SetOperationFailedException;
 }

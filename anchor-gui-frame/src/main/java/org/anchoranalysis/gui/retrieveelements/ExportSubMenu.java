@@ -59,7 +59,9 @@ public class ExportSubMenu implements AddToExportSubMenu {
 
     @Override
     public void addExportItemStackGenerator(
-            String outputName, String label, CallableWithException<Stack, AnchorNeverOccursException> stack)
+            String outputName,
+            String label,
+            CallableWithException<Stack, AnchorNeverOccursException> stack)
             throws OperationFailedException {
 
         StackGenerator stackGenerator = new StackGenerator(true, outputName);

@@ -105,7 +105,10 @@ public class FinderProbMap implements BackgroundStackContainer, FinderRasterSing
         }
         if (isRasterSeries()) {
             try {
-                return rasterSeries.get().get(rasterSeries.get().previousEqualIndex(0)).getChannel(0);
+                return rasterSeries
+                        .get()
+                        .get(rasterSeries.get().previousEqualIndex(0))
+                        .getChannel(0);
             } catch (GetOperationFailedException e) {
                 throw e.asOperationFailedException();
             }
@@ -114,7 +117,8 @@ public class FinderProbMap implements BackgroundStackContainer, FinderRasterSing
     }
 
     @Override
-    public BoundedIndexContainer<DisplayStack> container() throws BackgroundStackContainerException {
+    public BoundedIndexContainer<DisplayStack> container()
+            throws BackgroundStackContainerException {
 
         assert (exists());
 

@@ -27,6 +27,7 @@
 package org.anchoranalysis.gui.feature.evaluator;
 
 import java.util.Optional;
+import lombok.AllArgsConstructor;
 import org.anchoranalysis.anchor.mpp.bean.regionmap.RegionMap;
 import org.anchoranalysis.anchor.mpp.bean.regionmap.RegionMembershipWithFlags;
 import org.anchoranalysis.anchor.mpp.cfg.Cfg;
@@ -51,7 +52,6 @@ import org.anchoranalysis.feature.nrg.NRGStackWithParams;
 import org.anchoranalysis.feature.session.FeatureSession;
 import org.anchoranalysis.feature.session.calculator.FeatureCalculatorMulti;
 import org.anchoranalysis.feature.shared.SharedFeatureMulti;
-import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
 class FinderEvaluator {
@@ -96,7 +96,8 @@ class FinderEvaluator {
         return cntMark > cntOther;
     }
 
-    private static IdentifiablePair<Overlay> findPairFromCurrentSelectionObject(OverlayCollection oc) {
+    private static IdentifiablePair<Overlay> findPairFromCurrentSelectionObject(
+            OverlayCollection oc) {
 
         if (oc.size() <= 1) {
             return null;

@@ -26,6 +26,7 @@
 
 package org.anchoranalysis.gui.videostats.dropdown.common;
 
+import lombok.AllArgsConstructor;
 import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.progress.CacheCallWithProgressReporter;
 import org.anchoranalysis.gui.image.frame.ISliderState;
@@ -40,7 +41,6 @@ import org.anchoranalysis.gui.videostats.internalframe.evaluator.InternalFrameMa
 import org.anchoranalysis.gui.videostats.module.VideoStatsModuleCreateException;
 import org.anchoranalysis.gui.videostats.modulecreator.VideoStatsModuleCreator;
 import org.anchoranalysis.io.output.bean.OutputWriteSettings;
-import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
 class ProposerEvaluatorModuleCreator extends VideoStatsModuleCreator {
@@ -50,7 +50,7 @@ class ProposerEvaluatorModuleCreator extends VideoStatsModuleCreator {
     private OutputWriteSettings outputWriteSettings;
     private IUpdatableMarkEvaluator markEvaluatorUpdater;
     private VideoStatsModuleGlobalParams mpg;
-    
+
     @Override
     public void createAndAddVideoStatsModule(IAddVideoStatsModule adder)
             throws VideoStatsModuleCreateException {
@@ -83,12 +83,10 @@ class ProposerEvaluatorModuleCreator extends VideoStatsModuleCreator {
                         if (e.getMarkEvaluator() != null) {
                             backgroundUpdater.update(
                                     CacheCallWithProgressReporter.of(
-                                        new CreateBackgroundSetFromExisting(
-                                                nrgBackground.getBackgroundSet(),
-                                                e.getMarkEvaluator()
-                                                        .getProposerSharedObjectsOperation()
-                                                ))
-                                    );
+                                            new CreateBackgroundSetFromExisting(
+                                                    nrgBackground.getBackgroundSet(),
+                                                    e.getMarkEvaluator()
+                                                            .getProposerSharedObjectsOperation())));
                             markEvaluatorUpdater.setMarkEvaluatorIdentifier(
                                     e.getMarkEvaluatorName());
                         } else {

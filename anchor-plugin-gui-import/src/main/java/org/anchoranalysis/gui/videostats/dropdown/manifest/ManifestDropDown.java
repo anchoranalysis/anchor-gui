@@ -117,12 +117,10 @@ public class ManifestDropDown {
     }
 
     private CallableWithProgressReporter<TimeSequenceProvider, CreateException> asSequence(
-            CallableWithProgressReporter<NamedProvider<Stack>, OperationFailedException>
-                    opStacks) {
+            CallableWithProgressReporter<NamedProvider<Stack>, OperationFailedException> opStacks) {
         return pr -> {
             try {
-                return new TimeSequenceProvider(
-                        new WrapStackAsTimeSequence(opStacks.call(pr)), 1);
+                return new TimeSequenceProvider(new WrapStackAsTimeSequence(opStacks.call(pr)), 1);
             } catch (OperationFailedException e) {
                 throw new CreateException(e);
             }
@@ -132,21 +130,16 @@ public class ManifestDropDown {
     private FinderStacksCombine createFinderStacks(
             FinderNrgStack finderNrgStack, RasterReader rasterReader) throws InitException {
         // Finders
-        FinderStacksCombine combined =
-                new FinderStacksCombine();
-        combined.add(
-                new FinderStacksFromFolder(rasterReader, "stackCollection"));
-        combined.add(
-                new FinderStacksFromRootFiles(rasterReader, "out"));
+        FinderStacksCombine combined = new FinderStacksCombine();
+        combined.add(new FinderStacksFromFolder(rasterReader, "stackCollection"));
+        combined.add(new FinderStacksFromRootFiles(rasterReader, "out"));
         combined.add(
                 new FinderStacksFromNrgStack(
                         finderNrgStack)); // Adds the NRG stack to the input stack collection
 
         // Disabled, as they not be the same size as the existing image
-        combined.add(
-                new FinderStacksFromRootFiles(rasterReader, "stackFromCollection"));
-        combined.add(
-                new FinderStacksFromFolder(rasterReader, "chnlScaledCollection"));
+        combined.add(new FinderStacksFromRootFiles(rasterReader, "stackFromCollection"));
+        combined.add(new FinderStacksFromFolder(rasterReader, "chnlScaledCollection"));
 
         try {
             if (!combined.doFind(manifests.getFileManifest().call())) {
@@ -193,7 +186,8 @@ public class ManifestDropDown {
         return finderGroupParams;
     }
 
-    private FinderHistoryFolderKernelIterDescription createFinderKernelIterDescription() throws InitException {
+    private FinderHistoryFolderKernelIterDescription createFinderKernelIterDescription()
+            throws InitException {
 
         final FinderHistoryFolderKernelIterDescription finderKernelIterDescription =
                 new FinderHistoryFolderKernelIterDescription("kernelIterDescription");
@@ -212,8 +206,7 @@ public class ManifestDropDown {
             throws InitException {
         try {
             return markEvaluatorManager.createSetForStackCollection(
-                    finderStacks.getStacksAsOperation(),
-                    finderGroupParams.operation());
+                    finderStacks.getStacksAsOperation(), finderGroupParams.operation());
         } catch (CreateException e1) {
             throw new InitException(e1);
         }
@@ -229,8 +222,7 @@ public class ManifestDropDown {
 
         // Some necessary Finders and Objects
         FinderNrgStack finderNrgStack = createFinderNrgStack(rasterReader, mpg);
-        FinderStacksCombine finderStacks =
-                createFinderStacks(finderNrgStack, rasterReader);
+        FinderStacksCombine finderStacks = createFinderStacks(finderNrgStack, rasterReader);
         OperationCreateBackgroundSetWithAdder opBackgroundNRG =
                 createBackgroundSetWithNRG(finderNrgStack, finderStacks, adder, mpg);
 
@@ -245,7 +237,8 @@ public class ManifestDropDown {
                 createFinderKernelProposer(mpg);
 
         FinderSerializedObject<KeyValueParams> finderGroupParams = createFinderGroupParams(mpg);
-        FinderHistoryFolderKernelIterDescription finderKernelIterDescription = createFinderKernelIterDescription();
+        FinderHistoryFolderKernelIterDescription finderKernelIterDescription =
+                createFinderKernelIterDescription();
 
         addKernelHistoryNavigator(
                 finderKernelIterDescription, finderKernelProposer, opBackgroundNRG, mpg);
@@ -256,15 +249,9 @@ public class ManifestDropDown {
 
         // Proposer Evaluators
         MarkEvaluatorSetForImage markEvaluatorSet =
-                createMarkEvaluatorSet(
-                        markEvaluatorManager, finderStacks, finderGroupParams);
+                createMarkEvaluatorSet(markEvaluatorManager, finderStacks, finderGroupParams);
         addProposerEvaluator(
-                finderStacks,
-                finderNrgStack,
-                markEvaluatorSet,
-                outputManager,
-                adder,
-                mpg);
+                finderStacks, finderNrgStack, markEvaluatorSet, outputManager, adder, mpg);
 
         delegate.getRootMenu().addSeparator();
 
@@ -314,8 +301,7 @@ public class ManifestDropDown {
         OperationCreateBackgroundSetWithAdder operationBwsa =
                 new OperationCreateBackgroundSetWithAdder(
                         NRGBackground.createStack(
-                                finderStacks
-                                        .getStacksAsOperation(),
+                                finderStacks.getStacksAsOperation(),
                                 finderNrgStack.operationNrgStackWithProgressReporter()),
                         adder,
                         mpg.getThreadPool(),

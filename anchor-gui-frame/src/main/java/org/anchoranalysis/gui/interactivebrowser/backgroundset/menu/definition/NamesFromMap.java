@@ -57,8 +57,7 @@ class NamesFromMap implements IGetNames {
     @Override
     public List<String> names() {
         try {
-            Set<String> backgroundNames =
-                    backgroundSet.call(ProgressReporterNull.get()).names();
+            Set<String> backgroundNames = backgroundSet.call(ProgressReporterNull.get()).names();
 
             Map<String, String> mapping = map.create();
 

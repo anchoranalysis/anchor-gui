@@ -96,7 +96,9 @@ public class ObjectCollectionModuleCreator extends VideoStatsModuleCreator {
                     }
 
                     @Override
-                    public Optional<CallableWithException<ObjectCollection, OperationFailedException>>
+                    public Optional<
+                                    CallableWithException<
+                                            ObjectCollection, OperationFailedException>>
                             getObjects() {
                         return Optional.of(opObjects);
                     }

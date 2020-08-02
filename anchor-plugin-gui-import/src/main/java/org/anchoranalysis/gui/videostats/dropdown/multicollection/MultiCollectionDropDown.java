@@ -86,9 +86,7 @@ public class MultiCollectionDropDown {
         OperationCreateBackgroundSetWithAdder operationBwsa =
                 new OperationCreateBackgroundSetWithAdder(
                         NRGBackground.createStackSequence(
-                                rasterProvider,
-                                new GuessNRGStackFromStacks(rasterProvider)
-                        ),
+                                rasterProvider, new GuessNRGStackFromStacks(rasterProvider)),
                         adder,
                         params.getModuleParams().getThreadPool(),
                         params.getModuleParams().getLogger().errorReporter());
@@ -148,9 +146,7 @@ public class MultiCollectionDropDown {
                     markEvaluatorManager.createSetForStackCollection(
                             progressReporter ->
                                     new WrapTimeSequenceAsStack(
-                                            rasterProvider
-                                                    .call(progressReporter)
-                                                    .sequence()),
+                                            rasterProvider.call(progressReporter).sequence()),
                             () ->
                                     Optional.of(
                                             ParamsUtils.apply(

@@ -26,6 +26,8 @@
 
 package org.anchoranalysis.gui.videostats.dropdown;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import org.anchoranalysis.core.name.provider.NamedProvider;
 import org.anchoranalysis.core.progress.CacheCallWithProgressReporter;
 import org.anchoranalysis.core.progress.CallableWithProgressReporter;
@@ -37,26 +39,32 @@ import org.anchoranalysis.gui.series.TimeSequenceProvider;
 import org.anchoranalysis.image.stack.Stack;
 import org.anchoranalysis.image.stack.TimeSequence;
 import org.anchoranalysis.image.stack.wrap.WrapStackAsTimeSequence;
-import lombok.AccessLevel;
-import lombok.NoArgsConstructor;
 
-@NoArgsConstructor(access=AccessLevel.PRIVATE)
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class CreateBackgroundSetFactory {
 
-    public static CallableWithProgressReporter<BackgroundSet, BackgroundStackContainerException> createCached(NamedProvider<Stack> namedProvider) {
-        return createCached(progressReporter -> new TimeSequenceProvider(new WrapStackAsTimeSequence(namedProvider), 1));
+    public static CallableWithProgressReporter<BackgroundSet, BackgroundStackContainerException>
+            createCached(NamedProvider<Stack> namedProvider) {
+        return createCached(
+                progressReporter ->
+                        new TimeSequenceProvider(new WrapStackAsTimeSequence(namedProvider), 1));
     }
-    
-    public static CallableWithProgressReporter<BackgroundSet, BackgroundStackContainerException> createCached(CallableWithProgressReporter<TimeSequenceProvider, ? extends Throwable> stacksOverTime) {
-        return CacheCallWithProgressReporter.of( progressReporter -> {
-            try {
-                NamedProvider<TimeSequence> stacks =
-                        stacksOverTime.call(progressReporter).sequence();
 
-                return BackgroundSetFactory.createBackgroundSet(stacks, ProgressReporterNull.get());
-            } catch (Exception e) {
-                throw new BackgroundStackContainerException(e);
-            }
-        });
+    public static CallableWithProgressReporter<BackgroundSet, BackgroundStackContainerException>
+            createCached(
+                    CallableWithProgressReporter<TimeSequenceProvider, ? extends Throwable>
+                            stacksOverTime) {
+        return CacheCallWithProgressReporter.of(
+                progressReporter -> {
+                    try {
+                        NamedProvider<TimeSequence> stacks =
+                                stacksOverTime.call(progressReporter).sequence();
+
+                        return BackgroundSetFactory.createBackgroundSet(
+                                stacks, ProgressReporterNull.get());
+                    } catch (Exception e) {
+                        throw new BackgroundStackContainerException(e);
+                    }
+                });
     }
 }

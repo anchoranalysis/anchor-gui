@@ -43,18 +43,19 @@ public class FinderStacksFromNrgStack implements FinderStacks {
     // START REQUIRED ARGUMENTS
     private FinderNrgStack delegate;
     // END REQUIRED ARGUMENTS
-    
+
     private CallableWithProgressReporter<Stack, OperationFailedException>
             operationExtractUntilThreeChannels =
                     CacheCallWithProgressReporter.of(
                             pr -> {
                                 try {
-                                    NRGStackWithParams nrgStackWithParams = delegate.operationNrgStackWithProgressReporter()
-                                            .call(pr);
+                                    NRGStackWithParams nrgStackWithParams =
+                                            delegate.operationNrgStackWithProgressReporter()
+                                                    .call(pr);
                                     return nrgStackWithParams
                                             .getNrgStack()
                                             .asStack()
-                                            .extractUpToThreeChannels();                                        
+                                            .extractUpToThreeChannels();
                                 } catch (GetOperationFailedException e) {
                                     throw e.asOperationFailedException();
                                 }
@@ -64,17 +65,14 @@ public class FinderStacksFromNrgStack implements FinderStacks {
             operationStacks =
                     CacheCallWithProgressReporter.of(
                             pr -> {
-                                NamedStacks stackCollection =
-                                        new NamedStacks();
+                                NamedStacks stackCollection = new NamedStacks();
 
                                 // finder NRG stack
                                 if (delegate != null && delegate.exists()) {
 
                                     // Should we mention when we only have the first 3?
                                     stackCollection.addImageStack(
-                                        "nrgStack",
-                                        operationExtractUntilThreeChannels
-                                    );
+                                            "nrgStack", operationExtractUntilThreeChannels);
 
                                     stackCollection.addFromWithPrefix(
                                             delegate.getNamedStacks(), "nrgChnl-");
@@ -82,11 +80,10 @@ public class FinderStacksFromNrgStack implements FinderStacks {
                                 return stackCollection;
                             });
 
-
     public FinderStacksFromNrgStack(FinderNrgStack delegate) {
         this.delegate = delegate;
     }
-    
+
     @Override
     public NamedProvider<Stack> getStacks() throws OperationFailedException {
         return operationStacks.call(ProgressReporterNull.get());

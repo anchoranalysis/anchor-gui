@@ -46,7 +46,8 @@ public abstract class FinderRasterChnlZeroOne extends FinderRasterChnl
     }
 
     @Override
-    public BoundedIndexContainer<DisplayStack> container() throws BackgroundStackContainerException {
+    public BoundedIndexContainer<DisplayStack> container()
+            throws BackgroundStackContainerException {
         return new SingleContainer<>(backgroundStack(), 0, true);
     }
 

@@ -118,14 +118,17 @@ public class InteractiveBrowserInput implements InputFromManager {
     public Optional<Path> pathForBinding() {
         return Optional.empty();
     }
-    
-    private static <T> CallableWithException<T, OperationFailedException> cachedOperationFromProvider(Provider<T> provider) {
-       return CacheCall.of( ()->{
-            try {
-                return provider.create();
-            } catch (CreateException e) {
-                throw new OperationFailedException(e);
-            }
-       });
+
+    private static <T>
+            CallableWithException<T, OperationFailedException> cachedOperationFromProvider(
+                    Provider<T> provider) {
+        return CacheCall.of(
+                () -> {
+                    try {
+                        return provider.create();
+                    } catch (CreateException e) {
+                        throw new OperationFailedException(e);
+                    }
+                });
     }
 }

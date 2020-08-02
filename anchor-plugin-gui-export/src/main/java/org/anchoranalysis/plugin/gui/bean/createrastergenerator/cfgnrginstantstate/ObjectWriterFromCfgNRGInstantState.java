@@ -133,9 +133,7 @@ public class ObjectWriterFromCfgNRGInstantState extends CreateRasterGenerator<Cf
             throws OperationFailedException {
         try {
             Stack backgroundStackSrc =
-                    params.getFinderStacks()
-                            .getStacks()
-                            .getException(backgroundStackName);
+                    params.getFinderStacks().getStacks().getException(backgroundStackName);
 
             DisplayStack backgroundStack = DisplayStack.create(backgroundStackSrc);
 

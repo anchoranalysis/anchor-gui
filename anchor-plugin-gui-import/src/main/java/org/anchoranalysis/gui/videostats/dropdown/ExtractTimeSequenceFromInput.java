@@ -26,6 +26,7 @@
 
 package org.anchoranalysis.gui.videostats.dropdown;
 
+import lombok.AllArgsConstructor;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.functional.IdentityOperation;
@@ -36,7 +37,6 @@ import org.anchoranalysis.gui.series.TimeSequenceProvider;
 import org.anchoranalysis.image.io.RasterIOException;
 import org.anchoranalysis.image.stack.TimeSequence;
 import org.anchoranalysis.plugin.io.bean.input.stack.StackSequenceInput;
-import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
 public class ExtractTimeSequenceFromInput
@@ -54,9 +54,7 @@ public class ExtractTimeSequenceFromInput
 
         try {
             TimeSequence timeSeries =
-                    inputObject
-                            .createStackSequenceForSeries(seriesNum)
-                            .call(progressReporter);
+                    inputObject.createStackSequenceForSeries(seriesNum).call(progressReporter);
 
             LazyEvaluationStore<TimeSequence> store =
                     new LazyEvaluationStore<>("extractTimeSequence");

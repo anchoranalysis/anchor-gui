@@ -26,19 +26,19 @@
 
 package org.anchoranalysis.gui.frame.multiraster;
 
-import org.anchoranalysis.core.progress.CallableWithProgressReporter;
-import org.anchoranalysis.gui.backgroundset.BackgroundSet;
-import org.anchoranalysis.gui.container.background.BackgroundStackContainerException;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
+import org.anchoranalysis.core.progress.CallableWithProgressReporter;
+import org.anchoranalysis.gui.backgroundset.BackgroundSet;
+import org.anchoranalysis.gui.container.background.BackgroundStackContainerException;
 
 @AllArgsConstructor
 public class NamedRasterSet {
 
+    @Getter @Setter private String name;
+
     @Getter @Setter
-    private String name;
-    
-    @Getter @Setter
-    private CallableWithProgressReporter<BackgroundSet, BackgroundStackContainerException> backgroundSet;
+    private CallableWithProgressReporter<BackgroundSet, BackgroundStackContainerException>
+            backgroundSet;
 }

@@ -48,8 +48,8 @@ import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.error.reporter.ErrorReporter;
 import org.anchoranalysis.core.index.IIndexGettableSettable;
 import org.anchoranalysis.core.index.container.BoundedRangeIncompleteDynamic;
-import org.anchoranalysis.gui.displayupdate.ProvidesDisplayUpdate;
 import org.anchoranalysis.gui.displayupdate.DisplayUpdateRememberStack;
+import org.anchoranalysis.gui.displayupdate.ProvidesDisplayUpdate;
 import org.anchoranalysis.gui.displayupdate.ProvidesOverlayedDisplayStack;
 import org.anchoranalysis.gui.frame.canvas.ImageCanvas;
 import org.anchoranalysis.gui.frame.canvas.zoom.DefaultZoomSuggestor;
@@ -337,10 +337,11 @@ public class InternalFrameCanvas {
         public RetrieveElements retrieveElements() {
             try {
                 DisplayStack stack = stackProvider.getCurrentDisplayStack().extractFullyOverlayed();
-                return new RetrieveElementsImage( Optional.of(stack), Optional.of(stack.extractSlice(canvas.getSlice())));
+                return new RetrieveElementsImage(
+                        Optional.of(stack), Optional.of(stack.extractSlice(canvas.getSlice())));
             } catch (CreateException | OperationFailedException e) {
                 errorReporter.recordError(InternalFrameCanvas.class, e);
-                return new RetrieveElementsImage( Optional.empty(), Optional.empty());
+                return new RetrieveElementsImage(Optional.empty(), Optional.empty());
             }
         }
     }

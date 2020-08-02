@@ -37,7 +37,7 @@ import org.anchoranalysis.io.generator.sequence.GeneratorSequenceNonIncremental;
 import org.anchoranalysis.plugin.gui.bean.createrastergenerator.CreateRasterGenerator;
 
 public abstract class ExportTaskRasterGeneratorSequence<T> extends ExportTaskBean {
-    
+
     // START BEAN PARAMETERS
     @BeanField @Getter @Setter private CreateRasterGenerator<T> createRasterGenerator;
 

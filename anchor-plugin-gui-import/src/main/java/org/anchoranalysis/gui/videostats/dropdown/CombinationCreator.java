@@ -27,6 +27,7 @@
 package org.anchoranalysis.gui.videostats.dropdown;
 
 import java.util.Optional;
+import lombok.AllArgsConstructor;
 import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.progress.CallableWithProgressReporter;
@@ -39,7 +40,6 @@ import org.anchoranalysis.gui.videostats.internalframe.MergedCfgNRGHistoryIntern
 import org.anchoranalysis.gui.videostats.module.DefaultModuleStateManager;
 import org.anchoranalysis.gui.videostats.module.VideoStatsModuleCreateException;
 import org.anchoranalysis.gui.videostats.modulecreator.VideoStatsModuleCreatorContext;
-import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
 class CombinationCreator extends VideoStatsModuleCreatorContext {
@@ -47,7 +47,8 @@ class CombinationCreator extends VideoStatsModuleCreatorContext {
     private FinderCfgNRGSet finderFirst;
     private FinderCfgNRGSet finderSecond;
     private String combinationName;
-    private CallableWithProgressReporter<BackgroundSet, BackgroundStackContainerException> backgroundSet;
+    private CallableWithProgressReporter<BackgroundSet, BackgroundStackContainerException>
+            backgroundSet;
 
     @Override
     public boolean precondition() {

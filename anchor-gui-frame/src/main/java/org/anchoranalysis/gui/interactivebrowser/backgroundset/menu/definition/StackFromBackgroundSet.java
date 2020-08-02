@@ -26,6 +26,7 @@
 
 package org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.definition;
 
+import lombok.AllArgsConstructor;
 import org.anchoranalysis.core.error.reporter.ErrorReporter;
 import org.anchoranalysis.core.functional.function.FunctionWithException;
 import org.anchoranalysis.core.progress.CallableWithProgressReporter;
@@ -33,7 +34,6 @@ import org.anchoranalysis.core.progress.ProgressReporterNull;
 import org.anchoranalysis.gui.backgroundset.BackgroundSet;
 import org.anchoranalysis.gui.container.background.BackgroundStackContainerException;
 import org.anchoranalysis.image.stack.DisplayStack;
-import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
 class StackFromBackgroundSet implements ImageStackContainerFromName {

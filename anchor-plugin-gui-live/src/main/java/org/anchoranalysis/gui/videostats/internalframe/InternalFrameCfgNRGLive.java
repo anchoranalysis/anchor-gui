@@ -74,7 +74,7 @@ public class InternalFrameCfgNRGLive {
                 .addDefinition(
                         mpg,
                         new ChangeableBackgroundDefinitionSimple(
-                                progresssReporter->backgroundSet));
+                                progresssReporter -> backgroundSet));
 
         return sliderState;
     }

@@ -39,32 +39,35 @@ class IndexToRedrawUpdate
                 Integer, OverlayedDisplayStack, BackgroundStackContainerException> {
 
     private BoundedIndexBridge<ColoredOverlayedInstantState> delegate;
-    private FunctionWithException<Integer, DisplayStack, BackgroundStackContainerException> background;
+    private FunctionWithException<Integer, DisplayStack, BackgroundStackContainerException>
+            background;
 
     public IndexToRedrawUpdate(
             BoundedIndexContainer<ColoredOverlayedInstantState> cntr,
-            FunctionWithException<Integer, DisplayStack, BackgroundStackContainerException> background) {
+            FunctionWithException<Integer, DisplayStack, BackgroundStackContainerException>
+                    background) {
         delegate = new BoundedIndexBridge<>(cntr);
         this.background = background;
     }
 
     @Override
-    public OverlayedDisplayStack apply(Integer sourceObject) throws BackgroundStackContainerException {
+    public OverlayedDisplayStack apply(Integer sourceObject)
+            throws BackgroundStackContainerException {
 
         try {
             ColoredOverlayedInstantState found = delegate.apply(sourceObject);
-    
+
             return new OverlayedDisplayStack(
                     found.getOverlayCollection(), background.apply(sourceObject));
-            
+
         } catch (GetOperationFailedException e) {
             throw new BackgroundStackContainerException(e);
         }
     }
 
     public void setImageStackCntr(
-        FunctionWithException<Integer, DisplayStack, BackgroundStackContainerException> imageStackCntr
-    ) {
+            FunctionWithException<Integer, DisplayStack, BackgroundStackContainerException>
+                    imageStackCntr) {
         this.background = imageStackCntr;
     }
 }

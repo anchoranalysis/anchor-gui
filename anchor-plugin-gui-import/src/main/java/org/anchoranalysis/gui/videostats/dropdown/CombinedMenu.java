@@ -58,7 +58,8 @@ public class CombinedMenu {
     public void addCombination(
             FinderCfgNRGSet finderFirst,
             FinderCfgNRGSet finderSecond,
-            CallableWithProgressReporter<BackgroundSet, BackgroundStackContainerException> backgroundSet,
+            CallableWithProgressReporter<BackgroundSet, BackgroundStackContainerException>
+                    backgroundSet,
             CfgNRGFinderContext context)
             throws MenuAddException {
 
