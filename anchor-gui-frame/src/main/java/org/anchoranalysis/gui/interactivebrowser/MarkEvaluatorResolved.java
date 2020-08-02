@@ -27,7 +27,9 @@
 package org.anchoranalysis.gui.interactivebrowser;
 
 import org.anchoranalysis.anchor.mpp.bean.cfg.CfgGen;
+import org.anchoranalysis.anchor.mpp.bean.init.MPPInitParams;
 import org.anchoranalysis.anchor.mpp.feature.nrg.scheme.NRGScheme;
+import org.anchoranalysis.core.cache.CachedOperation;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.params.KeyValueParams;
@@ -38,8 +40,8 @@ import lombok.Getter;
 //  it into a ProposerSharedObjectsImageSpecific and other necessary components
 public class MarkEvaluatorResolved {
 
-    private final OperationInitParams operationCreateProposerSharedObjects;
-    private final OperationNrgStack operationCreateNrgStack;
+    private final CachedOperation<MPPInitParams, CreateException> operationCreateProposerSharedObjects;
+    private final CachedOperation<NRGStackWithParams, CreateException> operationCreateNrgStack;
     
     @Getter
     private final CfgGen cfgGen;
@@ -48,7 +50,7 @@ public class MarkEvaluatorResolved {
     private final NRGScheme nrgScheme;
 
     public MarkEvaluatorResolved(
-            OperationInitParams proposerSharedObjects,
+            CachedOperation<MPPInitParams, CreateException> proposerSharedObjects,
             CfgGen cfgGen,
             NRGScheme nrgScheme,
             KeyValueParams params) {
@@ -57,17 +59,18 @@ public class MarkEvaluatorResolved {
         this.cfgGen = cfgGen;
         this.nrgScheme = nrgScheme;
 
-        this.operationCreateNrgStack =
-                new OperationNrgStack(operationCreateProposerSharedObjects, params);
+        this.operationCreateNrgStack = CachedOperation.of(
+                new OperationNrgStack(operationCreateProposerSharedObjects, params)
+        );
     }
 
-    public OperationInitParams getProposerSharedObjectsOperation() {
+    public CachedOperation<MPPInitParams, CreateException> getProposerSharedObjectsOperation() {
         return operationCreateProposerSharedObjects;
     }
 
     public NRGStackWithParams getNRGStack() throws OperationFailedException {
         try {
-            return operationCreateNrgStack.doOperation();
+            return operationCreateNrgStack.call();
         } catch (CreateException e) {
             throw new OperationFailedException(e);
         }

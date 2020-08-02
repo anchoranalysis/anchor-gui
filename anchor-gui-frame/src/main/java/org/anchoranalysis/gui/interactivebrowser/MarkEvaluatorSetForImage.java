@@ -32,15 +32,16 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import lombok.RequiredArgsConstructor;
+import org.anchoranalysis.anchor.mpp.bean.init.MPPInitParams;
 import org.anchoranalysis.anchor.mpp.feature.bean.mark.MarkEvaluator;
 import org.anchoranalysis.core.cache.CachedOperation;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.error.OperationFailedException;
-import org.anchoranalysis.core.functional.Operation;
+import org.anchoranalysis.core.functional.CallableWithException;
 import org.anchoranalysis.core.name.provider.NamedProvider;
 import org.anchoranalysis.core.params.KeyValueParams;
-import org.anchoranalysis.core.progress.OperationWithProgressReporter;
+import org.anchoranalysis.core.progress.CallableWithProgressReporter;
 import org.anchoranalysis.image.stack.Stack;
 import org.anchoranalysis.io.output.bound.BoundIOContext;
 
@@ -48,37 +49,36 @@ import org.anchoranalysis.io.output.bound.BoundIOContext;
 public class MarkEvaluatorSetForImage {
 
     // START REQUIRED ARGUMENTS
-    private final OperationWithProgressReporter<NamedProvider<Stack>, ? extends Throwable>
+    private final CallableWithProgressReporter<NamedProvider<Stack>, ? extends Throwable>
             namedStacks;
-    private final Operation<Optional<KeyValueParams>, IOException> keyParams;
+    private final CallableWithException<Optional<KeyValueParams>, IOException> keyParams;
     private final BoundIOContext context;
     // END REQUIRED ARGUMENTS
 
-    private Map<String, Operation<MarkEvaluatorResolved, OperationFailedException>> map =
+    private Map<String, CallableWithException<MarkEvaluatorResolved, OperationFailedException>> map =
             new HashMap<>();
 
-    private class Resolved
-            extends CachedOperation<MarkEvaluatorResolved, OperationFailedException> {
+    private class Resolved implements CallableWithException<MarkEvaluatorResolved, OperationFailedException> {
 
-        private OperationInitParams operationProposerSharedObjects;
+        private CachedOperation<MPPInitParams, CreateException> operationProposerSharedObjects;
         private MarkEvaluator me;
 
         public Resolved(MarkEvaluator me) throws CreateException {
             this.me = me;
-            operationProposerSharedObjects =
+            operationProposerSharedObjects = CachedOperation.of(
                     new OperationInitParams(
                             namedStacks,
                             keyParams,
                             /// TODO Do we need this duplication?
                             me.getDefine().duplicateBean(),
-                            context);
+                            context));
 
             try {
                 // TODO owen, this is causing a bug in the annotorator, we need to get our feature
                 // params from somewhere else
                 //  i.e. where they are being passed around
                 me.initRecursive(
-                        operationProposerSharedObjects.doOperation().getFeature(),
+                        operationProposerSharedObjects.call().getFeature(),
                         context.getLogger());
             } catch (InitException e) {
                 throw new CreateException(e);
@@ -86,13 +86,13 @@ public class MarkEvaluatorSetForImage {
         }
 
         @Override
-        protected MarkEvaluatorResolved execute() throws OperationFailedException {
+        public MarkEvaluatorResolved call() throws OperationFailedException {
             try {
                 return new MarkEvaluatorResolved(
                         operationProposerSharedObjects,
                         me.getCfgGen(),
                         me.getNrgSchemeCreator().create(),
-                        keyParams.doOperation().get());
+                        keyParams.call().get());
             } catch (CreateException | IOException e) {
                 throw new OperationFailedException(e);
             }
@@ -101,7 +101,7 @@ public class MarkEvaluatorSetForImage {
 
     public void add(String key, MarkEvaluator me) throws OperationFailedException {
         try {
-            map.put(key, new Resolved(me));
+            map.put(key, CachedOperation.of(new Resolved(me)) );
         } catch (CreateException e) {
             throw new OperationFailedException(e);
         }
@@ -112,14 +112,14 @@ public class MarkEvaluatorSetForImage {
     }
 
     public MarkEvaluatorResolved get(String key) throws OperationFailedException {
-        Operation<MarkEvaluatorResolved, OperationFailedException> op = map.get(key);
+        CallableWithException<MarkEvaluatorResolved, OperationFailedException> op = map.get(key);
 
         if (op == null) {
             throw new OperationFailedException(
                     String.format("Cannot find markEvaluator '%s'", key));
         }
 
-        return op.doOperation();
+        return op.call();
     }
 
     public boolean hasItems() {

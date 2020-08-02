@@ -34,7 +34,7 @@ import org.anchoranalysis.core.error.AnchorNeverOccursException;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.error.friendly.AnchorFriendlyRuntimeException;
 import org.anchoranalysis.core.error.reporter.ErrorReporter;
-import org.anchoranalysis.core.functional.Operation;
+import org.anchoranalysis.core.functional.CallableWithException;
 import org.anchoranalysis.gui.bean.exporttask.ExportTask;
 import org.anchoranalysis.gui.bean.exporttask.ExportTaskActionAsThread;
 import org.anchoranalysis.gui.bean.exporttask.ExportTaskActionAsThread.ExportTaskCommand;
@@ -59,7 +59,7 @@ public class ExportSubMenu implements AddToExportSubMenu {
 
     @Override
     public void addExportItemStackGenerator(
-            String outputName, String label, Operation<Stack, AnchorNeverOccursException> stack)
+            String outputName, String label, CallableWithException<Stack, AnchorNeverOccursException> stack)
             throws OperationFailedException {
 
         StackGenerator stackGenerator = new StackGenerator(true, outputName);

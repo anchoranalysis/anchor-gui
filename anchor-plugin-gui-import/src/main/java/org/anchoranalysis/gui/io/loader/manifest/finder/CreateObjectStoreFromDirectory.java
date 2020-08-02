@@ -41,7 +41,7 @@ class CreateObjectStoreFromDirectory {
             throws OperationFailedException {
 
         LazyEvaluationStore<ObjectCollection> out =
-                new LazyEvaluationStore<>(logger, "finder object-collections");
+                new LazyEvaluationStore<>("finder object-collections");
 
         addHdf5Files(out, pathFolder);
 

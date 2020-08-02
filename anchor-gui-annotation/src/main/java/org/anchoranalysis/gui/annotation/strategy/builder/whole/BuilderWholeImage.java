@@ -76,7 +76,7 @@ public class BuilderWholeImage
             throws CreateException {
 
         AnnotationBackground background =
-                createBackground(prm, stacks().doOperation(ProgressReporterNull.get()));
+                createBackground(prm, stacks().call(ProgressReporterNull.get()));
 
         return new InitParamsWholeImage(background, context.getAnnotationRefresher());
     }

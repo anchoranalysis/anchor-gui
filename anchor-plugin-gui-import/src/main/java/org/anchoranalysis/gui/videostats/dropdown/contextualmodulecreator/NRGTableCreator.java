@@ -31,7 +31,7 @@ import org.anchoranalysis.anchor.mpp.feature.instantstate.CfgNRGInstantState;
 import org.anchoranalysis.core.color.ColorIndex;
 import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.error.OperationFailedException;
-import org.anchoranalysis.core.functional.Operation;
+import org.anchoranalysis.core.functional.CallableWithException;
 import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.feature.nrg.NRGStackWithParams;
 import org.anchoranalysis.gui.cfgnrg.StatePanelFrameHistoryCfgNRGInstantState;
@@ -47,9 +47,9 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class NRGTableCreator extends VideoStatsModuleCreatorContext {
 
-    private final Operation<LoadContainer<CfgNRGInstantState>, OperationFailedException>
+    private final CallableWithException<LoadContainer<CfgNRGInstantState>, OperationFailedException>
             operation;
-    private final Operation<NRGStackWithParams, GetOperationFailedException> nrgStackWithParams;
+    private final CallableWithException<NRGStackWithParams, GetOperationFailedException> nrgStackWithParams;
     private final ColorIndex colorIndex;
 
     @Override
@@ -65,7 +65,7 @@ public class NRGTableCreator extends VideoStatsModuleCreatorContext {
             throws VideoStatsModuleCreateException {
 
         try {
-            LoadContainer<CfgNRGInstantState> cntr = operation.doOperation();
+            LoadContainer<CfgNRGInstantState> cntr = operation.call();
 
             StatePanelFrameHistoryCfgNRGInstantState frame =
                     new StatePanelFrameHistoryCfgNRGInstantState(
@@ -73,7 +73,7 @@ public class NRGTableCreator extends VideoStatsModuleCreatorContext {
             frame.init(
                     defaultStateManager.getLinkStateManager().getState().getFrameIndex(),
                     cntr,
-                    new CfgNRGTablePanel(colorIndex, nrgStackWithParams.doOperation()),
+                    new CfgNRGTablePanel(colorIndex, nrgStackWithParams.call()),
                     mpg.getLogger().errorReporter());
             frame.controllerSize().configureSize(300, 600, 300, 1000);
             return Optional.of(frame.moduleCreator());

@@ -175,7 +175,7 @@ public class EvaluatorChooser {
         for (ProposalOperationCreatorFromProposer<?> item : listEvaluators) {
             try {
                 MPPInitParams so =
-                        markEvaluatorSelected.getProposerSharedObjectsOperation().doOperation();
+                        markEvaluatorSelected.getProposerSharedObjectsOperation().call();
                 item.init(so);
             } catch (CreateException e) {
                 errorReporter.recordError(EvaluatorChooser.class, e);

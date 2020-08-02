@@ -28,7 +28,7 @@ package org.anchoranalysis.gui.videostats.dropdown;
 
 import org.anchoranalysis.core.name.provider.NamedProvider;
 import org.anchoranalysis.core.progress.CachedOperationWithProgressReporter;
-import org.anchoranalysis.core.progress.OperationWithProgressReporter;
+import org.anchoranalysis.core.progress.CallableWithProgressReporter;
 import org.anchoranalysis.core.progress.ProgressReporter;
 import org.anchoranalysis.core.progress.ProgressReporterNull;
 import org.anchoranalysis.gui.backgroundset.BackgroundSet;
@@ -43,7 +43,7 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class OperationCreateBackgroundSet extends CachedOperationWithProgressReporter<BackgroundSet, BackgroundStackContainerException> {
 
-    private final OperationWithProgressReporter<TimeSequenceProvider, ? extends Throwable> stacksOverTime;
+    private final CallableWithProgressReporter<TimeSequenceProvider, ? extends Throwable> stacksOverTime;
 
     public OperationCreateBackgroundSet(NamedProvider<Stack> namedProvider) {
         this(
@@ -55,7 +55,7 @@ public class OperationCreateBackgroundSet extends CachedOperationWithProgressRep
     protected BackgroundSet execute(ProgressReporter progressReporter) throws BackgroundStackContainerException {
         try {
             NamedProvider<TimeSequence> stacks =
-                    stacksOverTime.doOperation(progressReporter).sequence();
+                    stacksOverTime.call(progressReporter).sequence();
 
             return BackgroundSetFactory.createBackgroundSet(stacks, ProgressReporterNull.get());
         } catch (Exception e) {

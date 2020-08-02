@@ -27,7 +27,6 @@
 package org.anchoranalysis.gui.retrieveelements;
 
 import org.anchoranalysis.core.cache.CachedOperation;
-import org.anchoranalysis.core.cache.WrapOperationAsCached;
 import org.anchoranalysis.core.error.AnchorNeverOccursException;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.image.io.generator.raster.MIPGenerator;
@@ -106,6 +105,6 @@ public class RetrieveElementsImage extends RetrieveElements {
 
     private CachedOperation<Stack, AnchorNeverOccursException> cachedOpFromDisplayStack(
             DisplayStack stack) {
-        return new WrapOperationAsCached<>(() -> stack.deriveStack(false));
+        return CachedOperation.of(() -> stack.deriveStack(false));
     }
 }

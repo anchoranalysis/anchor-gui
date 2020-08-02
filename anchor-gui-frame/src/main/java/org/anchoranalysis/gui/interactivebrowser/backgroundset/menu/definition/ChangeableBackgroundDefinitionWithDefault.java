@@ -26,7 +26,7 @@
 
 package org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.definition;
 
-import org.anchoranalysis.core.progress.OperationWithProgressReporter;
+import org.anchoranalysis.core.progress.CallableWithProgressReporter;
 import org.anchoranalysis.gui.backgroundset.BackgroundSet;
 import org.anchoranalysis.gui.container.background.BackgroundStackContainerException;
 import lombok.AllArgsConstructor;
@@ -37,10 +37,10 @@ public abstract class ChangeableBackgroundDefinitionWithDefault
         implements ChangeableBackgroundDefinition {
 
     @Getter
-    private OperationWithProgressReporter<BackgroundSet, BackgroundStackContainerException> backgroundSet;
+    private CallableWithProgressReporter<BackgroundSet, BackgroundStackContainerException> backgroundSet;
 
     public void update(
-            OperationWithProgressReporter<BackgroundSet, BackgroundStackContainerException>
+            CallableWithProgressReporter<BackgroundSet, BackgroundStackContainerException>
                     backgroundSet) {
         this.backgroundSet = backgroundSet;
     }

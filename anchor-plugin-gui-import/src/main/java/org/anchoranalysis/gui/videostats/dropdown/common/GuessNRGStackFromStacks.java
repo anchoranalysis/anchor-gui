@@ -30,7 +30,7 @@ import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.name.provider.NamedProvider;
 import org.anchoranalysis.core.name.provider.NamedProviderGetException;
-import org.anchoranalysis.core.progress.OperationWithProgressReporter;
+import org.anchoranalysis.core.progress.CallableWithProgressReporter;
 import org.anchoranalysis.core.progress.ProgressReporter;
 import org.anchoranalysis.core.progress.ProgressReporterNull;
 import org.anchoranalysis.feature.nrg.NRGStackWithParams;
@@ -41,12 +41,12 @@ import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
 public class GuessNRGStackFromStacks
-        implements OperationWithProgressReporter<NRGStackWithParams, GetOperationFailedException> {
+        implements CallableWithProgressReporter<NRGStackWithParams, GetOperationFailedException> {
 
-    private OperationWithProgressReporter<TimeSequenceProvider, CreateException> opBackgroundSet;
+    private CallableWithProgressReporter<TimeSequenceProvider, CreateException> opBackgroundSet;
 
     @Override
-    public NRGStackWithParams doOperation(ProgressReporter progressReporter)
+    public NRGStackWithParams call(ProgressReporter progressReporter)
             throws GetOperationFailedException {
         // If a time sequence, assume nrg stack is always t=0
         Stack stack = selectArbitraryItem(opBackgroundSet).get(0);
@@ -55,11 +55,11 @@ public class GuessNRGStackFromStacks
     }
 
     private static TimeSequence selectArbitraryItem(
-            OperationWithProgressReporter<TimeSequenceProvider, CreateException> opBackgroundSet)
+            CallableWithProgressReporter<TimeSequenceProvider, CreateException> opBackgroundSet)
             throws GetOperationFailedException {
         try {
             NamedProvider<TimeSequence> stacks =
-                    opBackgroundSet.doOperation(ProgressReporterNull.get()).sequence();
+                    opBackgroundSet.call(ProgressReporterNull.get()).sequence();
             String arbitraryKey = stacks.keys().iterator().next();
 
             try {

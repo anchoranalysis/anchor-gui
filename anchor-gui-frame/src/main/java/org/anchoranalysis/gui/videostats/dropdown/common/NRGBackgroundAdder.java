@@ -26,7 +26,7 @@
 
 package org.anchoranalysis.gui.videostats.dropdown.common;
 
-import org.anchoranalysis.core.progress.OperationWithProgressReporter;
+import org.anchoranalysis.core.progress.CallableWithProgressReporter;
 import org.anchoranalysis.gui.videostats.dropdown.IAddVideoStatsModule;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -38,5 +38,5 @@ public class NRGBackgroundAdder<E extends Exception> {
     private NRGBackground background;
     
     @Getter
-    private OperationWithProgressReporter<IAddVideoStatsModule, E> adder;
+    private CallableWithProgressReporter<IAddVideoStatsModule, E> adder;
 }

@@ -33,7 +33,6 @@ import org.anchoranalysis.anchor.mpp.feature.instantstate.CfgNRGInstantState;
 import org.anchoranalysis.anchor.mpp.feature.instantstate.CfgNRGNonHandleInstantState;
 import org.anchoranalysis.anchor.mpp.feature.nrg.cfg.CfgNRG;
 import org.anchoranalysis.core.cache.CachedOperation;
-import org.anchoranalysis.core.cache.WrapOperationAsCached;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.index.container.SingleContainer;
 import org.anchoranalysis.core.name.provider.NamedProvider;
@@ -89,7 +88,7 @@ class AddObjects {
         try {
             final FinderObjectCollectionFolder finderObjects =
                     new FinderObjectCollectionFolder(OutputterDirectories.OBJECT);
-            finderObjects.doFind(manifests.getFileManifest().doOperation());
+            finderObjects.doFind(manifests.getFileManifest().call());
 
             if (finderObjects.exists()) {
 
@@ -121,12 +120,12 @@ class AddObjects {
         try {
             final FinderSerializedObject<CfgNRG> finderFinalCfgNRG =
                     new FinderSerializedObject<>("cfgNRG", mpg.getLogger().errorReporter());
-            finderFinalCfgNRG.doFind(manifests.getFileManifest().doOperation());
+            finderFinalCfgNRG.doFind(manifests.getFileManifest().call());
 
             if (finderFinalCfgNRG.exists()) {
 
                 CachedOperation<LoadContainer<CfgNRGInstantState>, OperationFailedException> op =
-                        new WrapOperationAsCached<>(
+                        CachedOperation.of(
                                 () -> {
                                     CfgNRGInstantState instantState;
                                     try {
@@ -167,9 +166,9 @@ class AddObjects {
 
         try {
             FinderCfgFolder finder = new FinderCfgFolder("cfgCollection", "cfg");
-            finder.doFind(manifests.getFileManifest().doOperation());
+            finder.doFind(manifests.getFileManifest().call());
 
-            NamedProvider<Cfg> provider = finder.createNamedProvider(false, mpg.getLogger());
+            NamedProvider<Cfg> provider = finder.createNamedProvider(false);
             DropDownUtilities.addCfgSubmenu(
                     delegate.getRootMenu(),
                     delegate,

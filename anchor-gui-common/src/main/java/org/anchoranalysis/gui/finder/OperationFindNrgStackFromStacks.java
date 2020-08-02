@@ -26,44 +26,30 @@
 
 package org.anchoranalysis.gui.finder;
 
-import org.anchoranalysis.core.cache.CachedOperation;
 import org.anchoranalysis.core.error.OperationFailedException;
+import org.anchoranalysis.core.functional.CallableWithException;
 import org.anchoranalysis.core.name.provider.NamedProvider;
 import org.anchoranalysis.core.name.provider.NamedProviderGetException;
-import org.anchoranalysis.core.progress.OperationWithProgressReporter;
-import org.anchoranalysis.core.progress.ProgressReporter;
+import org.anchoranalysis.core.progress.CallableWithProgressReporter;
 import org.anchoranalysis.core.progress.ProgressReporterNull;
 import org.anchoranalysis.feature.nrg.NRGStackWithParams;
 import org.anchoranalysis.image.channel.Channel;
 import org.anchoranalysis.image.extent.IncorrectImageSizeException;
 import org.anchoranalysis.image.stack.Stack;
 import lombok.AllArgsConstructor;
-import lombok.Getter;
 
 @AllArgsConstructor
 public class OperationFindNrgStackFromStacks
-        extends CachedOperation<NRGStackWithParams, OperationFailedException>
-        implements OperationWithProgressReporter<NRGStackWithParams, OperationFailedException> {
+        implements CallableWithException<NRGStackWithParams, OperationFailedException> {
 
     /** We first retrieve a namedimgcollection which we use to construct our real NrgStack for purposes of good caching */
-    @Getter private OperationWithProgressReporter<NamedProvider<Stack>, OperationFailedException>
+    private CallableWithProgressReporter<NamedProvider<Stack>, OperationFailedException>
             operationStackCollection;
 
     @Override
-    public NRGStackWithParams doOperation(ProgressReporter progressReporter)
-            throws OperationFailedException {
-        return doOperation();
-    }
-
-    @Override
-    protected NRGStackWithParams execute() throws OperationFailedException {
-        return createNRGStack();
-    }
-
-    // NB Note assumption about named-stack ordering
-    private NRGStackWithParams createNRGStack() throws OperationFailedException {
-
-        NamedProvider<Stack> nic = operationStackCollection.doOperation(ProgressReporterNull.get());
+    public NRGStackWithParams call() throws OperationFailedException {
+        // NB Note assumption about named-stack ordering
+        NamedProvider<Stack> nic = operationStackCollection.call(ProgressReporterNull.get());
 
         // We expects the keys to be the indexes
         Stack stack = populateStack(nic);

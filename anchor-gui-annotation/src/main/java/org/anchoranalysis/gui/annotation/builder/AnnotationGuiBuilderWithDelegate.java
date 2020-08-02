@@ -33,7 +33,7 @@ import org.anchoranalysis.annotation.io.bean.strategy.AnnotatorStrategy;
 import org.anchoranalysis.annotation.io.input.AnnotationWithStrategy;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.name.provider.NamedProvider;
-import org.anchoranalysis.core.progress.OperationWithProgressReporter;
+import org.anchoranalysis.core.progress.CallableWithProgressReporter;
 import org.anchoranalysis.core.progress.ProgressReporterMultiple;
 import org.anchoranalysis.gui.annotation.AnnotationBackground;
 import org.anchoranalysis.gui.container.background.BackgroundStackContainerException;
@@ -67,7 +67,7 @@ public abstract class AnnotationGuiBuilderWithDelegate<
 
     // Cached-operation
     @Override
-    public OperationWithProgressReporter<NamedProvider<Stack>, CreateException> stacks() {
+    public CallableWithProgressReporter<NamedProvider<Stack>, CreateException> stacks() {
         return delegate.stacks();
     }
 

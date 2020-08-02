@@ -33,7 +33,7 @@ import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.name.provider.NamedProvider;
 import org.anchoranalysis.core.name.store.NamedProviderStore;
 import org.anchoranalysis.core.params.KeyValueParams;
-import org.anchoranalysis.core.progress.OperationWithProgressReporter;
+import org.anchoranalysis.core.progress.CallableWithProgressReporter;
 import org.anchoranalysis.gui.bean.filecreator.MarkCreatorParams;
 import org.anchoranalysis.gui.file.opened.IOpenedFileGUI;
 import org.anchoranalysis.gui.interactivebrowser.MarkEvaluatorManager;
@@ -55,7 +55,7 @@ public class MultiCollectionDropDown {
 
     private BoundVideoStatsModuleDropDown delegate;
 
-    private OperationWithProgressReporter<TimeSequenceProvider, CreateException> rasterProvider;
+    private CallableWithProgressReporter<TimeSequenceProvider, CreateException> rasterProvider;
     private NamedProvider<Cfg> cfgCollection;
     private NamedProvider<ObjectCollection> objCollection;
     private NamedProviderStore<KeyValueParams> paramsCollection;
@@ -63,7 +63,7 @@ public class MultiCollectionDropDown {
 
     // A dropdown menu representing a particular manifest
     public MultiCollectionDropDown(
-            OperationWithProgressReporter<TimeSequenceProvider, CreateException> rasterProvider,
+            CallableWithProgressReporter<TimeSequenceProvider, CreateException> rasterProvider,
             NamedProvider<Cfg> cfgCollection,
             NamedProvider<ObjectCollection> objCollection,
             NamedProviderStore<KeyValueParams> paramsCollection,
@@ -149,7 +149,7 @@ public class MultiCollectionDropDown {
                             progressReporter ->
                                     new WrapTimeSequenceAsStack(
                                             rasterProvider
-                                                    .doOperation(progressReporter)
+                                                    .call(progressReporter)
                                                     .sequence()),
                             () ->
                                     Optional.of(

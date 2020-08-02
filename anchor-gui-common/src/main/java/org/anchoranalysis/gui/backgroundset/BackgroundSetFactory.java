@@ -30,7 +30,7 @@ import java.util.Set;
 import org.anchoranalysis.core.cache.CachedOperation;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.OperationFailedException;
-import org.anchoranalysis.core.functional.Operation;
+import org.anchoranalysis.core.functional.CallableWithException;
 import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.index.container.BoundedIndexContainer;
 import org.anchoranalysis.core.index.container.bridge.BoundedIndexContainerBridgeWithoutIndex;
@@ -136,14 +136,13 @@ public class BackgroundSetFactory {
     }
 
     @AllArgsConstructor
-    private static class AddBackgroundSetItem
-            extends CachedOperation<BackgroundStackContainer, BackgroundStackContainerException> {
+    private static class AddBackgroundSetItem implements CallableWithException<BackgroundStackContainer, BackgroundStackContainerException> {
 
         private NamedProvider<TimeSequence> imageStackCollection;
         private String id;
 
         @Override
-        protected BackgroundStackContainer execute() throws BackgroundStackContainerException {
+        public BackgroundStackContainer call() throws BackgroundStackContainerException {
 
             try {
                 TimeSequence seq = imageStackCollection.getException(id);
@@ -242,8 +241,9 @@ public class BackgroundSetFactory {
             // The way we handle this means we cannot add the (only first three) brackets on the
             // name, as the image has not yet been evaluated
             for (String id : keys) {
-                Operation<BackgroundStackContainer, BackgroundStackContainerException> operation =
-                        new AddBackgroundSetItem(namedStacks, id);
+                CallableWithException<BackgroundStackContainer, BackgroundStackContainerException> operation = CachedOperation.of(
+                        new AddBackgroundSetItem(namedStacks, id)
+                );
                 backgroundSet.addItem(id, operation);
                 pri.update();
             }

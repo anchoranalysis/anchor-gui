@@ -65,7 +65,7 @@ public class FileAnnotationNamedChnlCollection extends InteractiveFile {
         op = annotation.queryAnnotationSummary();
 
         try {
-            op.doOperation();
+            op.call();
         } catch (Throwable e) {
             mpg.getLogger().errorReporter().recordError(FileAnnotationNamedChnlCollection.class, e);
         }
@@ -82,7 +82,7 @@ public class FileAnnotationNamedChnlCollection extends InteractiveFile {
 
     public AnnotationSummary summary() {
         try {
-            return op.doOperation();
+            return op.call();
         } catch (Throwable e) {
             mpg.getLogger().errorReporter().recordError(FileAnnotationNamedChnlCollection.class, e);
             return null;

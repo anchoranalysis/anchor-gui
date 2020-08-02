@@ -33,7 +33,7 @@ import org.anchoranalysis.anchor.overlay.id.IDGetterOverlayID;
 import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.idgetter.IDGetter;
 import org.anchoranalysis.core.index.container.bridge.BoundedIndexContainerBridgeWithoutIndex;
-import org.anchoranalysis.core.progress.OperationWithProgressReporter;
+import org.anchoranalysis.core.progress.CallableWithProgressReporter;
 import org.anchoranalysis.gui.backgroundset.BackgroundSet;
 import org.anchoranalysis.gui.container.background.BackgroundStackContainerException;
 import org.anchoranalysis.gui.frame.multioverlay.instantstate.InternalFrameOverlayedInstantStateToRGBSelectable;
@@ -54,7 +54,7 @@ public class InternalFrameCfgNRGHistoryFolder {
     public ISliderState init(
             LoadContainer<CfgNRGInstantState> history,
             DefaultModuleState defaultState,
-            OperationWithProgressReporter<BackgroundSet, BackgroundStackContainerException> backgroundSet,
+            CallableWithProgressReporter<BackgroundSet, BackgroundStackContainerException> backgroundSet,
             VideoStatsModuleGlobalParams mpg)
             throws InitException {
 

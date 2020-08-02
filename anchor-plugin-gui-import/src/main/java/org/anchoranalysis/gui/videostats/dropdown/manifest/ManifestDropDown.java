@@ -33,16 +33,15 @@ import org.anchoranalysis.anchor.mpp.feature.instantstate.CfgNRGNonHandleInstant
 import org.anchoranalysis.anchor.mpp.feature.nrg.cfg.CfgNRG;
 import org.anchoranalysis.anchor.mpp.feature.nrg.cfg.CfgNRGPixelized;
 import org.anchoranalysis.core.cache.CachedOperation;
-import org.anchoranalysis.core.cache.WrapOperationAsCached;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.error.OperationFailedException;
-import org.anchoranalysis.core.functional.Operation;
+import org.anchoranalysis.core.functional.CallableWithException;
 import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.index.container.SingleContainer;
 import org.anchoranalysis.core.name.provider.NamedProvider;
 import org.anchoranalysis.core.params.KeyValueParams;
-import org.anchoranalysis.core.progress.OperationWithProgressReporter;
+import org.anchoranalysis.core.progress.CallableWithProgressReporter;
 import org.anchoranalysis.feature.nrg.NRGStackWithParams;
 import org.anchoranalysis.gui.file.opened.IOpenedFileGUI;
 import org.anchoranalysis.gui.finder.FinderNrgStack;
@@ -101,12 +100,12 @@ public class ManifestDropDown {
             IAddVideoStatsModule adder,
             VideoStatsModuleGlobalParams mpg) {
 
-        OperationWithProgressReporter<NamedProvider<Stack>, OperationFailedException> opStacks =
+        CallableWithProgressReporter<NamedProvider<Stack>, OperationFailedException> opStacks =
                 finderStacks.getStacksAsOperation();
 
         // We try to read a nrgStack from the manifest. If none exists, we guess instead from the
         // image-stacks.
-        OperationWithProgressReporter<NRGStackWithParams, GetOperationFailedException> opNrg =
+        CallableWithProgressReporter<NRGStackWithParams, GetOperationFailedException> opNrg =
                 new OperationReplaceNull<>(
                         finderNrgStack.operationNrgStackWithProgressReporter(),
                         new GuessNRGStackFromStacks(asSequence(opStacks)));
@@ -117,13 +116,13 @@ public class ManifestDropDown {
                 nrgBackground, adder, mpg.getThreadPool(), mpg.getLogger().errorReporter());
     }
 
-    private OperationWithProgressReporter<TimeSequenceProvider, CreateException> asSequence(
-            OperationWithProgressReporter<NamedProvider<Stack>, OperationFailedException>
+    private CallableWithProgressReporter<TimeSequenceProvider, CreateException> asSequence(
+            CallableWithProgressReporter<NamedProvider<Stack>, OperationFailedException>
                     opStacks) {
         return pr -> {
             try {
                 return new TimeSequenceProvider(
-                        new WrapStackAsTimeSequence(opStacks.doOperation(pr)), 1);
+                        new WrapStackAsTimeSequence(opStacks.call(pr)), 1);
             } catch (OperationFailedException e) {
                 throw new CreateException(e);
             }
@@ -150,7 +149,7 @@ public class ManifestDropDown {
                 new FinderStacksFromFolder(rasterReader, "chnlScaledCollection"));
 
         try {
-            if (!combined.doFind(manifests.getFileManifest().doOperation())) {
+            if (!combined.doFind(manifests.getFileManifest().call())) {
                 throw new InitException("cannot find image stack collection");
             }
         } catch (OperationFailedException e) {
@@ -165,7 +164,7 @@ public class ManifestDropDown {
         FinderNrgStack finderNrgStack =
                 new FinderNrgStack(rasterReader, mpg.getLogger().errorReporter());
         try {
-            finderNrgStack.doFind(manifests.getFileManifest().doOperation());
+            finderNrgStack.doFind(manifests.getFileManifest().call());
         } catch (OperationFailedException e) {
             throw new InitException(e);
         }
@@ -187,7 +186,7 @@ public class ManifestDropDown {
         final FinderSerializedObject<KeyValueParams> finderGroupParams =
                 new FinderSerializedObject<>("groupParams", mpg.getLogger().errorReporter());
         try {
-            finderGroupParams.doFind(manifests.getFileManifest().doOperation());
+            finderGroupParams.doFind(manifests.getFileManifest().call());
         } catch (OperationFailedException e) {
             throw new InitException(e);
         }
@@ -199,7 +198,7 @@ public class ManifestDropDown {
         final FinderHistoryFolderKernelIterDescription finderKernelIterDescription =
                 new FinderHistoryFolderKernelIterDescription("kernelIterDescription");
         try {
-            finderKernelIterDescription.doFind(manifests.getFileManifest().doOperation());
+            finderKernelIterDescription.doFind(manifests.getFileManifest().call());
         } catch (OperationFailedException e) {
             throw new InitException(e);
         }
@@ -380,7 +379,7 @@ public class ManifestDropDown {
         try {
             final FinderSerializedObject<Cfg> finderFinalCfg =
                     new FinderSerializedObject<>("cfg", mpg.getLogger().errorReporter());
-            finderFinalCfg.doFind(manifests.getFileManifest().doOperation());
+            finderFinalCfg.doFind(manifests.getFileManifest().call());
 
             if (finderFinalCfg.exists()) {
 
@@ -407,11 +406,11 @@ public class ManifestDropDown {
         return defaultAdded;
     }
 
-    private Operation<Cfg, OperationFailedException> getCfgChangeException(
+    private CallableWithException<Cfg, OperationFailedException> getCfgChangeException(
             FinderSerializedObject<Cfg> finderFinalCfg) {
         return () -> {
             try {
-                return finderFinalCfg.operation().doOperation().get();
+                return finderFinalCfg.operation().call().get();
             } catch (IOException e) {
                 throw new OperationFailedException(e);
             }
@@ -425,12 +424,12 @@ public class ManifestDropDown {
         try {
             final FinderSerializedObject<CfgNRG> finderFinalCfgNRG =
                     new FinderSerializedObject<>("cfgNRG", mpg.getLogger().errorReporter());
-            finderFinalCfgNRG.doFind(manifests.getFileManifest().doOperation());
+            finderFinalCfgNRG.doFind(manifests.getFileManifest().call());
 
             if (finderFinalCfgNRG.exists()) {
 
                 CachedOperation<LoadContainer<CfgNRGInstantState>, OperationFailedException> op =
-                        new WrapOperationAsCached<>(
+                        CachedOperation.of(
                                 () -> {
                                     CfgNRGInstantState instantState;
                                     try {
@@ -472,9 +471,9 @@ public class ManifestDropDown {
             VideoStatsModuleGlobalParams mpg) {
         try {
             FinderCfgFolder finder = new FinderCfgFolder("cfgCollection", "cfg");
-            finder.doFind(manifests.getFileManifest().doOperation());
+            finder.doFind(manifests.getFileManifest().call());
 
-            NamedProvider<Cfg> provider = finder.createNamedProvider(false, mpg.getLogger());
+            NamedProvider<Cfg> provider = finder.createNamedProvider(false);
             DropDownUtilities.addCfgSubmenu(
                     delegate.getRootMenu(),
                     delegate,

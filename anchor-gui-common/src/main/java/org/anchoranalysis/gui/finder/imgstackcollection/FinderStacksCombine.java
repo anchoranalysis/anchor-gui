@@ -28,11 +28,10 @@ package org.anchoranalysis.gui.finder.imgstackcollection;
 
 import java.util.ArrayList;
 import java.util.List;
-import org.anchoranalysis.core.cache.WrapOperationWithProgressReporterAsCached;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.name.provider.NamedProvider;
 import org.anchoranalysis.core.progress.CachedOperationWithProgressReporter;
-import org.anchoranalysis.core.progress.OperationWithProgressReporter;
+import org.anchoranalysis.core.progress.CallableWithProgressReporter;
 import org.anchoranalysis.core.progress.ProgressReporterNull;
 import org.anchoranalysis.image.stack.NamedStacks;
 import org.anchoranalysis.image.stack.Stack;
@@ -45,7 +44,7 @@ public class FinderStacksCombine implements FinderStacks {
 
     private CachedOperationWithProgressReporter<NamedProvider<Stack>, OperationFailedException>
             operation =
-                    new WrapOperationWithProgressReporterAsCached<>(
+                    CachedOperationWithProgressReporter.wrap(
                             pr -> {
                                 NamedStacks out = new NamedStacks();
 
@@ -58,11 +57,11 @@ public class FinderStacksCombine implements FinderStacks {
 
     @Override
     public NamedProvider<Stack> getStacks() throws OperationFailedException {
-        return operation.doOperation(ProgressReporterNull.get());
+        return operation.call(ProgressReporterNull.get());
     }
 
     @Override
-    public OperationWithProgressReporter<NamedProvider<Stack>, OperationFailedException>
+    public CallableWithProgressReporter<NamedProvider<Stack>, OperationFailedException>
             getStacksAsOperation() {
         return operation;
     }

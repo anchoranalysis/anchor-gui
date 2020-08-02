@@ -28,7 +28,6 @@ package org.anchoranalysis.gui.series;
 
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.OperationFailedException;
-import org.anchoranalysis.core.log.LogUtilities;
 import org.anchoranalysis.core.name.store.LazyEvaluationStore;
 import org.anchoranalysis.core.progress.CachedOperationWithProgressReporter;
 import org.anchoranalysis.core.progress.ProgressReporter;
@@ -60,8 +59,7 @@ public class OperationCreateTimeSequence
     private TimeSequenceProvider doOperationWithException(ProgressReporter progressReporter)
             throws OperationFailedException {
         LazyEvaluationStore<TimeSequence> stackCollection =
-                new LazyEvaluationStore<>(
-                        LogUtilities.createNullErrorReporter(), "createTimeSeries");
+                new LazyEvaluationStore<>("createTimeSeries");
         inputObject.addToStoreInferNames(stackCollection, seriesNum, progressReporter);
         return new TimeSequenceProvider(stackCollection, inputObject.numberFrames());
     }

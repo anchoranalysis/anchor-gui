@@ -30,7 +30,7 @@ import java.nio.file.Path;
 import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.index.GetOperationFailedException;
-import org.anchoranalysis.core.progress.OperationWithProgressReporter;
+import org.anchoranalysis.core.progress.CallableWithProgressReporter;
 import org.anchoranalysis.core.progress.ProgressReporterNull;
 import org.anchoranalysis.gui.annotation.AnnotatorModuleCreator;
 import org.anchoranalysis.gui.backgroundset.BackgroundSet;
@@ -78,7 +78,7 @@ public class ShowRaster {
     }
 
     public void show(
-            OperationWithProgressReporter<BackgroundSet, BackgroundStackContainerException>
+            CallableWithProgressReporter<BackgroundSet, BackgroundStackContainerException>
                     opCreateBackgroundSet,
             String rasterName) {
         try {
@@ -87,7 +87,7 @@ public class ShowRaster {
                             .getDefaultModuleState()
                             .copyChangeBackground(
                                     opCreateBackgroundSet
-                                            .doOperation(ProgressReporterNull.get())
+                                            .call(ProgressReporterNull.get())
                                             .stackCntr("Associated Raster"));
 
             InternalFrameSingleRaster imageFrame = new InternalFrameSingleRaster(rasterName);

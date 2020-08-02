@@ -29,14 +29,13 @@ package org.anchoranalysis.gui.videostats.dropdown.common;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import org.anchoranalysis.anchor.mpp.cfg.Cfg;
-import org.anchoranalysis.core.cache.WrapOperationWithProgressReporterAsCached;
 import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.error.OperationFailedException;
-import org.anchoranalysis.core.functional.Operation;
+import org.anchoranalysis.core.functional.CallableWithException;
 import org.anchoranalysis.core.name.provider.NamedProvider;
 import org.anchoranalysis.core.name.provider.NamedProviderGetException;
 import org.anchoranalysis.core.progress.CachedOperationWithProgressReporter;
-import org.anchoranalysis.core.progress.OperationWithProgressReporter;
+import org.anchoranalysis.core.progress.CallableWithProgressReporter;
 import org.anchoranalysis.gui.backgroundset.BackgroundSet;
 import org.anchoranalysis.gui.container.background.BackgroundStackContainerException;
 import org.anchoranalysis.gui.interactivebrowser.MarkEvaluatorSetForImage;
@@ -62,9 +61,9 @@ public class DropDownUtilities {
 
     public static void addAllProposerEvaluator(
             BoundVideoStatsModuleDropDown dropDown,
-            OperationWithProgressReporter<IAddVideoStatsModule, ? extends Throwable>
+            CallableWithProgressReporter<IAddVideoStatsModule, ? extends Throwable>
                     adderOpWithoutNRG,
-            OperationWithProgressReporter<BackgroundSet, BackgroundStackContainerException> backgroundSet,
+            CallableWithProgressReporter<BackgroundSet, BackgroundStackContainerException> backgroundSet,
             MarkEvaluatorSetForImage markEvaluatorSet,
             OutputWriteSettings outputWriteSettings,
             boolean addNRGAdder,
@@ -77,9 +76,9 @@ public class DropDownUtilities {
                 NRGBackground.createFromBackground(backgroundSet, operationGetNRGStack);
 
         CachedOperationWithProgressReporter<IAddVideoStatsModule, ? extends Throwable> adderOp =
-                new WrapOperationWithProgressReporterAsCached<>(
+                CachedOperationWithProgressReporter.wrap(
                         pr -> {
-                            IAddVideoStatsModule adder = adderOpWithoutNRG.doOperation(pr);
+                            IAddVideoStatsModule adder = adderOpWithoutNRG.call(pr);
 
                             if (addNRGAdder) {
                                 nrgBackground.addNrgStackToAdder(adder);
@@ -109,7 +108,7 @@ public class DropDownUtilities {
     public static void addCfg(
             VideoStatsOperationMenu menu,
             BoundVideoStatsModuleDropDown delegate,
-            Operation<Cfg, OperationFailedException> op,
+            CallableWithException<Cfg, OperationFailedException> op,
             String name,
             NRGBackgroundAdder<?> nrgBackground,
             VideoStatsModuleGlobalParams mpg,
@@ -130,7 +129,7 @@ public class DropDownUtilities {
     public static void addObjectCollection(
             VideoStatsOperationMenu menu,
             BoundVideoStatsModuleDropDown delegate,
-            Operation<ObjectCollection, OperationFailedException> op,
+            CallableWithException<ObjectCollection, OperationFailedException> op,
             String name,
             NRGBackgroundAdder<?> nrgBackground,
             VideoStatsModuleGlobalParams mpg,
@@ -213,7 +212,7 @@ public class DropDownUtilities {
     private static void addModule(
             VideoStatsModuleCreator module,
             VideoStatsOperationMenu menu,
-            OperationWithProgressReporter<IAddVideoStatsModule, ? extends Throwable> opAdder,
+            CallableWithProgressReporter<IAddVideoStatsModule, ? extends Throwable> opAdder,
             String name,
             VideoStatsModuleGlobalParams mpg,
             boolean addAsDefault) {

@@ -28,14 +28,12 @@ package org.anchoranalysis.gui.finder;
 
 import java.io.IOException;
 import org.anchoranalysis.core.error.OperationFailedException;
+import org.anchoranalysis.core.functional.CallableWithException;
 import org.anchoranalysis.core.index.GetOperationFailedException;
-import org.anchoranalysis.core.name.provider.NamedProvider;
 import org.anchoranalysis.core.progress.CachedOperationWithProgressReporter;
-import org.anchoranalysis.core.progress.OperationWithProgressReporter;
 import org.anchoranalysis.core.progress.ProgressReporter;
 import org.anchoranalysis.feature.nrg.NRGElemParamsFromImage;
 import org.anchoranalysis.feature.nrg.NRGStackWithParams;
-import org.anchoranalysis.image.stack.Stack;
 import org.anchoranalysis.io.manifest.finder.FinderKeyValueParams;
 import org.anchoranalysis.io.manifest.finder.FinderSerializedObject;
 import lombok.AllArgsConstructor;
@@ -44,7 +42,7 @@ import lombok.AllArgsConstructor;
 class OperationStackWithParams
         extends CachedOperationWithProgressReporter<NRGStackWithParams, GetOperationFailedException> {
 
-    private final OperationFindNrgStackFromStacks nrgStackOperation;
+    private final CallableWithException<NRGStackWithParams, OperationFailedException> nrgStackOperation;
     private final FinderKeyValueParams finderImageParams;
     private final FinderSerializedObject<NRGElemParamsFromImage> finderImageParamsLegacy;
 
@@ -53,7 +51,7 @@ class OperationStackWithParams
             throws GetOperationFailedException {
 
         try {
-            NRGStackWithParams nrgStackWithParams = nrgStackOperation.doOperation();
+            NRGStackWithParams nrgStackWithParams = nrgStackOperation.call();
 
             if (finderImageParamsLegacy.exists()) {
                 NRGElemParamsFromImage params = finderImageParamsLegacy.get();
@@ -67,10 +65,5 @@ class OperationStackWithParams
         } catch (IOException | OperationFailedException e) {
             throw new GetOperationFailedException(e);
         }
-    }
-
-    public OperationWithProgressReporter<NamedProvider<Stack>, OperationFailedException>
-            getOperationStackCollection() {
-        return nrgStackOperation.getOperationStackCollection();
     }
 }

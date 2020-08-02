@@ -28,7 +28,7 @@ package org.anchoranalysis.gui.finder.imgstackcollection;
 
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.name.provider.NamedProvider;
-import org.anchoranalysis.core.progress.OperationWithProgressReporter;
+import org.anchoranalysis.core.progress.CallableWithProgressReporter;
 import org.anchoranalysis.image.stack.Stack;
 import org.anchoranalysis.io.manifest.finder.Finder;
 
@@ -36,6 +36,6 @@ public interface FinderStacks extends Finder {
 
     NamedProvider<Stack> getStacks() throws OperationFailedException;
 
-    OperationWithProgressReporter<NamedProvider<Stack>, OperationFailedException>
+    CallableWithProgressReporter<NamedProvider<Stack>, OperationFailedException>
             getStacksAsOperation();
 }

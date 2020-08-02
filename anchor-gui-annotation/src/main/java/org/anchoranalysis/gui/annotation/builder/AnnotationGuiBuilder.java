@@ -30,12 +30,11 @@ import java.io.File;
 import java.nio.file.Path;
 import java.util.Optional;
 import org.anchoranalysis.core.cache.CachedOperation;
-import org.anchoranalysis.core.cache.CachedOperationWrap;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.log.Logger;
 import org.anchoranalysis.core.name.provider.NamedProvider;
-import org.anchoranalysis.core.progress.OperationWithProgressReporter;
+import org.anchoranalysis.core.progress.CallableWithProgressReporter;
 import org.anchoranalysis.core.progress.ProgressReporterMultiple;
 import org.anchoranalysis.gui.annotation.AnnotationBackground;
 import org.anchoranalysis.gui.annotation.export.ExportAnnotation;
@@ -95,7 +94,7 @@ public abstract class AnnotationGuiBuilder<T extends AnnotationInitParams> {
     public abstract Path deletePath();
 
     // Cached-operation
-    public abstract OperationWithProgressReporter<NamedProvider<Stack>, CreateException> stacks();
+    public abstract CallableWithProgressReporter<NamedProvider<Stack>, CreateException> stacks();
 
     public abstract String descriptiveName();
 
@@ -109,6 +108,6 @@ public abstract class AnnotationGuiBuilder<T extends AnnotationInitParams> {
 
     /** Creates a cached version of the createSummary() method */
     private CachedOperation<AnnotationSummary, CreateException> createCachedSummary() {
-        return new CachedOperationWrap<>(() -> createSummary());
+        return CachedOperation.of(this::createSummary);
     }
 }

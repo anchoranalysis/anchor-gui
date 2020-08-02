@@ -26,12 +26,11 @@
 
 package org.anchoranalysis.gui.finder.imgstackcollection;
 
-import org.anchoranalysis.core.cache.WrapOperationWithProgressReporterAsCached;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.name.provider.NamedProvider;
 import org.anchoranalysis.core.progress.CachedOperationWithProgressReporter;
-import org.anchoranalysis.core.progress.OperationWithProgressReporter;
+import org.anchoranalysis.core.progress.CallableWithProgressReporter;
 import org.anchoranalysis.core.progress.ProgressReporterNull;
 import org.anchoranalysis.feature.nrg.NRGStackWithParams;
 import org.anchoranalysis.gui.finder.FinderNrgStack;
@@ -41,15 +40,17 @@ import org.anchoranalysis.io.manifest.ManifestRecorder;
 
 public class FinderStacksFromNrgStack implements FinderStacks {
 
-    private FinderNrgStack delegate = null;
-
-    private OperationWithProgressReporter<Stack, OperationFailedException>
+    // START REQUIRED ARGUMENTS
+    private FinderNrgStack delegate;
+    // END REQUIRED ARGUMENTS
+    
+    private CallableWithProgressReporter<Stack, OperationFailedException>
             operationExtractUntilThreeChannels =
-                    new WrapOperationWithProgressReporterAsCached<>(
+                    CachedOperationWithProgressReporter.wrap(
                             pr -> {
                                 try {
                                     NRGStackWithParams nrgStackWithParams = delegate.operationNrgStackWithProgressReporter()
-                                            .doOperation(pr);
+                                            .call(pr);
                                     return nrgStackWithParams
                                             .getNrgStack()
                                             .asStack()
@@ -61,7 +62,7 @@ public class FinderStacksFromNrgStack implements FinderStacks {
 
     private CachedOperationWithProgressReporter<NamedProvider<Stack>, OperationFailedException>
             operationStacks =
-                    new WrapOperationWithProgressReporterAsCached<>(
+                    CachedOperationWithProgressReporter.wrap(
                             pr -> {
                                 NamedStacks stackCollection =
                                         new NamedStacks();
@@ -81,17 +82,18 @@ public class FinderStacksFromNrgStack implements FinderStacks {
                                 return stackCollection;
                             });
 
-    public FinderStacksFromNrgStack(FinderNrgStack finderNrgStack) {
-        this.delegate = finderNrgStack;
-    }
 
+    public FinderStacksFromNrgStack(FinderNrgStack delegate) {
+        this.delegate = delegate;
+    }
+    
     @Override
     public NamedProvider<Stack> getStacks() throws OperationFailedException {
-        return operationStacks.doOperation(ProgressReporterNull.get());
+        return operationStacks.call(ProgressReporterNull.get());
     }
 
     @Override
-    public OperationWithProgressReporter<NamedProvider<Stack>, OperationFailedException>
+    public CallableWithProgressReporter<NamedProvider<Stack>, OperationFailedException>
             getStacksAsOperation() {
         return operationStacks;
     }

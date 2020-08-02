@@ -27,7 +27,7 @@
 package org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.definition;
 
 import org.anchoranalysis.core.error.reporter.ErrorReporter;
-import org.anchoranalysis.core.progress.OperationWithProgressReporter;
+import org.anchoranalysis.core.progress.CallableWithProgressReporter;
 import org.anchoranalysis.gui.backgroundset.BackgroundSet;
 import org.anchoranalysis.gui.container.background.BackgroundStackContainerException;
 import org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.IGetNames;
@@ -35,7 +35,7 @@ import org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.IGetNames;
 public interface ChangeableBackgroundDefinition {
 
     void update(
-            OperationWithProgressReporter<BackgroundSet, BackgroundStackContainerException>
+            CallableWithProgressReporter<BackgroundSet, BackgroundStackContainerException>
                     backgroundSet);
 
     IGetNames names(ErrorReporter errorReporter);

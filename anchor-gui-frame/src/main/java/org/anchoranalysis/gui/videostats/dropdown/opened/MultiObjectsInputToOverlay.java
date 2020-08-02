@@ -45,7 +45,7 @@ class MultiObjectsInputToOverlay
 
         OverlayCollection oc =
                 OverlayCollectionObjectFactory.createWithoutColor(
-                        sourceObject.getAssociatedObjects().doOperation(), new IDGetterIter<>());
+                        sourceObject.getAssociatedObjects().call(), new IDGetterIter<>());
         return new OverlayedInstantState(index, oc);
     }
 }

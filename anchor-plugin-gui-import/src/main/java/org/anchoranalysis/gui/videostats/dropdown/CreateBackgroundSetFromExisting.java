@@ -27,14 +27,14 @@
 package org.anchoranalysis.gui.videostats.dropdown;
 
 import org.anchoranalysis.anchor.mpp.bean.init.MPPInitParams;
+import org.anchoranalysis.core.cache.CachedOperation;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.progress.CachedOperationWithProgressReporter;
-import org.anchoranalysis.core.progress.OperationWithProgressReporter;
+import org.anchoranalysis.core.progress.CallableWithProgressReporter;
 import org.anchoranalysis.core.progress.ProgressReporter;
 import org.anchoranalysis.gui.backgroundset.BackgroundSet;
 import org.anchoranalysis.gui.backgroundset.BackgroundSetFactory;
 import org.anchoranalysis.gui.container.background.BackgroundStackContainerException;
-import org.anchoranalysis.gui.interactivebrowser.OperationInitParams;
 import org.anchoranalysis.image.bean.nonbean.init.CreateCombinedStack;
 import org.anchoranalysis.image.bean.nonbean.init.ImageInitParams;
 import org.anchoranalysis.image.stack.wrap.WrapStackAsTimeSequence;
@@ -44,18 +44,18 @@ import lombok.AllArgsConstructor;
 public class CreateBackgroundSetFromExisting
         extends CachedOperationWithProgressReporter<BackgroundSet, BackgroundStackContainerException> {
 
-    private final OperationWithProgressReporter<BackgroundSet, BackgroundStackContainerException>
+    private final CallableWithProgressReporter<BackgroundSet, BackgroundStackContainerException>
             existingBackgroundSet;
-    private OperationInitParams pso;
+    private CachedOperation<MPPInitParams, CreateException> pso;
 
     @Override
     protected BackgroundSet execute(ProgressReporter progressReporter)
             throws BackgroundStackContainerException {
 
         try {
-            BackgroundSet bsExisting = existingBackgroundSet.doOperation(progressReporter);
+            BackgroundSet bsExisting = existingBackgroundSet.call(progressReporter);
             
-            MPPInitParams so = pso.doOperation();
+            MPPInitParams so = pso.call();
             ImageInitParams soImage = so.getImage();
 
             return BackgroundSetFactory.createBackgroundSetFromExisting(

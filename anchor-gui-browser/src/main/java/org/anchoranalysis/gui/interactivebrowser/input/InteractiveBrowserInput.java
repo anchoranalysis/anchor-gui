@@ -34,10 +34,13 @@ import lombok.Setter;
 import org.anchoranalysis.anchor.mpp.feature.bean.mark.MarkEvaluator;
 import org.anchoranalysis.anchor.mpp.feature.bean.nrgscheme.NRGSchemeCreator;
 import org.anchoranalysis.bean.NamedBean;
+import org.anchoranalysis.bean.Provider;
 import org.anchoranalysis.bean.shared.params.keyvalue.KeyValueParamsInitParams;
 import org.anchoranalysis.bean.shared.params.keyvalue.KeyValueParamsProvider;
+import org.anchoranalysis.core.cache.CachedOperation;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.OperationFailedException;
+import org.anchoranalysis.core.functional.CallableWithException;
 import org.anchoranalysis.core.log.CommonContext;
 import org.anchoranalysis.core.name.store.SharedObjects;
 import org.anchoranalysis.feature.bean.list.FeatureListProvider;
@@ -94,7 +97,7 @@ public class InteractiveBrowserInput implements InputFromManager {
 
         for (NamedBean<KeyValueParamsProvider> ni : this.namedItemKeyValueParamsProviderList) {
             soParams.getNamedKeyValueParamsCollection()
-                    .add(ni.getName(), new OperationCreateFromProvider<>(ni.getValue()));
+                    .add(ni.getName(), cachedOperationFromProvider(ni.getValue()));
         }
     }
 
@@ -102,7 +105,7 @@ public class InteractiveBrowserInput implements InputFromManager {
 
         for (NamedBean<FilePathProvider> ni : this.namedItemFilePathProviderList) {
             soParams.getNamedFilePathCollection()
-                    .add(ni.getName(), new OperationCreateFromProvider<>(ni.getValue()));
+                    .add(ni.getName(), cachedOperationFromProvider(ni.getValue()));
         }
     }
 
@@ -114,5 +117,15 @@ public class InteractiveBrowserInput implements InputFromManager {
     @Override
     public Optional<Path> pathForBinding() {
         return Optional.empty();
+    }
+    
+    private static <T> CallableWithException<T, OperationFailedException> cachedOperationFromProvider(Provider<T> provider) {
+       return CachedOperation.of( ()->{
+            try {
+                return provider.create();
+            } catch (CreateException e) {
+                throw new OperationFailedException(e);
+            }
+       });
     }
 }

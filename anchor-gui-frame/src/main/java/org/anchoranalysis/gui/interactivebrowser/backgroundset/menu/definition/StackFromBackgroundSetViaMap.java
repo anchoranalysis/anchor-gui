@@ -30,7 +30,7 @@ import java.util.Map;
 import org.anchoranalysis.bean.shared.StringMap;
 import org.anchoranalysis.core.error.reporter.ErrorReporter;
 import org.anchoranalysis.core.functional.function.FunctionWithException;
-import org.anchoranalysis.core.progress.OperationWithProgressReporter;
+import org.anchoranalysis.core.progress.CallableWithProgressReporter;
 import org.anchoranalysis.core.progress.ProgressReporterNull;
 import org.anchoranalysis.gui.backgroundset.BackgroundSet;
 import org.anchoranalysis.gui.container.background.BackgroundStackContainerException;
@@ -39,12 +39,12 @@ import org.anchoranalysis.image.stack.DisplayStack;
 class StackFromBackgroundSetViaMap implements ImageStackContainerFromName {
     
     private Map<String, String> map;
-    private OperationWithProgressReporter<BackgroundSet, ? extends Throwable> backgroundSet;
+    private CallableWithProgressReporter<BackgroundSet, ? extends Throwable> backgroundSet;
     private ErrorReporter errorReporter;
 
     public StackFromBackgroundSetViaMap(
             StringMap map,
-            OperationWithProgressReporter<BackgroundSet, ? extends Throwable> backgroundSet,
+            CallableWithProgressReporter<BackgroundSet, ? extends Throwable> backgroundSet,
             ErrorReporter errorReporter) {
         super();
         this.backgroundSet = backgroundSet;
@@ -56,7 +56,7 @@ class StackFromBackgroundSetViaMap implements ImageStackContainerFromName {
     public FunctionWithException<Integer, DisplayStack, BackgroundStackContainerException>
             imageStackCntrFromName(String name) throws BackgroundStackContainerException {
         try {
-            return backgroundSet.doOperation(ProgressReporterNull.get()).stackCntr(map.get(name));
+            return backgroundSet.call(ProgressReporterNull.get()).stackCntr(map.get(name));
         } catch (Exception e) {
             errorReporter.recordError(NamesFromBackgroundSet.class, e);
             return null;

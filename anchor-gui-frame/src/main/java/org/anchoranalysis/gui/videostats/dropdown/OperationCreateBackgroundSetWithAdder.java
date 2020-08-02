@@ -26,12 +26,11 @@
 
 package org.anchoranalysis.gui.videostats.dropdown;
 
-import org.anchoranalysis.core.cache.WrapOperationWithProgressReporterAsCached;
 import org.anchoranalysis.core.error.reporter.ErrorReporter;
 import org.anchoranalysis.core.functional.function.FunctionWithException;
 import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.progress.CachedOperationWithProgressReporter;
-import org.anchoranalysis.core.progress.OperationWithProgressReporter;
+import org.anchoranalysis.core.progress.CallableWithProgressReporter;
 import org.anchoranalysis.core.progress.ProgressReporter;
 import org.anchoranalysis.core.property.IPropertyValueSendable;
 import org.anchoranalysis.gui.backgroundset.BackgroundSet;
@@ -56,20 +55,20 @@ public class OperationCreateBackgroundSetWithAdder
 
     private CachedOperationWithProgressReporter<IAddVideoStatsModule, BackgroundStackContainerException>
             operationIAddVideoStatsModule =
-                    new WrapOperationWithProgressReporterAsCached<>(
+                    CachedOperationWithProgressReporter.wrap(
                             progressReporter -> {
                                 BackgroundSetWithAdder bwsa =
-                                        OperationCreateBackgroundSetWithAdder.this.doOperation(
+                                        OperationCreateBackgroundSetWithAdder.this.call(
                                                 progressReporter);
                                 return bwsa.getAdder();
                             });
 
     private CachedOperationWithProgressReporter<BackgroundSet, BackgroundStackContainerException>
             operationBackgroundSet =
-                    new WrapOperationWithProgressReporterAsCached<>(
+                    CachedOperationWithProgressReporter.wrap(
                             progressReporter -> {
                                 BackgroundSetWithAdder bwsa =
-                                        OperationCreateBackgroundSetWithAdder.this.doOperation(
+                                        OperationCreateBackgroundSetWithAdder.this.call(
                                                 progressReporter);
                                 return bwsa.getBackgroundSet();
                             });
@@ -97,7 +96,7 @@ public class OperationCreateBackgroundSetWithAdder
         BackgroundSetWithAdder bwsa = new BackgroundSetWithAdder();
 
         BackgroundSet backgroundSet;
-        backgroundSet = nrgBackground.getBackgroundSet().doOperation(progressReporter);
+        backgroundSet = nrgBackground.getBackgroundSet().call(progressReporter);
         
         bwsa.setBackgroundSet(backgroundSet);
 
@@ -133,7 +132,7 @@ public class OperationCreateBackgroundSetWithAdder
         return bwsa;
     }
 
-    public OperationWithProgressReporter<IAddVideoStatsModule, BackgroundStackContainerException>
+    public CallableWithProgressReporter<IAddVideoStatsModule, BackgroundStackContainerException>
             operationAdder() {
         return operationIAddVideoStatsModule;
     }

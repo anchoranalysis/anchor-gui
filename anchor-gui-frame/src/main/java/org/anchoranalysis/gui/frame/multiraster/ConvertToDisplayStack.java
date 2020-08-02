@@ -43,7 +43,7 @@ class ConvertToDisplayStack {
     }
 
     private static BackgroundSet backgroundFromSet(NamedRasterSet set) throws BackgroundStackContainerException {
-        return set.getBackgroundSet().doOperation(ProgressReporterNull.get());
+        return set.getBackgroundSet().call(ProgressReporterNull.get());
     }
 
     private static BoundedIndexContainer<DisplayStack> convertBackgroundSet(BackgroundSet bg)

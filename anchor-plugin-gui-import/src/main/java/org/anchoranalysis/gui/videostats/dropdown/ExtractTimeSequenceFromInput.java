@@ -29,7 +29,6 @@ package org.anchoranalysis.gui.videostats.dropdown;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.functional.IdentityOperation;
-import org.anchoranalysis.core.log.LogUtilities;
 import org.anchoranalysis.core.name.store.LazyEvaluationStore;
 import org.anchoranalysis.core.progress.CachedOperationWithProgressReporter;
 import org.anchoranalysis.core.progress.ProgressReporter;
@@ -61,11 +60,10 @@ public class ExtractTimeSequenceFromInput
             TimeSequence timeSeries =
                     inputObject
                             .createStackSequenceForSeries(seriesNum)
-                            .doOperation(progressReporter);
+                            .call(progressReporter);
 
             LazyEvaluationStore<TimeSequence> store =
-                    new LazyEvaluationStore<>(
-                            LogUtilities.createNullErrorReporter(), "extractTimeSequence");
+                    new LazyEvaluationStore<>("extractTimeSequence");
 
             store.add("input_stack", new IdentityOperation<>(timeSeries));
 

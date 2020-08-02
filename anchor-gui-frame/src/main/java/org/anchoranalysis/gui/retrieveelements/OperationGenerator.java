@@ -29,7 +29,7 @@ package org.anchoranalysis.gui.retrieveelements;
 import java.nio.file.Path;
 import java.util.Optional;
 import org.anchoranalysis.core.error.AnchorNeverOccursException;
-import org.anchoranalysis.core.functional.Operation;
+import org.anchoranalysis.core.functional.CallableWithException;
 import org.anchoranalysis.core.index.SetOperationFailedException;
 import org.anchoranalysis.io.generator.IterableObjectGenerator;
 import org.anchoranalysis.io.generator.ObjectGenerator;
@@ -38,11 +38,11 @@ import org.anchoranalysis.io.output.bean.OutputWriteSettings;
 import org.anchoranalysis.io.output.error.OutputWriteFailedException;
 
 class OperationGenerator<S, T> extends ObjectGenerator<S>
-        implements IterableObjectGenerator<Operation<T, AnchorNeverOccursException>, S> {
+        implements IterableObjectGenerator<CallableWithException<T, AnchorNeverOccursException>, S> {
 
     private IterableObjectGenerator<T, S> delegate;
 
-    private Operation<T, AnchorNeverOccursException> element;
+    private CallableWithException<T, AnchorNeverOccursException> element;
 
     public OperationGenerator(IterableObjectGenerator<T, S> delegate) {
         super();
@@ -50,14 +50,14 @@ class OperationGenerator<S, T> extends ObjectGenerator<S>
     }
 
     @Override
-    public void setIterableElement(Operation<T, AnchorNeverOccursException> element)
+    public void setIterableElement(CallableWithException<T, AnchorNeverOccursException> element)
             throws SetOperationFailedException {
         this.element = element;
-        delegate.setIterableElement(element.doOperation());
+        delegate.setIterableElement(element.call());
     }
 
     @Override
-    public Operation<T, AnchorNeverOccursException> getIterableElement() {
+    public CallableWithException<T, AnchorNeverOccursException> getIterableElement() {
         return element;
     }
 

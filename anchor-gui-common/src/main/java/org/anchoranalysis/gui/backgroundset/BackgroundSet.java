@@ -32,7 +32,7 @@ import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.error.friendly.AnchorImpossibleSituationException;
 import org.anchoranalysis.core.functional.IdentityOperation;
-import org.anchoranalysis.core.functional.Operation;
+import org.anchoranalysis.core.functional.CallableWithException;
 import org.anchoranalysis.core.functional.function.FunctionWithException;
 import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.gui.container.background.BackgroundStackContainer;
@@ -45,7 +45,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class BackgroundSet {
 
-    private HashMap<String, Operation<BackgroundStackContainer, BackgroundStackContainerException>> map =
+    private HashMap<String, CallableWithException<BackgroundStackContainer, BackgroundStackContainerException>> map =
             new HashMap<>();
 
     public void addAll(BackgroundSet src) {
@@ -64,13 +64,13 @@ public class BackgroundSet {
 
     public void addItem(
             String name,
-            Operation<BackgroundStackContainer, BackgroundStackContainerException> rasterBackground) {
+            CallableWithException<BackgroundStackContainer, BackgroundStackContainerException> rasterBackground) {
         map.put(name, rasterBackground);
     }
 
     public BackgroundStackContainer getItem(String name) {
         try {
-            return map.get(name).doOperation();
+            return map.get(name).call();
         } catch (BackgroundStackContainerException e) {
             throw new AnchorImpossibleSituationException();
         }
@@ -79,7 +79,7 @@ public class BackgroundSet {
     public DisplayStack singleStack(String name) throws BackgroundStackContainerException {
 
         try {
-            BackgroundStackContainer finderRaster = map.get(name).doOperation();
+            BackgroundStackContainer finderRaster = map.get(name).call();
 
             if (finderRaster == null) {
                 return null;
@@ -97,13 +97,13 @@ public class BackgroundSet {
             String name) throws GetOperationFailedException {
         try {
 
-            Operation<BackgroundStackContainer, BackgroundStackContainerException> op = map.get(name);
+            CallableWithException<BackgroundStackContainer, BackgroundStackContainerException> op = map.get(name);
 
             if (op == null) {
                 return null;
             }
 
-            BackgroundStackContainer backgroundStackCntr = op.doOperation();
+            BackgroundStackContainer backgroundStackCntr = op.call();
 
             if (backgroundStackCntr == null) {
                 return null;
