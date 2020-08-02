@@ -32,7 +32,7 @@ import org.anchoranalysis.anchor.mpp.feature.instantstate.CfgNRGInstantState;
 import org.anchoranalysis.anchor.mpp.feature.instantstate.CfgNRGNonHandleInstantState;
 import org.anchoranalysis.anchor.mpp.feature.nrg.cfg.CfgNRG;
 import org.anchoranalysis.anchor.mpp.feature.nrg.cfg.CfgNRGPixelized;
-import org.anchoranalysis.core.cache.CachedOperation;
+import org.anchoranalysis.core.cache.CacheCall;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.error.OperationFailedException;
@@ -428,8 +428,8 @@ public class ManifestDropDown {
 
             if (finderFinalCfgNRG.exists()) {
 
-                CachedOperation<LoadContainer<CfgNRGInstantState>, OperationFailedException> op =
-                        CachedOperation.of(
+                CacheCall<LoadContainer<CfgNRGInstantState>, OperationFailedException> op =
+                        CacheCall.of(
                                 () -> {
                                     CfgNRGInstantState instantState;
                                     try {

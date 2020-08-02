@@ -26,85 +26,71 @@
 
 package org.anchoranalysis.gui.retrieveelements;
 
-import org.anchoranalysis.core.cache.CachedOperation;
+import java.util.Optional;
+import org.anchoranalysis.core.cache.CacheCall;
 import org.anchoranalysis.core.error.AnchorNeverOccursException;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.image.io.generator.raster.MIPGenerator;
 import org.anchoranalysis.image.stack.DisplayStack;
 import org.anchoranalysis.image.stack.Stack;
+import lombok.AllArgsConstructor;
 
 // An interface that allows receiving elements from a module
 // When a function returns NULL, that element doesn't exist
+@AllArgsConstructor
 public class RetrieveElementsImage extends RetrieveElements {
 
-    private DisplayStack stack;
-
-    private DisplayStack slice;
-
-    public RetrieveElementsImage() {}
-
-    public DisplayStack getStack() {
-        return stack;
-    }
-
-    public void setStack(DisplayStack stack) {
-        this.stack = stack;
-    }
-
-    public DisplayStack getSlice() {
-        return slice;
-    }
-
-    public void setSlice(DisplayStack slice) {
-        this.slice = slice;
-    }
-
+    private Optional<DisplayStack> stack;
+    private Optional<DisplayStack> slice;
+    
     @Override
     public void addToPopUp(AddToExportSubMenu popUp) {
 
-        if (getStack() != null) {
+        stack.ifPresent(raster->
+            addFromStack(popUp, raster)
+        );
+    
+        slice.ifPresent(raster->
+            addFromSlice(popUp, raster)
+        );
+    }
 
-            final DisplayStack currentStack = getStack();
+    private void addFromStack(AddToExportSubMenu popUp, DisplayStack stack) {
+        CacheCall<Stack, AnchorNeverOccursException> opCreateStack =
+                cachedOpFromDisplayStack(stack);
 
-            CachedOperation<Stack, AnchorNeverOccursException> opCreateStack =
-                    cachedOpFromDisplayStack(currentStack);
-
-            try {
-                popUp.addExportItemStackGenerator("selectedStack", "Stack", opCreateStack);
-            } catch (OperationFailedException e) {
-                assert false;
-            }
-
-            if (currentStack.getDimensions().getZ() > 1) {
-                MIPGenerator generatorMIP = new MIPGenerator(true, "selectedStackMIP");
-
-                OperationGenerator<Stack, Stack> generator =
-                        new OperationGenerator<Stack, Stack>(generatorMIP);
-                popUp.addExportItem(
-                        generator,
-                        opCreateStack,
-                        "selectedStackMIP",
-                        "MIP",
-                        generator.createManifestDescription(),
-                        1);
-            }
+        try {
+            popUp.addExportItemStackGenerator("selectedStack", "Stack", opCreateStack);
+        } catch (OperationFailedException e) {
+            assert false;
         }
 
-        if (getSlice() != null) {
+        if (stack.getDimensions().getZ() > 1) {
+            MIPGenerator generatorMIP = new MIPGenerator(true, "selectedStackMIP");
 
-            final DisplayStack currentSlice = getSlice();
-
-            try {
-                popUp.addExportItemStackGenerator(
-                        "selectedSlice", "Slice", cachedOpFromDisplayStack(currentSlice));
-            } catch (OperationFailedException e) {
-                assert false;
-            }
+            OperationGenerator<Stack, Stack> generator =
+                    new OperationGenerator<>(generatorMIP);
+            popUp.addExportItem(
+                    generator,
+                    opCreateStack,
+                    "selectedStackMIP",
+                    "MIP",
+                    generator.createManifestDescription(),
+                    1);
         }
     }
 
-    private CachedOperation<Stack, AnchorNeverOccursException> cachedOpFromDisplayStack(
+    private void addFromSlice(AddToExportSubMenu popUp, DisplayStack slice) {
+        try {
+            popUp.addExportItemStackGenerator(
+                    "selectedSlice", "Slice", cachedOpFromDisplayStack(slice));
+        } catch (OperationFailedException e) {
+            assert false;
+        }
+    }
+    
+    private CacheCall<Stack, AnchorNeverOccursException> cachedOpFromDisplayStack(
             DisplayStack stack) {
-        return CachedOperation.of(() -> stack.deriveStack(false));
+        return CacheCall.of(() -> stack.deriveStack(false));
     }
 }

@@ -36,18 +36,17 @@ import org.anchoranalysis.io.generator.ObjectGenerator;
 import org.anchoranalysis.io.manifest.ManifestDescription;
 import org.anchoranalysis.io.output.bean.OutputWriteSettings;
 import org.anchoranalysis.io.output.error.OutputWriteFailedException;
+import lombok.RequiredArgsConstructor;
 
+@RequiredArgsConstructor
 class OperationGenerator<S, T> extends ObjectGenerator<S>
         implements IterableObjectGenerator<CallableWithException<T, AnchorNeverOccursException>, S> {
 
-    private IterableObjectGenerator<T, S> delegate;
+    // START REQUIRED ARGUMENTS
+    private final IterableObjectGenerator<T, S> delegate;
+    // END REQUIRED ARGUMENTS
 
     private CallableWithException<T, AnchorNeverOccursException> element;
-
-    public OperationGenerator(IterableObjectGenerator<T, S> delegate) {
-        super();
-        this.delegate = delegate;
-    }
 
     @Override
     public void setIterableElement(CallableWithException<T, AnchorNeverOccursException> element)

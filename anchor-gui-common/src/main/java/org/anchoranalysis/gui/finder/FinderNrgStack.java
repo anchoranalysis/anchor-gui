@@ -26,13 +26,13 @@
 
 package org.anchoranalysis.gui.finder;
 
-import org.anchoranalysis.core.cache.CachedOperation;
+import org.anchoranalysis.core.cache.CacheCall;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.error.reporter.ErrorReporter;
 import org.anchoranalysis.core.functional.CallableWithException;
 import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.name.provider.NamedProvider;
-import org.anchoranalysis.core.progress.CachedOperationWithProgressReporter;
+import org.anchoranalysis.core.progress.CacheCallWithProgressReporter;
 import org.anchoranalysis.core.progress.CallableWithProgressReporter;
 import org.anchoranalysis.core.progress.ProgressReporterNull;
 import org.anchoranalysis.feature.nrg.NRGElemParamsFromImage;
@@ -47,7 +47,7 @@ import org.anchoranalysis.io.manifest.finder.FinderSerializedObject;
 public class FinderNrgStack implements Finder {
 
     private FinderRasterFolder finderRasterFolder;
-    private OperationStackWithParams operationCombined;
+    private CallableWithProgressReporter<NRGStackWithParams, GetOperationFailedException> operationCombined;
     private FinderKeyValueParams finderImageParams;
     private FinderSerializedObject<NRGElemParamsFromImage> finderImageParamsLegacy;
 
@@ -56,16 +56,17 @@ public class FinderNrgStack implements Finder {
     public FinderNrgStack(RasterReader rasterReader, ErrorReporter errorReporter) {
         finderRasterFolder = new FinderRasterFolder("nrgStack", "nrgStack", rasterReader);
 
-        operationStacks = CachedOperationWithProgressReporter.wrap(
+        operationStacks = CacheCallWithProgressReporter.of(
                 new OperationStackCollectionFromFinderRasterFolder(finderRasterFolder));
         
         this.finderImageParams = new FinderKeyValueParams("nrgStackParams", errorReporter);
         this.finderImageParamsLegacy =
                 new FinderSerializedObject<>("nrgStackImageParams", errorReporter);
 
-        operationCombined =
+        operationCombined = CacheCallWithProgressReporter.of(
                 new OperationStackWithParams(
-                        CachedOperation.of( new OperationFindNrgStackFromStacks(operationStacks) ), finderImageParams, finderImageParamsLegacy);
+                        CacheCall.of( new OperationFindNrgStackFromStacks(operationStacks) ), finderImageParams, finderImageParamsLegacy)
+                );
     }
 
     @Override
@@ -80,7 +81,7 @@ public class FinderNrgStack implements Finder {
     }
 
     public NRGStackWithParams getNrgStack() throws GetOperationFailedException {
-        return operationCombined.call();
+        return operationCombined.call(ProgressReporterNull.get());
     }
 
     public NamedProvider<Stack> getNamedStacks() throws OperationFailedException {
@@ -88,7 +89,7 @@ public class FinderNrgStack implements Finder {
     }
 
     public CallableWithException<NRGStackWithParams, GetOperationFailedException> operationNrgStack() {
-        return operationCombined;
+        return operationCombined.withoutProgressReporter();
     }
 
     public CallableWithProgressReporter<NRGStackWithParams, GetOperationFailedException>

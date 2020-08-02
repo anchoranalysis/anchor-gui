@@ -34,7 +34,7 @@ import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.functional.CallableWithException;
 import org.anchoranalysis.core.name.provider.NamedProvider;
 import org.anchoranalysis.core.name.provider.NamedProviderGetException;
-import org.anchoranalysis.core.progress.CachedOperationWithProgressReporter;
+import org.anchoranalysis.core.progress.CacheCallWithProgressReporter;
 import org.anchoranalysis.core.progress.CallableWithProgressReporter;
 import org.anchoranalysis.gui.backgroundset.BackgroundSet;
 import org.anchoranalysis.gui.container.background.BackgroundStackContainerException;
@@ -75,8 +75,8 @@ public class DropDownUtilities {
         NRGBackground nrgBackground =
                 NRGBackground.createFromBackground(backgroundSet, operationGetNRGStack);
 
-        CachedOperationWithProgressReporter<IAddVideoStatsModule, ? extends Throwable> adderOp =
-                CachedOperationWithProgressReporter.wrap(
+        CallableWithProgressReporter<IAddVideoStatsModule, ? extends Throwable> adderOp =
+                CacheCallWithProgressReporter.of(
                         pr -> {
                             IAddVideoStatsModule adder = adderOpWithoutNRG.call(pr);
 

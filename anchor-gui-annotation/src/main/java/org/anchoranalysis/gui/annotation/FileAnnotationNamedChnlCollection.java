@@ -28,7 +28,7 @@ package org.anchoranalysis.gui.annotation;
 
 import java.io.File;
 import java.util.Optional;
-import org.anchoranalysis.core.cache.CachedOperation;
+import org.anchoranalysis.core.cache.CacheCall;
 import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.gui.annotation.builder.AnnotationGuiBuilder;
@@ -48,7 +48,7 @@ public class FileAnnotationNamedChnlCollection extends InteractiveFile {
     private AnnotationGuiBuilder<?> annotation;
     private VideoStatsModuleGlobalParams mpg;
     private AnnotationRefresher annotationRefresher;
-    private CachedOperation<AnnotationSummary, ? extends Throwable> op;
+    private CacheCall<AnnotationSummary, ? extends Throwable> op;
     private MarkEvaluatorManager markEvaluatorManager;
 
     public FileAnnotationNamedChnlCollection(

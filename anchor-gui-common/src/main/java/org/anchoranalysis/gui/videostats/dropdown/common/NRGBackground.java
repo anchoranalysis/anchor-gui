@@ -31,7 +31,6 @@ import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.functional.CallableWithException;
 import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.name.provider.NamedProvider;
-import org.anchoranalysis.core.progress.IdentityOperationWithProgressReporter;
 import org.anchoranalysis.core.progress.CallableWithProgressReporter;
 import org.anchoranalysis.core.progress.ProgressReporterNull;
 import org.anchoranalysis.feature.nrg.NRGStackWithParams;
@@ -41,7 +40,7 @@ import org.anchoranalysis.gui.series.TimeSequenceProvider;
 import org.anchoranalysis.gui.videostats.INRGStackGetter;
 import org.anchoranalysis.gui.videostats.dropdown.AdderAppendNRGStack;
 import org.anchoranalysis.gui.videostats.dropdown.IAddVideoStatsModule;
-import org.anchoranalysis.gui.videostats.dropdown.OperationCreateBackgroundSet;
+import org.anchoranalysis.gui.videostats.dropdown.CreateBackgroundSetFactory;
 import org.anchoranalysis.image.stack.Stack;
 import org.anchoranalysis.image.stack.wrap.WrapStackAsTimeSequence;
 import lombok.AllArgsConstructor;
@@ -70,7 +69,7 @@ public class NRGBackground {
             CallableWithProgressReporter<NRGStackWithParams, GetOperationFailedException> opNrgStack
     ) {
         return new NRGBackground(
-                opBackgroundSet, opNrgStack, new IdentityOperationWithProgressReporter<>(1));
+                opBackgroundSet, opNrgStack, progresssReporter->1);
     }
 
     public static <E extends Exception> NRGBackground createStack(
@@ -134,7 +133,7 @@ public class NRGBackground {
     private static CallableWithProgressReporter<BackgroundSet, BackgroundStackContainerException>
             convertProvider(
                     CallableWithProgressReporter<TimeSequenceProvider, ? extends Throwable> in) {
-        return new OperationCreateBackgroundSet(in);
+        return CreateBackgroundSetFactory.createCached(in);
     }
 
     public CallableWithException<NRGStackWithParams, GetOperationFailedException> getNrgStack() {

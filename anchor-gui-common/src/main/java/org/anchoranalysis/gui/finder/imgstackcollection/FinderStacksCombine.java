@@ -30,7 +30,7 @@ import java.util.ArrayList;
 import java.util.List;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.name.provider.NamedProvider;
-import org.anchoranalysis.core.progress.CachedOperationWithProgressReporter;
+import org.anchoranalysis.core.progress.CacheCallWithProgressReporter;
 import org.anchoranalysis.core.progress.CallableWithProgressReporter;
 import org.anchoranalysis.core.progress.ProgressReporterNull;
 import org.anchoranalysis.image.stack.NamedStacks;
@@ -42,9 +42,9 @@ public class FinderStacksCombine implements FinderStacks {
 
     private List<FinderStacks> list = new ArrayList<>();
 
-    private CachedOperationWithProgressReporter<NamedProvider<Stack>, OperationFailedException>
+    private CallableWithProgressReporter<NamedProvider<Stack>, OperationFailedException>
             operation =
-                    CachedOperationWithProgressReporter.wrap(
+                    CacheCallWithProgressReporter.of(
                             pr -> {
                                 NamedStacks out = new NamedStacks();
 

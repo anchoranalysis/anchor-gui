@@ -29,7 +29,7 @@ package org.anchoranalysis.gui.videostats.dropdown;
 import org.anchoranalysis.core.error.reporter.ErrorReporter;
 import org.anchoranalysis.core.functional.function.FunctionWithException;
 import org.anchoranalysis.core.index.GetOperationFailedException;
-import org.anchoranalysis.core.progress.CachedOperationWithProgressReporter;
+import org.anchoranalysis.core.progress.CacheCallWithProgressReporter;
 import org.anchoranalysis.core.progress.CallableWithProgressReporter;
 import org.anchoranalysis.core.progress.ProgressReporter;
 import org.anchoranalysis.core.property.IPropertyValueSendable;
@@ -42,9 +42,7 @@ import org.anchoranalysis.gui.videostats.threading.InteractiveThreadPool;
 import org.anchoranalysis.image.experiment.identifiers.StackIdentifiers;
 import org.anchoranalysis.image.stack.DisplayStack;
 
-public class OperationCreateBackgroundSetWithAdder
-        extends CachedOperationWithProgressReporter<
-                BackgroundSetWithAdder, BackgroundStackContainerException> {
+public class OperationCreateBackgroundSetWithAdder {
 
     private IAddVideoStatsModule parentAdder;
     private InteractiveThreadPool threadPool;
@@ -53,26 +51,14 @@ public class OperationCreateBackgroundSetWithAdder
     private NRGBackground nrgBackground;
     private NRGBackgroundAdder<BackgroundStackContainerException> nrgBackgroundNew;
 
-    private CachedOperationWithProgressReporter<IAddVideoStatsModule, BackgroundStackContainerException>
-            operationIAddVideoStatsModule =
-                    CachedOperationWithProgressReporter.wrap(
-                            progressReporter -> {
-                                BackgroundSetWithAdder bwsa =
-                                        OperationCreateBackgroundSetWithAdder.this.call(
-                                                progressReporter);
-                                return bwsa.getAdder();
-                            });
+    private CallableWithProgressReporter<IAddVideoStatsModule, BackgroundStackContainerException>
+            operationIAddVideoStatsModule;
 
-    private CachedOperationWithProgressReporter<BackgroundSet, BackgroundStackContainerException>
-            operationBackgroundSet =
-                    CachedOperationWithProgressReporter.wrap(
-                            progressReporter -> {
-                                BackgroundSetWithAdder bwsa =
-                                        OperationCreateBackgroundSetWithAdder.this.call(
-                                                progressReporter);
-                                return bwsa.getBackgroundSet();
-                            });
-
+    private CallableWithProgressReporter<BackgroundSet, BackgroundStackContainerException>
+            operationBackgroundSet;
+    
+    private final CallableWithProgressReporter<BackgroundSetWithAdder, BackgroundStackContainerException> cachedOp;
+    
     public OperationCreateBackgroundSetWithAdder(
             NRGBackground nrgBackground,
             IAddVideoStatsModule parentAdder,
@@ -89,10 +75,21 @@ public class OperationCreateBackgroundSetWithAdder
                 new NRGBackgroundAdder<>(
                         nrgBackground.copyChangeOp(operationBackgroundSet),
                         operationIAddVideoStatsModule);
+        
+        this.cachedOp = CacheCallWithProgressReporter.of(this::execute);
+        
+        this.operationIAddVideoStatsModule =
+                CacheCallWithProgressReporter.of(
+                        progressReporter -> cachedOp.call(progressReporter).getAdder()
+                );
+        
+        this.operationBackgroundSet =
+                CacheCallWithProgressReporter.of(
+                        progressReporter -> cachedOp.call(progressReporter).getBackgroundSet()
+                );
     }
 
-    @Override
-    protected BackgroundSetWithAdder execute(ProgressReporter progressReporter) throws BackgroundStackContainerException {
+    private BackgroundSetWithAdder execute(ProgressReporter progressReporter) throws BackgroundStackContainerException {
         BackgroundSetWithAdder bwsa = new BackgroundSetWithAdder();
 
         BackgroundSet backgroundSet;

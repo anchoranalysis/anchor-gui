@@ -67,10 +67,10 @@ class OverlapChecker {
 
         for (Mark prop : proposed) {
 
-            VoxelizedMarkMemo pmProp = new VoxelizedMarkMemo(prop, nrgStack, regionMap, null);
+            VoxelizedMarkMemo pmProp = new VoxelizedMarkMemo(prop, nrgStack, regionMap);
 
             for (Mark exst : existing) {
-                VoxelizedMarkMemo pmExst = new VoxelizedMarkMemo(exst, nrgStack, regionMap, null);
+                VoxelizedMarkMemo pmExst = new VoxelizedMarkMemo(exst, nrgStack, regionMap);
 
                 try {
                     if (boundingBoxIntersectionExists(pmProp, pmExst)

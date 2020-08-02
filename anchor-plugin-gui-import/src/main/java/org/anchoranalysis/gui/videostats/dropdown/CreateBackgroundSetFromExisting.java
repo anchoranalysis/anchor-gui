@@ -27,9 +27,8 @@
 package org.anchoranalysis.gui.videostats.dropdown;
 
 import org.anchoranalysis.anchor.mpp.bean.init.MPPInitParams;
-import org.anchoranalysis.core.cache.CachedOperation;
+import org.anchoranalysis.core.cache.CacheCall;
 import org.anchoranalysis.core.error.CreateException;
-import org.anchoranalysis.core.progress.CachedOperationWithProgressReporter;
 import org.anchoranalysis.core.progress.CallableWithProgressReporter;
 import org.anchoranalysis.core.progress.ProgressReporter;
 import org.anchoranalysis.gui.backgroundset.BackgroundSet;
@@ -42,15 +41,14 @@ import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
 public class CreateBackgroundSetFromExisting
-        extends CachedOperationWithProgressReporter<BackgroundSet, BackgroundStackContainerException> {
+        implements CallableWithProgressReporter<BackgroundSet, BackgroundStackContainerException> {
 
     private final CallableWithProgressReporter<BackgroundSet, BackgroundStackContainerException>
             existingBackgroundSet;
-    private CachedOperation<MPPInitParams, CreateException> pso;
+    private CacheCall<MPPInitParams, CreateException> pso;
 
     @Override
-    protected BackgroundSet execute(ProgressReporter progressReporter)
-            throws BackgroundStackContainerException {
+    public BackgroundSet call(ProgressReporter progressReporter) throws BackgroundStackContainerException {
 
         try {
             BackgroundSet bsExisting = existingBackgroundSet.call(progressReporter);

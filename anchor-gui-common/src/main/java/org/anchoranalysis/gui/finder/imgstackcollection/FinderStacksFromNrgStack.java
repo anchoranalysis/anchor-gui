@@ -29,7 +29,7 @@ package org.anchoranalysis.gui.finder.imgstackcollection;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.name.provider.NamedProvider;
-import org.anchoranalysis.core.progress.CachedOperationWithProgressReporter;
+import org.anchoranalysis.core.progress.CacheCallWithProgressReporter;
 import org.anchoranalysis.core.progress.CallableWithProgressReporter;
 import org.anchoranalysis.core.progress.ProgressReporterNull;
 import org.anchoranalysis.feature.nrg.NRGStackWithParams;
@@ -46,7 +46,7 @@ public class FinderStacksFromNrgStack implements FinderStacks {
     
     private CallableWithProgressReporter<Stack, OperationFailedException>
             operationExtractUntilThreeChannels =
-                    CachedOperationWithProgressReporter.wrap(
+                    CacheCallWithProgressReporter.of(
                             pr -> {
                                 try {
                                     NRGStackWithParams nrgStackWithParams = delegate.operationNrgStackWithProgressReporter()
@@ -60,9 +60,9 @@ public class FinderStacksFromNrgStack implements FinderStacks {
                                 }
                             });
 
-    private CachedOperationWithProgressReporter<NamedProvider<Stack>, OperationFailedException>
+    private CallableWithProgressReporter<NamedProvider<Stack>, OperationFailedException>
             operationStacks =
-                    CachedOperationWithProgressReporter.wrap(
+                    CacheCallWithProgressReporter.of(
                             pr -> {
                                 NamedStacks stackCollection =
                                         new NamedStacks();

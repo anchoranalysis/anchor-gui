@@ -34,7 +34,7 @@ import org.anchoranalysis.core.progress.ProgressReporterMultiple;
 import org.anchoranalysis.core.progress.ProgressReporterOneOfMany;
 import org.anchoranalysis.gui.backgroundset.BackgroundSet;
 import org.anchoranalysis.gui.container.background.BackgroundStackContainerException;
-import org.anchoranalysis.gui.videostats.dropdown.OperationCreateBackgroundSet;
+import org.anchoranalysis.gui.videostats.dropdown.CreateBackgroundSetFactory;
 import org.anchoranalysis.gui.videostats.link.DefaultLinkStateManager;
 import org.anchoranalysis.image.extent.ImageDimensions;
 import org.anchoranalysis.image.stack.DisplayStack;
@@ -57,7 +57,7 @@ public class AnnotationBackground {
             NamedProvider<Stack> backgroundStacks,
             String stackNameVisualOriginal)
             throws BackgroundStackContainerException {
-        backgroundSetOp = new OperationCreateBackgroundSet(backgroundStacks);
+        backgroundSetOp = CreateBackgroundSetFactory.createCached(backgroundStacks);
         try {
             defaultBackground = backgroundSetOp
                 .call(new ProgressReporterOneOfMany(prm))

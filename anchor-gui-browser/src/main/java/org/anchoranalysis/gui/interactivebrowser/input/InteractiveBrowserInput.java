@@ -37,7 +37,7 @@ import org.anchoranalysis.bean.NamedBean;
 import org.anchoranalysis.bean.Provider;
 import org.anchoranalysis.bean.shared.params.keyvalue.KeyValueParamsInitParams;
 import org.anchoranalysis.bean.shared.params.keyvalue.KeyValueParamsProvider;
-import org.anchoranalysis.core.cache.CachedOperation;
+import org.anchoranalysis.core.cache.CacheCall;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.functional.CallableWithException;
@@ -120,7 +120,7 @@ public class InteractiveBrowserInput implements InputFromManager {
     }
     
     private static <T> CallableWithException<T, OperationFailedException> cachedOperationFromProvider(Provider<T> provider) {
-       return CachedOperation.of( ()->{
+       return CacheCall.of( ()->{
             try {
                 return provider.create();
             } catch (CreateException e) {

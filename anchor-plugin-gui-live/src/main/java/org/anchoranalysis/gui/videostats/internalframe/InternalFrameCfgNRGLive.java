@@ -34,7 +34,6 @@ import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.idgetter.IDGetter;
 import org.anchoranalysis.core.index.container.ArrayListContainer;
 import org.anchoranalysis.core.index.container.bridge.BoundedIndexContainerBridgeWithoutIndex;
-import org.anchoranalysis.core.progress.IdentityOperationWithProgressReporter;
 import org.anchoranalysis.gui.backgroundset.BackgroundSet;
 import org.anchoranalysis.gui.frame.multioverlay.instantstate.InternalFrameOverlayedInstantStateToRGBSelectable;
 import org.anchoranalysis.gui.image.frame.ISliderState;
@@ -75,7 +74,7 @@ public class InternalFrameCfgNRGLive {
                 .addDefinition(
                         mpg,
                         new ChangeableBackgroundDefinitionSimple(
-                                new IdentityOperationWithProgressReporter<>(backgroundSet)));
+                                progresssReporter->backgroundSet));
 
         return sliderState;
     }

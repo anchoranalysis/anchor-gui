@@ -28,7 +28,7 @@ package org.anchoranalysis.gui.io.loader.manifest.finder.historyfolder;
 
 import org.anchoranalysis.anchor.mpp.feature.instantstate.CfgNRGInstantState;
 import org.anchoranalysis.anchor.mpp.feature.nrg.cfg.CfgNRG;
-import org.anchoranalysis.core.index.ITypedGetFromIndex;
+import org.anchoranalysis.core.index.GetterFromIndex;
 import org.anchoranalysis.core.index.TypedGetFromIndexBridge;
 import org.anchoranalysis.io.bean.deserializer.Deserializer;
 import org.anchoranalysis.io.manifest.deserializer.folder.DeserializeFromFolder;
@@ -46,7 +46,7 @@ class DeserializeFromSerializedCfgNRG extends DeserializeFromFolder<CfgNRGInstan
     }
 
     @Override
-    protected ITypedGetFromIndex<CfgNRGInstantState> createCtnr(SequencedFolder folder) {
+    protected GetterFromIndex<CfgNRGInstantState> createCtnr(SequencedFolder folder) {
         return new TypedGetFromIndexBridge<>(
                 new SequencedFolderDeserializer<>(folder, deserializer),
                 new CfgNRGInstantStateFromCfgNRGBridge());

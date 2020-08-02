@@ -27,7 +27,7 @@
 package org.anchoranalysis.gui.backgroundset;
 
 import java.util.Set;
-import org.anchoranalysis.core.cache.CachedOperation;
+import org.anchoranalysis.core.cache.CacheCall;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.functional.CallableWithException;
@@ -241,7 +241,7 @@ public class BackgroundSetFactory {
             // The way we handle this means we cannot add the (only first three) brackets on the
             // name, as the image has not yet been evaluated
             for (String id : keys) {
-                CallableWithException<BackgroundStackContainer, BackgroundStackContainerException> operation = CachedOperation.of(
+                CallableWithException<BackgroundStackContainer, BackgroundStackContainerException> operation = CacheCall.of(
                         new AddBackgroundSetItem(namedStacks, id)
                 );
                 backgroundSet.addItem(id, operation);

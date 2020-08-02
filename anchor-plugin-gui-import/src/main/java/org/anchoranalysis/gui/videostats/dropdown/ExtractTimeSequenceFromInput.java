@@ -30,27 +30,23 @@ import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.functional.IdentityOperation;
 import org.anchoranalysis.core.name.store.LazyEvaluationStore;
-import org.anchoranalysis.core.progress.CachedOperationWithProgressReporter;
+import org.anchoranalysis.core.progress.CallableWithProgressReporter;
 import org.anchoranalysis.core.progress.ProgressReporter;
 import org.anchoranalysis.gui.series.TimeSequenceProvider;
 import org.anchoranalysis.image.io.RasterIOException;
 import org.anchoranalysis.image.stack.TimeSequence;
 import org.anchoranalysis.plugin.io.bean.input.stack.StackSequenceInput;
+import lombok.AllArgsConstructor;
 
+@AllArgsConstructor
 public class ExtractTimeSequenceFromInput
-        extends CachedOperationWithProgressReporter<TimeSequenceProvider, CreateException> {
+        implements CallableWithProgressReporter<TimeSequenceProvider, CreateException> {
 
     private StackSequenceInput inputObject;
     private int seriesNum;
 
     public ExtractTimeSequenceFromInput(StackSequenceInput inputObject) {
         this(inputObject, 0);
-    }
-
-    public ExtractTimeSequenceFromInput(StackSequenceInput inputObject, int seriesNum) {
-        super();
-        this.inputObject = inputObject;
-        this.seriesNum = seriesNum;
     }
 
     private TimeSequenceProvider doOperationWithException(ProgressReporter progressReporter)
@@ -74,8 +70,7 @@ public class ExtractTimeSequenceFromInput
     }
 
     @Override
-    protected TimeSequenceProvider execute(ProgressReporter progressReporter)
-            throws CreateException {
+    public TimeSequenceProvider call(ProgressReporter progressReporter) throws CreateException {
         return doOperationWithException(progressReporter);
     }
 }

@@ -34,7 +34,7 @@ import java.util.Set;
 import lombok.RequiredArgsConstructor;
 import org.anchoranalysis.anchor.mpp.bean.init.MPPInitParams;
 import org.anchoranalysis.anchor.mpp.feature.bean.mark.MarkEvaluator;
-import org.anchoranalysis.core.cache.CachedOperation;
+import org.anchoranalysis.core.cache.CacheCall;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.error.OperationFailedException;
@@ -60,12 +60,12 @@ public class MarkEvaluatorSetForImage {
 
     private class Resolved implements CallableWithException<MarkEvaluatorResolved, OperationFailedException> {
 
-        private CachedOperation<MPPInitParams, CreateException> operationProposerSharedObjects;
+        private CacheCall<MPPInitParams, CreateException> operationProposerSharedObjects;
         private MarkEvaluator me;
 
         public Resolved(MarkEvaluator me) throws CreateException {
             this.me = me;
-            operationProposerSharedObjects = CachedOperation.of(
+            operationProposerSharedObjects = CacheCall.of(
                     new OperationInitParams(
                             namedStacks,
                             keyParams,
@@ -101,7 +101,7 @@ public class MarkEvaluatorSetForImage {
 
     public void add(String key, MarkEvaluator me) throws OperationFailedException {
         try {
-            map.put(key, CachedOperation.of(new Resolved(me)) );
+            map.put(key, CacheCall.of(new Resolved(me)) );
         } catch (CreateException e) {
             throw new OperationFailedException(e);
         }

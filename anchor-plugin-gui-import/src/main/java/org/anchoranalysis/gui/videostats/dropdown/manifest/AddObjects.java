@@ -32,10 +32,11 @@ import org.anchoranalysis.anchor.mpp.cfg.Cfg;
 import org.anchoranalysis.anchor.mpp.feature.instantstate.CfgNRGInstantState;
 import org.anchoranalysis.anchor.mpp.feature.instantstate.CfgNRGNonHandleInstantState;
 import org.anchoranalysis.anchor.mpp.feature.nrg.cfg.CfgNRG;
-import org.anchoranalysis.core.cache.CachedOperation;
+import org.anchoranalysis.core.cache.CacheCall;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.index.container.SingleContainer;
 import org.anchoranalysis.core.name.provider.NamedProvider;
+import org.anchoranalysis.core.name.provider.NamedProviderGetException;
 import org.anchoranalysis.gui.finder.FinderNrgStack;
 import org.anchoranalysis.gui.io.loader.manifest.finder.FinderCfgFolder;
 import org.anchoranalysis.gui.io.loader.manifest.finder.FinderObjectCollectionFolder;
@@ -99,7 +100,13 @@ class AddObjects {
                     DropDownUtilities.addObjectCollection(
                             subMenu,
                             delegate,
-                            new OperationFromNamedProvider<>(providers, key),
+                            CacheCall.of( () -> {
+                                try {
+                                    return providers.getException(key);
+                                } catch (NamedProviderGetException e) {
+                                    throw new OperationFailedException(e);
+                                }      
+                            }),
                             key,
                             operationBwsaWithNRG.nrgBackground(),
                             mpg,
@@ -124,8 +131,8 @@ class AddObjects {
 
             if (finderFinalCfgNRG.exists()) {
 
-                CachedOperation<LoadContainer<CfgNRGInstantState>, OperationFailedException> op =
-                        CachedOperation.of(
+                CacheCall<LoadContainer<CfgNRGInstantState>, OperationFailedException> op =
+                        CacheCall.of(
                                 () -> {
                                     CfgNRGInstantState instantState;
                                     try {

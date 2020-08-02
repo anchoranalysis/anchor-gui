@@ -28,7 +28,7 @@ package org.anchoranalysis.gui.finder.imgstackcollection;
 
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.name.provider.NamedProvider;
-import org.anchoranalysis.core.progress.CachedOperationWithProgressReporter;
+import org.anchoranalysis.core.progress.CacheCallWithProgressReporter;
 import org.anchoranalysis.core.progress.CallableWithProgressReporter;
 import org.anchoranalysis.core.progress.ProgressReporterNull;
 import org.anchoranalysis.gui.finder.FinderRasterFilesByManifestDescriptionFunction;
@@ -41,9 +41,9 @@ public class FinderStacksFromRootFiles implements FinderStacks {
 
     private FinderRasterFilesByManifestDescriptionFunction delegate;
 
-    private CachedOperationWithProgressReporter<NamedProvider<Stack>, OperationFailedException>
+    private CallableWithProgressReporter<NamedProvider<Stack>, OperationFailedException>
             operationStacks =
-                    CachedOperationWithProgressReporter.wrap(
+                    CacheCallWithProgressReporter.of(
                             pr -> delegate.createStackCollection());
 
     public FinderStacksFromRootFiles(RasterReader rasterReader, String function) {

@@ -26,7 +26,7 @@
 
 package org.anchoranalysis.gui.io.loader.manifest.finder.historyfolder;
 
-import org.anchoranalysis.core.index.ITypedGetFromIndex;
+import org.anchoranalysis.core.index.GetterFromIndex;
 import org.anchoranalysis.io.manifest.deserializer.folder.BundleDeserializers;
 import org.anchoranalysis.io.manifest.deserializer.folder.DeserializeFromFolderBundle;
 import org.anchoranalysis.io.manifest.deserializer.folder.DeserializedObjectFromFolderBundle;
@@ -42,7 +42,7 @@ class DeserializeFromBundleKernelIterDescription
     }
 
     @Override
-    protected ITypedGetFromIndex<KernelIterDescription> createCntr(
+    protected GetterFromIndex<KernelIterDescription> createCntr(
             DeserializedObjectFromFolderBundle<KernelIterDescription> deserializeFromBundle) {
         return deserializeFromBundle;
     }

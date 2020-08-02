@@ -30,7 +30,7 @@ import java.io.IOException;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.functional.CallableWithException;
 import org.anchoranalysis.core.index.GetOperationFailedException;
-import org.anchoranalysis.core.progress.CachedOperationWithProgressReporter;
+import org.anchoranalysis.core.progress.CallableWithProgressReporter;
 import org.anchoranalysis.core.progress.ProgressReporter;
 import org.anchoranalysis.feature.nrg.NRGElemParamsFromImage;
 import org.anchoranalysis.feature.nrg.NRGStackWithParams;
@@ -40,15 +40,14 @@ import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
 class OperationStackWithParams
-        extends CachedOperationWithProgressReporter<NRGStackWithParams, GetOperationFailedException> {
+        implements CallableWithProgressReporter<NRGStackWithParams, GetOperationFailedException> {
 
     private final CallableWithException<NRGStackWithParams, OperationFailedException> nrgStackOperation;
     private final FinderKeyValueParams finderImageParams;
     private final FinderSerializedObject<NRGElemParamsFromImage> finderImageParamsLegacy;
 
     @Override
-    protected NRGStackWithParams execute(ProgressReporter progressReporter)
-            throws GetOperationFailedException {
+    public NRGStackWithParams call(ProgressReporter progressReporter) throws GetOperationFailedException {
 
         try {
             NRGStackWithParams nrgStackWithParams = nrgStackOperation.call();

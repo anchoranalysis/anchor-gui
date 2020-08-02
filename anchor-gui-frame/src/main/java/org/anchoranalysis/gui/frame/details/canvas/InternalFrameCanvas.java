@@ -335,19 +335,13 @@ public class InternalFrameCanvas {
 
         @Override
         public RetrieveElements retrieveElements() {
-
-            RetrieveElementsImage rei = new RetrieveElementsImage();
-
             try {
                 DisplayStack stack = stackProvider.getCurrentDisplayStack().extractFullyOverlayed();
-                rei.setStack(stack);
-                rei.setSlice(stack.extractSlice(canvas.getSlice()));
+                return new RetrieveElementsImage( Optional.of(stack), Optional.of(stack.extractSlice(canvas.getSlice())));
             } catch (CreateException | OperationFailedException e) {
                 errorReporter.recordError(InternalFrameCanvas.class, e);
-                rei.setStack(null);
-                rei.setSlice(null);
+                return new RetrieveElementsImage( Optional.empty(), Optional.empty());
             }
-            return rei;
         }
     }
 

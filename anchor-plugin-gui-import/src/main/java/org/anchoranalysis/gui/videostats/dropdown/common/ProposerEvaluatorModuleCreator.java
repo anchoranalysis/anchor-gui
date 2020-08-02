@@ -27,6 +27,7 @@
 package org.anchoranalysis.gui.videostats.dropdown.common;
 
 import org.anchoranalysis.core.error.InitException;
+import org.anchoranalysis.core.progress.CacheCallWithProgressReporter;
 import org.anchoranalysis.gui.image.frame.ISliderState;
 import org.anchoranalysis.gui.interactivebrowser.MarkEvaluatorSetForImage;
 import org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.IBackgroundUpdater;
@@ -81,11 +82,13 @@ class ProposerEvaluatorModuleCreator extends VideoStatsModuleCreator {
                     e -> {
                         if (e.getMarkEvaluator() != null) {
                             backgroundUpdater.update(
-                                    new CreateBackgroundSetFromExisting(
-                                            nrgBackground.getBackgroundSet(),
-                                            e.getMarkEvaluator()
-                                                    .getProposerSharedObjectsOperation()
-                                            ));
+                                    CacheCallWithProgressReporter.of(
+                                        new CreateBackgroundSetFromExisting(
+                                                nrgBackground.getBackgroundSet(),
+                                                e.getMarkEvaluator()
+                                                        .getProposerSharedObjectsOperation()
+                                                ))
+                                    );
                             markEvaluatorUpdater.setMarkEvaluatorIdentifier(
                                     e.getMarkEvaluatorName());
                         } else {

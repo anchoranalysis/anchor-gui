@@ -29,26 +29,21 @@ package org.anchoranalysis.gui.series;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.name.store.LazyEvaluationStore;
-import org.anchoranalysis.core.progress.CachedOperationWithProgressReporter;
+import org.anchoranalysis.core.progress.CallableWithProgressReporter;
 import org.anchoranalysis.core.progress.ProgressReporter;
 import org.anchoranalysis.image.io.input.ProvidesStackInput;
 import org.anchoranalysis.image.stack.TimeSequence;
+import lombok.AllArgsConstructor;
 
+@AllArgsConstructor
 public class OperationCreateTimeSequence
-        extends CachedOperationWithProgressReporter<TimeSequenceProvider, CreateException> {
+        implements CallableWithProgressReporter<TimeSequenceProvider, CreateException> {
 
     private ProvidesStackInput inputObject;
     private int seriesNum;
 
-    public OperationCreateTimeSequence(ProvidesStackInput inputObject, int seriesNum) {
-        super();
-        this.inputObject = inputObject;
-        this.seriesNum = seriesNum;
-    }
-
     @Override
-    protected TimeSequenceProvider execute(ProgressReporter progressReporter)
-            throws CreateException {
+    public TimeSequenceProvider call(ProgressReporter progressReporter) throws CreateException {
         try {
             return doOperationWithException(progressReporter);
         } catch (OperationFailedException e) {

@@ -35,7 +35,6 @@ import org.anchoranalysis.anchor.overlay.OverlayedInstantState;
 import org.anchoranalysis.core.bridge.BridgeElementWithIndex;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.functional.CallableWithException;
-import org.anchoranalysis.core.progress.IdentityOperationWithProgressReporter;
 import org.anchoranalysis.gui.file.opened.IOpenedFileGUI;
 import org.anchoranalysis.gui.frame.multioverlay.RasterMultiCreator;
 import org.anchoranalysis.gui.frame.multiraster.NamedRasterSet;
@@ -187,7 +186,7 @@ public class OpenedFileGUIMultipleDropDown {
                     new RasterMultiModuleCreator(list, "multi-raster", mpg);
             VideoStatsModuleCreatorAndAdder creatorAndAdder =
                     new VideoStatsModuleCreatorAndAdder(
-                            new IdentityOperationWithProgressReporter<>(adder.createChild()),
+                            progresssReporter->adder.createChild(),
                             creator);
             out.add(
                     new VideoStatsOperationFromCreatorAndAdder(
@@ -236,7 +235,7 @@ public class OpenedFileGUIMultipleDropDown {
                     new RasterMultiCreator<>(list, rootOperation.getName(), mpg, bridge);
             VideoStatsModuleCreatorAndAdder creatorAndAdder =
                     new VideoStatsModuleCreatorAndAdder(
-                            new IdentityOperationWithProgressReporter<>(adder), creator);
+                            progresssReporter->adder, creator);
             subMenu.add(
                     new VideoStatsOperationFromCreatorAndAdder(
                             rootOperation.getName(),

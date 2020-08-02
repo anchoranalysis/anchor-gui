@@ -29,12 +29,11 @@ package org.anchoranalysis.gui.io.loader.manifest.finder;
 import java.util.List;
 import java.util.Optional;
 import org.anchoranalysis.anchor.mpp.cfg.Cfg;
-import org.anchoranalysis.core.cache.CachedOperation;
 import org.anchoranalysis.core.error.OperationFailedException;
-import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.name.provider.NameValueSet;
 import org.anchoranalysis.core.name.provider.NamedProvider;
 import org.anchoranalysis.core.name.store.LazyEvaluationStore;
+import org.anchoranalysis.gui.finder.AddFromSequenceHelper;
 import org.anchoranalysis.io.bean.deserializer.Deserializer;
 import org.anchoranalysis.io.bean.deserializer.XStreamDeserializer;
 import org.anchoranalysis.io.manifest.ManifestRecorder;
@@ -45,7 +44,6 @@ import org.anchoranalysis.io.manifest.folder.FolderWrite;
 import org.anchoranalysis.io.manifest.match.FolderWriteAnd;
 import org.anchoranalysis.io.manifest.match.FolderWritePath;
 import org.anchoranalysis.io.manifest.match.helper.folderwrite.FolderWriteFileFunctionType;
-import org.anchoranalysis.io.manifest.sequencetype.SequenceType;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
@@ -75,7 +73,7 @@ public class FinderCfgFolder extends FinderSingleFolder {
         }
     }
 
-    // If namesAsIndexes is true, we use the indexes as names instead of the existing names
+
     public NamedProvider<Cfg> createNamedProvider(boolean namesAsIndexes)
             throws OperationFailedException {
 
@@ -88,29 +86,7 @@ public class FinderCfgFolder extends FinderSingleFolder {
         SequencedFolderDeserializer<Cfg> sfrr =
                 new SequencedFolderDeserializer<>(getFoundFolder(), deserializer);
 
-        SequenceType st = getFoundFolder().getAssociatedSequence();
-        int min = st.getMinimumIndex();
-
-        for (int i = min; i != -1; i = st.nextIndex(i)) {
-            String name = st.indexStr(i);
-
-            final int index = i;
-            out.add( nameForKey(namesAsIndexes, index, name), CachedOperation.of( ()->{
-                try {
-                    return sfrr.get(index);
-                } catch (GetOperationFailedException e) {
-                    throw new OperationFailedException(e);
-                }       
-            }));
-        }
+        AddFromSequenceHelper.addFromSequence(getFoundFolder().getAssociatedSequence(), sfrr, out::add, namesAsIndexes);
         return out;
-    }
-    
-    private static String nameForKey(boolean namesAsIndexes, int index, String name) {
-        if (namesAsIndexes) {
-            return String.valueOf(index);
-        } else {
-            return name;
-        }
     }
 }
