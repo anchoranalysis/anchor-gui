@@ -28,7 +28,7 @@ package org.anchoranalysis.gui.feature.evaluator.nrgtree;
 
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreeNode;
-import org.anchoranalysis.anchor.mpp.pair.Pair;
+import org.anchoranalysis.anchor.mpp.pair.IdentifiablePair;
 import org.anchoranalysis.anchor.overlay.Overlay;
 import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.error.OperationFailedException;
@@ -105,7 +105,7 @@ public class FeatureCalcDescriptionTreeModel extends DefaultTreeModel
     }
 
     @Override
-    public void updatePair(Pair<Overlay> pair, NRGStackWithParams nrgStack) {
+    public void updatePair(IdentifiablePair<Overlay> pair, NRGStackWithParams nrgStack) {
 
         try {
             // If we have no mark matching the current id

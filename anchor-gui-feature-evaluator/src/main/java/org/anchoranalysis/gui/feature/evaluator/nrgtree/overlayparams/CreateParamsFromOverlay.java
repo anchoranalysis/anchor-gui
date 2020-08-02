@@ -28,7 +28,7 @@ package org.anchoranalysis.gui.feature.evaluator.nrgtree.overlayparams;
 
 import org.anchoranalysis.anchor.mpp.mark.Mark;
 import org.anchoranalysis.anchor.mpp.overlay.OverlayMark;
-import org.anchoranalysis.anchor.mpp.pair.Pair;
+import org.anchoranalysis.anchor.mpp.pair.IdentifiablePair;
 import org.anchoranalysis.anchor.overlay.Overlay;
 import org.anchoranalysis.anchor.overlay.object.OverlayObjectMask;
 import org.anchoranalysis.core.error.friendly.AnchorFriendlyRuntimeException;
@@ -64,7 +64,7 @@ public class CreateParamsFromOverlay {
     }
 
     public static CreateFeatureInput<FeatureInput> addForOverlayPair(
-            Pair<Overlay> pair,
+            IdentifiablePair<Overlay> pair,
             NRGStackWithParams raster,
             FeatureListWithRegionMap<?> featureList) {
         if (pair.getSource() instanceof OverlayMark) {

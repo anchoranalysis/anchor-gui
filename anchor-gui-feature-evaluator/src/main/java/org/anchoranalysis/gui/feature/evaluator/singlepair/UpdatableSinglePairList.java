@@ -27,7 +27,7 @@
 package org.anchoranalysis.gui.feature.evaluator.singlepair;
 
 import java.util.ArrayList;
-import org.anchoranalysis.anchor.mpp.pair.Pair;
+import org.anchoranalysis.anchor.mpp.pair.IdentifiablePair;
 import org.anchoranalysis.anchor.overlay.Overlay;
 import org.anchoranalysis.feature.nrg.NRGStackWithParams;
 
@@ -48,7 +48,7 @@ public class UpdatableSinglePairList implements IUpdatableSinglePair {
     }
 
     @Override
-    public void updatePair(Pair<Overlay> pair, NRGStackWithParams raster) {
+    public void updatePair(IdentifiablePair<Overlay> pair, NRGStackWithParams raster) {
 
         for (IUpdatableSinglePair iup : delegate) {
             iup.updatePair(pair, raster);

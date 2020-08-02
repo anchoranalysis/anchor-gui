@@ -26,7 +26,7 @@
 
 package org.anchoranalysis.gui.feature.evaluator;
 
-import org.anchoranalysis.anchor.mpp.pair.Pair;
+import org.anchoranalysis.anchor.mpp.pair.IdentifiablePair;
 import org.anchoranalysis.anchor.overlay.Overlay;
 import org.anchoranalysis.anchor.overlay.collection.OverlayCollection;
 import org.anchoranalysis.core.error.CreateException;
@@ -82,7 +82,7 @@ class SinglePairUpdater {
 
         assert (nrgStack != null);
 
-        Pair<Overlay> pair = finder.findPairFromCurrentSelection(overlays, nrgStack);
+        IdentifiablePair<Overlay> pair = finder.findPairFromCurrentSelection(overlays, nrgStack);
 
         if (pair != null) {
 
@@ -103,7 +103,7 @@ class SinglePairUpdater {
         updatableMarkPairList.updateSingle(overlay, raster);
     }
 
-    private void updatePair(Pair<Overlay> pair, NRGStackWithParams raster) {
+    private void updatePair(IdentifiablePair<Overlay> pair, NRGStackWithParams raster) {
         updatableMarkPairList.updatePair(pair, raster);
     }
 }
