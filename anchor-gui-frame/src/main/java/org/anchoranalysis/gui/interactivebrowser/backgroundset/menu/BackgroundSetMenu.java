@@ -32,37 +32,26 @@ import javax.swing.JMenu;
 import javax.swing.JOptionPane;
 import javax.swing.event.MenuEvent;
 import javax.swing.event.MenuListener;
+import lombok.AllArgsConstructor;
 import org.anchoranalysis.core.error.reporter.ErrorReporter;
-import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.index.SetOperationFailedException;
-import org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.definition.IImageStackCntrFromName;
+import org.anchoranalysis.gui.container.background.BackgroundStackContainerException;
+import org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.definition.ImageStackContainerFromName;
 
 // A menu which allows changing of the background
 class BackgroundSetMenu {
 
     private JMenu menu;
 
+    @AllArgsConstructor
     public static class BackgroundChangeAction extends AbstractAction {
 
         private static final long serialVersionUID = -7238970062538672779L;
 
         private String backgroundSetName;
-        private IImageStackCntrFromName stackCntrGetter;
+        private ImageStackContainerFromName stackCntrGetter;
         private IBackgroundSetter backgroundSetter;
         private ErrorReporter errorReporter;
-
-        public BackgroundChangeAction(
-                String backgroundSetName,
-                IImageStackCntrFromName stackCntrGetter,
-                IBackgroundSetter backgroundSetter,
-                ErrorReporter errorReporter) {
-            super(backgroundSetName);
-            assert (backgroundSetter != null);
-            this.backgroundSetName = backgroundSetName;
-            this.stackCntrGetter = stackCntrGetter;
-            this.backgroundSetter = backgroundSetter;
-            this.errorReporter = errorReporter;
-        }
 
         @Override
         public void actionPerformed(ActionEvent arg0) {
@@ -70,11 +59,7 @@ class BackgroundSetMenu {
             try {
                 backgroundSetter.setImageStackCntr(
                         stackCntrGetter.imageStackCntrFromName(backgroundSetName));
-            } catch (GetOperationFailedException e) {
-                errorReporter.recordError(BackgroundSetMenu.class, e);
-                JOptionPane.showMessageDialog(
-                        null, String.format("Background set '%s' failed", backgroundSetName));
-            } catch (SetOperationFailedException e) {
+            } catch (BackgroundStackContainerException | SetOperationFailedException e) {
                 errorReporter.recordError(BackgroundSetMenu.class, e);
                 JOptionPane.showMessageDialog(
                         null, String.format("Background set '%s' failed", backgroundSetName));
@@ -87,7 +72,7 @@ class BackgroundSetMenu {
     private static class ShowMenuListener implements MenuListener {
 
         private IGetNames nameGetter;
-        private IImageStackCntrFromName stackCntrFromName;
+        private ImageStackContainerFromName stackCntrFromName;
         private IBackgroundSetter backgroundSetter;
         private JMenu menu;
         private ErrorReporter errorReporter;
@@ -96,7 +81,7 @@ class BackgroundSetMenu {
                 JMenu menu,
                 IBackgroundSetter backgroundSetter,
                 IGetNames nameGetter,
-                IImageStackCntrFromName stackCntrFromName,
+                ImageStackContainerFromName stackCntrFromName,
                 ErrorReporter errorReporter) {
             this.menu = menu;
             this.nameGetter = nameGetter;
@@ -118,7 +103,7 @@ class BackgroundSetMenu {
             this.nameGetter = nameGetter;
         }
 
-        public void setStackCntrFromName(IImageStackCntrFromName stackCntrFromName) {
+        public void setStackCntrFromName(ImageStackContainerFromName stackCntrFromName) {
             this.stackCntrFromName = stackCntrFromName;
         }
 
@@ -137,7 +122,7 @@ class BackgroundSetMenu {
 
     public BackgroundSetMenu(
             final IGetNames nameGetter,
-            IImageStackCntrFromName stackCntrFromName,
+            ImageStackContainerFromName stackCntrFromName,
             IBackgroundSetter backgroundSetter,
             ErrorReporter errorReporter) {
         assert (backgroundSetter != null);
@@ -152,7 +137,7 @@ class BackgroundSetMenu {
         return menu;
     }
 
-    public void update(IGetNames nameGetter, IImageStackCntrFromName stackCntrFromName) {
+    public void update(IGetNames nameGetter, ImageStackContainerFromName stackCntrFromName) {
         showMenuListener.setNameGetter(nameGetter);
         showMenuListener.setStackCntrFromName(stackCntrFromName);
     }

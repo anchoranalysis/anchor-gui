@@ -27,6 +27,8 @@
 package org.anchoranalysis.plugin.gui.bean.exporttask;
 
 import javax.swing.ProgressMonitor;
+import lombok.Getter;
+import lombok.Setter;
 import org.anchoranalysis.bean.annotation.BeanField;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.OperationFailedException;
@@ -39,7 +41,7 @@ public abstract class ExportTaskRasterGeneratorFromBoundedIndexContainer<T>
         extends ExportTaskRasterGeneratorSequence<T> {
 
     // START BEAN PROPERTIES
-    @BeanField private ExportTaskBoundedIndexContainerGeneratorSeries<T> delegate;
+    @BeanField @Getter @Setter private ExportTaskBoundedIndexContainerGeneratorSeries<T> delegate;
     // END BEAN PROPERTIES
 
     public ExportTaskRasterGeneratorFromBoundedIndexContainer() {
@@ -80,12 +82,7 @@ public abstract class ExportTaskRasterGeneratorFromBoundedIndexContainer<T>
             throws ExportTaskFailedException {
 
         try {
-            return delegate.execute(
-                    params,
-                    progressMonitor,
-                    createGeneratorSequenceWriter(params),
-                    params.getOutputManager(),
-                    getOutputName());
+            return delegate.execute(params, progressMonitor, createGeneratorSequenceWriter(params));
         } catch (CreateException e) {
             throw new ExportTaskFailedException(e);
         }
@@ -105,13 +102,5 @@ public abstract class ExportTaskRasterGeneratorFromBoundedIndexContainer<T>
 
     public void setLimitIterations(int limitIterations) {
         delegate.setLimitIterations(limitIterations);
-    }
-
-    public ExportTaskBoundedIndexContainerGeneratorSeries<T> getDelegate() {
-        return delegate;
-    }
-
-    public void setDelegate(ExportTaskBoundedIndexContainerGeneratorSeries<T> delegate) {
-        this.delegate = delegate;
     }
 }

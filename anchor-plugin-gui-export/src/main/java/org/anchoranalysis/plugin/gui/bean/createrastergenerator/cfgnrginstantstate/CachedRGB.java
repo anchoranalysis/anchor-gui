@@ -162,7 +162,7 @@ class CachedRGB {
 
                 VoxelBox<ByteBuffer> vbTarget = rgbTarget.getVoxelBox().asByte();
 
-                int bgChnl = selectBackgroundChnl(c, backgroundOrig.getNumChnl());
+                int bgChnl = selectBackgroundChnl(c, backgroundOrig.getNumberChannels());
                 backgroundOrig.copyPixelsTo(bgChnl, bboxClipped, vbTarget, bboxClipped);
             }
         }

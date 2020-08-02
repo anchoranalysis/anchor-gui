@@ -26,6 +26,8 @@
 
 package org.anchoranalysis.plugin.gui.bean.createrastergenerator;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.anchoranalysis.anchor.plot.GraphInstance;
 import org.anchoranalysis.anchor.plot.bean.GraphDefinition;
 import org.anchoranalysis.bean.annotation.BeanField;
@@ -34,17 +36,15 @@ import org.anchoranalysis.gui.bean.exporttask.ExportTaskParams;
 import org.anchoranalysis.image.stack.Stack;
 import org.anchoranalysis.io.generator.IterableObjectGenerator;
 import org.anchoranalysis.plugin.gui.bean.exporttask.MappedFrom;
-import org.anchoranalysis.plugin.gui.graph.RasterGraph;
 
-public abstract class CreateRasterGraph<T, S> extends CreateRasterGenerator<S>
-        implements RasterGraph<T, S> {
+public abstract class CreateRasterGraph<T, S> extends CreateRasterGenerator<S> {
 
     // START BEAN PARAMETERS
-    @BeanField private GraphDefinition<T> graphDefinition;
+    @BeanField @Getter @Setter private GraphDefinition<T> graphDefinition;
 
-    @BeanField private int width = 1024;
+    @BeanField @Getter @Setter private int width = 1024;
 
-    @BeanField private int height = 768;
+    @BeanField @Getter @Setter private int height = 768;
     // END BEAN PARAMETERS
 
     protected IterableObjectGenerator<GraphInstance, Stack> createGraphInstanceGenerator() {
@@ -57,36 +57,6 @@ public abstract class CreateRasterGraph<T, S> extends CreateRasterGenerator<S>
 
     @Override
     public abstract boolean hasNecessaryParams(ExportTaskParams params);
-
-    @Override
-    public GraphDefinition<T> getGraphDefinition() {
-        return graphDefinition;
-    }
-
-    @Override
-    public void setGraphDefinition(GraphDefinition<T> graphDefinition) {
-        this.graphDefinition = graphDefinition;
-    }
-
-    @Override
-    public int getWidth() {
-        return width;
-    }
-
-    @Override
-    public void setWidth(int width) {
-        this.width = width;
-    }
-
-    @Override
-    public int getHeight() {
-        return height;
-    }
-
-    @Override
-    public void setHeight(int height) {
-        this.height = height;
-    }
 
     @Override
     public String getBeanDscr() {

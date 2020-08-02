@@ -29,9 +29,9 @@ package org.anchoranalysis.gui.frame.multiraster;
 import java.util.List;
 import org.anchoranalysis.core.bridge.BridgeElementException;
 import org.anchoranalysis.core.error.InitException;
-import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.index.container.BoundedIndexContainerFromList;
 import org.anchoranalysis.core.index.container.bridge.BoundedIndexContainerBridgeWithoutIndex;
+import org.anchoranalysis.gui.container.background.BackgroundStackContainerException;
 import org.anchoranalysis.gui.frame.threaded.indexable.InternalFrameThreadedIndexableRaster;
 import org.anchoranalysis.gui.image.frame.ISliderState;
 import org.anchoranalysis.gui.retrieveelements.IRetrieveElements;
@@ -83,7 +83,7 @@ public class InternalFrameMultiRaster {
             throws BridgeElementException {
         try {
             return ConvertToDisplayStack.apply(set);
-        } catch (OperationFailedException e) {
+        } catch (BackgroundStackContainerException e) {
             throw new BridgeElementException(e);
         }
     }

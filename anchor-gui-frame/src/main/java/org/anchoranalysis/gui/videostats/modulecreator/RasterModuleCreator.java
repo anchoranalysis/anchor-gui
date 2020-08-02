@@ -30,7 +30,7 @@ import java.util.Optional;
 import org.anchoranalysis.anchor.mpp.cfg.Cfg;
 import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.error.OperationFailedException;
-import org.anchoranalysis.core.functional.Operation;
+import org.anchoranalysis.core.functional.CallableWithException;
 import org.anchoranalysis.gui.frame.singleraster.InternalFrameSingleRaster;
 import org.anchoranalysis.gui.image.frame.ISliderState;
 import org.anchoranalysis.gui.videostats.dropdown.IAddVideoStatsModule;
@@ -51,7 +51,7 @@ public class RasterModuleCreator extends VideoStatsModuleCreator {
             new IVideoStatsOperationCombine() {
 
                 @Override
-                public Optional<Operation<Cfg, OperationFailedException>> getCfg() {
+                public Optional<CallableWithException<Cfg, OperationFailedException>> getCfg() {
                     return Optional.empty();
                 }
 
@@ -61,7 +61,7 @@ public class RasterModuleCreator extends VideoStatsModuleCreator {
                 }
 
                 @Override
-                public Optional<Operation<ObjectCollection, OperationFailedException>>
+                public Optional<CallableWithException<ObjectCollection, OperationFailedException>>
                         getObjects() {
                     return Optional.empty();
                 }

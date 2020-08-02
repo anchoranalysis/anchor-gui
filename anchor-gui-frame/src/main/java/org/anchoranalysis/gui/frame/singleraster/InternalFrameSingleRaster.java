@@ -27,9 +27,9 @@
 package org.anchoranalysis.gui.frame.singleraster;
 
 import org.anchoranalysis.core.error.InitException;
-import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.index.container.IntegerSequenceContaner;
 import org.anchoranalysis.core.index.container.bridge.BoundedIndexContainerBridgeWithoutIndex;
+import org.anchoranalysis.gui.container.background.BackgroundStackContainerException;
 import org.anchoranalysis.gui.frame.threaded.indexable.InternalFrameThreadedIndexableRaster;
 import org.anchoranalysis.gui.image.frame.ISliderState;
 import org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.ControllerPopupMenuWithBackground;
@@ -53,7 +53,8 @@ public class InternalFrameSingleRaster {
             throws InitException {
 
         // Create a sequence from 0 to numFrames -1, and map to our bridge
-        BoundedIndexContainerBridgeWithoutIndex<Integer, DisplayStack, GetOperationFailedException>
+        BoundedIndexContainerBridgeWithoutIndex<
+                        Integer, DisplayStack, BackgroundStackContainerException>
                 bridge =
                         new BoundedIndexContainerBridgeWithoutIndex<>(
                                 new IntegerSequenceContaner(numFrames),

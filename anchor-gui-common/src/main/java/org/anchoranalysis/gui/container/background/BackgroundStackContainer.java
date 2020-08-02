@@ -24,40 +24,14 @@
  * #L%
  */
 
-package org.anchoranalysis.gui.image;
+package org.anchoranalysis.gui.container.background;
 
-import org.anchoranalysis.anchor.overlay.collection.OverlayCollection;
-import org.anchoranalysis.feature.nrg.NRGStackWithParams;
+import org.anchoranalysis.core.index.container.BoundedIndexContainer;
+import org.anchoranalysis.image.stack.DisplayStack;
 
-public class OverlayCollectionWithImgStack {
+public interface BackgroundStackContainer {
 
-    private OverlayCollection overlayCollection;
-    private NRGStackWithParams stack;
+    boolean exists();
 
-    public OverlayCollectionWithImgStack(
-            OverlayCollection overlayCollection, NRGStackWithParams stack) {
-        super();
-        this.overlayCollection = overlayCollection;
-        this.stack = stack;
-    }
-
-    public OverlayCollection getOverlayCollection() {
-        return overlayCollection;
-    }
-
-    public NRGStackWithParams getStack() {
-        return stack;
-    }
-
-    public void setStack(NRGStackWithParams stack) {
-        this.stack = stack;
-    }
-
-    public void setOverlayCollection(OverlayCollection overlayCollection) {
-        this.overlayCollection = overlayCollection;
-    }
-
-    public OverlayCollectionWithImgStack copyChangeStack(NRGStackWithParams stack) {
-        return new OverlayCollectionWithImgStack(overlayCollection, stack);
-    }
+    BoundedIndexContainer<DisplayStack> container() throws BackgroundStackContainerException;
 }

@@ -50,7 +50,7 @@ class MultiCfgInputToOverlay
     public OverlayedInstantState bridgeElement(int index, MultiInput<Cfg> sourceObject)
             throws OperationFailedException {
 
-        Cfg cfg = sourceObject.getAssociatedObjects().doOperation();
+        Cfg cfg = sourceObject.getAssociatedObjects().call();
 
         OverlayCollection oc =
                 OverlayCollectionMarkFactory.createWithoutColor(

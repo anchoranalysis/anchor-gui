@@ -27,7 +27,7 @@
 package org.anchoranalysis.gui.feature.evaluator.nrgtree.createparams;
 
 import lombok.RequiredArgsConstructor;
-import org.anchoranalysis.anchor.mpp.pxlmark.memo.VoxelizedMarkMemo;
+import org.anchoranalysis.anchor.mpp.mark.voxelized.memo.VoxelizedMarkMemo;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.feature.bean.Feature;
 import org.anchoranalysis.feature.input.FeatureInput;

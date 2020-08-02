@@ -1,6 +1,6 @@
 /*-
  * #%L
- * anchor-gui-common
+ * anchor-gui-frame
  * %%
  * Copyright (C) 2010 - 2020 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann-La Roche
  * %%
@@ -24,19 +24,15 @@
  * #L%
  */
 
-package org.anchoranalysis.gui.finder.imgstackcollection;
+package org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.definition;
 
-import org.anchoranalysis.core.error.OperationFailedException;
-import org.anchoranalysis.core.index.GetOperationFailedException;
-import org.anchoranalysis.core.name.provider.NamedProvider;
-import org.anchoranalysis.core.progress.OperationWithProgressReporter;
-import org.anchoranalysis.image.stack.Stack;
-import org.anchoranalysis.io.manifest.finder.Finder;
+import org.anchoranalysis.core.functional.function.FunctionWithException;
+import org.anchoranalysis.gui.container.background.BackgroundStackContainerException;
+import org.anchoranalysis.image.stack.DisplayStack;
 
-public interface FinderImgStackCollection extends Finder {
+@FunctionalInterface
+public interface ImageStackContainerFromName {
 
-    NamedProvider<Stack> getImgStackCollection() throws GetOperationFailedException;
-
-    OperationWithProgressReporter<NamedProvider<Stack>, OperationFailedException>
-            getImgStackCollectionAsOperationWithProgressReporter();
+    FunctionWithException<Integer, DisplayStack, BackgroundStackContainerException>
+            imageStackCntrFromName(String name) throws BackgroundStackContainerException;
 }

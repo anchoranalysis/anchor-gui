@@ -26,7 +26,9 @@
 
 package org.anchoranalysis.gui.videostats.dropdown.common;
 
+import lombok.AllArgsConstructor;
 import org.anchoranalysis.core.error.InitException;
+import org.anchoranalysis.core.progress.CacheCallWithProgressReporter;
 import org.anchoranalysis.gui.image.frame.ISliderState;
 import org.anchoranalysis.gui.interactivebrowser.MarkEvaluatorSetForImage;
 import org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.IBackgroundUpdater;
@@ -40,6 +42,7 @@ import org.anchoranalysis.gui.videostats.module.VideoStatsModuleCreateException;
 import org.anchoranalysis.gui.videostats.modulecreator.VideoStatsModuleCreator;
 import org.anchoranalysis.io.output.bean.OutputWriteSettings;
 
+@AllArgsConstructor
 class ProposerEvaluatorModuleCreator extends VideoStatsModuleCreator {
 
     private MarkEvaluatorSetForImage markEvaluatorSet;
@@ -47,20 +50,6 @@ class ProposerEvaluatorModuleCreator extends VideoStatsModuleCreator {
     private OutputWriteSettings outputWriteSettings;
     private IUpdatableMarkEvaluator markEvaluatorUpdater;
     private VideoStatsModuleGlobalParams mpg;
-
-    public ProposerEvaluatorModuleCreator(
-            MarkEvaluatorSetForImage markEvaluatorSet,
-            NRGBackground nrgBackground,
-            OutputWriteSettings outputWriteSettings,
-            IUpdatableMarkEvaluator markEvaluatorUpdater,
-            VideoStatsModuleGlobalParams mpg) {
-        super();
-        this.markEvaluatorSet = markEvaluatorSet;
-        this.nrgBackground = nrgBackground;
-        this.outputWriteSettings = outputWriteSettings;
-        this.mpg = mpg;
-        this.markEvaluatorUpdater = markEvaluatorUpdater;
-    }
 
     @Override
     public void createAndAddVideoStatsModule(IAddVideoStatsModule adder)
@@ -93,11 +82,11 @@ class ProposerEvaluatorModuleCreator extends VideoStatsModuleCreator {
                     e -> {
                         if (e.getMarkEvaluator() != null) {
                             backgroundUpdater.update(
-                                    new CreateBackgroundSetFromExisting(
-                                            nrgBackground.getBackgroundSet(),
-                                            e.getMarkEvaluator()
-                                                    .getProposerSharedObjectsOperation(),
-                                            outputWriteSettings));
+                                    CacheCallWithProgressReporter.of(
+                                            new CreateBackgroundSetFromExisting(
+                                                    nrgBackground.getBackgroundSet(),
+                                                    e.getMarkEvaluator()
+                                                            .getProposerSharedObjectsOperation())));
                             markEvaluatorUpdater.setMarkEvaluatorIdentifier(
                                     e.getMarkEvaluatorName());
                         } else {
@@ -109,9 +98,7 @@ class ProposerEvaluatorModuleCreator extends VideoStatsModuleCreator {
 
             ModuleAddUtilities.add(adder, imageFrame.moduleCreator(), sliderState);
 
-        } catch (VideoStatsModuleCreateException e) {
-            mpg.getLogger().errorReporter().recordError(ProposerEvaluatorModuleCreator.class, e);
-        } catch (InitException e) {
+        } catch (VideoStatsModuleCreateException | InitException e) {
             mpg.getLogger().errorReporter().recordError(ProposerEvaluatorModuleCreator.class, e);
         }
     }

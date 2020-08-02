@@ -29,7 +29,7 @@ package org.anchoranalysis.gui.io.loader.manifest.finder;
 import java.util.List;
 import java.util.Optional;
 import org.anchoranalysis.core.error.reporter.ErrorReporter;
-import org.anchoranalysis.image.experiment.identifiers.ImgStackIdentifiers;
+import org.anchoranalysis.image.experiment.identifiers.StackIdentifiers;
 import org.anchoranalysis.image.io.bean.rasterreader.RasterReader;
 import org.anchoranalysis.io.manifest.ManifestRecorder;
 import org.anchoranalysis.io.manifest.file.FileWrite;
@@ -52,7 +52,7 @@ public class FinderScaledOriginal extends FinderRasterStack {
         List<FileWrite> scaledOriginalList =
                 FinderUtilities.findListFile(
                         manifestRecorder,
-                        new FileWriteOutputName("stack_" + ImgStackIdentifiers.INPUT_IMAGE));
+                        new FileWriteOutputName("stack_" + StackIdentifiers.INPUT_IMAGE));
         if (scaledOriginalList.size() > 1) {
             throw new MultipleFilesException("cannot determine scaledOriginal exactly");
         }

@@ -26,14 +26,14 @@
 
 package org.anchoranalysis.gui.feature.evaluator;
 
-import org.anchoranalysis.anchor.mpp.pair.Pair;
+import org.anchoranalysis.anchor.mpp.pair.IdentifiablePair;
 import org.anchoranalysis.anchor.overlay.Overlay;
 import org.anchoranalysis.anchor.overlay.collection.OverlayCollection;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.feature.nrg.NRGStackWithParams;
 import org.anchoranalysis.gui.feature.evaluator.singlepair.IUpdatableSinglePair;
 import org.anchoranalysis.gui.feature.evaluator.singlepair.UpdatableSinglePairList;
-import org.anchoranalysis.gui.image.OverlayCollectionWithImgStack;
+import org.anchoranalysis.gui.image.OverlayCollectionWithNrgStack;
 
 class SinglePairUpdater {
 
@@ -54,7 +54,7 @@ class SinglePairUpdater {
         updatableMarkPairList.add(secondInitialItem);
     }
 
-    public void updateModel(OverlayCollectionWithImgStack cws) throws CreateException {
+    public void updateModel(OverlayCollectionWithNrgStack cws) throws CreateException {
 
         if (overlayDescriptionPanel.isFrozen()) {
             return;
@@ -82,7 +82,7 @@ class SinglePairUpdater {
 
         assert (nrgStack != null);
 
-        Pair<Overlay> pair = finder.findPairFromCurrentSelection(overlays, nrgStack);
+        IdentifiablePair<Overlay> pair = finder.findPairFromCurrentSelection(overlays, nrgStack);
 
         if (pair != null) {
 
@@ -103,7 +103,7 @@ class SinglePairUpdater {
         updatableMarkPairList.updateSingle(overlay, raster);
     }
 
-    private void updatePair(Pair<Overlay> pair, NRGStackWithParams raster) {
+    private void updatePair(IdentifiablePair<Overlay> pair, NRGStackWithParams raster) {
         updatableMarkPairList.updatePair(pair, raster);
     }
 }

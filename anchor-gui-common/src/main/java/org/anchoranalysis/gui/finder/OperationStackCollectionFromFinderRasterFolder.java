@@ -26,25 +26,21 @@
 
 package org.anchoranalysis.gui.finder;
 
+import lombok.AllArgsConstructor;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.name.provider.NamedProvider;
-import org.anchoranalysis.core.progress.CachedOperationWithProgressReporter;
+import org.anchoranalysis.core.progress.CallableWithProgressReporter;
 import org.anchoranalysis.core.progress.ProgressReporter;
 import org.anchoranalysis.image.stack.Stack;
 
+@AllArgsConstructor
 class OperationStackCollectionFromFinderRasterFolder
-        extends CachedOperationWithProgressReporter<
-                NamedProvider<Stack>, OperationFailedException> {
+        implements CallableWithProgressReporter<NamedProvider<Stack>, OperationFailedException> {
 
     private FinderRasterFolder finderRasterFolder;
 
-    public OperationStackCollectionFromFinderRasterFolder(FinderRasterFolder finderRasterFolder) {
-        super();
-        this.finderRasterFolder = finderRasterFolder;
-    }
-
     @Override
-    protected NamedProvider<Stack> execute(ProgressReporter progressReporter)
+    public NamedProvider<Stack> call(ProgressReporter progressReporter)
             throws OperationFailedException {
         return finderRasterFolder.createStackCollection(true);
     }

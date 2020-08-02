@@ -1,8 +1,10 @@
+package org.anchoranalysis.gui.backgroundset;
+
 /*-
  * #%L
- * anchor-gui-common
+ * anchor-core
  * %%
- * Copyright (C) 2010 - 2020 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann-La Roche
+ * Copyright (C) 2010 - 2020 Owen Feehan
  * %%
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -24,15 +26,31 @@
  * #L%
  */
 
-package org.anchoranalysis.gui.container.background;
-
+import lombok.AllArgsConstructor;
+import lombok.Setter;
+import org.anchoranalysis.core.functional.function.FunctionWithException;
 import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.index.container.BoundedIndexContainer;
-import org.anchoranalysis.image.stack.DisplayStack;
+import org.anchoranalysis.gui.container.background.BackgroundStackContainerException;
 
-public interface BackgroundStackCntr {
+@AllArgsConstructor
+class BoundedIndexBridge<T>
+        implements FunctionWithException<Integer, T, BackgroundStackContainerException> {
 
-    boolean exists();
+    /** The container associated with the bridge */
+    @Setter private BoundedIndexContainer<T> container;
 
-    BoundedIndexContainer<DisplayStack> backgroundStackCntr() throws GetOperationFailedException;
+    @Override
+    public T apply(Integer sourceObject) throws BackgroundStackContainerException {
+        int index = container.previousEqualIndex(sourceObject);
+        if (index == -1) {
+            throw new BackgroundStackContainerException(
+                    "Cannot find a previousEqualIndex in the cntr");
+        }
+        try {
+            return container.get(index);
+        } catch (GetOperationFailedException e) {
+            throw new BackgroundStackContainerException(e);
+        }
+    }
 }

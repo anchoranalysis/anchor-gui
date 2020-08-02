@@ -49,9 +49,8 @@ import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.error.reporter.ErrorReporter;
 import org.anchoranalysis.core.geometry.Point2i;
 import org.anchoranalysis.core.geometry.Point3i;
-import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.index.SetOperationFailedException;
-import org.anchoranalysis.gui.displayupdate.IDisplayUpdateProvider;
+import org.anchoranalysis.gui.displayupdate.ProvidesDisplayUpdate;
 import org.anchoranalysis.gui.frame.canvas.zoom.DefaultZoomSuggestor;
 import org.anchoranalysis.gui.frame.canvas.zoom.ZoomScale;
 import org.anchoranalysis.gui.frame.display.DisplayUpdate;
@@ -65,7 +64,7 @@ public class ImageCanvas {
 
     private ImageCanvasSwing imageCanvas = null;
 
-    private IDisplayUpdateProvider imageProvider;
+    private ProvidesDisplayUpdate imageProvider;
 
     private int slice = 0;
 
@@ -122,7 +121,7 @@ public class ImageCanvas {
         }
     }
 
-    public void init(IDisplayUpdateProvider imageProvider, final ErrorReporter errorReporter)
+    public void init(ProvidesDisplayUpdate imageProvider, final ErrorReporter errorReporter)
             throws InitException {
 
         this.displayStackViewport = new DisplayStackViewportZoomed();
@@ -346,7 +345,7 @@ public class ImageCanvas {
             int sy = imageCanvas.getHeight();
             sx = Math.min(sx, sdScaled.getX());
             sy = Math.min(sy, sdScaled.getY());
-            return new Extent(sx, sy, 1);
+            return new Extent(sx, sy);
         } else {
             ImageDimensions sdEntire = displayStackViewport.createDimensionsEntireScaled();
             int sx = Math.min(sdEntire.getX(), sdScaled.getX());
@@ -460,7 +459,7 @@ public class ImageCanvas {
                 }
             }
 
-        } catch (GetOperationFailedException | SetOperationFailedException e) {
+        } catch (SetOperationFailedException e) {
             throw new OperationFailedException(e);
         }
     }

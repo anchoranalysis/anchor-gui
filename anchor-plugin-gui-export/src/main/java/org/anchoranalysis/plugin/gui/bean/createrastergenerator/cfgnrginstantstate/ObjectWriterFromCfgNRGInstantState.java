@@ -36,8 +36,8 @@ import org.anchoranalysis.anchor.mpp.feature.nrg.cfg.CfgNRG;
 import org.anchoranalysis.anchor.mpp.mark.GlobalRegionIdentifiers;
 import org.anchoranalysis.anchor.mpp.mark.IDGetterMarkID;
 import org.anchoranalysis.anchor.mpp.mark.Mark;
+import org.anchoranalysis.anchor.mpp.mark.conic.RegionMapSingleton;
 import org.anchoranalysis.anchor.mpp.overlay.OverlayCollectionMarkFactory;
-import org.anchoranalysis.anchor.mpp.regionmap.RegionMapSingleton;
 import org.anchoranalysis.anchor.overlay.bean.DrawObject;
 import org.anchoranalysis.anchor.overlay.collection.ColoredOverlayCollection;
 import org.anchoranalysis.anchor.overlay.id.IDGetterOverlayID;
@@ -46,7 +46,6 @@ import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.idgetter.IDGetter;
 import org.anchoranalysis.core.idgetter.IDGetterIter;
-import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.name.provider.NamedProviderGetException;
 import org.anchoranalysis.gui.bean.exporttask.ExportTaskParams;
 import org.anchoranalysis.gui.frame.display.OverlayedDisplayStackUpdate;
@@ -104,7 +103,7 @@ public class ObjectWriterFromCfgNRGInstantState extends CreateRasterGenerator<Cf
 
     @Override
     public boolean hasNecessaryParams(ExportTaskParams params) {
-        return params.getFinderImgStackCollection() != null && params.getColorIndexMarks() != null;
+        return params.getFinderStacks() != null && params.getColorIndexMarks() != null;
     }
 
     @Override
@@ -134,9 +133,7 @@ public class ObjectWriterFromCfgNRGInstantState extends CreateRasterGenerator<Cf
             throws OperationFailedException {
         try {
             Stack backgroundStackSrc =
-                    params.getFinderImgStackCollection()
-                            .getImgStackCollection()
-                            .getException(backgroundStackName);
+                    params.getFinderStacks().getStacks().getException(backgroundStackName);
 
             DisplayStack backgroundStack = DisplayStack.create(backgroundStackSrc);
 
@@ -154,7 +151,7 @@ public class ObjectWriterFromCfgNRGInstantState extends CreateRasterGenerator<Cf
                     OverlayCollectionMarkFactory.createColor(coloredCfg, regionMembership);
             return OverlayedDisplayStackUpdate.assignOverlaysAndBackground(oc, backgroundStack);
 
-        } catch (CreateException | GetOperationFailedException e) {
+        } catch (CreateException e) {
             throw new OperationFailedException(e);
         } catch (NamedProviderGetException e) {
             throw new OperationFailedException(e.summarize());

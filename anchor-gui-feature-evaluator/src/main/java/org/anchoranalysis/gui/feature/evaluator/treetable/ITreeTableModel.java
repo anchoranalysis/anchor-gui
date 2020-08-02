@@ -28,7 +28,7 @@ package org.anchoranalysis.gui.feature.evaluator.treetable;
 
 import java.awt.event.MouseListener;
 import javax.swing.JComponent;
-import org.anchoranalysis.anchor.mpp.pair.Pair;
+import org.anchoranalysis.anchor.mpp.pair.IdentifiablePair;
 import org.anchoranalysis.anchor.overlay.Overlay;
 import org.anchoranalysis.feature.nrg.NRGStackWithParams;
 import org.anchoranalysis.gui.feature.evaluator.singlepair.IUpdatableSinglePair;
@@ -41,7 +41,7 @@ public interface ITreeTableModel extends IUpdatableSinglePair {
     @Override
     void updateSingle(Overlay overlay, NRGStackWithParams raster);
 
-    void updatePair(Pair<Overlay> pair, NRGStackWithParams raster);
+    void updatePair(IdentifiablePair<Overlay> pair, NRGStackWithParams raster);
 
     // We should do this to all our tables
     void addMouseListenerToOutline(MouseListener ml);

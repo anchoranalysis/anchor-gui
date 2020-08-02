@@ -39,7 +39,6 @@ import org.anchoranalysis.anchor.overlay.OverlayedInstantState;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.error.friendly.AnchorImpossibleSituationException;
 import org.anchoranalysis.core.functional.function.FunctionWithException;
-import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.index.container.BoundedIndexContainer;
 import org.anchoranalysis.core.index.container.bridge.BoundedIndexContainerBridgeWithoutIndex;
 import org.anchoranalysis.gui.bean.exporttask.ExportTaskParams;
@@ -71,19 +70,12 @@ class MergedContainerBridge
         // TODO fix
         if (retBridge == null) {
 
-            DualCfgNRGContainer<Cfg> dualHistory;
+            DualCfgNRGContainer<Cfg> dualHistory =
+                    new DualCfgNRGContainer<>(
+                            ContainerUtilities.listCntrs(sourceObject.getAllFinderCfgNRGHistory()),
+                            new TransformToCfg());
 
-            try {
-                dualHistory =
-                        new DualCfgNRGContainer<>(
-                                ContainerUtilities.listCntrs(
-                                        sourceObject.getAllFinderCfgNRGHistory()),
-                                new TransformToCfg());
-
-                dualHistory.init();
-            } catch (GetOperationFailedException e) {
-                throw new OperationFailedException(e);
-            }
+            dualHistory.init();
 
             MergeCfgBridge mergeCfgBridge = new MergeCfgBridge(regionMembership);
 

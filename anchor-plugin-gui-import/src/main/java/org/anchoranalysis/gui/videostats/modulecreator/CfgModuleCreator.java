@@ -27,12 +27,13 @@
 package org.anchoranalysis.gui.videostats.modulecreator;
 
 import java.util.Optional;
+import lombok.AllArgsConstructor;
 import org.anchoranalysis.anchor.mpp.cfg.Cfg;
 import org.anchoranalysis.anchor.mpp.overlay.OverlayCollectionMarkFactory;
 import org.anchoranalysis.anchor.overlay.collection.OverlayCollection;
 import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.error.OperationFailedException;
-import org.anchoranalysis.core.functional.Operation;
+import org.anchoranalysis.core.functional.CallableWithException;
 import org.anchoranalysis.gui.image.frame.ISliderState;
 import org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.definition.ChangeableBackgroundDefinitionSimple;
 import org.anchoranalysis.gui.mark.MarkDisplaySettings;
@@ -45,37 +46,22 @@ import org.anchoranalysis.gui.videostats.module.VideoStatsModuleCreateException;
 import org.anchoranalysis.gui.videostats.operation.combine.IVideoStatsOperationCombine;
 import org.anchoranalysis.image.object.ObjectCollection;
 
+@AllArgsConstructor
 public class CfgModuleCreator extends VideoStatsModuleCreator {
 
     private String fileIdentifier;
     private String name;
-    private Operation<Cfg, OperationFailedException> opCfg;
+    private CallableWithException<Cfg, OperationFailedException> opCfg;
     private NRGBackground nrgBackground;
     private VideoStatsModuleGlobalParams mpg;
     private MarkDisplaySettings markDisplaySettings;
-
-    public CfgModuleCreator(
-            String fileIdentifier,
-            String name,
-            Operation<Cfg, OperationFailedException> opCfg,
-            NRGBackground nrgBackground,
-            VideoStatsModuleGlobalParams mpg,
-            MarkDisplaySettings markDisplaySettings) {
-        super();
-        this.fileIdentifier = fileIdentifier;
-        this.name = name;
-        this.opCfg = opCfg;
-        this.nrgBackground = nrgBackground;
-        this.mpg = mpg;
-        this.markDisplaySettings = markDisplaySettings;
-    }
 
     @Override
     public void createAndAddVideoStatsModule(IAddVideoStatsModule adder)
             throws VideoStatsModuleCreateException {
 
         try {
-            Cfg cfg = opCfg.doOperation();
+            Cfg cfg = opCfg.call();
 
             OverlayCollection oc =
                     OverlayCollectionMarkFactory.createWithoutColor(
@@ -107,7 +93,7 @@ public class CfgModuleCreator extends VideoStatsModuleCreator {
                 new IVideoStatsOperationCombine() {
 
                     @Override
-                    public Optional<Operation<Cfg, OperationFailedException>> getCfg() {
+                    public Optional<CallableWithException<Cfg, OperationFailedException>> getCfg() {
                         return Optional.of(opCfg);
                     }
 
@@ -117,7 +103,9 @@ public class CfgModuleCreator extends VideoStatsModuleCreator {
                     }
 
                     @Override
-                    public Optional<Operation<ObjectCollection, OperationFailedException>>
+                    public Optional<
+                                    CallableWithException<
+                                            ObjectCollection, OperationFailedException>>
                             getObjects() {
                         return Optional.empty();
                     }

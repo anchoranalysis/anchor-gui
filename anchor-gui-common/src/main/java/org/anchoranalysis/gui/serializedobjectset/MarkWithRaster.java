@@ -67,12 +67,7 @@ public class MarkWithRaster implements IIndexGetter, Comparable<IIndexGetter> {
     public void setBackgroundSet(BackgroundSet backgroundSet) {
         this.backgroundSet = backgroundSet;
     }
-    //		public NamedImgStackCollection getRasterCollection() {
-    //			return rasterCollection;
-    //		}
-    //		public void setRasterCollection(NamedImgStackCollection rasterCollection) {
-    //			this.rasterCollection = rasterCollection;
-    //		}
+
     public NRGStackWithParams getNRGStack() {
         return nrgStack;
     }

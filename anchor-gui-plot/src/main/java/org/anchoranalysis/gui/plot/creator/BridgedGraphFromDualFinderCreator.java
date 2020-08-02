@@ -28,8 +28,8 @@ package org.anchoranalysis.gui.plot.creator;
 
 import org.anchoranalysis.anchor.mpp.feature.instantstate.CfgNRGInstantState;
 import org.anchoranalysis.core.error.CreateException;
+import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.functional.function.FunctionWithException;
-import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.index.container.BoundedIndexContainer;
 import org.anchoranalysis.core.index.container.bridge.BoundedIndexContainerBridgeWithoutIndex;
 import org.anchoranalysis.gui.io.loader.manifest.finder.FinderCSVStats;
@@ -40,13 +40,13 @@ public abstract class BridgedGraphFromDualFinderCreator<T>
         implements GraphFromDualFinderCreator<T> {
 
     @Override
-    public BoundedIndexContainer<T> createCntr(FinderCSVStats finderCSVStats)
+    public BoundedIndexContainer<T> createContainer(FinderCSVStats finderCSVStats)
             throws CreateException {
 
         try {
             return new BoundedIndexContainerBridgeWithoutIndex<>(
                     finderCSVStats.get(), createCSVStatisticBridge());
-        } catch (GetOperationFailedException e) {
+        } catch (OperationFailedException e) {
             throw new CreateException(e);
         }
     }
@@ -58,7 +58,7 @@ public abstract class BridgedGraphFromDualFinderCreator<T>
         try {
             return new BoundedIndexContainerBridgeWithoutIndex<>(
                     finderCfgNRGHistory.get().getCntr(), createCfgNRGInstantStateBridge());
-        } catch (GetOperationFailedException e) {
+        } catch (OperationFailedException e) {
             throw new CreateException(e);
         }
     }

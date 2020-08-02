@@ -28,7 +28,6 @@ package org.anchoranalysis.gui.interactivebrowser.browser;
 
 import javax.swing.JButton;
 import org.anchoranalysis.core.error.InitException;
-import org.anchoranalysis.core.progress.IdentityOperationWithProgressReporter;
 import org.anchoranalysis.gui.feature.evaluator.treetable.FeatureListSrc;
 import org.anchoranalysis.gui.videostats.dropdown.BoundVideoStatsModuleDropDown;
 import org.anchoranalysis.gui.videostats.dropdown.IAddVideoStatsModule;
@@ -52,7 +51,7 @@ class GlobalDropDown {
         try {
             delegate.addModule(
                     "Selected Mark Properties",
-                    new IdentityOperationWithProgressReporter<>(adder),
+                    progresssReporter -> adder,
                     new FeatureEvaluatorCreator(src, mpg.getLogger()),
                     mpg.getThreadPool(),
                     mpg.getLogger());

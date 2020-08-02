@@ -34,7 +34,7 @@ import org.anchoranalysis.anchor.mpp.feature.input.memo.FeatureInputPairMemo;
 import org.anchoranalysis.anchor.mpp.feature.input.memo.FeatureInputSingleMemo;
 import org.anchoranalysis.anchor.mpp.feature.nrg.scheme.NRGScheme;
 import org.anchoranalysis.anchor.mpp.feature.nrg.scheme.NamedNRGSchemeSet;
-import org.anchoranalysis.anchor.mpp.regionmap.RegionMapSingleton;
+import org.anchoranalysis.anchor.mpp.mark.conic.RegionMapSingleton;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.log.Logger;

@@ -32,6 +32,7 @@ import java.util.Optional;
 import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.name.store.EagerEvaluationStore;
+import org.anchoranalysis.core.progress.CacheCallWithProgressReporter;
 import org.anchoranalysis.gui.bean.filecreator.MarkCreatorParams;
 import org.anchoranalysis.gui.file.opened.OpenedFile;
 import org.anchoranalysis.gui.file.opened.OpenedFileGUI;
@@ -74,7 +75,8 @@ public class FileSingleStack extends InteractiveFile {
 
         MultiCollectionDropDown dropDown =
                 new MultiCollectionDropDown(
-                        new OperationCreateTimeSequence(inputObject, 0),
+                        CacheCallWithProgressReporter.of(
+                                new OperationCreateTimeSequence(inputObject, 0)),
                         null,
                         null,
                         new EagerEvaluationStore<>(),

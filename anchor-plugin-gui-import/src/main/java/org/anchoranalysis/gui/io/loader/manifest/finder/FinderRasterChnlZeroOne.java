@@ -27,35 +27,36 @@
 package org.anchoranalysis.gui.io.loader.manifest.finder;
 
 import org.anchoranalysis.core.error.CreateException;
+import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.error.reporter.ErrorReporter;
-import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.index.container.BoundedIndexContainer;
 import org.anchoranalysis.core.index.container.SingleContainer;
-import org.anchoranalysis.gui.container.background.BackgroundStackCntr;
+import org.anchoranalysis.gui.container.background.BackgroundStackContainer;
+import org.anchoranalysis.gui.container.background.BackgroundStackContainerException;
 import org.anchoranalysis.image.channel.Channel;
 import org.anchoranalysis.image.io.bean.rasterreader.RasterReader;
 import org.anchoranalysis.image.stack.DisplayStack;
 
 // We can eliminate this finder in a moment
 public abstract class FinderRasterChnlZeroOne extends FinderRasterChnl
-        implements BackgroundStackCntr {
+        implements BackgroundStackContainer {
 
     public FinderRasterChnlZeroOne(RasterReader rasterReader, ErrorReporter errorReporter) {
         super(rasterReader, true, errorReporter);
     }
 
     @Override
-    public BoundedIndexContainer<DisplayStack> backgroundStackCntr()
-            throws GetOperationFailedException {
+    public BoundedIndexContainer<DisplayStack> container()
+            throws BackgroundStackContainerException {
         return new SingleContainer<>(backgroundStack(), 0, true);
     }
 
-    public DisplayStack backgroundStack() throws GetOperationFailedException {
-        Channel background = getFirstChnl();
+    public DisplayStack backgroundStack() throws BackgroundStackContainerException {
         try {
+            Channel background = getFirstChnl();
             return DisplayStack.create(background);
-        } catch (CreateException e) {
-            throw new GetOperationFailedException(e);
+        } catch (CreateException | OperationFailedException e) {
+            throw new BackgroundStackContainerException(e);
         }
     }
 }

@@ -26,21 +26,30 @@
 
 package org.anchoranalysis.gui.videostats.link;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.anchoranalysis.anchor.overlay.collection.OverlayCollection;
 import org.anchoranalysis.core.functional.function.FunctionWithException;
-import org.anchoranalysis.core.index.GetOperationFailedException;
-import org.anchoranalysis.gui.image.OverlayCollectionWithImgStack;
+import org.anchoranalysis.gui.container.background.BackgroundStackContainerException;
+import org.anchoranalysis.gui.image.OverlayCollectionWithNrgStack;
 import org.anchoranalysis.image.stack.DisplayStack;
 import org.apache.commons.lang.ArrayUtils;
 
 public class DefaultLinkState {
 
-    private int frameIndex;
-    private int sliceNum;
-    private int[] objectIDs = new int[] {};
-    private OverlayCollection overlayCollection;
-    private OverlayCollectionWithImgStack cfgWithStack;
-    private FunctionWithException<Integer, DisplayStack, GetOperationFailedException> background;
+    @Getter @Setter private int frameIndex;
+
+    @Getter @Setter private int sliceNum;
+
+    @Getter @Setter private int[] objectIDs = new int[] {};
+
+    @Getter @Setter private OverlayCollection overlayCollection;
+
+    @Getter @Setter private OverlayCollectionWithNrgStack cfgWithStack;
+
+    @Getter @Setter
+    private FunctionWithException<Integer, DisplayStack, BackgroundStackContainerException>
+            background;
 
     DefaultLinkState duplicate() {
         DefaultLinkState dms = new DefaultLinkState();
@@ -51,55 +60,5 @@ public class DefaultLinkState {
         dms.cfgWithStack = cfgWithStack;
         dms.background = background;
         return dms;
-    }
-
-    public int getSliceNum() {
-        return sliceNum;
-    }
-
-    void setSliceNum(int sliceNum) {
-        this.sliceNum = sliceNum;
-    }
-
-    public int[] getObjectIDs() {
-        return objectIDs;
-    }
-
-    void setObjectIDs(int[] objectIDs) {
-        this.objectIDs = objectIDs;
-    }
-
-    public int getFrameIndex() {
-        return frameIndex;
-    }
-
-    void setFrameIndex(int frameIndex) {
-        this.frameIndex = frameIndex;
-    }
-
-    public FunctionWithException<Integer, DisplayStack, GetOperationFailedException>
-            getBackground() {
-        return background;
-    }
-
-    void setBackground(
-            FunctionWithException<Integer, DisplayStack, GetOperationFailedException> background) {
-        this.background = background;
-    }
-
-    public OverlayCollectionWithImgStack getCfgWithStack() {
-        return cfgWithStack;
-    }
-
-    void setCfgWithStack(OverlayCollectionWithImgStack cfgWithStack) {
-        this.cfgWithStack = cfgWithStack;
-    }
-
-    public OverlayCollection getOverlayCollection() {
-        return overlayCollection;
-    }
-
-    void setOverlayCollection(OverlayCollection overlayCollection) {
-        this.overlayCollection = overlayCollection;
     }
 }

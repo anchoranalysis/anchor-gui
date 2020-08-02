@@ -26,18 +26,14 @@
 
 package org.anchoranalysis.gui.container.background;
 
-import org.anchoranalysis.core.index.GetOperationFailedException;
+import lombok.AllArgsConstructor;
 import org.anchoranalysis.core.index.container.BoundedIndexContainer;
 import org.anchoranalysis.image.stack.DisplayStack;
 
-public class SingleBackgroundStackCntr implements BackgroundStackCntr {
+@AllArgsConstructor
+public class SingleBackgroundStackCntr implements BackgroundStackContainer {
 
-    private BoundedIndexContainer<DisplayStack> cntr;
-
-    public SingleBackgroundStackCntr(BoundedIndexContainer<DisplayStack> cntr) {
-        super();
-        this.cntr = cntr;
-    }
+    private final BoundedIndexContainer<DisplayStack> container;
 
     @Override
     public boolean exists() {
@@ -45,8 +41,7 @@ public class SingleBackgroundStackCntr implements BackgroundStackCntr {
     }
 
     @Override
-    public BoundedIndexContainer<DisplayStack> backgroundStackCntr()
-            throws GetOperationFailedException {
-        return cntr;
+    public BoundedIndexContainer<DisplayStack> container() {
+        return container;
     }
 }

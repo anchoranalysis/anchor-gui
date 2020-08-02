@@ -33,7 +33,7 @@ import org.anchoranalysis.anchor.overlay.collection.OverlayCollection;
 import org.anchoranalysis.anchor.overlay.collection.OverlayCollectionObjectFactory;
 import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.error.OperationFailedException;
-import org.anchoranalysis.core.functional.Operation;
+import org.anchoranalysis.core.functional.CallableWithException;
 import org.anchoranalysis.core.idgetter.IDGetterIter;
 import org.anchoranalysis.gui.image.frame.ISliderState;
 import org.anchoranalysis.gui.videostats.dropdown.IAddVideoStatsModule;
@@ -50,7 +50,7 @@ public class ObjectCollectionModuleCreator extends VideoStatsModuleCreator {
 
     private String fileIdentifier;
     private String name;
-    private Operation<ObjectCollection, OperationFailedException> opObjects;
+    private CallableWithException<ObjectCollection, OperationFailedException> opObjects;
     private NRGBackground nrgBackground;
     private VideoStatsModuleGlobalParams mpg;
 
@@ -60,7 +60,7 @@ public class ObjectCollectionModuleCreator extends VideoStatsModuleCreator {
         try {
             OverlayCollection overlays =
                     OverlayCollectionObjectFactory.createWithoutColor(
-                            opObjects.doOperation(), new IDGetterIter<>());
+                            opObjects.call(), new IDGetterIter<>());
 
             InternalFrameStaticOverlaySelectable imageFrame =
                     new InternalFrameStaticOverlaySelectable(
@@ -86,7 +86,7 @@ public class ObjectCollectionModuleCreator extends VideoStatsModuleCreator {
                 new IVideoStatsOperationCombine() {
 
                     @Override
-                    public Optional<Operation<Cfg, OperationFailedException>> getCfg() {
+                    public Optional<CallableWithException<Cfg, OperationFailedException>> getCfg() {
                         return Optional.empty();
                     }
 
@@ -96,7 +96,9 @@ public class ObjectCollectionModuleCreator extends VideoStatsModuleCreator {
                     }
 
                     @Override
-                    public Optional<Operation<ObjectCollection, OperationFailedException>>
+                    public Optional<
+                                    CallableWithException<
+                                            ObjectCollection, OperationFailedException>>
                             getObjects() {
                         return Optional.of(opObjects);
                     }

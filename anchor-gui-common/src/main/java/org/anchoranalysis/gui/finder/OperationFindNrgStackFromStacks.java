@@ -26,62 +26,38 @@
 
 package org.anchoranalysis.gui.finder;
 
-import org.anchoranalysis.core.cache.CachedOperation;
+import lombok.AllArgsConstructor;
 import org.anchoranalysis.core.error.OperationFailedException;
+import org.anchoranalysis.core.functional.CallableWithException;
 import org.anchoranalysis.core.name.provider.NamedProvider;
 import org.anchoranalysis.core.name.provider.NamedProviderGetException;
-import org.anchoranalysis.core.progress.OperationWithProgressReporter;
-import org.anchoranalysis.core.progress.ProgressReporter;
+import org.anchoranalysis.core.progress.CallableWithProgressReporter;
 import org.anchoranalysis.core.progress.ProgressReporterNull;
 import org.anchoranalysis.feature.nrg.NRGStackWithParams;
 import org.anchoranalysis.image.channel.Channel;
 import org.anchoranalysis.image.extent.IncorrectImageSizeException;
 import org.anchoranalysis.image.stack.Stack;
 
-public class OperationFindNrgStackFromStackCollection
-        extends CachedOperation<NRGStackWithParams, OperationFailedException>
-        implements OperationWithProgressReporter<NRGStackWithParams, OperationFailedException> {
+@AllArgsConstructor
+public class OperationFindNrgStackFromStacks
+        implements CallableWithException<NRGStackWithParams, OperationFailedException> {
 
-    // We first retrieve a namedimgcollection which we use to contstruct our real NrgStack for
-    // purposes
-    //   of good caching
-    private OperationWithProgressReporter<NamedProvider<Stack>, OperationFailedException>
+    /**
+     * We first retrieve a namedimgcollection which we use to construct our real NrgStack for
+     * purposes of good caching
+     */
+    private CallableWithProgressReporter<NamedProvider<Stack>, OperationFailedException>
             operationStackCollection;
 
-    // An operation to retrieve a stackCollection
-    //
-    public OperationFindNrgStackFromStackCollection(
-            OperationWithProgressReporter<NamedProvider<Stack>, OperationFailedException>
-                    operationStackCollection) {
-        super();
-        this.operationStackCollection = operationStackCollection;
-    }
-
-    public OperationWithProgressReporter<NamedProvider<Stack>, OperationFailedException>
-            getOperationStackCollection() {
-        return operationStackCollection;
-    }
-
     @Override
-    public NRGStackWithParams doOperation(ProgressReporter progressReporter)
-            throws OperationFailedException {
-        return doOperation();
-    }
-
-    @Override
-    protected NRGStackWithParams execute() throws OperationFailedException {
-        return createNRGStack();
-    }
-
-    // NB Note assumption about namedImgStackCollection ordering
-    private NRGStackWithParams createNRGStack() throws OperationFailedException {
-
-        NamedProvider<Stack> nic = operationStackCollection.doOperation(ProgressReporterNull.get());
+    public NRGStackWithParams call() throws OperationFailedException {
+        // NB Note assumption about named-stack ordering
+        NamedProvider<Stack> nic = operationStackCollection.call(ProgressReporterNull.get());
 
         // We expects the keys to be the indexes
         Stack stack = populateStack(nic);
 
-        if (stack.getNumChnl() > 0) {
+        if (stack.getNumberChannels() > 0) {
             return new NRGStackWithParams(stack);
         } else {
             return null;
@@ -96,7 +72,7 @@ public class OperationFindNrgStackFromStackCollection
         for (int c = 0; c < size; c++) {
 
             try {
-                stack.addChnl(chnlFromStack(nic, c));
+                stack.addChannel(chnlFromStack(nic, c));
             } catch (IncorrectImageSizeException e) {
                 throw new OperationFailedException(e);
             }
@@ -111,11 +87,11 @@ public class OperationFindNrgStackFromStackCollection
         try {
             Stack chnlStack = stackProvider.getException(Integer.toString(c));
 
-            if (chnlStack.getNumChnl() != 1) {
+            if (chnlStack.getNumberChannels() != 1) {
                 throw new OperationFailedException("Stack should have only a single channel");
             }
 
-            return chnlStack.getChnl(0);
+            return chnlStack.getChannel(0);
         } catch (NamedProviderGetException e) {
             throw new OperationFailedException(e);
         }

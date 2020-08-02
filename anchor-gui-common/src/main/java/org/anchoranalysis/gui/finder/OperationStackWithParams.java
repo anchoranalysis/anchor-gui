@@ -27,41 +27,32 @@
 package org.anchoranalysis.gui.finder;
 
 import java.io.IOException;
+import lombok.AllArgsConstructor;
 import org.anchoranalysis.core.error.OperationFailedException;
+import org.anchoranalysis.core.functional.CallableWithException;
 import org.anchoranalysis.core.index.GetOperationFailedException;
-import org.anchoranalysis.core.name.provider.NamedProvider;
-import org.anchoranalysis.core.progress.CachedOperationWithProgressReporter;
-import org.anchoranalysis.core.progress.OperationWithProgressReporter;
+import org.anchoranalysis.core.progress.CallableWithProgressReporter;
 import org.anchoranalysis.core.progress.ProgressReporter;
 import org.anchoranalysis.feature.nrg.NRGElemParamsFromImage;
 import org.anchoranalysis.feature.nrg.NRGStackWithParams;
-import org.anchoranalysis.image.stack.Stack;
 import org.anchoranalysis.io.manifest.finder.FinderKeyValueParams;
 import org.anchoranalysis.io.manifest.finder.FinderSerializedObject;
 
+@AllArgsConstructor
 class OperationStackWithParams
-        extends CachedOperationWithProgressReporter<NRGStackWithParams, OperationFailedException> {
+        implements CallableWithProgressReporter<NRGStackWithParams, GetOperationFailedException> {
 
-    private OperationFindNrgStackFromStackCollection nrgStackOperation;
-    private FinderKeyValueParams finderImageParams;
-    private FinderSerializedObject<NRGElemParamsFromImage> finderImageParamsLegacy;
-
-    public OperationStackWithParams(
-            OperationFindNrgStackFromStackCollection nrgStackOperation,
-            FinderKeyValueParams finderImageParams,
-            FinderSerializedObject<NRGElemParamsFromImage> finderImageParamsLegacy) {
-        super();
-        this.nrgStackOperation = nrgStackOperation;
-        this.finderImageParams = finderImageParams;
-        this.finderImageParamsLegacy = finderImageParamsLegacy;
-    }
+    private final CallableWithException<NRGStackWithParams, OperationFailedException>
+            nrgStackOperation;
+    private final FinderKeyValueParams finderImageParams;
+    private final FinderSerializedObject<NRGElemParamsFromImage> finderImageParamsLegacy;
 
     @Override
-    protected NRGStackWithParams execute(ProgressReporter progressReporter)
-            throws OperationFailedException {
+    public NRGStackWithParams call(ProgressReporter progressReporter)
+            throws GetOperationFailedException {
 
         try {
-            NRGStackWithParams nrgStackWithParams = nrgStackOperation.doOperation();
+            NRGStackWithParams nrgStackWithParams = nrgStackOperation.call();
 
             if (finderImageParamsLegacy.exists()) {
                 NRGElemParamsFromImage params = finderImageParamsLegacy.get();
@@ -72,13 +63,8 @@ class OperationStackWithParams
 
             return nrgStackWithParams;
 
-        } catch (GetOperationFailedException | IOException e) {
-            throw new OperationFailedException(e);
+        } catch (IOException | OperationFailedException e) {
+            throw new GetOperationFailedException(e);
         }
-    }
-
-    public OperationWithProgressReporter<NamedProvider<Stack>, OperationFailedException>
-            getOperationStackCollection() {
-        return nrgStackOperation.getOperationStackCollection();
     }
 }

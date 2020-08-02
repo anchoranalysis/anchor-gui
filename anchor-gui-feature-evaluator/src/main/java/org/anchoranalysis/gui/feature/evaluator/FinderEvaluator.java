@@ -27,6 +27,7 @@
 package org.anchoranalysis.gui.feature.evaluator;
 
 import java.util.Optional;
+import lombok.AllArgsConstructor;
 import org.anchoranalysis.anchor.mpp.bean.regionmap.RegionMap;
 import org.anchoranalysis.anchor.mpp.bean.regionmap.RegionMembershipWithFlags;
 import org.anchoranalysis.anchor.mpp.cfg.Cfg;
@@ -35,33 +36,28 @@ import org.anchoranalysis.anchor.mpp.feature.addcriteria.BBoxIntersection;
 import org.anchoranalysis.anchor.mpp.feature.input.memo.FeatureInputPairMemo;
 import org.anchoranalysis.anchor.mpp.mark.GlobalRegionIdentifiers;
 import org.anchoranalysis.anchor.mpp.mark.Mark;
+import org.anchoranalysis.anchor.mpp.mark.conic.RegionMapSingleton;
+import org.anchoranalysis.anchor.mpp.mark.voxelized.memo.PxlMarkMemoFactory;
 import org.anchoranalysis.anchor.mpp.overlay.OverlayCollectionMarkFactory;
 import org.anchoranalysis.anchor.mpp.overlay.OverlayMark;
-import org.anchoranalysis.anchor.mpp.pair.Pair;
-import org.anchoranalysis.anchor.mpp.pxlmark.memo.PxlMarkMemoFactory;
-import org.anchoranalysis.anchor.mpp.regionmap.RegionMapSingleton;
+import org.anchoranalysis.anchor.mpp.pair.IdentifiablePair;
 import org.anchoranalysis.anchor.overlay.Overlay;
 import org.anchoranalysis.anchor.overlay.collection.OverlayCollection;
 import org.anchoranalysis.core.error.CreateException;
+import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.log.Logger;
 import org.anchoranalysis.feature.bean.list.FeatureList;
-import org.anchoranalysis.feature.calc.FeatureCalcException;
 import org.anchoranalysis.feature.calc.FeatureInitParams;
 import org.anchoranalysis.feature.nrg.NRGStackWithParams;
 import org.anchoranalysis.feature.session.FeatureSession;
 import org.anchoranalysis.feature.session.calculator.FeatureCalculatorMulti;
 import org.anchoranalysis.feature.shared.SharedFeatureMulti;
 
+@AllArgsConstructor
 class FinderEvaluator {
 
     private SharedFeatureMulti sharedFeatureList;
     private Logger logger;
-
-    public FinderEvaluator(SharedFeatureMulti sharedFeatureList, Logger logger) {
-        super();
-        this.sharedFeatureList = sharedFeatureList;
-        this.logger = logger;
-    }
 
     // We take the first valid mark we can find, or NULL if there aren't any
     public static Overlay findOverlayFromCurrentSelection(OverlayCollection overlays) {
@@ -73,7 +69,7 @@ class FinderEvaluator {
         }
     }
 
-    public Pair<Overlay> findPairFromCurrentSelection(
+    public IdentifiablePair<Overlay> findPairFromCurrentSelection(
             OverlayCollection overlays, NRGStackWithParams nrgStack) throws CreateException {
 
         if (doMarkOrObject(overlays)) {
@@ -100,17 +96,18 @@ class FinderEvaluator {
         return cntMark > cntOther;
     }
 
-    private static Pair<Overlay> findPairFromCurrentSelectionObject(OverlayCollection oc) {
+    private static IdentifiablePair<Overlay> findPairFromCurrentSelectionObject(
+            OverlayCollection oc) {
 
         if (oc.size() <= 1) {
             return null;
         }
 
         // We always take the first two
-        return new Pair<>(oc.get(0), oc.get(1));
+        return new IdentifiablePair<>(oc.get(0), oc.get(1));
     }
 
-    private static Pair<Overlay> findPairFromCurrentSelectionMark(
+    private static IdentifiablePair<Overlay> findPairFromCurrentSelectionMark(
             Cfg cfg, NRGStackWithParams raster, SharedFeatureMulti sharedFeatureList, Logger logger)
             throws CreateException {
 
@@ -140,7 +137,7 @@ class FinderEvaluator {
                 assert (m2 != null);
 
                 if (edgeTester.canGenerateEdge(m1, m2)) {
-                    return new Pair<>(
+                    return new IdentifiablePair<>(
                             new OverlayMark(m1, regionMembership),
                             new OverlayMark(m2, regionMembership));
                 }
@@ -193,7 +190,7 @@ class FinderEvaluator {
                                     new FeatureInitParams(raster.getParams()),
                                     sharedFeatureList,
                                     logger));
-                } catch (FeatureCalcException e) {
+                } catch (InitException e) {
                     throw new CreateException(e);
                 }
 

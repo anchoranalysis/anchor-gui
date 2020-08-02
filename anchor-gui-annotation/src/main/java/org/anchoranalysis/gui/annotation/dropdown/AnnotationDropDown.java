@@ -28,7 +28,6 @@ package org.anchoranalysis.gui.annotation.dropdown;
 
 import javax.swing.JFrame;
 import org.anchoranalysis.core.error.InitException;
-import org.anchoranalysis.core.progress.IdentityOperationWithProgressReporter;
 import org.anchoranalysis.gui.annotation.AnnotatorModuleCreator;
 import org.anchoranalysis.gui.annotation.builder.AnnotationGuiBuilder;
 import org.anchoranalysis.gui.annotation.builder.AnnotationGuiContext;
@@ -80,16 +79,14 @@ public class AnnotationDropDown {
     }
 
     private void addAnnotation(
-            IAddVideoStatsModule adder, OutputWriteSettings ows, VideoStatsModuleGlobalParams mpg)
-            throws InitException {
+            IAddVideoStatsModule adder, OutputWriteSettings ows, VideoStatsModuleGlobalParams mpg) {
         String desc = String.format("Annotator: %s", name);
 
         VideoStatsModuleCreator moduleCreator =
                 new AnnotatorModuleCreator<>(desc, annotation, context, ows, mpg);
 
         VideoStatsModuleCreatorAndAdder creatorAndAdder =
-                new VideoStatsModuleCreatorAndAdder(
-                        new IdentityOperationWithProgressReporter<>(adder), moduleCreator);
+                new VideoStatsModuleCreatorAndAdder(progresssReporter -> adder, moduleCreator);
         delegate.getRootMenu()
                 .addAsDefault(
                         new VideoStatsOperationFromCreatorAndAdder(

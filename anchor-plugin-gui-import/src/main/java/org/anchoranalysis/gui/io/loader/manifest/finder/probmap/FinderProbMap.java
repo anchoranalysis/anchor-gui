@@ -35,7 +35,8 @@ import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.index.container.BoundedIndexContainer;
 import org.anchoranalysis.core.index.container.SingleContainer;
 import org.anchoranalysis.core.index.container.bridge.BoundedIndexContainerBridgeWithoutIndex;
-import org.anchoranalysis.gui.container.background.BackgroundStackCntr;
+import org.anchoranalysis.gui.container.background.BackgroundStackContainer;
+import org.anchoranalysis.gui.container.background.BackgroundStackContainerException;
 import org.anchoranalysis.gui.finder.FinderRasterSingleChnl;
 import org.anchoranalysis.image.channel.Channel;
 import org.anchoranalysis.image.extent.IncorrectImageSizeException;
@@ -45,7 +46,7 @@ import org.anchoranalysis.image.stack.Stack;
 import org.anchoranalysis.io.manifest.ManifestRecorder;
 import org.anchoranalysis.io.manifest.finder.Finder;
 
-public class FinderProbMap implements BackgroundStackCntr, FinderRasterSingleChnl, Finder {
+public class FinderProbMap implements BackgroundStackContainer, FinderRasterSingleChnl, Finder {
 
     private final FinderProbMapSingleRaster singleRaster;
 
@@ -93,24 +94,31 @@ public class FinderProbMap implements BackgroundStackCntr, FinderRasterSingleChn
         return !isRasterSeries();
     }
 
-    public BoundedIndexContainer<Stack> getRasterSeries() throws GetOperationFailedException {
+    public BoundedIndexContainer<Stack> getRasterSeries() {
         return rasterSeries.get();
     }
 
     // Returns a single channel the probMap, o series allowed
-    public Channel singleChnl() throws GetOperationFailedException {
+    public Channel singleChnl() throws OperationFailedException {
         if (singleRaster.exists()) {
             return singleRaster.get();
         }
         if (isRasterSeries()) {
-            return rasterSeries.get().get(rasterSeries.get().previousEqualIndex(0)).getChnl(0);
+            try {
+                return rasterSeries
+                        .get()
+                        .get(rasterSeries.get().previousEqualIndex(0))
+                        .getChannel(0);
+            } catch (GetOperationFailedException e) {
+                throw e.asOperationFailedException();
+            }
         }
         throw new AnchorImpossibleSituationException();
     }
 
     @Override
-    public BoundedIndexContainer<DisplayStack> backgroundStackCntr()
-            throws GetOperationFailedException {
+    public BoundedIndexContainer<DisplayStack> container()
+            throws BackgroundStackContainerException {
 
         assert (exists());
 
@@ -119,9 +127,9 @@ public class FinderProbMap implements BackgroundStackCntr, FinderRasterSingleChn
                 Channel chnl = singleRaster.get();
 
                 Stack stack = new Stack();
-                stack.addChnl(chnl);
-                stack.addBlankChnl();
-                stack.addBlankChnl();
+                stack.addChannel(chnl);
+                stack.addBlankChannel();
+                stack.addBlankChannel();
 
                 DisplayStack bgStack = DisplayStack.create(stack);
                 return new SingleContainer<>(bgStack, 0, true);
@@ -131,7 +139,7 @@ public class FinderProbMap implements BackgroundStackCntr, FinderRasterSingleChn
                         rasterSeries.get(), new BackgroundStackBridge());
             }
         } catch (OperationFailedException | CreateException | IncorrectImageSizeException e) {
-            throw new GetOperationFailedException(e);
+            throw new BackgroundStackContainerException(e);
         }
     }
 
@@ -149,12 +157,12 @@ public class FinderProbMap implements BackgroundStackCntr, FinderRasterSingleChn
     }
 
     @Override
-    public Channel getFirstChnl() throws GetOperationFailedException {
+    public Channel getFirstChnl() throws OperationFailedException {
         return singleChnl();
     }
 
     @Override
-    public int getNumChnl() throws GetOperationFailedException {
+    public int getNumChnl() {
         return 1;
     }
 

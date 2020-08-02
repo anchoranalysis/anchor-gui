@@ -127,7 +127,7 @@ class AddSets {
                 };
 
         for (FinderCfgNRGSet finder : allFinderCfgNRG) {
-            if (finder.doFind(manifests.getFileManifest().doOperation())) {}
+            if (finder.doFind(manifests.getFileManifest().call())) {}
         }
     }
 
@@ -158,7 +158,7 @@ class AddSets {
         combinedDropDown.addCombination(
                 finderFirst,
                 finderSecond,
-                operationBwsa.nrgBackground().getNRGBackground().getBackgroundSet(),
+                operationBwsa.nrgBackground().getBackground().getBackgroundSet(),
                 finderContext.getContext());
     }
 }

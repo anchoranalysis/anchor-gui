@@ -40,7 +40,7 @@ import javax.swing.event.InternalFrameEvent;
 import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.index.IIndexGettableSettable;
 import org.anchoranalysis.core.index.container.BoundedRangeIncompleteDynamic;
-import org.anchoranalysis.gui.displayupdate.IDisplayUpdateRememberStack;
+import org.anchoranalysis.gui.displayupdate.DisplayUpdateRememberStack;
 import org.anchoranalysis.gui.frame.details.canvas.ControllerAction;
 import org.anchoranalysis.gui.frame.details.canvas.InitialSliderState;
 import org.anchoranalysis.gui.frame.details.canvas.InternalFrameCanvas;
@@ -74,7 +74,7 @@ public class InternalFrameWithDetailsTopPanel {
     public ISliderState init(
             BoundedRangeIncompleteDynamic indexBounds,
             IIndexGettableSettable indexCntr,
-            IDisplayUpdateRememberStack stackProvider,
+            DisplayUpdateRememberStack stackProvider,
             InitialSliderState initialSliceState,
             IRetrieveElements elementRetriever,
             VideoStatsModuleGlobalParams mpg)

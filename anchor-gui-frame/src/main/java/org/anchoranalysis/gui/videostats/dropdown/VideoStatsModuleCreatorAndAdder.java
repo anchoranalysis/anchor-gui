@@ -30,7 +30,7 @@ import java.awt.Component;
 import java.util.concurrent.ExecutionException;
 import javax.swing.JOptionPane;
 import org.anchoranalysis.core.log.Logger;
-import org.anchoranalysis.core.progress.OperationWithProgressReporter;
+import org.anchoranalysis.core.progress.CallableWithProgressReporter;
 import org.anchoranalysis.core.progress.ProgressReporter;
 import org.anchoranalysis.core.progress.ProgressReporterMultiple;
 import org.anchoranalysis.core.progress.ProgressReporterOneOfMany;
@@ -42,11 +42,11 @@ import org.anchoranalysis.gui.videostats.threading.InteractiveWorker;
 
 public class VideoStatsModuleCreatorAndAdder {
 
-    private OperationWithProgressReporter<IAddVideoStatsModule, ? extends Throwable> adderOperation;
+    private CallableWithProgressReporter<IAddVideoStatsModule, ? extends Throwable> adderOperation;
     private VideoStatsModuleCreator creator;
 
     public VideoStatsModuleCreatorAndAdder(
-            OperationWithProgressReporter<IAddVideoStatsModule, ? extends Throwable> adderOperation,
+            CallableWithProgressReporter<IAddVideoStatsModule, ? extends Throwable> adderOperation,
             VideoStatsModuleCreator creator) {
         this.adderOperation = adderOperation;
         this.creator = creator;
@@ -85,7 +85,7 @@ public class VideoStatsModuleCreatorAndAdder {
                     try (ProgressReporterMultiple prm =
                             new ProgressReporterMultiple(progressReporter, 2)) {
                         IAddVideoStatsModule adder =
-                                adderOperation.doOperation(new ProgressReporterOneOfMany(prm));
+                                adderOperation.call(new ProgressReporterOneOfMany(prm));
                         prm.incrWorker();
 
                         creator.doInBackground(new ProgressReporterOneOfMany(prm));

@@ -32,13 +32,13 @@ import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.error.reporter.ErrorReporter;
 import org.anchoranalysis.core.functional.function.FunctionWithException;
 import org.anchoranalysis.core.idgetter.IDGetter;
-import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.index.IIndexGettableSettable;
 import org.anchoranalysis.core.index.SetOperationFailedException;
 import org.anchoranalysis.core.log.Logger;
 import org.anchoranalysis.core.property.change.PropertyValueChangeEvent;
 import org.anchoranalysis.core.property.change.PropertyValueChangeListener;
-import org.anchoranalysis.gui.displayupdate.IDisplayUpdateRememberStack;
+import org.anchoranalysis.gui.container.background.BackgroundStackContainerException;
+import org.anchoranalysis.gui.displayupdate.DisplayUpdateRememberStack;
 import org.anchoranalysis.gui.displayupdate.OverlayedDisplayStack;
 import org.anchoranalysis.gui.frame.display.IRedrawable;
 import org.anchoranalysis.gui.frame.display.OverlayedDisplayStackUpdate;
@@ -94,7 +94,8 @@ class ThreadedOverlayUpdateProducer implements IRedrawable, IThreadedProducer, I
     }
 
     public void init(
-            final FunctionWithException<Integer, OverlayedDisplayStack, GetOperationFailedException>
+            final FunctionWithException<
+                            Integer, OverlayedDisplayStack, BackgroundStackContainerException>
                     integerToCfgBridge,
             final MarkDisplaySettingsWrapper markDisplaySettingsWrapper,
             int defaultIndex,
@@ -108,7 +109,8 @@ class ThreadedOverlayUpdateProducer implements IRedrawable, IThreadedProducer, I
         // When our Mark display settings change
         markDisplaySettingsWrapper.addChangeListener(propertyValueChange);
 
-        FunctionWithException<Integer, OverlayedDisplayStackUpdate, GetOperationFailedException>
+        FunctionWithException<
+                        Integer, OverlayedDisplayStackUpdate, BackgroundStackContainerException>
                 findCorrectUpdate =
                         new FindCorrectUpdate(integerToCfgBridge, () -> consumer != null, this);
 
@@ -131,7 +133,7 @@ class ThreadedOverlayUpdateProducer implements IRedrawable, IThreadedProducer, I
 
     // How it provides stacks to other applications (the output)
     @Override
-    public IDisplayUpdateRememberStack getStackProvider() {
+    public DisplayUpdateRememberStack getStackProvider() {
         return consumer;
     }
 
@@ -182,7 +184,8 @@ class ThreadedOverlayUpdateProducer implements IRedrawable, IThreadedProducer, I
     }
 
     private static DisplayUpdateCreator setupDisplayUpdateCreator(
-            FunctionWithException<Integer, OverlayedDisplayStackUpdate, GetOperationFailedException>
+            FunctionWithException<
+                            Integer, OverlayedDisplayStackUpdate, BackgroundStackContainerException>
                     findCorrectUpdate,
             IDGetter<Overlay> idGetter,
             DrawOverlay maskWriter)

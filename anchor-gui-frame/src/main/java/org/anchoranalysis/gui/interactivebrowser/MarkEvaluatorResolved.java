@@ -26,10 +26,13 @@
 
 package org.anchoranalysis.gui.interactivebrowser;
 
+import lombok.Getter;
 import org.anchoranalysis.anchor.mpp.bean.cfg.CfgGen;
+import org.anchoranalysis.anchor.mpp.bean.init.MPPInitParams;
 import org.anchoranalysis.anchor.mpp.feature.nrg.scheme.NRGScheme;
+import org.anchoranalysis.core.cache.CacheCall;
 import org.anchoranalysis.core.error.CreateException;
-import org.anchoranalysis.core.index.GetOperationFailedException;
+import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.params.KeyValueParams;
 import org.anchoranalysis.feature.nrg.NRGStackWithParams;
 
@@ -37,13 +40,15 @@ import org.anchoranalysis.feature.nrg.NRGStackWithParams;
 //  it into a ProposerSharedObjectsImageSpecific and other necessary components
 public class MarkEvaluatorResolved {
 
-    private final OperationInitParams operationCreateProposerSharedObjects;
-    private final OperationNrgStack operationCreateNrgStack;
-    private final CfgGen cfgGen;
-    private final NRGScheme nrgScheme;
+    private final CacheCall<MPPInitParams, CreateException> operationCreateProposerSharedObjects;
+    private final CacheCall<NRGStackWithParams, CreateException> operationCreateNrgStack;
+
+    @Getter private final CfgGen cfgGen;
+
+    @Getter private final NRGScheme nrgScheme;
 
     public MarkEvaluatorResolved(
-            OperationInitParams proposerSharedObjects,
+            CacheCall<MPPInitParams, CreateException> proposerSharedObjects,
             CfgGen cfgGen,
             NRGScheme nrgScheme,
             KeyValueParams params) {
@@ -53,26 +58,18 @@ public class MarkEvaluatorResolved {
         this.nrgScheme = nrgScheme;
 
         this.operationCreateNrgStack =
-                new OperationNrgStack(operationCreateProposerSharedObjects, params);
+                CacheCall.of(new OperationNrgStack(operationCreateProposerSharedObjects, params));
     }
 
-    public OperationInitParams getProposerSharedObjectsOperation() {
+    public CacheCall<MPPInitParams, CreateException> getProposerSharedObjectsOperation() {
         return operationCreateProposerSharedObjects;
     }
 
-    public NRGStackWithParams getNRGStack() throws GetOperationFailedException {
+    public NRGStackWithParams getNRGStack() throws OperationFailedException {
         try {
-            return operationCreateNrgStack.doOperation();
+            return operationCreateNrgStack.call();
         } catch (CreateException e) {
-            throw new GetOperationFailedException(e);
+            throw new OperationFailedException(e);
         }
-    }
-
-    public CfgGen getCfgGen() {
-        return cfgGen;
-    }
-
-    public NRGScheme getNrgScheme() {
-        return nrgScheme;
     }
 }

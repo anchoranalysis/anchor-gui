@@ -30,9 +30,8 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.error.reporter.ErrorReporter;
-import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.index.IIndexGettableSettable;
-import org.anchoranalysis.gui.displayupdate.IOverlayedImgStackProvider;
+import org.anchoranalysis.gui.displayupdate.ProvidesOverlayedDisplayStack;
 import org.anchoranalysis.gui.frame.display.BoundOverlayedDisplayStack;
 import org.anchoranalysis.gui.reassign.FrameTitleGenerator;
 
@@ -40,7 +39,7 @@ class TitleBoundsUpdater implements ChangeListener {
 
     private ErrorReporter errorReporter;
     private IIndexGettableSettable indexCntr;
-    private IOverlayedImgStackProvider stackProvider;
+    private ProvidesOverlayedDisplayStack stackProvider;
     private SliceIndexSlider slider;
     private InternalFrameDelegate frame;
     private String frameName;
@@ -48,7 +47,7 @@ class TitleBoundsUpdater implements ChangeListener {
     public TitleBoundsUpdater(
             ErrorReporter errorReporter,
             IIndexGettableSettable indexCntr,
-            IOverlayedImgStackProvider stackProvider,
+            ProvidesOverlayedDisplayStack stackProvider,
             SliceIndexSlider slider,
             InternalFrameDelegate frame,
             String frameName) {
@@ -77,18 +76,14 @@ class TitleBoundsUpdater implements ChangeListener {
 
     // Maybe this gets called before init
     public void updateSliceBounds() throws OperationFailedException {
-        try {
-            BoundOverlayedDisplayStack initialStack = this.stackProvider.getCurrentDisplayStack();
-            ChnlSliceRange sliceBounds = new ChnlSliceRange(initialStack.getDimensions());
+        BoundOverlayedDisplayStack initialStack = this.stackProvider.getCurrentDisplayStack();
+        ChnlSliceRange sliceBounds = new ChnlSliceRange(initialStack.getDimensions());
 
-            if (slider == null) {
-                return;
-            }
-
-            slider.setSliceBounds(sliceBounds);
-        } catch (GetOperationFailedException e) {
-            throw new OperationFailedException(e);
+        if (slider == null) {
+            return;
         }
+
+        slider.setSliceBounds(sliceBounds);
     }
 
     private String genTitle(int iter) {

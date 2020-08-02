@@ -26,7 +26,7 @@
 
 package org.anchoranalysis.gui.videostats.dropdown.manifest;
 
-import org.anchoranalysis.core.progress.OperationWithProgressReporter;
+import org.anchoranalysis.core.progress.CallableWithProgressReporter;
 import org.anchoranalysis.core.progress.ProgressReporter;
 import org.anchoranalysis.core.progress.ProgressReporterNull;
 
@@ -36,14 +36,14 @@ import org.anchoranalysis.core.progress.ProgressReporterNull;
  * @param <T> return-type of operation
  * @param <E> exception-type if something goes wrong during operation
  */
-class OperationReplaceNull<T, E extends Exception> implements OperationWithProgressReporter<T, E> {
+class OperationReplaceNull<T, E extends Exception> implements CallableWithProgressReporter<T, E> {
 
-    private OperationWithProgressReporter<T, E> opFirst;
-    private OperationWithProgressReporter<T, E> opSecond;
+    private CallableWithProgressReporter<T, E> opFirst;
+    private CallableWithProgressReporter<T, E> opSecond;
 
     public OperationReplaceNull(
-            OperationWithProgressReporter<T, E> opFirst,
-            OperationWithProgressReporter<T, E> opSecond) {
+            CallableWithProgressReporter<T, E> opFirst,
+            CallableWithProgressReporter<T, E> opSecond) {
         super();
         this.opFirst = opFirst;
         this.opSecond = opSecond;
@@ -52,12 +52,12 @@ class OperationReplaceNull<T, E extends Exception> implements OperationWithProgr
     }
 
     @Override
-    public T doOperation(ProgressReporter progressReporter) throws E {
+    public T call(ProgressReporter progressReporter) throws E {
 
-        T first = opFirst.doOperation(progressReporter);
+        T first = opFirst.call(progressReporter);
 
         if (first == null) {
-            return opSecond.doOperation(ProgressReporterNull.get());
+            return opSecond.call(ProgressReporterNull.get());
         }
 
         return first;

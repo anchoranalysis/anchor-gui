@@ -26,5 +26,13 @@
 
 package org.anchoranalysis.gui.displayupdate;
 
-public interface IDisplayUpdateRememberStack
-        extends IDisplayUpdateProvider, IOverlayedImgStackProvider {}
+import javax.swing.event.ChangeListener;
+import org.anchoranalysis.core.error.OperationFailedException;
+import org.anchoranalysis.gui.frame.display.DisplayUpdate;
+
+public interface ProvidesDisplayUpdate {
+
+    DisplayUpdate get() throws OperationFailedException;
+
+    void addChangeListener(ChangeListener cl);
+}

@@ -33,7 +33,7 @@ import org.anchoranalysis.core.log.Logger;
 import org.anchoranalysis.gui.cfgnrg.StatePanelFrame;
 import org.anchoranalysis.gui.cfgnrg.StatePanelUpdateException;
 import org.anchoranalysis.gui.feature.evaluator.treetable.FeatureListSrc;
-import org.anchoranalysis.gui.image.OverlayCollectionWithImgStack;
+import org.anchoranalysis.gui.image.OverlayCollectionWithNrgStack;
 import org.anchoranalysis.gui.image.frame.ControllerSize;
 import org.anchoranalysis.gui.videostats.IModuleCreatorDefaultState;
 import org.anchoranalysis.gui.videostats.link.LinkModules;
@@ -42,7 +42,7 @@ import org.anchoranalysis.gui.videostats.module.VideoStatsModule;
 
 public class FeatureEvaluatorTableFrame {
 
-    private StatePanelFrame<OverlayCollectionWithImgStack> delegate;
+    private StatePanelFrame<OverlayCollectionWithNrgStack> delegate;
 
     private ErrorReporter errorReporter;
     private FeatureListSrc featureListSrc;
@@ -76,7 +76,7 @@ public class FeatureEvaluatorTableFrame {
         };
     }
 
-    private void showIncomingState(final OverlayCollectionWithImgStack value) {
+    private void showIncomingState(final OverlayCollectionWithNrgStack value) {
         SwingUtilities.invokeLater(
                 () -> {
                     try {
@@ -88,7 +88,7 @@ public class FeatureEvaluatorTableFrame {
                 });
     }
 
-    private OverlayCollectionWithImgStack maybeAugmentParams(OverlayCollectionWithImgStack oc)
+    private OverlayCollectionWithNrgStack maybeAugmentParams(OverlayCollectionWithNrgStack oc)
             throws OperationFailedException {
         return oc.copyChangeStack(featureListSrc.maybeAugmentParams(oc.getStack()));
     }

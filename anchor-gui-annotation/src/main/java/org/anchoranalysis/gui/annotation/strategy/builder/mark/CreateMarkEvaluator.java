@@ -32,12 +32,12 @@ import java.util.Optional;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import org.anchoranalysis.core.error.CreateException;
-import org.anchoranalysis.core.functional.Operation;
+import org.anchoranalysis.core.functional.CallableWithException;
 import org.anchoranalysis.core.functional.OptionalUtilities;
 import org.anchoranalysis.core.log.Logger;
 import org.anchoranalysis.core.name.provider.NamedProvider;
 import org.anchoranalysis.core.params.KeyValueParams;
-import org.anchoranalysis.core.progress.OperationWithProgressReporter;
+import org.anchoranalysis.core.progress.CallableWithProgressReporter;
 import org.anchoranalysis.gui.annotation.mark.MarkAnnotator;
 import org.anchoranalysis.gui.interactivebrowser.MarkEvaluatorManager;
 import org.anchoranalysis.gui.interactivebrowser.MarkEvaluatorSetForImage;
@@ -54,7 +54,7 @@ class CreateMarkEvaluator {
             MarkEvaluatorManager markEvaluatorManager,
             Path pathForBinding,
             MarkProposerStrategy strategy,
-            OperationWithProgressReporter<NamedProvider<Stack>, CreateException> stacks,
+            CallableWithProgressReporter<NamedProvider<Stack>, CreateException> stacks,
             Logger logger)
             throws CreateException {
 
@@ -68,14 +68,14 @@ class CreateMarkEvaluator {
             MarkEvaluatorManager markEvaluatorManager,
             Path pathForBinding,
             MarkProposerStrategy strategy,
-            OperationWithProgressReporter<NamedProvider<Stack>, CreateException> stacks)
+            CallableWithProgressReporter<NamedProvider<Stack>, CreateException> stacks)
             throws CreateException {
         return markEvaluatorManager.createSetForStackCollection(
                 stacks, opLoadKeyValueParams(pathForBinding, strategy));
     }
 
-    private static Operation<Optional<KeyValueParams>, IOException> opLoadKeyValueParams(
-            Path pathForBinding, MarkProposerStrategy strategy) {
+    private static CallableWithException<Optional<KeyValueParams>, IOException>
+            opLoadKeyValueParams(Path pathForBinding, MarkProposerStrategy strategy) {
         return () -> paramsFromGenerator(pathForBinding, strategy.paramsFilePathGenerator());
     }
 

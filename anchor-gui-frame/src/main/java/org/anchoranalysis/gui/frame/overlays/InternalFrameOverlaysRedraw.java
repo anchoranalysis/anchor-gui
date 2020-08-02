@@ -29,11 +29,9 @@ package org.anchoranalysis.gui.frame.overlays;
 import java.util.Optional;
 import org.anchoranalysis.anchor.overlay.collection.OverlayCollection;
 import org.anchoranalysis.core.error.InitException;
-import org.anchoranalysis.core.index.GetOperationFailedException;
-import org.anchoranalysis.core.progress.OperationWithProgressReporter;
 import org.anchoranalysis.core.property.change.PropertyValueChangeEvent;
 import org.anchoranalysis.core.property.change.PropertyValueChangeListener;
-import org.anchoranalysis.gui.backgroundset.BackgroundSet;
+import org.anchoranalysis.gui.container.background.BackgroundStackContainerException;
 import org.anchoranalysis.gui.frame.details.canvas.ControllerAction;
 import org.anchoranalysis.gui.frame.details.canvas.controller.imageview.ControllerImageView;
 import org.anchoranalysis.gui.frame.overlays.onrgb.InternalFrameEditableOverlays;
@@ -46,7 +44,6 @@ import org.anchoranalysis.gui.videostats.link.LinkModules;
 import org.anchoranalysis.gui.videostats.module.DefaultModuleState;
 import org.anchoranalysis.gui.videostats.module.VideoStatsModule;
 import org.anchoranalysis.image.stack.DisplayStack;
-import org.anchoranalysis.io.output.bean.OutputWriteSettings;
 
 // A frame that supports quickly drawing marks on top of existing images based upon a mouse-click
 //  at a particular point
@@ -64,12 +61,7 @@ public class InternalFrameOverlaysRedraw {
         this.delegate.controllerImageView().setEnforceMinimumSizeAfterGuessZoom(true);
     }
 
-    public ISliderState init(
-            DefaultModuleState defaultState,
-            OperationWithProgressReporter<BackgroundSet, GetOperationFailedException>
-                    operationBackgroundSet,
-            OutputWriteSettings outputWriteSettings,
-            VideoStatsModuleGlobalParams mpg)
+    public ISliderState init(DefaultModuleState defaultState, VideoStatsModuleGlobalParams mpg)
             throws InitException {
 
         ISliderState sliderState = delegate.init(defaultState, mpg);
@@ -77,7 +69,7 @@ public class InternalFrameOverlaysRedraw {
         // For now we keep background as it is
         try {
             background = defaultState.getLinkState().getBackground().apply(0);
-        } catch (GetOperationFailedException e) {
+        } catch (BackgroundStackContainerException e) {
             throw new InitException(e);
         }
 

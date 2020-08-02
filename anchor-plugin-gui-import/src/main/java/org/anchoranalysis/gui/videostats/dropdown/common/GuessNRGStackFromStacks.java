@@ -26,11 +26,12 @@
 
 package org.anchoranalysis.gui.videostats.dropdown.common;
 
+import lombok.AllArgsConstructor;
 import org.anchoranalysis.core.error.CreateException;
-import org.anchoranalysis.core.error.OperationFailedException;
+import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.name.provider.NamedProvider;
 import org.anchoranalysis.core.name.provider.NamedProviderGetException;
-import org.anchoranalysis.core.progress.OperationWithProgressReporter;
+import org.anchoranalysis.core.progress.CallableWithProgressReporter;
 import org.anchoranalysis.core.progress.ProgressReporter;
 import org.anchoranalysis.core.progress.ProgressReporterNull;
 import org.anchoranalysis.feature.nrg.NRGStackWithParams;
@@ -38,20 +39,15 @@ import org.anchoranalysis.gui.series.TimeSequenceProvider;
 import org.anchoranalysis.image.stack.Stack;
 import org.anchoranalysis.image.stack.TimeSequence;
 
+@AllArgsConstructor
 public class GuessNRGStackFromStacks
-        implements OperationWithProgressReporter<NRGStackWithParams, OperationFailedException> {
+        implements CallableWithProgressReporter<NRGStackWithParams, GetOperationFailedException> {
 
-    private OperationWithProgressReporter<TimeSequenceProvider, CreateException> opBackgroundSet;
-
-    public GuessNRGStackFromStacks(
-            OperationWithProgressReporter<TimeSequenceProvider, CreateException> opBackgroundSet) {
-        super();
-        this.opBackgroundSet = opBackgroundSet;
-    }
+    private CallableWithProgressReporter<TimeSequenceProvider, CreateException> opBackgroundSet;
 
     @Override
-    public NRGStackWithParams doOperation(ProgressReporter progressReporter)
-            throws OperationFailedException {
+    public NRGStackWithParams call(ProgressReporter progressReporter)
+            throws GetOperationFailedException {
         // If a time sequence, assume nrg stack is always t=0
         Stack stack = selectArbitraryItem(opBackgroundSet).get(0);
 
@@ -59,19 +55,21 @@ public class GuessNRGStackFromStacks
     }
 
     private static TimeSequence selectArbitraryItem(
-            OperationWithProgressReporter<TimeSequenceProvider, CreateException> opBackgroundSet)
-            throws OperationFailedException {
+            CallableWithProgressReporter<TimeSequenceProvider, CreateException> opBackgroundSet)
+            throws GetOperationFailedException {
         try {
             NamedProvider<TimeSequence> stacks =
-                    opBackgroundSet.doOperation(ProgressReporterNull.get()).sequence();
+                    opBackgroundSet.call(ProgressReporterNull.get()).sequence();
             String arbitraryKey = stacks.keys().iterator().next();
 
-            // If a time sequence, assume nrg stack is always t=0
-            return stacks.getException(arbitraryKey);
-        } catch (NamedProviderGetException e) {
-            throw new OperationFailedException(e.summarize());
+            try {
+                // If a time sequence, assume nrg stack is always t=0
+                return stacks.getException(arbitraryKey);
+            } catch (NamedProviderGetException e) {
+                throw new GetOperationFailedException(arbitraryKey, e.summarize());
+            }
         } catch (CreateException e) {
-            throw new OperationFailedException(e);
+            throw new GetOperationFailedException(e);
         }
     }
 }

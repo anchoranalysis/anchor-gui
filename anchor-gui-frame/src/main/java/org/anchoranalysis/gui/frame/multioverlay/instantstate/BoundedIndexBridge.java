@@ -1,8 +1,10 @@
+package org.anchoranalysis.gui.frame.multioverlay.instantstate;
+
 /*-
  * #%L
- * anchor-gui-frame
+ * anchor-core
  * %%
- * Copyright (C) 2010 - 2020 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann-La Roche
+ * Copyright (C) 2010 - 2020 Owen Feehan
  * %%
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -24,15 +26,26 @@
  * #L%
  */
 
-package org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.definition;
-
+import lombok.AllArgsConstructor;
+import lombok.Setter;
 import org.anchoranalysis.core.functional.function.FunctionWithException;
 import org.anchoranalysis.core.index.GetOperationFailedException;
-import org.anchoranalysis.image.stack.DisplayStack;
+import org.anchoranalysis.core.index.container.BoundedIndexContainer;
 
-@FunctionalInterface
-public interface IImageStackCntrFromName {
+@AllArgsConstructor
+class BoundedIndexBridge<T>
+        implements FunctionWithException<Integer, T, GetOperationFailedException> {
 
-    FunctionWithException<Integer, DisplayStack, GetOperationFailedException>
-            imageStackCntrFromName(String name) throws GetOperationFailedException;
+    /** The container associated with the bridge */
+    @Setter private BoundedIndexContainer<T> container;
+
+    @Override
+    public T apply(Integer sourceObject) throws GetOperationFailedException {
+        int index = container.previousEqualIndex(sourceObject);
+        if (index == -1) {
+            throw new GetOperationFailedException(
+                    sourceObject, "Cannot find a previousEqualIndex in the cntr");
+        }
+        return container.get(index);
+    }
 }

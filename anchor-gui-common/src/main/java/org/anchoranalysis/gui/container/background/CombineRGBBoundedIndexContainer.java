@@ -28,6 +28,7 @@ package org.anchoranalysis.gui.container.background;
 
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.InitException;
+import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.index.container.BoundChangeListener;
 import org.anchoranalysis.core.index.container.BoundedIndexContainer;
@@ -198,11 +199,12 @@ public class CombineRGBBoundedIndexContainer implements BoundedIndexContainer<Di
     }
 
     private void addChnlToStack(Stack stackNew, BoundedIndexContainer<DisplayStack> cntr, int index)
-            throws GetOperationFailedException {
+            throws OperationFailedException {
 
         try {
             if (cntr != null) {
-                stackNew.addChnl(cntr.get(cntr.previousEqualIndex(index)).createChnl(0, false));
+                stackNew.addChannel(
+                        cntr.get(cntr.previousEqualIndex(index)).createChannel(0, false));
             } else {
                 // TODO, why do we create an empty initialised here
                 assert (dimensions != null);
@@ -210,10 +212,10 @@ public class CombineRGBBoundedIndexContainer implements BoundedIndexContainer<Di
                         ChannelFactory.instance()
                                 .createEmptyInitialised(
                                         dimensions, VoxelDataTypeUnsignedByte.INSTANCE);
-                stackNew.addChnl(chnlNew);
+                stackNew.addChannel(chnlNew);
             }
-        } catch (IncorrectImageSizeException e) {
-            throw new GetOperationFailedException(e);
+        } catch (IncorrectImageSizeException | GetOperationFailedException e) {
+            throw new OperationFailedException(e);
         }
     }
 
@@ -224,14 +226,14 @@ public class CombineRGBBoundedIndexContainer implements BoundedIndexContainer<Di
         // containers
         Stack stackNew = new Stack();
 
-        addChnlToStack(stackNew, red, index);
-        addChnlToStack(stackNew, green, index);
-        addChnlToStack(stackNew, blue, index);
-
         try {
+            addChnlToStack(stackNew, red, index);
+            addChnlToStack(stackNew, green, index);
+            addChnlToStack(stackNew, blue, index);
+
             return DisplayStack.create(stackNew);
-        } catch (CreateException e) {
-            throw new GetOperationFailedException(e);
+        } catch (CreateException | OperationFailedException e) {
+            throw new GetOperationFailedException(String.valueOf(index), e);
         }
     }
 }

@@ -28,7 +28,7 @@ package org.anchoranalysis.gui.feature.evaluator.treetable;
 
 import java.awt.event.MouseListener;
 import javax.swing.JComponent;
-import org.anchoranalysis.anchor.mpp.pair.Pair;
+import org.anchoranalysis.anchor.mpp.pair.IdentifiablePair;
 import org.anchoranalysis.anchor.overlay.Overlay;
 import org.anchoranalysis.feature.input.FeatureInput;
 import org.anchoranalysis.feature.nrg.NRGStackWithParams;
@@ -76,7 +76,7 @@ public class TreeTableWithModel implements ITreeTableModel {
     }
 
     @Override
-    public void updatePair(Pair<Overlay> pair, NRGStackWithParams raster) {
+    public void updatePair(IdentifiablePair<Overlay> pair, NRGStackWithParams raster) {
         featureTree.updatePair(pair, raster);
     }
 

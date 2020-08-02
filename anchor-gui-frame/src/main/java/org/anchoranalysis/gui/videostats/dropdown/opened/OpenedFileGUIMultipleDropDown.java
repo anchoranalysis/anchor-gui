@@ -34,8 +34,7 @@ import lombok.Getter;
 import org.anchoranalysis.anchor.overlay.OverlayedInstantState;
 import org.anchoranalysis.core.bridge.BridgeElementWithIndex;
 import org.anchoranalysis.core.error.OperationFailedException;
-import org.anchoranalysis.core.functional.Operation;
-import org.anchoranalysis.core.progress.IdentityOperationWithProgressReporter;
+import org.anchoranalysis.core.functional.CallableWithException;
 import org.anchoranalysis.gui.file.opened.IOpenedFileGUI;
 import org.anchoranalysis.gui.frame.multioverlay.RasterMultiCreator;
 import org.anchoranalysis.gui.frame.multiraster.NamedRasterSet;
@@ -187,8 +186,7 @@ public class OpenedFileGUIMultipleDropDown {
                     new RasterMultiModuleCreator(list, "multi-raster", mpg);
             VideoStatsModuleCreatorAndAdder creatorAndAdder =
                     new VideoStatsModuleCreatorAndAdder(
-                            new IdentityOperationWithProgressReporter<>(adder.createChild()),
-                            creator);
+                            progresssReporter -> adder.createChild(), creator);
             out.add(
                     new VideoStatsOperationFromCreatorAndAdder(
                             "Multi Raster", creatorAndAdder, mpg.getThreadPool(), mpg.getLogger()));
@@ -219,7 +217,7 @@ public class OpenedFileGUIMultipleDropDown {
             if (op.getNrgBackground() != null
                     && getObjFromOperationCombine.getObj(op).isPresent()) {
 
-                Optional<Operation<T, OperationFailedException>> opt =
+                Optional<CallableWithException<T, OperationFailedException>> opt =
                         getObjFromOperationCombine.getObj(op);
                 if (opt.isPresent()) {
                     MultiInput<T> multiInput =
@@ -229,14 +227,13 @@ public class OpenedFileGUIMultipleDropDown {
             }
         }
 
-        if (list.size() > 0) {
+        if (!list.isEmpty()) {
             VideoStatsOperationMenu subMenu = outMenu.getOrCreateSubMenu(subMenuName, true);
 
             RasterMultiCreator<T> creator =
                     new RasterMultiCreator<>(list, rootOperation.getName(), mpg, bridge);
             VideoStatsModuleCreatorAndAdder creatorAndAdder =
-                    new VideoStatsModuleCreatorAndAdder(
-                            new IdentityOperationWithProgressReporter<>(adder), creator);
+                    new VideoStatsModuleCreatorAndAdder(progresssReporter -> adder, creator);
             subMenu.add(
                     new VideoStatsOperationFromCreatorAndAdder(
                             rootOperation.getName(),
@@ -248,7 +245,7 @@ public class OpenedFileGUIMultipleDropDown {
 
     @FunctionalInterface
     private interface GetObjFromOperationCombine<T> {
-        public Optional<Operation<T, OperationFailedException>> getObj(
+        public Optional<CallableWithException<T, OperationFailedException>> getObj(
                 IVideoStatsOperationCombine op);
     }
 

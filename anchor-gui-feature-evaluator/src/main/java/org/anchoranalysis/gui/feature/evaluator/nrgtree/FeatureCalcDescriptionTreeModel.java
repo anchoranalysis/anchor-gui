@@ -28,12 +28,12 @@ package org.anchoranalysis.gui.feature.evaluator.nrgtree;
 
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreeNode;
-import org.anchoranalysis.anchor.mpp.pair.Pair;
+import org.anchoranalysis.anchor.mpp.pair.IdentifiablePair;
 import org.anchoranalysis.anchor.overlay.Overlay;
+import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.log.Logger;
 import org.anchoranalysis.feature.bean.list.FeatureList;
-import org.anchoranalysis.feature.calc.FeatureCalcException;
 import org.anchoranalysis.feature.calc.FeatureInitParams;
 import org.anchoranalysis.feature.input.FeatureInput;
 import org.anchoranalysis.feature.nrg.NRGStackWithParams;
@@ -105,7 +105,7 @@ public class FeatureCalcDescriptionTreeModel extends DefaultTreeModel
     }
 
     @Override
-    public void updatePair(Pair<Overlay> pair, NRGStackWithParams nrgStack) {
+    public void updatePair(IdentifiablePair<Overlay> pair, NRGStackWithParams nrgStack) {
 
         try {
             // If we have no mark matching the current id
@@ -156,7 +156,7 @@ public class FeatureCalcDescriptionTreeModel extends DefaultTreeModel
                 nodeChanged(root);
             }
 
-        } catch (FeatureCalcException e) {
+        } catch (InitException e) {
             throw new OperationFailedException(e);
         }
     }

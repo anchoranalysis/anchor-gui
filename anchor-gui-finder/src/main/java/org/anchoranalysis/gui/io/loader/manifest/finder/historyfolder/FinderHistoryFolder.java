@@ -28,8 +28,8 @@ package org.anchoranalysis.gui.io.loader.manifest.finder.historyfolder;
 
 import java.util.List;
 import java.util.Optional;
-import org.anchoranalysis.core.functional.Operation;
-import org.anchoranalysis.core.index.GetOperationFailedException;
+import org.anchoranalysis.core.error.OperationFailedException;
+import org.anchoranalysis.core.functional.CallableWithException;
 import org.anchoranalysis.core.index.container.BoundedIndexContainer;
 import org.anchoranalysis.gui.container.ContainerGetter;
 import org.anchoranalysis.io.deserializer.DeserializationFailedException;
@@ -94,11 +94,11 @@ public abstract class FinderHistoryFolder<T> extends FinderSingleFolder
     protected abstract LoadContainer<T> createFromSerialized(FolderWrite folder)
             throws DeserializationFailedException;
 
-    public Operation<LoadContainer<T>, GetOperationFailedException> getAsOperation() {
+    public CallableWithException<LoadContainer<T>, OperationFailedException> getAsOperation() {
         return () -> get();
     }
 
-    public LoadContainer<T> get() throws GetOperationFailedException {
+    public LoadContainer<T> get() throws OperationFailedException {
 
         try {
             assert (exists());
@@ -118,14 +118,14 @@ public abstract class FinderHistoryFolder<T> extends FinderSingleFolder
                 }
             }
         } catch (DeserializationFailedException e) {
-            throw new GetOperationFailedException(e);
+            throw new OperationFailedException(e);
         }
 
         return this.history;
     }
 
     @Override
-    public BoundedIndexContainer<T> getCntr() throws GetOperationFailedException {
+    public BoundedIndexContainer<T> getCntr() throws OperationFailedException {
         return get().getCntr();
     }
 }

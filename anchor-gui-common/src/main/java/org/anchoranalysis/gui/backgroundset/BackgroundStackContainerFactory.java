@@ -26,35 +26,33 @@
 
 package org.anchoranalysis.gui.backgroundset;
 
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import org.anchoranalysis.core.bridge.BridgeElementException;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.OperationFailedException;
-import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.index.container.BoundedIndexContainer;
 import org.anchoranalysis.core.index.container.SingleContainer;
 import org.anchoranalysis.core.index.container.bridge.BoundedIndexContainerBridgeWithoutIndex;
-import org.anchoranalysis.gui.container.background.BackgroundStackCntr;
+import org.anchoranalysis.gui.container.background.BackgroundStackContainer;
 import org.anchoranalysis.image.stack.DisplayStack;
 import org.anchoranalysis.image.stack.Stack;
 import org.anchoranalysis.image.stack.TimeSequence;
 
-public class BackgroundStackCntrFactory {
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
+public class BackgroundStackContainerFactory {
 
     private static DisplayStack convert(Stack s) throws CreateException {
-        if (s.getNumChnl() <= 3) {
-            s = s.extractUpToThreeChnls();
+        if (s.getNumberChannels() <= 3) {
+            s = s.extractUpToThreeChannels();
         }
         return DisplayStack.create(s);
     }
 
-    private static class ExistingStack implements BackgroundStackCntr {
+    @AllArgsConstructor
+    private static class ExistingStack implements BackgroundStackContainer {
 
-        private BoundedIndexContainer<DisplayStack> cntr;
-
-        public ExistingStack(BoundedIndexContainer<DisplayStack> cntr) {
-            super();
-            this.cntr = cntr;
-        }
+        private final BoundedIndexContainer<DisplayStack> container;
 
         @Override
         public boolean exists() {
@@ -62,14 +60,12 @@ public class BackgroundStackCntrFactory {
         }
 
         @Override
-        public BoundedIndexContainer<DisplayStack> backgroundStackCntr()
-                throws GetOperationFailedException {
-            // TODO Auto-generated method stub
-            return cntr;
+        public BoundedIndexContainer<DisplayStack> container() {
+            return container;
         }
     }
 
-    public static BackgroundStackCntr convertedSequence(TimeSequence seq)
+    public static BackgroundStackContainer convertedSequence(TimeSequence seq)
             throws OperationFailedException {
 
         BoundedIndexContainer<DisplayStack> bridge =
@@ -86,7 +82,7 @@ public class BackgroundStackCntrFactory {
         return new ExistingStack(bridge);
     }
 
-    public static BackgroundStackCntr singleSavedStack(Stack stack)
+    public static BackgroundStackContainer singleSavedStack(Stack stack)
             throws OperationFailedException {
 
         try {

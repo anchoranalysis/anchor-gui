@@ -26,6 +26,8 @@
 
 package org.anchoranalysis.plugin.gui.bean.createrastergenerator.cfgnrginstantstate;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.anchoranalysis.anchor.mpp.feature.nrg.cfg.CfgNRG;
 import org.anchoranalysis.bean.annotation.AllowEmpty;
 import org.anchoranalysis.bean.annotation.BeanField;
@@ -34,7 +36,7 @@ import org.anchoranalysis.plugin.gui.bean.createrastergenerator.CreateStringRast
 public class CfgSizeStringFromCfgNRGInstantState extends CreateStringRasterGenerator {
 
     // START BEAN PROPERTIES
-    @BeanField @AllowEmpty private String prefix = "";
+    @BeanField @AllowEmpty @Getter @Setter private String prefix = "";
     // END BEAN PROPERTIES
 
     @Override
@@ -49,13 +51,5 @@ public class CfgSizeStringFromCfgNRGInstantState extends CreateStringRasterGener
         } else {
             return prefix + "0";
         }
-    }
-
-    public String getPrefix() {
-        return prefix;
-    }
-
-    public void setPrefix(String prefix) {
-        this.prefix = prefix;
     }
 }

@@ -27,11 +27,13 @@
 package org.anchoranalysis.gui.videostats.dropdown.modulecreator.graph;
 
 import java.util.Optional;
+import lombok.AllArgsConstructor;
 import org.anchoranalysis.anchor.mpp.feature.instantstate.CfgNRGInstantState;
 import org.anchoranalysis.core.error.InitException;
-import org.anchoranalysis.core.index.GetOperationFailedException;
-import org.anchoranalysis.core.progress.OperationWithProgressReporter;
+import org.anchoranalysis.core.error.OperationFailedException;
+import org.anchoranalysis.core.progress.CallableWithProgressReporter;
 import org.anchoranalysis.gui.backgroundset.BackgroundSet;
+import org.anchoranalysis.gui.container.background.BackgroundStackContainerException;
 import org.anchoranalysis.gui.image.frame.ISliderState;
 import org.anchoranalysis.gui.io.loader.manifest.finder.historyfolder.FinderHistoryFolder;
 import org.anchoranalysis.gui.videostats.IModuleCreatorDefaultState;
@@ -41,20 +43,12 @@ import org.anchoranalysis.gui.videostats.module.DefaultModuleStateManager;
 import org.anchoranalysis.gui.videostats.module.VideoStatsModuleCreateException;
 import org.anchoranalysis.gui.videostats.modulecreator.VideoStatsModuleCreatorContext;
 
+@AllArgsConstructor
 public class ColoredOutlineCreator extends VideoStatsModuleCreatorContext {
 
     private final FinderHistoryFolder<CfgNRGInstantState> finderCfgNRGHistory;
-    private final OperationWithProgressReporter<BackgroundSet, GetOperationFailedException>
+    private final CallableWithProgressReporter<BackgroundSet, BackgroundStackContainerException>
             backgroundSet;
-
-    public ColoredOutlineCreator(
-            FinderHistoryFolder<CfgNRGInstantState> finderCfgNRGHistory,
-            OperationWithProgressReporter<BackgroundSet, GetOperationFailedException>
-                    backgroundSet) {
-        super();
-        this.finderCfgNRGHistory = finderCfgNRGHistory;
-        this.backgroundSet = backgroundSet;
-    }
 
     @Override
     public boolean precondition() {
@@ -80,9 +74,7 @@ public class ColoredOutlineCreator extends VideoStatsModuleCreatorContext {
 
             return Optional.of(imageFrame.moduleCreator(sliderState));
 
-        } catch (InitException e) {
-            throw new VideoStatsModuleCreateException(e);
-        } catch (GetOperationFailedException e) {
+        } catch (InitException | OperationFailedException e) {
             throw new VideoStatsModuleCreateException(e);
         }
     }

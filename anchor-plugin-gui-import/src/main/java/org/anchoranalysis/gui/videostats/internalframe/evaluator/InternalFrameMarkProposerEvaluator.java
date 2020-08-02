@@ -36,12 +36,11 @@ import org.anchoranalysis.anchor.mpp.cfg.Cfg;
 import org.anchoranalysis.anchor.mpp.overlay.OverlayCollectionMarkFactory;
 import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.error.reporter.ErrorReporter;
-import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.name.provider.NamedProvider;
-import org.anchoranalysis.core.progress.OperationWithProgressReporter;
+import org.anchoranalysis.core.progress.CallableWithProgressReporter;
 import org.anchoranalysis.gui.backgroundset.BackgroundSet;
 import org.anchoranalysis.gui.cfgnrg.StatePanelUpdateException;
-import org.anchoranalysis.gui.frame.cfgproposer.CfgProposedListener;
+import org.anchoranalysis.gui.container.background.BackgroundStackContainerException;
 import org.anchoranalysis.gui.frame.cfgproposer.CfgProposerMouseClickAdapter;
 import org.anchoranalysis.gui.frame.details.canvas.controller.imageview.ControllerImageView;
 import org.anchoranalysis.gui.frame.overlays.IShowEvaluationResult;
@@ -100,7 +99,7 @@ public class InternalFrameMarkProposerEvaluator {
     public ISliderState init(
             MarkEvaluatorSetForImage markEvaluatorSet,
             DefaultModuleState defaultState,
-            OperationWithProgressReporter<BackgroundSet, GetOperationFailedException>
+            CallableWithProgressReporter<BackgroundSet, BackgroundStackContainerException>
                     operationBackgroundSet,
             OutputWriteSettings outputWriteSettings,
             VideoStatsModuleGlobalParams mpg)
@@ -111,8 +110,7 @@ public class InternalFrameMarkProposerEvaluator {
         outputPanel.init(
                 mpg.getDefaultColorIndexForMarks(), mpg.getExportPopupParams().getOutputManager());
 
-        ISliderState sliderState =
-                delegate.init(defaultState, operationBackgroundSet, outputWriteSettings, mpg);
+        ISliderState sliderState = delegate.init(defaultState, mpg);
 
         setupHistoryNavigator(sliderState);
 
@@ -130,14 +128,7 @@ public class InternalFrameMarkProposerEvaluator {
         final AddToHistoryNavigator showEvaluationResult = new AddToHistoryNavigator();
 
         clickListener.addCfgProposedListener(
-                new CfgProposedListener() {
-
-                    @Override
-                    public void proposed(ProposedCfg proposedCfg) {
-                        showEvaluationResult.showEvaluationResult(proposedCfg, null);
-                    }
-                });
-
+                proposedCfg -> showEvaluationResult.showEvaluationResult(proposedCfg, null));
         return sliderState;
     }
 

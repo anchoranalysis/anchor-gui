@@ -69,9 +69,7 @@ public class InternalFrameAnnotator {
                         mpg.getGraphicsCurrentScreen(),
                         paramsInit.getBackground().getDimensionsViewer());
 
-        ISliderState sliderState =
-                delegate.init(
-                        defaultState, paramsInit.getBackgroundSetOp(), outputWriteSettings, mpg);
+        ISliderState sliderState = delegate.init(defaultState, mpg);
 
         SaveMonitor saveMonitor = new SaveMonitor();
 

@@ -27,11 +27,12 @@
 package org.anchoranalysis.gui.videostats.dropdown.contextualmodulecreator;
 
 import java.util.Optional;
+import lombok.AllArgsConstructor;
 import org.anchoranalysis.anchor.mpp.feature.instantstate.CfgNRGInstantState;
 import org.anchoranalysis.core.color.ColorIndex;
 import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.error.OperationFailedException;
-import org.anchoranalysis.core.functional.Operation;
+import org.anchoranalysis.core.functional.CallableWithException;
 import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.feature.nrg.NRGStackWithParams;
 import org.anchoranalysis.gui.cfgnrg.StatePanelFrameHistoryCfgNRGInstantState;
@@ -43,22 +44,14 @@ import org.anchoranalysis.gui.videostats.module.VideoStatsModuleCreateException;
 import org.anchoranalysis.gui.videostats.modulecreator.VideoStatsModuleCreatorContext;
 import org.anchoranalysis.io.manifest.deserializer.folder.LoadContainer;
 
+@AllArgsConstructor
 public class NRGTableCreator extends VideoStatsModuleCreatorContext {
 
-    private final Operation<LoadContainer<CfgNRGInstantState>, GetOperationFailedException>
+    private final CallableWithException<LoadContainer<CfgNRGInstantState>, OperationFailedException>
             operation;
+    private final CallableWithException<NRGStackWithParams, GetOperationFailedException>
+            nrgStackWithParams;
     private final ColorIndex colorIndex;
-    private final Operation<NRGStackWithParams, OperationFailedException> nrgStackWithParams;
-
-    public NRGTableCreator(
-            Operation<LoadContainer<CfgNRGInstantState>, GetOperationFailedException> operation,
-            Operation<NRGStackWithParams, OperationFailedException> nrgStackWithParams,
-            ColorIndex colorIndex) {
-        super();
-        this.operation = operation;
-        this.colorIndex = colorIndex;
-        this.nrgStackWithParams = nrgStackWithParams;
-    }
 
     @Override
     public boolean precondition() {
@@ -73,7 +66,7 @@ public class NRGTableCreator extends VideoStatsModuleCreatorContext {
             throws VideoStatsModuleCreateException {
 
         try {
-            LoadContainer<CfgNRGInstantState> cntr = operation.doOperation();
+            LoadContainer<CfgNRGInstantState> cntr = operation.call();
 
             StatePanelFrameHistoryCfgNRGInstantState frame =
                     new StatePanelFrameHistoryCfgNRGInstantState(
@@ -81,15 +74,15 @@ public class NRGTableCreator extends VideoStatsModuleCreatorContext {
             frame.init(
                     defaultStateManager.getLinkStateManager().getState().getFrameIndex(),
                     cntr,
-                    new CfgNRGTablePanel(colorIndex, nrgStackWithParams.doOperation()),
+                    new CfgNRGTablePanel(colorIndex, nrgStackWithParams.call()),
                     mpg.getLogger().errorReporter());
             frame.controllerSize().configureSize(300, 600, 300, 1000);
             return Optional.of(frame.moduleCreator());
 
         } catch (IllegalArgumentException
                 | InitException
-                | GetOperationFailedException
-                | OperationFailedException e) {
+                | OperationFailedException
+                | GetOperationFailedException e) {
             throw new VideoStatsModuleCreateException(e);
         }
     }

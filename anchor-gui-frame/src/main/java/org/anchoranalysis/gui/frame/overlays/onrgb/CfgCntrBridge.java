@@ -29,11 +29,12 @@ package org.anchoranalysis.gui.frame.overlays.onrgb;
 import org.anchoranalysis.core.functional.function.FunctionWithException;
 import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.index.container.SingleContainer;
+import org.anchoranalysis.gui.container.background.BackgroundStackContainerException;
 import org.anchoranalysis.gui.displayupdate.OverlayedDisplayStack;
 
 class CfgCntrBridge
         implements FunctionWithException<
-                Integer, OverlayedDisplayStack, GetOperationFailedException> {
+                Integer, OverlayedDisplayStack, BackgroundStackContainerException> {
 
     private SingleContainer<OverlayedDisplayStack> cfgCntr;
 
@@ -43,7 +44,12 @@ class CfgCntrBridge
     }
 
     @Override
-    public OverlayedDisplayStack apply(Integer sourceObject) throws GetOperationFailedException {
-        return cfgCntr.get(0);
+    public OverlayedDisplayStack apply(Integer sourceObject)
+            throws BackgroundStackContainerException {
+        try {
+            return cfgCntr.get(0);
+        } catch (GetOperationFailedException e) {
+            throw new BackgroundStackContainerException(e);
+        }
     }
 }

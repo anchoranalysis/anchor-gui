@@ -29,15 +29,18 @@ package org.anchoranalysis.gui.frame.multiraster;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import org.anchoranalysis.core.progress.ProgressReporterNull;
 import org.anchoranalysis.gui.frame.details.ControllerPopupMenu;
 import org.anchoranalysis.gui.image.frame.ISliderState;
 import org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.ControllerPopupMenuWithBackground;
 import org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.IBackgroundSetter;
 import org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.IGetNames;
-import org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.definition.IImageStackCntrFromName;
+import org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.definition.ImageStackContainerFromName;
 import org.anchoranalysis.gui.videostats.dropdown.VideoStatsModuleGlobalParams;
 
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 class AddBackgroundPopup {
 
     public static void apply(
@@ -51,12 +54,12 @@ class AddBackgroundPopup {
         controller.add(createGetNames(list, sliderState, mpg), stackCntrFromName(list), mpg);
     }
 
-    private static IImageStackCntrFromName stackCntrFromName(List<NamedRasterSet> list) {
+    private static ImageStackContainerFromName stackCntrFromName(List<NamedRasterSet> list) {
         return name ->
                 sourceObject -> {
                     return list.get(sourceObject)
                             .getBackgroundSet()
-                            .doOperation(ProgressReporterNull.get())
+                            .call(ProgressReporterNull.get())
                             .singleStack(name);
                 };
     }
@@ -68,11 +71,11 @@ class AddBackgroundPopup {
                 Set<String> names =
                         list.get(sliderState.getIndex())
                                 .getBackgroundSet()
-                                .doOperation(ProgressReporterNull.get())
+                                .call(ProgressReporterNull.get())
                                 .names();
                 return new ArrayList<>(names);
 
-            } catch (Throwable e) {
+            } catch (Exception e) {
                 mpg.getLogger().errorReporter().recordError(InternalFrameMultiRaster.class, e);
                 return new ArrayList<>();
             }

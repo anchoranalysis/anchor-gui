@@ -33,7 +33,6 @@ import org.anchoranalysis.anchor.mpp.cfg.Cfg;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.error.OperationFailedException;
-import org.anchoranalysis.core.log.Logger;
 import org.anchoranalysis.core.name.store.LazyEvaluationStore;
 import org.anchoranalysis.core.params.KeyValueParams;
 import org.anchoranalysis.gui.bean.filecreator.MarkCreatorParams;
@@ -78,22 +77,18 @@ public class FileMultiCollection extends InteractiveFile {
             IAddVideoStatsModule globalSubgroupAdder, BoundOutputManagerRouteErrors outputManager)
             throws OperationFailedException {
 
-        LazyEvaluationStore<TimeSequence> stacks =
-                new LazyEvaluationStore<>(
-                        markCreatorParams.getModuleParams().getLogger(), "stacks");
+        LazyEvaluationStore<TimeSequence> stacks = new LazyEvaluationStore<>("stacks");
         inputObject.stack().addToStore(stacks);
 
-        LazyEvaluationStore<Cfg> cfgs =
-                new LazyEvaluationStore<>(markCreatorParams.getModuleParams().getLogger(), "cfg");
+        LazyEvaluationStore<Cfg> cfgs = new LazyEvaluationStore<>("cfg");
         inputObject.cfg().addToStore(cfgs);
 
-        Logger logger = markCreatorParams.getModuleParams().getLogger();
         LazyEvaluationStore<KeyValueParams> keyValueParams =
-                new LazyEvaluationStore<>(logger, "keyValueParams");
+                new LazyEvaluationStore<>("keyValueParams");
         inputObject.keyValueParams().addToStore(keyValueParams);
 
         LazyEvaluationStore<ObjectCollection> objects =
-                new LazyEvaluationStore<>(logger, "object-collections");
+                new LazyEvaluationStore<>("object-collections");
         inputObject.objects().addToStore(objects);
 
         MultiCollectionDropDown dropDown =
@@ -117,7 +112,7 @@ public class FileMultiCollection extends InteractiveFile {
     private TimeSequenceProvider createTimeSequenceProvider(
             LazyEvaluationStore<TimeSequence> stacks) throws CreateException {
         try {
-            return new TimeSequenceProvider(stacks, inputObject.numFrames());
+            return new TimeSequenceProvider(stacks, inputObject.numberFrames());
         } catch (OperationFailedException e) {
             throw new CreateException(e);
         }

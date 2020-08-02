@@ -72,7 +72,7 @@ public class BoundOverlayedDisplayStack {
     }
 
     public final int getNumChnl() {
-        return background.getNumChnl();
+        return background.getNumberChannels();
     }
 
     public Optional<VoxelDataType> unconvertedDataType() {

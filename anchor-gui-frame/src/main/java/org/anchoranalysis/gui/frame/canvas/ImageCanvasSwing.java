@@ -30,10 +30,12 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import javax.swing.JPanel;
+import lombok.NoArgsConstructor;
 import org.anchoranalysis.core.geometry.Point2i;
 import org.anchoranalysis.image.extent.Extent;
 import org.anchoranalysis.image.stack.bufferedimage.BufferedImageOverlay;
 
+@NoArgsConstructor
 class ImageCanvasSwing extends JPanel {
 
     private static final long serialVersionUID = -3283996455215161927L;
@@ -45,10 +47,8 @@ class ImageCanvasSwing extends JPanel {
 
     private Point2i imageCrnrPoint = pointOrigin;
 
-    public ImageCanvasSwing() {}
-
     public Extent createExtent() {
-        return new Extent(getWidth(), getHeight(), 1);
+        return new Extent(getWidth(), getHeight());
     }
 
     public void updated(BufferedImage image) {

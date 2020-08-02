@@ -48,7 +48,7 @@ public class GraphDefinitionLineIterVsAccptProbMultipleSeries
                         case 2:
                             return item.getAccptProbRand();
                         default:
-                            throw new GetOperationFailedException("Invalid yIndex value");
+                            throw new GetOperationFailedException(yIndex, "Invalid yIndex value");
                     }
                 },
                 graphColorScheme);

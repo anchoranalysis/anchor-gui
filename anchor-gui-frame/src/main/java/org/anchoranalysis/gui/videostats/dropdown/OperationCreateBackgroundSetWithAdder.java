@@ -26,57 +26,40 @@
 
 package org.anchoranalysis.gui.videostats.dropdown;
 
-import org.anchoranalysis.core.cache.WrapOperationWithProgressReporterAsCached;
-import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.error.reporter.ErrorReporter;
 import org.anchoranalysis.core.functional.function.FunctionWithException;
 import org.anchoranalysis.core.index.GetOperationFailedException;
-import org.anchoranalysis.core.progress.CachedOperationWithProgressReporter;
-import org.anchoranalysis.core.progress.OperationWithProgressReporter;
+import org.anchoranalysis.core.progress.CacheCallWithProgressReporter;
+import org.anchoranalysis.core.progress.CallableWithProgressReporter;
 import org.anchoranalysis.core.progress.ProgressReporter;
 import org.anchoranalysis.core.property.IPropertyValueSendable;
 import org.anchoranalysis.gui.backgroundset.BackgroundSet;
+import org.anchoranalysis.gui.container.background.BackgroundStackContainerException;
 import org.anchoranalysis.gui.videostats.dropdown.addoverlays.AdderAddOverlaysWithStack;
 import org.anchoranalysis.gui.videostats.dropdown.common.NRGBackground;
 import org.anchoranalysis.gui.videostats.dropdown.common.NRGBackgroundAdder;
 import org.anchoranalysis.gui.videostats.threading.InteractiveThreadPool;
-import org.anchoranalysis.image.experiment.identifiers.ImgStackIdentifiers;
+import org.anchoranalysis.image.experiment.identifiers.StackIdentifiers;
 import org.anchoranalysis.image.stack.DisplayStack;
 
-public class OperationCreateBackgroundSetWithAdder
-        extends CachedOperationWithProgressReporter<
-                BackgroundSetWithAdder, OperationFailedException> {
+public class OperationCreateBackgroundSetWithAdder {
 
     private IAddVideoStatsModule parentAdder;
     private InteractiveThreadPool threadPool;
     private ErrorReporter errorReporter;
 
     private NRGBackground nrgBackground;
-    private NRGBackgroundAdder<OperationFailedException> nrgBackgroundNew;
+    private NRGBackgroundAdder<BackgroundStackContainerException> nrgBackgroundNew;
 
-    private CachedOperationWithProgressReporter<IAddVideoStatsModule, OperationFailedException>
-            operationIAddVideoStatsModule =
-                    new WrapOperationWithProgressReporterAsCached<>(
-                            progressReporter -> {
-                                BackgroundSetWithAdder bwsa =
-                                        OperationCreateBackgroundSetWithAdder.this.doOperation(
-                                                progressReporter);
-                                return bwsa.getAdder();
-                            });
+    private CallableWithProgressReporter<IAddVideoStatsModule, BackgroundStackContainerException>
+            operationIAddVideoStatsModule;
 
-    private CachedOperationWithProgressReporter<BackgroundSet, GetOperationFailedException>
-            operationBackgroundSet =
-                    new WrapOperationWithProgressReporterAsCached<>(
-                            progressReporter -> {
-                                try {
-                                    BackgroundSetWithAdder bwsa =
-                                            OperationCreateBackgroundSetWithAdder.this.doOperation(
-                                                    progressReporter);
-                                    return bwsa.getBackgroundSet();
-                                } catch (OperationFailedException e) {
-                                    throw new GetOperationFailedException(e);
-                                }
-                            });
+    private CallableWithProgressReporter<BackgroundSet, BackgroundStackContainerException>
+            operationBackgroundSet;
+
+    private final CallableWithProgressReporter<
+                    BackgroundSetWithAdder, BackgroundStackContainerException>
+            cachedOp;
 
     public OperationCreateBackgroundSetWithAdder(
             NRGBackground nrgBackground,
@@ -94,13 +77,72 @@ public class OperationCreateBackgroundSetWithAdder
                 new NRGBackgroundAdder<>(
                         nrgBackground.copyChangeOp(operationBackgroundSet),
                         operationIAddVideoStatsModule);
+
+        this.cachedOp = CacheCallWithProgressReporter.of(this::execute);
+
+        this.operationIAddVideoStatsModule =
+                CacheCallWithProgressReporter.of(
+                        progressReporter -> cachedOp.call(progressReporter).getAdder());
+
+        this.operationBackgroundSet =
+                CacheCallWithProgressReporter.of(
+                        progressReporter -> cachedOp.call(progressReporter).getBackgroundSet());
     }
 
-    private static FunctionWithException<Integer, DisplayStack, GetOperationFailedException>
+    private BackgroundSetWithAdder execute(ProgressReporter progressReporter)
+            throws BackgroundStackContainerException {
+        BackgroundSetWithAdder bwsa = new BackgroundSetWithAdder();
+
+        BackgroundSet backgroundSet;
+        backgroundSet = nrgBackground.getBackgroundSet().call(progressReporter);
+
+        bwsa.setBackgroundSet(backgroundSet);
+
+        IAddVideoStatsModule childAdder = parentAdder.createChild();
+        childAdder = new AdderAddOverlaysWithStack(childAdder, threadPool, errorReporter);
+
+        childAdder = nrgBackground.addNrgStackToAdder(childAdder);
+
+        FunctionWithException<Integer, DisplayStack, BackgroundStackContainerException>
+                initialBackground;
+        try {
+            initialBackground = initialBackground(backgroundSet);
+        } catch (GetOperationFailedException e) {
+            throw new BackgroundStackContainerException(e);
+        }
+
+        // TODO For now we assume there is always an index 0 available as a minimum
+        DisplayStack initialStack = initialBackground.apply(0);
+
+        // TODO is this the right place?
+        // Sets an appropriate default slice in the middle
+        assignDefaultSliceForStack(childAdder, initialStack);
+
+        bwsa.setAdder(childAdder);
+
+        childAdder
+                .getSubgroup()
+                .getDefaultModuleState()
+                .getLinkStateManager()
+                .setBackground(initialBackground);
+
+        return bwsa;
+    }
+
+    public CallableWithProgressReporter<IAddVideoStatsModule, BackgroundStackContainerException>
+            operationAdder() {
+        return operationIAddVideoStatsModule;
+    }
+
+    public NRGBackgroundAdder<BackgroundStackContainerException> nrgBackground() {
+        return nrgBackgroundNew;
+    }
+
+    private static FunctionWithException<Integer, DisplayStack, BackgroundStackContainerException>
             initialBackground(BackgroundSet backgroundSet) throws GetOperationFailedException {
 
-        if (backgroundSet.names().contains(ImgStackIdentifiers.INPUT_IMAGE)) {
-            return backgroundSet.stackCntr(ImgStackIdentifiers.INPUT_IMAGE);
+        if (backgroundSet.names().contains(StackIdentifiers.INPUT_IMAGE)) {
+            return backgroundSet.stackCntr(StackIdentifiers.INPUT_IMAGE);
         } else {
             String first = backgroundSet.names().iterator().next();
             return backgroundSet.stackCntr(first);
@@ -119,63 +161,5 @@ public class OperationCreateBackgroundSetWithAdder
         if (sliceNumSetter != null) {
             sliceNumSetter.setPropertyValue(stack.getDimensions().getZ() / 2, false);
         }
-    }
-
-    @Override
-    protected BackgroundSetWithAdder execute(ProgressReporter progressReporter)
-            throws OperationFailedException {
-        BackgroundSetWithAdder bwsa = new BackgroundSetWithAdder();
-
-        BackgroundSet backgroundSet;
-        try {
-            backgroundSet = nrgBackground.getBackgroundSet().doOperation(progressReporter);
-        } catch (GetOperationFailedException e1) {
-            throw new OperationFailedException(e1);
-        }
-
-        bwsa.setBackgroundSet(backgroundSet);
-
-        IAddVideoStatsModule childAdder = parentAdder.createChild();
-        childAdder = new AdderAddOverlaysWithStack(childAdder, threadPool, errorReporter);
-
-        childAdder = nrgBackground.addNrgStackToAdder(childAdder);
-
-        FunctionWithException<Integer, DisplayStack, GetOperationFailedException> initialBackground;
-        try {
-            initialBackground = initialBackground(backgroundSet);
-        } catch (GetOperationFailedException e) {
-            throw new OperationFailedException("Cannot set defaultModuleState background: " + e);
-        }
-
-        // TODO For now we assume there is always an index 0 available as a minimum
-        DisplayStack initialStack;
-        try {
-            initialStack = initialBackground.apply(0);
-        } catch (GetOperationFailedException e) {
-            throw new OperationFailedException("Cannot set defaultModuleState background: " + e);
-        }
-
-        // TODO is this the right place?
-        // Sets an appropriate default slice in the middle
-        assignDefaultSliceForStack(childAdder, initialStack);
-
-        bwsa.setAdder(childAdder);
-
-        childAdder
-                .getSubgroup()
-                .getDefaultModuleState()
-                .getLinkStateManager()
-                .setBackground(initialBackground);
-
-        return bwsa;
-    }
-
-    public OperationWithProgressReporter<IAddVideoStatsModule, OperationFailedException>
-            operationAdder() {
-        return operationIAddVideoStatsModule;
-    }
-
-    public NRGBackgroundAdder<OperationFailedException> nrgBackground() {
-        return nrgBackgroundNew;
     }
 }

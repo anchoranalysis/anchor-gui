@@ -26,45 +26,38 @@
 
 package org.anchoranalysis.gui.finder.imgstackcollection;
 
-import org.anchoranalysis.core.cache.WrapOperationWithProgressReporterAsCached;
 import org.anchoranalysis.core.error.OperationFailedException;
-import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.name.provider.NamedProvider;
-import org.anchoranalysis.core.progress.CachedOperationWithProgressReporter;
-import org.anchoranalysis.core.progress.OperationWithProgressReporter;
+import org.anchoranalysis.core.progress.CacheCallWithProgressReporter;
+import org.anchoranalysis.core.progress.CallableWithProgressReporter;
 import org.anchoranalysis.core.progress.ProgressReporterNull;
-import org.anchoranalysis.gui.finder.FinderRasterFilesByManifestDescriptionFunction;
+import org.anchoranalysis.gui.finder.FinderRasterFolder;
 import org.anchoranalysis.image.io.bean.rasterreader.RasterReader;
 import org.anchoranalysis.image.stack.Stack;
 import org.anchoranalysis.io.manifest.ManifestRecorder;
 
-// Finds an image stack collection from the files in the root directory
-public class FinderImgStackCollectionFromRootFiles implements FinderImgStackCollection {
+// Finds an image stack collection
+public class FinderStacksFromFolder implements FinderStacks {
 
-    private FinderRasterFilesByManifestDescriptionFunction delegate;
+    private FinderRasterFolder delegate;
 
-    private CachedOperationWithProgressReporter<NamedProvider<Stack>, OperationFailedException>
-            operationImgStackCollection =
-                    new WrapOperationWithProgressReporterAsCached<>(
-                            pr -> delegate.createStackCollection());
+    private CallableWithProgressReporter<NamedProvider<Stack>, OperationFailedException>
+            operationStacks =
+                    CacheCallWithProgressReporter.of(pr -> delegate.createStackCollection(false));
 
-    public FinderImgStackCollectionFromRootFiles(RasterReader rasterReader, String function) {
-        delegate = new FinderRasterFilesByManifestDescriptionFunction(rasterReader, function);
+    public FinderStacksFromFolder(RasterReader rasterReader, String folderName) {
+        delegate = new FinderRasterFolder(folderName, "stackFromCollection", rasterReader);
     }
 
     @Override
-    public NamedProvider<Stack> getImgStackCollection() throws GetOperationFailedException {
-        try {
-            return operationImgStackCollection.doOperation(ProgressReporterNull.get());
-        } catch (OperationFailedException e) {
-            throw new GetOperationFailedException(e);
-        }
+    public NamedProvider<Stack> getStacks() throws OperationFailedException {
+        return operationStacks.call(ProgressReporterNull.get());
     }
 
     @Override
-    public OperationWithProgressReporter<NamedProvider<Stack>, OperationFailedException>
-            getImgStackCollectionAsOperationWithProgressReporter() {
-        return operationImgStackCollection;
+    public CallableWithProgressReporter<NamedProvider<Stack>, OperationFailedException>
+            getStacksAsOperation() {
+        return operationStacks;
     }
 
     @Override

@@ -26,9 +26,9 @@
 
 package org.anchoranalysis.gui.frame.multiraster;
 
-import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.functional.function.FunctionWithException;
 import org.anchoranalysis.core.index.SetOperationFailedException;
+import org.anchoranalysis.gui.container.background.BackgroundStackContainerException;
 import org.anchoranalysis.gui.frame.display.BoundOverlayedDisplayStack;
 import org.anchoranalysis.gui.frame.display.DisplayUpdate;
 import org.anchoranalysis.image.stack.DisplayStack;
@@ -36,7 +36,8 @@ import org.anchoranalysis.io.generator.IterableObjectGenerator;
 import org.anchoranalysis.io.output.error.OutputWriteFailedException;
 
 class NoOverlayBridgeFromGenerator
-        implements FunctionWithException<Integer, DisplayUpdate, OperationFailedException> {
+        implements FunctionWithException<
+                Integer, DisplayUpdate, BackgroundStackContainerException> {
 
     private IterableObjectGenerator<Integer, DisplayStack> generator;
 
@@ -46,7 +47,7 @@ class NoOverlayBridgeFromGenerator
     }
 
     @Override
-    public DisplayUpdate apply(Integer sourceObject) throws OperationFailedException {
+    public DisplayUpdate apply(Integer sourceObject) throws BackgroundStackContainerException {
         try {
             generator.setIterableElement(sourceObject);
             BoundOverlayedDisplayStack overlayedStack =
@@ -54,7 +55,7 @@ class NoOverlayBridgeFromGenerator
             return DisplayUpdate.assignNewStack(overlayedStack);
 
         } catch (SetOperationFailedException | OutputWriteFailedException e) {
-            throw new OperationFailedException(e);
+            throw new BackgroundStackContainerException(e);
         }
     }
 }

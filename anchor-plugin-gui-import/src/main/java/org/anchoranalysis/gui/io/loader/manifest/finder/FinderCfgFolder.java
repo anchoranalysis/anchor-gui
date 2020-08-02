@@ -28,14 +28,13 @@ package org.anchoranalysis.gui.io.loader.manifest.finder;
 
 import java.util.List;
 import java.util.Optional;
+import lombok.RequiredArgsConstructor;
 import org.anchoranalysis.anchor.mpp.cfg.Cfg;
-import org.anchoranalysis.core.cache.CachedOperation;
 import org.anchoranalysis.core.error.OperationFailedException;
-import org.anchoranalysis.core.index.GetOperationFailedException;
-import org.anchoranalysis.core.log.Logger;
 import org.anchoranalysis.core.name.provider.NameValueSet;
 import org.anchoranalysis.core.name.provider.NamedProvider;
 import org.anchoranalysis.core.name.store.LazyEvaluationStore;
+import org.anchoranalysis.gui.finder.AddFromSequenceHelper;
 import org.anchoranalysis.io.bean.deserializer.Deserializer;
 import org.anchoranalysis.io.bean.deserializer.XStreamDeserializer;
 import org.anchoranalysis.io.manifest.ManifestRecorder;
@@ -46,21 +45,16 @@ import org.anchoranalysis.io.manifest.folder.FolderWrite;
 import org.anchoranalysis.io.manifest.match.FolderWriteAnd;
 import org.anchoranalysis.io.manifest.match.FolderWritePath;
 import org.anchoranalysis.io.manifest.match.helper.folderwrite.FolderWriteFileFunctionType;
-import org.anchoranalysis.io.manifest.sequencetype.SequenceType;
 
+@RequiredArgsConstructor
 public class FinderCfgFolder extends FinderSingleFolder {
 
-    private String manifestFunction;
+    // START REQUIRED ARGUMENTS
+    private final String manifestFunction;
+    private final String folderName;
+    // END REQUIRED ARGUMENTS
 
     private Deserializer<Cfg> deserializer = new XStreamDeserializer<>();
-
-    private String folderName;
-
-    public FinderCfgFolder(String folderName, String manifestFunction) {
-        super();
-        this.manifestFunction = manifestFunction;
-        this.folderName = folderName;
-    }
 
     @Override
     protected Optional<FolderWrite> findFolder(ManifestRecorder manifestRecorder) {
@@ -79,52 +73,20 @@ public class FinderCfgFolder extends FinderSingleFolder {
         }
     }
 
-    private static class OperationCreateCfg extends CachedOperation<Cfg, OperationFailedException> {
-
-        private SequencedFolderDeserializer<Cfg> sfrr;
-        private int index;
-
-        public OperationCreateCfg(SequencedFolderDeserializer<Cfg> sfrr, int index) {
-            super();
-            this.sfrr = sfrr;
-            this.index = index;
-        }
-
-        @Override
-        protected Cfg execute() throws OperationFailedException {
-            try {
-                return sfrr.get(index);
-            } catch (GetOperationFailedException e) {
-                throw new OperationFailedException(e);
-            }
-        }
-    }
-
-    // If namesAsIndexes is true, we use the indexes as names instead of the existing names
-    public NamedProvider<Cfg> createNamedProvider(boolean namesAsIndexes, Logger logger)
+    public NamedProvider<Cfg> createNamedProvider(boolean namesAsIndexes)
             throws OperationFailedException {
 
         if (getFoundFolder() == null) {
             return new NameValueSet<>();
         }
 
-        LazyEvaluationStore<Cfg> out = new LazyEvaluationStore<>(logger, "finderCfgFolder");
+        LazyEvaluationStore<Cfg> out = new LazyEvaluationStore<>("finderCfgFolder");
 
         SequencedFolderDeserializer<Cfg> sfrr =
                 new SequencedFolderDeserializer<>(getFoundFolder(), deserializer);
 
-        SequenceType st = getFoundFolder().getAssociatedSequence();
-        int min = st.getMinimumIndex();
-
-        for (int i = min; i != -1; i = st.nextIndex(i)) {
-            String name = st.indexStr(i);
-
-            if (namesAsIndexes) {
-                out.add(String.valueOf(i), new OperationCreateCfg(sfrr, i));
-            } else {
-                out.add(name, new OperationCreateCfg(sfrr, i));
-            }
-        }
+        AddFromSequenceHelper.addFromSequence(
+                getFoundFolder().getAssociatedSequence(), sfrr, out::add, namesAsIndexes);
         return out;
     }
 }

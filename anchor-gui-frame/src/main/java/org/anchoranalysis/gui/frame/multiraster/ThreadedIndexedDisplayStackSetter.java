@@ -26,13 +26,11 @@
 
 package org.anchoranalysis.gui.frame.multiraster;
 
-import org.anchoranalysis.core.error.InitException;
-import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.error.reporter.ErrorReporter;
 import org.anchoranalysis.core.functional.function.FunctionWithException;
-import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.index.IIndexGettableSettable;
-import org.anchoranalysis.gui.displayupdate.IDisplayUpdateRememberStack;
+import org.anchoranalysis.gui.container.background.BackgroundStackContainerException;
+import org.anchoranalysis.gui.displayupdate.DisplayUpdateRememberStack;
 import org.anchoranalysis.gui.frame.display.DisplayUpdate;
 import org.anchoranalysis.gui.frame.threaded.stack.IThreadedProducer;
 import org.anchoranalysis.gui.frame.threaded.stack.ThreadedDisplayUpdateConsumer;
@@ -52,8 +50,7 @@ public class ThreadedIndexedDisplayStackSetter implements IBackgroundSetter, ITh
     public void init(
             FunctionWithException<Integer, DisplayStack, ? extends Throwable> cntrDisplayStack,
             InteractiveThreadPool threadPool,
-            ErrorReporter errorReporter)
-            throws InitException {
+            ErrorReporter errorReporter) {
 
         stackGenerator = new DisplayStackGenerator("display");
 
@@ -63,7 +60,7 @@ public class ThreadedIndexedDisplayStackSetter implements IBackgroundSetter, ITh
     }
 
     // How it provides stacks to other applications (the output)
-    public IDisplayUpdateRememberStack getStackProvider() {
+    public DisplayUpdateRememberStack getStackProvider() {
         return delegate;
     }
 
@@ -78,7 +75,7 @@ public class ThreadedIndexedDisplayStackSetter implements IBackgroundSetter, ITh
 
     @Override
     public void setImageStackCntr(
-            FunctionWithException<Integer, DisplayStack, GetOperationFailedException>
+            FunctionWithException<Integer, DisplayStack, BackgroundStackContainerException>
                     imageStackCntr) {
 
         delegate.setImageStackGenerator(ensure8bit(imageStackCntr));
@@ -90,8 +87,8 @@ public class ThreadedIndexedDisplayStackSetter implements IBackgroundSetter, ITh
         delegate.dispose();
     }
 
-    private FunctionWithException<Integer, DisplayUpdate, OperationFailedException> ensure8bit(
-            FunctionWithException<Integer, DisplayStack, ? extends Throwable> cntr) {
+    private FunctionWithException<Integer, DisplayUpdate, BackgroundStackContainerException>
+            ensure8bit(FunctionWithException<Integer, DisplayStack, ? extends Throwable> cntr) {
         return new NoOverlayBridgeFromGenerator(
                 new IterableObjectGeneratorBridge<>(
                         stackGenerator, new EnsureUnsigned8Bit<>(cntr)));

@@ -30,13 +30,14 @@ import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.anchoranalysis.core.error.reporter.ErrorReporter;
 import org.anchoranalysis.core.functional.FunctionalList;
-import org.anchoranalysis.core.index.GetOperationFailedException;
-import org.anchoranalysis.core.progress.OperationWithProgressReporter;
+import org.anchoranalysis.core.progress.CallableWithProgressReporter;
 import org.anchoranalysis.gui.backgroundset.BackgroundSet;
+import org.anchoranalysis.gui.container.background.BackgroundStackContainerException;
 import org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.IGetNames;
 
 @RequiredArgsConstructor
-public class ChangeableBackgroundDefinitionIgnoreContains extends ChangeableBackgroundDefinition {
+public class ChangeableBackgroundDefinitionIgnoreContains
+        implements ChangeableBackgroundDefinition {
 
     // START REQUIRED ARGUMENTS
     private final ChangeableBackgroundDefinition background;
@@ -45,13 +46,13 @@ public class ChangeableBackgroundDefinitionIgnoreContains extends ChangeableBack
 
     @Override
     public void update(
-            OperationWithProgressReporter<BackgroundSet, GetOperationFailedException>
+            CallableWithProgressReporter<BackgroundSet, BackgroundStackContainerException>
                     backgroundSet) {
         background.update(backgroundSet);
     }
 
     @Override
-    public IImageStackCntrFromName stackCntrFromName(ErrorReporter errorReporter) {
+    public ImageStackContainerFromName stackCntrFromName(ErrorReporter errorReporter) {
         return background.stackCntrFromName(errorReporter);
     }
 

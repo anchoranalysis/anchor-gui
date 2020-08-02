@@ -31,7 +31,7 @@ import org.anchoranalysis.anchor.mpp.feature.instantstate.CfgNRGInstantState;
 import org.anchoranalysis.anchor.plot.bean.GraphDefinition;
 import org.anchoranalysis.anchor.plot.bean.colorscheme.GraphColorScheme;
 import org.anchoranalysis.core.error.CreateException;
-import org.anchoranalysis.core.progress.OperationWithProgressReporter;
+import org.anchoranalysis.core.progress.CallableWithProgressReporter;
 import org.anchoranalysis.gui.io.loader.manifest.finder.FinderCSVStats;
 import org.anchoranalysis.gui.io.loader.manifest.finder.historyfolder.FinderHistoryFolder;
 import org.anchoranalysis.gui.plot.creator.GraphFromDualFinderCreator;
@@ -64,7 +64,7 @@ public class GraphDualFinderCreator<T> extends ContextualModuleCreator {
     @Override
     public NamedModule[] create(
             String namePrefix,
-            OperationWithProgressReporter<IAddVideoStatsModule, ? extends Throwable> adder,
+            CallableWithProgressReporter<IAddVideoStatsModule, ? extends Throwable> adder,
             VideoStatsModuleGlobalParams mpg)
             throws CreateException {
 

@@ -33,7 +33,6 @@ import org.anchoranalysis.anchor.mpp.bean.proposer.MarkProposer;
 import org.anchoranalysis.anchor.mpp.bean.regionmap.RegionMap;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.OperationFailedException;
-import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.log.Logger;
 import org.anchoranalysis.core.name.provider.NamedProviderGetException;
 import org.anchoranalysis.core.name.store.NamedProviderStore;
@@ -99,7 +98,7 @@ public class MarkAnnotator {
     private static MPPInitParams setupEvaluatorAndPointsFitter(
             MarkEvaluatorResolved markEvaluator, MarkProposerStrategy annotationStrategy)
             throws CreateException {
-        return markEvaluator.getProposerSharedObjectsOperation().doOperation();
+        return markEvaluator.getProposerSharedObjectsOperation().call();
     }
 
     private static PointsFitter extractPointsFitter(
@@ -137,7 +136,7 @@ public class MarkAnnotator {
             }
 
             return markEvaluatorSet.get(annotationStrategy.getMarkEvaluatorName());
-        } catch (GetOperationFailedException | OperationFailedException e1) {
+        } catch (OperationFailedException e1) {
             throw new CreateException(e1);
         }
     }

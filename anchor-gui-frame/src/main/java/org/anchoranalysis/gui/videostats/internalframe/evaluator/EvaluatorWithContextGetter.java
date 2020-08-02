@@ -27,10 +27,9 @@
 package org.anchoranalysis.gui.videostats.internalframe.evaluator;
 
 import java.util.Optional;
-import org.anchoranalysis.core.index.GetOperationFailedException;
+import org.anchoranalysis.core.error.OperationFailedException;
 
 @FunctionalInterface
 public interface EvaluatorWithContextGetter {
-    public Optional<EvaluatorWithContext> getEvaluatorWithContext()
-            throws GetOperationFailedException;
+    public Optional<EvaluatorWithContext> getEvaluatorWithContext() throws OperationFailedException;
 }

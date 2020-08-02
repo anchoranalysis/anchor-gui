@@ -26,39 +26,19 @@
 
 package org.anchoranalysis.gui.frame.multiraster;
 
-import org.anchoranalysis.core.index.GetOperationFailedException;
-import org.anchoranalysis.core.progress.OperationWithProgressReporter;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
+import org.anchoranalysis.core.progress.CallableWithProgressReporter;
 import org.anchoranalysis.gui.backgroundset.BackgroundSet;
+import org.anchoranalysis.gui.container.background.BackgroundStackContainerException;
 
+@AllArgsConstructor
 public class NamedRasterSet {
-    private String name;
-    private OperationWithProgressReporter<BackgroundSet, GetOperationFailedException> backgroundSet;
 
-    public NamedRasterSet(
-            String name,
-            OperationWithProgressReporter<BackgroundSet, GetOperationFailedException>
-                    backgroundSet) {
-        super();
-        this.name = name;
-        this.backgroundSet = backgroundSet;
-    }
+    @Getter @Setter private String name;
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public OperationWithProgressReporter<BackgroundSet, GetOperationFailedException>
-            getBackgroundSet() {
-        return backgroundSet;
-    }
-
-    public void setBackgroundSet(
-            OperationWithProgressReporter<BackgroundSet, GetOperationFailedException>
-                    backgroundSet) {
-        this.backgroundSet = backgroundSet;
-    }
+    @Getter @Setter
+    private CallableWithProgressReporter<BackgroundSet, BackgroundStackContainerException>
+            backgroundSet;
 }

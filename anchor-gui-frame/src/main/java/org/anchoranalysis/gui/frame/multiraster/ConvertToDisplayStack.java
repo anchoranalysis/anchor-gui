@@ -26,49 +26,44 @@
 
 package org.anchoranalysis.gui.frame.multiraster;
 
-import org.anchoranalysis.core.error.OperationFailedException;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.index.container.BoundedIndexContainer;
 import org.anchoranalysis.core.progress.ProgressReporterNull;
 import org.anchoranalysis.gui.backgroundset.BackgroundSet;
+import org.anchoranalysis.gui.container.background.BackgroundStackContainerException;
 import org.anchoranalysis.image.stack.DisplayStack;
 
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 class ConvertToDisplayStack {
 
-    public static DisplayStack apply(NamedRasterSet set) throws OperationFailedException {
+    public static DisplayStack apply(NamedRasterSet set) throws BackgroundStackContainerException {
         return extractAtIndex(convertBackgroundSet(backgroundFromSet(set)));
     }
 
     private static BackgroundSet backgroundFromSet(NamedRasterSet set)
-            throws OperationFailedException {
-        try {
-            return set.getBackgroundSet().doOperation(ProgressReporterNull.get());
-        } catch (GetOperationFailedException e) {
-            throw new OperationFailedException("Cannot create background-set", e.getCause());
-        }
+            throws BackgroundStackContainerException {
+        return set.getBackgroundSet().call(ProgressReporterNull.get());
     }
 
     private static BoundedIndexContainer<DisplayStack> convertBackgroundSet(BackgroundSet bg)
-            throws OperationFailedException {
-        try {
-            return bg.getItem(
-                            bg.names().iterator().next() // Arbitrary name
-                            )
-                    .backgroundStackCntr();
-        } catch (GetOperationFailedException e) {
-            throw new OperationFailedException(e);
-        }
+            throws BackgroundStackContainerException {
+        return bg.getItem(
+                        bg.names().iterator().next() // Arbitrary name
+                        )
+                .container();
     }
 
     private static DisplayStack extractAtIndex(BoundedIndexContainer<DisplayStack> indexCntr)
-            throws OperationFailedException {
+            throws BackgroundStackContainerException {
         if (indexCntr.getMinimumIndex() != indexCntr.getMaximumIndex()) {
-            throw new OperationFailedException("BackgroundSet has more than one image");
+            throw new BackgroundStackContainerException("BackgroundSet has more than one image");
         }
         try {
             return indexCntr.get(indexCntr.getMinimumIndex());
         } catch (GetOperationFailedException e) {
-            throw new OperationFailedException(e);
+            throw new BackgroundStackContainerException(e);
         }
     }
 }

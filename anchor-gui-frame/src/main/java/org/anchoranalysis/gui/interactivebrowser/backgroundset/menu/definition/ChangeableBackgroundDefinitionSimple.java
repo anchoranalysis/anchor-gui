@@ -27,16 +27,16 @@
 package org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.definition;
 
 import org.anchoranalysis.core.error.reporter.ErrorReporter;
-import org.anchoranalysis.core.index.GetOperationFailedException;
-import org.anchoranalysis.core.progress.OperationWithProgressReporter;
+import org.anchoranalysis.core.progress.CallableWithProgressReporter;
 import org.anchoranalysis.gui.backgroundset.BackgroundSet;
+import org.anchoranalysis.gui.container.background.BackgroundStackContainerException;
 import org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.IGetNames;
 
 public class ChangeableBackgroundDefinitionSimple
         extends ChangeableBackgroundDefinitionWithDefault {
 
     public ChangeableBackgroundDefinitionSimple(
-            OperationWithProgressReporter<BackgroundSet, GetOperationFailedException>
+            CallableWithProgressReporter<BackgroundSet, BackgroundStackContainerException>
                     backgroundSet) {
         super(backgroundSet);
     }
@@ -47,7 +47,7 @@ public class ChangeableBackgroundDefinitionSimple
     }
 
     @Override
-    public IImageStackCntrFromName stackCntrFromName(ErrorReporter errorReporter) {
+    public ImageStackContainerFromName stackCntrFromName(ErrorReporter errorReporter) {
         return new StackFromBackgroundSet(getBackgroundSet(), errorReporter);
     }
 }

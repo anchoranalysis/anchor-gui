@@ -29,8 +29,8 @@ package org.anchoranalysis.gui.io.loader.manifest.finder;
 import java.nio.file.Path;
 import java.util.Optional;
 import org.anchoranalysis.core.error.CreateException;
+import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.error.reporter.ErrorReporter;
-import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.progress.ProgressReporterNull;
 import org.anchoranalysis.gui.finder.FinderRasterSingleChnl;
 import org.anchoranalysis.image.channel.Channel;
@@ -56,25 +56,25 @@ public abstract class FinderRasterChnl extends FinderSingleFile implements Finde
         this.normalizeChnl = normalizeChnl;
     }
 
-    public Channel get() throws GetOperationFailedException {
+    public Channel get() throws OperationFailedException {
         assert (exists());
         if (!result.isPresent()) {
             try {
                 result = Optional.of(createChnl(getFoundFile()));
             } catch (RasterIOException | CreateException e) {
-                throw new GetOperationFailedException(e);
+                throw new OperationFailedException(e);
             }
         }
         return result.get();
     }
 
     @Override
-    public Channel getFirstChnl() throws GetOperationFailedException {
+    public Channel getFirstChnl() throws OperationFailedException {
         return get();
     }
 
     @Override
-    public int getNumChnl() throws GetOperationFailedException {
+    public int getNumChnl() {
         return 1;
     }
 
@@ -84,21 +84,21 @@ public abstract class FinderRasterChnl extends FinderSingleFile implements Finde
         Path filePath = fileWrite.calcPath();
 
         try (OpenedRaster openedRaster = rasterReader.openFile(filePath)) {
-            if (openedRaster.numSeries() != 1) {
+            if (openedRaster.numberSeries() != 1) {
                 throw new CreateException("there must be exactly one series");
             }
 
             Stack stack = openedRaster.open(0, ProgressReporterNull.get()).get(0);
 
-            if (stack.getNumChnl() != 1) {
+            if (stack.getNumberChannels() != 1) {
                 throw new CreateException("there must be exactly one channel");
             }
 
             if (normalizeChnl) {
-                stack.getChnl(0).getVoxelBox().any().multiplyBy(255);
+                stack.getChannel(0).getVoxelBox().any().multiplyBy(255);
             }
 
-            return stack.getChnl(0);
+            return stack.getChannel(0);
         }
     }
 }

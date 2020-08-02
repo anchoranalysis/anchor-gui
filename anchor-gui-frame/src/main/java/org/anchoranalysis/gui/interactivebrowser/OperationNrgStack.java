@@ -26,51 +26,43 @@
 
 package org.anchoranalysis.gui.interactivebrowser;
 
+import lombok.AllArgsConstructor;
 import org.anchoranalysis.anchor.mpp.bean.init.MPPInitParams;
-import org.anchoranalysis.core.cache.CachedOperation;
 import org.anchoranalysis.core.error.CreateException;
-import org.anchoranalysis.core.functional.Operation;
+import org.anchoranalysis.core.functional.CallableWithException;
 import org.anchoranalysis.core.name.provider.NamedProvider;
 import org.anchoranalysis.core.params.KeyValueParams;
-import org.anchoranalysis.core.progress.OperationWithProgressReporter;
+import org.anchoranalysis.core.progress.CallableWithProgressReporter;
 import org.anchoranalysis.core.progress.ProgressReporter;
 import org.anchoranalysis.feature.nrg.NRGStack;
 import org.anchoranalysis.feature.nrg.NRGStackWithParams;
-import org.anchoranalysis.image.experiment.identifiers.ImgStackIdentifiers;
+import org.anchoranalysis.image.experiment.identifiers.StackIdentifiers;
 import org.anchoranalysis.image.stack.Stack;
 
-class OperationNrgStack extends CachedOperation<NRGStackWithParams, CreateException>
-        implements OperationWithProgressReporter<NRGStackWithParams, CreateException> {
+@AllArgsConstructor
+class OperationNrgStack
+        implements CallableWithException<NRGStackWithParams, CreateException>,
+                CallableWithProgressReporter<NRGStackWithParams, CreateException> {
 
     // We first retrieve a NamedImgCollection which we use to construct our real NrgStack for
-    // purposes
-    //   of good caching
-    private Operation<MPPInitParams, ? extends Throwable> operationProposerSharedObjects;
+    // purposes of good caching
+    private CallableWithException<MPPInitParams, ? extends Throwable>
+            operationProposerSharedObjects;
     private KeyValueParams params;
-    // An operation to retrieve a stackCollection
-    //
-    public OperationNrgStack(
-            Operation<MPPInitParams, ? extends Throwable> operationProposerSharedObjects,
-            KeyValueParams params) {
-        super();
-        this.params = params;
-        this.operationProposerSharedObjects = operationProposerSharedObjects;
-    }
 
     @Override
-    protected NRGStackWithParams execute() throws CreateException {
-        return creatergStack();
+    public NRGStackWithParams call() throws CreateException {
+        return createNrgStack();
     }
 
-    // NB Note assumption about namedImgStackCollection ordering
-    private NRGStackWithParams creatergStack() throws CreateException {
+    // NB Note assumption about named-stack ordering
+    private NRGStackWithParams createNrgStack() throws CreateException {
 
-        // System.out.println("Start Creating NRG Stack");
         try {
 
-            Stack stack = new Stack();
+            Stack stack;
 
-            MPPInitParams soMPP = operationProposerSharedObjects.doOperation();
+            MPPInitParams soMPP = operationProposerSharedObjects.call();
 
             NamedProvider<Stack> nic = soMPP.getImage().getStackCollection();
 
@@ -79,28 +71,26 @@ class OperationNrgStack extends CachedOperation<NRGStackWithParams, CreateExcept
                 // We try to automatically detect which of the two cases it can be
                 // Either an NRG_STACK direct in the StackCollection or split amongst multiple
                 //   files (but only those should exist in the directory)
-                if (nic.keys().contains(ImgStackIdentifiers.NRG_STACK)) {
-                    stack = nic.getException(ImgStackIdentifiers.NRG_STACK);
+                if (nic.keys().contains(StackIdentifiers.NRG_STACK)) {
+                    stack = nic.getException(StackIdentifiers.NRG_STACK);
                 } else {
                     throw new CreateException("Cannot find NRG_STACK");
                 }
             }
 
-            if (stack.getNumChnl() > 0) {
-                NRGStack nrgStack = new NRGStack(stack);
-                return new NRGStackWithParams(nrgStack, params);
+            if (stack.getNumberChannels() > 0) {
+                return new NRGStackWithParams(new NRGStack(stack), params);
             } else {
                 return null;
             }
 
-        } catch (Throwable e) {
+        } catch (Exception e) {
             throw new CreateException(e);
         }
     }
 
     @Override
-    public NRGStackWithParams doOperation(ProgressReporter progressReporter)
-            throws CreateException {
-        return doOperation();
+    public NRGStackWithParams call(ProgressReporter progressReporter) throws CreateException {
+        return call();
     }
 }

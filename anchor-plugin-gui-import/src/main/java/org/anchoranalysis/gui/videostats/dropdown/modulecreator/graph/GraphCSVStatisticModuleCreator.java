@@ -30,6 +30,7 @@ import java.util.Iterator;
 import java.util.Optional;
 import org.anchoranalysis.anchor.plot.bean.GraphDefinition;
 import org.anchoranalysis.core.error.CreateException;
+import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.index.container.BoundedIndexContainer;
 import org.anchoranalysis.gui.io.loader.manifest.finder.FinderCSVStats;
@@ -92,7 +93,7 @@ public class GraphCSVStatisticModuleCreator extends VideoStatsModuleCreatorConte
                     new InternalFrameGraphAsModule(graphFrameTitle, graphInstance);
             return Optional.of(frame.moduleCreator());
 
-        } catch (GetOperationFailedException | CreateException e) {
+        } catch (GetOperationFailedException | CreateException | OperationFailedException e) {
             throw new VideoStatsModuleCreateException(e);
         }
     }

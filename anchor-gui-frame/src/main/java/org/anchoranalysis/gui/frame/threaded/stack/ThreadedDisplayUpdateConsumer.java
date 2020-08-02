@@ -33,16 +33,16 @@ import javax.swing.event.EventListenerList;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.error.reporter.ErrorReporter;
 import org.anchoranalysis.core.functional.function.FunctionWithException;
-import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.index.IIndexGettableSettable;
-import org.anchoranalysis.gui.displayupdate.IDisplayUpdateRememberStack;
+import org.anchoranalysis.gui.container.background.BackgroundStackContainerException;
+import org.anchoranalysis.gui.displayupdate.DisplayUpdateRememberStack;
 import org.anchoranalysis.gui.frame.display.BoundOverlayedDisplayStack;
 import org.anchoranalysis.gui.frame.display.DisplayUpdate;
 import org.anchoranalysis.gui.videostats.threading.InteractiveThreadPool;
 import org.anchoranalysis.gui.videostats.threading.InteractiveWorker;
 
 public class ThreadedDisplayUpdateConsumer
-        implements IDisplayUpdateRememberStack, IIndexGettableSettable {
+        implements DisplayUpdateRememberStack, IIndexGettableSettable {
 
     private class UpdateSignal {
 
@@ -73,7 +73,7 @@ public class ThreadedDisplayUpdateConsumer
 
     private UpdateImage updateImage;
 
-    private FunctionWithException<Integer, DisplayUpdate, OperationFailedException>
+    private FunctionWithException<Integer, DisplayUpdate, BackgroundStackContainerException>
             displayUpdateBridge;
 
     private ErrorReporter errorReporter;
@@ -119,7 +119,7 @@ public class ThreadedDisplayUpdateConsumer
                     currentDisplayStack = currentUpdate.getDisplayStack();
                 }
 
-            } catch (OperationFailedException e) {
+            } catch (BackgroundStackContainerException e) {
                 currentUpdate = null;
                 errorReporter.recordError(ThreadedDisplayUpdateConsumer.class, e);
             } finally {
@@ -136,7 +136,7 @@ public class ThreadedDisplayUpdateConsumer
     }
 
     public ThreadedDisplayUpdateConsumer(
-            FunctionWithException<Integer, DisplayUpdate, OperationFailedException>
+            FunctionWithException<Integer, DisplayUpdate, BackgroundStackContainerException>
                     displayUpdateBridge,
             int defaultIndex,
             InteractiveThreadPool threadPool,
@@ -154,16 +154,16 @@ public class ThreadedDisplayUpdateConsumer
     }
 
     public synchronized void setImageStackGenerator(
-            FunctionWithException<Integer, DisplayUpdate, OperationFailedException>
+            FunctionWithException<Integer, DisplayUpdate, BackgroundStackContainerException>
                     displayUpdateBridge) {
         this.displayUpdateBridge = displayUpdateBridge;
     }
 
     @Override
-    public DisplayUpdate get() throws GetOperationFailedException {
+    public DisplayUpdate get() throws OperationFailedException {
 
         if (currentUpdate == null) {
-            throw new GetOperationFailedException("currentImage is null. No update to return");
+            throw new OperationFailedException("currentImage is null. No update to return");
         }
 
         return currentUpdate;
@@ -203,7 +203,7 @@ public class ThreadedDisplayUpdateConsumer
     }
 
     @Override
-    public BoundOverlayedDisplayStack getCurrentDisplayStack() throws GetOperationFailedException {
+    public BoundOverlayedDisplayStack getCurrentDisplayStack() {
         return currentDisplayStack;
     }
 }

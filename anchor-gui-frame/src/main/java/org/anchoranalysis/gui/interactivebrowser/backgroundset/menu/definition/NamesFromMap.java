@@ -33,20 +33,20 @@ import java.util.Set;
 import java.util.TreeSet;
 import org.anchoranalysis.bean.shared.StringMap;
 import org.anchoranalysis.core.error.reporter.ErrorReporter;
-import org.anchoranalysis.core.progress.OperationWithProgressReporter;
+import org.anchoranalysis.core.progress.CallableWithProgressReporter;
 import org.anchoranalysis.core.progress.ProgressReporterNull;
 import org.anchoranalysis.gui.backgroundset.BackgroundSet;
 import org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.IGetNames;
 
 class NamesFromMap implements IGetNames {
 
-    private OperationWithProgressReporter<BackgroundSet, ? extends Throwable> backgroundSet;
+    private CallableWithProgressReporter<BackgroundSet, ? extends Throwable> backgroundSet;
     private ErrorReporter errorReporter;
     private StringMap map;
 
     public NamesFromMap(
             StringMap map,
-            OperationWithProgressReporter<BackgroundSet, ? extends Throwable> backgroundSet,
+            CallableWithProgressReporter<BackgroundSet, ? extends Throwable> backgroundSet,
             ErrorReporter errorReporter) {
         super();
         this.backgroundSet = backgroundSet;
@@ -57,8 +57,7 @@ class NamesFromMap implements IGetNames {
     @Override
     public List<String> names() {
         try {
-            Set<String> backgroundNames =
-                    backgroundSet.doOperation(ProgressReporterNull.get()).names();
+            Set<String> backgroundNames = backgroundSet.call(ProgressReporterNull.get()).names();
 
             Map<String, String> mapping = map.create();
 

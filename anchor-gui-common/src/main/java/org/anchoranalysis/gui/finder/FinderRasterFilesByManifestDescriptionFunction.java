@@ -29,12 +29,12 @@ package org.anchoranalysis.gui.finder;
 import java.nio.file.Path;
 import java.util.List;
 import org.anchoranalysis.core.error.OperationFailedException;
-import org.anchoranalysis.core.progress.CachedOperationWithProgressReporter;
+import org.anchoranalysis.core.progress.CacheCallWithProgressReporter;
 import org.anchoranalysis.core.progress.ProgressReporter;
 import org.anchoranalysis.image.io.RasterIOException;
 import org.anchoranalysis.image.io.bean.rasterreader.RasterReader;
 import org.anchoranalysis.image.io.rasterreader.OpenedRaster;
-import org.anchoranalysis.image.stack.NamedImgStackCollection;
+import org.anchoranalysis.image.stack.NamedStacks;
 import org.anchoranalysis.image.stack.Stack;
 import org.anchoranalysis.io.manifest.ManifestRecorder;
 import org.anchoranalysis.io.manifest.file.FileWrite;
@@ -78,40 +78,31 @@ public class FinderRasterFilesByManifestDescriptionFunction implements Finder {
         return list != null && !list.isEmpty();
     }
 
-    public NamedImgStackCollection createStackCollection() {
+    public NamedStacks createStackCollection() {
 
-        NamedImgStackCollection out = new NamedImgStackCollection();
+        NamedStacks out = new NamedStacks();
         for (FileWrite fileWrite : list) {
             String name = fileWrite.getIndex();
 
             // Assume single series, single channel
-            Path filePath = fileWrite.calcPath();
-
-            out.addImageStack(name, new CachedOpenStackOp(filePath, rasterReader));
+            out.addImageStack(
+                    name,
+                    CacheCallWithProgressReporter.of(
+                            progressReporter ->
+                                    openStack(
+                                            fileWrite.calcPath(), rasterReader, progressReporter)));
         }
         return out;
     }
 
-    private static class CachedOpenStackOp
-            extends CachedOperationWithProgressReporter<Stack, OperationFailedException> {
+    private Stack openStack(
+            Path filePath, RasterReader rasterReader, ProgressReporter progressReporter)
+            throws OperationFailedException {
+        try (OpenedRaster openedRaster = rasterReader.openFile(filePath)) {
+            return openedRaster.open(0, progressReporter).get(0);
 
-        private Path filePath;
-        private RasterReader rasterReader;
-
-        public CachedOpenStackOp(Path filePath, RasterReader rasterReader) {
-            super();
-            this.filePath = filePath;
-            this.rasterReader = rasterReader;
-        }
-
-        @Override
-        protected Stack execute(ProgressReporter progressReporter) throws OperationFailedException {
-            try (OpenedRaster openedRaster = rasterReader.openFile(filePath)) {
-                return openedRaster.open(0, progressReporter).get(0);
-
-            } catch (RasterIOException e) {
-                throw new OperationFailedException(e);
-            }
+        } catch (RasterIOException e) {
+            throw new OperationFailedException(e);
         }
     }
 }

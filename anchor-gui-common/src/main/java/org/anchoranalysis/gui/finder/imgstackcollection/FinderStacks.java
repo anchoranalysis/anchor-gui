@@ -1,6 +1,6 @@
 /*-
  * #%L
- * anchor-plugin-gui-export
+ * anchor-gui-common
  * %%
  * Copyright (C) 2010 - 2020 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann-La Roche
  * %%
@@ -24,26 +24,18 @@
  * #L%
  */
 
-package org.anchoranalysis.plugin.gui.graph;
+package org.anchoranalysis.gui.finder.imgstackcollection;
 
-import org.anchoranalysis.anchor.plot.bean.GraphDefinition;
+import org.anchoranalysis.core.error.OperationFailedException;
+import org.anchoranalysis.core.name.provider.NamedProvider;
+import org.anchoranalysis.core.progress.CallableWithProgressReporter;
+import org.anchoranalysis.image.stack.Stack;
+import org.anchoranalysis.io.manifest.finder.Finder;
 
-/**
- * @author Owen Feehan
- * @param <T> graph-item
- * @param <S> source-type
- */
-public interface RasterGraph<T, S> {
+public interface FinderStacks extends Finder {
 
-    GraphDefinition<T> getGraphDefinition();
+    NamedProvider<Stack> getStacks() throws OperationFailedException;
 
-    void setGraphDefinition(GraphDefinition<T> graphDefinition);
-
-    int getWidth();
-
-    void setWidth(int width);
-
-    int getHeight();
-
-    void setHeight(int height);
+    CallableWithProgressReporter<NamedProvider<Stack>, OperationFailedException>
+            getStacksAsOperation();
 }

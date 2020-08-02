@@ -28,8 +28,8 @@ package org.anchoranalysis.plugin.gui.bean.createrastergenerator.cfgnrginstantst
 
 import org.anchoranalysis.anchor.mpp.feature.instantstate.CfgNRGInstantState;
 import org.anchoranalysis.core.error.CreateException;
+import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.functional.function.FunctionWithException;
-import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.gui.bean.exporttask.ExportTaskParams;
 import org.anchoranalysis.gui.io.loader.manifest.finder.csvstatistic.CSVStatistic;
 import org.anchoranalysis.image.stack.Stack;
@@ -75,7 +75,7 @@ public abstract class GraphDynamicallyDrawnFromCfgNRGInstantState<T>
                     generator,
                     new FindNearestStatisticBridge(params.getFinderCsvStatistics().get()));
 
-        } catch (GetOperationFailedException e) {
+        } catch (OperationFailedException e) {
             throw new CreateException(e);
         }
     }

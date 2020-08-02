@@ -41,9 +41,9 @@ import org.anchoranalysis.core.property.IPropertyValueSendable;
 import org.anchoranalysis.gui.cfgnrg.StatePanel;
 import org.anchoranalysis.gui.cfgnrg.StatePanelUpdateException;
 import org.anchoranalysis.gui.feature.evaluator.treetable.FeatureListSrc;
-import org.anchoranalysis.gui.image.OverlayCollectionWithImgStack;
+import org.anchoranalysis.gui.image.OverlayCollectionWithNrgStack;
 
-public class FeatureEvaluatorTablePanel extends StatePanel<OverlayCollectionWithImgStack> {
+public class FeatureEvaluatorTablePanel extends StatePanel<OverlayCollectionWithNrgStack> {
 
     private JPanel delegate;
 
@@ -119,7 +119,7 @@ public class FeatureEvaluatorTablePanel extends StatePanel<OverlayCollectionWith
     }
 
     @Override
-    public void updateState(OverlayCollectionWithImgStack state) throws StatePanelUpdateException {
+    public void updateState(OverlayCollectionWithNrgStack state) throws StatePanelUpdateException {
 
         try {
             updater.updateModel(state);

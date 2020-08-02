@@ -41,7 +41,6 @@ import org.anchoranalysis.anchor.mpp.proposer.error.ProposerFailureDescription;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.error.reporter.ErrorReporter;
 import org.anchoranalysis.core.geometry.Point3d;
-import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.random.RandomNumberGenerator;
 import org.anchoranalysis.gui.frame.overlays.ExtractOverlays;
 import org.anchoranalysis.gui.frame.overlays.ProposedCfg;
@@ -85,7 +84,7 @@ public class CfgProposerMouseClickAdapter extends MouseAdapter {
                 // If we have no evaluatorWithCotnext we ignored it
                 return;
             }
-        } catch (GetOperationFailedException e) {
+        } catch (OperationFailedException e) {
             errorReporter.recordError(CfgProposerMouseClickAdapter.class, e);
             return;
         }

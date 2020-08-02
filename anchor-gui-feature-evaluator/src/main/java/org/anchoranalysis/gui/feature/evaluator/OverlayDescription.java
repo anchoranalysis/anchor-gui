@@ -28,7 +28,7 @@ package org.anchoranalysis.gui.feature.evaluator;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import org.anchoranalysis.anchor.mpp.pair.Pair;
+import org.anchoranalysis.anchor.mpp.pair.IdentifiablePair;
 import org.anchoranalysis.anchor.overlay.Overlay;
 import org.anchoranalysis.anchor.overlay.OverlayProperties;
 import org.anchoranalysis.core.name.value.ComparatorOrderByName;
@@ -62,7 +62,7 @@ class OverlayDescription extends TitleValueTableModel implements IUpdatableSingl
     }
 
     @Override
-    public void updatePair(final Pair<Overlay> pair, NRGStackWithParams raster) {
+    public void updatePair(final IdentifiablePair<Overlay> pair, NRGStackWithParams raster) {
 
         clear();
         // If we have no mark matching the current id

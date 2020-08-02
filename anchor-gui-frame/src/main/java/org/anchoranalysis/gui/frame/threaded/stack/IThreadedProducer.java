@@ -27,12 +27,12 @@
 package org.anchoranalysis.gui.frame.threaded.stack;
 
 import org.anchoranalysis.core.index.IIndexGettableSettable;
-import org.anchoranalysis.gui.displayupdate.IDisplayUpdateRememberStack;
+import org.anchoranalysis.gui.displayupdate.DisplayUpdateRememberStack;
 
 public interface IThreadedProducer {
 
     // How it provides stacks to other applications (the output)
-    IDisplayUpdateRememberStack getStackProvider();
+    DisplayUpdateRememberStack getStackProvider();
 
     // How it is updated with indexes from other classes (the input control mechanism)
     IIndexGettableSettable getIndexGettableSettable();

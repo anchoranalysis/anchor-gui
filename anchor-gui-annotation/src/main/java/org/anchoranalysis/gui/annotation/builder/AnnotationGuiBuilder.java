@@ -29,13 +29,12 @@ package org.anchoranalysis.gui.annotation.builder;
 import java.io.File;
 import java.nio.file.Path;
 import java.util.Optional;
-import org.anchoranalysis.core.cache.CachedOperation;
-import org.anchoranalysis.core.cache.CachedOperationWrap;
+import org.anchoranalysis.core.cache.CacheCall;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.log.Logger;
 import org.anchoranalysis.core.name.provider.NamedProvider;
-import org.anchoranalysis.core.progress.OperationWithProgressReporter;
+import org.anchoranalysis.core.progress.CallableWithProgressReporter;
 import org.anchoranalysis.core.progress.ProgressReporterMultiple;
 import org.anchoranalysis.gui.annotation.AnnotationBackground;
 import org.anchoranalysis.gui.annotation.export.ExportAnnotation;
@@ -49,7 +48,7 @@ import org.anchoranalysis.image.stack.Stack;
 
 public abstract class AnnotationGuiBuilder<T extends AnnotationInitParams> {
 
-    private CachedOperation<AnnotationSummary, CreateException> queryAnnotationStatus;
+    private CacheCall<AnnotationSummary, CreateException> queryAnnotationStatus;
 
     public AnnotationGuiBuilder() {
         super();
@@ -84,7 +83,7 @@ public abstract class AnnotationGuiBuilder<T extends AnnotationInitParams> {
      *
      * <p>The cache should be reset of the annotation is changed by the user
      */
-    public CachedOperation<AnnotationSummary, CreateException> queryAnnotationSummary() {
+    public CacheCall<AnnotationSummary, CreateException> queryAnnotationSummary() {
         return queryAnnotationStatus;
     }
 
@@ -95,7 +94,7 @@ public abstract class AnnotationGuiBuilder<T extends AnnotationInitParams> {
     public abstract Path deletePath();
 
     // Cached-operation
-    public abstract OperationWithProgressReporter<NamedProvider<Stack>, CreateException> stacks();
+    public abstract CallableWithProgressReporter<NamedProvider<Stack>, CreateException> stacks();
 
     public abstract String descriptiveName();
 
@@ -108,7 +107,7 @@ public abstract class AnnotationGuiBuilder<T extends AnnotationInitParams> {
     protected abstract AnnotationSummary createSummary() throws CreateException;
 
     /** Creates a cached version of the createSummary() method */
-    private CachedOperation<AnnotationSummary, CreateException> createCachedSummary() {
-        return new CachedOperationWrap<>(() -> createSummary());
+    private CacheCall<AnnotationSummary, CreateException> createCachedSummary() {
+        return CacheCall.of(this::createSummary);
     }
 }

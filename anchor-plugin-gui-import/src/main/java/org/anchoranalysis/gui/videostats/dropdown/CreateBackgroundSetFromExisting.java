@@ -26,55 +26,44 @@
 
 package org.anchoranalysis.gui.videostats.dropdown;
 
+import lombok.AllArgsConstructor;
 import org.anchoranalysis.anchor.mpp.bean.init.MPPInitParams;
+import org.anchoranalysis.core.cache.CacheCall;
 import org.anchoranalysis.core.error.CreateException;
-import org.anchoranalysis.core.index.GetOperationFailedException;
-import org.anchoranalysis.core.progress.CachedOperationWithProgressReporter;
-import org.anchoranalysis.core.progress.OperationWithProgressReporter;
+import org.anchoranalysis.core.progress.CallableWithProgressReporter;
 import org.anchoranalysis.core.progress.ProgressReporter;
 import org.anchoranalysis.gui.backgroundset.BackgroundSet;
 import org.anchoranalysis.gui.backgroundset.BackgroundSetFactory;
-import org.anchoranalysis.gui.interactivebrowser.OperationInitParams;
+import org.anchoranalysis.gui.container.background.BackgroundStackContainerException;
 import org.anchoranalysis.image.bean.nonbean.init.CreateCombinedStack;
 import org.anchoranalysis.image.bean.nonbean.init.ImageInitParams;
 import org.anchoranalysis.image.stack.wrap.WrapStackAsTimeSequence;
-import org.anchoranalysis.io.output.bean.OutputWriteSettings;
 
+@AllArgsConstructor
 public class CreateBackgroundSetFromExisting
-        extends CachedOperationWithProgressReporter<BackgroundSet, GetOperationFailedException> {
+        implements CallableWithProgressReporter<BackgroundSet, BackgroundStackContainerException> {
 
-    private final OperationWithProgressReporter<BackgroundSet, GetOperationFailedException>
+    private final CallableWithProgressReporter<BackgroundSet, BackgroundStackContainerException>
             existingBackgroundSet;
-    private OperationInitParams pso;
-    private OutputWriteSettings ows;
-
-    public CreateBackgroundSetFromExisting(
-            OperationWithProgressReporter<BackgroundSet, GetOperationFailedException> backgroundSet,
-            OperationInitParams pso,
-            OutputWriteSettings ows) {
-        super();
-        this.existingBackgroundSet = backgroundSet;
-        this.pso = pso;
-        this.ows = ows;
-    }
+    private CacheCall<MPPInitParams, CreateException> pso;
 
     @Override
-    protected BackgroundSet execute(ProgressReporter progressReporter)
-            throws GetOperationFailedException {
+    public BackgroundSet call(ProgressReporter progressReporter)
+            throws BackgroundStackContainerException {
 
-        BackgroundSet bsExisting = existingBackgroundSet.doOperation(progressReporter);
         try {
-            MPPInitParams so = pso.doOperation();
+            BackgroundSet bsExisting = existingBackgroundSet.call(progressReporter);
+
+            MPPInitParams so = pso.call();
             ImageInitParams soImage = so.getImage();
 
             return BackgroundSetFactory.createBackgroundSetFromExisting(
                     bsExisting,
                     new WrapStackAsTimeSequence(CreateCombinedStack.apply(soImage)),
-                    ows,
                     progressReporter);
 
         } catch (CreateException e) {
-            throw new GetOperationFailedException(e);
+            throw new BackgroundStackContainerException(e);
         }
     }
 }

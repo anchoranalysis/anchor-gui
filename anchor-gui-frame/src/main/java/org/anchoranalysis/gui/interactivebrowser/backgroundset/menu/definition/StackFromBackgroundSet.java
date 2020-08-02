@@ -26,33 +26,27 @@
 
 package org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.definition;
 
+import lombok.AllArgsConstructor;
 import org.anchoranalysis.core.error.reporter.ErrorReporter;
 import org.anchoranalysis.core.functional.function.FunctionWithException;
-import org.anchoranalysis.core.index.GetOperationFailedException;
-import org.anchoranalysis.core.progress.OperationWithProgressReporter;
+import org.anchoranalysis.core.progress.CallableWithProgressReporter;
 import org.anchoranalysis.core.progress.ProgressReporterNull;
 import org.anchoranalysis.gui.backgroundset.BackgroundSet;
+import org.anchoranalysis.gui.container.background.BackgroundStackContainerException;
 import org.anchoranalysis.image.stack.DisplayStack;
 
-class StackFromBackgroundSet implements IImageStackCntrFromName {
+@AllArgsConstructor
+class StackFromBackgroundSet implements ImageStackContainerFromName {
 
-    private OperationWithProgressReporter<BackgroundSet, ? extends Throwable> backgroundSet;
-    private ErrorReporter errorReporter;
-
-    public StackFromBackgroundSet(
-            OperationWithProgressReporter<BackgroundSet, ? extends Throwable> backgroundSet,
-            ErrorReporter errorReporter) {
-        super();
-        this.backgroundSet = backgroundSet;
-        this.errorReporter = errorReporter;
-    }
+    private final CallableWithProgressReporter<BackgroundSet, ? extends Throwable> backgroundSet;
+    private final ErrorReporter errorReporter;
 
     @Override
-    public FunctionWithException<Integer, DisplayStack, GetOperationFailedException>
+    public FunctionWithException<Integer, DisplayStack, BackgroundStackContainerException>
             imageStackCntrFromName(String name) {
         try {
-            return backgroundSet.doOperation(ProgressReporterNull.get()).stackCntr(name);
-        } catch (Throwable e) {
+            return backgroundSet.call(ProgressReporterNull.get()).stackCntr(name);
+        } catch (Exception e) {
             errorReporter.recordError(NamesFromBackgroundSet.class, e);
             return null;
         }

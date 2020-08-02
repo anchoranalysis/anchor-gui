@@ -26,12 +26,14 @@
 
 package org.anchoranalysis.gui.finder;
 
+import org.anchoranalysis.core.cache.CacheCall;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.error.reporter.ErrorReporter;
-import org.anchoranalysis.core.functional.Operation;
+import org.anchoranalysis.core.functional.CallableWithException;
 import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.name.provider.NamedProvider;
-import org.anchoranalysis.core.progress.OperationWithProgressReporter;
+import org.anchoranalysis.core.progress.CacheCallWithProgressReporter;
+import org.anchoranalysis.core.progress.CallableWithProgressReporter;
 import org.anchoranalysis.core.progress.ProgressReporterNull;
 import org.anchoranalysis.feature.nrg.NRGElemParamsFromImage;
 import org.anchoranalysis.feature.nrg.NRGStackWithParams;
@@ -45,23 +47,31 @@ import org.anchoranalysis.io.manifest.finder.FinderSerializedObject;
 public class FinderNrgStack implements Finder {
 
     private FinderRasterFolder finderRasterFolder;
-    private OperationStackWithParams operationCombined;
+    private CallableWithProgressReporter<NRGStackWithParams, GetOperationFailedException>
+            operationCombined;
     private FinderKeyValueParams finderImageParams;
     private FinderSerializedObject<NRGElemParamsFromImage> finderImageParamsLegacy;
+
+    private CallableWithProgressReporter<NamedProvider<Stack>, OperationFailedException>
+            operationStacks;
 
     public FinderNrgStack(RasterReader rasterReader, ErrorReporter errorReporter) {
         finderRasterFolder = new FinderRasterFolder("nrgStack", "nrgStack", rasterReader);
 
-        OperationFindNrgStackFromStackCollection nrgStackOperation =
-                new OperationFindNrgStackFromStackCollection(
+        operationStacks =
+                CacheCallWithProgressReporter.of(
                         new OperationStackCollectionFromFinderRasterFolder(finderRasterFolder));
+
         this.finderImageParams = new FinderKeyValueParams("nrgStackParams", errorReporter);
         this.finderImageParamsLegacy =
                 new FinderSerializedObject<>("nrgStackImageParams", errorReporter);
 
         operationCombined =
-                new OperationStackWithParams(
-                        nrgStackOperation, finderImageParams, finderImageParamsLegacy);
+                CacheCallWithProgressReporter.of(
+                        new OperationStackWithParams(
+                                CacheCall.of(new OperationFindNrgStackFromStacks(operationStacks)),
+                                finderImageParams,
+                                finderImageParamsLegacy));
     }
 
     @Override
@@ -76,28 +86,19 @@ public class FinderNrgStack implements Finder {
     }
 
     public NRGStackWithParams getNrgStack() throws GetOperationFailedException {
-        try {
-            return operationCombined.doOperation();
-        } catch (OperationFailedException e) {
-            throw new GetOperationFailedException(e);
-        }
+        return operationCombined.call(ProgressReporterNull.get());
     }
 
-    public NamedProvider<Stack> getNamedImgStackCollection() throws GetOperationFailedException {
-        try {
-            return operationCombined
-                    .getOperationStackCollection()
-                    .doOperation(ProgressReporterNull.get());
-        } catch (OperationFailedException e) {
-            throw new GetOperationFailedException(e);
-        }
+    public NamedProvider<Stack> getNamedStacks() throws OperationFailedException {
+        return operationStacks.call(ProgressReporterNull.get());
     }
 
-    public Operation<NRGStackWithParams, OperationFailedException> operationNrgStack() {
-        return operationCombined;
+    public CallableWithException<NRGStackWithParams, GetOperationFailedException>
+            operationNrgStack() {
+        return operationCombined.withoutProgressReporter();
     }
 
-    public OperationWithProgressReporter<NRGStackWithParams, OperationFailedException>
+    public CallableWithProgressReporter<NRGStackWithParams, GetOperationFailedException>
             operationNrgStackWithProgressReporter() {
         return operationCombined;
     }
