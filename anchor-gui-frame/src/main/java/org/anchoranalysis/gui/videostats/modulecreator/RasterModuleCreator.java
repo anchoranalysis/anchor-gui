@@ -30,14 +30,14 @@ import java.util.Optional;
 import org.anchoranalysis.anchor.mpp.cfg.Cfg;
 import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.error.OperationFailedException;
-import org.anchoranalysis.core.functional.function.CheckedSupplier;
 import org.anchoranalysis.gui.frame.singleraster.InternalFrameSingleRaster;
 import org.anchoranalysis.gui.image.frame.ISliderState;
 import org.anchoranalysis.gui.videostats.dropdown.AddVideoStatsModule;
 import org.anchoranalysis.gui.videostats.dropdown.VideoStatsModuleGlobalParams;
 import org.anchoranalysis.gui.videostats.dropdown.common.NRGBackground;
 import org.anchoranalysis.gui.videostats.module.VideoStatsModuleCreateException;
-import org.anchoranalysis.gui.videostats.operation.combine.IVideoStatsOperationCombine;
+import org.anchoranalysis.gui.videostats.operation.combine.OverlayCollectionSupplier;
+import org.anchoranalysis.gui.videostats.operation.combine.VideoStatsOperationCombine;
 import org.anchoranalysis.image.object.ObjectCollection;
 
 public class RasterModuleCreator extends VideoStatsModuleCreator {
@@ -47,11 +47,11 @@ public class RasterModuleCreator extends VideoStatsModuleCreator {
     private final String frameName;
     private final VideoStatsModuleGlobalParams mpg;
 
-    private IVideoStatsOperationCombine combiner =
-            new IVideoStatsOperationCombine() {
+    private VideoStatsOperationCombine combiner =
+            new VideoStatsOperationCombine() {
 
                 @Override
-                public Optional<CheckedSupplier<Cfg, OperationFailedException>> getCfg() {
+                public Optional<OverlayCollectionSupplier<Cfg>> getCfg() {
                     return Optional.empty();
                 }
 
@@ -61,7 +61,7 @@ public class RasterModuleCreator extends VideoStatsModuleCreator {
                 }
 
                 @Override
-                public Optional<CheckedSupplier<ObjectCollection, OperationFailedException>>
+                public Optional<OverlayCollectionSupplier<ObjectCollection>>
                         getObjects() {
                     return Optional.empty();
                 }
@@ -111,7 +111,7 @@ public class RasterModuleCreator extends VideoStatsModuleCreator {
     }
 
     @Override
-    public Optional<IVideoStatsOperationCombine> getCombiner() {
+    public Optional<VideoStatsOperationCombine> getCombiner() {
         return Optional.of(combiner);
     }
 }

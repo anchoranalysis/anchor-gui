@@ -34,12 +34,12 @@ import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.name.store.EagerEvaluationStore;
 import org.anchoranalysis.core.name.store.LazyEvaluationStore;
-import org.anchoranalysis.core.progress.CachedProgressingSupplier;
 import org.anchoranalysis.core.progress.ProgressReporter;
 import org.anchoranalysis.gui.bean.filecreator.MarkCreatorParams;
 import org.anchoranalysis.gui.file.opened.OpenedFile;
 import org.anchoranalysis.gui.file.opened.OpenedFileGUI;
 import org.anchoranalysis.gui.series.TimeSequenceProvider;
+import org.anchoranalysis.gui.series.TimeSequenceProviderSupplier;
 import org.anchoranalysis.gui.videostats.dropdown.AddVideoStatsModule;
 import org.anchoranalysis.gui.videostats.dropdown.multicollection.MultiCollectionDropDown;
 import org.anchoranalysis.image.io.input.ProvidesStackInput;
@@ -79,7 +79,7 @@ public class FileSingleStack extends InteractiveFile {
 
         MultiCollectionDropDown dropDown =
                 new MultiCollectionDropDown(
-                        CachedProgressingSupplier.cache(
+                        TimeSequenceProviderSupplier.cache(
                                 progressReporter -> createTimeSeries(progressReporter, 0) ),
                         null,
                         null,

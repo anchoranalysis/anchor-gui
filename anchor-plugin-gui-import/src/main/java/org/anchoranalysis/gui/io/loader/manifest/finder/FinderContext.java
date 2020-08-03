@@ -31,41 +31,16 @@ import org.anchoranalysis.gui.videostats.dropdown.BoundVideoStatsModuleDropDown;
 import org.anchoranalysis.gui.videostats.dropdown.VideoStatsModuleGlobalParams;
 import org.anchoranalysis.gui.videostats.dropdown.common.NRGBackgroundAdder;
 import org.anchoranalysis.gui.videostats.operation.VideoStatsOperationMenu;
+import lombok.AllArgsConstructor;
+import lombok.Value;
 
+@Value @AllArgsConstructor
 public class FinderContext {
 
-    private NRGBackgroundAdder<?> nrgBackground;
+    private NRGBackgroundAdder nrgBackground;
     private BoundVideoStatsModuleDropDown boundVideoStats;
     private VideoStatsOperationMenu parentMenu;
     private CfgNRGFinderContext context;
-
-    public FinderContext(
-            NRGBackgroundAdder<?> nrgBackground,
-            BoundVideoStatsModuleDropDown boundVideoStats,
-            VideoStatsOperationMenu parentMenu,
-            CfgNRGFinderContext context) {
-        super();
-        this.nrgBackground = nrgBackground;
-        this.boundVideoStats = boundVideoStats;
-        this.parentMenu = parentMenu;
-        this.context = context;
-    }
-
-    public NRGBackgroundAdder<?> getNrgBackground() {
-        return nrgBackground;
-    }
-
-    public BoundVideoStatsModuleDropDown getBoundVideoStats() {
-        return boundVideoStats;
-    }
-
-    public VideoStatsOperationMenu getParentMenu() {
-        return parentMenu;
-    }
-
-    public CfgNRGFinderContext getContext() {
-        return context;
-    }
 
     public VideoStatsModuleGlobalParams getMpg() {
         return context.getMpg();

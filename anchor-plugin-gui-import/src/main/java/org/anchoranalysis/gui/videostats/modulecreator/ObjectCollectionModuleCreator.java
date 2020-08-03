@@ -27,86 +27,42 @@
 package org.anchoranalysis.gui.videostats.modulecreator;
 
 import java.util.Optional;
-import lombok.AllArgsConstructor;
 import org.anchoranalysis.anchor.mpp.cfg.Cfg;
 import org.anchoranalysis.anchor.overlay.collection.OverlayCollection;
 import org.anchoranalysis.anchor.overlay.collection.OverlayCollectionObjectFactory;
-import org.anchoranalysis.core.error.InitException;
-import org.anchoranalysis.core.error.OperationFailedException;
-import org.anchoranalysis.core.functional.function.CheckedSupplier;
 import org.anchoranalysis.core.idgetter.IDGetterIter;
-import org.anchoranalysis.gui.image.frame.ISliderState;
-import org.anchoranalysis.gui.videostats.dropdown.AddVideoStatsModule;
-import org.anchoranalysis.gui.videostats.dropdown.ModuleAddUtilities;
 import org.anchoranalysis.gui.videostats.dropdown.VideoStatsModuleGlobalParams;
 import org.anchoranalysis.gui.videostats.dropdown.common.NRGBackground;
 import org.anchoranalysis.gui.videostats.internalframe.InternalFrameStaticOverlaySelectable;
-import org.anchoranalysis.gui.videostats.module.VideoStatsModuleCreateException;
-import org.anchoranalysis.gui.videostats.operation.combine.IVideoStatsOperationCombine;
+import org.anchoranalysis.gui.videostats.operation.combine.OverlayCollectionSupplier;
 import org.anchoranalysis.image.object.ObjectCollection;
 
-@AllArgsConstructor
-public class ObjectCollectionModuleCreator extends VideoStatsModuleCreator {
-
-    private String fileIdentifier;
-    private String name;
-    private CheckedSupplier<ObjectCollection, OperationFailedException> opObjects;
-    private NRGBackground nrgBackground;
-    private VideoStatsModuleGlobalParams mpg;
-
-    @Override
-    public void createAndAddVideoStatsModule(AddVideoStatsModule adder)
-            throws VideoStatsModuleCreateException {
-        try {
-            OverlayCollection overlays =
-                    OverlayCollectionObjectFactory.createWithoutColor(
-                            opObjects.get(), new IDGetterIter<>());
-
-            InternalFrameStaticOverlaySelectable imageFrame =
-                    new InternalFrameStaticOverlaySelectable(
-                            String.format("%s: %s", fileIdentifier, name), false);
-
-            ISliderState sliderState =
-                    imageFrame.init(
-                            overlays, adder.getSubgroup().getDefaultModuleState().getState(), mpg);
-
-            imageFrame
-                    .controllerBackgroundMenu(sliderState)
-                    .add(mpg, nrgBackground.getBackgroundSet());
-            ModuleAddUtilities.add(adder, imageFrame.moduleCreator(sliderState));
-
-        } catch (InitException | OperationFailedException e) {
-            throw new VideoStatsModuleCreateException(e);
-        }
+public class ObjectCollectionModuleCreator extends OverlayedCollectionModuleCreator<ObjectCollection> {
+    
+    public ObjectCollectionModuleCreator(String fileIdentifier, String name,
+            OverlayCollectionSupplier<ObjectCollection> supplier,
+            NRGBackground nrgBackground, VideoStatsModuleGlobalParams mpg) {
+        super(fileIdentifier, name, supplier, nrgBackground, mpg);
     }
 
     @Override
-    public Optional<IVideoStatsOperationCombine> getCombiner() {
-        return Optional.of(
-                new IVideoStatsOperationCombine() {
+    protected OverlayCollection createOverlays(ObjectCollection initialContents) {
+        return OverlayCollectionObjectFactory.createWithoutColor(
+                initialContents, new IDGetterIter<>());
+    }
 
-                    @Override
-                    public Optional<CheckedSupplier<Cfg, OperationFailedException>> getCfg() {
-                        return Optional.empty();
-                    }
+    @Override
+    protected InternalFrameStaticOverlaySelectable createFrame(String frameName) {
+        return new InternalFrameStaticOverlaySelectable(frameName, false);
+    }
+    
+    @Override
+    protected Optional<OverlayCollectionSupplier<Cfg>> cfgSupplier() {
+        return Optional.empty();
+    }
 
-                    @Override
-                    public String generateName() {
-                        return fileIdentifier;
-                    }
-
-                    @Override
-                    public Optional<
-                                    CheckedSupplier<
-                                            ObjectCollection, OperationFailedException>>
-                            getObjects() {
-                        return Optional.of(opObjects);
-                    }
-
-                    @Override
-                    public NRGBackground getNrgBackground() {
-                        return nrgBackground;
-                    }
-                });
+    @Override
+    protected Optional<OverlayCollectionSupplier<ObjectCollection>> objectsSupplier() {
+        return Optional.of(supplier());
     }
 }

@@ -27,93 +27,45 @@
 package org.anchoranalysis.gui.videostats.modulecreator;
 
 import java.util.Optional;
-import lombok.AllArgsConstructor;
 import org.anchoranalysis.anchor.mpp.cfg.Cfg;
 import org.anchoranalysis.anchor.mpp.overlay.OverlayCollectionMarkFactory;
 import org.anchoranalysis.anchor.overlay.collection.OverlayCollection;
-import org.anchoranalysis.core.error.InitException;
-import org.anchoranalysis.core.error.OperationFailedException;
-import org.anchoranalysis.core.functional.function.CheckedSupplier;
-import org.anchoranalysis.gui.image.frame.ISliderState;
-import org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.definition.ChangeableBackgroundDefinitionSimple;
 import org.anchoranalysis.gui.mark.MarkDisplaySettings;
-import org.anchoranalysis.gui.videostats.dropdown.AddVideoStatsModule;
-import org.anchoranalysis.gui.videostats.dropdown.ModuleAddUtilities;
 import org.anchoranalysis.gui.videostats.dropdown.VideoStatsModuleGlobalParams;
 import org.anchoranalysis.gui.videostats.dropdown.common.NRGBackground;
 import org.anchoranalysis.gui.videostats.internalframe.InternalFrameStaticOverlaySelectable;
-import org.anchoranalysis.gui.videostats.module.VideoStatsModuleCreateException;
-import org.anchoranalysis.gui.videostats.operation.combine.IVideoStatsOperationCombine;
+import org.anchoranalysis.gui.videostats.operation.combine.OverlayCollectionSupplier;
 import org.anchoranalysis.image.object.ObjectCollection;
 
-@AllArgsConstructor
-public class CfgModuleCreator extends VideoStatsModuleCreator {
+public class CfgModuleCreator extends OverlayedCollectionModuleCreator<Cfg> {
 
-    private String fileIdentifier;
-    private String name;
-    private CheckedSupplier<Cfg, OperationFailedException> opCfg;
-    private NRGBackground nrgBackground;
-    private VideoStatsModuleGlobalParams mpg;
     private MarkDisplaySettings markDisplaySettings;
-
-    @Override
-    public void createAndAddVideoStatsModule(AddVideoStatsModule adder)
-            throws VideoStatsModuleCreateException {
-
-        try {
-            Cfg cfg = opCfg.get();
-
-            OverlayCollection oc =
-                    OverlayCollectionMarkFactory.createWithoutColor(
-                            cfg, markDisplaySettings.regionMembership());
-
-            String frameName = String.format("%s: %s", fileIdentifier, name);
-            InternalFrameStaticOverlaySelectable imageFrame =
-                    new InternalFrameStaticOverlaySelectable(frameName, true);
-            ISliderState sliderState =
-                    imageFrame.init(
-                            oc, adder.getSubgroup().getDefaultModuleState().getState(), mpg);
-
-            imageFrame
-                    .controllerBackgroundMenu(sliderState)
-                    .addDefinition(
-                            mpg,
-                            new ChangeableBackgroundDefinitionSimple(
-                                    nrgBackground.getBackgroundSet()));
-            ModuleAddUtilities.add(adder, imageFrame.moduleCreator(sliderState));
-
-        } catch (InitException | OperationFailedException e) {
-            throw new VideoStatsModuleCreateException(e);
-        }
+    
+    public CfgModuleCreator(String fileIdentifier, String name,
+            OverlayCollectionSupplier<Cfg> supplier, NRGBackground nrgBackground,
+            VideoStatsModuleGlobalParams mpg, MarkDisplaySettings markDisplaySettings) {
+        super(fileIdentifier, name, supplier, nrgBackground, mpg);
+        this.markDisplaySettings = markDisplaySettings;
     }
 
     @Override
-    public Optional<IVideoStatsOperationCombine> getCombiner() {
-        return Optional.of(
-                new IVideoStatsOperationCombine() {
+    protected OverlayCollection createOverlays(Cfg initialContents) {
+        return OverlayCollectionMarkFactory.createWithoutColor(
+                initialContents, markDisplaySettings.regionMembership());
+    }
 
-                    @Override
-                    public Optional<CheckedSupplier<Cfg, OperationFailedException>> getCfg() {
-                        return Optional.of(opCfg);
-                    }
+    @Override
+    protected InternalFrameStaticOverlaySelectable createFrame(String frameName) {
+        return new InternalFrameStaticOverlaySelectable(frameName, true);
+    }
+    
+    @Override
+    protected Optional<OverlayCollectionSupplier<Cfg>> cfgSupplier() {
+        return Optional.of(supplier());
+    }
 
-                    @Override
-                    public String generateName() {
-                        return fileIdentifier;
-                    }
-
-                    @Override
-                    public Optional<
-                                    CheckedSupplier<
-                                            ObjectCollection, OperationFailedException>>
-                            getObjects() {
-                        return Optional.empty();
-                    }
-
-                    @Override
-                    public NRGBackground getNrgBackground() {
-                        return nrgBackground;
-                    }
-                });
+    @Override
+    protected Optional<OverlayCollectionSupplier<ObjectCollection>> objectsSupplier() {
+        return Optional.empty();
     }
 }

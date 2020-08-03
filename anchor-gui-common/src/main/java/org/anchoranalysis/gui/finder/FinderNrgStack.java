@@ -31,7 +31,6 @@ import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.error.reporter.ErrorReporter;
 import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.name.provider.NamedProvider;
-import org.anchoranalysis.core.progress.CheckedProgressingSupplier;
 import org.anchoranalysis.core.progress.ProgressReporterNull;
 import org.anchoranalysis.feature.nrg.NRGElemParamsFromImage;
 import org.anchoranalysis.feature.nrg.NRGStackWithParams;
@@ -77,21 +76,12 @@ public class FinderNrgStack implements Finder {
         return finderRasterFolder.exists();
     }
 
-    public NRGStackWithParams getNrgStack() throws GetOperationFailedException {
-        return nrgStackSupplier.get();
-    }
-
     public NamedProvider<Stack> getNamedStacks() throws OperationFailedException {
         return operationStacks.get(ProgressReporterNull.get());
     }
 
     public NRGStackSupplier nrgStackSupplier() {
         return nrgStackSupplier;
-    }
-
-    public CheckedProgressingSupplier<NRGStackWithParams, GetOperationFailedException>
-            operationNrgStackWithProgressReporter() {
-        return progressReporter -> getNrgStack();
     }
     
     private NRGStackWithParams findStack() throws GetOperationFailedException {

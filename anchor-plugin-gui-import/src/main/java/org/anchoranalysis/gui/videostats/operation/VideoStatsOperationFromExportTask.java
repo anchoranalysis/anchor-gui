@@ -34,7 +34,7 @@ import org.anchoranalysis.gui.bean.exporttask.ExportTask;
 import org.anchoranalysis.gui.bean.exporttask.ExportTaskActionAsThread;
 import org.anchoranalysis.gui.bean.exporttask.ExportTaskActionAsThread.ExportTaskCommand;
 import org.anchoranalysis.gui.bean.exporttask.ExportTaskParams;
-import org.anchoranalysis.gui.videostats.operation.combine.IVideoStatsOperationCombine;
+import org.anchoranalysis.gui.videostats.operation.combine.VideoStatsOperationCombine;
 
 public class VideoStatsOperationFromExportTask implements VideoStatsOperation {
 
@@ -77,7 +77,7 @@ public class VideoStatsOperationFromExportTask implements VideoStatsOperation {
     }
 
     @Override
-    public Optional<IVideoStatsOperationCombine> getCombiner() {
+    public Optional<VideoStatsOperationCombine> getCombiner() {
         return Optional.empty();
     }
 }

@@ -37,7 +37,7 @@ import org.anchoranalysis.core.progress.ProgressReporter;
 import org.anchoranalysis.gui.file.interactive.InteractiveFile;
 import org.anchoranalysis.gui.interactivebrowser.filelist.InteractiveFileListTableModel;
 
-public class AnnotationTableModel extends InteractiveFileListTableModel {
+public class AnnotationTableModel implements InteractiveFileListTableModel {
 
     private CheckedProgressingSupplier<AnnotationProject, OperationFailedException>
             opAnnotationProject;

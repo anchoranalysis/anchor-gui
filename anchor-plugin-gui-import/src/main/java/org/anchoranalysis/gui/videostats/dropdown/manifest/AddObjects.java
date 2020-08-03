@@ -42,13 +42,13 @@ import org.anchoranalysis.gui.io.loader.manifest.finder.FinderCfgFolder;
 import org.anchoranalysis.gui.io.loader.manifest.finder.FinderObjectCollectionFolder;
 import org.anchoranalysis.gui.mark.MarkDisplaySettings;
 import org.anchoranalysis.gui.videostats.dropdown.BoundVideoStatsModuleDropDown;
-import org.anchoranalysis.gui.videostats.dropdown.MenuAddException;
 import org.anchoranalysis.gui.videostats.dropdown.OperationCreateBackgroundSetWithAdder;
 import org.anchoranalysis.gui.videostats.dropdown.VideoStatsModuleGlobalParams;
 import org.anchoranalysis.gui.videostats.dropdown.common.DropDownUtilities;
 import org.anchoranalysis.gui.videostats.dropdown.contextualmodulecreator.NRGTableCreator;
 import org.anchoranalysis.gui.videostats.dropdown.contextualmodulecreator.SingleContextualModuleCreator;
 import org.anchoranalysis.gui.videostats.operation.VideoStatsOperationMenu;
+import org.anchoranalysis.gui.videostats.operation.combine.OverlayCollectionSupplier;
 import org.anchoranalysis.image.object.ObjectCollection;
 import org.anchoranalysis.io.manifest.deserializer.folder.LoadContainer;
 import org.anchoranalysis.io.manifest.finder.FinderSerializedObject;
@@ -100,7 +100,7 @@ class AddObjects {
                     DropDownUtilities.addObjectCollection(
                             subMenu,
                             delegate,
-                            CachedSupplier.cache(
+                            OverlayCollectionSupplier.cache(
                                     () -> {
                                         try {
                                             return providers.getException(key);
@@ -164,7 +164,7 @@ class AddObjects {
 
                 return true;
             }
-        } catch (MenuAddException | OperationFailedException e) {
+        } catch (OperationFailedException e) {
             mpg.getLogger().errorReporter().recordError(ManifestDropDown.class, e);
         }
         return false;

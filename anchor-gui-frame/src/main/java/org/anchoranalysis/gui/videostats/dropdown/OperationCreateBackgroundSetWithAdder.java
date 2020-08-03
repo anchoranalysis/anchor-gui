@@ -44,17 +44,16 @@ import org.anchoranalysis.image.stack.DisplayStack;
 
 public class OperationCreateBackgroundSetWithAdder {
 
-    private AddVideoStatsModule parentAdder;
-    private InteractiveThreadPool threadPool;
-    private ErrorReporter errorReporter;
+    private final NRGBackground nrgBackground;
+    private final AddVideoStatsModule parentAdder;
+    private final InteractiveThreadPool threadPool;
+    private final ErrorReporter errorReporter;
+    
+    private final NRGBackgroundAdder nrgBackgroundNew;
 
-    private NRGBackground nrgBackground;
-    private NRGBackgroundAdder<BackgroundStackContainerException> nrgBackgroundNew;
+    private final AddVideoStatsModuleSupplier addVideoStatsModule;
 
-    private CheckedProgressingSupplier<AddVideoStatsModule, BackgroundStackContainerException>
-            addVideoStatsModule;
-
-    private BackgroundSetProgressingSupplier backgroundSetSupplier;
+    private final BackgroundSetProgressingSupplier backgroundSetSupplier;
 
     private final CheckedProgressingSupplier<
                     BackgroundSetWithAdder, BackgroundStackContainerException>
@@ -65,27 +64,26 @@ public class OperationCreateBackgroundSetWithAdder {
             AddVideoStatsModule parentAdder,
             InteractiveThreadPool threadPool,
             ErrorReporter errorReporter) {
-        super();
         this.nrgBackground = nrgBackground;
         this.parentAdder = parentAdder;
         this.threadPool = threadPool;
         this.errorReporter = errorReporter;
 
-        // A new nrgBackground that includes the changed operation for the background
-        this.nrgBackgroundNew =
-                new NRGBackgroundAdder<>(
-                        nrgBackground.copyChangeOp(backgroundSetSupplier),
-                        addVideoStatsModule);
-
         this.withAdderSupplier = CachedProgressingSupplier.cache(this::createBackgroundSetWithAdder);
 
         this.addVideoStatsModule =
-                CachedProgressingSupplier.cache(
+                AddVideoStatsModuleSupplier.cache(
                         progressReporter -> withAdderSupplier.get(progressReporter).getAdder());
 
         this.backgroundSetSupplier =
                 BackgroundSetProgressingSupplier.cache(
                         progressReporter -> withAdderSupplier.get(progressReporter).getBackgroundSet());
+
+        // A new nrgBackground that includes the changed operation for the background
+        this.nrgBackgroundNew =
+                new NRGBackgroundAdder(
+                        nrgBackground.copyChangeOp(backgroundSetSupplier),
+                        addVideoStatsModule);
     }
 
     private BackgroundSetWithAdder createBackgroundSetWithAdder(ProgressReporter progressReporter)
@@ -127,12 +125,11 @@ public class OperationCreateBackgroundSetWithAdder {
         return bwsa;
     }
 
-    public CheckedProgressingSupplier<AddVideoStatsModule, BackgroundStackContainerException>
-            operationAdder() {
+    public AddVideoStatsModuleSupplier operationAdder() {
         return addVideoStatsModule;
     }
 
-    public NRGBackgroundAdder<BackgroundStackContainerException> nrgBackground() {
+    public NRGBackgroundAdder nrgBackground() {
         return nrgBackgroundNew;
     }
 

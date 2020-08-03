@@ -32,26 +32,25 @@ import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.name.provider.NamedProvider;
 import org.anchoranalysis.core.name.provider.NamedProviderGetException;
-import org.anchoranalysis.core.progress.CheckedProgressingSupplier;
 import org.anchoranalysis.core.progress.ProgressReporterNull;
 import org.anchoranalysis.feature.nrg.NRGStackWithParams;
-import org.anchoranalysis.gui.series.TimeSequenceProvider;
+import org.anchoranalysis.gui.series.TimeSequenceProviderSupplier;
 import org.anchoranalysis.image.stack.TimeSequence;
 
 @NoArgsConstructor(access=AccessLevel.PRIVATE)
 public class GuessNRGStackFromStacks {
 
-    public static NRGStackWithParams guess(CheckedProgressingSupplier<TimeSequenceProvider, CreateException> backgroundSet) throws GetOperationFailedException {
+    public static NRGStackWithParams guess(TimeSequenceProviderSupplier stackSequenceProvider) throws GetOperationFailedException {
         // If a time sequence, assume nrg stack is always t=0
-        return new NRGStackWithParams( selectArbitraryItem(backgroundSet).get(0) );
+        return new NRGStackWithParams( selectArbitrarySequence(stackSequenceProvider).get(0) );
     }
 
-    private static TimeSequence selectArbitraryItem(
-            CheckedProgressingSupplier<TimeSequenceProvider, CreateException> backgroundSet)
+    private static TimeSequence selectArbitrarySequence(
+            TimeSequenceProviderSupplier stackSequenceProvider)
             throws GetOperationFailedException {
         try {
             NamedProvider<TimeSequence> stacks =
-                    backgroundSet.get(ProgressReporterNull.get()).getSequence();
+                    stackSequenceProvider.get(ProgressReporterNull.get()).getSequence();
             String arbitraryKey = stacks.keys().iterator().next();
 
             try {

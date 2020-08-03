@@ -26,16 +26,12 @@
 
 package org.anchoranalysis.gui.interactivebrowser;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
 import java.util.Set;
 import org.anchoranalysis.anchor.mpp.feature.bean.mark.MarkEvaluator;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.OperationFailedException;
-import org.anchoranalysis.core.functional.function.CheckedSupplier;
-import org.anchoranalysis.core.params.KeyValueParams;
 import org.anchoranalysis.image.stack.NamedStacksSupplier;
 import org.anchoranalysis.io.output.bound.BoundIOContext;
 
@@ -57,16 +53,15 @@ public class MarkEvaluatorManager {
 
     public MarkEvaluatorSetForImage createSetForStackCollection(
             NamedStacksSupplier namedStacks,
-            CheckedSupplier<Optional<KeyValueParams>, IOException> keyParams)
+            KeyValueParamsSupplier keyParams)
             throws CreateException {
 
         try {
             MarkEvaluatorSetForImage out =
                     new MarkEvaluatorSetForImage(namedStacks, keyParams, context);
 
-            for (String key : map.keySet()) {
-                MarkEvaluator me = map.get(key);
-                out.add(key, me.duplicateBean());
+            for (Map.Entry<String, MarkEvaluator> entry : map.entrySet()) {
+                out.add(entry.getKey(), entry.getValue().duplicateBean());
             }
             return out;
 

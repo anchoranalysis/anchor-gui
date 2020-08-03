@@ -30,7 +30,6 @@ import java.awt.Component;
 import java.util.concurrent.ExecutionException;
 import javax.swing.JOptionPane;
 import org.anchoranalysis.core.log.Logger;
-import org.anchoranalysis.core.progress.CheckedProgressingSupplier;
 import org.anchoranalysis.core.progress.ProgressReporter;
 import org.anchoranalysis.core.progress.ProgressReporterMultiple;
 import org.anchoranalysis.core.progress.ProgressReporterOneOfMany;
@@ -39,18 +38,13 @@ import org.anchoranalysis.gui.videostats.module.VideoStatsModuleCreateException;
 import org.anchoranalysis.gui.videostats.modulecreator.VideoStatsModuleCreator;
 import org.anchoranalysis.gui.videostats.threading.InteractiveThreadPool;
 import org.anchoranalysis.gui.videostats.threading.InteractiveWorker;
+import lombok.AllArgsConstructor;
 
+@AllArgsConstructor
 public class VideoStatsModuleCreatorAndAdder {
 
-    private CheckedProgressingSupplier<AddVideoStatsModule, ? extends Throwable> adderOperation;
+    private AddVideoStatsModuleSupplier adderOperation;
     private VideoStatsModuleCreator creator;
-
-    public VideoStatsModuleCreatorAndAdder(
-            CheckedProgressingSupplier<AddVideoStatsModule, ? extends Throwable> adderOperation,
-            VideoStatsModuleCreator creator) {
-        this.adderOperation = adderOperation;
-        this.creator = creator;
-    }
 
     public void createVideoStatsModuleForAdder(
             InteractiveThreadPool threadPool, Component parentComponent, Logger logger) {
@@ -93,7 +87,7 @@ public class VideoStatsModuleCreatorAndAdder {
                         return adder;
                     }
                 }
-            } catch (Throwable e) {
+            } catch (Exception e) {
                 exceptionRecorded = e;
                 return null;
             }

@@ -30,7 +30,6 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.log.Logger;
-import org.anchoranalysis.core.progress.CheckedProgressingSupplier;
 import org.anchoranalysis.gui.IconFactory;
 import org.anchoranalysis.gui.file.opened.IOpenedFileGUI;
 import org.anchoranalysis.gui.reassign.JDropdownButton;
@@ -87,17 +86,17 @@ public class BoundVideoStatsModuleDropDown {
     }
 
     public void addModule(
-            CheckedProgressingSupplier<AddVideoStatsModule, ? extends Throwable> adder,
+            AddVideoStatsModuleSupplier adder,
             SingleContextualModuleCreator creator,
             String namePrefix,
             VideoStatsModuleGlobalParams mpg)
-            throws MenuAddException {
+            {
         addModule(
                 creator.createSingle(namePrefix, adder, mpg), mpg.getThreadPool(), mpg.getLogger());
     }
 
     public VideoStatsModuleCreatorAndAdder addModule(
-            CheckedProgressingSupplier<AddVideoStatsModule, ? extends Throwable> adder,
+            AddVideoStatsModuleSupplier adder,
             ContextualModuleCreator creator,
             VideoStatsModuleGlobalParams mpg)
             throws MenuAddException {
@@ -111,7 +110,7 @@ public class BoundVideoStatsModuleDropDown {
 
     public void addModule(
             String itemName,
-            CheckedProgressingSupplier<AddVideoStatsModule, ? extends Throwable> adder,
+            AddVideoStatsModuleSupplier adder,
             VideoStatsModuleCreator creator,
             InteractiveThreadPool threadPool,
             Logger logger)
@@ -122,7 +121,7 @@ public class BoundVideoStatsModuleDropDown {
     }
 
     public IAddModuleToMenu createAddModuleToMenu(
-            final CheckedProgressingSupplier<AddVideoStatsModule, ? extends Throwable> adder) {
+            AddVideoStatsModuleSupplier adder) {
         return new IAddModuleToMenu() {
 
             @Override

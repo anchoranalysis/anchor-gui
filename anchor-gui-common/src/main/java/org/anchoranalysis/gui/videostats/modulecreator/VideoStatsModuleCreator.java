@@ -31,7 +31,7 @@ import java.util.Optional;
 import org.anchoranalysis.core.progress.ProgressReporter;
 import org.anchoranalysis.gui.videostats.dropdown.AddVideoStatsModule;
 import org.anchoranalysis.gui.videostats.module.VideoStatsModuleCreateException;
-import org.anchoranalysis.gui.videostats.operation.combine.IVideoStatsOperationCombine;
+import org.anchoranalysis.gui.videostats.operation.combine.VideoStatsOperationCombine;
 
 // Responsible only for creating a module
 public abstract class VideoStatsModuleCreator {
@@ -46,7 +46,7 @@ public abstract class VideoStatsModuleCreator {
             throws VideoStatsModuleCreateException {}
 
     // If it returns empty(), no combining is possible. Override with operations
-    public Optional<IVideoStatsOperationCombine> getCombiner() {
+    public Optional<VideoStatsOperationCombine> getCombiner() {
         return Optional.empty();
     }
 }

@@ -34,13 +34,12 @@ import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.name.provider.NamedProvider;
 import org.anchoranalysis.core.name.store.NamedProviderStore;
 import org.anchoranalysis.core.params.KeyValueParams;
-import org.anchoranalysis.core.progress.CheckedProgressingSupplier;
 import org.anchoranalysis.core.progress.ProgressReporter;
 import org.anchoranalysis.gui.bean.filecreator.MarkCreatorParams;
 import org.anchoranalysis.gui.file.opened.IOpenedFileGUI;
 import org.anchoranalysis.gui.interactivebrowser.MarkEvaluatorManager;
 import org.anchoranalysis.gui.interactivebrowser.MarkEvaluatorSetForImage;
-import org.anchoranalysis.gui.series.TimeSequenceProvider;
+import org.anchoranalysis.gui.series.TimeSequenceProviderSupplier;
 import org.anchoranalysis.gui.videostats.dropdown.BoundVideoStatsModuleDropDown;
 import org.anchoranalysis.gui.videostats.dropdown.AddVideoStatsModule;
 import org.anchoranalysis.gui.videostats.dropdown.OperationCreateBackgroundSetWithAdder;
@@ -57,7 +56,7 @@ public class MultiCollectionDropDown {
 
     private BoundVideoStatsModuleDropDown delegate;
 
-    private CheckedProgressingSupplier<TimeSequenceProvider, CreateException> rasterProvider;
+    private TimeSequenceProviderSupplier rasterProvider;
     private NamedProvider<Cfg> cfgCollection;
     private NamedProvider<ObjectCollection> objCollection;
     private NamedProviderStore<KeyValueParams> paramsCollection;
@@ -65,7 +64,7 @@ public class MultiCollectionDropDown {
 
     // A dropdown menu representing a particular manifest
     public MultiCollectionDropDown(
-            CheckedProgressingSupplier<TimeSequenceProvider, CreateException> rasterProvider,
+            TimeSequenceProviderSupplier rasterProvider,
             NamedProvider<Cfg> cfgCollection,
             NamedProvider<ObjectCollection> objCollection,
             NamedProviderStore<KeyValueParams> paramsCollection,

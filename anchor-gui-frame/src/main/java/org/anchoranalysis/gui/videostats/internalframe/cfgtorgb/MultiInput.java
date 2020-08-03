@@ -26,38 +26,16 @@
 
 package org.anchoranalysis.gui.videostats.internalframe.cfgtorgb;
 
-import org.anchoranalysis.core.error.OperationFailedException;
-import org.anchoranalysis.core.functional.function.CheckedSupplier;
 import org.anchoranalysis.gui.videostats.dropdown.common.NRGBackground;
+import org.anchoranalysis.gui.videostats.operation.combine.OverlayCollectionSupplier;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
 
+@AllArgsConstructor
 public class MultiInput<T> {
 
-    private String name;
-    private NRGBackground nrgBackground;
-    private CheckedSupplier<T, OperationFailedException> associatedObjects;
-
-    public MultiInput(
-            String name,
-            NRGBackground nrgBackground,
-            CheckedSupplier<T, OperationFailedException> associatedObjects) {
-        this.name = name;
-        this.nrgBackground = nrgBackground;
-        this.associatedObjects = associatedObjects;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public CheckedSupplier<T, OperationFailedException> getAssociatedObjects() {
-        return associatedObjects;
-    }
-
-    public NRGBackground getNrgBackground() {
-        return nrgBackground;
-    }
+    @Getter @Setter private String name;
+    @Getter private NRGBackground nrgBackground;
+    @Getter private OverlayCollectionSupplier<T> associatedObjects;
 }

@@ -89,9 +89,7 @@ public class FinderStacksFromNrgStack implements FinderStacks {
 
     private Stack extractStack() throws OperationFailedException {
         try {
-            NRGStackWithParams nrgStackWithParams =
-                    delegate.operationNrgStackWithProgressReporter()
-                            .get(ProgressReporterNull.get());
+            NRGStackWithParams nrgStackWithParams = delegate.nrgStackSupplier().get();
             return nrgStackWithParams
                     .getNrgStack()
                     .asStack()

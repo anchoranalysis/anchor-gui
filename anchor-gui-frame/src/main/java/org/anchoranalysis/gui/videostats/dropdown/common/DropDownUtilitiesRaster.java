@@ -32,14 +32,17 @@ import org.anchoranalysis.gui.videostats.dropdown.VideoStatsModuleGlobalParams;
 import org.anchoranalysis.gui.videostats.modulecreator.RasterModuleCreator;
 import org.anchoranalysis.gui.videostats.operation.VideoStatsOperationFromCreatorAndAdder;
 import org.anchoranalysis.gui.videostats.operation.VideoStatsOperationMenu;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 
+@NoArgsConstructor(access=AccessLevel.PRIVATE)
 public class DropDownUtilitiesRaster {
 
     // Note, adds as default
     public static void addRaster(
             VideoStatsOperationMenu menu,
             BoundVideoStatsModuleDropDown delegate,
-            NRGBackgroundAdder<?> nrgBackground,
+            NRGBackgroundAdder nrgBackground,
             String name,
             VideoStatsModuleGlobalParams mpg,
             boolean addAsDefault) {

@@ -39,9 +39,7 @@ import org.anchoranalysis.core.cache.CachedSupplier;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.error.OperationFailedException;
-import org.anchoranalysis.core.functional.function.CheckedSupplier;
 import org.anchoranalysis.core.name.store.StoreSupplier;
-import org.anchoranalysis.core.params.KeyValueParams;
 import org.anchoranalysis.core.progress.ProgressReporterNull;
 import org.anchoranalysis.image.stack.NamedStacksSupplier;
 import org.anchoranalysis.io.output.bound.BoundIOContext;
@@ -52,7 +50,7 @@ public class MarkEvaluatorSetForImage {
 
     // START REQUIRED ARGUMENTS
     private final NamedStacksSupplier namedStacks;
-    private final CheckedSupplier<Optional<KeyValueParams>, IOException> keyParams;
+    private final KeyValueParamsSupplier keyParams;
     private final BoundIOContext context;
     // END REQUIRED ARGUMENTS
 

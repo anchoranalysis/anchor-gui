@@ -34,7 +34,7 @@ import javax.swing.JOptionPane;
 import org.anchoranalysis.annotation.io.mark.MarkAnnotationDeleter;
 import org.anchoranalysis.gui.annotation.AnnotationRefresher;
 import org.anchoranalysis.gui.videostats.operation.VideoStatsOperation;
-import org.anchoranalysis.gui.videostats.operation.combine.IVideoStatsOperationCombine;
+import org.anchoranalysis.gui.videostats.operation.combine.VideoStatsOperationCombine;
 
 class DeleteAnnotationOperation implements VideoStatsOperation {
 
@@ -73,7 +73,7 @@ class DeleteAnnotationOperation implements VideoStatsOperation {
     }
 
     @Override
-    public Optional<IVideoStatsOperationCombine> getCombiner() {
+    public Optional<VideoStatsOperationCombine> getCombiner() {
         return Optional.empty();
     }
 }

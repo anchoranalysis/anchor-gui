@@ -31,16 +31,14 @@ import lombok.NoArgsConstructor;
 import org.anchoranalysis.anchor.mpp.cfg.Cfg;
 import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.error.OperationFailedException;
-import org.anchoranalysis.core.functional.function.CheckedSupplier;
 import org.anchoranalysis.core.name.provider.NamedProvider;
 import org.anchoranalysis.core.name.provider.NamedProviderGetException;
-import org.anchoranalysis.core.progress.CachedProgressingSupplier;
-import org.anchoranalysis.core.progress.CheckedProgressingSupplier;
 import org.anchoranalysis.core.progress.ProgressReporterNull;
 import org.anchoranalysis.gui.interactivebrowser.MarkEvaluatorSetForImage;
 import org.anchoranalysis.gui.mark.MarkDisplaySettings;
 import org.anchoranalysis.gui.videostats.dropdown.BoundVideoStatsModuleDropDown;
 import org.anchoranalysis.gui.videostats.dropdown.AddVideoStatsModule;
+import org.anchoranalysis.gui.videostats.dropdown.AddVideoStatsModuleSupplier;
 import org.anchoranalysis.gui.videostats.dropdown.BackgroundSetProgressingSupplier;
 import org.anchoranalysis.gui.videostats.dropdown.OperationNRGStackFromMarkEvaluatorSet;
 import org.anchoranalysis.gui.videostats.dropdown.VideoStatsModuleCreatorAndAdder;
@@ -50,6 +48,7 @@ import org.anchoranalysis.gui.videostats.modulecreator.ObjectCollectionModuleCre
 import org.anchoranalysis.gui.videostats.modulecreator.VideoStatsModuleCreator;
 import org.anchoranalysis.gui.videostats.operation.VideoStatsOperationFromCreatorAndAdder;
 import org.anchoranalysis.gui.videostats.operation.VideoStatsOperationMenu;
+import org.anchoranalysis.gui.videostats.operation.combine.OverlayCollectionSupplier;
 import org.anchoranalysis.image.object.ObjectCollection;
 import org.anchoranalysis.io.manifest.ManifestFolderDescription;
 import org.anchoranalysis.io.manifest.sequencetype.SetSequenceType;
@@ -61,8 +60,7 @@ public class DropDownUtilities {
 
     public static void addAllProposerEvaluator(
             BoundVideoStatsModuleDropDown dropDown,
-            CheckedProgressingSupplier<AddVideoStatsModule, ? extends Throwable>
-                    adderOpWithoutNRG,
+            AddVideoStatsModuleSupplier adderOpWithoutNRG,
             BackgroundSetProgressingSupplier backgroundSet,
             MarkEvaluatorSetForImage markEvaluatorSet,
             OutputWriteSettings outputWriteSettings,
@@ -75,8 +73,8 @@ public class DropDownUtilities {
         NRGBackground nrgBackground =
                 NRGBackground.createFromBackground(backgroundSet, () -> operationGetNRGStack.get(ProgressReporterNull.get()));
 
-        CheckedProgressingSupplier<AddVideoStatsModule, ? extends Throwable> adderOp =
-                CachedProgressingSupplier.cache(
+        AddVideoStatsModuleSupplier adderOp =
+                AddVideoStatsModuleSupplier.cache(
                         progressReporter -> {
                             AddVideoStatsModule adder = adderOpWithoutNRG.get(progressReporter);
 
@@ -108,9 +106,9 @@ public class DropDownUtilities {
     public static void addCfg(
             VideoStatsOperationMenu menu,
             BoundVideoStatsModuleDropDown delegate,
-            CheckedSupplier<Cfg, OperationFailedException> op,
+            OverlayCollectionSupplier<Cfg> op,
             String name,
-            NRGBackgroundAdder<?> nrgBackground,
+            NRGBackgroundAdder nrgBackground,
             VideoStatsModuleGlobalParams mpg,
             MarkDisplaySettings markDisplaySettings,
             boolean addAsDefault) {
@@ -129,9 +127,9 @@ public class DropDownUtilities {
     public static void addObjectCollection(
             VideoStatsOperationMenu menu,
             BoundVideoStatsModuleDropDown delegate,
-            CheckedSupplier<ObjectCollection, OperationFailedException> op,
+            OverlayCollectionSupplier<ObjectCollection> op,
             String name,
-            NRGBackgroundAdder<?> nrgBackground,
+            NRGBackgroundAdder nrgBackground,
             VideoStatsModuleGlobalParams mpg,
             boolean addAsDefault) {
         VideoStatsModuleCreator module =
@@ -144,7 +142,7 @@ public class DropDownUtilities {
             VideoStatsOperationMenu menu,
             BoundVideoStatsModuleDropDown delegate,
             NamedProvider<Cfg> cfgProvider,
-            NRGBackgroundAdder<?> nrgBackground,
+            NRGBackgroundAdder nrgBackground,
             VideoStatsModuleGlobalParams mpg,
             MarkDisplaySettings markDisplaySettings,
             boolean addAsDefault) {
@@ -172,7 +170,7 @@ public class DropDownUtilities {
             VideoStatsOperationMenu menu,
             BoundVideoStatsModuleDropDown delegate,
             final NamedProvider<ObjectCollection> provider,
-            NRGBackgroundAdder<?> nrgBackground,
+            NRGBackgroundAdder nrgBackground,
             VideoStatsModuleGlobalParams mpg,
             boolean addAsDefault) {
         if (provider.keys().isEmpty()) {
@@ -212,7 +210,7 @@ public class DropDownUtilities {
     private static void addModule(
             VideoStatsModuleCreator module,
             VideoStatsOperationMenu menu,
-            CheckedProgressingSupplier<AddVideoStatsModule, ? extends Throwable> opAdder,
+            AddVideoStatsModuleSupplier opAdder,
             String name,
             VideoStatsModuleGlobalParams mpg,
             boolean addAsDefault) {

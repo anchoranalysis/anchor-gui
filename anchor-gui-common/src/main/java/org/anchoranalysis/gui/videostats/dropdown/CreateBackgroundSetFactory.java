@@ -29,11 +29,11 @@ package org.anchoranalysis.gui.videostats.dropdown;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import org.anchoranalysis.core.name.provider.NamedProvider;
-import org.anchoranalysis.core.progress.CheckedProgressingSupplier;
 import org.anchoranalysis.core.progress.ProgressReporterNull;
 import org.anchoranalysis.gui.backgroundset.BackgroundSetFactory;
 import org.anchoranalysis.gui.container.background.BackgroundStackContainerException;
 import org.anchoranalysis.gui.series.TimeSequenceProvider;
+import org.anchoranalysis.gui.series.TimeSequenceProviderSupplier;
 import org.anchoranalysis.image.stack.Stack;
 import org.anchoranalysis.image.stack.TimeSequence;
 import org.anchoranalysis.image.stack.wrap.WrapStackAsTimeSequence;
@@ -48,8 +48,7 @@ public class CreateBackgroundSetFactory {
     }
 
     public static BackgroundSetProgressingSupplier createCached(
-                    CheckedProgressingSupplier<TimeSequenceProvider, ? extends Throwable>
-                            stacksOverTime) {
+            TimeSequenceProviderSupplier stacksOverTime) {
         return BackgroundSetProgressingSupplier.cache( progressReporter -> {
                     try {
                         NamedProvider<TimeSequence> stacks =

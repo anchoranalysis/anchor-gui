@@ -36,12 +36,10 @@ import org.anchoranalysis.core.cache.CachedSupplier;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.error.OperationFailedException;
-import org.anchoranalysis.core.functional.function.CheckedSupplier;
 import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.index.container.SingleContainer;
 import org.anchoranalysis.core.name.provider.NamedProvider;
 import org.anchoranalysis.core.params.KeyValueParams;
-import org.anchoranalysis.core.progress.CheckedProgressingSupplier;
 import org.anchoranalysis.feature.nrg.NRGStackWithParams;
 import org.anchoranalysis.gui.file.opened.IOpenedFileGUI;
 import org.anchoranalysis.gui.finder.FinderNrgStack;
@@ -56,9 +54,9 @@ import org.anchoranalysis.gui.io.loader.manifest.finder.FinderCfgFolder;
 import org.anchoranalysis.gui.io.loader.manifest.finder.historyfolder.FinderHistoryFolderKernelIterDescription;
 import org.anchoranalysis.gui.mark.MarkDisplaySettings;
 import org.anchoranalysis.gui.series.TimeSequenceProvider;
+import org.anchoranalysis.gui.series.TimeSequenceProviderSupplier;
 import org.anchoranalysis.gui.videostats.dropdown.BoundVideoStatsModuleDropDown;
 import org.anchoranalysis.gui.videostats.dropdown.AddVideoStatsModule;
-import org.anchoranalysis.gui.videostats.dropdown.MenuAddException;
 import org.anchoranalysis.gui.videostats.dropdown.OperationCreateBackgroundSetWithAdder;
 import org.anchoranalysis.gui.videostats.dropdown.VideoStatsModuleGlobalParams;
 import org.anchoranalysis.gui.videostats.dropdown.common.DropDownUtilities;
@@ -69,6 +67,7 @@ import org.anchoranalysis.gui.videostats.dropdown.common.NRGStackSupplier;
 import org.anchoranalysis.gui.videostats.dropdown.contextualmodulecreator.NRGTableCreator;
 import org.anchoranalysis.gui.videostats.dropdown.contextualmodulecreator.SingleContextualModuleCreator;
 import org.anchoranalysis.gui.videostats.dropdown.modulecreator.graph.KernelIterDescriptionModuleCreator;
+import org.anchoranalysis.gui.videostats.operation.combine.OverlayCollectionSupplier;
 import org.anchoranalysis.image.io.bean.rasterreader.RasterReader;
 import org.anchoranalysis.image.stack.NamedStacksSupplier;
 import org.anchoranalysis.image.stack.wrap.WrapStackAsTimeSequence;
@@ -126,8 +125,7 @@ public class ManifestDropDown {
         return firstResult;
     }
 
-    private CheckedProgressingSupplier<TimeSequenceProvider, CreateException> asSequence(
-            NamedStacksSupplier opStacks) {
+    private TimeSequenceProviderSupplier asSequence(NamedStacksSupplier opStacks) {
         return pr -> {
             try {
                 return new TimeSequenceProvider(new WrapStackAsTimeSequence(opStacks.get(pr)), 1);
@@ -216,7 +214,7 @@ public class ManifestDropDown {
             throws InitException {
         try {
             return markEvaluatorManager.createSetForStackCollection(
-                    finderStacks.getStacksAsOperation(), finderGroupParams.operation());
+                    finderStacks.getStacksAsOperation(), finderGroupParams.getMemoized()::get);
         } catch (CreateException e1) {
             throw new InitException(e1);
         }
@@ -336,17 +334,13 @@ public class ManifestDropDown {
             VideoStatsModuleGlobalParams mpg)
             throws InitException {
         if (finderKernelIterDescription.exists() && finderKernelProposer.exists()) {
-            try {
-                delegate.addModule(
-                        backgroundNRG.operationAdder(),
-                        new SingleContextualModuleCreator(
-                                new KernelIterDescriptionModuleCreator(
-                                        finderKernelIterDescription, finderKernelProposer)),
-                        "Kernel History Navigator",
-                        mpg);
-            } catch (MenuAddException e) {
-                throw new InitException(e);
-            }
+            delegate.addModule(
+                    backgroundNRG.operationAdder(),
+                    new SingleContextualModuleCreator(
+                            new KernelIterDescriptionModuleCreator(
+                                    finderKernelIterDescription, finderKernelProposer)),
+                    "Kernel History Navigator",
+                    mpg);
         }
     }
 
@@ -402,11 +396,11 @@ public class ManifestDropDown {
         return defaultAdded;
     }
 
-    private CheckedSupplier<Cfg, OperationFailedException> getCfgChangeException(
+    private OverlayCollectionSupplier<Cfg> getCfgChangeException(
             FinderSerializedObject<Cfg> finderFinalCfg) {
         return () -> {
             try {
-                return finderFinalCfg.operation().get().get();
+                return finderFinalCfg.get();
             } catch (IOException e) {
                 throw new OperationFailedException(e);
             }
@@ -456,7 +450,7 @@ public class ManifestDropDown {
 
                 return true;
             }
-        } catch (MenuAddException | OperationFailedException e) {
+        } catch (OperationFailedException e) {
             mpg.getLogger().errorReporter().recordError(ManifestDropDown.class, e);
         }
         return false;

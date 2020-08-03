@@ -33,7 +33,6 @@ import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.functional.OptionalUtilities;
-import org.anchoranalysis.core.functional.function.CheckedSupplier;
 import org.anchoranalysis.core.log.Logger;
 import org.anchoranalysis.core.params.KeyValueParams;
 import org.anchoranalysis.gui.annotation.mark.MarkAnnotator;
@@ -69,12 +68,7 @@ class CreateMarkEvaluator {
             NamedStacksSupplier stacks)
             throws CreateException {
         return markEvaluatorManager.createSetForStackCollection(
-                stacks, opLoadKeyValueParams(pathForBinding, strategy));
-    }
-
-    private static CheckedSupplier<Optional<KeyValueParams>, IOException>
-            opLoadKeyValueParams(Path pathForBinding, MarkProposerStrategy strategy) {
-        return () -> paramsFromGenerator(pathForBinding, strategy.paramsFilePathGenerator());
+                stacks, () -> paramsFromGenerator(pathForBinding, strategy.paramsFilePathGenerator()));
     }
 
     private static Optional<KeyValueParams> paramsFromGenerator(
