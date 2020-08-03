@@ -37,11 +37,12 @@ import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.functional.function.CheckedSupplier;
+import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.index.container.SingleContainer;
 import org.anchoranalysis.core.name.provider.NamedProvider;
 import org.anchoranalysis.core.params.KeyValueParams;
 import org.anchoranalysis.core.progress.CheckedProgressingSupplier;
-import org.anchoranalysis.core.progress.ProgressReporterNull;
+import org.anchoranalysis.feature.nrg.NRGStackWithParams;
 import org.anchoranalysis.gui.file.opened.IOpenedFileGUI;
 import org.anchoranalysis.gui.finder.FinderNrgStack;
 import org.anchoranalysis.gui.finder.imgstackcollection.FinderStacksCombine;
@@ -64,6 +65,7 @@ import org.anchoranalysis.gui.videostats.dropdown.common.DropDownUtilities;
 import org.anchoranalysis.gui.videostats.dropdown.common.DropDownUtilitiesRaster;
 import org.anchoranalysis.gui.videostats.dropdown.common.GuessNRGStackFromStacks;
 import org.anchoranalysis.gui.videostats.dropdown.common.NRGBackground;
+import org.anchoranalysis.gui.videostats.dropdown.common.NRGStackSupplier;
 import org.anchoranalysis.gui.videostats.dropdown.contextualmodulecreator.NRGTableCreator;
 import org.anchoranalysis.gui.videostats.dropdown.contextualmodulecreator.SingleContextualModuleCreator;
 import org.anchoranalysis.gui.videostats.dropdown.modulecreator.graph.KernelIterDescriptionModuleCreator;
@@ -104,21 +106,21 @@ public class ManifestDropDown {
         // We try to read a nrgStack from the manifest. If none exists, we guess instead from the
         // image-stacks.
         NRGBackground nrgBackground = NRGBackground.createStack(stacks, () -> firstOrSecond(
-                finderNrgStack.operationNrgStackWithProgressReporter(),
-                progressReporter -> GuessNRGStackFromStacks.guess(asSequence(stacks)
-        )));
+                finderNrgStack.nrgStackSupplier(),
+                () -> GuessNRGStackFromStacks.guess(asSequence(stacks))
+        ));
 
         return new OperationCreateBackgroundSetWithAdder(
                 nrgBackground, adder, mpg.getThreadPool(), mpg.getLogger().errorReporter());
     }
 
     /** Gets from the first supplier, and if it returns null, then gets from the second instead */
-    private <T,E extends Exception> T firstOrSecond(CheckedProgressingSupplier<T, E> first, CheckedProgressingSupplier<T, E> second) throws E {
+    private static NRGStackWithParams firstOrSecond(NRGStackSupplier first, NRGStackSupplier second) throws GetOperationFailedException {
 
-        T firstResult = first.get(ProgressReporterNull.get());
+        NRGStackWithParams firstResult = first.get();
 
         if (firstResult == null) {
-            return second.get(ProgressReporterNull.get());
+            return second.get();
         }
 
         return firstResult;
