@@ -26,124 +26,74 @@
 
 package org.anchoranalysis.gui.videostats.dropdown.common;
 
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.error.OperationFailedException;
-import org.anchoranalysis.core.functional.function.CheckedSupplier;
-import org.anchoranalysis.core.index.GetOperationFailedException;
-import org.anchoranalysis.core.name.provider.NamedProvider;
 import org.anchoranalysis.core.progress.CheckedProgressingSupplier;
 import org.anchoranalysis.core.progress.ProgressReporterNull;
-import org.anchoranalysis.feature.nrg.NRGStackWithParams;
-import org.anchoranalysis.gui.backgroundset.BackgroundSet;
 import org.anchoranalysis.gui.container.background.BackgroundStackContainerException;
 import org.anchoranalysis.gui.series.TimeSequenceProvider;
-import org.anchoranalysis.gui.videostats.INRGStackGetter;
 import org.anchoranalysis.gui.videostats.dropdown.AdderAppendNRGStack;
+import org.anchoranalysis.gui.videostats.dropdown.BackgroundSetProgressingSupplier;
 import org.anchoranalysis.gui.videostats.dropdown.CreateBackgroundSetFactory;
-import org.anchoranalysis.gui.videostats.dropdown.IAddVideoStatsModule;
-import org.anchoranalysis.image.stack.Stack;
+import org.anchoranalysis.gui.videostats.dropdown.AddVideoStatsModule;
+import org.anchoranalysis.image.stack.NamedStacksSupplier;
 import org.anchoranalysis.image.stack.wrap.WrapStackAsTimeSequence;
 
-@AllArgsConstructor
+@AllArgsConstructor(access=AccessLevel.PRIVATE)
 public class NRGBackground {
 
-    private CheckedProgressingSupplier<BackgroundSet, BackgroundStackContainerException>
-            opBackgroundSet;
-    private CheckedSupplier<NRGStackWithParams, GetOperationFailedException> opNrgStack;
-    private CheckedProgressingSupplier<Integer, OperationFailedException> opNumFrames;
-
-    private NRGBackground(
-            CheckedProgressingSupplier<BackgroundSet, BackgroundStackContainerException>
-                    opBackgroundSet,
-            CheckedProgressingSupplier<NRGStackWithParams, GetOperationFailedException>
-                    opNrgStack,
-            CheckedProgressingSupplier<Integer, OperationFailedException> opNumFrames) {
-        super();
-        this.opBackgroundSet = opBackgroundSet;
-        this.opNrgStack = removeProgressReporter(opNrgStack);
-        this.opNumFrames = opNumFrames;
-        assert (opNumFrames != null);
-    }
+    @Getter private BackgroundSetProgressingSupplier backgroundSet;
+    
+    @Getter private NRGStackSupplier nrgStack;
+    
+    private CheckedProgressingSupplier<Integer, OperationFailedException> numberFrames;
 
     public static NRGBackground createFromBackground(
-            CheckedProgressingSupplier<BackgroundSet, BackgroundStackContainerException>
-                    opBackgroundSet,
-            CheckedProgressingSupplier<NRGStackWithParams, GetOperationFailedException>
-                    opNrgStack) {
-        return new NRGBackground(opBackgroundSet, opNrgStack, progresssReporter -> 1);
+            BackgroundSetProgressingSupplier backgroundSet,
+            NRGStackSupplier nrgStack) {
+        return new NRGBackground(backgroundSet, nrgStack, progresssReporter -> 1);
     }
 
-    public static <E extends Exception> NRGBackground createStack(
-            CheckedProgressingSupplier<NamedProvider<Stack>, E> opBackgroundSet,
-            CheckedProgressingSupplier<NRGStackWithParams, GetOperationFailedException>
-                    opNrgStack) {
-        CheckedProgressingSupplier<TimeSequenceProvider, E> opConvert =
-                progressReporter ->
-                        new TimeSequenceProvider(
-                                new WrapStackAsTimeSequence(opBackgroundSet.get(progressReporter)),
-                                1);
+    public static NRGBackground createStack(NamedStacksSupplier backgroundSet, NRGStackSupplier nrgStack) {
 
-        return createStackSequence(opConvert, opNrgStack);
+        return createStackSequence(progressReporter ->
+            new TimeSequenceProvider(
+                    new WrapStackAsTimeSequence(backgroundSet.get(progressReporter)),
+                    1
+            ),
+           nrgStack
+        );
     }
 
     public static NRGBackground createStackSequence(
-            CheckedProgressingSupplier<TimeSequenceProvider, ? extends Throwable> opBackgroundSet,
-            CheckedProgressingSupplier<NRGStackWithParams, GetOperationFailedException>
-                    opNrgStack) {
+            CheckedProgressingSupplier<TimeSequenceProvider, ? extends Throwable> backgroundSet,
+            NRGStackSupplier nrgStack) {
         return new NRGBackground(
-                convertProvider(opBackgroundSet),
-                opNrgStack,
+                convertProvider(backgroundSet),
+                nrgStack,
                 progress -> {
                     try {
-                        return opBackgroundSet.get(progress).getNumFrames();
+                        return backgroundSet.get(progress).getNumFrames();
                     } catch (Exception e) {
                         throw new OperationFailedException(e);
                     }
                 });
     }
 
-    public CheckedProgressingSupplier<BackgroundSet, BackgroundStackContainerException>
-            getBackgroundSet() {
-        return opBackgroundSet;
-    }
-
-    public IAddVideoStatsModule addNrgStackToAdder(IAddVideoStatsModule adder) {
-        return new AdderAppendNRGStack(adder, convertToGetter());
+    public AddVideoStatsModule addNrgStackToAdder(AddVideoStatsModule adder) {
+        return new AdderAppendNRGStack(adder, nrgStack::get);
     }
 
     // Assumes the number of frames does not change
-    public NRGBackground copyChangeOp(
-            CheckedProgressingSupplier<BackgroundSet, BackgroundStackContainerException>
-                    opBackgroundSetNew) {
-        return new NRGBackground(opBackgroundSetNew, opNrgStack, opNumFrames);
-    }
-
-    private INRGStackGetter convertToGetter() {
-        return () -> opNrgStack.get();
-    }
-
-    private static CheckedSupplier<NRGStackWithParams, GetOperationFailedException>
-            removeProgressReporter(
-                    CheckedProgressingSupplier<NRGStackWithParams, GetOperationFailedException>
-                            in) {
-        return () -> {
-            return in.get(ProgressReporterNull.get());
-        };
-    }
-
-    private static CheckedProgressingSupplier<BackgroundSet, BackgroundStackContainerException>
-            convertProvider(
-                    CheckedProgressingSupplier<TimeSequenceProvider, ? extends Throwable> in) {
-        return CreateBackgroundSetFactory.createCached(in);
-    }
-
-    public CheckedSupplier<NRGStackWithParams, GetOperationFailedException> getNrgStack() {
-        return opNrgStack;
+    public NRGBackground copyChangeOp( BackgroundSetProgressingSupplier backgroundSetToAssign) {
+        return new NRGBackground(backgroundSetToAssign, nrgStack, numberFrames);
     }
 
     public int numFrames() throws OperationFailedException {
-        return opNumFrames.get(ProgressReporterNull.get());
+        return numberFrames.get(ProgressReporterNull.get());
     }
 
     public String arbitraryBackgroundStackName() throws InitException {
@@ -153,5 +103,10 @@ public class NRGBackground {
         } catch (BackgroundStackContainerException e) {
             throw new InitException(e);
         }
+    }
+    
+    private static BackgroundSetProgressingSupplier convertProvider(
+            CheckedProgressingSupplier<TimeSequenceProvider, ? extends Throwable> in) {
+            return CreateBackgroundSetFactory.createCached(in);
     }
 }

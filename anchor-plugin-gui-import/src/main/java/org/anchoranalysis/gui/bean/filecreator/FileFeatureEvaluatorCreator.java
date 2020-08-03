@@ -46,7 +46,7 @@ import org.anchoranalysis.feature.shared.SharedFeaturesInitParams;
 import org.anchoranalysis.gui.feature.evaluator.treetable.FeatureListSrc;
 import org.anchoranalysis.gui.interactivebrowser.IOpenFile;
 import org.anchoranalysis.gui.interactivebrowser.input.FeatureListSrcBuilder;
-import org.anchoranalysis.gui.videostats.dropdown.IAddVideoStatsModule;
+import org.anchoranalysis.gui.videostats.dropdown.AddVideoStatsModule;
 import org.anchoranalysis.gui.videostats.dropdown.VideoStatsModuleGlobalParams;
 import org.anchoranalysis.gui.videostats.module.VideoStatsModule;
 import org.anchoranalysis.gui.videostats.module.VideoStatsModuleCreateException;
@@ -71,7 +71,7 @@ public class FileFeatureEvaluatorCreator extends FileCreator {
             String name,
             FileCreatorParams params,
             VideoStatsModuleGlobalParams mpg,
-            IAddVideoStatsModule adder,
+            AddVideoStatsModule adder,
             IOpenFile fileOpenManager,
             ProgressReporter progressReporter)
             throws VideoStatsModuleCreateException {

@@ -29,16 +29,15 @@ package org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.definition;
 import lombok.AllArgsConstructor;
 import org.anchoranalysis.core.error.reporter.ErrorReporter;
 import org.anchoranalysis.core.functional.function.CheckedFunction;
-import org.anchoranalysis.core.progress.CheckedProgressingSupplier;
 import org.anchoranalysis.core.progress.ProgressReporterNull;
-import org.anchoranalysis.gui.backgroundset.BackgroundSet;
 import org.anchoranalysis.gui.container.background.BackgroundStackContainerException;
+import org.anchoranalysis.gui.videostats.dropdown.BackgroundSetProgressingSupplier;
 import org.anchoranalysis.image.stack.DisplayStack;
 
 @AllArgsConstructor
 class StackFromBackgroundSet implements ImageStackContainerFromName {
 
-    private final CheckedProgressingSupplier<BackgroundSet, ? extends Throwable> backgroundSet;
+    private final BackgroundSetProgressingSupplier backgroundSet;
     private final ErrorReporter errorReporter;
 
     @Override

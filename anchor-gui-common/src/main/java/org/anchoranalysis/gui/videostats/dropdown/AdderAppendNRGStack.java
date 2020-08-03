@@ -27,16 +27,16 @@
 package org.anchoranalysis.gui.videostats.dropdown;
 
 import javax.swing.JFrame;
-import org.anchoranalysis.gui.videostats.INRGStackGetter;
+import org.anchoranalysis.gui.videostats.AssociatedNRGStackGetter;
 import org.anchoranalysis.gui.videostats.module.VideoStatsModule;
 import org.anchoranalysis.gui.videostats.module.VideoStatsModuleSubgroup;
 
-public class AdderAppendNRGStack implements IAddVideoStatsModule {
+public class AdderAppendNRGStack implements AddVideoStatsModule {
 
-    private final IAddVideoStatsModule delegate;
-    private INRGStackGetter nrgStackGetter;
+    private final AddVideoStatsModule delegate;
+    private AssociatedNRGStackGetter nrgStackGetter;
 
-    public AdderAppendNRGStack(IAddVideoStatsModule adder, INRGStackGetter nrgStackGetter) {
+    public AdderAppendNRGStack(AddVideoStatsModule adder, AssociatedNRGStackGetter nrgStackGetter) {
         super();
         this.delegate = adder;
         this.nrgStackGetter = nrgStackGetter;
@@ -60,7 +60,7 @@ public class AdderAppendNRGStack implements IAddVideoStatsModule {
     }
 
     @Override
-    public IAddVideoStatsModule createChild() {
+    public AddVideoStatsModule createChild() {
         return delegate.createChild();
     }
 }

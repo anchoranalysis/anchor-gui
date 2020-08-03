@@ -156,7 +156,7 @@ class AddObjects {
                             new SingleContextualModuleCreator(
                                     new NRGTableCreator(
                                             op,
-                                            finderNrgStack.operationNrgStack(),
+                                            finderNrgStack.nrgStackSupplier(),
                                             mpg.getDefaultColorIndexForMarks()));
                     delegate.addModule(
                             operationBwsaWithNRG.operationAdder(), creator, "NRG Table", mpg);

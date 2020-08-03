@@ -27,17 +27,17 @@
 package org.anchoranalysis.gui.interactivebrowser;
 
 import javax.swing.JFrame;
-import org.anchoranalysis.gui.videostats.dropdown.IAddVideoStatsModule;
+import org.anchoranalysis.gui.videostats.dropdown.AddVideoStatsModule;
 import org.anchoranalysis.gui.videostats.module.VideoStatsModule;
 import org.anchoranalysis.gui.videostats.module.VideoStatsModuleSubgroup;
 
-public class AdderGUICountToolbar implements IAddVideoStatsModule {
+public class AdderGUICountToolbar implements AddVideoStatsModule {
 
-    private IAddVideoStatsModule delegate;
+    private AddVideoStatsModule delegate;
     private OpenedFileCounter openedFileCounter;
 
     public AdderGUICountToolbar(
-            IAddVideoStatsModule delegate, OpenedFileCounter openedFileCounter) {
+            AddVideoStatsModule delegate, OpenedFileCounter openedFileCounter) {
         super();
         this.delegate = delegate;
         this.openedFileCounter = openedFileCounter;
@@ -60,7 +60,7 @@ public class AdderGUICountToolbar implements IAddVideoStatsModule {
     }
 
     @Override
-    public IAddVideoStatsModule createChild() {
+    public AddVideoStatsModule createChild() {
         return new AdderGUICountToolbar(delegate.createChild(), openedFileCounter);
     }
 }

@@ -42,11 +42,11 @@ import org.anchoranalysis.gui.videostats.threading.InteractiveWorker;
 
 public class VideoStatsModuleCreatorAndAdder {
 
-    private CheckedProgressingSupplier<IAddVideoStatsModule, ? extends Throwable> adderOperation;
+    private CheckedProgressingSupplier<AddVideoStatsModule, ? extends Throwable> adderOperation;
     private VideoStatsModuleCreator creator;
 
     public VideoStatsModuleCreatorAndAdder(
-            CheckedProgressingSupplier<IAddVideoStatsModule, ? extends Throwable> adderOperation,
+            CheckedProgressingSupplier<AddVideoStatsModule, ? extends Throwable> adderOperation,
             VideoStatsModuleCreator creator) {
         this.adderOperation = adderOperation;
         this.creator = creator;
@@ -59,7 +59,7 @@ public class VideoStatsModuleCreatorAndAdder {
         threadPool.submitWithProgressMonitor(worker, "Create module");
     }
 
-    private class Worker extends InteractiveWorker<IAddVideoStatsModule, Void> {
+    private class Worker extends InteractiveWorker<AddVideoStatsModule, Void> {
 
         private Throwable exceptionRecorded;
         private Logger logger;
@@ -74,7 +74,7 @@ public class VideoStatsModuleCreatorAndAdder {
         }
 
         @Override
-        protected IAddVideoStatsModule doInBackground() {
+        protected AddVideoStatsModule doInBackground() {
 
             exceptionRecorded = null;
 
@@ -84,7 +84,7 @@ public class VideoStatsModuleCreatorAndAdder {
 
                     try (ProgressReporterMultiple prm =
                             new ProgressReporterMultiple(progressReporter, 2)) {
-                        IAddVideoStatsModule adder =
+                        AddVideoStatsModule adder =
                                 adderOperation.get(new ProgressReporterOneOfMany(prm));
                         prm.incrWorker();
 

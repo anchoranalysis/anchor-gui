@@ -47,7 +47,7 @@ public class NamedMultiCollectionCreator extends FileCreatorGeneralList {
     // END BEAN PROPERTIES
 
     @Override
-    public void addFilesToList(
+    protected void addFilesToList(
             List<InteractiveFile> listFiles,
             FileCreatorParams params,
             ProgressReporter progressReporter)
@@ -63,12 +63,7 @@ public class NamedMultiCollectionCreator extends FileCreatorGeneralList {
                             .iterator();
 
             while (itr.hasNext()) {
-
-                MultiInput obj = itr.next();
-
-                FileMultiCollection file =
-                        new FileMultiCollection(obj, params.getMarkCreatorParams());
-                listFiles.add(file);
+                listFiles.add( new FileMultiCollection(itr.next(), params.getMarkCreatorParams()) );
             }
 
         } catch (AnchorIOException e) {

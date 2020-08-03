@@ -87,7 +87,7 @@ public class BoundVideoStatsModuleDropDown {
     }
 
     public void addModule(
-            CheckedProgressingSupplier<IAddVideoStatsModule, ? extends Throwable> adder,
+            CheckedProgressingSupplier<AddVideoStatsModule, ? extends Throwable> adder,
             SingleContextualModuleCreator creator,
             String namePrefix,
             VideoStatsModuleGlobalParams mpg)
@@ -97,7 +97,7 @@ public class BoundVideoStatsModuleDropDown {
     }
 
     public VideoStatsModuleCreatorAndAdder addModule(
-            CheckedProgressingSupplier<IAddVideoStatsModule, ? extends Throwable> adder,
+            CheckedProgressingSupplier<AddVideoStatsModule, ? extends Throwable> adder,
             ContextualModuleCreator creator,
             VideoStatsModuleGlobalParams mpg)
             throws MenuAddException {
@@ -111,7 +111,7 @@ public class BoundVideoStatsModuleDropDown {
 
     public void addModule(
             String itemName,
-            CheckedProgressingSupplier<IAddVideoStatsModule, ? extends Throwable> adder,
+            CheckedProgressingSupplier<AddVideoStatsModule, ? extends Throwable> adder,
             VideoStatsModuleCreator creator,
             InteractiveThreadPool threadPool,
             Logger logger)
@@ -122,7 +122,7 @@ public class BoundVideoStatsModuleDropDown {
     }
 
     public IAddModuleToMenu createAddModuleToMenu(
-            final CheckedProgressingSupplier<IAddVideoStatsModule, ? extends Throwable> adder) {
+            final CheckedProgressingSupplier<AddVideoStatsModule, ? extends Throwable> adder) {
         return new IAddModuleToMenu() {
 
             @Override

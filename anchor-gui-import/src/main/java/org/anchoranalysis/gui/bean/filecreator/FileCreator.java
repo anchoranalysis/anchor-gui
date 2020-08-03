@@ -32,7 +32,7 @@ import org.anchoranalysis.bean.AnchorBean;
 import org.anchoranalysis.bean.annotation.BeanField;
 import org.anchoranalysis.core.progress.ProgressReporter;
 import org.anchoranalysis.gui.interactivebrowser.IOpenFile;
-import org.anchoranalysis.gui.videostats.dropdown.IAddVideoStatsModule;
+import org.anchoranalysis.gui.videostats.dropdown.AddVideoStatsModule;
 import org.anchoranalysis.gui.videostats.dropdown.VideoStatsModuleGlobalParams;
 import org.anchoranalysis.gui.videostats.module.VideoStatsModule;
 import org.anchoranalysis.gui.videostats.module.VideoStatsModuleCreateException;
@@ -54,7 +54,7 @@ public abstract class FileCreator extends AnchorBean<FileCreator> {
             String name,
             FileCreatorParams params,
             VideoStatsModuleGlobalParams mpg,
-            IAddVideoStatsModule adder,
+            AddVideoStatsModule adder,
             IOpenFile fileOpenManager,
             ProgressReporter progressReporter)
             throws VideoStatsModuleCreateException;

@@ -39,7 +39,7 @@ import org.anchoranalysis.gui.file.interactive.InteractiveFile;
 import org.anchoranalysis.gui.file.opened.OpenedFile;
 import org.anchoranalysis.gui.file.opened.OpenedFileGUI;
 import org.anchoranalysis.gui.interactivebrowser.MarkEvaluatorManager;
-import org.anchoranalysis.gui.videostats.dropdown.IAddVideoStatsModule;
+import org.anchoranalysis.gui.videostats.dropdown.AddVideoStatsModule;
 import org.anchoranalysis.gui.videostats.dropdown.VideoStatsModuleGlobalParams;
 import org.anchoranalysis.io.output.bound.BoundOutputManagerRouteErrors;
 
@@ -96,7 +96,7 @@ public class FileAnnotationNamedChnlCollection extends InteractiveFile {
 
     @Override
     public OpenedFile open(
-            IAddVideoStatsModule globalSubgroupAdder, BoundOutputManagerRouteErrors outputManager)
+            AddVideoStatsModule globalSubgroupAdder, BoundOutputManagerRouteErrors outputManager)
             throws OperationFailedException {
 
         AnnotationRefresher refresherResetCache =

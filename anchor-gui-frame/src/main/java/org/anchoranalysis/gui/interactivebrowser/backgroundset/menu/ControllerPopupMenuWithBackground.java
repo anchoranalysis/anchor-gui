@@ -29,13 +29,11 @@ package org.anchoranalysis.gui.interactivebrowser.backgroundset.menu;
 import javax.swing.JMenu;
 import lombok.AllArgsConstructor;
 import org.anchoranalysis.core.error.reporter.ErrorReporter;
-import org.anchoranalysis.core.progress.CheckedProgressingSupplier;
-import org.anchoranalysis.gui.backgroundset.BackgroundSet;
-import org.anchoranalysis.gui.container.background.BackgroundStackContainerException;
 import org.anchoranalysis.gui.frame.details.ControllerPopupMenu;
 import org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.definition.ChangeableBackgroundDefinition;
 import org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.definition.ChangeableBackgroundDefinitionSimple;
 import org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.definition.ImageStackContainerFromName;
+import org.anchoranalysis.gui.videostats.dropdown.BackgroundSetProgressingSupplier;
 import org.anchoranalysis.gui.videostats.dropdown.VideoStatsModuleGlobalParams;
 
 @AllArgsConstructor
@@ -55,14 +53,13 @@ public class ControllerPopupMenuWithBackground {
         addAdditionalMenu(menu.getMenu());
     }
 
-    public IBackgroundUpdater add(
+    public BackgroundUpdater add(
             VideoStatsModuleGlobalParams mpg,
-            CheckedProgressingSupplier<BackgroundSet, BackgroundStackContainerException>
-                    backgroundSet) {
+            BackgroundSetProgressingSupplier backgroundSet) {
         return addDefinition(mpg, new ChangeableBackgroundDefinitionSimple(backgroundSet));
     }
 
-    public IBackgroundUpdater addDefinition(
+    public BackgroundUpdater addDefinition(
             VideoStatsModuleGlobalParams mpg, ChangeableBackgroundDefinition backgroundDefinition) {
         BackgroundSetMenuWithMap menu =
                 new BackgroundSetMenuWithMap(

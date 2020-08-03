@@ -117,7 +117,7 @@ public class CfgNRGHistoryMenu {
                             menu,
                             new SingleContextualModuleCreator(
                                     new NRGTableCreator(
-                                            finderCfgNRGHistory.getAsOperation(),
+                                            finderCfgNRGHistory::get,
                                             nrgBackground.getNrgStack(),
                                             context.getMpg().getDefaultColorIndexForMarks())),
                             false,

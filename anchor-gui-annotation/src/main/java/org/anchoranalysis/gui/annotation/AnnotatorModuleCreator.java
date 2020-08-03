@@ -38,7 +38,7 @@ import org.anchoranalysis.gui.annotation.builder.AnnotationGuiBuilder;
 import org.anchoranalysis.gui.annotation.builder.AnnotationGuiContext;
 import org.anchoranalysis.gui.image.frame.ISliderState;
 import org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.ControllerPopupMenuWithBackground;
-import org.anchoranalysis.gui.videostats.dropdown.IAddVideoStatsModule;
+import org.anchoranalysis.gui.videostats.dropdown.AddVideoStatsModule;
 import org.anchoranalysis.gui.videostats.dropdown.ModuleAddUtilities;
 import org.anchoranalysis.gui.videostats.dropdown.VideoStatsModuleGlobalParams;
 import org.anchoranalysis.gui.videostats.internalframe.annotator.AnnotationInitParams;
@@ -112,7 +112,7 @@ public class AnnotatorModuleCreator<T extends AnnotationInitParams>
     }
 
     @Override
-    public void createAndAddVideoStatsModule(IAddVideoStatsModule adder)
+    public void createAndAddVideoStatsModule(AddVideoStatsModule adder)
             throws VideoStatsModuleCreateException {
 
         try {
@@ -130,7 +130,7 @@ public class AnnotatorModuleCreator<T extends AnnotationInitParams>
         }
     }
 
-    private void configureAddImageFrame(IAddVideoStatsModule adder)
+    private void configureAddImageFrame(AddVideoStatsModule adder)
             throws InitException, VideoStatsModuleCreateException {
 
         InternalFrameAnnotator imageFrame =

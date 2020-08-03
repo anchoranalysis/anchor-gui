@@ -44,18 +44,17 @@ import org.anchoranalysis.image.stack.DisplayStack;
 
 public class OperationCreateBackgroundSetWithAdder {
 
-    private IAddVideoStatsModule parentAdder;
+    private AddVideoStatsModule parentAdder;
     private InteractiveThreadPool threadPool;
     private ErrorReporter errorReporter;
 
     private NRGBackground nrgBackground;
     private NRGBackgroundAdder<BackgroundStackContainerException> nrgBackgroundNew;
 
-    private CheckedProgressingSupplier<IAddVideoStatsModule, BackgroundStackContainerException>
+    private CheckedProgressingSupplier<AddVideoStatsModule, BackgroundStackContainerException>
             operationIAddVideoStatsModule;
 
-    private CheckedProgressingSupplier<BackgroundSet, BackgroundStackContainerException>
-            operationBackgroundSet;
+    private BackgroundSetProgressingSupplier backgroundSet;
 
     private final CheckedProgressingSupplier<
                     BackgroundSetWithAdder, BackgroundStackContainerException>
@@ -63,7 +62,7 @@ public class OperationCreateBackgroundSetWithAdder {
 
     public OperationCreateBackgroundSetWithAdder(
             NRGBackground nrgBackground,
-            IAddVideoStatsModule parentAdder,
+            AddVideoStatsModule parentAdder,
             InteractiveThreadPool threadPool,
             ErrorReporter errorReporter) {
         super();
@@ -75,7 +74,7 @@ public class OperationCreateBackgroundSetWithAdder {
         // A new nrgBackground that includes the changed operation for the background
         this.nrgBackgroundNew =
                 new NRGBackgroundAdder<>(
-                        nrgBackground.copyChangeOp(operationBackgroundSet),
+                        nrgBackground.copyChangeOp(backgroundSet),
                         operationIAddVideoStatsModule);
 
         this.cachedOp = CachedProgressingSupplier.cache(this::execute);
@@ -84,8 +83,8 @@ public class OperationCreateBackgroundSetWithAdder {
                 CachedProgressingSupplier.cache(
                         progressReporter -> cachedOp.get(progressReporter).getAdder());
 
-        this.operationBackgroundSet =
-                CachedProgressingSupplier.cache(
+        this.backgroundSet =
+                BackgroundSetProgressingSupplier.cache(
                         progressReporter -> cachedOp.get(progressReporter).getBackgroundSet());
     }
 
@@ -98,7 +97,7 @@ public class OperationCreateBackgroundSetWithAdder {
 
         bwsa.setBackgroundSet(backgroundSet);
 
-        IAddVideoStatsModule childAdder = parentAdder.createChild();
+        AddVideoStatsModule childAdder = parentAdder.createChild();
         childAdder = new AdderAddOverlaysWithStack(childAdder, threadPool, errorReporter);
 
         childAdder = nrgBackground.addNrgStackToAdder(childAdder);
@@ -129,7 +128,7 @@ public class OperationCreateBackgroundSetWithAdder {
         return bwsa;
     }
 
-    public CheckedProgressingSupplier<IAddVideoStatsModule, BackgroundStackContainerException>
+    public CheckedProgressingSupplier<AddVideoStatsModule, BackgroundStackContainerException>
             operationAdder() {
         return operationIAddVideoStatsModule;
     }
@@ -150,7 +149,7 @@ public class OperationCreateBackgroundSetWithAdder {
     }
 
     private static void assignDefaultSliceForStack(
-            IAddVideoStatsModule childAdder, DisplayStack stack) {
+            AddVideoStatsModule childAdder, DisplayStack stack) {
 
         IPropertyValueSendable<Integer> sliceNumSetter =
                 childAdder

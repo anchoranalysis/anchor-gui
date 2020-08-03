@@ -40,12 +40,10 @@ import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.functional.function.CheckedSupplier;
-import org.anchoranalysis.core.name.provider.NamedProvider;
 import org.anchoranalysis.core.name.store.StoreSupplier;
 import org.anchoranalysis.core.params.KeyValueParams;
-import org.anchoranalysis.core.progress.CheckedProgressingSupplier;
 import org.anchoranalysis.core.progress.ProgressReporterNull;
-import org.anchoranalysis.image.stack.Stack;
+import org.anchoranalysis.image.stack.NamedStacksSupplier;
 import org.anchoranalysis.io.output.bound.BoundIOContext;
 import org.anchoranalysis.mpp.io.input.MPPInitParamsFactory;
 
@@ -53,8 +51,7 @@ import org.anchoranalysis.mpp.io.input.MPPInitParamsFactory;
 public class MarkEvaluatorSetForImage {
 
     // START REQUIRED ARGUMENTS
-    private final CheckedProgressingSupplier<NamedProvider<Stack>, ? extends Throwable>
-            namedStacks;
+    private final NamedStacksSupplier namedStacks;
     private final CheckedSupplier<Optional<KeyValueParams>, IOException> keyParams;
     private final BoundIOContext context;
     // END REQUIRED ARGUMENTS
@@ -95,6 +92,22 @@ public class MarkEvaluatorSetForImage {
                 throw new OperationFailedException(e);
             }
         }
+        
+        private MPPInitParams deriveInitParams(Define define) throws CreateException {
+
+            // We initialise the markEvaluator
+            try {
+                return MPPInitParamsFactory.createFromExistingCollections(
+                        context,
+                        Optional.ofNullable(define),
+                        Optional.of(namedStacks.get(ProgressReporterNull.get())),
+                        Optional.empty(),
+                        keyParams.get());
+
+            } catch (Exception e) {
+                throw new CreateException(e);
+            }
+        }
     }
 
     public void add(String key, MarkEvaluator me) throws OperationFailedException {
@@ -122,21 +135,5 @@ public class MarkEvaluatorSetForImage {
 
     public boolean hasItems() {
         return map.size() > 0;
-    }
-    
-    private MPPInitParams deriveInitParams(Define define) throws CreateException {
-
-        // We initialise the markEvaluator
-        try {
-            return MPPInitParamsFactory.createFromExistingCollections(
-                    context,
-                    Optional.ofNullable(define),
-                    Optional.of(namedStacks.get(ProgressReporterNull.get())),
-                    Optional.empty(),
-                    keyParams.get());
-
-        } catch (Exception e) {
-            throw new CreateException(e);
-        }
     }
 }

@@ -48,7 +48,7 @@ public class NamedSingleStackCreator extends FileCreatorGeneralList {
     // END BEAN PROPERTIES
 
     @Override
-    public void addFilesToList(
+    protected void addFilesToList(
             List<InteractiveFile> listFiles,
             FileCreatorParams params,
             ProgressReporter progressReporter)
@@ -56,20 +56,14 @@ public class NamedSingleStackCreator extends FileCreatorGeneralList {
 
         try {
 
-            Iterator<? extends ProvidesStackInput> itr =
-                    input.inputObjects(
+            List<? extends ProvidesStackInput> list = input.inputObjects(
                                     new InputManagerParams(
                                             params.createInputContext(),
                                             progressReporter,
-                                            params.getLogErrorReporter()))
-                            .iterator();
+                                            params.getLogErrorReporter()));
 
-            while (itr.hasNext()) {
-
-                ProvidesStackInput obj = itr.next();
-
-                FileSingleStack file = new FileSingleStack(obj, params.getMarkCreatorParams());
-                listFiles.add(file);
+            for (ProvidesStackInput providesStackInput : list) {
+                listFiles.add(new FileSingleStack(providesStackInput, params.getMarkCreatorParams()));
             }
 
         } catch (AnchorIOException e) {

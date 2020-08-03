@@ -29,12 +29,13 @@ package org.anchoranalysis.gui.finder;
 import java.nio.file.Path;
 import java.util.List;
 import org.anchoranalysis.core.error.OperationFailedException;
-import org.anchoranalysis.core.progress.CachedProgressingSupplier;
+import org.anchoranalysis.core.name.store.StoreSupplier;
 import org.anchoranalysis.core.progress.ProgressReporter;
+import org.anchoranalysis.core.progress.ProgressReporterNull;
 import org.anchoranalysis.image.io.RasterIOException;
 import org.anchoranalysis.image.io.bean.rasterreader.RasterReader;
 import org.anchoranalysis.image.io.rasterreader.OpenedRaster;
-import org.anchoranalysis.image.stack.NamedStacks;
+import org.anchoranalysis.image.stack.NamedStacksSet;
 import org.anchoranalysis.image.stack.Stack;
 import org.anchoranalysis.io.manifest.ManifestRecorder;
 import org.anchoranalysis.io.manifest.file.FileWrite;
@@ -78,19 +79,17 @@ public class FinderRasterFilesByManifestDescriptionFunction implements Finder {
         return list != null && !list.isEmpty();
     }
 
-    public NamedStacks createStackCollection() {
+    public NamedStacksSet createStackCollection() {
 
-        NamedStacks out = new NamedStacks();
+        NamedStacksSet out = new NamedStacksSet();
         for (FileWrite fileWrite : list) {
             String name = fileWrite.getIndex();
 
             // Assume single series, single channel
             out.addImageStack(
                     name,
-                    CachedProgressingSupplier.cache(
-                            progressReporter ->
-                                    openStack(
-                                            fileWrite.calcPath(), rasterReader, progressReporter)));
+                    StoreSupplier.cache(
+                            () -> openStack(fileWrite.calcPath(), rasterReader, ProgressReporterNull.get() )));
         }
         return out;
     }

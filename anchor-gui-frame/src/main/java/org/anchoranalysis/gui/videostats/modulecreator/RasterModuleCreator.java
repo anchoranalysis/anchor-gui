@@ -33,7 +33,7 @@ import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.functional.function.CheckedSupplier;
 import org.anchoranalysis.gui.frame.singleraster.InternalFrameSingleRaster;
 import org.anchoranalysis.gui.image.frame.ISliderState;
-import org.anchoranalysis.gui.videostats.dropdown.IAddVideoStatsModule;
+import org.anchoranalysis.gui.videostats.dropdown.AddVideoStatsModule;
 import org.anchoranalysis.gui.videostats.dropdown.VideoStatsModuleGlobalParams;
 import org.anchoranalysis.gui.videostats.dropdown.common.NRGBackground;
 import org.anchoranalysis.gui.videostats.module.VideoStatsModuleCreateException;
@@ -85,7 +85,7 @@ public class RasterModuleCreator extends VideoStatsModuleCreator {
     }
 
     @Override
-    public void createAndAddVideoStatsModule(IAddVideoStatsModule adder)
+    public void createAndAddVideoStatsModule(AddVideoStatsModule adder)
             throws VideoStatsModuleCreateException {
 
         try {

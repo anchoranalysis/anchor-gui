@@ -41,7 +41,7 @@ import org.anchoranalysis.gui.bean.filecreator.MarkCreatorParams;
 import org.anchoranalysis.gui.file.opened.OpenedFile;
 import org.anchoranalysis.gui.file.opened.OpenedFileGUI;
 import org.anchoranalysis.gui.series.TimeSequenceProvider;
-import org.anchoranalysis.gui.videostats.dropdown.IAddVideoStatsModule;
+import org.anchoranalysis.gui.videostats.dropdown.AddVideoStatsModule;
 import org.anchoranalysis.gui.videostats.dropdown.multicollection.MultiCollectionDropDown;
 import org.anchoranalysis.image.io.RasterIOException;
 import org.anchoranalysis.image.stack.TimeSequence;
@@ -72,7 +72,7 @@ public class FileStackCollection extends InteractiveFile {
 
     @Override
     public OpenedFile open(
-            IAddVideoStatsModule globalSubgroupAdder, BoundOutputManagerRouteErrors outputManager)
+            AddVideoStatsModule globalSubgroupAdder, BoundOutputManagerRouteErrors outputManager)
             throws OperationFailedException {
 
         MultiCollectionDropDown dropDown =

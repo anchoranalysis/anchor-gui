@@ -36,12 +36,12 @@ import org.anchoranalysis.core.name.provider.NamedProvider;
 import org.anchoranalysis.core.name.provider.NamedProviderGetException;
 import org.anchoranalysis.core.progress.CachedProgressingSupplier;
 import org.anchoranalysis.core.progress.CheckedProgressingSupplier;
-import org.anchoranalysis.gui.backgroundset.BackgroundSet;
-import org.anchoranalysis.gui.container.background.BackgroundStackContainerException;
+import org.anchoranalysis.core.progress.ProgressReporterNull;
 import org.anchoranalysis.gui.interactivebrowser.MarkEvaluatorSetForImage;
 import org.anchoranalysis.gui.mark.MarkDisplaySettings;
 import org.anchoranalysis.gui.videostats.dropdown.BoundVideoStatsModuleDropDown;
-import org.anchoranalysis.gui.videostats.dropdown.IAddVideoStatsModule;
+import org.anchoranalysis.gui.videostats.dropdown.AddVideoStatsModule;
+import org.anchoranalysis.gui.videostats.dropdown.BackgroundSetProgressingSupplier;
 import org.anchoranalysis.gui.videostats.dropdown.OperationNRGStackFromMarkEvaluatorSet;
 import org.anchoranalysis.gui.videostats.dropdown.VideoStatsModuleCreatorAndAdder;
 import org.anchoranalysis.gui.videostats.dropdown.VideoStatsModuleGlobalParams;
@@ -61,10 +61,9 @@ public class DropDownUtilities {
 
     public static void addAllProposerEvaluator(
             BoundVideoStatsModuleDropDown dropDown,
-            CheckedProgressingSupplier<IAddVideoStatsModule, ? extends Throwable>
+            CheckedProgressingSupplier<AddVideoStatsModule, ? extends Throwable>
                     adderOpWithoutNRG,
-            CheckedProgressingSupplier<BackgroundSet, BackgroundStackContainerException>
-                    backgroundSet,
+            BackgroundSetProgressingSupplier backgroundSet,
             MarkEvaluatorSetForImage markEvaluatorSet,
             OutputWriteSettings outputWriteSettings,
             boolean addNRGAdder,
@@ -74,12 +73,12 @@ public class DropDownUtilities {
                 new OperationNRGStackFromMarkEvaluatorSet(markEvaluatorSet);
 
         NRGBackground nrgBackground =
-                NRGBackground.createFromBackground(backgroundSet, operationGetNRGStack);
+                NRGBackground.createFromBackground(backgroundSet, () -> operationGetNRGStack.get(ProgressReporterNull.get()));
 
-        CheckedProgressingSupplier<IAddVideoStatsModule, ? extends Throwable> adderOp =
+        CheckedProgressingSupplier<AddVideoStatsModule, ? extends Throwable> adderOp =
                 CachedProgressingSupplier.cache(
-                        pr -> {
-                            IAddVideoStatsModule adder = adderOpWithoutNRG.get(pr);
+                        progressReporter -> {
+                            AddVideoStatsModule adder = adderOpWithoutNRG.get(progressReporter);
 
                             if (addNRGAdder) {
                                 nrgBackground.addNrgStackToAdder(adder);
@@ -213,7 +212,7 @@ public class DropDownUtilities {
     private static void addModule(
             VideoStatsModuleCreator module,
             VideoStatsOperationMenu menu,
-            CheckedProgressingSupplier<IAddVideoStatsModule, ? extends Throwable> opAdder,
+            CheckedProgressingSupplier<AddVideoStatsModule, ? extends Throwable> opAdder,
             String name,
             VideoStatsModuleGlobalParams mpg,
             boolean addAsDefault) {

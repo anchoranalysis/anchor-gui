@@ -28,11 +28,10 @@ package org.anchoranalysis.gui.finder.imgstackcollection;
 
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.name.provider.NamedProvider;
-import org.anchoranalysis.core.progress.CachedProgressingSupplier;
-import org.anchoranalysis.core.progress.CheckedProgressingSupplier;
 import org.anchoranalysis.core.progress.ProgressReporterNull;
 import org.anchoranalysis.gui.finder.FinderRasterFolder;
 import org.anchoranalysis.image.io.bean.rasterreader.RasterReader;
+import org.anchoranalysis.image.stack.NamedStacksSupplier;
 import org.anchoranalysis.image.stack.Stack;
 import org.anchoranalysis.io.manifest.ManifestRecorder;
 
@@ -41,9 +40,9 @@ public class FinderStacksFromFolder implements FinderStacks {
 
     private FinderRasterFolder delegate;
 
-    private CheckedProgressingSupplier<NamedProvider<Stack>, OperationFailedException>
+    private NamedStacksSupplier
             operationStacks =
-                    CachedProgressingSupplier.cache(pr -> delegate.createStackCollection(false));
+                    NamedStacksSupplier.cache(pr -> delegate.createStackCollection(false));
 
     public FinderStacksFromFolder(RasterReader rasterReader, String folderName) {
         delegate = new FinderRasterFolder(folderName, "stackFromCollection", rasterReader);
@@ -55,7 +54,7 @@ public class FinderStacksFromFolder implements FinderStacks {
     }
 
     @Override
-    public CheckedProgressingSupplier<NamedProvider<Stack>, OperationFailedException>
+    public NamedStacksSupplier
             getStacksAsOperation() {
         return operationStacks;
     }

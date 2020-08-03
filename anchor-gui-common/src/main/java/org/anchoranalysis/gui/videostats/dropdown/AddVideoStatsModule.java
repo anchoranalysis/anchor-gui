@@ -1,6 +1,6 @@
 /*-
  * #%L
- * anchor-gui-frame
+ * anchor-gui-common
  * %%
  * Copyright (C) 2010 - 2020 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann-La Roche
  * %%
@@ -24,16 +24,19 @@
  * #L%
  */
 
-package org.anchoranalysis.gui.interactivebrowser.backgroundset.menu;
+package org.anchoranalysis.gui.videostats.dropdown;
 
-import org.anchoranalysis.core.progress.CheckedProgressingSupplier;
-import org.anchoranalysis.gui.backgroundset.BackgroundSet;
-import org.anchoranalysis.gui.container.background.BackgroundStackContainerException;
+import javax.swing.JFrame;
+import org.anchoranalysis.gui.videostats.module.VideoStatsModule;
+import org.anchoranalysis.gui.videostats.module.VideoStatsModuleSubgroup;
 
-@FunctionalInterface
-public interface IBackgroundUpdater {
+public interface AddVideoStatsModule {
 
-    void update(
-            CheckedProgressingSupplier<BackgroundSet, BackgroundStackContainerException>
-                    backgroundSet);
+    void addVideoStatsModule(VideoStatsModule module);
+
+    VideoStatsModuleSubgroup getSubgroup();
+
+    JFrame getParentFrame();
+
+    AddVideoStatsModule createChild();
 }

@@ -30,9 +30,6 @@ import java.util.Optional;
 import lombok.AllArgsConstructor;
 import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.error.OperationFailedException;
-import org.anchoranalysis.core.progress.CheckedProgressingSupplier;
-import org.anchoranalysis.gui.backgroundset.BackgroundSet;
-import org.anchoranalysis.gui.container.background.BackgroundStackContainerException;
 import org.anchoranalysis.gui.image.frame.ISliderState;
 import org.anchoranalysis.gui.io.loader.manifest.finder.FinderCfgNRGSet;
 import org.anchoranalysis.gui.videostats.IModuleCreatorDefaultState;
@@ -47,8 +44,7 @@ class CombinationCreator extends VideoStatsModuleCreatorContext {
     private FinderCfgNRGSet finderFirst;
     private FinderCfgNRGSet finderSecond;
     private String combinationName;
-    private CheckedProgressingSupplier<BackgroundSet, BackgroundStackContainerException>
-            backgroundSet;
+    private BackgroundSetProgressingSupplier backgroundSet;
 
     @Override
     public boolean precondition() {

@@ -28,21 +28,17 @@ package org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.definition;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import org.anchoranalysis.core.progress.CheckedProgressingSupplier;
-import org.anchoranalysis.gui.backgroundset.BackgroundSet;
-import org.anchoranalysis.gui.container.background.BackgroundStackContainerException;
+import org.anchoranalysis.gui.videostats.dropdown.BackgroundSetProgressingSupplier;
 
 @AllArgsConstructor
 public abstract class ChangeableBackgroundDefinitionWithDefault
         implements ChangeableBackgroundDefinition {
 
     @Getter
-    private CheckedProgressingSupplier<BackgroundSet, BackgroundStackContainerException>
-            backgroundSet;
+    private BackgroundSetProgressingSupplier backgroundSet;
 
-    public void update(
-            CheckedProgressingSupplier<BackgroundSet, BackgroundStackContainerException>
-                    backgroundSet) {
+    @Override
+    public void update(BackgroundSetProgressingSupplier backgroundSet) {
         this.backgroundSet = backgroundSet;
     }
 }

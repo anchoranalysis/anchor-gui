@@ -34,7 +34,7 @@ import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.gui.bean.filecreator.MarkCreatorParams;
 import org.anchoranalysis.gui.file.opened.OpenedFile;
 import org.anchoranalysis.gui.file.opened.OpenedFileGUI;
-import org.anchoranalysis.gui.videostats.dropdown.IAddVideoStatsModule;
+import org.anchoranalysis.gui.videostats.dropdown.AddVideoStatsModule;
 import org.anchoranalysis.gui.videostats.dropdown.manifest.ManifestDropDown;
 import org.anchoranalysis.image.io.bean.rasterreader.RasterReader;
 import org.anchoranalysis.io.output.bound.BoundOutputManagerRouteErrors;
@@ -60,7 +60,7 @@ public class FileExecutedExperimentImageWithManifest extends InteractiveFile {
 
     @Override
     public OpenedFile open(
-            final IAddVideoStatsModule adder, final BoundOutputManagerRouteErrors outputManager)
+            final AddVideoStatsModule adder, final BoundOutputManagerRouteErrors outputManager)
             throws OperationFailedException {
 
         manifestDropDown =

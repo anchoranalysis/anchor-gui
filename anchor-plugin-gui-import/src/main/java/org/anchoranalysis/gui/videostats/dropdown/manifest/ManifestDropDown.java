@@ -41,7 +41,6 @@ import org.anchoranalysis.core.index.container.SingleContainer;
 import org.anchoranalysis.core.name.provider.NamedProvider;
 import org.anchoranalysis.core.params.KeyValueParams;
 import org.anchoranalysis.core.progress.CheckedProgressingSupplier;
-import org.anchoranalysis.core.progress.ProgressReporter;
 import org.anchoranalysis.core.progress.ProgressReporterNull;
 import org.anchoranalysis.gui.file.opened.IOpenedFileGUI;
 import org.anchoranalysis.gui.finder.FinderNrgStack;
@@ -57,7 +56,7 @@ import org.anchoranalysis.gui.io.loader.manifest.finder.historyfolder.FinderHist
 import org.anchoranalysis.gui.mark.MarkDisplaySettings;
 import org.anchoranalysis.gui.series.TimeSequenceProvider;
 import org.anchoranalysis.gui.videostats.dropdown.BoundVideoStatsModuleDropDown;
-import org.anchoranalysis.gui.videostats.dropdown.IAddVideoStatsModule;
+import org.anchoranalysis.gui.videostats.dropdown.AddVideoStatsModule;
 import org.anchoranalysis.gui.videostats.dropdown.MenuAddException;
 import org.anchoranalysis.gui.videostats.dropdown.OperationCreateBackgroundSetWithAdder;
 import org.anchoranalysis.gui.videostats.dropdown.VideoStatsModuleGlobalParams;
@@ -69,7 +68,7 @@ import org.anchoranalysis.gui.videostats.dropdown.contextualmodulecreator.NRGTab
 import org.anchoranalysis.gui.videostats.dropdown.contextualmodulecreator.SingleContextualModuleCreator;
 import org.anchoranalysis.gui.videostats.dropdown.modulecreator.graph.KernelIterDescriptionModuleCreator;
 import org.anchoranalysis.image.io.bean.rasterreader.RasterReader;
-import org.anchoranalysis.image.stack.Stack;
+import org.anchoranalysis.image.stack.NamedStacksSupplier;
 import org.anchoranalysis.image.stack.wrap.WrapStackAsTimeSequence;
 import org.anchoranalysis.io.manifest.deserializer.folder.LoadContainer;
 import org.anchoranalysis.io.manifest.finder.FinderSerializedObject;
@@ -97,18 +96,16 @@ public class ManifestDropDown {
     private OperationCreateBackgroundSetWithAdder createBackgroundSetWithNRG(
             FinderNrgStack finderNrgStack,
             FinderStacksCombine finderStacks,
-            IAddVideoStatsModule adder,
+            AddVideoStatsModule adder,
             VideoStatsModuleGlobalParams mpg) {
 
-        CheckedProgressingSupplier<NamedProvider<Stack>, OperationFailedException> stacks =
-                finderStacks.getStacksAsOperation();
+        NamedStacksSupplier stacks = finderStacks.getStacksAsOperation();
 
         // We try to read a nrgStack from the manifest. If none exists, we guess instead from the
         // image-stacks.
-        NRGBackground nrgBackground = NRGBackground.createStack(stacks, progressReporter -> firstOrSecond(
-                progressReporter,
+        NRGBackground nrgBackground = NRGBackground.createStack(stacks, () -> firstOrSecond(
                 finderNrgStack.operationNrgStackWithProgressReporter(),
-                new GuessNRGStackFromStacks(asSequence(stacks)
+                progressReporter -> GuessNRGStackFromStacks.guess(asSequence(stacks)
         )));
 
         return new OperationCreateBackgroundSetWithAdder(
@@ -116,9 +113,9 @@ public class ManifestDropDown {
     }
 
     /** Gets from the first supplier, and if it returns null, then gets from the second instead */
-    private <T,E extends Exception> T firstOrSecond(ProgressReporter progressReporter, CheckedProgressingSupplier<T, E> first, CheckedProgressingSupplier<T, E> second) throws E {
+    private <T,E extends Exception> T firstOrSecond(CheckedProgressingSupplier<T, E> first, CheckedProgressingSupplier<T, E> second) throws E {
 
-        T firstResult = first.get(progressReporter);
+        T firstResult = first.get(ProgressReporterNull.get());
 
         if (firstResult == null) {
             return second.get(ProgressReporterNull.get());
@@ -128,7 +125,7 @@ public class ManifestDropDown {
     }
 
     private CheckedProgressingSupplier<TimeSequenceProvider, CreateException> asSequence(
-            CheckedProgressingSupplier<NamedProvider<Stack>, OperationFailedException> opStacks) {
+            NamedStacksSupplier opStacks) {
         return pr -> {
             try {
                 return new TimeSequenceProvider(new WrapStackAsTimeSequence(opStacks.get(pr)), 1);
@@ -224,7 +221,7 @@ public class ManifestDropDown {
     }
 
     public void init(
-            IAddVideoStatsModule adder,
+            AddVideoStatsModule adder,
             RasterReader rasterReader,
             MarkEvaluatorManager markEvaluatorManager,
             BoundOutputManagerRouteErrors outputManager,
@@ -234,14 +231,14 @@ public class ManifestDropDown {
         // Some necessary Finders and Objects
         FinderNrgStack finderNrgStack = createFinderNrgStack(rasterReader, mpg);
         FinderStacksCombine finderStacks = createFinderStacks(finderNrgStack, rasterReader);
-        OperationCreateBackgroundSetWithAdder opBackgroundNRG =
+        OperationCreateBackgroundSetWithAdder backgroundNRG =
                 createBackgroundSetWithNRG(finderNrgStack, finderStacks, adder, mpg);
 
         // Add: Cfgs, Rasters and object-masks
-        boolean defaultAdded = addCfgs(opBackgroundNRG, finderNrgStack, mpg);
-        addRaster(opBackgroundNRG, mpg, defaultAdded);
+        boolean defaultAdded = addCfgs(backgroundNRG, finderNrgStack, mpg);
+        addRaster(backgroundNRG, mpg, defaultAdded);
         new AddObjects(delegate, manifests, finderNrgStack, mpg, markDisplaySettings)
-                .apply(opBackgroundNRG);
+                .apply(backgroundNRG);
 
         // Various useful finders
         FinderSerializedObject<KernelProposer<CfgNRGPixelized>> finderKernelProposer =
@@ -252,7 +249,7 @@ public class ManifestDropDown {
                 createFinderKernelIterDescription();
 
         addKernelHistoryNavigator(
-                finderKernelIterDescription, finderKernelProposer, opBackgroundNRG, mpg);
+                finderKernelIterDescription, finderKernelProposer, backgroundNRG, mpg);
 
         outputManager =
                 DropDownUtilities.createOutputManagerForSubfolder(
@@ -269,7 +266,7 @@ public class ManifestDropDown {
         addSetsWrap(
                 finderNrgStack,
                 finderStacks,
-                opBackgroundNRG,
+                backgroundNRG,
                 finderKernelProposer,
                 outputManager,
                 adder,
@@ -279,10 +276,10 @@ public class ManifestDropDown {
     private void addSetsWrap(
             FinderNrgStack finderNrgStack,
             FinderStacksCombine finderStacks,
-            OperationCreateBackgroundSetWithAdder opBackgroundNRG,
+            OperationCreateBackgroundSetWithAdder backgroundNRG,
             FinderSerializedObject<KernelProposer<CfgNRGPixelized>> finderKernelProposer,
             BoundOutputManagerRouteErrors outputManager,
-            IAddVideoStatsModule adder,
+            AddVideoStatsModule adder,
             VideoStatsModuleGlobalParams mpg) {
         try {
             CfgNRGFinderContext context =
@@ -293,7 +290,7 @@ public class ManifestDropDown {
                             outputManager,
                             mpg);
 
-            AddSets addSets = new AddSets(delegate, opBackgroundNRG, context);
+            AddSets addSets = new AddSets(delegate, backgroundNRG, context);
 
             addSets.apply(manifests, finderNrgStack);
 
@@ -307,13 +304,13 @@ public class ManifestDropDown {
             FinderNrgStack finderNrgStack,
             MarkEvaluatorSetForImage markEvaluatorSet,
             BoundOutputManagerRouteErrors outputManager,
-            IAddVideoStatsModule adder,
+            AddVideoStatsModule adder,
             VideoStatsModuleGlobalParams mpg) {
         OperationCreateBackgroundSetWithAdder operationBwsa =
                 new OperationCreateBackgroundSetWithAdder(
                         NRGBackground.createStack(
                                 finderStacks.getStacksAsOperation(),
-                                finderNrgStack.operationNrgStackWithProgressReporter()),
+                                finderNrgStack.nrgStackSupplier()),
                         adder,
                         mpg.getThreadPool(),
                         mpg.getLogger().errorReporter());
@@ -333,13 +330,13 @@ public class ManifestDropDown {
     private void addKernelHistoryNavigator(
             FinderHistoryFolderKernelIterDescription finderKernelIterDescription,
             FinderSerializedObject<KernelProposer<CfgNRGPixelized>> finderKernelProposer,
-            OperationCreateBackgroundSetWithAdder opBackgroundNRG,
+            OperationCreateBackgroundSetWithAdder backgroundNRG,
             VideoStatsModuleGlobalParams mpg)
             throws InitException {
         if (finderKernelIterDescription.exists() && finderKernelProposer.exists()) {
             try {
                 delegate.addModule(
-                        opBackgroundNRG.operationAdder(),
+                        backgroundNRG.operationAdder(),
                         new SingleContextualModuleCreator(
                                 new KernelIterDescriptionModuleCreator(
                                         finderKernelIterDescription, finderKernelProposer)),
@@ -352,13 +349,13 @@ public class ManifestDropDown {
     }
 
     private void addRaster(
-            OperationCreateBackgroundSetWithAdder opBackground,
+            OperationCreateBackgroundSetWithAdder background,
             VideoStatsModuleGlobalParams mpg,
             boolean defaultAdded) {
         DropDownUtilitiesRaster.addRaster(
                 delegate.getRootMenu(),
                 delegate,
-                opBackground.nrgBackground(),
+                background.nrgBackground(),
                 "Raster",
                 mpg,
                 !defaultAdded // Adds as default operation
@@ -449,7 +446,7 @@ public class ManifestDropDown {
                             new SingleContextualModuleCreator(
                                     new NRGTableCreator(
                                             op,
-                                            finderNrgStack.operationNrgStack(),
+                                            finderNrgStack.nrgStackSupplier(),
                                             mpg.getDefaultColorIndexForMarks()));
                     delegate.addModule(
                             operationBwsaWithNRG.operationAdder(), creator, "NRG Table", mpg);

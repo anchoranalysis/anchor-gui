@@ -48,28 +48,22 @@ public class StackCollectionCreator extends FileCreatorGeneralList {
     // END BEAN PROPERTIES
 
     @Override
-    public void addFilesToList(
+    protected void addFilesToList(
             List<InteractiveFile> listFiles,
             FileCreatorParams params,
             ProgressReporter progressReporter)
             throws OperationFailedException {
 
         try {
-            Iterator<StackSequenceInput> itr =
+            List<StackSequenceInput> list =
                     input.inputObjects(
                                     new InputManagerParams(
                                             params.createInputContext(),
                                             progressReporter,
-                                            params.getLogErrorReporter()))
-                            .iterator();
+                                            params.getLogErrorReporter()));
 
-            while (itr.hasNext()) {
-
-                StackSequenceInput obj = itr.next();
-
-                FileStackCollection file =
-                        new FileStackCollection(obj, params.getMarkCreatorParams());
-                listFiles.add(file);
+            for (StackSequenceInput stackSequenceInput : list) {
+                listFiles.add( new FileStackCollection(stackSequenceInput, params.getMarkCreatorParams() ));
             }
 
         } catch (AnchorIOException e) {

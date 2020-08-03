@@ -43,7 +43,7 @@ import org.anchoranalysis.gui.interactivebrowser.IOpenFile;
 import org.anchoranalysis.gui.mark.MarkDisplaySettings;
 import org.anchoranalysis.gui.progressreporter.ProgressReporterInteractiveWorker;
 import org.anchoranalysis.gui.videostats.IModuleCreatorDefaultState;
-import org.anchoranalysis.gui.videostats.dropdown.IAddVideoStatsModule;
+import org.anchoranalysis.gui.videostats.dropdown.AddVideoStatsModule;
 import org.anchoranalysis.gui.videostats.dropdown.VideoStatsModuleGlobalParams;
 import org.anchoranalysis.gui.videostats.module.VideoStatsModule;
 import org.anchoranalysis.gui.videostats.threading.InteractiveWorker;
@@ -68,7 +68,7 @@ public class InteractiveFileListInternalFrame {
     }
 
     public void init(
-            final IAddVideoStatsModule adder,
+            final AddVideoStatsModule adder,
             final InteractiveFileListTableModel tableModel,
             final IOpenFile fileOpenManager,
             final VideoStatsModuleGlobalParams mpg,

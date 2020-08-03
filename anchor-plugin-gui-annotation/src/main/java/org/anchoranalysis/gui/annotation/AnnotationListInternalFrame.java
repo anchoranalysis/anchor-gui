@@ -45,7 +45,7 @@ import org.anchoranalysis.gui.bean.filecreator.MarkCreatorParams;
 import org.anchoranalysis.gui.interactivebrowser.IOpenFile;
 import org.anchoranalysis.gui.interactivebrowser.filelist.InteractiveFileListInternalFrame;
 import org.anchoranalysis.gui.videostats.IModuleCreatorDefaultState;
-import org.anchoranalysis.gui.videostats.dropdown.IAddVideoStatsModule;
+import org.anchoranalysis.gui.videostats.dropdown.AddVideoStatsModule;
 import org.anchoranalysis.image.io.input.ProvidesStackInput;
 import org.anchoranalysis.io.bean.input.InputManagerParams;
 import org.anchoranalysis.io.error.AnchorIOException;
@@ -63,7 +63,7 @@ public class AnnotationListInternalFrame {
 
     public <T extends AnnotatorStrategy> void init(
             AnnotationInputManager<ProvidesStackInput, T> inputManager,
-            IAddVideoStatsModule adder,
+            AddVideoStatsModule adder,
             IOpenFile fileOpenManager,
             MarkCreatorParams params,
             ProgressReporter progressReporter,

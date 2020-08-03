@@ -34,11 +34,11 @@ import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.functional.function.CheckedSupplier;
 import org.anchoranalysis.core.index.GetOperationFailedException;
-import org.anchoranalysis.feature.nrg.NRGStackWithParams;
 import org.anchoranalysis.gui.cfgnrg.StatePanelFrameHistoryCfgNRGInstantState;
 import org.anchoranalysis.gui.cfgnrgtable.CfgNRGTablePanel;
 import org.anchoranalysis.gui.videostats.IModuleCreatorDefaultState;
 import org.anchoranalysis.gui.videostats.dropdown.VideoStatsModuleGlobalParams;
+import org.anchoranalysis.gui.videostats.dropdown.common.NRGStackSupplier;
 import org.anchoranalysis.gui.videostats.module.DefaultModuleStateManager;
 import org.anchoranalysis.gui.videostats.module.VideoStatsModuleCreateException;
 import org.anchoranalysis.gui.videostats.modulecreator.VideoStatsModuleCreatorContext;
@@ -49,8 +49,7 @@ public class NRGTableCreator extends VideoStatsModuleCreatorContext {
 
     private final CheckedSupplier<LoadContainer<CfgNRGInstantState>, OperationFailedException>
             operation;
-    private final CheckedSupplier<NRGStackWithParams, GetOperationFailedException>
-            nrgStackWithParams;
+    private final NRGStackSupplier nrgStackWithParams;
     private final ColorIndex colorIndex;
 
     @Override

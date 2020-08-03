@@ -29,12 +29,12 @@ package org.anchoranalysis.gui.videostats.dropdown.common;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.anchoranalysis.core.progress.CheckedProgressingSupplier;
-import org.anchoranalysis.gui.videostats.dropdown.IAddVideoStatsModule;
+import org.anchoranalysis.gui.videostats.dropdown.AddVideoStatsModule;
 
 @AllArgsConstructor
 public class NRGBackgroundAdder<E extends Exception> {
 
     @Getter private NRGBackground background;
 
-    @Getter private CheckedProgressingSupplier<IAddVideoStatsModule, E> adder;
+    @Getter private CheckedProgressingSupplier<AddVideoStatsModule, E> adder;
 }

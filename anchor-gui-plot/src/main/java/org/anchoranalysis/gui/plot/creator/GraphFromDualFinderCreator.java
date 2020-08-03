@@ -38,7 +38,7 @@ import org.anchoranalysis.gui.plot.BoundedIndexContainerIterator;
 import org.anchoranalysis.gui.plot.panel.ClickableGraphFactory;
 import org.anchoranalysis.gui.plot.visualvm.InternalFrameGraphAsModule;
 import org.anchoranalysis.gui.reassign.FrameTitleGenerator;
-import org.anchoranalysis.gui.videostats.dropdown.IAddVideoStatsModule;
+import org.anchoranalysis.gui.videostats.dropdown.AddVideoStatsModule;
 import org.anchoranalysis.gui.videostats.dropdown.ModuleAddUtilities;
 import org.anchoranalysis.gui.videostats.module.VideoStatsModuleCreateException;
 import org.anchoranalysis.gui.videostats.modulecreator.VideoStatsModuleCreator;
@@ -65,7 +65,7 @@ public interface GraphFromDualFinderCreator<T> {
         return new VideoStatsModuleCreator() {
 
             @Override
-            public void createAndAddVideoStatsModule(IAddVideoStatsModule adder)
+            public void createAndAddVideoStatsModule(AddVideoStatsModule adder)
                     throws VideoStatsModuleCreateException {
 
                 try {

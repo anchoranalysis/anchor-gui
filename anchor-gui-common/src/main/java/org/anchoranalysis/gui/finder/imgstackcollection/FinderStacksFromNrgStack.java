@@ -29,68 +29,34 @@ package org.anchoranalysis.gui.finder.imgstackcollection;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.name.provider.NamedProvider;
-import org.anchoranalysis.core.progress.CachedProgressingSupplier;
-import org.anchoranalysis.core.progress.CheckedProgressingSupplier;
+import org.anchoranalysis.core.name.store.StoreSupplier;
+import org.anchoranalysis.core.progress.ProgressReporter;
 import org.anchoranalysis.core.progress.ProgressReporterNull;
 import org.anchoranalysis.feature.nrg.NRGStackWithParams;
 import org.anchoranalysis.gui.finder.FinderNrgStack;
-import org.anchoranalysis.image.stack.NamedStacks;
+import org.anchoranalysis.image.stack.NamedStacksSupplier;
+import org.anchoranalysis.image.stack.NamedStacksSet;
 import org.anchoranalysis.image.stack.Stack;
 import org.anchoranalysis.io.manifest.ManifestRecorder;
+import lombok.RequiredArgsConstructor;
 
+@RequiredArgsConstructor
 public class FinderStacksFromNrgStack implements FinderStacks {
 
     // START REQUIRED ARGUMENTS
-    private FinderNrgStack delegate;
+    private final FinderNrgStack delegate;
     // END REQUIRED ARGUMENTS
 
-    private CheckedProgressingSupplier<Stack, OperationFailedException>
-            operationExtractUntilThreeChannels =
-                    CachedProgressingSupplier.cache(
-                            pr -> {
-                                try {
-                                    NRGStackWithParams nrgStackWithParams =
-                                            delegate.operationNrgStackWithProgressReporter()
-                                                    .get(pr);
-                                    return nrgStackWithParams
-                                            .getNrgStack()
-                                            .asStack()
-                                            .extractUpToThreeChannels();
-                                } catch (GetOperationFailedException e) {
-                                    throw e.asOperationFailedException();
-                                }
-                            });
-
-    private CheckedProgressingSupplier<NamedProvider<Stack>, OperationFailedException>
-            operationStacks =
-                    CachedProgressingSupplier.cache(
-                            pr -> {
-                                NamedStacks stackCollection = new NamedStacks();
-
-                                // finder NRG stack
-                                if (delegate != null && delegate.exists()) {
-
-                                    // Should we mention when we only have the first 3?
-                                    stackCollection.addImageStack(
-                                            "nrgStack", operationExtractUntilThreeChannels);
-
-                                    stackCollection.addFromWithPrefix(
-                                            delegate.getNamedStacks(), "nrgChnl-");
-                                }
-                                return stackCollection;
-                            });
-
-    public FinderStacksFromNrgStack(FinderNrgStack delegate) {
-        this.delegate = delegate;
-    }
-
+    private NamedStacksSupplier
+            operationStacks = NamedStacksSupplier.cache(this::buildStacks);
+        
     @Override
     public NamedProvider<Stack> getStacks() throws OperationFailedException {
         return operationStacks.get(ProgressReporterNull.get());
     }
 
     @Override
-    public CheckedProgressingSupplier<NamedProvider<Stack>, OperationFailedException>
+    public NamedStacksSupplier
             getStacksAsOperation() {
         return operationStacks;
     }
@@ -103,5 +69,35 @@ public class FinderStacksFromNrgStack implements FinderStacks {
     @Override
     public boolean exists() {
         return delegate.exists();
+    }
+    
+    private NamedProvider<Stack> buildStacks(ProgressReporter progressReporter) throws OperationFailedException {
+        NamedStacksSet stackCollection = new NamedStacksSet();
+
+        // finder NRG stack
+        if (delegate != null && delegate.exists()) {
+
+            // Should we mention when we only have the first 3?
+            stackCollection.addImageStack(
+                    "nrgStack", StoreSupplier.cache( this::extractStack ));
+
+            stackCollection.addFromWithPrefix(
+                    delegate.getNamedStacks(), "nrgChnl-");
+        }
+        return stackCollection; 
+    }
+
+    private Stack extractStack() throws OperationFailedException {
+        try {
+            NRGStackWithParams nrgStackWithParams =
+                    delegate.operationNrgStackWithProgressReporter()
+                            .get(ProgressReporterNull.get());
+            return nrgStackWithParams
+                    .getNrgStack()
+                    .asStack()
+                    .extractUpToThreeChannels();
+        } catch (GetOperationFailedException e) {
+            throw e.asOperationFailedException();
+        }
     }
 }

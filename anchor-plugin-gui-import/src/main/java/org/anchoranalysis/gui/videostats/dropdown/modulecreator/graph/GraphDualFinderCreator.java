@@ -35,7 +35,7 @@ import org.anchoranalysis.core.progress.CheckedProgressingSupplier;
 import org.anchoranalysis.gui.io.loader.manifest.finder.FinderCSVStats;
 import org.anchoranalysis.gui.io.loader.manifest.finder.historyfolder.FinderHistoryFolder;
 import org.anchoranalysis.gui.plot.creator.GraphFromDualFinderCreator;
-import org.anchoranalysis.gui.videostats.dropdown.IAddVideoStatsModule;
+import org.anchoranalysis.gui.videostats.dropdown.AddVideoStatsModule;
 import org.anchoranalysis.gui.videostats.dropdown.NamedModule;
 import org.anchoranalysis.gui.videostats.dropdown.VideoStatsModuleCreatorAndAdder;
 import org.anchoranalysis.gui.videostats.dropdown.VideoStatsModuleGlobalParams;
@@ -64,7 +64,7 @@ public class GraphDualFinderCreator<T> extends ContextualModuleCreator {
     @Override
     public NamedModule[] create(
             String namePrefix,
-            CheckedProgressingSupplier<IAddVideoStatsModule, ? extends Throwable> adder,
+            CheckedProgressingSupplier<AddVideoStatsModule, ? extends Throwable> adder,
             VideoStatsModuleGlobalParams mpg)
             throws CreateException {
 

@@ -55,7 +55,7 @@ public class ExecutedExperimentFileCreator extends FileCreatorGeneralList {
     private List<String> experimentNames;
 
     @Override
-    public void addFilesToList(
+    protected void addFilesToList(
             List<InteractiveFile> listFiles,
             FileCreatorParams params,
             ProgressReporter progressReporter)

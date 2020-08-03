@@ -27,16 +27,12 @@
 package org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.definition;
 
 import org.anchoranalysis.core.error.reporter.ErrorReporter;
-import org.anchoranalysis.core.progress.CheckedProgressingSupplier;
-import org.anchoranalysis.gui.backgroundset.BackgroundSet;
-import org.anchoranalysis.gui.container.background.BackgroundStackContainerException;
 import org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.IGetNames;
+import org.anchoranalysis.gui.videostats.dropdown.BackgroundSetProgressingSupplier;
 
 public interface ChangeableBackgroundDefinition {
 
-    void update(
-            CheckedProgressingSupplier<BackgroundSet, BackgroundStackContainerException>
-                    backgroundSet);
+    void update(BackgroundSetProgressingSupplier backgroundSet);
 
     IGetNames names(ErrorReporter errorReporter);
 

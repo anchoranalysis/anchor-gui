@@ -34,7 +34,7 @@ import org.anchoranalysis.gui.annotation.builder.AnnotationGuiContext;
 import org.anchoranalysis.gui.annotation.export.ExportAnnotation;
 import org.anchoranalysis.gui.file.opened.IOpenedFileGUI;
 import org.anchoranalysis.gui.videostats.dropdown.BoundVideoStatsModuleDropDown;
-import org.anchoranalysis.gui.videostats.dropdown.IAddVideoStatsModule;
+import org.anchoranalysis.gui.videostats.dropdown.AddVideoStatsModule;
 import org.anchoranalysis.gui.videostats.dropdown.OperationCreateBackgroundSetWithAdder;
 import org.anchoranalysis.gui.videostats.dropdown.VideoStatsModuleCreatorAndAdder;
 import org.anchoranalysis.gui.videostats.dropdown.VideoStatsModuleGlobalParams;
@@ -62,7 +62,7 @@ public class AnnotationDropDown {
     }
 
     public void init(
-            IAddVideoStatsModule adder,
+            AddVideoStatsModule adder,
             BoundOutputManagerRouteErrors outputManager,
             VideoStatsModuleGlobalParams mpg)
             throws InitException {
@@ -79,7 +79,7 @@ public class AnnotationDropDown {
     }
 
     private void addAnnotation(
-            IAddVideoStatsModule adder, OutputWriteSettings ows, VideoStatsModuleGlobalParams mpg) {
+            AddVideoStatsModule adder, OutputWriteSettings ows, VideoStatsModuleGlobalParams mpg) {
         String desc = String.format("Annotator: %s", name);
 
         VideoStatsModuleCreator moduleCreator =
@@ -113,7 +113,7 @@ public class AnnotationDropDown {
         }
     }
 
-    private void addChannelViewer(IAddVideoStatsModule adder, VideoStatsModuleGlobalParams mpg) {
+    private void addChannelViewer(AddVideoStatsModule adder, VideoStatsModuleGlobalParams mpg) {
         OperationCreateBackgroundSetWithAdder operationBwsa =
                 new OperationCreateBackgroundSetWithAdder(
                         NRGBackground.createStack(annotation.stacks(), null),

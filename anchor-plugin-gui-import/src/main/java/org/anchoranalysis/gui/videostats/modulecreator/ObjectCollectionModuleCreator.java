@@ -36,7 +36,7 @@ import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.functional.function.CheckedSupplier;
 import org.anchoranalysis.core.idgetter.IDGetterIter;
 import org.anchoranalysis.gui.image.frame.ISliderState;
-import org.anchoranalysis.gui.videostats.dropdown.IAddVideoStatsModule;
+import org.anchoranalysis.gui.videostats.dropdown.AddVideoStatsModule;
 import org.anchoranalysis.gui.videostats.dropdown.ModuleAddUtilities;
 import org.anchoranalysis.gui.videostats.dropdown.VideoStatsModuleGlobalParams;
 import org.anchoranalysis.gui.videostats.dropdown.common.NRGBackground;
@@ -55,7 +55,7 @@ public class ObjectCollectionModuleCreator extends VideoStatsModuleCreator {
     private VideoStatsModuleGlobalParams mpg;
 
     @Override
-    public void createAndAddVideoStatsModule(IAddVideoStatsModule adder)
+    public void createAndAddVideoStatsModule(AddVideoStatsModule adder)
             throws VideoStatsModuleCreateException {
         try {
             OverlayCollection overlays =

@@ -31,15 +31,15 @@ import org.anchoranalysis.anchor.mpp.bean.init.MPPInitParams;
 import org.anchoranalysis.core.cache.CachedSupplier;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.InitException;
-import org.anchoranalysis.core.progress.CachedProgressingSupplier;
 import org.anchoranalysis.core.progress.ProgressReporter;
 import org.anchoranalysis.gui.backgroundset.BackgroundSet;
 import org.anchoranalysis.gui.backgroundset.BackgroundSetFactory;
 import org.anchoranalysis.gui.container.background.BackgroundStackContainerException;
 import org.anchoranalysis.gui.image.frame.ISliderState;
 import org.anchoranalysis.gui.interactivebrowser.MarkEvaluatorSetForImage;
-import org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.IBackgroundUpdater;
-import org.anchoranalysis.gui.videostats.dropdown.IAddVideoStatsModule;
+import org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.BackgroundUpdater;
+import org.anchoranalysis.gui.videostats.dropdown.AddVideoStatsModule;
+import org.anchoranalysis.gui.videostats.dropdown.BackgroundSetProgressingSupplier;
 import org.anchoranalysis.gui.videostats.dropdown.IUpdatableMarkEvaluator;
 import org.anchoranalysis.gui.videostats.dropdown.ModuleAddUtilities;
 import org.anchoranalysis.gui.videostats.dropdown.VideoStatsModuleGlobalParams;
@@ -61,7 +61,7 @@ class ProposerEvaluatorModuleCreator extends VideoStatsModuleCreator {
     private VideoStatsModuleGlobalParams mpg;
 
     @Override
-    public void createAndAddVideoStatsModule(IAddVideoStatsModule adder)
+    public void createAndAddVideoStatsModule(AddVideoStatsModule adder)
             throws VideoStatsModuleCreateException {
 
         try {
@@ -78,11 +78,10 @@ class ProposerEvaluatorModuleCreator extends VideoStatsModuleCreator {
                     imageFrame.init(
                             markEvaluatorSet,
                             adder.getSubgroup().getDefaultModuleState().getState(),
-                            nrgBackground.getBackgroundSet(),
                             outputWriteSettings,
                             mpg);
 
-            IBackgroundUpdater backgroundUpdater =
+            BackgroundUpdater backgroundUpdater =
                     imageFrame
                             .controllerBackgroundMenu()
                             .add(mpg, nrgBackground.getBackgroundSet());
@@ -91,7 +90,7 @@ class ProposerEvaluatorModuleCreator extends VideoStatsModuleCreator {
                     e -> {
                         if (e.getMarkEvaluator() != null) {
                             backgroundUpdater.update(
-                                    CachedProgressingSupplier.cache( progressReporter->
+                                    BackgroundSetProgressingSupplier.cache( progressReporter->
                                             createBackgroundSetFromExisting(
                                                     progressReporter,
                                                     e.getMarkEvaluator()

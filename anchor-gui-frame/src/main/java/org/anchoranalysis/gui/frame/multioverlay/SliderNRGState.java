@@ -27,7 +27,7 @@
 package org.anchoranalysis.gui.frame.multioverlay;
 
 import org.anchoranalysis.gui.image.frame.ISliderState;
-import org.anchoranalysis.gui.videostats.dropdown.IAddVideoStatsModule;
+import org.anchoranalysis.gui.videostats.dropdown.AddVideoStatsModule;
 import org.anchoranalysis.gui.videostats.dropdown.common.NRGBackground;
 
 class SliderNRGState {
@@ -45,7 +45,7 @@ class SliderNRGState {
         return slider;
     }
 
-    public IAddVideoStatsModule addNrgStackToAdder(IAddVideoStatsModule adder) {
+    public AddVideoStatsModule addNrgStackToAdder(AddVideoStatsModule adder) {
         return nrgBackground.addNrgStackToAdder(adder);
     }
 }

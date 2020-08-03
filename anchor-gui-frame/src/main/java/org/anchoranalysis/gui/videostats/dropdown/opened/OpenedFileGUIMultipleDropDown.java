@@ -40,7 +40,7 @@ import org.anchoranalysis.gui.frame.multioverlay.RasterMultiCreator;
 import org.anchoranalysis.gui.frame.multiraster.NamedRasterSet;
 import org.anchoranalysis.gui.mark.MarkDisplaySettings;
 import org.anchoranalysis.gui.videostats.dropdown.DualMenuWrapper;
-import org.anchoranalysis.gui.videostats.dropdown.IAddVideoStatsModule;
+import org.anchoranalysis.gui.videostats.dropdown.AddVideoStatsModule;
 import org.anchoranalysis.gui.videostats.dropdown.VideoStatsModuleCreatorAndAdder;
 import org.anchoranalysis.gui.videostats.dropdown.VideoStatsModuleGlobalParams;
 import org.anchoranalysis.gui.videostats.internalframe.cfgtorgb.MultiInput;
@@ -55,12 +55,12 @@ import org.anchoranalysis.gui.videostats.operation.combine.IVideoStatsOperationC
 public class OpenedFileGUIMultipleDropDown {
 
     @Getter private JPopupMenu popupMenu = new JPopupMenu();
-    private IAddVideoStatsModule adder;
+    private AddVideoStatsModule adder;
     private VideoStatsModuleGlobalParams mpg;
     private MarkDisplaySettings markDisplaySettings;
 
     public OpenedFileGUIMultipleDropDown(
-            IAddVideoStatsModule adder,
+            AddVideoStatsModule adder,
             List<IOpenedFileGUI> listOpenedGUI,
             VideoStatsModuleGlobalParams moduleParamsGlobal,
             MarkDisplaySettings markDisplaySettings) {

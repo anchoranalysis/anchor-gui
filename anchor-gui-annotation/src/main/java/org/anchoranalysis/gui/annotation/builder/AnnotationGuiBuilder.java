@@ -33,8 +33,6 @@ import org.anchoranalysis.core.cache.CachedSupplier;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.log.Logger;
-import org.anchoranalysis.core.name.provider.NamedProvider;
-import org.anchoranalysis.core.progress.CheckedProgressingSupplier;
 import org.anchoranalysis.core.progress.ProgressReporterMultiple;
 import org.anchoranalysis.gui.annotation.AnnotationBackground;
 import org.anchoranalysis.gui.annotation.export.ExportAnnotation;
@@ -44,7 +42,7 @@ import org.anchoranalysis.gui.videostats.internalframe.annotator.AnnotationFrame
 import org.anchoranalysis.gui.videostats.internalframe.annotator.AnnotationInitParams;
 import org.anchoranalysis.gui.videostats.internalframe.annotator.AnnotationPanelParams;
 import org.anchoranalysis.gui.videostats.internalframe.annotator.navigation.PanelNavigation;
-import org.anchoranalysis.image.stack.Stack;
+import org.anchoranalysis.image.stack.NamedStacksSupplier;
 
 public abstract class AnnotationGuiBuilder<T extends AnnotationInitParams> {
 
@@ -94,7 +92,7 @@ public abstract class AnnotationGuiBuilder<T extends AnnotationInitParams> {
     public abstract Path deletePath();
 
     // Cached-operation
-    public abstract CheckedProgressingSupplier<NamedProvider<Stack>, CreateException> stacks();
+    public abstract NamedStacksSupplier stacks();
 
     public abstract String descriptiveName();
 

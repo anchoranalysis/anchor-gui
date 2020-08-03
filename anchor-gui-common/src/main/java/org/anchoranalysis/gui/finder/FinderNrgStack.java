@@ -29,16 +29,15 @@ package org.anchoranalysis.gui.finder;
 import java.io.IOException;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.error.reporter.ErrorReporter;
-import org.anchoranalysis.core.functional.function.CheckedSupplier;
 import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.name.provider.NamedProvider;
-import org.anchoranalysis.core.progress.CachedProgressingSupplier;
 import org.anchoranalysis.core.progress.CheckedProgressingSupplier;
-import org.anchoranalysis.core.progress.ProgressReporter;
 import org.anchoranalysis.core.progress.ProgressReporterNull;
 import org.anchoranalysis.feature.nrg.NRGElemParamsFromImage;
 import org.anchoranalysis.feature.nrg.NRGStackWithParams;
+import org.anchoranalysis.gui.videostats.dropdown.common.NRGStackSupplier;
 import org.anchoranalysis.image.io.bean.rasterreader.RasterReader;
+import org.anchoranalysis.image.stack.NamedStacksSupplier;
 import org.anchoranalysis.image.stack.Stack;
 import org.anchoranalysis.io.manifest.ManifestRecorder;
 import org.anchoranalysis.io.manifest.finder.Finder;
@@ -48,25 +47,23 @@ import org.anchoranalysis.io.manifest.finder.FinderSerializedObject;
 public class FinderNrgStack implements Finder {
 
     private FinderRasterFolder finderRasterFolder;
-    private CheckedProgressingSupplier<NRGStackWithParams, GetOperationFailedException>
-            operationCombined;
+    private NRGStackSupplier nrgStackSupplier;
     private FinderKeyValueParams finderImageParams;
     private FinderSerializedObject<NRGElemParamsFromImage> finderImageParamsLegacy;
 
-    private CheckedProgressingSupplier<NamedProvider<Stack>, OperationFailedException>
-            operationStacks;
+    private NamedStacksSupplier operationStacks;
 
     public FinderNrgStack(RasterReader rasterReader, ErrorReporter errorReporter) {
         finderRasterFolder = new FinderRasterFolder("nrgStack", "nrgStack", rasterReader);
 
-        this.operationStacks =
-                CachedProgressingSupplier.cache( progressReporter -> finderRasterFolder.createStackCollection(true) );
+        this.operationStacks = 
+                NamedStacksSupplier.cache( progressReporter -> finderRasterFolder.createStackCollection(true) );
 
         this.finderImageParams = new FinderKeyValueParams("nrgStackParams", errorReporter);
         this.finderImageParamsLegacy =
                 new FinderSerializedObject<>("nrgStackImageParams", errorReporter);
 
-        this.operationCombined =  CachedProgressingSupplier.cache(this::findStack);
+        this.nrgStackSupplier = NRGStackSupplier.cache(this::findStack);
     }
 
     @Override
@@ -81,24 +78,23 @@ public class FinderNrgStack implements Finder {
     }
 
     public NRGStackWithParams getNrgStack() throws GetOperationFailedException {
-        return operationCombined.get(ProgressReporterNull.get());
+        return nrgStackSupplier.get();
     }
 
     public NamedProvider<Stack> getNamedStacks() throws OperationFailedException {
         return operationStacks.get(ProgressReporterNull.get());
     }
 
-    public CheckedSupplier<NRGStackWithParams, GetOperationFailedException>
-            operationNrgStack() {
-        return operationCombined.withoutProgressReporter();
+    public NRGStackSupplier nrgStackSupplier() {
+        return nrgStackSupplier;
     }
 
     public CheckedProgressingSupplier<NRGStackWithParams, GetOperationFailedException>
             operationNrgStackWithProgressReporter() {
-        return operationCombined;
+        return progressReporter -> getNrgStack();
     }
     
-    private NRGStackWithParams findStack(ProgressReporter progressReporter) throws GetOperationFailedException {
+    private NRGStackWithParams findStack() throws GetOperationFailedException {
 
         try {
             NRGStackWithParams nrgStack = FindNrgStackFromStacks.find(operationStacks);

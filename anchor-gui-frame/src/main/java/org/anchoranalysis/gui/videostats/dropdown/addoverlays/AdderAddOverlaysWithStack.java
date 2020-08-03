@@ -31,20 +31,20 @@ import org.anchoranalysis.anchor.overlay.collection.OverlayCollection;
 import org.anchoranalysis.core.error.reporter.ErrorReporter;
 import org.anchoranalysis.core.event.IRoutableReceivable;
 import org.anchoranalysis.core.property.change.PropertyValueChangeEvent;
-import org.anchoranalysis.gui.videostats.dropdown.IAddVideoStatsModule;
+import org.anchoranalysis.gui.videostats.dropdown.AddVideoStatsModule;
 import org.anchoranalysis.gui.videostats.link.LinkModules;
 import org.anchoranalysis.gui.videostats.module.VideoStatsModule;
 import org.anchoranalysis.gui.videostats.module.VideoStatsModuleSubgroup;
 import org.anchoranalysis.gui.videostats.threading.InteractiveThreadPool;
 
-public class AdderAddOverlaysWithStack implements IAddVideoStatsModule {
+public class AdderAddOverlaysWithStack implements AddVideoStatsModule {
 
-    private final IAddVideoStatsModule delegate;
+    private final AddVideoStatsModule delegate;
     private final InteractiveThreadPool threadPool;
     private final ErrorReporter errorReporter;
 
     public AdderAddOverlaysWithStack(
-            IAddVideoStatsModule adder,
+            AddVideoStatsModule adder,
             InteractiveThreadPool threadPool,
             ErrorReporter errorReporter) {
         super();
@@ -95,7 +95,7 @@ public class AdderAddOverlaysWithStack implements IAddVideoStatsModule {
     }
 
     @Override
-    public IAddVideoStatsModule createChild() {
+    public AddVideoStatsModule createChild() {
         return delegate.createChild();
     }
 }

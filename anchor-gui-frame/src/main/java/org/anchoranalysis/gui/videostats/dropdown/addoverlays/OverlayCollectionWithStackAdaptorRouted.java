@@ -37,7 +37,7 @@ import org.anchoranalysis.core.event.RoutableListener;
 import org.anchoranalysis.core.property.change.PropertyValueChangeEvent;
 import org.anchoranalysis.feature.nrg.NRGStackWithParams;
 import org.anchoranalysis.gui.image.OverlayCollectionWithNrgStack;
-import org.anchoranalysis.gui.videostats.INRGStackGetter;
+import org.anchoranalysis.gui.videostats.AssociatedNRGStackGetter;
 import org.anchoranalysis.gui.videostats.threading.InteractiveThreadPool;
 import org.anchoranalysis.gui.videostats.threading.InteractiveWorker;
 
@@ -50,7 +50,7 @@ class OverlayCollectionWithStackAdaptorRouted
 
     public OverlayCollectionWithStackAdaptorRouted(
             IRoutableReceivable<PropertyValueChangeEvent<OverlayCollection>> source,
-            final INRGStackGetter associatedRasterGetter,
+            final AssociatedNRGStackGetter associatedRasterGetter,
             final InteractiveThreadPool threadPool,
             final ErrorReporter errorReporter) {
 
@@ -70,13 +70,13 @@ class OverlayCollectionWithStackAdaptorRouted
 
     private class TriggerEvents extends InteractiveWorker<NRGStackWithParams, Void> {
 
-        private INRGStackGetter nrgStackGetter;
+        private AssociatedNRGStackGetter nrgStackGetter;
         private ErrorReporter errorReporter;
         private RoutableEvent<PropertyValueChangeEvent<OverlayCollection>> evt;
 
         public TriggerEvents(
                 RoutableEvent<PropertyValueChangeEvent<OverlayCollection>> evt,
-                INRGStackGetter nrgStackGetter,
+                AssociatedNRGStackGetter nrgStackGetter,
                 ErrorReporter errorReporter) {
             super();
             this.nrgStackGetter = nrgStackGetter;

@@ -33,12 +33,12 @@ import org.anchoranalysis.annotation.io.bean.strategy.AnnotatorStrategy;
 import org.anchoranalysis.annotation.io.input.AnnotationWithStrategy;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.name.provider.NamedProvider;
-import org.anchoranalysis.core.progress.CheckedProgressingSupplier;
 import org.anchoranalysis.core.progress.ProgressReporterMultiple;
 import org.anchoranalysis.gui.annotation.AnnotationBackground;
 import org.anchoranalysis.gui.container.background.BackgroundStackContainerException;
 import org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.definition.ChangeableBackgroundDefinition;
 import org.anchoranalysis.gui.videostats.internalframe.annotator.AnnotationInitParams;
+import org.anchoranalysis.image.stack.NamedStacksSupplier;
 import org.anchoranalysis.image.stack.Stack;
 import org.anchoranalysis.io.error.AnchorIOException;
 
@@ -67,7 +67,7 @@ public abstract class AnnotationGuiBuilderWithDelegate<
 
     // Cached-operation
     @Override
-    public CheckedProgressingSupplier<NamedProvider<Stack>, CreateException> stacks() {
+    public NamedStacksSupplier stacks() {
         return delegate.stacks();
     }
 

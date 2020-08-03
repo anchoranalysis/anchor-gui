@@ -29,7 +29,7 @@ package org.anchoranalysis.gui.videostats.modulecreator;
 import java.awt.Component;
 import java.util.Optional;
 import org.anchoranalysis.core.progress.ProgressReporter;
-import org.anchoranalysis.gui.videostats.dropdown.IAddVideoStatsModule;
+import org.anchoranalysis.gui.videostats.dropdown.AddVideoStatsModule;
 import org.anchoranalysis.gui.videostats.module.VideoStatsModuleCreateException;
 import org.anchoranalysis.gui.videostats.operation.combine.IVideoStatsOperationCombine;
 
@@ -39,7 +39,7 @@ public abstract class VideoStatsModuleCreator {
     public void beforeBackground(Component parentComponent) {}
     ;
 
-    public abstract void createAndAddVideoStatsModule(IAddVideoStatsModule adder)
+    public abstract void createAndAddVideoStatsModule(AddVideoStatsModule adder)
             throws VideoStatsModuleCreateException;
 
     public void doInBackground(ProgressReporter progressReporter)

@@ -31,7 +31,7 @@ import org.anchoranalysis.feature.nrg.NRGStackWithParams;
 
 // Gets a raster associated with this module for calculating marks
 @FunctionalInterface
-public interface INRGStackGetter {
+public interface AssociatedNRGStackGetter {
 
     NRGStackWithParams getAssociatedNrgStack() throws GetOperationFailedException;
 }

@@ -34,7 +34,7 @@ import org.anchoranalysis.gui.videostats.module.VideoStatsModuleCreateException;
 
 public class ModuleAddUtilities {
 
-    public static void add(IAddVideoStatsModule adder, IModuleCreatorDefaultState creator)
+    public static void add(AddVideoStatsModule adder, IModuleCreatorDefaultState creator)
             throws VideoStatsModuleCreateException {
         VideoStatsModule module =
                 creator.createVideoStatsModule(
@@ -43,7 +43,7 @@ public class ModuleAddUtilities {
     }
 
     public static void add(
-            IAddVideoStatsModule adder,
+            AddVideoStatsModule adder,
             IModuleCreatorDefaultStateSliderState creator,
             ISliderState sliderState)
             throws VideoStatsModuleCreateException {

@@ -29,10 +29,8 @@ package org.anchoranalysis.gui.videostats.dropdown;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import org.anchoranalysis.core.name.provider.NamedProvider;
-import org.anchoranalysis.core.progress.CachedProgressingSupplier;
 import org.anchoranalysis.core.progress.CheckedProgressingSupplier;
 import org.anchoranalysis.core.progress.ProgressReporterNull;
-import org.anchoranalysis.gui.backgroundset.BackgroundSet;
 import org.anchoranalysis.gui.backgroundset.BackgroundSetFactory;
 import org.anchoranalysis.gui.container.background.BackgroundStackContainerException;
 import org.anchoranalysis.gui.series.TimeSequenceProvider;
@@ -43,22 +41,19 @@ import org.anchoranalysis.image.stack.wrap.WrapStackAsTimeSequence;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class CreateBackgroundSetFactory {
 
-    public static CheckedProgressingSupplier<BackgroundSet, BackgroundStackContainerException>
-            createCached(NamedProvider<Stack> namedProvider) {
+    public static BackgroundSetProgressingSupplier createCached(NamedProvider<Stack> namedProvider) {
         return createCached(
                 progressReporter ->
                         new TimeSequenceProvider(new WrapStackAsTimeSequence(namedProvider), 1));
     }
 
-    public static CheckedProgressingSupplier<BackgroundSet, BackgroundStackContainerException>
-            createCached(
+    public static BackgroundSetProgressingSupplier createCached(
                     CheckedProgressingSupplier<TimeSequenceProvider, ? extends Throwable>
                             stacksOverTime) {
-        return CachedProgressingSupplier.cache(
-                progressReporter -> {
+        return BackgroundSetProgressingSupplier.cache( progressReporter -> {
                     try {
                         NamedProvider<TimeSequence> stacks =
-                                stacksOverTime.get(progressReporter).sequence();
+                                stacksOverTime.get(progressReporter).getSequence();
 
                         return BackgroundSetFactory.createBackgroundSet(
                                 stacks, ProgressReporterNull.get());

@@ -30,7 +30,7 @@ import java.io.File;
 import java.util.Optional;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.gui.file.opened.OpenedFile;
-import org.anchoranalysis.gui.videostats.dropdown.IAddVideoStatsModule;
+import org.anchoranalysis.gui.videostats.dropdown.AddVideoStatsModule;
 import org.anchoranalysis.io.output.bound.BoundOutputManagerRouteErrors;
 
 // An entity that can be opened in the InteractiveBrowser
@@ -44,7 +44,7 @@ public abstract class InteractiveFile implements Comparable<InteractiveFile> {
     public abstract String type();
 
     public abstract OpenedFile open(
-            final IAddVideoStatsModule globalSubgroupAdder,
+            final AddVideoStatsModule globalSubgroupAdder,
             final BoundOutputManagerRouteErrors outputManager)
             throws OperationFailedException;
 

@@ -75,10 +75,14 @@ public class BuilderWholeImage
             boolean useDefaultCfg)
             throws CreateException {
 
-        AnnotationBackground background =
-                createBackground(prm, stacks().get(ProgressReporterNull.get()));
-
-        return new InitParamsWholeImage(background, context.getAnnotationRefresher());
+        try {
+            AnnotationBackground background =
+                    createBackground(prm, stacks().get(ProgressReporterNull.get()));
+    
+            return new InitParamsWholeImage(background, context.getAnnotationRefresher());
+        } catch (OperationFailedException e) {
+            throw new CreateException(e);
+        }
     }
 
     @Override

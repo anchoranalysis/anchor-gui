@@ -33,27 +33,18 @@ import java.util.Set;
 import java.util.TreeSet;
 import org.anchoranalysis.bean.shared.StringMap;
 import org.anchoranalysis.core.error.reporter.ErrorReporter;
-import org.anchoranalysis.core.progress.CheckedProgressingSupplier;
 import org.anchoranalysis.core.progress.ProgressReporterNull;
-import org.anchoranalysis.gui.backgroundset.BackgroundSet;
 import org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.IGetNames;
+import org.anchoranalysis.gui.videostats.dropdown.BackgroundSetProgressingSupplier;
+import lombok.AllArgsConstructor;
 
+@AllArgsConstructor
 class NamesFromMap implements IGetNames {
 
-    private CheckedProgressingSupplier<BackgroundSet, ? extends Throwable> backgroundSet;
-    private ErrorReporter errorReporter;
     private StringMap map;
-
-    public NamesFromMap(
-            StringMap map,
-            CheckedProgressingSupplier<BackgroundSet, ? extends Throwable> backgroundSet,
-            ErrorReporter errorReporter) {
-        super();
-        this.backgroundSet = backgroundSet;
-        this.errorReporter = errorReporter;
-        this.map = map;
-    }
-
+    private BackgroundSetProgressingSupplier backgroundSet;
+    private ErrorReporter errorReporter;
+    
     @Override
     public List<String> names() {
         try {
@@ -63,7 +54,7 @@ class NamesFromMap implements IGetNames {
 
             return new ArrayList<>(createdSortedSet(mapping, backgroundNames));
 
-        } catch (Throwable e) {
+        } catch (Exception e) {
             errorReporter.recordError(NamesFromMap.class, e);
             return new ArrayList<>();
         }
