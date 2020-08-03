@@ -278,10 +278,8 @@ public class OpenedFileGUIMultipleDropDown {
             VideoStatsOperation src, VideoStatsOperationMenu menu) {
 
         for (VideoStatsOperationOrMenu vsoom : menu.getListOperations()) {
-            if (vsoom.isOperation()) {
-                if (src.getName().equals(vsoom.getOperation().getName())) {
-                    return vsoom.getOperation();
-                }
+            if (vsoom.isOperation() && src.getName().equals(vsoom.getOperation().getName())) {
+               return vsoom.getOperation();
             }
         }
         return null;

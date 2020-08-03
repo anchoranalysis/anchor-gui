@@ -29,11 +29,11 @@ package org.anchoranalysis.gui.videostats.internalframe.annotator;
 import org.anchoranalysis.gui.annotation.AnnotationBackground;
 import org.anchoranalysis.gui.videostats.dropdown.BackgroundSetProgressingSupplier;
 
-public abstract class AnnotationInitParams {
+public interface AnnotationInitParams {
 
-    public BackgroundSetProgressingSupplier getBackgroundSetOp() {
+    default BackgroundSetProgressingSupplier getBackgroundSetOp() {
         return getBackground().getBackgroundSetOp();
     }
 
-    public abstract AnnotationBackground getBackground();
+    AnnotationBackground getBackground();
 }

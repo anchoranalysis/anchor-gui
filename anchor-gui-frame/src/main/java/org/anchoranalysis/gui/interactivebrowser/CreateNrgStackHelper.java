@@ -26,6 +26,7 @@
 
 package org.anchoranalysis.gui.interactivebrowser;
 
+import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import org.anchoranalysis.anchor.mpp.bean.init.MPPInitParams;
 import org.anchoranalysis.core.error.CreateException;
@@ -37,7 +38,7 @@ import org.anchoranalysis.feature.nrg.NRGStackWithParams;
 import org.anchoranalysis.image.experiment.identifiers.StackIdentifiers;
 import org.anchoranalysis.image.stack.Stack;
 
-@NoArgsConstructor
+@NoArgsConstructor(access=AccessLevel.PRIVATE)
 class CreateNrgStackHelper {
 
     // We first retrieve a NamedImgCollection which we use to construct our real NrgStack for

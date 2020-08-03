@@ -52,13 +52,13 @@ public class OperationCreateBackgroundSetWithAdder {
     private NRGBackgroundAdder<BackgroundStackContainerException> nrgBackgroundNew;
 
     private CheckedProgressingSupplier<AddVideoStatsModule, BackgroundStackContainerException>
-            operationIAddVideoStatsModule;
+            addVideoStatsModule;
 
-    private BackgroundSetProgressingSupplier backgroundSet;
+    private BackgroundSetProgressingSupplier backgroundSetSupplier;
 
     private final CheckedProgressingSupplier<
                     BackgroundSetWithAdder, BackgroundStackContainerException>
-            cachedOp;
+            withAdderSupplier;
 
     public OperationCreateBackgroundSetWithAdder(
             NRGBackground nrgBackground,
@@ -74,26 +74,25 @@ public class OperationCreateBackgroundSetWithAdder {
         // A new nrgBackground that includes the changed operation for the background
         this.nrgBackgroundNew =
                 new NRGBackgroundAdder<>(
-                        nrgBackground.copyChangeOp(backgroundSet),
-                        operationIAddVideoStatsModule);
+                        nrgBackground.copyChangeOp(backgroundSetSupplier),
+                        addVideoStatsModule);
 
-        this.cachedOp = CachedProgressingSupplier.cache(this::execute);
+        this.withAdderSupplier = CachedProgressingSupplier.cache(this::createBackgroundSetWithAdder);
 
-        this.operationIAddVideoStatsModule =
+        this.addVideoStatsModule =
                 CachedProgressingSupplier.cache(
-                        progressReporter -> cachedOp.get(progressReporter).getAdder());
+                        progressReporter -> withAdderSupplier.get(progressReporter).getAdder());
 
-        this.backgroundSet =
+        this.backgroundSetSupplier =
                 BackgroundSetProgressingSupplier.cache(
-                        progressReporter -> cachedOp.get(progressReporter).getBackgroundSet());
+                        progressReporter -> withAdderSupplier.get(progressReporter).getBackgroundSet());
     }
 
-    private BackgroundSetWithAdder execute(ProgressReporter progressReporter)
+    private BackgroundSetWithAdder createBackgroundSetWithAdder(ProgressReporter progressReporter)
             throws BackgroundStackContainerException {
         BackgroundSetWithAdder bwsa = new BackgroundSetWithAdder();
 
-        BackgroundSet backgroundSet;
-        backgroundSet = nrgBackground.getBackgroundSet().get(progressReporter);
+        BackgroundSet backgroundSet = nrgBackground.getBackgroundSet().get(progressReporter);
 
         bwsa.setBackgroundSet(backgroundSet);
 
@@ -130,7 +129,7 @@ public class OperationCreateBackgroundSetWithAdder {
 
     public CheckedProgressingSupplier<AddVideoStatsModule, BackgroundStackContainerException>
             operationAdder() {
-        return operationIAddVideoStatsModule;
+        return addVideoStatsModule;
     }
 
     public NRGBackgroundAdder<BackgroundStackContainerException> nrgBackground() {

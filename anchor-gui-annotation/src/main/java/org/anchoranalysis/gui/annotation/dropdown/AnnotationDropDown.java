@@ -27,7 +27,6 @@
 package org.anchoranalysis.gui.annotation.dropdown;
 
 import javax.swing.JFrame;
-import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.gui.annotation.AnnotatorModuleCreator;
 import org.anchoranalysis.gui.annotation.builder.AnnotationGuiBuilder;
 import org.anchoranalysis.gui.annotation.builder.AnnotationGuiContext;
@@ -64,8 +63,7 @@ public class AnnotationDropDown {
     public void init(
             AddVideoStatsModule adder,
             BoundOutputManagerRouteErrors outputManager,
-            VideoStatsModuleGlobalParams mpg)
-            throws InitException {
+            VideoStatsModuleGlobalParams mpg) {
 
         addAnnotation(adder, outputManager.getOutputWriteSettings(), mpg);
 

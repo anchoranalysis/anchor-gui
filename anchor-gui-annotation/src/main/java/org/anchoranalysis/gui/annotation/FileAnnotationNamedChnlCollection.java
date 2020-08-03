@@ -29,7 +29,6 @@ package org.anchoranalysis.gui.annotation;
 import java.io.File;
 import java.util.Optional;
 import org.anchoranalysis.core.cache.CachedSupplier;
-import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.gui.annotation.builder.AnnotationGuiBuilder;
 import org.anchoranalysis.gui.annotation.builder.AnnotationGuiContext;
@@ -99,15 +98,10 @@ public class FileAnnotationNamedChnlCollection extends InteractiveFile {
             AddVideoStatsModule globalSubgroupAdder, BoundOutputManagerRouteErrors outputManager)
             throws OperationFailedException {
 
-        AnnotationRefresher refresherResetCache =
-                new AnnotationRefresher() {
-
-                    @Override
-                    public void refreshAnnotation() {
-                        invalidateProgressState();
-                        annotationRefresher.refreshAnnotation();
-                    }
-                };
+        AnnotationRefresher refresherResetCache = () -> {
+            invalidateProgressState();
+            annotationRefresher.refreshAnnotation();
+        };
 
         AnnotationDropDown dropDown =
                 new AnnotationDropDown(
@@ -115,11 +109,7 @@ public class FileAnnotationNamedChnlCollection extends InteractiveFile {
                         new AnnotationGuiContext(refresherResetCache, markEvaluatorManager),
                         identifier());
 
-        try {
-            dropDown.init(globalSubgroupAdder, outputManager, mpg);
-        } catch (InitException e) {
-            throw new OperationFailedException(e);
-        }
+        dropDown.init(globalSubgroupAdder, outputManager, mpg);
 
         return new OpenedFileGUI(this, dropDown.openedFileGUI());
     }

@@ -70,8 +70,6 @@ import org.anchoranalysis.plugin.gui.bean.graphdefinition.line.GraphDefinitionLi
 // TODO needs heavy refactoring for readability
 public class CfgNRGHistoryMenu {
 
-    // private static Log log = LogFactory.getLog(CfgNRGHistoryMenu.class);
-
     private final IAddModuleToMenu adder;
 
     // Exposed creators
@@ -234,10 +232,7 @@ public class CfgNRGHistoryMenu {
                                             mpg.getGraphColorScheme()),
                                     false,
                                     mpg);
-                            /*addModule( graphSubMenu, new GraphCSVStatisticModuleCreator( new GraphDefinitionLineIterVsAccptProb(), finderCSVStats), false );
-                            addModule( graphSubMenu, new GraphCSVStatisticModuleCreator( new GraphDefinitionLineIterVsAccptProbAll(), finderCSVStats), false );
-                            addModule( graphSubMenu, new GraphCSVStatisticModuleCreator( new GraphDefinitionLineIterVsAccptProbRand(), finderCSVStats ), false );
-                            addModule( graphSubMenu, new GraphCSVStatisticModuleCreator( new GraphDefinitionLineIterVsAccptProbMultipleSeries(), finderCSVStats ), false);*/
+
                             addCSVStatistic(
                                     graphSubMenu,
                                     new GraphDefinitionLineIterVsTemperature(
@@ -262,7 +257,7 @@ public class CfgNRGHistoryMenu {
                                     graphSubMenu.createSubMenu(
                                             "Kernel - Rate of Acceptance", false);
 
-                            String kernelNames[];
+                            String[] kernelNames;
                             try {
                                 KernelProposer<CfgNRGPixelized> kp = finderKernelProposer.get();
 

@@ -72,8 +72,6 @@ public class InternalFrameMarkProposerEvaluator {
     private OutputPanel outputPanel;
     private ErrorReporter errorReporter;
 
-    // A panel which incorporates both our failure dialog and options
-    private JPanel bottomPanel;
     private ProposerFailureDescriptionPanel failurePanel;
 
     public InternalFrameMarkProposerEvaluator(ErrorReporter errorReporter) {
@@ -133,11 +131,12 @@ public class InternalFrameMarkProposerEvaluator {
                 new HistoryNavigator(new ShowEvaluationResultFromHistoryNavigator(cfgShower));
     }
 
+    /** A panel which incorporates both our failure dialog and options */
     private JPanel createBottomPanel() {
-        this.bottomPanel = new JPanel();
-        this.bottomPanel.setLayout(new BorderLayout());
-        this.bottomPanel.add(failurePanel.getPanel(), BorderLayout.CENTER);
-        this.bottomPanel.add(createBotttomMultipleLines(), BorderLayout.SOUTH);
+        JPanel bottomPanel = new JPanel();
+        bottomPanel.setLayout(new BorderLayout());
+        bottomPanel.add(failurePanel.getPanel(), BorderLayout.CENTER);
+        bottomPanel.add(createBotttomMultipleLines(), BorderLayout.SOUTH);
         return bottomPanel;
     }
 

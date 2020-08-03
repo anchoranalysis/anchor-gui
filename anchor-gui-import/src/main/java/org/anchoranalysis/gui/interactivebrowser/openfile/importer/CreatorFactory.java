@@ -30,7 +30,10 @@ import java.io.File;
 import java.util.function.BiConsumer;
 import org.anchoranalysis.gui.bean.filecreator.FileCreator;
 import org.apache.commons.io.FilenameUtils;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 
+@NoArgsConstructor(access=AccessLevel.PRIVATE)
 class CreatorFactory {
 
     public static <S extends FileCreator, T> FileCreator create(

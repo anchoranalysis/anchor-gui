@@ -41,11 +41,14 @@ import org.anchoranalysis.gui.bean.filecreator.NamedSingleStackCreator;
 import org.anchoranalysis.gui.interactivebrowser.openfile.type.NrgSchemeCreatorState;
 import org.anchoranalysis.image.io.input.ProvidesStackInput;
 import org.anchoranalysis.io.bean.input.InputManager;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 
+@NoArgsConstructor(access=AccessLevel.PRIVATE)
 class XMLBeanListHelper {
 
-    public static FileCreator createSingleStack(
-            InputManager<? extends ProvidesStackInput> inputManager, File f) {
+    public static <T extends ProvidesStackInput> FileCreator createSingleStack(
+            InputManager<T> inputManager, File f) {
         return CreatorFactory.create(
                 new NamedSingleStackCreator(),
                 inputManager,
@@ -56,12 +59,12 @@ class XMLBeanListHelper {
 
     @SuppressWarnings("unchecked")
     public static FileCreator creatorForList(List<Object> list, File f) throws CreateException {
-        if (list.size() == 0) {
+        if (list.isEmpty()) {
             throw new CreateException(
                     "There are no bean in the list, so cannot figure out the type");
         }
 
-        Object bean = (Object) list; // Upcast to make down-casting easy later
+        Object bean = list; // Upcast to make down-casting easy later
         Object firstItem = list.get(0);
 
         if (firstItem instanceof NamedBean) {
