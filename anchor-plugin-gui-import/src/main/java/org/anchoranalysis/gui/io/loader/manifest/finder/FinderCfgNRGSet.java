@@ -37,38 +37,23 @@ import org.anchoranalysis.gui.videostats.dropdown.MenuAddException;
 import org.anchoranalysis.io.manifest.ManifestRecorder;
 import org.anchoranalysis.io.manifest.deserializer.folder.LoadContainer;
 import org.anchoranalysis.io.manifest.finder.Finder;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
+@RequiredArgsConstructor
 public class FinderCfgNRGSet implements Finder, ContainerGetter<CfgNRGInstantState> {
 
-    // Constructor fields
-    private String setName;
-    private String manifestNameCfgNRGHistory;
+    // START REQUIRED ARGUMENTS
+    @Getter private final String setName;
+    private final String csvStatsName;
+    private final String manifestNameCfgNRGHistory;
+    private final FinderContext context;
+    private final FinderCfgNRGSet secondary;
+    private final FinderCfgNRGSet tertiary;
+    // END REQUIRED ARGUMENTS
 
-    private String csvStatsName;
-    private FinderContext context;
-
-    // Return
     private CfgNRGHistoryMenu dropDown;
     private FinderHistoryFolder<CfgNRGInstantState> finderCfgNRGHistory;
-
-    private FinderCfgNRGSet secondary;
-    private FinderCfgNRGSet tertiary;
-
-    public FinderCfgNRGSet(
-            String setName,
-            String csvStatsName,
-            String manifestNameCfgNRGHistory,
-            FinderContext context,
-            FinderCfgNRGSet secondary,
-            FinderCfgNRGSet tertiary) {
-        super();
-        this.setName = setName;
-        this.manifestNameCfgNRGHistory = manifestNameCfgNRGHistory;
-        this.csvStatsName = csvStatsName;
-        this.context = context;
-        this.secondary = secondary;
-        this.tertiary = tertiary;
-    }
 
     @Override
     public boolean doFind(ManifestRecorder manifestRecorder) {
@@ -125,10 +110,6 @@ public class FinderCfgNRGSet implements Finder, ContainerGetter<CfgNRGInstantSta
         return finderCfgNRGHistory.get();
     }
 
-    public String getSetName() {
-        return setName;
-    }
-
     public void createDefaultModules() {
 
         if (dropDown.getCreatorColoredOutline() != null) {
@@ -146,7 +127,7 @@ public class FinderCfgNRGSet implements Finder, ContainerGetter<CfgNRGInstantSta
     }
 
     @Override
-    public BoundedIndexContainer<CfgNRGInstantState> getCntr() throws OperationFailedException {
-        return getHistory().getCntr();
+    public BoundedIndexContainer<CfgNRGInstantState> getContainer() throws OperationFailedException {
+        return getHistory().getContainer();
     }
 }

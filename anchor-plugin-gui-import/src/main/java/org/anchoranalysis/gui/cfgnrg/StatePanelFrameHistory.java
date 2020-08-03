@@ -98,7 +98,7 @@ public class StatePanelFrameHistory<T> {
         this.errorReporter = errorReporter;
 
         try {
-            this.boundedIndexCntr = selectedHistory.getCntr();
+            this.boundedIndexCntr = selectedHistory.getContainer();
             int actualPhysicalIndex = this.boundedIndexCntr.previousEqualIndex(initialIndex);
             assert (actualPhysicalIndex != -1);
             T startState = this.boundedIndexCntr.get(actualPhysicalIndex);
@@ -107,7 +107,7 @@ public class StatePanelFrameHistory<T> {
             {
                 indexSlider =
                         new IndexSlider(
-                                selectedHistory.getCntr(), !selectedHistory.isExpensiveLoad());
+                                selectedHistory.getContainer(), !selectedHistory.isExpensiveLoad());
                 // frameSlider = new FrameSlider( selectedHistory.getCfgNRGCntnr(), false );
                 indexSlider.setIndex(initialIndex, false);
 

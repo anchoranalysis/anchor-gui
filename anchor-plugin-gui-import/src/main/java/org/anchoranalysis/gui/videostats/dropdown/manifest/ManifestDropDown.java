@@ -432,7 +432,7 @@ public class ManifestDropDown {
 
                                     LoadContainer<CfgNRGInstantState> lc = new LoadContainer<>();
                                     lc.setExpensiveLoad(false);
-                                    lc.setCntr(new SingleContainer<>(instantState, 0, false));
+                                    lc.setContainer(new SingleContainer<>(instantState, 0, false));
                                     return lc;
                                 });
 

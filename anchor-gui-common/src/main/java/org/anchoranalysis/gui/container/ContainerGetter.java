@@ -31,5 +31,5 @@ import org.anchoranalysis.core.index.container.BoundedIndexContainer;
 
 public interface ContainerGetter<T> {
 
-    BoundedIndexContainer<T> getCntr() throws OperationFailedException;
+    BoundedIndexContainer<T> getContainer() throws OperationFailedException;
 }

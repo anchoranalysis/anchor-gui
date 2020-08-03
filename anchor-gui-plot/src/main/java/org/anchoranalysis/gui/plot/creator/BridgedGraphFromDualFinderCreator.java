@@ -57,7 +57,7 @@ public abstract class BridgedGraphFromDualFinderCreator<T>
 
         try {
             return new BoundedIndexContainerBridgeWithoutIndex<>(
-                    finderCfgNRGHistory.get().getCntr(), createCfgNRGInstantStateBridge());
+                    finderCfgNRGHistory.get().getContainer(), createCfgNRGInstantStateBridge());
         } catch (OperationFailedException e) {
             throw new CreateException(e);
         }

@@ -110,7 +110,7 @@ public class BackgroundSetFactory {
         // We assume every LoadContainer contains the same rasters in the BackgroundSet
         ///  and use the first one to get the names
 
-        BackgroundSet first = lc.getCntr().get(lc.getCntr().getMinimumIndex()).getBackgroundSet();
+        BackgroundSet first = lc.getContainer().get(lc.getContainer().getMinimumIndex()).getBackgroundSet();
 
         for (String name : first.names()) {
             backgroundSet.addItem(name, new SingleBackgroundStackCntr(rasterBridge(lc, name)));
@@ -124,7 +124,7 @@ public class BackgroundSetFactory {
 
         assert (cntr != null);
         return new BoundedIndexContainerBridgeWithoutIndex<>(
-                cntr.getCntr(),
+                cntr.getContainer(),
                 sourceObject -> {
                     assert (sourceObject != null);
                     return sourceObject.getBackgroundSet().singleStack(name);

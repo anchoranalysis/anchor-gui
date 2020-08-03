@@ -46,7 +46,7 @@ class DeserializeFromSerializedCfgNRG extends DeserializeFromFolder<CfgNRGInstan
     }
 
     @Override
-    protected GetterFromIndex<CfgNRGInstantState> createCtnr(SequencedFolder folder) {
+    protected GetterFromIndex<CfgNRGInstantState> createContainer(SequencedFolder folder) {
         return new TypedGetFromIndexBridge<>(
                 new SequencedFolderDeserializer<>(folder, deserializer),
                 new CfgNRGInstantStateFromCfgNRGBridge());

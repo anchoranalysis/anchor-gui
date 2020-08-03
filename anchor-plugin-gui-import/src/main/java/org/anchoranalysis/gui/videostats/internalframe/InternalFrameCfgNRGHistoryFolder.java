@@ -61,7 +61,7 @@ public class InternalFrameCfgNRGHistoryFolder {
         ISliderState sliderState =
                 this.delegate.init(
                         new BoundedIndexContainerBridgeWithoutIndex<>(
-                                history.getCntr(),
+                                history.getContainer(),
                                 new CfgNRGInstantStateBridge(
                                         defaultState.getMarkDisplaySettings().regionMembership())),
                         mpg.getDefaultColorIndexForMarks(),

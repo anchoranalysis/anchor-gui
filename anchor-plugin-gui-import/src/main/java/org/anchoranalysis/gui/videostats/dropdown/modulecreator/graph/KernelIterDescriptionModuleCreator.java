@@ -90,7 +90,7 @@ public class KernelIterDescriptionModuleCreator extends VideoStatsModuleCreatorC
 
             StatePanel<KernelIterDescription> panel =
                     new KernelIterDescriptionNavigatorPanel(
-                            finderKernelIterDescriptionHistory.get().getCntr(), kp);
+                            finderKernelIterDescriptionHistory.get().getContainer(), kp);
 
             StatePanelFrameHistory<KernelIterDescription> frame =
                     new StatePanelFrameHistory<>(namePrefix, true);

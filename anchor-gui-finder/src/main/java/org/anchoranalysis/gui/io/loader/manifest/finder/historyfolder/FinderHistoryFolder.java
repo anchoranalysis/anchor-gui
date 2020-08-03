@@ -120,7 +120,7 @@ public abstract class FinderHistoryFolder<T> extends FinderSingleFolder
     }
 
     @Override
-    public BoundedIndexContainer<T> getCntr() throws OperationFailedException {
-        return get().getCntr();
+    public BoundedIndexContainer<T> getContainer() throws OperationFailedException {
+        return get().getContainer();
     }
 }

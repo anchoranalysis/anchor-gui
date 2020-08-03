@@ -105,8 +105,8 @@ public class MergedCfgNRGHistoryInternalFrame {
             LoadContainer<CfgNRGInstantState> selectedHistory,
             LoadContainer<CfgNRGInstantState> proposalHistory) {
         List<BoundedIndexContainer<CfgNRGInstantState>> out = new ArrayList<>();
-        out.add(selectedHistory.getCntr());
-        out.add(proposalHistory.getCntr());
+        out.add(selectedHistory.getContainer());
+        out.add(proposalHistory.getContainer());
         return out;
     }
 }

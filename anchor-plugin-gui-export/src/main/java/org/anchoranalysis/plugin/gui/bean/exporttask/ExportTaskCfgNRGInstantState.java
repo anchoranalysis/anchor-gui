@@ -48,7 +48,7 @@ public class ExportTaskCfgNRGInstantState
     private BoundedIndexContainer<DualStateWithoutIndex<CfgNRGInstantState>> createPrimaryOnly(
             ExportTaskParams sourceObject) throws OperationFailedException {
         return new BoundedIndexContainerBridgeWithoutIndex<>(
-                sourceObject.getFinderCfgNRGHistory().getCntr(), DualStateWithoutIndex::new);
+                sourceObject.getFinderCfgNRGHistory().getContainer(), DualStateWithoutIndex::new);
     }
 
     private static DualCfgNRGContainer<CfgNRGInstantState> combine(

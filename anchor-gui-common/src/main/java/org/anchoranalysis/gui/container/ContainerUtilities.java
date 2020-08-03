@@ -40,7 +40,7 @@ public class ContainerUtilities {
         List<BoundedIndexContainer<CfgNRGInstantState>> out = new ArrayList<>();
 
         for (ContainerGetter<CfgNRGInstantState> item : cntrs) {
-            out.add(item.getCntr());
+            out.add(item.getContainer());
         }
 
         return out;
