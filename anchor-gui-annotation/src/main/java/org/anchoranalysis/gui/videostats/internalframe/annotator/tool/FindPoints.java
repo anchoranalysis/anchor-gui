@@ -77,10 +77,10 @@ class FindPoints {
         // Find marks that contain the point x, y
         return FunctionalList.mapToListOptional(
                 listPoints,
-                p -> {
-                    int distanceSquared = distanceFromPoints(p, pointNear);
+                point -> {
+                    int distanceSquared = distanceFromPoints(point, pointNear);
                     return OptionalUtilities.createFromFlag(
-                            distanceSquared < DISTANCE_THRESHOLD_SQUARED, () -> p);
+                            distanceSquared < DISTANCE_THRESHOLD_SQUARED, point);
                 });
     }
 
