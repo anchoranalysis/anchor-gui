@@ -35,7 +35,10 @@ import org.anchoranalysis.feature.bean.Feature;
 import org.anchoranalysis.feature.bean.list.FeatureList;
 import org.anchoranalysis.feature.bean.operator.Sum;
 import org.anchoranalysis.feature.input.FeatureInput;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 
+@NoArgsConstructor(access=AccessLevel.PRIVATE)
 public class FeatureListUtilities {
 
     // Creates a feature list for showing Individual Elems
