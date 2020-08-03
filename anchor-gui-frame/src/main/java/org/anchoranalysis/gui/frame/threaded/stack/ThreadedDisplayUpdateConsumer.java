@@ -32,7 +32,7 @@ import javax.swing.event.ChangeListener;
 import javax.swing.event.EventListenerList;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.error.reporter.ErrorReporter;
-import org.anchoranalysis.core.functional.function.FunctionWithException;
+import org.anchoranalysis.core.functional.function.CheckedFunction;
 import org.anchoranalysis.core.index.IIndexGettableSettable;
 import org.anchoranalysis.gui.container.background.BackgroundStackContainerException;
 import org.anchoranalysis.gui.displayupdate.DisplayUpdateRememberStack;
@@ -73,7 +73,7 @@ public class ThreadedDisplayUpdateConsumer
 
     private UpdateImage updateImage;
 
-    private FunctionWithException<Integer, DisplayUpdate, BackgroundStackContainerException>
+    private CheckedFunction<Integer, DisplayUpdate, BackgroundStackContainerException>
             displayUpdateBridge;
 
     private ErrorReporter errorReporter;
@@ -136,7 +136,7 @@ public class ThreadedDisplayUpdateConsumer
     }
 
     public ThreadedDisplayUpdateConsumer(
-            FunctionWithException<Integer, DisplayUpdate, BackgroundStackContainerException>
+            CheckedFunction<Integer, DisplayUpdate, BackgroundStackContainerException>
                     displayUpdateBridge,
             int defaultIndex,
             InteractiveThreadPool threadPool,
@@ -154,7 +154,7 @@ public class ThreadedDisplayUpdateConsumer
     }
 
     public synchronized void setImageStackGenerator(
-            FunctionWithException<Integer, DisplayUpdate, BackgroundStackContainerException>
+            CheckedFunction<Integer, DisplayUpdate, BackgroundStackContainerException>
                     displayUpdateBridge) {
         this.displayUpdateBridge = displayUpdateBridge;
     }

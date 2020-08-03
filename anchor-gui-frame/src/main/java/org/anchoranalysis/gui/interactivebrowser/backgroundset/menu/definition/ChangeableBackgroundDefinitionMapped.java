@@ -28,7 +28,7 @@ package org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.definition;
 
 import org.anchoranalysis.bean.shared.StringMap;
 import org.anchoranalysis.core.error.reporter.ErrorReporter;
-import org.anchoranalysis.core.progress.CallableWithProgressReporter;
+import org.anchoranalysis.core.progress.CheckedProgressingSupplier;
 import org.anchoranalysis.gui.backgroundset.BackgroundSet;
 import org.anchoranalysis.gui.container.background.BackgroundStackContainerException;
 import org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.IGetNames;
@@ -39,7 +39,7 @@ public class ChangeableBackgroundDefinitionMapped
     private final StringMap labelMap;
 
     public ChangeableBackgroundDefinitionMapped(
-            CallableWithProgressReporter<BackgroundSet, BackgroundStackContainerException>
+            CheckedProgressingSupplier<BackgroundSet, BackgroundStackContainerException>
                     backgroundSet,
             StringMap labelMap) {
         super(backgroundSet);

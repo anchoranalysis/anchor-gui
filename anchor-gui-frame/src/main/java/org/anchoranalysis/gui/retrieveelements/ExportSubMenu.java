@@ -27,14 +27,13 @@
 package org.anchoranalysis.gui.retrieveelements;
 
 import java.util.Optional;
+import java.util.function.Supplier;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import lombok.RequiredArgsConstructor;
-import org.anchoranalysis.core.error.AnchorNeverOccursException;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.error.friendly.AnchorFriendlyRuntimeException;
 import org.anchoranalysis.core.error.reporter.ErrorReporter;
-import org.anchoranalysis.core.functional.CallableWithException;
 import org.anchoranalysis.gui.bean.exporttask.ExportTask;
 import org.anchoranalysis.gui.bean.exporttask.ExportTaskActionAsThread;
 import org.anchoranalysis.gui.bean.exporttask.ExportTaskActionAsThread.ExportTaskCommand;
@@ -61,7 +60,7 @@ public class ExportSubMenu implements AddToExportSubMenu {
     public void addExportItemStackGenerator(
             String outputName,
             String label,
-            CallableWithException<Stack, AnchorNeverOccursException> stack)
+            Supplier<Stack> stack)
             throws OperationFailedException {
 
         StackGenerator stackGenerator = new StackGenerator(true, outputName);

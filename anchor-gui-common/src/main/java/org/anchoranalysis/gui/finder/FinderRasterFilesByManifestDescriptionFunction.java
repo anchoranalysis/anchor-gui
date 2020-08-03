@@ -29,7 +29,7 @@ package org.anchoranalysis.gui.finder;
 import java.nio.file.Path;
 import java.util.List;
 import org.anchoranalysis.core.error.OperationFailedException;
-import org.anchoranalysis.core.progress.CacheCallWithProgressReporter;
+import org.anchoranalysis.core.progress.CachedProgressingSupplier;
 import org.anchoranalysis.core.progress.ProgressReporter;
 import org.anchoranalysis.image.io.RasterIOException;
 import org.anchoranalysis.image.io.bean.rasterreader.RasterReader;
@@ -87,7 +87,7 @@ public class FinderRasterFilesByManifestDescriptionFunction implements Finder {
             // Assume single series, single channel
             out.addImageStack(
                     name,
-                    CacheCallWithProgressReporter.of(
+                    CachedProgressingSupplier.cache(
                             progressReporter ->
                                     openStack(
                                             fileWrite.calcPath(), rasterReader, progressReporter)));

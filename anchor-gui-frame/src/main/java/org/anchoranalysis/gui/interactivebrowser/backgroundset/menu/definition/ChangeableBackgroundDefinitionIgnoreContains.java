@@ -30,7 +30,7 @@ import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.anchoranalysis.core.error.reporter.ErrorReporter;
 import org.anchoranalysis.core.functional.FunctionalList;
-import org.anchoranalysis.core.progress.CallableWithProgressReporter;
+import org.anchoranalysis.core.progress.CheckedProgressingSupplier;
 import org.anchoranalysis.gui.backgroundset.BackgroundSet;
 import org.anchoranalysis.gui.container.background.BackgroundStackContainerException;
 import org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.IGetNames;
@@ -46,7 +46,7 @@ public class ChangeableBackgroundDefinitionIgnoreContains
 
     @Override
     public void update(
-            CallableWithProgressReporter<BackgroundSet, BackgroundStackContainerException>
+            CheckedProgressingSupplier<BackgroundSet, BackgroundStackContainerException>
                     backgroundSet) {
         background.update(backgroundSet);
     }

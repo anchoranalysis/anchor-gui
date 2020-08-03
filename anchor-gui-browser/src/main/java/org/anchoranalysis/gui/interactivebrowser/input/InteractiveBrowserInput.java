@@ -37,12 +37,11 @@ import org.anchoranalysis.bean.NamedBean;
 import org.anchoranalysis.bean.Provider;
 import org.anchoranalysis.bean.shared.params.keyvalue.KeyValueParamsInitParams;
 import org.anchoranalysis.bean.shared.params.keyvalue.KeyValueParamsProvider;
-import org.anchoranalysis.core.cache.CacheCall;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.OperationFailedException;
-import org.anchoranalysis.core.functional.CallableWithException;
 import org.anchoranalysis.core.log.CommonContext;
 import org.anchoranalysis.core.name.store.SharedObjects;
+import org.anchoranalysis.core.name.store.StoreSupplier;
 import org.anchoranalysis.feature.bean.list.FeatureListProvider;
 import org.anchoranalysis.feature.input.FeatureInput;
 import org.anchoranalysis.feature.shared.SharedFeaturesInitParams;
@@ -85,8 +84,8 @@ public class InteractiveBrowserInput implements InputFromManager {
             addFilePaths(soParams);
 
             // so.g
-        } catch (OperationFailedException e2) {
-            throw new CreateException(e2);
+        } catch (OperationFailedException e) {
+            throw new CreateException(e);
         }
 
         return new FeatureListSrcBuilder(context.getLogger()).build(soFeature, nrgSchemeCreator);
@@ -95,17 +94,17 @@ public class InteractiveBrowserInput implements InputFromManager {
     private void addKeyValueParams(KeyValueParamsInitParams soParams)
             throws OperationFailedException {
 
-        for (NamedBean<KeyValueParamsProvider> ni : this.namedItemKeyValueParamsProviderList) {
+        for (NamedBean<KeyValueParamsProvider> provider : this.namedItemKeyValueParamsProviderList) {
             soParams.getNamedKeyValueParamsCollection()
-                    .add(ni.getName(), cachedOperationFromProvider(ni.getValue()));
+                    .add(provider.getName(), cachedCreationFromProvider(provider.getValue()));
         }
     }
 
     private void addFilePaths(KeyValueParamsInitParams soParams) throws OperationFailedException {
 
-        for (NamedBean<FilePathProvider> ni : this.namedItemFilePathProviderList) {
+        for (NamedBean<FilePathProvider> provider : this.namedItemFilePathProviderList) {
             soParams.getNamedFilePathCollection()
-                    .add(ni.getName(), cachedOperationFromProvider(ni.getValue()));
+                    .add(provider.getName(), cachedCreationFromProvider(provider.getValue()));
         }
     }
 
@@ -119,10 +118,8 @@ public class InteractiveBrowserInput implements InputFromManager {
         return Optional.empty();
     }
 
-    private static <T>
-            CallableWithException<T, OperationFailedException> cachedOperationFromProvider(
-                    Provider<T> provider) {
-        return CacheCall.of(
+    private static <T> StoreSupplier<T> cachedCreationFromProvider(Provider<T> provider) {
+        return StoreSupplier.cache(
                 () -> {
                     try {
                         return provider.create();

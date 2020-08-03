@@ -29,7 +29,7 @@ package org.anchoranalysis.gui.videostats.dropdown.contextualmodulecreator;
 import java.util.Optional;
 import lombok.AllArgsConstructor;
 import org.anchoranalysis.core.error.CreateException;
-import org.anchoranalysis.core.progress.CallableWithProgressReporter;
+import org.anchoranalysis.core.progress.CheckedProgressingSupplier;
 import org.anchoranalysis.gui.videostats.dropdown.IAddVideoStatsModule;
 import org.anchoranalysis.gui.videostats.dropdown.NamedModule;
 import org.anchoranalysis.gui.videostats.dropdown.VideoStatsModuleCreatorAndAdder;
@@ -44,7 +44,7 @@ public class SingleContextualModuleCreator extends ContextualModuleCreator {
     @Override
     public NamedModule[] create(
             String namePrefix,
-            CallableWithProgressReporter<IAddVideoStatsModule, ? extends Throwable> adder,
+            CheckedProgressingSupplier<IAddVideoStatsModule, ? extends Throwable> adder,
             VideoStatsModuleGlobalParams mpg)
             throws CreateException {
 
@@ -59,7 +59,7 @@ public class SingleContextualModuleCreator extends ContextualModuleCreator {
 
     public NamedModule createSingle(
             String namePrefix,
-            CallableWithProgressReporter<IAddVideoStatsModule, ? extends Throwable> adder,
+            CheckedProgressingSupplier<IAddVideoStatsModule, ? extends Throwable> adder,
             VideoStatsModuleGlobalParams mpg) {
 
         if (!moduleCreator.precondition()) {

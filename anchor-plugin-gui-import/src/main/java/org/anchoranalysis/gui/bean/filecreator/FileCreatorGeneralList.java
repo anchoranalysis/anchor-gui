@@ -31,7 +31,7 @@ import java.util.Collections;
 import java.util.List;
 import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.error.OperationFailedException;
-import org.anchoranalysis.core.progress.CallableWithProgressReporter;
+import org.anchoranalysis.core.progress.CheckedProgressingSupplier;
 import org.anchoranalysis.core.progress.ProgressReporter;
 import org.anchoranalysis.gui.file.interactive.InteractiveFile;
 import org.anchoranalysis.gui.interactivebrowser.IOpenFile;
@@ -60,7 +60,7 @@ public abstract class FileCreatorGeneralList extends FileCreator {
             throws VideoStatsModuleCreateException {
 
         // Operation to retrieve files
-        CallableWithProgressReporter<List<InteractiveFile>, OperationFailedException> op =
+        CheckedProgressingSupplier<List<InteractiveFile>, OperationFailedException> op =
                 pr -> {
                     List<InteractiveFile> listFiles = new ArrayList<>();
                     addFilesToList(listFiles, params, pr);

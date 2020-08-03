@@ -27,10 +27,10 @@
 package org.anchoranalysis.gui.videostats.dropdown;
 
 import org.anchoranalysis.core.error.reporter.ErrorReporter;
-import org.anchoranalysis.core.functional.function.FunctionWithException;
+import org.anchoranalysis.core.functional.function.CheckedFunction;
 import org.anchoranalysis.core.index.GetOperationFailedException;
-import org.anchoranalysis.core.progress.CacheCallWithProgressReporter;
-import org.anchoranalysis.core.progress.CallableWithProgressReporter;
+import org.anchoranalysis.core.progress.CachedProgressingSupplier;
+import org.anchoranalysis.core.progress.CheckedProgressingSupplier;
 import org.anchoranalysis.core.progress.ProgressReporter;
 import org.anchoranalysis.core.property.IPropertyValueSendable;
 import org.anchoranalysis.gui.backgroundset.BackgroundSet;
@@ -51,13 +51,13 @@ public class OperationCreateBackgroundSetWithAdder {
     private NRGBackground nrgBackground;
     private NRGBackgroundAdder<BackgroundStackContainerException> nrgBackgroundNew;
 
-    private CallableWithProgressReporter<IAddVideoStatsModule, BackgroundStackContainerException>
+    private CheckedProgressingSupplier<IAddVideoStatsModule, BackgroundStackContainerException>
             operationIAddVideoStatsModule;
 
-    private CallableWithProgressReporter<BackgroundSet, BackgroundStackContainerException>
+    private CheckedProgressingSupplier<BackgroundSet, BackgroundStackContainerException>
             operationBackgroundSet;
 
-    private final CallableWithProgressReporter<
+    private final CheckedProgressingSupplier<
                     BackgroundSetWithAdder, BackgroundStackContainerException>
             cachedOp;
 
@@ -78,15 +78,15 @@ public class OperationCreateBackgroundSetWithAdder {
                         nrgBackground.copyChangeOp(operationBackgroundSet),
                         operationIAddVideoStatsModule);
 
-        this.cachedOp = CacheCallWithProgressReporter.of(this::execute);
+        this.cachedOp = CachedProgressingSupplier.cache(this::execute);
 
         this.operationIAddVideoStatsModule =
-                CacheCallWithProgressReporter.of(
-                        progressReporter -> cachedOp.call(progressReporter).getAdder());
+                CachedProgressingSupplier.cache(
+                        progressReporter -> cachedOp.get(progressReporter).getAdder());
 
         this.operationBackgroundSet =
-                CacheCallWithProgressReporter.of(
-                        progressReporter -> cachedOp.call(progressReporter).getBackgroundSet());
+                CachedProgressingSupplier.cache(
+                        progressReporter -> cachedOp.get(progressReporter).getBackgroundSet());
     }
 
     private BackgroundSetWithAdder execute(ProgressReporter progressReporter)
@@ -94,7 +94,7 @@ public class OperationCreateBackgroundSetWithAdder {
         BackgroundSetWithAdder bwsa = new BackgroundSetWithAdder();
 
         BackgroundSet backgroundSet;
-        backgroundSet = nrgBackground.getBackgroundSet().call(progressReporter);
+        backgroundSet = nrgBackground.getBackgroundSet().get(progressReporter);
 
         bwsa.setBackgroundSet(backgroundSet);
 
@@ -103,7 +103,7 @@ public class OperationCreateBackgroundSetWithAdder {
 
         childAdder = nrgBackground.addNrgStackToAdder(childAdder);
 
-        FunctionWithException<Integer, DisplayStack, BackgroundStackContainerException>
+        CheckedFunction<Integer, DisplayStack, BackgroundStackContainerException>
                 initialBackground;
         try {
             initialBackground = initialBackground(backgroundSet);
@@ -129,7 +129,7 @@ public class OperationCreateBackgroundSetWithAdder {
         return bwsa;
     }
 
-    public CallableWithProgressReporter<IAddVideoStatsModule, BackgroundStackContainerException>
+    public CheckedProgressingSupplier<IAddVideoStatsModule, BackgroundStackContainerException>
             operationAdder() {
         return operationIAddVideoStatsModule;
     }
@@ -138,7 +138,7 @@ public class OperationCreateBackgroundSetWithAdder {
         return nrgBackgroundNew;
     }
 
-    private static FunctionWithException<Integer, DisplayStack, BackgroundStackContainerException>
+    private static CheckedFunction<Integer, DisplayStack, BackgroundStackContainerException>
             initialBackground(BackgroundSet backgroundSet) throws GetOperationFailedException {
 
         if (backgroundSet.names().contains(StackIdentifiers.INPUT_IMAGE)) {

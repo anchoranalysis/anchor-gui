@@ -30,7 +30,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.log.Logger;
-import org.anchoranalysis.core.progress.CallableWithProgressReporter;
+import org.anchoranalysis.core.progress.CheckedProgressingSupplier;
 import org.anchoranalysis.gui.IconFactory;
 import org.anchoranalysis.gui.file.opened.IOpenedFileGUI;
 import org.anchoranalysis.gui.reassign.JDropdownButton;
@@ -87,7 +87,7 @@ public class BoundVideoStatsModuleDropDown {
     }
 
     public void addModule(
-            CallableWithProgressReporter<IAddVideoStatsModule, ? extends Throwable> adder,
+            CheckedProgressingSupplier<IAddVideoStatsModule, ? extends Throwable> adder,
             SingleContextualModuleCreator creator,
             String namePrefix,
             VideoStatsModuleGlobalParams mpg)
@@ -97,7 +97,7 @@ public class BoundVideoStatsModuleDropDown {
     }
 
     public VideoStatsModuleCreatorAndAdder addModule(
-            CallableWithProgressReporter<IAddVideoStatsModule, ? extends Throwable> adder,
+            CheckedProgressingSupplier<IAddVideoStatsModule, ? extends Throwable> adder,
             ContextualModuleCreator creator,
             VideoStatsModuleGlobalParams mpg)
             throws MenuAddException {
@@ -111,7 +111,7 @@ public class BoundVideoStatsModuleDropDown {
 
     public void addModule(
             String itemName,
-            CallableWithProgressReporter<IAddVideoStatsModule, ? extends Throwable> adder,
+            CheckedProgressingSupplier<IAddVideoStatsModule, ? extends Throwable> adder,
             VideoStatsModuleCreator creator,
             InteractiveThreadPool threadPool,
             Logger logger)
@@ -122,7 +122,7 @@ public class BoundVideoStatsModuleDropDown {
     }
 
     public IAddModuleToMenu createAddModuleToMenu(
-            final CallableWithProgressReporter<IAddVideoStatsModule, ? extends Throwable> adder) {
+            final CheckedProgressingSupplier<IAddVideoStatsModule, ? extends Throwable> adder) {
         return new IAddModuleToMenu() {
 
             @Override

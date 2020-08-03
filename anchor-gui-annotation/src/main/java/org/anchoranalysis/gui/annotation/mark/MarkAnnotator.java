@@ -98,7 +98,7 @@ public class MarkAnnotator {
     private static MPPInitParams setupEvaluatorAndPointsFitter(
             MarkEvaluatorResolved markEvaluator, MarkProposerStrategy annotationStrategy)
             throws CreateException {
-        return markEvaluator.getProposerSharedObjectsOperation().call();
+        return markEvaluator.getProposerSharedObjectsOperation().get();
     }
 
     private static PointsFitter extractPointsFitter(

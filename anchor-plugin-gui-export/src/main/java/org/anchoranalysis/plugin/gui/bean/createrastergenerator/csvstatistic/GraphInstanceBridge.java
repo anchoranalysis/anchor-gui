@@ -32,7 +32,7 @@ import org.anchoranalysis.anchor.plot.AxisLimits;
 import org.anchoranalysis.anchor.plot.GraphInstance;
 import org.anchoranalysis.anchor.plot.bean.GraphDefinition;
 import org.anchoranalysis.core.error.CreateException;
-import org.anchoranalysis.core.functional.function.FunctionWithException;
+import org.anchoranalysis.core.functional.function.CheckedFunction;
 import org.anchoranalysis.core.index.container.BoundedIndexContainer;
 import org.anchoranalysis.core.index.container.bridge.BoundedIndexContainerBridgeWithoutIndex;
 import org.anchoranalysis.gui.io.loader.manifest.finder.csvstatistic.CSVStatistic;
@@ -40,12 +40,12 @@ import org.anchoranalysis.gui.plot.BoundedIndexContainerIterator;
 import org.anchoranalysis.plugin.gui.bean.exporttask.MappedFrom;
 
 class GraphInstanceBridge<T>
-        implements FunctionWithException<MappedFrom<CSVStatistic>, GraphInstance, CreateException> {
+        implements CheckedFunction<MappedFrom<CSVStatistic>, GraphInstance, CreateException> {
 
     // START: PARAMETERS IN
     private GraphDefinition<T> graphDefinition;
     private BoundedIndexContainer<CSVStatistic> cntr;
-    private FunctionWithException<CSVStatistic, T, ? extends Exception> elementBridge;
+    private CheckedFunction<CSVStatistic, T, ? extends Exception> elementBridge;
     // END: PARAMETERS IN
 
     private Optional<AxisLimits> rangeLimits = Optional.empty();
@@ -53,7 +53,7 @@ class GraphInstanceBridge<T>
     public GraphInstanceBridge(
             GraphDefinition<T> graphDefinition,
             BoundedIndexContainer<CSVStatistic> cntr,
-            FunctionWithException<CSVStatistic, T, ? extends Exception> elementBridge) {
+            CheckedFunction<CSVStatistic, T, ? extends Exception> elementBridge) {
         super();
         this.graphDefinition = graphDefinition;
         this.cntr = cntr;

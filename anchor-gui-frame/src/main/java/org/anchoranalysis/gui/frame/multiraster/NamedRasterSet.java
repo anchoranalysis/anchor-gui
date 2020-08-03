@@ -29,7 +29,7 @@ package org.anchoranalysis.gui.frame.multiraster;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
-import org.anchoranalysis.core.progress.CallableWithProgressReporter;
+import org.anchoranalysis.core.progress.CheckedProgressingSupplier;
 import org.anchoranalysis.gui.backgroundset.BackgroundSet;
 import org.anchoranalysis.gui.container.background.BackgroundStackContainerException;
 
@@ -39,6 +39,6 @@ public class NamedRasterSet {
     @Getter @Setter private String name;
 
     @Getter @Setter
-    private CallableWithProgressReporter<BackgroundSet, BackgroundStackContainerException>
+    private CheckedProgressingSupplier<BackgroundSet, BackgroundStackContainerException>
             backgroundSet;
 }

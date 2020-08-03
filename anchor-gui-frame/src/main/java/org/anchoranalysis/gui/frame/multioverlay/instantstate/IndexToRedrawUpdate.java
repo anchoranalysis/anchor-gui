@@ -26,7 +26,7 @@
 
 package org.anchoranalysis.gui.frame.multioverlay.instantstate;
 
-import org.anchoranalysis.core.functional.function.FunctionWithException;
+import org.anchoranalysis.core.functional.function.CheckedFunction;
 import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.index.container.BoundedIndexContainer;
 import org.anchoranalysis.gui.container.background.BackgroundStackContainerException;
@@ -35,16 +35,16 @@ import org.anchoranalysis.gui.videostats.internalframe.cfgtorgb.ColoredOverlayed
 import org.anchoranalysis.image.stack.DisplayStack;
 
 class IndexToRedrawUpdate
-        implements FunctionWithException<
+        implements CheckedFunction<
                 Integer, OverlayedDisplayStack, BackgroundStackContainerException> {
 
     private BoundedIndexBridge<ColoredOverlayedInstantState> delegate;
-    private FunctionWithException<Integer, DisplayStack, BackgroundStackContainerException>
+    private CheckedFunction<Integer, DisplayStack, BackgroundStackContainerException>
             background;
 
     public IndexToRedrawUpdate(
             BoundedIndexContainer<ColoredOverlayedInstantState> cntr,
-            FunctionWithException<Integer, DisplayStack, BackgroundStackContainerException>
+            CheckedFunction<Integer, DisplayStack, BackgroundStackContainerException>
                     background) {
         delegate = new BoundedIndexBridge<>(cntr);
         this.background = background;
@@ -66,7 +66,7 @@ class IndexToRedrawUpdate
     }
 
     public void setImageStackCntr(
-            FunctionWithException<Integer, DisplayStack, BackgroundStackContainerException>
+            CheckedFunction<Integer, DisplayStack, BackgroundStackContainerException>
                     imageStackCntr) {
         this.background = imageStackCntr;
     }

@@ -28,14 +28,14 @@ package org.anchoranalysis.gui.backgroundset;
 
 import lombok.AllArgsConstructor;
 import lombok.Setter;
-import org.anchoranalysis.core.functional.function.FunctionWithException;
+import org.anchoranalysis.core.functional.function.CheckedFunction;
 import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.index.container.BoundedIndexContainer;
 import org.anchoranalysis.gui.container.background.BackgroundStackContainerException;
 
 @AllArgsConstructor
 class BoundedIndexBridge<T>
-        implements FunctionWithException<Integer, T, BackgroundStackContainerException> {
+        implements CheckedFunction<Integer, T, BackgroundStackContainerException> {
 
     /** The container associated with the bridge */
     @Setter private BoundedIndexContainer<T> container;

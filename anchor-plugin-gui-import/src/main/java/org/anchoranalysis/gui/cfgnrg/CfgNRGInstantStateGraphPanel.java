@@ -31,7 +31,7 @@ import javax.swing.JPanel;
 import org.anchoranalysis.anchor.mpp.feature.instantstate.CfgNRGInstantState;
 import org.anchoranalysis.anchor.overlay.collection.OverlayCollection;
 import org.anchoranalysis.core.error.OperationFailedException;
-import org.anchoranalysis.core.functional.function.FunctionWithException;
+import org.anchoranalysis.core.functional.function.CheckedFunction;
 import org.anchoranalysis.core.index.IntArray;
 import org.anchoranalysis.core.property.IPropertyValueReceivable;
 import org.anchoranalysis.core.property.IPropertyValueSendable;
@@ -42,12 +42,12 @@ public class CfgNRGInstantStateGraphPanel extends StatePanel<CfgNRGInstantState>
 
     private GraphPanel graphPanel;
 
-    private FunctionWithException<
+    private CheckedFunction<
                     CfgNRGInstantState, ClickableGraphInstance, OperationFailedException>
             graphGenerator;
 
     public CfgNRGInstantStateGraphPanel(
-            FunctionWithException<
+            CheckedFunction<
                             CfgNRGInstantState, ClickableGraphInstance, OperationFailedException>
                     graphGenerator) {
         this.graphGenerator = graphGenerator;

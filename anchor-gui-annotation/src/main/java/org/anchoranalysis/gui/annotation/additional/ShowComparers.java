@@ -33,7 +33,7 @@ import lombok.RequiredArgsConstructor;
 import org.anchoranalysis.annotation.AnnotationWithCfg;
 import org.anchoranalysis.annotation.io.bean.comparer.MultipleComparer;
 import org.anchoranalysis.core.error.OperationFailedException;
-import org.anchoranalysis.core.functional.function.FunctionWithException;
+import org.anchoranalysis.core.functional.function.CheckedFunction;
 import org.anchoranalysis.core.log.Logger;
 import org.anchoranalysis.core.name.value.NameValue;
 import org.anchoranalysis.gui.annotation.AnnotatorModuleCreator;
@@ -51,7 +51,7 @@ public class ShowComparers {
     private final ColorSetGenerator colorSetGenerator;
     private final Path matchPath;
     private final String name;
-    private final FunctionWithException<Integer, DisplayStack, ? extends Throwable>
+    private final CheckedFunction<Integer, DisplayStack, ? extends Throwable>
             defaultBackground;
     private final Path modelDirectory;
     private final Logger logger;

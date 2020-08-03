@@ -26,16 +26,16 @@
 
 package org.anchoranalysis.gui.frame.multiraster;
 
-import org.anchoranalysis.core.functional.function.FunctionWithException;
+import org.anchoranalysis.core.functional.function.CheckedFunction;
 import org.anchoranalysis.image.stack.DisplayStack;
 
 // Ensure unsigned 8-bit
 class EnsureUnsigned8Bit<E extends Exception>
-        implements FunctionWithException<Integer, DisplayStack, E> {
+        implements CheckedFunction<Integer, DisplayStack, E> {
 
-    private FunctionWithException<Integer, DisplayStack, E> bridge;
+    private CheckedFunction<Integer, DisplayStack, E> bridge;
 
-    public EnsureUnsigned8Bit(FunctionWithException<Integer, DisplayStack, E> bridge) {
+    public EnsureUnsigned8Bit(CheckedFunction<Integer, DisplayStack, E> bridge) {
         super();
         this.bridge = bridge;
     }

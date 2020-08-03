@@ -29,7 +29,7 @@ package org.anchoranalysis.gui.interactivebrowser.filelist;
 import java.util.List;
 import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.error.OperationFailedException;
-import org.anchoranalysis.core.progress.CallableWithProgressReporter;
+import org.anchoranalysis.core.progress.CheckedProgressingSupplier;
 import org.anchoranalysis.core.progress.ProgressReporter;
 import org.anchoranalysis.gui.file.interactive.InteractiveFile;
 import org.anchoranalysis.gui.interactivebrowser.IOpenFile;
@@ -51,7 +51,7 @@ public class SimpleInteractiveFileListInternalFrame {
 
     public void init(
             IAddVideoStatsModule adder,
-            CallableWithProgressReporter<List<InteractiveFile>, OperationFailedException>
+            CheckedProgressingSupplier<List<InteractiveFile>, OperationFailedException>
                     opListFile,
             IOpenFile fileOpenManager,
             VideoStatsModuleGlobalParams mpg,

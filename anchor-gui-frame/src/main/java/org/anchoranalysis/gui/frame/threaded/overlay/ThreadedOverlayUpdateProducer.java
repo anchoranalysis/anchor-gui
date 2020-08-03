@@ -30,7 +30,7 @@ import org.anchoranalysis.anchor.overlay.Overlay;
 import org.anchoranalysis.anchor.overlay.writer.DrawOverlay;
 import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.error.reporter.ErrorReporter;
-import org.anchoranalysis.core.functional.function.FunctionWithException;
+import org.anchoranalysis.core.functional.function.CheckedFunction;
 import org.anchoranalysis.core.idgetter.IDGetter;
 import org.anchoranalysis.core.index.IIndexGettableSettable;
 import org.anchoranalysis.core.index.SetOperationFailedException;
@@ -94,7 +94,7 @@ class ThreadedOverlayUpdateProducer implements IRedrawable, IThreadedProducer, I
     }
 
     public void init(
-            final FunctionWithException<
+            final CheckedFunction<
                             Integer, OverlayedDisplayStack, BackgroundStackContainerException>
                     integerToCfgBridge,
             final MarkDisplaySettingsWrapper markDisplaySettingsWrapper,
@@ -109,7 +109,7 @@ class ThreadedOverlayUpdateProducer implements IRedrawable, IThreadedProducer, I
         // When our Mark display settings change
         markDisplaySettingsWrapper.addChangeListener(propertyValueChange);
 
-        FunctionWithException<
+        CheckedFunction<
                         Integer, OverlayedDisplayStackUpdate, BackgroundStackContainerException>
                 findCorrectUpdate =
                         new FindCorrectUpdate(integerToCfgBridge, () -> consumer != null, this);
@@ -184,7 +184,7 @@ class ThreadedOverlayUpdateProducer implements IRedrawable, IThreadedProducer, I
     }
 
     private static DisplayUpdateCreator setupDisplayUpdateCreator(
-            FunctionWithException<
+            CheckedFunction<
                             Integer, OverlayedDisplayStackUpdate, BackgroundStackContainerException>
                     findCorrectUpdate,
             IDGetter<Overlay> idGetter,

@@ -29,7 +29,7 @@ package org.anchoranalysis.plugin.gui.bean.createrastergenerator.cfgnrginstantst
 import org.anchoranalysis.anchor.mpp.feature.instantstate.CfgNRGInstantState;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.OperationFailedException;
-import org.anchoranalysis.core.functional.function.FunctionWithException;
+import org.anchoranalysis.core.functional.function.CheckedFunction;
 import org.anchoranalysis.gui.bean.exporttask.ExportTaskParams;
 import org.anchoranalysis.gui.io.loader.manifest.finder.csvstatistic.CSVStatistic;
 import org.anchoranalysis.image.stack.Stack;
@@ -45,10 +45,10 @@ public abstract class GraphDynamicallyDrawnFromCfgNRGInstantState<T>
     // Delayed instantiation of delegate so parameters are already filled
     private GraphDynamicallyDrawnFromCSVStatistic<T> delegate;
 
-    private FunctionWithException<CSVStatistic, T, CreateException> elementBridge;
+    private CheckedFunction<CSVStatistic, T, CreateException> elementBridge;
 
     public GraphDynamicallyDrawnFromCfgNRGInstantState(
-            FunctionWithException<CSVStatistic, T, CreateException> elementBridge) {
+            CheckedFunction<CSVStatistic, T, CreateException> elementBridge) {
         super();
         this.elementBridge = elementBridge;
     }

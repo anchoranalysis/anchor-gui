@@ -105,7 +105,7 @@ class InternalFrameMultiOverlay<T> {
                     return list.get(sourceObject)
                             .getNrgBackground()
                             .getBackgroundSet()
-                            .call(ProgressReporterNull.get())
+                            .get(ProgressReporterNull.get())
                             .singleStack(name);
                 };
     }
@@ -154,7 +154,7 @@ class InternalFrameMultiOverlay<T> {
                         list.get(sliderState.getIndex())
                                 .getNrgBackground()
                                 .getBackgroundSet()
-                                .call(ProgressReporterNull.get())
+                                .get(ProgressReporterNull.get())
                                 .names();
                 return new ArrayList<>(names);
 

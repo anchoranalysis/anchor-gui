@@ -2,14 +2,13 @@ package org.anchoranalysis.gui.finder;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
-import org.anchoranalysis.core.cache.CacheCall;
+import org.anchoranalysis.core.cache.CachedSupplier;
 import org.anchoranalysis.core.error.OperationFailedException;
-import org.anchoranalysis.core.functional.CallableWithException;
-import org.anchoranalysis.core.functional.function.BiConsumerWithException;
+import org.anchoranalysis.core.functional.function.CheckedBiConsumer;
 import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.index.GetterFromIndex;
-import org.anchoranalysis.core.progress.CacheCallWithProgressReporter;
-import org.anchoranalysis.core.progress.CallableWithProgressReporter;
+import org.anchoranalysis.core.name.store.StoreSupplier;
+import org.anchoranalysis.core.progress.CheckedProgressingSupplier;
 import org.anchoranalysis.io.manifest.sequencetype.SequenceType;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
@@ -26,8 +25,7 @@ public class AddFromSequenceHelper {
     public static <T, E extends Exception> void addFromSequence(
             SequenceType sequenceType,
             GetterFromIndex<T> getter,
-            BiConsumerWithException<String, CallableWithException<T, OperationFailedException>, E>
-                    addTo,
+            CheckedBiConsumer<String, StoreSupplier<T>, E> addTo,
             boolean namesAsIndexes)
             throws E {
         int min = sequenceType.getMinimumIndex();
@@ -38,7 +36,7 @@ public class AddFromSequenceHelper {
             final int index = i;
             addTo.accept(
                     nameForKey(namesAsIndexes, index, name),
-                    CacheCall.of(
+                    StoreSupplier.cache(
                             () -> {
                                 try {
                                     return getter.get(index);
@@ -60,8 +58,8 @@ public class AddFromSequenceHelper {
     public static <T, E extends Exception> void addFromSequenceWithProgressReporter(
             SequenceType sequenceType,
             GetterFromIndex<T> getter,
-            BiConsumerWithException<
-                            String, CallableWithProgressReporter<T, OperationFailedException>, E>
+            CheckedBiConsumer<
+                            String, CheckedProgressingSupplier<T, OperationFailedException>, E>
                     addTo,
             boolean namesAsIndexes)
             throws E {
@@ -73,14 +71,13 @@ public class AddFromSequenceHelper {
             final int index = i;
             addTo.accept(
                     nameForKey(namesAsIndexes, index, name),
-                    CacheCallWithProgressReporter.of(
-                            progressReporter -> {
-                                try {
-                                    return getter.get(index);
-                                } catch (GetOperationFailedException e) {
-                                    throw new OperationFailedException(e);
-                                }
-                            }));
+                    CachedSupplier.cache(() -> {
+                        try {
+                            return getter.get(index);
+                        } catch (GetOperationFailedException e) {
+                            throw new OperationFailedException(e);
+                        }
+                    }).progressing());
         }
     }
 

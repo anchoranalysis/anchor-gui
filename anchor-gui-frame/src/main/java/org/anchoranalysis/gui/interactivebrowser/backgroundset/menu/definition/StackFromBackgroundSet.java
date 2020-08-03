@@ -28,8 +28,8 @@ package org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.definition;
 
 import lombok.AllArgsConstructor;
 import org.anchoranalysis.core.error.reporter.ErrorReporter;
-import org.anchoranalysis.core.functional.function.FunctionWithException;
-import org.anchoranalysis.core.progress.CallableWithProgressReporter;
+import org.anchoranalysis.core.functional.function.CheckedFunction;
+import org.anchoranalysis.core.progress.CheckedProgressingSupplier;
 import org.anchoranalysis.core.progress.ProgressReporterNull;
 import org.anchoranalysis.gui.backgroundset.BackgroundSet;
 import org.anchoranalysis.gui.container.background.BackgroundStackContainerException;
@@ -38,14 +38,14 @@ import org.anchoranalysis.image.stack.DisplayStack;
 @AllArgsConstructor
 class StackFromBackgroundSet implements ImageStackContainerFromName {
 
-    private final CallableWithProgressReporter<BackgroundSet, ? extends Throwable> backgroundSet;
+    private final CheckedProgressingSupplier<BackgroundSet, ? extends Throwable> backgroundSet;
     private final ErrorReporter errorReporter;
 
     @Override
-    public FunctionWithException<Integer, DisplayStack, BackgroundStackContainerException>
+    public CheckedFunction<Integer, DisplayStack, BackgroundStackContainerException>
             imageStackCntrFromName(String name) {
         try {
-            return backgroundSet.call(ProgressReporterNull.get()).stackCntr(name);
+            return backgroundSet.get(ProgressReporterNull.get()).stackCntr(name);
         } catch (Exception e) {
             errorReporter.recordError(NamesFromBackgroundSet.class, e);
             return null;

@@ -59,7 +59,7 @@ class AddBackgroundPopup {
                 sourceObject -> {
                     return list.get(sourceObject)
                             .getBackgroundSet()
-                            .call(ProgressReporterNull.get())
+                            .get(ProgressReporterNull.get())
                             .singleStack(name);
                 };
     }
@@ -71,7 +71,7 @@ class AddBackgroundPopup {
                 Set<String> names =
                         list.get(sliderState.getIndex())
                                 .getBackgroundSet()
-                                .call(ProgressReporterNull.get())
+                                .get(ProgressReporterNull.get())
                                 .names();
                 return new ArrayList<>(names);
 

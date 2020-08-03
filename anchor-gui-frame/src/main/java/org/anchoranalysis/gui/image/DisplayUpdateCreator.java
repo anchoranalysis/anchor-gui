@@ -30,7 +30,7 @@ import org.anchoranalysis.anchor.overlay.Overlay;
 import org.anchoranalysis.anchor.overlay.writer.DrawOverlay;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.OperationFailedException;
-import org.anchoranalysis.core.functional.function.FunctionWithException;
+import org.anchoranalysis.core.functional.function.CheckedFunction;
 import org.anchoranalysis.core.idgetter.IDGetter;
 import org.anchoranalysis.core.index.SetOperationFailedException;
 import org.anchoranalysis.gui.container.background.BackgroundStackContainerException;
@@ -41,10 +41,10 @@ import org.anchoranalysis.gui.frame.display.overlay.OverlayRetriever;
 import org.anchoranalysis.image.stack.DisplayStack;
 
 public class DisplayUpdateCreator
-        implements FunctionWithException<
+        implements CheckedFunction<
                 Integer, DisplayUpdate, BackgroundStackContainerException> {
 
-    private FunctionWithException<
+    private CheckedFunction<
                     Integer, OverlayedDisplayStackUpdate, BackgroundStackContainerException>
             src;
     private DrawOverlay maskWriter;
@@ -54,7 +54,7 @@ public class DisplayUpdateCreator
     private BoundColoredOverlayCollection boundOverlay = null;
 
     public DisplayUpdateCreator(
-            FunctionWithException<
+            CheckedFunction<
                             Integer, OverlayedDisplayStackUpdate, BackgroundStackContainerException>
                     src,
             IDGetter<Overlay> idGetter) {

@@ -26,13 +26,13 @@
 
 package org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.definition;
 
-import org.anchoranalysis.core.functional.function.FunctionWithException;
+import org.anchoranalysis.core.functional.function.CheckedFunction;
 import org.anchoranalysis.gui.container.background.BackgroundStackContainerException;
 import org.anchoranalysis.image.stack.DisplayStack;
 
 @FunctionalInterface
 public interface ImageStackContainerFromName {
 
-    FunctionWithException<Integer, DisplayStack, BackgroundStackContainerException>
+    CheckedFunction<Integer, DisplayStack, BackgroundStackContainerException>
             imageStackCntrFromName(String name) throws BackgroundStackContainerException;
 }

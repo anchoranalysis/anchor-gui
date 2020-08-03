@@ -27,7 +27,7 @@
 package org.anchoranalysis.gui.frame.overlays.onrgb;
 
 import lombok.AllArgsConstructor;
-import org.anchoranalysis.core.functional.function.FunctionWithException;
+import org.anchoranalysis.core.functional.function.CheckedFunction;
 import org.anchoranalysis.core.index.SetOperationFailedException;
 import org.anchoranalysis.gui.container.background.BackgroundStackContainerException;
 import org.anchoranalysis.gui.frame.display.IRedrawable;
@@ -42,7 +42,7 @@ class BackgroundSetterLocal implements IBackgroundSetter {
 
     @Override
     public void setImageStackCntr(
-            FunctionWithException<Integer, DisplayStack, BackgroundStackContainerException>
+            CheckedFunction<Integer, DisplayStack, BackgroundStackContainerException>
                     imageStackCntr)
             throws SetOperationFailedException {
 

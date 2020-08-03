@@ -27,10 +27,10 @@
 package org.anchoranalysis.gui.annotation;
 
 import lombok.Getter;
-import org.anchoranalysis.core.functional.function.FunctionWithException;
+import org.anchoranalysis.core.functional.function.CheckedFunction;
 import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.name.provider.NamedProvider;
-import org.anchoranalysis.core.progress.CallableWithProgressReporter;
+import org.anchoranalysis.core.progress.CheckedProgressingSupplier;
 import org.anchoranalysis.core.progress.ProgressReporterMultiple;
 import org.anchoranalysis.core.progress.ProgressReporterOneOfMany;
 import org.anchoranalysis.gui.backgroundset.BackgroundSet;
@@ -44,11 +44,11 @@ import org.anchoranalysis.image.stack.Stack;
 public class AnnotationBackground {
 
     @Getter
-    private CallableWithProgressReporter<BackgroundSet, BackgroundStackContainerException>
+    private CheckedProgressingSupplier<BackgroundSet, BackgroundStackContainerException>
             backgroundSetOp;
 
     @Getter
-    private FunctionWithException<Integer, DisplayStack, BackgroundStackContainerException>
+    private CheckedFunction<Integer, DisplayStack, BackgroundStackContainerException>
             defaultBackground;
 
     @Getter private ImageDimensions dimensionsViewer;
@@ -62,7 +62,7 @@ public class AnnotationBackground {
         try {
             defaultBackground =
                     backgroundSetOp
-                            .call(new ProgressReporterOneOfMany(prm))
+                            .get(new ProgressReporterOneOfMany(prm))
                             .stackCntr(stackNameVisualOriginal);
 
             if (defaultBackground == null) {

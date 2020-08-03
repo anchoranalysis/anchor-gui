@@ -33,7 +33,7 @@ import org.anchoranalysis.anchor.mpp.overlay.OverlayCollectionMarkFactory;
 import org.anchoranalysis.anchor.overlay.collection.OverlayCollection;
 import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.error.OperationFailedException;
-import org.anchoranalysis.core.functional.CallableWithException;
+import org.anchoranalysis.core.functional.function.CheckedSupplier;
 import org.anchoranalysis.gui.image.frame.ISliderState;
 import org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.definition.ChangeableBackgroundDefinitionSimple;
 import org.anchoranalysis.gui.mark.MarkDisplaySettings;
@@ -51,7 +51,7 @@ public class CfgModuleCreator extends VideoStatsModuleCreator {
 
     private String fileIdentifier;
     private String name;
-    private CallableWithException<Cfg, OperationFailedException> opCfg;
+    private CheckedSupplier<Cfg, OperationFailedException> opCfg;
     private NRGBackground nrgBackground;
     private VideoStatsModuleGlobalParams mpg;
     private MarkDisplaySettings markDisplaySettings;
@@ -61,7 +61,7 @@ public class CfgModuleCreator extends VideoStatsModuleCreator {
             throws VideoStatsModuleCreateException {
 
         try {
-            Cfg cfg = opCfg.call();
+            Cfg cfg = opCfg.get();
 
             OverlayCollection oc =
                     OverlayCollectionMarkFactory.createWithoutColor(
@@ -93,7 +93,7 @@ public class CfgModuleCreator extends VideoStatsModuleCreator {
                 new IVideoStatsOperationCombine() {
 
                     @Override
-                    public Optional<CallableWithException<Cfg, OperationFailedException>> getCfg() {
+                    public Optional<CheckedSupplier<Cfg, OperationFailedException>> getCfg() {
                         return Optional.of(opCfg);
                     }
 
@@ -104,7 +104,7 @@ public class CfgModuleCreator extends VideoStatsModuleCreator {
 
                     @Override
                     public Optional<
-                                    CallableWithException<
+                                    CheckedSupplier<
                                             ObjectCollection, OperationFailedException>>
                             getObjects() {
                         return Optional.empty();

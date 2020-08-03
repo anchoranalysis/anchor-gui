@@ -26,14 +26,14 @@
 
 package org.anchoranalysis.gui.videostats.internalframe.annotator;
 
-import org.anchoranalysis.core.progress.CallableWithProgressReporter;
+import org.anchoranalysis.core.progress.CheckedProgressingSupplier;
 import org.anchoranalysis.gui.annotation.AnnotationBackground;
 import org.anchoranalysis.gui.backgroundset.BackgroundSet;
 import org.anchoranalysis.gui.container.background.BackgroundStackContainerException;
 
 public abstract class AnnotationInitParams {
 
-    public CallableWithProgressReporter<BackgroundSet, BackgroundStackContainerException>
+    public CheckedProgressingSupplier<BackgroundSet, BackgroundStackContainerException>
             getBackgroundSetOp() {
         return getBackground().getBackgroundSetOp();
     }

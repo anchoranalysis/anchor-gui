@@ -33,7 +33,7 @@ import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.name.provider.NamedProvider;
 import org.anchoranalysis.core.name.store.NamedProviderStore;
 import org.anchoranalysis.core.params.KeyValueParams;
-import org.anchoranalysis.core.progress.CallableWithProgressReporter;
+import org.anchoranalysis.core.progress.CheckedProgressingSupplier;
 import org.anchoranalysis.gui.bean.filecreator.MarkCreatorParams;
 import org.anchoranalysis.gui.file.opened.IOpenedFileGUI;
 import org.anchoranalysis.gui.interactivebrowser.MarkEvaluatorManager;
@@ -55,7 +55,7 @@ public class MultiCollectionDropDown {
 
     private BoundVideoStatsModuleDropDown delegate;
 
-    private CallableWithProgressReporter<TimeSequenceProvider, CreateException> rasterProvider;
+    private CheckedProgressingSupplier<TimeSequenceProvider, CreateException> rasterProvider;
     private NamedProvider<Cfg> cfgCollection;
     private NamedProvider<ObjectCollection> objCollection;
     private NamedProviderStore<KeyValueParams> paramsCollection;
@@ -63,7 +63,7 @@ public class MultiCollectionDropDown {
 
     // A dropdown menu representing a particular manifest
     public MultiCollectionDropDown(
-            CallableWithProgressReporter<TimeSequenceProvider, CreateException> rasterProvider,
+            CheckedProgressingSupplier<TimeSequenceProvider, CreateException> rasterProvider,
             NamedProvider<Cfg> cfgCollection,
             NamedProvider<ObjectCollection> objCollection,
             NamedProviderStore<KeyValueParams> paramsCollection,
@@ -146,7 +146,7 @@ public class MultiCollectionDropDown {
                     markEvaluatorManager.createSetForStackCollection(
                             progressReporter ->
                                     new WrapTimeSequenceAsStack(
-                                            rasterProvider.call(progressReporter).sequence()),
+                                            rasterProvider.get(progressReporter).sequence()),
                             () ->
                                     Optional.of(
                                             ParamsUtils.apply(

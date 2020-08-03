@@ -29,7 +29,7 @@ package org.anchoranalysis.gui.plot.creator;
 import org.anchoranalysis.anchor.mpp.feature.instantstate.CfgNRGInstantState;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.OperationFailedException;
-import org.anchoranalysis.core.functional.function.FunctionWithException;
+import org.anchoranalysis.core.functional.function.CheckedFunction;
 import org.anchoranalysis.core.index.container.BoundedIndexContainer;
 import org.anchoranalysis.core.index.container.bridge.BoundedIndexContainerBridgeWithoutIndex;
 import org.anchoranalysis.gui.io.loader.manifest.finder.FinderCSVStats;
@@ -63,9 +63,9 @@ public abstract class BridgedGraphFromDualFinderCreator<T>
         }
     }
 
-    public abstract FunctionWithException<CSVStatistic, T, CreateException>
+    public abstract CheckedFunction<CSVStatistic, T, CreateException>
             createCSVStatisticBridge();
 
-    public abstract FunctionWithException<CfgNRGInstantState, T, CreateException>
+    public abstract CheckedFunction<CfgNRGInstantState, T, CreateException>
             createCfgNRGInstantStateBridge();
 }

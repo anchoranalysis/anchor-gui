@@ -29,7 +29,7 @@ package org.anchoranalysis.plugin.gui.bean.createrastergenerator.csvstatistic;
 import org.anchoranalysis.anchor.plot.GraphInstance;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.OperationFailedException;
-import org.anchoranalysis.core.functional.function.FunctionWithException;
+import org.anchoranalysis.core.functional.function.CheckedFunction;
 import org.anchoranalysis.gui.bean.exporttask.ExportTaskParams;
 import org.anchoranalysis.gui.io.loader.manifest.finder.csvstatistic.CSVStatistic;
 import org.anchoranalysis.image.stack.Stack;
@@ -40,10 +40,10 @@ import org.anchoranalysis.plugin.gui.bean.exporttask.MappedFrom;
 
 public class GraphDynamicallyDrawnFromCSVStatistic<T> extends CreateRasterGraph<T, CSVStatistic> {
 
-    private FunctionWithException<CSVStatistic, T, CreateException> elementBridge;
+    private CheckedFunction<CSVStatistic, T, CreateException> elementBridge;
 
     public GraphDynamicallyDrawnFromCSVStatistic(
-            FunctionWithException<CSVStatistic, T, CreateException> elementBridge) {
+            CheckedFunction<CSVStatistic, T, CreateException> elementBridge) {
         super();
         this.elementBridge = elementBridge;
     }
@@ -55,7 +55,7 @@ public class GraphDynamicallyDrawnFromCSVStatistic<T> extends CreateRasterGraph<
         assert (getGraphDefinition() != null);
 
         try {
-            FunctionWithException<MappedFrom<CSVStatistic>, GraphInstance, CreateException> bridge =
+            CheckedFunction<MappedFrom<CSVStatistic>, GraphInstance, CreateException> bridge =
                     new GraphInstanceBridge<>(
                             getGraphDefinition(),
                             params.getFinderCsvStatistics().get(),

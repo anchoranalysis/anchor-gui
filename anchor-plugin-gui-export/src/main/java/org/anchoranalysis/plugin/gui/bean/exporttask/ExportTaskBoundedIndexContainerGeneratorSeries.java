@@ -32,7 +32,7 @@ import lombok.Setter;
 import org.anchoranalysis.bean.AnchorBean;
 import org.anchoranalysis.bean.annotation.BeanField;
 import org.anchoranalysis.core.error.OperationFailedException;
-import org.anchoranalysis.core.functional.function.FunctionWithException;
+import org.anchoranalysis.core.functional.function.CheckedFunction;
 import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.index.container.BoundedIndexContainer;
 import org.anchoranalysis.gui.bean.exporttask.ExportTaskFailedException;
@@ -57,7 +57,7 @@ public class ExportTaskBoundedIndexContainerGeneratorSeries<T>
     // END BEAN PARAMETERS
 
     @Setter
-    private FunctionWithException<
+    private CheckedFunction<
                     ExportTaskParams, BoundedIndexContainer<T>, OperationFailedException>
             containerBridge;
 
@@ -95,7 +95,7 @@ public class ExportTaskBoundedIndexContainerGeneratorSeries<T>
         return String.format("incrementSize=%d", this.incrementSize);
     }
 
-    public FunctionWithException<
+    public CheckedFunction<
                     ExportTaskParams, BoundedIndexContainer<T>, OperationFailedException>
             getContainerBridge() {
         return containerBridge;

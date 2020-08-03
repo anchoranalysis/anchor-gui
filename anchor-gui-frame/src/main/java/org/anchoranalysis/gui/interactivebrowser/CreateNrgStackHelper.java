@@ -26,43 +26,27 @@
 
 package org.anchoranalysis.gui.interactivebrowser;
 
-import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import org.anchoranalysis.anchor.mpp.bean.init.MPPInitParams;
 import org.anchoranalysis.core.error.CreateException;
-import org.anchoranalysis.core.functional.CallableWithException;
+import org.anchoranalysis.core.functional.function.CheckedSupplier;
 import org.anchoranalysis.core.name.provider.NamedProvider;
 import org.anchoranalysis.core.params.KeyValueParams;
-import org.anchoranalysis.core.progress.CallableWithProgressReporter;
-import org.anchoranalysis.core.progress.ProgressReporter;
 import org.anchoranalysis.feature.nrg.NRGStack;
 import org.anchoranalysis.feature.nrg.NRGStackWithParams;
 import org.anchoranalysis.image.experiment.identifiers.StackIdentifiers;
 import org.anchoranalysis.image.stack.Stack;
 
-@AllArgsConstructor
-class OperationNrgStack
-        implements CallableWithException<NRGStackWithParams, CreateException>,
-                CallableWithProgressReporter<NRGStackWithParams, CreateException> {
+@NoArgsConstructor
+class CreateNrgStackHelper {
 
     // We first retrieve a NamedImgCollection which we use to construct our real NrgStack for
     // purposes of good caching
-    private CallableWithException<MPPInitParams, ? extends Throwable>
-            operationProposerSharedObjects;
-    private KeyValueParams params;
-
-    @Override
-    public NRGStackWithParams call() throws CreateException {
-        return createNrgStack();
-    }
-
-    // NB Note assumption about named-stack ordering
-    private NRGStackWithParams createNrgStack() throws CreateException {
-
+    public static NRGStackWithParams create(CheckedSupplier<MPPInitParams, ? extends Throwable> operationProposerSharedObjects, KeyValueParams params) throws CreateException {
         try {
-
             Stack stack;
 
-            MPPInitParams soMPP = operationProposerSharedObjects.call();
+            MPPInitParams soMPP = operationProposerSharedObjects.get();
 
             NamedProvider<Stack> nic = soMPP.getImage().getStackCollection();
 
@@ -87,10 +71,5 @@ class OperationNrgStack
         } catch (Exception e) {
             throw new CreateException(e);
         }
-    }
-
-    @Override
-    public NRGStackWithParams call(ProgressReporter progressReporter) throws CreateException {
-        return call();
     }
 }

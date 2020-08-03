@@ -34,7 +34,7 @@ import lombok.Getter;
 import org.anchoranalysis.anchor.overlay.OverlayedInstantState;
 import org.anchoranalysis.core.bridge.BridgeElementWithIndex;
 import org.anchoranalysis.core.error.OperationFailedException;
-import org.anchoranalysis.core.functional.CallableWithException;
+import org.anchoranalysis.core.functional.function.CheckedSupplier;
 import org.anchoranalysis.gui.file.opened.IOpenedFileGUI;
 import org.anchoranalysis.gui.frame.multioverlay.RasterMultiCreator;
 import org.anchoranalysis.gui.frame.multiraster.NamedRasterSet;
@@ -217,7 +217,7 @@ public class OpenedFileGUIMultipleDropDown {
             if (op.getNrgBackground() != null
                     && getObjFromOperationCombine.getObj(op).isPresent()) {
 
-                Optional<CallableWithException<T, OperationFailedException>> opt =
+                Optional<CheckedSupplier<T, OperationFailedException>> opt =
                         getObjFromOperationCombine.getObj(op);
                 if (opt.isPresent()) {
                     MultiInput<T> multiInput =
@@ -245,7 +245,7 @@ public class OpenedFileGUIMultipleDropDown {
 
     @FunctionalInterface
     private interface GetObjFromOperationCombine<T> {
-        public Optional<CallableWithException<T, OperationFailedException>> getObj(
+        public Optional<CheckedSupplier<T, OperationFailedException>> getObj(
                 IVideoStatsOperationCombine op);
     }
 

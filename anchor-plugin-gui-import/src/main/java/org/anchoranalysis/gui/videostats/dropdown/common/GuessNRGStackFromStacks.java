@@ -31,35 +31,32 @@ import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.name.provider.NamedProvider;
 import org.anchoranalysis.core.name.provider.NamedProviderGetException;
-import org.anchoranalysis.core.progress.CallableWithProgressReporter;
+import org.anchoranalysis.core.progress.CheckedProgressingSupplier;
 import org.anchoranalysis.core.progress.ProgressReporter;
 import org.anchoranalysis.core.progress.ProgressReporterNull;
 import org.anchoranalysis.feature.nrg.NRGStackWithParams;
 import org.anchoranalysis.gui.series.TimeSequenceProvider;
-import org.anchoranalysis.image.stack.Stack;
 import org.anchoranalysis.image.stack.TimeSequence;
 
 @AllArgsConstructor
 public class GuessNRGStackFromStacks
-        implements CallableWithProgressReporter<NRGStackWithParams, GetOperationFailedException> {
+        implements CheckedProgressingSupplier<NRGStackWithParams, GetOperationFailedException> {
 
-    private CallableWithProgressReporter<TimeSequenceProvider, CreateException> opBackgroundSet;
+    private CheckedProgressingSupplier<TimeSequenceProvider, CreateException> opBackgroundSet;
 
     @Override
-    public NRGStackWithParams call(ProgressReporter progressReporter)
+    public NRGStackWithParams get(ProgressReporter progressReporter)
             throws GetOperationFailedException {
         // If a time sequence, assume nrg stack is always t=0
-        Stack stack = selectArbitraryItem(opBackgroundSet).get(0);
-
-        return new NRGStackWithParams(stack);
+        return new NRGStackWithParams( selectArbitraryItem(opBackgroundSet).get(0) );
     }
 
     private static TimeSequence selectArbitraryItem(
-            CallableWithProgressReporter<TimeSequenceProvider, CreateException> opBackgroundSet)
+            CheckedProgressingSupplier<TimeSequenceProvider, CreateException> opBackgroundSet)
             throws GetOperationFailedException {
         try {
             NamedProvider<TimeSequence> stacks =
-                    opBackgroundSet.call(ProgressReporterNull.get()).sequence();
+                    opBackgroundSet.get(ProgressReporterNull.get()).sequence();
             String arbitraryKey = stacks.keys().iterator().next();
 
             try {

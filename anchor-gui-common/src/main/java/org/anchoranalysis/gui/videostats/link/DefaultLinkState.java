@@ -29,7 +29,7 @@ package org.anchoranalysis.gui.videostats.link;
 import lombok.Getter;
 import lombok.Setter;
 import org.anchoranalysis.anchor.overlay.collection.OverlayCollection;
-import org.anchoranalysis.core.functional.function.FunctionWithException;
+import org.anchoranalysis.core.functional.function.CheckedFunction;
 import org.anchoranalysis.gui.container.background.BackgroundStackContainerException;
 import org.anchoranalysis.gui.image.OverlayCollectionWithNrgStack;
 import org.anchoranalysis.image.stack.DisplayStack;
@@ -48,7 +48,7 @@ public class DefaultLinkState {
     @Getter @Setter private OverlayCollectionWithNrgStack cfgWithStack;
 
     @Getter @Setter
-    private FunctionWithException<Integer, DisplayStack, BackgroundStackContainerException>
+    private CheckedFunction<Integer, DisplayStack, BackgroundStackContainerException>
             background;
 
     DefaultLinkState duplicate() {

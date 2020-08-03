@@ -26,14 +26,14 @@
 
 package org.anchoranalysis.gui.frame.overlays.onrgb;
 
-import org.anchoranalysis.core.functional.function.FunctionWithException;
+import org.anchoranalysis.core.functional.function.CheckedFunction;
 import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.index.container.SingleContainer;
 import org.anchoranalysis.gui.container.background.BackgroundStackContainerException;
 import org.anchoranalysis.gui.displayupdate.OverlayedDisplayStack;
 
 class CfgCntrBridge
-        implements FunctionWithException<
+        implements CheckedFunction<
                 Integer, OverlayedDisplayStack, BackgroundStackContainerException> {
 
     private SingleContainer<OverlayedDisplayStack> cfgCntr;

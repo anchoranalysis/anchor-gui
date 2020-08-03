@@ -27,7 +27,7 @@
 package org.anchoranalysis.gui.frame.multiraster;
 
 import org.anchoranalysis.core.error.reporter.ErrorReporter;
-import org.anchoranalysis.core.functional.function.FunctionWithException;
+import org.anchoranalysis.core.functional.function.CheckedFunction;
 import org.anchoranalysis.core.index.IIndexGettableSettable;
 import org.anchoranalysis.gui.container.background.BackgroundStackContainerException;
 import org.anchoranalysis.gui.displayupdate.DisplayUpdateRememberStack;
@@ -48,7 +48,7 @@ public class ThreadedIndexedDisplayStackSetter implements IBackgroundSetter, ITh
     private IterableObjectGenerator<DisplayStack, DisplayStack> stackGenerator;
 
     public void init(
-            FunctionWithException<Integer, DisplayStack, ? extends Throwable> cntrDisplayStack,
+            CheckedFunction<Integer, DisplayStack, ? extends Throwable> cntrDisplayStack,
             InteractiveThreadPool threadPool,
             ErrorReporter errorReporter) {
 
@@ -75,7 +75,7 @@ public class ThreadedIndexedDisplayStackSetter implements IBackgroundSetter, ITh
 
     @Override
     public void setImageStackCntr(
-            FunctionWithException<Integer, DisplayStack, BackgroundStackContainerException>
+            CheckedFunction<Integer, DisplayStack, BackgroundStackContainerException>
                     imageStackCntr) {
 
         delegate.setImageStackGenerator(ensure8bit(imageStackCntr));
@@ -87,8 +87,8 @@ public class ThreadedIndexedDisplayStackSetter implements IBackgroundSetter, ITh
         delegate.dispose();
     }
 
-    private FunctionWithException<Integer, DisplayUpdate, BackgroundStackContainerException>
-            ensure8bit(FunctionWithException<Integer, DisplayStack, ? extends Throwable> cntr) {
+    private CheckedFunction<Integer, DisplayUpdate, BackgroundStackContainerException>
+            ensure8bit(CheckedFunction<Integer, DisplayStack, ? extends Throwable> cntr) {
         return new NoOverlayBridgeFromGenerator(
                 new IterableObjectGeneratorBridge<>(
                         stackGenerator, new EnsureUnsigned8Bit<>(cntr)));

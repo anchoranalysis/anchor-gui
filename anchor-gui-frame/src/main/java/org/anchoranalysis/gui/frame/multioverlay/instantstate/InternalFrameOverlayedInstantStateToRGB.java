@@ -29,7 +29,7 @@ package org.anchoranalysis.gui.frame.multioverlay.instantstate;
 import lombok.AllArgsConstructor;
 import org.anchoranalysis.anchor.overlay.Overlay;
 import org.anchoranalysis.core.error.InitException;
-import org.anchoranalysis.core.functional.function.FunctionWithException;
+import org.anchoranalysis.core.functional.function.CheckedFunction;
 import org.anchoranalysis.core.idgetter.IDGetter;
 import org.anchoranalysis.core.index.IIndexGettableSettable;
 import org.anchoranalysis.core.index.SetOperationFailedException;
@@ -116,7 +116,7 @@ class InternalFrameOverlayedInstantStateToRGB {
     @AllArgsConstructor
     private static class BackgroundSendable
             implements IPropertyValueSendable<
-                    FunctionWithException<
+                    CheckedFunction<
                             Integer, DisplayStack, BackgroundStackContainerException>> {
 
         private IndexToRedrawUpdate indexToRedrawUpdate;
@@ -124,7 +124,7 @@ class InternalFrameOverlayedInstantStateToRGB {
 
         @Override
         public void setPropertyValue(
-                FunctionWithException<Integer, DisplayStack, BackgroundStackContainerException>
+                CheckedFunction<Integer, DisplayStack, BackgroundStackContainerException>
                         value,
                 boolean adjusting) {
             indexToRedrawUpdate.setImageStackCntr(value);

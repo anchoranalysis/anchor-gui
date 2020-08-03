@@ -28,9 +28,8 @@ package org.anchoranalysis.gui.retrieveelements;
 
 import java.nio.file.Path;
 import java.util.Optional;
+import java.util.function.Supplier;
 import lombok.RequiredArgsConstructor;
-import org.anchoranalysis.core.error.AnchorNeverOccursException;
-import org.anchoranalysis.core.functional.CallableWithException;
 import org.anchoranalysis.core.index.SetOperationFailedException;
 import org.anchoranalysis.io.generator.IterableObjectGenerator;
 import org.anchoranalysis.io.generator.ObjectGenerator;
@@ -41,23 +40,23 @@ import org.anchoranalysis.io.output.error.OutputWriteFailedException;
 @RequiredArgsConstructor
 class OperationGenerator<S, T> extends ObjectGenerator<S>
         implements IterableObjectGenerator<
-                CallableWithException<T, AnchorNeverOccursException>, S> {
+                Supplier<T>, S> {
 
     // START REQUIRED ARGUMENTS
     private final IterableObjectGenerator<T, S> delegate;
     // END REQUIRED ARGUMENTS
 
-    private CallableWithException<T, AnchorNeverOccursException> element;
+    private Supplier<T> element;
 
     @Override
-    public void setIterableElement(CallableWithException<T, AnchorNeverOccursException> element)
+    public void setIterableElement(Supplier<T> element)
             throws SetOperationFailedException {
         this.element = element;
-        delegate.setIterableElement(element.call());
+        delegate.setIterableElement(element.get());
     }
 
     @Override
-    public CallableWithException<T, AnchorNeverOccursException> getIterableElement() {
+    public Supplier<T> getIterableElement() {
         return element;
     }
 

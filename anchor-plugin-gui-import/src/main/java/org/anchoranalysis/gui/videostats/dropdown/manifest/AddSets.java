@@ -127,7 +127,7 @@ class AddSets {
                 };
 
         for (FinderCfgNRGSet finder : allFinderCfgNRG) {
-            if (finder.doFind(manifests.getFileManifest().call())) {}
+            if (finder.doFind(manifests.getFileManifest().get())) {}
         }
     }
 

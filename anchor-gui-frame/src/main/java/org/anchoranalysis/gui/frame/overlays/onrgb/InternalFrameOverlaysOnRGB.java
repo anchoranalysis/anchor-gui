@@ -29,7 +29,7 @@ package org.anchoranalysis.gui.frame.overlays.onrgb;
 import org.anchoranalysis.anchor.overlay.Overlay;
 import org.anchoranalysis.anchor.overlay.collection.ColoredOverlayCollection;
 import org.anchoranalysis.core.error.InitException;
-import org.anchoranalysis.core.functional.function.FunctionWithException;
+import org.anchoranalysis.core.functional.function.CheckedFunction;
 import org.anchoranalysis.core.idgetter.IDGetter;
 import org.anchoranalysis.core.index.IIndexGettableSettable;
 import org.anchoranalysis.core.index.container.SingleContainer;
@@ -85,7 +85,7 @@ class InternalFrameOverlaysOnRGB {
 
         cntr.setItem(overlayedDisplayStack, 0);
 
-        FunctionWithException<Integer, OverlayedDisplayStack, BackgroundStackContainerException>
+        CheckedFunction<Integer, OverlayedDisplayStack, BackgroundStackContainerException>
                 bridge = new CfgCntrBridge(cntr);
 
         delegate.beforeInit(bridge, idGetter, 0, markDisplaySettingsWrapper, mpg);

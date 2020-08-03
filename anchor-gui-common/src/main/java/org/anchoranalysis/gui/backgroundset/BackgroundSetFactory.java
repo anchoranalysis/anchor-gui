@@ -28,12 +28,10 @@ package org.anchoranalysis.gui.backgroundset;
 
 import java.util.Set;
 import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
-import org.anchoranalysis.core.cache.CacheCall;
+import org.anchoranalysis.core.cache.CachedSupplier;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.OperationFailedException;
-import org.anchoranalysis.core.functional.CallableWithException;
 import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.index.container.BoundedIndexContainer;
 import org.anchoranalysis.core.index.container.bridge.BoundedIndexContainerBridgeWithoutIndex;
@@ -132,30 +130,20 @@ public class BackgroundSetFactory {
                     return sourceObject.getBackgroundSet().singleStack(name);
                 });
     }
+    
+    private static BackgroundStackContainer addBackgroundSetItem(NamedProvider<TimeSequence> imageStackCollection, String id) throws BackgroundStackContainerException {
 
-    @AllArgsConstructor
-    private static class AddBackgroundSetItem
-            implements CallableWithException<
-                    BackgroundStackContainer, BackgroundStackContainerException> {
+        try {
+            TimeSequence seq = imageStackCollection.getException(id);
 
-        private NamedProvider<TimeSequence> imageStackCollection;
-        private String id;
-
-        @Override
-        public BackgroundStackContainer call() throws BackgroundStackContainerException {
-
-            try {
-                TimeSequence seq = imageStackCollection.getException(id);
-
-                if (seq.size() > 1) {
-                    return createBackgroundTimeSeries(seq);
-                } else {
-                    return createBackgroundNotTimeSeries(seq.get(0));
-                }
-
-            } catch (NamedProviderGetException | OperationFailedException e) {
-                throw new BackgroundStackContainerException(e);
+            if (seq.size() > 1) {
+                return createBackgroundTimeSeries(seq);
+            } else {
+                return createBackgroundNotTimeSeries(seq.get(0));
             }
+
+        } catch (NamedProviderGetException | OperationFailedException e) {
+            throw new BackgroundStackContainerException(e);
         }
     }
 
@@ -241,8 +229,8 @@ public class BackgroundSetFactory {
             // The way we handle this means we cannot add the (only first three) brackets on the
             // name, as the image has not yet been evaluated
             for (String id : keys) {
-                CallableWithException<BackgroundStackContainer, BackgroundStackContainerException>
-                        operation = CacheCall.of(new AddBackgroundSetItem(namedStacks, id));
+                BackgroundSetSupplier<BackgroundStackContainer>
+                        operation = CachedSupplier.cache(()-> addBackgroundSetItem(namedStacks, id))::get;
                 backgroundSet.addItem(id, operation);
                 pri.update();
             }

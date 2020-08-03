@@ -28,7 +28,7 @@ package org.anchoranalysis.gui.frame.threaded.overlay;
 
 import org.anchoranalysis.anchor.overlay.Overlay;
 import org.anchoranalysis.core.error.InitException;
-import org.anchoranalysis.core.functional.function.FunctionWithException;
+import org.anchoranalysis.core.functional.function.CheckedFunction;
 import org.anchoranalysis.core.idgetter.IDGetter;
 import org.anchoranalysis.core.index.IIndexGettableSettable;
 import org.anchoranalysis.core.index.container.BoundedRangeIncompleteDynamic;
@@ -63,7 +63,7 @@ public class InternalFrameThreadedOverlayProvider {
     }
 
     public void beforeInit(
-            FunctionWithException<Integer, OverlayedDisplayStack, BackgroundStackContainerException>
+            CheckedFunction<Integer, OverlayedDisplayStack, BackgroundStackContainerException>
                     bridge,
             IDGetter<Overlay> idGetter,
             int defaultIndex,

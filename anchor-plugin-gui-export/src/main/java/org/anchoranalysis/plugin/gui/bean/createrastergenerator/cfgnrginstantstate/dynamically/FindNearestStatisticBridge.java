@@ -28,14 +28,14 @@ package org.anchoranalysis.plugin.gui.bean.createrastergenerator.cfgnrginstantst
 
 import org.anchoranalysis.anchor.mpp.feature.instantstate.CfgNRGInstantState;
 import org.anchoranalysis.core.error.OperationFailedException;
-import org.anchoranalysis.core.functional.function.FunctionWithException;
+import org.anchoranalysis.core.functional.function.CheckedFunction;
 import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.index.container.BoundedIndexContainer;
 import org.anchoranalysis.gui.io.loader.manifest.finder.csvstatistic.CSVStatistic;
 import org.anchoranalysis.plugin.gui.bean.exporttask.MappedFrom;
 
 class FindNearestStatisticBridge
-        implements FunctionWithException<
+        implements CheckedFunction<
                 MappedFrom<CfgNRGInstantState>,
                 MappedFrom<CSVStatistic>,
                 OperationFailedException> {

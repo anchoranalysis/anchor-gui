@@ -38,7 +38,7 @@ import org.anchoranalysis.anchor.mpp.overlay.OverlayCollectionMarkFactory;
 import org.anchoranalysis.anchor.overlay.OverlayedInstantState;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.error.friendly.AnchorImpossibleSituationException;
-import org.anchoranalysis.core.functional.function.FunctionWithException;
+import org.anchoranalysis.core.functional.function.CheckedFunction;
 import org.anchoranalysis.core.index.container.BoundedIndexContainer;
 import org.anchoranalysis.core.index.container.bridge.BoundedIndexContainerBridgeWithoutIndex;
 import org.anchoranalysis.gui.bean.exporttask.ExportTaskParams;
@@ -50,7 +50,7 @@ import org.anchoranalysis.gui.mergebridge.TransformToCfg;
 
 @RequiredArgsConstructor
 class MergedContainerBridge
-        implements FunctionWithException<
+        implements CheckedFunction<
                 ExportTaskParams,
                 BoundedIndexContainer<CfgNRGInstantState>,
                 OperationFailedException> {

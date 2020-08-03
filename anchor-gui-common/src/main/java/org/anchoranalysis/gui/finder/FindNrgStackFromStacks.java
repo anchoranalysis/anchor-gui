@@ -26,36 +26,32 @@
 
 package org.anchoranalysis.gui.finder;
 
-import lombok.AllArgsConstructor;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import org.anchoranalysis.core.error.OperationFailedException;
-import org.anchoranalysis.core.functional.CallableWithException;
 import org.anchoranalysis.core.name.provider.NamedProvider;
 import org.anchoranalysis.core.name.provider.NamedProviderGetException;
-import org.anchoranalysis.core.progress.CallableWithProgressReporter;
+import org.anchoranalysis.core.progress.CheckedProgressingSupplier;
 import org.anchoranalysis.core.progress.ProgressReporterNull;
 import org.anchoranalysis.feature.nrg.NRGStackWithParams;
 import org.anchoranalysis.image.channel.Channel;
 import org.anchoranalysis.image.extent.IncorrectImageSizeException;
 import org.anchoranalysis.image.stack.Stack;
 
-@AllArgsConstructor
-public class OperationFindNrgStackFromStacks
-        implements CallableWithException<NRGStackWithParams, OperationFailedException> {
+@NoArgsConstructor(access=AccessLevel.PRIVATE)
+class FindNrgStackFromStacks {
 
     /**
      * We first retrieve a namedimgcollection which we use to construct our real NrgStack for
      * purposes of good caching
      */
-    private CallableWithProgressReporter<NamedProvider<Stack>, OperationFailedException>
-            operationStackCollection;
-
-    @Override
-    public NRGStackWithParams call() throws OperationFailedException {
+    public static NRGStackWithParams find( CheckedProgressingSupplier<NamedProvider<Stack>, OperationFailedException>
+    operationStackCollection ) throws OperationFailedException {
         // NB Note assumption about named-stack ordering
-        NamedProvider<Stack> nic = operationStackCollection.call(ProgressReporterNull.get());
+        NamedProvider<Stack> nic = operationStackCollection.get(ProgressReporterNull.get());
 
         // We expects the keys to be the indexes
-        Stack stack = populateStack(nic);
+        Stack stack = allChannelsInStack(nic);
 
         if (stack.getNumberChannels() > 0) {
             return new NRGStackWithParams(stack);
@@ -64,24 +60,24 @@ public class OperationFindNrgStackFromStacks
         }
     }
 
-    private static Stack populateStack(NamedProvider<Stack> nic) throws OperationFailedException {
+    private static Stack allChannelsInStack(NamedProvider<Stack> namedStacks) throws OperationFailedException {
 
-        Stack stack = new Stack();
+        Stack out = new Stack();
 
-        int size = nic.keys().size();
+        int size = namedStacks.keys().size();
         for (int c = 0; c < size; c++) {
 
             try {
-                stack.addChannel(chnlFromStack(nic, c));
+                out.addChannel(channelFromStack(namedStacks, c));
             } catch (IncorrectImageSizeException e) {
                 throw new OperationFailedException(e);
             }
         }
 
-        return stack;
+        return out;
     }
 
-    private static Channel chnlFromStack(NamedProvider<Stack> stackProvider, int c)
+    private static Channel channelFromStack(NamedProvider<Stack> stackProvider, int c)
             throws OperationFailedException {
 
         try {

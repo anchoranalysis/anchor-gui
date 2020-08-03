@@ -28,7 +28,7 @@ package org.anchoranalysis.gui.interactivebrowser.backgroundset.menu;
 
 import javax.swing.JMenu;
 import org.anchoranalysis.core.error.reporter.ErrorReporter;
-import org.anchoranalysis.core.progress.CallableWithProgressReporter;
+import org.anchoranalysis.core.progress.CheckedProgressingSupplier;
 import org.anchoranalysis.gui.backgroundset.BackgroundSet;
 import org.anchoranalysis.gui.container.background.BackgroundStackContainerException;
 import org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.definition.ChangeableBackgroundDefinition;
@@ -55,7 +55,7 @@ class BackgroundSetMenuWithMap implements IBackgroundUpdater {
 
     @Override
     public void update(
-            CallableWithProgressReporter<BackgroundSet, BackgroundStackContainerException>
+            CheckedProgressingSupplier<BackgroundSet, BackgroundStackContainerException>
                     backgroundSet) {
         backgroundDefinition.update(backgroundSet);
         delegate.update(

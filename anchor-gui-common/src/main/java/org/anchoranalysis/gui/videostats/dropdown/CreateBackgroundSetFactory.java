@@ -29,8 +29,8 @@ package org.anchoranalysis.gui.videostats.dropdown;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import org.anchoranalysis.core.name.provider.NamedProvider;
-import org.anchoranalysis.core.progress.CacheCallWithProgressReporter;
-import org.anchoranalysis.core.progress.CallableWithProgressReporter;
+import org.anchoranalysis.core.progress.CachedProgressingSupplier;
+import org.anchoranalysis.core.progress.CheckedProgressingSupplier;
 import org.anchoranalysis.core.progress.ProgressReporterNull;
 import org.anchoranalysis.gui.backgroundset.BackgroundSet;
 import org.anchoranalysis.gui.backgroundset.BackgroundSetFactory;
@@ -43,22 +43,22 @@ import org.anchoranalysis.image.stack.wrap.WrapStackAsTimeSequence;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class CreateBackgroundSetFactory {
 
-    public static CallableWithProgressReporter<BackgroundSet, BackgroundStackContainerException>
+    public static CheckedProgressingSupplier<BackgroundSet, BackgroundStackContainerException>
             createCached(NamedProvider<Stack> namedProvider) {
         return createCached(
                 progressReporter ->
                         new TimeSequenceProvider(new WrapStackAsTimeSequence(namedProvider), 1));
     }
 
-    public static CallableWithProgressReporter<BackgroundSet, BackgroundStackContainerException>
+    public static CheckedProgressingSupplier<BackgroundSet, BackgroundStackContainerException>
             createCached(
-                    CallableWithProgressReporter<TimeSequenceProvider, ? extends Throwable>
+                    CheckedProgressingSupplier<TimeSequenceProvider, ? extends Throwable>
                             stacksOverTime) {
-        return CacheCallWithProgressReporter.of(
+        return CachedProgressingSupplier.cache(
                 progressReporter -> {
                     try {
                         NamedProvider<TimeSequence> stacks =
-                                stacksOverTime.call(progressReporter).sequence();
+                                stacksOverTime.get(progressReporter).sequence();
 
                         return BackgroundSetFactory.createBackgroundSet(
                                 stacks, ProgressReporterNull.get());

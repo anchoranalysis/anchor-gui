@@ -32,7 +32,7 @@ import org.anchoranalysis.anchor.mpp.cfg.Cfg;
 import org.anchoranalysis.anchor.mpp.feature.instantstate.CfgNRGInstantState;
 import org.anchoranalysis.anchor.mpp.feature.instantstate.CfgNRGNonHandleInstantState;
 import org.anchoranalysis.anchor.mpp.feature.nrg.cfg.CfgNRG;
-import org.anchoranalysis.core.cache.CacheCall;
+import org.anchoranalysis.core.cache.CachedSupplier;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.index.container.SingleContainer;
 import org.anchoranalysis.core.name.provider.NamedProvider;
@@ -89,7 +89,7 @@ class AddObjects {
         try {
             final FinderObjectCollectionFolder finderObjects =
                     new FinderObjectCollectionFolder(OutputterDirectories.OBJECT);
-            finderObjects.doFind(manifests.getFileManifest().call());
+            finderObjects.doFind(manifests.getFileManifest().get());
 
             if (finderObjects.exists()) {
 
@@ -100,7 +100,7 @@ class AddObjects {
                     DropDownUtilities.addObjectCollection(
                             subMenu,
                             delegate,
-                            CacheCall.of(
+                            CachedSupplier.cache(
                                     () -> {
                                         try {
                                             return providers.getException(key);
@@ -128,12 +128,12 @@ class AddObjects {
         try {
             final FinderSerializedObject<CfgNRG> finderFinalCfgNRG =
                     new FinderSerializedObject<>("cfgNRG", mpg.getLogger().errorReporter());
-            finderFinalCfgNRG.doFind(manifests.getFileManifest().call());
+            finderFinalCfgNRG.doFind(manifests.getFileManifest().get());
 
             if (finderFinalCfgNRG.exists()) {
 
-                CacheCall<LoadContainer<CfgNRGInstantState>, OperationFailedException> op =
-                        CacheCall.of(
+                CachedSupplier<LoadContainer<CfgNRGInstantState>, OperationFailedException> op =
+                        CachedSupplier.cache(
                                 () -> {
                                     CfgNRGInstantState instantState;
                                     try {
@@ -174,7 +174,7 @@ class AddObjects {
 
         try {
             FinderCfgFolder finder = new FinderCfgFolder("cfgCollection", "cfg");
-            finder.doFind(manifests.getFileManifest().call());
+            finder.doFind(manifests.getFileManifest().get());
 
             NamedProvider<Cfg> provider = finder.createNamedProvider(false);
             DropDownUtilities.addCfgSubmenu(

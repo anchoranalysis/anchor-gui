@@ -70,7 +70,7 @@ class CreateObjectStoreFromDirectory {
 
     private void addPath(LazyEvaluationStore<ObjectCollection> out, String name, Path path)
             throws OperationFailedException {
-        out.add(name, ObjectCollectionReader.createFromPathCached(() -> path));
+        out.add(name, ObjectCollectionReader.createFromPathCached(() -> path)::get);
     }
 
     private static File[] subdirectoriesFor(Path pathFolder) {

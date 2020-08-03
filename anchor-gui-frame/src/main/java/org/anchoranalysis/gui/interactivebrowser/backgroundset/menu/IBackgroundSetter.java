@@ -26,7 +26,7 @@
 
 package org.anchoranalysis.gui.interactivebrowser.backgroundset.menu;
 
-import org.anchoranalysis.core.functional.function.FunctionWithException;
+import org.anchoranalysis.core.functional.function.CheckedFunction;
 import org.anchoranalysis.core.index.SetOperationFailedException;
 import org.anchoranalysis.gui.container.background.BackgroundStackContainerException;
 import org.anchoranalysis.image.stack.DisplayStack;
@@ -35,7 +35,7 @@ import org.anchoranalysis.image.stack.DisplayStack;
 public interface IBackgroundSetter {
 
     void setImageStackCntr(
-            FunctionWithException<Integer, DisplayStack, BackgroundStackContainerException>
+            CheckedFunction<Integer, DisplayStack, BackgroundStackContainerException>
                     imageStackCntr)
             throws SetOperationFailedException;
 }

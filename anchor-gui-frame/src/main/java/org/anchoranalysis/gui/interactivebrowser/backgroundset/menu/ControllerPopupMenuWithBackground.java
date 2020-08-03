@@ -29,7 +29,7 @@ package org.anchoranalysis.gui.interactivebrowser.backgroundset.menu;
 import javax.swing.JMenu;
 import lombok.AllArgsConstructor;
 import org.anchoranalysis.core.error.reporter.ErrorReporter;
-import org.anchoranalysis.core.progress.CallableWithProgressReporter;
+import org.anchoranalysis.core.progress.CheckedProgressingSupplier;
 import org.anchoranalysis.gui.backgroundset.BackgroundSet;
 import org.anchoranalysis.gui.container.background.BackgroundStackContainerException;
 import org.anchoranalysis.gui.frame.details.ControllerPopupMenu;
@@ -57,7 +57,7 @@ public class ControllerPopupMenuWithBackground {
 
     public IBackgroundUpdater add(
             VideoStatsModuleGlobalParams mpg,
-            CallableWithProgressReporter<BackgroundSet, BackgroundStackContainerException>
+            CheckedProgressingSupplier<BackgroundSet, BackgroundStackContainerException>
                     backgroundSet) {
         return addDefinition(mpg, new ChangeableBackgroundDefinitionSimple(backgroundSet));
     }

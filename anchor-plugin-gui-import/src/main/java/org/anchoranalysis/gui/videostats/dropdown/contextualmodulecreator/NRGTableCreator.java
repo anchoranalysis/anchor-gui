@@ -32,7 +32,7 @@ import org.anchoranalysis.anchor.mpp.feature.instantstate.CfgNRGInstantState;
 import org.anchoranalysis.core.color.ColorIndex;
 import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.error.OperationFailedException;
-import org.anchoranalysis.core.functional.CallableWithException;
+import org.anchoranalysis.core.functional.function.CheckedSupplier;
 import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.feature.nrg.NRGStackWithParams;
 import org.anchoranalysis.gui.cfgnrg.StatePanelFrameHistoryCfgNRGInstantState;
@@ -47,9 +47,9 @@ import org.anchoranalysis.io.manifest.deserializer.folder.LoadContainer;
 @AllArgsConstructor
 public class NRGTableCreator extends VideoStatsModuleCreatorContext {
 
-    private final CallableWithException<LoadContainer<CfgNRGInstantState>, OperationFailedException>
+    private final CheckedSupplier<LoadContainer<CfgNRGInstantState>, OperationFailedException>
             operation;
-    private final CallableWithException<NRGStackWithParams, GetOperationFailedException>
+    private final CheckedSupplier<NRGStackWithParams, GetOperationFailedException>
             nrgStackWithParams;
     private final ColorIndex colorIndex;
 
@@ -66,7 +66,7 @@ public class NRGTableCreator extends VideoStatsModuleCreatorContext {
             throws VideoStatsModuleCreateException {
 
         try {
-            LoadContainer<CfgNRGInstantState> cntr = operation.call();
+            LoadContainer<CfgNRGInstantState> cntr = operation.get();
 
             StatePanelFrameHistoryCfgNRGInstantState frame =
                     new StatePanelFrameHistoryCfgNRGInstantState(
@@ -74,7 +74,7 @@ public class NRGTableCreator extends VideoStatsModuleCreatorContext {
             frame.init(
                     defaultStateManager.getLinkStateManager().getState().getFrameIndex(),
                     cntr,
-                    new CfgNRGTablePanel(colorIndex, nrgStackWithParams.call()),
+                    new CfgNRGTablePanel(colorIndex, nrgStackWithParams.get()),
                     mpg.getLogger().errorReporter());
             frame.controllerSize().configureSize(300, 600, 300, 1000);
             return Optional.of(frame.moduleCreator());

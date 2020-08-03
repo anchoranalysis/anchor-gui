@@ -28,25 +28,25 @@ package org.anchoranalysis.gui.videostats.dropdown;
 
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.index.GetOperationFailedException;
-import org.anchoranalysis.core.progress.CallableWithProgressReporter;
+import org.anchoranalysis.core.progress.CheckedProgressingSupplier;
 import org.anchoranalysis.core.progress.ProgressReporter;
 import org.anchoranalysis.feature.nrg.NRGStackWithParams;
 import org.anchoranalysis.gui.interactivebrowser.MarkEvaluatorSetForImage;
+import lombok.RequiredArgsConstructor;
 
+@RequiredArgsConstructor
 public class OperationNRGStackFromMarkEvaluatorSet
-        implements CallableWithProgressReporter<NRGStackWithParams, GetOperationFailedException>,
+        implements CheckedProgressingSupplier<NRGStackWithParams, GetOperationFailedException>,
                 IUpdatableMarkEvaluator {
 
-    private MarkEvaluatorSetForImage markEvaluatorSet;
+    // START REQUIRED ARGUMENTS
+    private final MarkEvaluatorSetForImage markEvaluatorSet;
+    // END REQUIRED ARGUMENTS
+    
     private String markEvaluatorIdentifier;
 
-    public OperationNRGStackFromMarkEvaluatorSet(MarkEvaluatorSetForImage markEvaluatorSet) {
-        super();
-        this.markEvaluatorSet = markEvaluatorSet;
-    }
-
     @Override
-    public NRGStackWithParams call(ProgressReporter progressReporter)
+    public NRGStackWithParams get(ProgressReporter progressReporter)
             throws GetOperationFailedException {
 
         if (markEvaluatorIdentifier == null || markEvaluatorIdentifier.isEmpty()) {

@@ -37,7 +37,7 @@ import org.anchoranalysis.anchor.mpp.overlay.OverlayCollectionMarkFactory;
 import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.error.reporter.ErrorReporter;
 import org.anchoranalysis.core.name.provider.NamedProvider;
-import org.anchoranalysis.core.progress.CallableWithProgressReporter;
+import org.anchoranalysis.core.progress.CheckedProgressingSupplier;
 import org.anchoranalysis.gui.backgroundset.BackgroundSet;
 import org.anchoranalysis.gui.cfgnrg.StatePanelUpdateException;
 import org.anchoranalysis.gui.container.background.BackgroundStackContainerException;
@@ -99,7 +99,7 @@ public class InternalFrameMarkProposerEvaluator {
     public ISliderState init(
             MarkEvaluatorSetForImage markEvaluatorSet,
             DefaultModuleState defaultState,
-            CallableWithProgressReporter<BackgroundSet, BackgroundStackContainerException>
+            CheckedProgressingSupplier<BackgroundSet, BackgroundStackContainerException>
                     operationBackgroundSet,
             OutputWriteSettings outputWriteSettings,
             VideoStatsModuleGlobalParams mpg)

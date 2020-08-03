@@ -28,7 +28,7 @@ package org.anchoranalysis.gui.videostats.link;
 
 import java.util.HashMap;
 import org.anchoranalysis.anchor.overlay.collection.OverlayCollection;
-import org.anchoranalysis.core.functional.function.FunctionWithException;
+import org.anchoranalysis.core.functional.function.CheckedFunction;
 import org.anchoranalysis.core.index.IntArray;
 import org.anchoranalysis.core.property.IPropertyValueSendable;
 import org.anchoranalysis.gui.container.background.BackgroundStackContainerException;
@@ -80,7 +80,7 @@ public class DefaultLinkStateManager {
     }
 
     public void setBackground(
-            FunctionWithException<Integer, DisplayStack, BackgroundStackContainerException>
+            CheckedFunction<Integer, DisplayStack, BackgroundStackContainerException>
                     background) {
         getState().setBackground(background);
     }
@@ -98,7 +98,7 @@ public class DefaultLinkStateManager {
 
     /** Provides a copy of the default module state with a changed background */
     public DefaultLinkState copyChangeBackground(
-            FunctionWithException<Integer, DisplayStack, BackgroundStackContainerException>
+            CheckedFunction<Integer, DisplayStack, BackgroundStackContainerException>
                     background) {
         DefaultLinkState dup = delegate.duplicate();
         dup.setBackground(background);

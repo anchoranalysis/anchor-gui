@@ -37,10 +37,10 @@ import org.anchoranalysis.anchor.mpp.overlay.OverlayCollectionMarkFactory;
 import org.anchoranalysis.anchor.overlay.OverlayedInstantState;
 import org.anchoranalysis.anchor.overlay.collection.OverlayCollection;
 import org.anchoranalysis.core.error.AnchorNeverOccursException;
-import org.anchoranalysis.core.functional.function.FunctionWithException;
+import org.anchoranalysis.core.functional.function.CheckedFunction;
 
 public class MergeCfgBridge
-        implements FunctionWithException<
+        implements CheckedFunction<
                 IndexedDualState<Cfg>, OverlayedInstantState, AnchorNeverOccursException> {
 
     private Supplier<RegionMembershipWithFlags> regionMembership;

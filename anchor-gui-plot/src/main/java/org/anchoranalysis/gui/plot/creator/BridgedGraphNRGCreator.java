@@ -30,7 +30,7 @@ import org.anchoranalysis.anchor.mpp.feature.instantstate.CfgNRGInstantState;
 import org.anchoranalysis.anchor.plot.bean.GraphDefinition;
 import org.anchoranalysis.anchor.plot.bean.colorscheme.GraphColorScheme;
 import org.anchoranalysis.core.error.CreateException;
-import org.anchoranalysis.core.functional.function.FunctionWithException;
+import org.anchoranalysis.core.functional.function.CheckedFunction;
 import org.anchoranalysis.gui.io.loader.manifest.finder.csvstatistic.CSVStatistic;
 import org.anchoranalysis.gui.plot.definition.line.GraphDefinitionLineIterVsNRG;
 import org.anchoranalysis.gui.plot.definition.line.GraphDefinitionLineIterVsNRG.Item;
@@ -50,14 +50,14 @@ public class BridgedGraphNRGCreator
     }
 
     @Override
-    public FunctionWithException<CSVStatistic, Item, CreateException> createCSVStatisticBridge() {
+    public CheckedFunction<CSVStatistic, Item, CreateException> createCSVStatisticBridge() {
         return sourceObject ->
                 new GraphDefinitionLineIterVsNRG.Item(
                         sourceObject.getIter(), sourceObject.getNrg());
     }
 
     @Override
-    public FunctionWithException<CfgNRGInstantState, Item, CreateException>
+    public CheckedFunction<CfgNRGInstantState, Item, CreateException>
             createCfgNRGInstantStateBridge() {
         return sourceObject -> {
             if (sourceObject.getCfgNRG() != null) {

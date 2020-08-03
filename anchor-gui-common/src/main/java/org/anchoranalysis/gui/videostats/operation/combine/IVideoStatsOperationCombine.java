@@ -29,7 +29,7 @@ package org.anchoranalysis.gui.videostats.operation.combine;
 import java.util.Optional;
 import org.anchoranalysis.anchor.mpp.cfg.Cfg;
 import org.anchoranalysis.core.error.OperationFailedException;
-import org.anchoranalysis.core.functional.CallableWithException;
+import org.anchoranalysis.core.functional.function.CheckedSupplier;
 import org.anchoranalysis.gui.videostats.dropdown.common.NRGBackground;
 import org.anchoranalysis.image.object.ObjectCollection;
 
@@ -38,9 +38,9 @@ public interface IVideoStatsOperationCombine {
 
     NRGBackground getNrgBackground();
 
-    Optional<CallableWithException<Cfg, OperationFailedException>> getCfg();
+    Optional<CheckedSupplier<Cfg, OperationFailedException>> getCfg();
 
-    Optional<CallableWithException<ObjectCollection, OperationFailedException>> getObjects();
+    Optional<CheckedSupplier<ObjectCollection, OperationFailedException>> getObjects();
 
     String generateName();
 }

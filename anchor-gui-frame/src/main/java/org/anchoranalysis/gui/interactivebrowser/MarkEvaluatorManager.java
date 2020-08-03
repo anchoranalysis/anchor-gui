@@ -34,10 +34,10 @@ import java.util.Set;
 import org.anchoranalysis.anchor.mpp.feature.bean.mark.MarkEvaluator;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.OperationFailedException;
-import org.anchoranalysis.core.functional.CallableWithException;
+import org.anchoranalysis.core.functional.function.CheckedSupplier;
 import org.anchoranalysis.core.name.provider.NamedProvider;
 import org.anchoranalysis.core.params.KeyValueParams;
-import org.anchoranalysis.core.progress.CallableWithProgressReporter;
+import org.anchoranalysis.core.progress.CheckedProgressingSupplier;
 import org.anchoranalysis.image.stack.Stack;
 import org.anchoranalysis.io.output.bound.BoundIOContext;
 
@@ -58,8 +58,8 @@ public class MarkEvaluatorManager {
     }
 
     public MarkEvaluatorSetForImage createSetForStackCollection(
-            CallableWithProgressReporter<NamedProvider<Stack>, ? extends Throwable> namedStacks,
-            CallableWithException<Optional<KeyValueParams>, IOException> keyParams)
+            CheckedProgressingSupplier<NamedProvider<Stack>, ? extends Throwable> namedStacks,
+            CheckedSupplier<Optional<KeyValueParams>, IOException> keyParams)
             throws CreateException {
 
         try {

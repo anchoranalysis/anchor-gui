@@ -31,11 +31,11 @@ import lombok.NoArgsConstructor;
 import org.anchoranalysis.anchor.mpp.cfg.Cfg;
 import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.error.OperationFailedException;
-import org.anchoranalysis.core.functional.CallableWithException;
+import org.anchoranalysis.core.functional.function.CheckedSupplier;
 import org.anchoranalysis.core.name.provider.NamedProvider;
 import org.anchoranalysis.core.name.provider.NamedProviderGetException;
-import org.anchoranalysis.core.progress.CacheCallWithProgressReporter;
-import org.anchoranalysis.core.progress.CallableWithProgressReporter;
+import org.anchoranalysis.core.progress.CachedProgressingSupplier;
+import org.anchoranalysis.core.progress.CheckedProgressingSupplier;
 import org.anchoranalysis.gui.backgroundset.BackgroundSet;
 import org.anchoranalysis.gui.container.background.BackgroundStackContainerException;
 import org.anchoranalysis.gui.interactivebrowser.MarkEvaluatorSetForImage;
@@ -61,9 +61,9 @@ public class DropDownUtilities {
 
     public static void addAllProposerEvaluator(
             BoundVideoStatsModuleDropDown dropDown,
-            CallableWithProgressReporter<IAddVideoStatsModule, ? extends Throwable>
+            CheckedProgressingSupplier<IAddVideoStatsModule, ? extends Throwable>
                     adderOpWithoutNRG,
-            CallableWithProgressReporter<BackgroundSet, BackgroundStackContainerException>
+            CheckedProgressingSupplier<BackgroundSet, BackgroundStackContainerException>
                     backgroundSet,
             MarkEvaluatorSetForImage markEvaluatorSet,
             OutputWriteSettings outputWriteSettings,
@@ -76,10 +76,10 @@ public class DropDownUtilities {
         NRGBackground nrgBackground =
                 NRGBackground.createFromBackground(backgroundSet, operationGetNRGStack);
 
-        CallableWithProgressReporter<IAddVideoStatsModule, ? extends Throwable> adderOp =
-                CacheCallWithProgressReporter.of(
+        CheckedProgressingSupplier<IAddVideoStatsModule, ? extends Throwable> adderOp =
+                CachedProgressingSupplier.cache(
                         pr -> {
-                            IAddVideoStatsModule adder = adderOpWithoutNRG.call(pr);
+                            IAddVideoStatsModule adder = adderOpWithoutNRG.get(pr);
 
                             if (addNRGAdder) {
                                 nrgBackground.addNrgStackToAdder(adder);
@@ -109,7 +109,7 @@ public class DropDownUtilities {
     public static void addCfg(
             VideoStatsOperationMenu menu,
             BoundVideoStatsModuleDropDown delegate,
-            CallableWithException<Cfg, OperationFailedException> op,
+            CheckedSupplier<Cfg, OperationFailedException> op,
             String name,
             NRGBackgroundAdder<?> nrgBackground,
             VideoStatsModuleGlobalParams mpg,
@@ -130,7 +130,7 @@ public class DropDownUtilities {
     public static void addObjectCollection(
             VideoStatsOperationMenu menu,
             BoundVideoStatsModuleDropDown delegate,
-            CallableWithException<ObjectCollection, OperationFailedException> op,
+            CheckedSupplier<ObjectCollection, OperationFailedException> op,
             String name,
             NRGBackgroundAdder<?> nrgBackground,
             VideoStatsModuleGlobalParams mpg,
@@ -213,7 +213,7 @@ public class DropDownUtilities {
     private static void addModule(
             VideoStatsModuleCreator module,
             VideoStatsOperationMenu menu,
-            CallableWithProgressReporter<IAddVideoStatsModule, ? extends Throwable> opAdder,
+            CheckedProgressingSupplier<IAddVideoStatsModule, ? extends Throwable> opAdder,
             String name,
             VideoStatsModuleGlobalParams mpg,
             boolean addAsDefault) {
