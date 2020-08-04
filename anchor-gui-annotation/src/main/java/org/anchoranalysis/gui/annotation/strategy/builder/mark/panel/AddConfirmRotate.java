@@ -35,7 +35,10 @@ import org.anchoranalysis.gui.frame.details.canvas.ControllerMouse;
 import org.anchoranalysis.gui.image.frame.ISliderState;
 import org.anchoranalysis.gui.videostats.internalframe.annotator.navigation.PanelMark;
 import org.anchoranalysis.gui.videostats.internalframe.annotator.navigation.PanelTool;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 
+@NoArgsConstructor(access=AccessLevel.PRIVATE)
 public class AddConfirmRotate {
 
     public static void apply(

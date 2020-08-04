@@ -40,7 +40,10 @@ import org.anchoranalysis.gui.videostats.internalframe.annotator.currentstate.Cu
 import org.anchoranalysis.gui.videostats.internalframe.annotator.currentstate.IQueryAcceptedRejected;
 import org.anchoranalysis.gui.videostats.internalframe.annotator.currentstate.ShowCurrentState;
 import org.anchoranalysis.gui.videostats.internalframe.annotator.navigation.PanelNavigation;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 
+@NoArgsConstructor(access=AccessLevel.PRIVATE)
 public class CreateNavigationPanel {
 
     public static PanelNavigation apply(
