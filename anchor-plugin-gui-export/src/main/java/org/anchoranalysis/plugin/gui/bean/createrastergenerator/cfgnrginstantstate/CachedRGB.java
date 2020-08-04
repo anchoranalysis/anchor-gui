@@ -39,7 +39,7 @@ import org.anchoranalysis.image.extent.BoundingBox;
 import org.anchoranalysis.image.io.stack.ConvertDisplayStackToRGB;
 import org.anchoranalysis.image.stack.DisplayStack;
 import org.anchoranalysis.image.stack.rgb.RGBStack;
-import org.anchoranalysis.image.voxel.box.VoxelBox;
+import org.anchoranalysis.image.voxel.Voxels;
 
 class CachedRGB {
 
@@ -155,7 +155,7 @@ class CachedRGB {
             for (int c = 0; c < 3; c++) {
                 Channel rgbTarget = rgb.getChnl(c);
 
-                VoxelBox<ByteBuffer> vbTarget = rgbTarget.voxels().asByte();
+                Voxels<ByteBuffer> vbTarget = rgbTarget.voxels().asByte();
 
                 int bgChnl = selectBackgroundChnl(c, backgroundOriginal.getNumberChannels());
                 backgroundOriginal.copyPixelsTo(bgChnl, bboxClipped, vbTarget, bboxClipped);
