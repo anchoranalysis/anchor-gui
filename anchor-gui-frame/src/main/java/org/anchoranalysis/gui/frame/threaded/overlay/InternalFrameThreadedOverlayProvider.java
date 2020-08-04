@@ -30,7 +30,7 @@ import org.anchoranalysis.anchor.overlay.Overlay;
 import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.functional.function.CheckedFunction;
 import org.anchoranalysis.core.idgetter.IDGetter;
-import org.anchoranalysis.core.index.IIndexGettableSettable;
+import org.anchoranalysis.core.index.IndexGettableSettable;
 import org.anchoranalysis.core.index.container.BoundedRangeIncompleteDynamic;
 import org.anchoranalysis.gui.container.background.BackgroundStackContainerException;
 import org.anchoranalysis.gui.displayupdate.OverlayedDisplayStack;
@@ -147,7 +147,7 @@ public class InternalFrameThreadedOverlayProvider {
         return delegate.getDimensions();
     }
 
-    public IIndexGettableSettable getIndexGettableSettable() {
+    public IndexGettableSettable getIndexGettableSettable() {
         return delegate.getIndexGettableSettable();
     }
 

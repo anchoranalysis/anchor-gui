@@ -29,7 +29,7 @@ package org.anchoranalysis.gui.videostats.dropdown.addoverlays;
 import javax.swing.JFrame;
 import org.anchoranalysis.anchor.overlay.collection.OverlayCollection;
 import org.anchoranalysis.core.error.reporter.ErrorReporter;
-import org.anchoranalysis.core.event.IRoutableReceivable;
+import org.anchoranalysis.core.event.RoutableReceivable;
 import org.anchoranalysis.core.property.change.PropertyValueChangeEvent;
 import org.anchoranalysis.gui.videostats.dropdown.AddVideoStatsModule;
 import org.anchoranalysis.gui.videostats.link.LinkModules;
@@ -64,7 +64,7 @@ public class AdderAddOverlaysWithStack implements AddVideoStatsModule {
         if (link.getOverlays().exists()
                 && !link.getOverlaysWithStack().exists()
                 && module.getNrgStackGetter() != null) {
-            IRoutableReceivable<PropertyValueChangeEvent<OverlayCollection>> rec =
+            RoutableReceivable<PropertyValueChangeEvent<OverlayCollection>> rec =
                     link.getOverlays().getReceivable();
             if (rec != null) {
 

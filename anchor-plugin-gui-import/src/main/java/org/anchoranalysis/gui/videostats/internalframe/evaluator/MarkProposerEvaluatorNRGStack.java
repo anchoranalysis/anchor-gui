@@ -69,7 +69,6 @@ public class MarkProposerEvaluatorNRGStack implements ProposalOperationCreator {
                             MarkProposerEvaluatorUtilities.createMarkFromPosition(
                                     position,
                                     cfgGen.getTemplateMark().create(),
-                                    context.getDimensions(),
                                     context.getRandomNumberGenerator());
 
                     @Override

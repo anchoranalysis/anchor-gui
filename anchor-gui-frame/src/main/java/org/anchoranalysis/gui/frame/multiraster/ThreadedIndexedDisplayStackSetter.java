@@ -28,7 +28,7 @@ package org.anchoranalysis.gui.frame.multiraster;
 
 import org.anchoranalysis.core.error.reporter.ErrorReporter;
 import org.anchoranalysis.core.functional.function.CheckedFunction;
-import org.anchoranalysis.core.index.IIndexGettableSettable;
+import org.anchoranalysis.core.index.IndexGettableSettable;
 import org.anchoranalysis.gui.container.background.BackgroundStackContainerException;
 import org.anchoranalysis.gui.displayupdate.DisplayUpdateRememberStack;
 import org.anchoranalysis.gui.frame.display.DisplayUpdate;
@@ -65,7 +65,7 @@ public class ThreadedIndexedDisplayStackSetter implements IBackgroundSetter, ITh
     }
 
     // How it is updated with indexes from other classes (the input control mechanism)
-    public IIndexGettableSettable getIndexGettableSettable() {
+    public IndexGettableSettable getIndexGettableSettable() {
         return delegate;
     }
 

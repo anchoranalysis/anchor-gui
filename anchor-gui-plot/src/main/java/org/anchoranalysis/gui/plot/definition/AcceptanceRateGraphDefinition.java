@@ -91,9 +91,9 @@ public class AcceptanceRateGraphDefinition extends GraphDefinition {
 
         int i = 0;
         long[] values = new long[1 + numKernel];
-        values[i++] = resolve(this.agg.getAccptAll());
+        values[i++] = resolve(this.agg.getAcceptAll());
         for (int j = 0; j < numKernel; j++) {
-            values[i++] = resolve(agg.getKernelAccpt().get(j));
+            values[i++] = resolve(agg.getKernelAccepted().get(j));
         }
 
         return values;
@@ -110,9 +110,9 @@ public class AcceptanceRateGraphDefinition extends GraphDefinition {
         String[] details = new String[3 + numKernel];
         details[i++] = iter + "";
         details[i++] = support.formatTime(timeStamp - timeZoneOffset);
-        details[i++] = String.format("%e", agg.getAccptAll());
+        details[i++] = String.format("%e", agg.getAcceptAll());
         for (int j = 0; j < numKernel; j++) {
-            details[i++] = String.format("%.3f", agg.getKernelAccpt().get(j));
+            details[i++] = String.format("%.3f", agg.getKernelAccepted().get(j));
         }
         return details;
     }

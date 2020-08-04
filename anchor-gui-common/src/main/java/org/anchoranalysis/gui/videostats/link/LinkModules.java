@@ -29,7 +29,7 @@ package org.anchoranalysis.gui.videostats.link;
 import java.util.Optional;
 import java.util.function.Function;
 import org.anchoranalysis.anchor.overlay.collection.OverlayCollection;
-import org.anchoranalysis.core.event.IRoutableReceivable;
+import org.anchoranalysis.core.event.RoutableReceivable;
 import org.anchoranalysis.core.functional.function.CheckedFunction;
 import org.anchoranalysis.core.index.IntArray;
 import org.anchoranalysis.core.property.IPropertyValueReceivable;
@@ -74,7 +74,7 @@ public class LinkModules {
         }
 
         @SuppressWarnings("unchecked")
-        public IRoutableReceivable<PropertyValueChangeEvent<T>> getReceivable() {
+        public RoutableReceivable<PropertyValueChangeEvent<T>> getReceivable() {
             return module.getReceivableSendablePairMap().get(id).getReceivable();
         }
 
@@ -86,7 +86,7 @@ public class LinkModules {
             internalAdd(Optional.empty(), Optional.of(sender));
         }
 
-        public void add(IRoutableReceivable<PropertyValueChangeEvent<T>> receivable) {
+        public void add(RoutableReceivable<PropertyValueChangeEvent<T>> receivable) {
             internalAddRoutable(Optional.of(receivable), Optional.empty());
         }
 
@@ -120,7 +120,7 @@ public class LinkModules {
         }
 
         private ReceivableSendablePair<T> internalAddRoutable(
-                Optional<IRoutableReceivable<PropertyValueChangeEvent<T>>> receivable,
+                Optional<RoutableReceivable<PropertyValueChangeEvent<T>>> receivable,
                 Optional<IPropertyValueSendable<T>> sender) {
             ReceivableSendablePair<T> rsp = createPairAdd();
             receivable.ifPresent(rsp::setReceivable);

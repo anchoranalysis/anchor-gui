@@ -26,16 +26,16 @@
 
 package org.anchoranalysis.gui.frame.details.canvas;
 
-import org.anchoranalysis.core.index.IIndexGettableSettable;
+import org.anchoranalysis.core.index.IndexGettableSettable;
 import org.anchoranalysis.core.property.change.PropertyValueChangeEvent;
 import org.anchoranalysis.core.property.change.PropertyValueChangeListener;
 
 class SliderIndexChanged implements PropertyValueChangeListener<Integer> {
 
-    private IIndexGettableSettable indexCntr;
+    private IndexGettableSettable indexCntr;
     private SliceIndexSlider slider;
 
-    public SliderIndexChanged(IIndexGettableSettable indexCntr, SliceIndexSlider slider) {
+    public SliderIndexChanged(IndexGettableSettable indexCntr, SliceIndexSlider slider) {
         super();
         this.indexCntr = indexCntr;
         this.slider = slider;

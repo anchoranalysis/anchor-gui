@@ -29,7 +29,7 @@ package org.anchoranalysis.gui.videostats.link;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
-import org.anchoranalysis.core.event.IRoutableEventSourceObject;
+import org.anchoranalysis.core.event.RoutableEventSourceObject;
 import org.anchoranalysis.core.event.RoutableEvent;
 import org.anchoranalysis.core.event.RoutableListener;
 import org.anchoranalysis.core.property.IPropertyValueSendable;
@@ -122,7 +122,7 @@ class LinkedPropertyModuleSet<PropertyValueType> {
 
     @SuppressWarnings("unchecked")
     public void setPropertyValue(
-            PropertyValueType value, boolean adjusting, IRoutableEventSourceObject exclude) {
+            PropertyValueType value, boolean adjusting, RoutableEventSourceObject exclude) {
 
         // For recording the subgroup associated with each module
         Set<VideoStatsModuleSubgroup> subgroupSet = new HashSet<>();

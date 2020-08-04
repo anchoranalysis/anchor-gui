@@ -46,13 +46,13 @@ class CachedRGB {
     // Start - these parameters never change
     private final IDGetter<Overlay> idGetter;
 
-    private DisplayStack backgroundOrig;
+    private DisplayStack backgroundOriginal;
 
     private RGBStack rgb;
 
     private ColoredOverlayCollection currentCfg;
 
-    private DrawOverlay maskWriter;
+    private DrawOverlay drawOverlay;
 
     private boolean needsBackgroundRefresh = false;
 
@@ -66,21 +66,16 @@ class CachedRGB {
         needsBackgroundRefresh = true;
     }
 
-    public void updateMaskWriter(DrawOverlay maskWriter) {
-
+    public void updateDrawer(DrawOverlay drawOverlay) {
         // change to only trigger a redraw at the next operation
-
-        // resetToChnlOrig( currentCfg );
-        this.maskWriter = maskWriter;
-        // drawCfg( currentCfg );
-
+        this.drawOverlay = drawOverlay;
         needsBackgroundRefresh = true;
     }
 
     // resets it all to the orginal, but doesn't draw any cfg
-    private void resetToChnlOrigAll() {
+    private void resetToOriginalChannelAll() {
 
-        createRGBFromChnl(backgroundOrig);
+        createRGBFromChnl(backgroundOriginal);
 
         needsBackgroundRefresh = false;
     }
@@ -100,7 +95,7 @@ class CachedRGB {
         if (update.getRedrawParts() == null) {
 
             List<BoundingBox> bboxListReset =
-                    currentCfg.bboxList(maskWriter, backgroundOrig.getDimensions());
+                    currentCfg.bboxList(drawOverlay, backgroundOriginal.getDimensions());
 
             if (update.getColoredCfg() != null) {
                 ColoredOverlayCollection cfgNew = update.getColoredCfg();
@@ -115,7 +110,7 @@ class CachedRGB {
 
         } else {
             List<BoundingBox> listBBox =
-                    update.getRedrawParts().bboxList(maskWriter, backgroundOrig.getDimensions());
+                    update.getRedrawParts().bboxList(drawOverlay, backgroundOriginal.getDimensions());
 
             if (update.getColoredCfg() != null) {
                 ColoredOverlayCollection cfgNew = update.getColoredCfg();
@@ -134,8 +129,8 @@ class CachedRGB {
 
     // Allows us to change just the background
     private void setBackground(DisplayStack background) {
-        if (background != this.backgroundOrig) {
-            this.backgroundOrig = background;
+        if (background != this.backgroundOriginal) {
+            this.backgroundOriginal = background;
             needsBackgroundRefresh = true;
         }
     }
@@ -145,25 +140,25 @@ class CachedRGB {
     private void resetToChnlOrig(List<BoundingBox> listBBox) {
 
         if (needsBackgroundRefresh) {
-            resetToChnlOrigAll();
+            resetToOriginalChannelAll();
             return;
         }
 
         if (listBBox == null) {
-            resetToChnlOrigAll();
+            resetToOriginalChannelAll();
         }
 
         for (BoundingBox bbox : listBBox) {
 
-            BoundingBox bboxClipped = bbox.clipTo(backgroundOrig.getDimensions().getExtent());
+            BoundingBox bboxClipped = bbox.clipTo(backgroundOriginal.getDimensions().getExtent());
 
             for (int c = 0; c < 3; c++) {
                 Channel rgbTarget = rgb.getChnl(c);
 
-                VoxelBox<ByteBuffer> vbTarget = rgbTarget.getVoxelBox().asByte();
+                VoxelBox<ByteBuffer> vbTarget = rgbTarget.voxels().asByte();
 
-                int bgChnl = selectBackgroundChnl(c, backgroundOrig.getNumberChannels());
-                backgroundOrig.copyPixelsTo(bgChnl, bboxClipped, vbTarget, bboxClipped);
+                int bgChnl = selectBackgroundChnl(c, backgroundOriginal.getNumberChannels());
+                backgroundOriginal.copyPixelsTo(bgChnl, bboxClipped, vbTarget, bboxClipped);
             }
         }
     }
@@ -185,14 +180,14 @@ class CachedRGB {
         assert (cfg.getColorList().size() == cfg.size());
         // assert( cfg.getColorList().numUniqueColors() > 0 );
         // TODO We only draw marks which intersect with the bounding box
-        maskWriter.writeOverlays(cfg, rgb, idGetter);
+        drawOverlay.writeOverlays(cfg, rgb, idGetter);
     }
 
     private void drawCfgIfIntersects(ColoredOverlayCollection oc, List<BoundingBox> bboxList)
             throws OperationFailedException {
 
         // We only draw marks which intersect with the bounding box
-        maskWriter.writeOverlaysIfIntersects(oc, rgb, idGetter, bboxList);
+        drawOverlay.writeOverlaysIfIntersects(oc, rgb, idGetter, bboxList);
     }
 
     private void createRGBFromChnl(DisplayStack background) {
@@ -201,7 +196,7 @@ class CachedRGB {
 
     public RGBStack getRGB() {
         if (rgb == null) {
-            resetToChnlOrigAll();
+            resetToOriginalChannelAll();
         }
         return rgb;
     }
@@ -211,6 +206,6 @@ class CachedRGB {
     }
 
     public DisplayStack getBackground() {
-        return backgroundOrig;
+        return backgroundOriginal;
     }
 }

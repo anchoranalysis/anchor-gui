@@ -113,7 +113,7 @@ public class InternalFrameOverlayedInstantStateToRGBSelectable {
         MarkDisplaySettingsWrapper markDisplaySettingsWrapper =
                 new MarkDisplaySettingsWrapper(
                         initialState.getMarkDisplaySettings().duplicate(),
-                        (ObjectWithProperties mask, RGBStack stack, int id) ->
+                        (ObjectWithProperties object, RGBStack stack, int id) ->
                                 selectionIndices.getCurrentSelection().contains(id));
 
         BoundedIndexContainer<ColoredOverlayedInstantState> cfgCntrColored =

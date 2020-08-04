@@ -32,10 +32,11 @@ import org.anchoranalysis.core.error.reporter.ErrorReporter;
 import org.anchoranalysis.core.name.provider.NamedProviderGetException;
 import org.anchoranalysis.core.name.store.NamedProviderStore;
 import org.anchoranalysis.core.params.KeyValueParams;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 
+@NoArgsConstructor(access=AccessLevel.PRIVATE)
 class ParamsUtils {
-
-    private ParamsUtils() {}
 
     public static KeyValueParams apply(
             NamedProviderStore<KeyValueParams> paramsCollection, ErrorReporter errorReporter) {

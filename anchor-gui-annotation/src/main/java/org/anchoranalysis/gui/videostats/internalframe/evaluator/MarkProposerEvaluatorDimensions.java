@@ -70,7 +70,6 @@ public class MarkProposerEvaluatorDimensions implements ProposalOperationCreator
                             MarkProposerEvaluatorUtilities.createMarkFromPosition(
                                     position,
                                     cfgGen.getTemplateMark().create(),
-                                    context.getDimensions(),
                                     context.getRandomNumberGenerator());
 
                     @Override

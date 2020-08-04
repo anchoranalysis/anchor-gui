@@ -26,9 +26,9 @@
 
 package org.anchoranalysis.gui.io.loader.manifest.finder.csvstatistic;
 
-import org.anchoranalysis.core.index.IIndexGetter;
+import org.anchoranalysis.core.index.IndexGetter;
 
-public class CSVStatistic implements IIndexGetter, Comparable<IIndexGetter> {
+public class CSVStatistic implements IndexGetter, Comparable<IndexGetter> {
 
     private boolean hasAccptProb = false;
     private boolean hasAccptProbAll = false;
@@ -121,7 +121,7 @@ public class CSVStatistic implements IIndexGetter, Comparable<IIndexGetter> {
     }
 
     @Override
-    public int compareTo(IIndexGetter arg0) {
+    public int compareTo(IndexGetter arg0) {
         return Integer.valueOf(iter).compareTo(arg0.getIndex());
     }
 

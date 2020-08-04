@@ -40,7 +40,7 @@ public abstract class CacheableCfgToRGBGenerator extends ObjectGenerator<Display
         implements IRedrawable, IterableObjectGenerator<OverlayedDisplayStackUpdate, DisplayStack> {
 
     // THIS MUST BE CALLED before we do any drawing.
-    public abstract void updateMaskWriter(DrawOverlay maskWriter);
+    public abstract void updateDrawer(DrawOverlay drawOverlay);
 
     // public abstract ColoredCfg getColoredCfg();
 

@@ -27,28 +27,28 @@
 package org.anchoranalysis.gui.interactivebrowser.openfile.type;
 
 import org.anchoranalysis.anchor.mpp.feature.bean.nrgscheme.NRGSchemeCreator;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+/**
+ * <p>Note item can be null
+ * 
+ * @author Owen Feehan
+ *
+ */
+@NoArgsConstructor(access=AccessLevel.PRIVATE)
 public class NrgSchemeCreatorState {
 
     private static NrgSchemeCreatorState instance;
 
-    private NRGSchemeCreator item;
-
-    private NrgSchemeCreatorState() {}
+    @Getter @Setter private NRGSchemeCreator item;
 
     public static NrgSchemeCreatorState instance() {
         if (instance == null) {
             instance = new NrgSchemeCreatorState();
         }
         return instance;
-    }
-
-    /** Can return NULL */
-    public NRGSchemeCreator getItem() {
-        return item;
-    }
-
-    public void setItem(NRGSchemeCreator item) {
-        this.item = item;
     }
 }

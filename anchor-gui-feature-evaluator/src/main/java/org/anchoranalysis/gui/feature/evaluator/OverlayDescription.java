@@ -35,14 +35,12 @@ import org.anchoranalysis.core.name.value.ComparatorOrderByName;
 import org.anchoranalysis.core.name.value.NameValue;
 import org.anchoranalysis.feature.nrg.NRGStackWithParams;
 import org.anchoranalysis.gui.cfgnrgtable.TitleValueTableModel;
-import org.anchoranalysis.gui.feature.evaluator.singlepair.IUpdatableSinglePair;
+import org.anchoranalysis.gui.feature.evaluator.singlepair.UpdatableSinglePair;
 import org.anchoranalysis.image.extent.ImageResolution;
 
-class OverlayDescription extends TitleValueTableModel implements IUpdatableSinglePair {
+class OverlayDescription extends TitleValueTableModel implements UpdatableSinglePair {
 
     private static final long serialVersionUID = -5093139154944903750L;
-
-    public OverlayDescription() {}
 
     @Override
     public void updateSingle(final Overlay overlay, NRGStackWithParams raster) {
@@ -55,7 +53,7 @@ class OverlayDescription extends TitleValueTableModel implements IUpdatableSingl
         }
 
         ImageResolution sr =
-                raster.getDimensions() != null ? raster.getDimensions().getRes() : null;
+                raster.getDimensions() != null ? raster.getDimensions().getResolution() : null;
         addOverlayDetails(overlay, "", sr);
 
         fireTableDataChanged();
@@ -73,8 +71,8 @@ class OverlayDescription extends TitleValueTableModel implements IUpdatableSingl
 
         addEntry(new SimpleTitleValue("Pair", pair.toString()));
 
-        addOverlayDetails(pair.getSource(), "Source: ", raster.getDimensions().getRes());
-        addOverlayDetails(pair.getDestination(), "Dest: ", raster.getDimensions().getRes());
+        addOverlayDetails(pair.getSource(), "Source: ", raster.getDimensions().getResolution());
+        addOverlayDetails(pair.getDestination(), "Dest: ", raster.getDimensions().getResolution());
 
         fireTableDataChanged();
     }

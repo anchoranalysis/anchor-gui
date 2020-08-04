@@ -39,7 +39,7 @@ import org.anchoranalysis.anchor.plot.bean.colorscheme.GraphColorScheme;
 import org.anchoranalysis.anchor.plot.index.LinePlot;
 import org.anchoranalysis.bean.annotation.BeanField;
 import org.anchoranalysis.core.error.CreateException;
-import org.anchoranalysis.core.index.IIndexGetter;
+import org.anchoranalysis.core.index.IndexGetter;
 
 public class GraphDefinitionLineIterVsCfgSize
         extends GraphDefinition<GraphDefinitionLineIterVsCfgSize.Item> {
@@ -51,7 +51,7 @@ public class GraphDefinitionLineIterVsCfgSize
     // Item
     @NoArgsConstructor
     @AllArgsConstructor
-    public static class Item implements IIndexGetter {
+    public static class Item implements IndexGetter {
         private int iter;
 
         @Getter private double cfgSize;

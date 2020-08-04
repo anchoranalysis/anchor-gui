@@ -26,7 +26,7 @@
 
 package org.anchoranalysis.gui.frame.threaded.stack;
 
-import org.anchoranalysis.core.index.IIndexGettableSettable;
+import org.anchoranalysis.core.index.IndexGettableSettable;
 import org.anchoranalysis.gui.displayupdate.DisplayUpdateRememberStack;
 
 public interface IThreadedProducer {
@@ -35,7 +35,7 @@ public interface IThreadedProducer {
     DisplayUpdateRememberStack getStackProvider();
 
     // How it is updated with indexes from other classes (the input control mechanism)
-    IIndexGettableSettable getIndexGettableSettable();
+    IndexGettableSettable getIndexGettableSettable();
 
     void dispose();
 }

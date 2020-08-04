@@ -28,7 +28,10 @@ package org.anchoranalysis.gui.plot.definition.line;
 
 import java.util.Iterator;
 import java.util.Optional;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.anchoranalysis.anchor.plot.AxisLimits;
 import org.anchoranalysis.anchor.plot.GraphInstance;
@@ -37,7 +40,7 @@ import org.anchoranalysis.anchor.plot.bean.colorscheme.GraphColorScheme;
 import org.anchoranalysis.anchor.plot.index.LinePlot;
 import org.anchoranalysis.bean.annotation.BeanField;
 import org.anchoranalysis.core.error.CreateException;
-import org.anchoranalysis.core.index.IIndexGetter;
+import org.anchoranalysis.core.index.IndexGetter;
 
 public class GraphDefinitionLineIterVsNRG
         extends GraphDefinition<GraphDefinitionLineIterVsNRG.Item> {
@@ -48,34 +51,10 @@ public class GraphDefinitionLineIterVsNRG
     @BeanField @Getter @Setter private int minMaxIgnoreBeforeIndex = 0;
     // END BEAN PROPERTIES
 
-    // Item
-    public static class Item implements IIndexGetter {
+    @Data @NoArgsConstructor @AllArgsConstructor
+    public static class Item implements IndexGetter {
         private int iter;
         private double nrg;
-
-        public Item() {}
-
-        public Item(int iter, double nrg) {
-            super();
-            this.iter = iter;
-            this.nrg = nrg;
-        }
-
-        public int getIter() {
-            return iter;
-        }
-
-        public void setIter(int iter) {
-            this.iter = iter;
-        }
-
-        public double getNrg() {
-            return nrg;
-        }
-
-        public void setNrg(double nrg) {
-            this.nrg = nrg;
-        }
 
         @Override
         public int getIndex() {

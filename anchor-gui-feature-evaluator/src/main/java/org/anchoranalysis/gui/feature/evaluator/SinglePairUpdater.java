@@ -31,7 +31,7 @@ import org.anchoranalysis.anchor.overlay.Overlay;
 import org.anchoranalysis.anchor.overlay.collection.OverlayCollection;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.feature.nrg.NRGStackWithParams;
-import org.anchoranalysis.gui.feature.evaluator.singlepair.IUpdatableSinglePair;
+import org.anchoranalysis.gui.feature.evaluator.singlepair.UpdatableSinglePair;
 import org.anchoranalysis.gui.feature.evaluator.singlepair.UpdatableSinglePairList;
 import org.anchoranalysis.gui.image.OverlayCollectionWithNrgStack;
 
@@ -46,7 +46,7 @@ class SinglePairUpdater {
     public SinglePairUpdater(
             OverlayDescriptionPanel overlayDescriptionPanel,
             FinderEvaluator finder,
-            IUpdatableSinglePair secondInitialItem) {
+            UpdatableSinglePair secondInitialItem) {
         super();
         this.overlayDescriptionPanel = overlayDescriptionPanel;
         this.finder = finder;

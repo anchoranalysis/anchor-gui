@@ -31,18 +31,18 @@ import org.anchoranalysis.anchor.mpp.pair.IdentifiablePair;
 import org.anchoranalysis.anchor.overlay.Overlay;
 import org.anchoranalysis.feature.nrg.NRGStackWithParams;
 
-public class UpdatableSinglePairList implements IUpdatableSinglePair {
+public class UpdatableSinglePairList implements UpdatableSinglePair {
 
-    private ArrayList<IUpdatableSinglePair> delegate = new ArrayList<>();
+    private ArrayList<UpdatableSinglePair> delegate = new ArrayList<>();
 
-    public boolean add(IUpdatableSinglePair arg0) {
+    public boolean add(UpdatableSinglePair arg0) {
         return delegate.add(arg0);
     }
 
     @Override
     public void updateSingle(Overlay overlay, NRGStackWithParams raster) {
 
-        for (IUpdatableSinglePair iup : delegate) {
+        for (UpdatableSinglePair iup : delegate) {
             iup.updateSingle(overlay, raster);
         }
     }
@@ -50,7 +50,7 @@ public class UpdatableSinglePairList implements IUpdatableSinglePair {
     @Override
     public void updatePair(IdentifiablePair<Overlay> pair, NRGStackWithParams raster) {
 
-        for (IUpdatableSinglePair iup : delegate) {
+        for (UpdatableSinglePair iup : delegate) {
             iup.updatePair(pair, raster);
         }
     }

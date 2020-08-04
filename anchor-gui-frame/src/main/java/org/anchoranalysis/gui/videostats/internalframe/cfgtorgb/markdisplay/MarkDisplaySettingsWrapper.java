@@ -49,7 +49,7 @@ public class MarkDisplaySettingsWrapper implements IChangeMarkDisplaySendable {
     public MarkDisplaySettingsWrapper(MarkDisplaySettings markDisplaySettings) {
         this(
                 markDisplaySettings,
-                (ObjectWithProperties mask, RGBStack stack, int id) -> false // Always false
+                (ObjectWithProperties object, RGBStack stack, int id) -> false // Always false
                 );
     }
 
@@ -64,47 +64,47 @@ public class MarkDisplaySettingsWrapper implements IChangeMarkDisplaySendable {
     public void setIncludeBoundingBox(boolean b) {
 
         markDisplaySettings.setShowBoundingBox(b);
-        updateMaskWriter();
+        triggerMarkDisplayChanged();
     }
 
     @Override
     public void setShowShell(boolean showShell) {
 
         markDisplaySettings.setShowShell(showShell);
-        updateMaskWriter();
+        triggerMarkDisplayChanged();
     }
 
     @Override
     public void setShowMidpoint(boolean show) {
         markDisplaySettings.setShowMidpoint(show);
-        updateMaskWriter();
+        triggerMarkDisplayChanged();
     }
 
     @Override
     public void setShowOrientationLine(boolean show) {
         markDisplaySettings.setShowOrientationLine(show);
-        updateMaskWriter();
+        triggerMarkDisplayChanged();
     }
 
     @Override
     public void setShowThickBorder(boolean show) {
         markDisplaySettings.setShowThickBorder(show);
-        updateMaskWriter();
+        triggerMarkDisplayChanged();
     }
 
     @Override
     public void setShowInside(boolean show) {
         markDisplaySettings.setShowInside(show);
-        updateMaskWriter();
+        triggerMarkDisplayChanged();
     }
 
     @Override
     public void setShowSolid(boolean show) {
         markDisplaySettings.setShowSolid(show);
-        updateMaskWriter();
+        triggerMarkDisplayChanged();
     }
 
-    private void updateMaskWriter() {
+    private void triggerMarkDisplayChanged() {
 
         for (PropertyValueChangeListener<MarkDisplaySettings> listener : listListeners) {
             listener.propertyValueChanged(

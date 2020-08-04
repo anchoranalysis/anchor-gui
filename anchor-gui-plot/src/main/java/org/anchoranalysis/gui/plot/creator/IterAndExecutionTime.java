@@ -27,9 +27,9 @@
 package org.anchoranalysis.gui.plot.creator;
 
 import org.anchoranalysis.anchor.mpp.plot.execution.KernelExecutionTimeAllEach;
-import org.anchoranalysis.core.index.IIndexGetter;
+import org.anchoranalysis.core.index.IndexGetter;
 
-public class IterAndExecutionTime implements IIndexGetter {
+public class IterAndExecutionTime implements IndexGetter {
 
     private int iter;
     private KernelExecutionTimeAllEach executionTimes;

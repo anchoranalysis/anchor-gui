@@ -36,12 +36,13 @@ import org.anchoranalysis.core.progress.CheckedProgressingSupplier;
 import org.anchoranalysis.core.progress.ProgressReporter;
 import org.anchoranalysis.gui.file.interactive.InteractiveFile;
 import org.anchoranalysis.gui.interactivebrowser.filelist.InteractiveFileListTableModel;
+import lombok.Getter;
 
 public class AnnotationTableModel implements InteractiveFileListTableModel {
 
     private CheckedProgressingSupplier<AnnotationProject, OperationFailedException>
             opAnnotationProject;
-    private AnnotationProject annotationProject;
+    @Getter private AnnotationProject annotationProject;
 
     private AbstractTableModel tableModel =
             new AbstractTableModel() {
@@ -132,14 +133,7 @@ public class AnnotationTableModel implements InteractiveFileListTableModel {
     public void refreshEntireTable(ProgressReporter progressReporter)
             throws OperationFailedException {
         this.annotationProject = opAnnotationProject.get(progressReporter);
-        this.annotationProject.addAnnotationChangedListener(
-                new AnnotationChangedListener() {
-
-                    @Override
-                    public void annotationChanged(int index) {
-                        tableModel.fireTableRowsUpdated(index, index);
-                    }
-                });
+        this.annotationProject.addAnnotationChangedListener( index-> tableModel.fireTableRowsUpdated(index, index) );
     }
 
     @Override
@@ -147,14 +141,9 @@ public class AnnotationTableModel implements InteractiveFileListTableModel {
         return tableModel;
     }
 
-    public AnnotationProject getAnnotationProject() {
-        return annotationProject;
-    }
-
     @Override
     public void fireTableDataChanged() {
         tableModel.fireTableDataChanged();
-        ;
     }
 
     @Override

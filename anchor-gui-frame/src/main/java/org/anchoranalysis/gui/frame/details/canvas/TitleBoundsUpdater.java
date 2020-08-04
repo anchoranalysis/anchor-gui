@@ -30,7 +30,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.error.reporter.ErrorReporter;
-import org.anchoranalysis.core.index.IIndexGettableSettable;
+import org.anchoranalysis.core.index.IndexGettableSettable;
 import org.anchoranalysis.gui.displayupdate.ProvidesOverlayedDisplayStack;
 import org.anchoranalysis.gui.frame.display.BoundOverlayedDisplayStack;
 import org.anchoranalysis.gui.reassign.FrameTitleGenerator;
@@ -38,7 +38,7 @@ import org.anchoranalysis.gui.reassign.FrameTitleGenerator;
 class TitleBoundsUpdater implements ChangeListener {
 
     private ErrorReporter errorReporter;
-    private IIndexGettableSettable indexCntr;
+    private IndexGettableSettable indexCntr;
     private ProvidesOverlayedDisplayStack stackProvider;
     private SliceIndexSlider slider;
     private InternalFrameDelegate frame;
@@ -46,7 +46,7 @@ class TitleBoundsUpdater implements ChangeListener {
 
     public TitleBoundsUpdater(
             ErrorReporter errorReporter,
-            IIndexGettableSettable indexCntr,
+            IndexGettableSettable indexCntr,
             ProvidesOverlayedDisplayStack stackProvider,
             SliceIndexSlider slider,
             InternalFrameDelegate frame,

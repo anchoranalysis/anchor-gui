@@ -84,7 +84,7 @@ public class TemperatureGraphDefinition extends GraphDefinition {
 
     @Override
     public void updateCrnt(int iter, long timeStamp, CfgWithNRGTotal crnt, Aggregator agg) {
-        this.temperature = agg.getTemp();
+        this.temperature = agg.getTemperature();
     }
 
     @Override

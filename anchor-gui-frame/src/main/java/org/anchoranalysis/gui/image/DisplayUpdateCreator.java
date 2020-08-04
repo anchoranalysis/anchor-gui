@@ -39,35 +39,31 @@ import org.anchoranalysis.gui.frame.display.DisplayUpdate;
 import org.anchoranalysis.gui.frame.display.OverlayedDisplayStackUpdate;
 import org.anchoranalysis.gui.frame.display.overlay.OverlayRetriever;
 import org.anchoranalysis.image.stack.DisplayStack;
+import lombok.RequiredArgsConstructor;
 
+@RequiredArgsConstructor
 public class DisplayUpdateCreator
         implements CheckedFunction<
                 Integer, DisplayUpdate, BackgroundStackContainerException> {
 
-    private CheckedFunction<
+    // START REQUIRED ARGUMENTS
+    private final CheckedFunction<
                     Integer, OverlayedDisplayStackUpdate, BackgroundStackContainerException>
             src;
-    private DrawOverlay maskWriter;
-    private IDGetter<Overlay> idGetter;
 
+    private final IDGetter<Overlay> idGetter;
+    // END REQUIRED ARGUMENTS
+
+    private DrawOverlay drawOverlay;
+    
     // This keeps track of the current over
     private BoundColoredOverlayCollection boundOverlay = null;
 
-    public DisplayUpdateCreator(
-            CheckedFunction<
-                            Integer, OverlayedDisplayStackUpdate, BackgroundStackContainerException>
-                    src,
-            IDGetter<Overlay> idGetter) {
-        super();
-        this.src = src;
-        this.idGetter = idGetter;
-    }
-
     // Must be called before we can bridge any elements
-    public void updateMaskWriter(DrawOverlay maskWriter) throws SetOperationFailedException {
-        this.maskWriter = maskWriter;
+    public void updateDrawer(DrawOverlay drawOverlay) throws SetOperationFailedException {
+        this.drawOverlay = drawOverlay;
         if (boundOverlay != null) {
-            boundOverlay.updateMaskWriter(maskWriter);
+            boundOverlay.updateDrawer(drawOverlay);
         }
     }
 
@@ -90,7 +86,7 @@ public class DisplayUpdateCreator
                 DisplayStack currentBackground = update.getBackgroundStack();
                 boundOverlay =
                         new BoundColoredOverlayCollection(
-                                maskWriter, idGetter, currentBackground.getDimensions());
+                                drawOverlay, idGetter, currentBackground.getDimensions());
             }
 
             return update.applyAndCreateDisplayUpdate(boundOverlay);

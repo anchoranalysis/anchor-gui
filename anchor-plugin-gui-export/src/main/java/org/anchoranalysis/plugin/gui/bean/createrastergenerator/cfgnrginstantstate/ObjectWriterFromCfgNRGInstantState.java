@@ -93,7 +93,7 @@ public class ObjectWriterFromCfgNRGInstantState extends CreateRasterGenerator<Cf
             CfgCachedGenerator ccGenerator =
                     new CfgCachedGenerator(cachedRGB, params.getOutputManager().getErrorReporter());
 
-            ccGenerator.updateMaskWriter(new SimpleOverlayWriter(drawObject));
+            ccGenerator.updateDrawer(new SimpleOverlayWriter(drawObject));
 
             generator = new RasterGeneratorFromDisplayStack<>(ccGenerator, true);
         }

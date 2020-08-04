@@ -30,7 +30,7 @@ import org.anchoranalysis.anchor.mpp.pair.IdentifiablePair;
 import org.anchoranalysis.anchor.overlay.Overlay;
 import org.anchoranalysis.feature.nrg.NRGStackWithParams;
 
-public interface IUpdatableSinglePair {
+public interface UpdatableSinglePair {
 
     void updateSingle(final Overlay overlay, NRGStackWithParams raster);
 

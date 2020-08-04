@@ -53,8 +53,8 @@ class CfgCachedGenerator extends CacheableCfgToRGBGenerator {
 
     // THIS MUST BE CALLED before we do any drawing.
     @Override
-    public void updateMaskWriter(DrawOverlay maskWriter) {
-        this.cachedRGB.updateMaskWriter(maskWriter);
+    public void updateDrawer(DrawOverlay drawOverlay) {
+        this.cachedRGB.updateDrawer(drawOverlay);
     }
 
     @Override

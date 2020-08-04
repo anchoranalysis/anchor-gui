@@ -30,14 +30,14 @@ import java.util.Collection;
 import java.util.HashMap;
 import javax.swing.JInternalFrame;
 import javax.swing.event.EventListenerList;
-import org.anchoranalysis.core.event.IRoutableEventSourceObject;
-import org.anchoranalysis.core.event.IRoutableReceivable;
+import org.anchoranalysis.core.event.RoutableEventSourceObject;
+import org.anchoranalysis.core.event.RoutableReceivable;
 import org.anchoranalysis.core.property.IPropertyValueSendable;
 import org.anchoranalysis.core.property.change.PropertyValueChangeEvent;
 import org.anchoranalysis.gui.videostats.AssociatedNRGStackGetter;
 import org.anchoranalysis.gui.videostats.action.changemarkdisplay.IChangeMarkDisplaySendable;
 
-public class VideoStatsModule implements IRoutableEventSourceObject {
+public class VideoStatsModule implements RoutableEventSourceObject {
 
     private JInternalFrame component;
     private EventListenerList eventListenerList = new EventListenerList();
@@ -56,14 +56,14 @@ public class VideoStatsModule implements IRoutableEventSourceObject {
 
     public static class ReceivableSendablePair<T> {
 
-        private IRoutableReceivable<PropertyValueChangeEvent<T>> receivable;
+        private RoutableReceivable<PropertyValueChangeEvent<T>> receivable;
         private IPropertyValueSendable<T> sendable;
 
-        public IRoutableReceivable<PropertyValueChangeEvent<T>> getReceivable() {
+        public RoutableReceivable<PropertyValueChangeEvent<T>> getReceivable() {
             return receivable;
         }
 
-        public void setReceivable(IRoutableReceivable<PropertyValueChangeEvent<T>> receivable) {
+        public void setReceivable(RoutableReceivable<PropertyValueChangeEvent<T>> receivable) {
             this.receivable = receivable;
         }
 

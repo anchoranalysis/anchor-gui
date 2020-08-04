@@ -178,7 +178,7 @@ public class MarkDisplaySettings {
             if (!insideList.isEmpty()) {
                 return new SimpleOverlayWriter(insideWriter);
             } else {
-                // Then there is no mask
+                // Then there is no object-mask
                 // We should not get here at the moment, as it is impossible to disable showInside
                 return new SimpleOverlayWriter(new Nothing());
             }

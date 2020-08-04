@@ -38,8 +38,6 @@ import org.anchoranalysis.gui.plot.definition.line.GraphDefinitionLineIterVsNRG.
 public class BridgedGraphNRGCreator
         extends BridgedGraphFromDualFinderCreator<GraphDefinitionLineIterVsNRG.Item> {
 
-    public BridgedGraphNRGCreator() {}
-
     @Override
     public GraphDefinition<GraphDefinitionLineIterVsNRG.Item> createGraphDefinition(
             GraphColorScheme graphColorScheme) throws CreateException {

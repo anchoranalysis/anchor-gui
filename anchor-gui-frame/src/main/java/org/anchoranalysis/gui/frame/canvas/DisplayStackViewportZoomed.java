@@ -126,7 +126,7 @@ class DisplayStackViewportZoomed {
     }
 
     public ImageResolution getRes() {
-        return delegate.getDimensionsEntire().getRes();
+        return delegate.getDimensionsEntire().getResolution();
     }
 
     public Point2i calcNewCrnrPosToMaintainMousePoint(Point2i mousePoint, ZoomScale zoomScaleOld) {

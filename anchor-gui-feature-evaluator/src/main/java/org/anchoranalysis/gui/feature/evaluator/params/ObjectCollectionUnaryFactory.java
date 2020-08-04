@@ -49,11 +49,11 @@ public class ObjectCollectionUnaryFactory extends UnaryFactory {
 
         ObjectMask object =
                 pmm.getMark()
-                        .calcMask(
+                        .deriveObject(
                                 nrgStack.getDimensions(),
                                 regionMembership,
                                 BinaryValuesByte.getDefault())
-                        .getMask();
+                        .withoutProperties();
 
         return new FeatureInputObjectCollection(
                 ObjectCollectionFactory.of(object), Optional.of(nrgStack));

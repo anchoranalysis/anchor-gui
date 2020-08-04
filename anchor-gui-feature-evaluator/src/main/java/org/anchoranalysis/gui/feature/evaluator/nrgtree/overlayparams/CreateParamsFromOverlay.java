@@ -56,7 +56,7 @@ public class CreateParamsFromOverlay {
 
             OverlayObjectMask overlayCast = (OverlayObjectMask) overlay;
 
-            return new CreateIndFromObj(overlayCast.getObject().getMask(), nrgStack);
+            return new CreateIndFromObj(overlayCast.getObject().withoutProperties(), nrgStack);
 
         } else {
             throw new AnchorImpossibleSituationException();
@@ -78,8 +78,8 @@ public class CreateParamsFromOverlay {
 
         } else if (pair.getSource() instanceof OverlayObjectMask) {
 
-            ObjectMask source = ((OverlayObjectMask) pair.getSource()).getObject().getMask();
-            ObjectMask dest = ((OverlayObjectMask) pair.getDestination()).getObject().getMask();
+            ObjectMask source = ((OverlayObjectMask) pair.getSource()).getObject().withoutProperties();
+            ObjectMask dest = ((OverlayObjectMask) pair.getDestination()).getObject().withoutProperties();
 
             return new CreatePairFromObj(source, dest, raster);
         } else {

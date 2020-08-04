@@ -31,7 +31,7 @@ import java.util.List;
 import java.util.concurrent.ExecutionException;
 import org.anchoranalysis.anchor.overlay.collection.OverlayCollection;
 import org.anchoranalysis.core.error.reporter.ErrorReporter;
-import org.anchoranalysis.core.event.IRoutableReceivable;
+import org.anchoranalysis.core.event.RoutableReceivable;
 import org.anchoranalysis.core.event.RoutableEvent;
 import org.anchoranalysis.core.event.RoutableListener;
 import org.anchoranalysis.core.property.change.PropertyValueChangeEvent;
@@ -43,13 +43,13 @@ import org.anchoranalysis.gui.videostats.threading.InteractiveWorker;
 
 // Triggers a OverlayCollectionWithStack event, every time a OverlayCollection event occurs
 class OverlayCollectionWithStackAdaptorRouted
-        implements IRoutableReceivable<PropertyValueChangeEvent<OverlayCollectionWithNrgStack>> {
+        implements RoutableReceivable<PropertyValueChangeEvent<OverlayCollectionWithNrgStack>> {
 
     private List<RoutableListener<PropertyValueChangeEvent<OverlayCollectionWithNrgStack>>>
             listeners = new ArrayList<>();
 
     public OverlayCollectionWithStackAdaptorRouted(
-            IRoutableReceivable<PropertyValueChangeEvent<OverlayCollection>> source,
+            RoutableReceivable<PropertyValueChangeEvent<OverlayCollection>> source,
             final AssociatedNRGStackGetter associatedRasterGetter,
             final InteractiveThreadPool threadPool,
             final ErrorReporter errorReporter) {

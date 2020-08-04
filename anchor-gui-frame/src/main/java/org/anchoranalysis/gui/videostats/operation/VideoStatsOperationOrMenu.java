@@ -26,15 +26,16 @@
 
 package org.anchoranalysis.gui.videostats.operation;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+
+@NoArgsConstructor(access=AccessLevel.PRIVATE)
 public class VideoStatsOperationOrMenu {
 
     private boolean separator = false;
 
-    private VideoStatsOperation operation = null;
-    private VideoStatsOperationMenu menu = null;
-
-    // This constructor means it's a separator
-    private VideoStatsOperationOrMenu() {}
+    private VideoStatsOperation operation;
+    private VideoStatsOperationMenu menu;
 
     public static VideoStatsOperationOrMenu createAsSeparator() {
         VideoStatsOperationOrMenu out = new VideoStatsOperationOrMenu();

@@ -61,7 +61,7 @@ class FeatureValueNode extends FeatureListNode {
         this.parentFeature = parentFeature;
 
         try {
-            childFeatures = parentFeature.createListChildFeatures(true);
+            childFeatures = parentFeature.createListChildFeatures();
         } catch (BeanMisconfiguredException e) {
             errorReporter.recordError(FeatureValueNode.class, e);
             childFeatures = FeatureListFactory.empty();

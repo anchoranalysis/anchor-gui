@@ -28,12 +28,12 @@ package org.anchoranalysis.gui.kernel.match;
 
 import java.util.ArrayList;
 import org.anchoranalysis.mpp.sgmn.kernel.proposer.KernelIterDescription;
+import lombok.NoArgsConstructor;
 
+@NoArgsConstructor
 public class MatchKernelAnd extends MatchKernel {
 
     private ArrayList<MatchKernel> conditions = new ArrayList<>();
-
-    public MatchKernelAnd() {}
 
     public MatchKernelAnd(MatchKernel condition1, MatchKernel condition2) {
         conditions.add(condition1);

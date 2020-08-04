@@ -46,7 +46,7 @@ import org.anchoranalysis.image.stack.rgb.RGBStack;
 
 public class BoundColoredOverlayCollection {
 
-    private DrawOverlay maskWriter;
+    private DrawOverlay drawOverlay;
 
     private IDGetter<Overlay> idGetter;
 
@@ -56,20 +56,20 @@ public class BoundColoredOverlayCollection {
     private OverlayPrecalculatedCache cache;
 
     public BoundColoredOverlayCollection(
-            DrawOverlay maskWriter, IDGetter<Overlay> idGetter, ImageDimensions dim)
+            DrawOverlay drawOverlay, IDGetter<Overlay> idGetter, ImageDimensions dim)
             throws CreateException {
         super();
-        this.maskWriter = maskWriter;
+        this.drawOverlay = drawOverlay;
         this.idGetter = idGetter;
         this.dimEntireImage = dim;
         this.cache =
                 new OverlayPrecalculatedCache(
-                        new ColoredOverlayCollection(), dimEntireImage, maskWriter);
+                        new ColoredOverlayCollection(), dimEntireImage, drawOverlay);
     }
 
-    public void updateMaskWriter(DrawOverlay maskWriter) throws SetOperationFailedException {
-        this.maskWriter = maskWriter;
-        this.cache.setMaskWriter(maskWriter);
+    public void updateDrawer(DrawOverlay drawOverlay) throws SetOperationFailedException {
+        this.drawOverlay = drawOverlay;
+        this.cache.setDrawer(drawOverlay);
     }
 
     public void addOverlays(ColoredOverlayCollection oc) throws OperationFailedException {
@@ -96,7 +96,7 @@ public class BoundColoredOverlayCollection {
         OverlayPrecalculatedCache marksWithinView =
                 cache.subsetWithinView(bbox, container, zoomFactor);
 
-        maskWriter.writePrecalculatedOverlays(
+        drawOverlay.writePrecalculatedOverlays(
                 marksWithinView.getGeneratedObjectsZoomed(),
                 dimEntireImage,
                 stack,
@@ -114,13 +114,13 @@ public class BoundColoredOverlayCollection {
 
     // Note the overlay do not actually have to be contained in the OverlayCollection for this to
     // work
-    //  it will work with any overlay.... simply using the settings from the bound maskWriter
+    //  it will work with any overlay.... simply using the settings from the bound drawOverlay
     public List<BoundingBox> bboxList(ColoredOverlayCollection oc) {
-        return oc.bboxList(maskWriter, dimEntireImage);
+        return oc.bboxList(drawOverlay, dimEntireImage);
     }
 
     public List<BoundingBox> bboxList(OverlayCollection oc) {
-        return oc.bboxList(maskWriter, dimEntireImage);
+        return oc.bboxList(drawOverlay, dimEntireImage);
     }
 
     public synchronized OverlayPrecalculatedCache getPrecalculatedCache() {

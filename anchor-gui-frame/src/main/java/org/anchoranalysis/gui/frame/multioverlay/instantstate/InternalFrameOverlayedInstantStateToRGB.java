@@ -31,7 +31,7 @@ import org.anchoranalysis.anchor.overlay.Overlay;
 import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.functional.function.CheckedFunction;
 import org.anchoranalysis.core.idgetter.IDGetter;
-import org.anchoranalysis.core.index.IIndexGettableSettable;
+import org.anchoranalysis.core.index.IndexGettableSettable;
 import org.anchoranalysis.core.index.SetOperationFailedException;
 import org.anchoranalysis.core.index.container.BoundedIndexContainer;
 import org.anchoranalysis.core.property.IPropertyValueSendable;
@@ -152,7 +152,7 @@ class InternalFrameOverlayedInstantStateToRGB {
         return delegate.getDimensions();
     }
 
-    public IIndexGettableSettable getIndexGettableSettable() {
+    public IndexGettableSettable getIndexGettableSettable() {
         return delegate.getIndexGettableSettable();
     }
 

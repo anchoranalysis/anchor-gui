@@ -28,7 +28,7 @@ package org.anchoranalysis.gui.frame.details.canvas;
 
 import java.util.Optional;
 import javax.swing.JComponent;
-import org.anchoranalysis.core.index.IIndexGettableSettable;
+import org.anchoranalysis.core.index.IndexGettableSettable;
 import org.anchoranalysis.core.index.container.BoundedRangeIncompleteDynamic;
 import org.anchoranalysis.core.property.IPropertyValueSendable;
 import org.anchoranalysis.core.property.change.PropertyValueChangeListener;
@@ -42,7 +42,7 @@ class WrappedSlider implements ISliderState {
 
     private InitialSliderState initialState;
     private ChnlSliceRange sliceBounds;
-    private IIndexGettableSettable indexCntr;
+    private IndexGettableSettable indexCntr;
 
     private IPropertyValueSendable<Integer> sliceSendable;
     private IPropertyValueSendable<Integer> indexSendable;
@@ -51,7 +51,7 @@ class WrappedSlider implements ISliderState {
             ChnlSliceRange sliceBounds,
             BoundedRangeIncompleteDynamic indexBounds,
             InitialSliderState initialState,
-            IIndexGettableSettable indexCntr) {
+            IndexGettableSettable indexCntr) {
         super();
         this.delegate =
                 new SliceIndexSlider(sliceBounds, indexBounds, initialState.isFrameAdjusting());

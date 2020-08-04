@@ -46,7 +46,7 @@ import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.error.reporter.ErrorReporter;
-import org.anchoranalysis.core.index.IIndexGettableSettable;
+import org.anchoranalysis.core.index.IndexGettableSettable;
 import org.anchoranalysis.core.index.container.BoundedRangeIncompleteDynamic;
 import org.anchoranalysis.gui.displayupdate.DisplayUpdateRememberStack;
 import org.anchoranalysis.gui.displayupdate.ProvidesDisplayUpdate;
@@ -186,7 +186,7 @@ public class InternalFrameCanvas {
 
     public ISliderState init(
             BoundedRangeIncompleteDynamic indexBounds,
-            IIndexGettableSettable indexCntr,
+            IndexGettableSettable indexCntr,
             DisplayUpdateRememberStack stackProvider,
             InitialSliderState initialState,
             IRetrieveElements elementRetriever,
@@ -433,7 +433,7 @@ public class InternalFrameCanvas {
     }
 
     private void addTitleBoundsUpdater(
-            DisplayUpdateRememberStack stackProvider, IIndexGettableSettable indexCntr) {
+            DisplayUpdateRememberStack stackProvider, IndexGettableSettable indexCntr) {
         this.titleBoundsUpdater =
                 new TitleBoundsUpdater(
                         errorReporter,

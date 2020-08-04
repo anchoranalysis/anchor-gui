@@ -95,7 +95,7 @@ public abstract class FinderRasterChnl extends FinderSingleFile implements Finde
             }
 
             if (normalizeChnl) {
-                stack.getChannel(0).getVoxelBox().any().multiplyBy(255);
+                stack.getChannel(0).voxels().any().multiplyBy(255);
             }
 
             return stack.getChannel(0);

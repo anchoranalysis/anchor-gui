@@ -39,18 +39,16 @@ import org.anchoranalysis.gui.videostats.modulecreator.VideoStatsModuleCreator;
 import org.anchoranalysis.gui.videostats.operation.VideoStatsOperationFromCreatorAndAdder;
 import org.anchoranalysis.gui.videostats.operation.VideoStatsOperationMenu;
 import org.anchoranalysis.gui.videostats.threading.InteractiveThreadPool;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 
+@AllArgsConstructor(access=AccessLevel.PRIVATE)
 public class BoundVideoStatsModuleDropDown {
 
     private VideoStatsModuleDropdown delegate;
 
-    private String name;
-
-    public String getName() {
-        return name;
-    }
-
-    private BoundVideoStatsModuleDropDown() {}
+    @Getter private final String name;
 
     public BoundVideoStatsModuleDropDown(String name, String iconPath) {
         this.name = name;
@@ -59,10 +57,7 @@ public class BoundVideoStatsModuleDropDown {
     }
 
     public BoundVideoStatsModuleDropDown createChild(String name) {
-        BoundVideoStatsModuleDropDown child = new BoundVideoStatsModuleDropDown();
-        child.name = this.name + ": " + name;
-        child.delegate = this.delegate;
-        return child;
+        return new BoundVideoStatsModuleDropDown(this.delegate, this.name + ": " + name);
     }
 
     public void addModule(

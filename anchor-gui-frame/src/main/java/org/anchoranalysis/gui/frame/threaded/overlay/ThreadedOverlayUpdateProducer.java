@@ -32,7 +32,7 @@ import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.error.reporter.ErrorReporter;
 import org.anchoranalysis.core.functional.function.CheckedFunction;
 import org.anchoranalysis.core.idgetter.IDGetter;
-import org.anchoranalysis.core.index.IIndexGettableSettable;
+import org.anchoranalysis.core.index.IndexGettableSettable;
 import org.anchoranalysis.core.index.SetOperationFailedException;
 import org.anchoranalysis.core.log.Logger;
 import org.anchoranalysis.core.property.change.PropertyValueChangeEvent;
@@ -74,10 +74,10 @@ class ThreadedOverlayUpdateProducer implements IRedrawable, IThreadedProducer, I
         @Override
         public void propertyValueChanged(PropertyValueChangeEvent<MarkDisplaySettings> evt) {
 
-            DrawOverlay maskWriter = markDisplaySettingsWrapper.createObjectDrawer();
+            DrawOverlay drawOverlay = markDisplaySettingsWrapper.createObjectDrawer();
 
             try {
-                displayStackCreator.updateMaskWriter(maskWriter);
+                displayStackCreator.updateDrawer(drawOverlay);
                 applyRedrawUpdate(OverlayedDisplayStackUpdate.redrawAll());
 
                 // cfgGenerator.applyRedrawUpdate( new ColoredCfgRedrawUpdate(null) );
@@ -139,7 +139,7 @@ class ThreadedOverlayUpdateProducer implements IRedrawable, IThreadedProducer, I
 
     // How it is updated with indexes from other classes (the input control mechanism)
     @Override
-    public IIndexGettableSettable getIndexGettableSettable() {
+    public IndexGettableSettable getIndexGettableSettable() {
         return consumer;
     }
 
@@ -188,14 +188,14 @@ class ThreadedOverlayUpdateProducer implements IRedrawable, IThreadedProducer, I
                             Integer, OverlayedDisplayStackUpdate, BackgroundStackContainerException>
                     findCorrectUpdate,
             IDGetter<Overlay> idGetter,
-            DrawOverlay maskWriter)
+            DrawOverlay drawOverlay)
             throws InitException {
 
         DisplayUpdateCreator displayStackCreator =
                 new DisplayUpdateCreator(findCorrectUpdate, idGetter);
 
         try {
-            displayStackCreator.updateMaskWriter(maskWriter);
+            displayStackCreator.updateDrawer(drawOverlay);
         } catch (SetOperationFailedException e) {
             throw new InitException(e);
         }

@@ -66,10 +66,10 @@ class PrecalculatedOverlayList {
     public PrecalculatedOverlayList(
             ColoredOverlayCollection overlayCollection,
             ImageDimensions dimEntireImage,
-            DrawOverlay maskWriter)
+            DrawOverlay drawOverlay)
             throws CreateException {
         this.overlayCollection = overlayCollection;
-        rebuild(dimEntireImage, maskWriter);
+        rebuild(dimEntireImage, drawOverlay);
     }
 
     public void assertListsSizeMatch() {
@@ -92,15 +92,15 @@ class PrecalculatedOverlayList {
         this.overlayCollection = overlayCollection;
     }
 
-    public void rebuild(ImageDimensions dimEntireImage, DrawOverlay maskWriter)
+    public void rebuild(ImageDimensions dimEntireImage, DrawOverlay drawOverlay)
             throws CreateException {
         generatedObjects =
                 DrawOverlay.precalculate(
                         overlayCollection,
-                        maskWriter,
+                        drawOverlay,
                         dimEntireImage,
                         BinaryValues.getDefault().createByte());
-        listBoundingBox = overlayCollection.bboxList(maskWriter, dimEntireImage);
+        listBoundingBox = overlayCollection.bboxList(drawOverlay, dimEntireImage);
         generatedObjectsZoomed = null;
     }
 

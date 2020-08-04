@@ -27,7 +27,7 @@
 package org.anchoranalysis.gui.frame.threaded.stack;
 
 import org.anchoranalysis.core.error.InitException;
-import org.anchoranalysis.core.index.IIndexGettableSettable;
+import org.anchoranalysis.core.index.IndexGettableSettable;
 import org.anchoranalysis.core.index.container.BoundedRangeIncompleteDynamic;
 import org.anchoranalysis.gui.frame.details.ControllerPopupMenu;
 import org.anchoranalysis.gui.frame.details.IGenerateExtraDetail;
@@ -148,7 +148,7 @@ public class InternalFrameThreadedProvider {
         return delegate.getDimensions();
     }
 
-    public IIndexGettableSettable getIndexGettableSettable() {
+    public IndexGettableSettable getIndexGettableSettable() {
         return producer.getIndexGettableSettable();
     }
 }

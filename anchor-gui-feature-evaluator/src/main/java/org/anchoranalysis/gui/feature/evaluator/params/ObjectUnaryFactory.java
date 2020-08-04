@@ -46,11 +46,11 @@ public class ObjectUnaryFactory extends UnaryFactory {
 
         ObjectMask object =
                 pmm.getMark()
-                        .calcMask(
+                        .deriveObject(
                                 nrgStack.getDimensions(),
                                 pmm.getRegionMap().membershipWithFlagsForIndex(regionID),
                                 BinaryValuesByte.getDefault())
-                        .getMask();
+                        .withoutProperties();
 
         return new FeatureInputSingleObject(object, nrgStack);
     }

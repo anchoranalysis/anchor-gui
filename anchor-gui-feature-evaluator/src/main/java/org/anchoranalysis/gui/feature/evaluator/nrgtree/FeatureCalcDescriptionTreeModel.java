@@ -43,10 +43,10 @@ import org.anchoranalysis.feature.session.calculator.FeatureCalculatorMulti;
 import org.anchoranalysis.feature.shared.SharedFeatureMulti;
 import org.anchoranalysis.gui.feature.FeatureListWithRegionMap;
 import org.anchoranalysis.gui.feature.evaluator.nrgtree.overlayparams.CreateParamsFromOverlay;
-import org.anchoranalysis.gui.feature.evaluator.singlepair.IUpdatableSinglePair;
+import org.anchoranalysis.gui.feature.evaluator.singlepair.UpdatableSinglePair;
 
 public class FeatureCalcDescriptionTreeModel extends DefaultTreeModel
-        implements IUpdatableSinglePair {
+        implements UpdatableSinglePair {
 
     private static final long serialVersionUID = -5795973516009041187L;
 

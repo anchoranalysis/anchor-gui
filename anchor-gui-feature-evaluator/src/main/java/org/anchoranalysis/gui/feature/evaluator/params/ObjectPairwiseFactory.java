@@ -48,19 +48,19 @@ public class ObjectPairwiseFactory extends PairwiseFactory {
 
         ObjectMask object1 =
                 pmm1.getMark()
-                        .calcMask(
+                        .deriveObject(
                                 nrgStack.getDimensions(),
                                 pmm1.getRegionMap().membershipWithFlagsForIndex(regionID),
                                 BinaryValuesByte.getDefault())
-                        .getMask();
+                        .withoutProperties();
 
         ObjectMask object2 =
                 pmm1.getMark()
-                        .calcMask(
+                        .deriveObject(
                                 nrgStack.getDimensions(),
                                 pmm2.getRegionMap().membershipWithFlagsForIndex(regionID),
                                 BinaryValuesByte.getDefault())
-                        .getMask();
+                        .withoutProperties();
 
         return new FeatureInputPairObjects(object1, object2, Optional.of(nrgStack));
     }
