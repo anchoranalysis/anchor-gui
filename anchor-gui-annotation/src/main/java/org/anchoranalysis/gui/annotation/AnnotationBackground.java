@@ -68,7 +68,7 @@ public class AnnotationBackground {
                         String.format("Cannot find stackName '%s'", stackNameVisualOriginal));
             }
 
-            dimensionsViewer = defaultBackground.apply(0).getDimensions();
+            dimensionsViewer = defaultBackground.apply(0).dimensions();
         } catch (GetOperationFailedException e) {
             throw new BackgroundStackContainerException(e);
         }
@@ -76,6 +76,6 @@ public class AnnotationBackground {
 
     public void configureLinkManager(DefaultLinkStateManager linkStateManager) {
         linkStateManager.setBackground(defaultBackground);
-        linkStateManager.setSliceNum(dimensionsViewer.getZ() / 2);
+        linkStateManager.setSliceNum(dimensionsViewer.z() / 2);
     }
 }

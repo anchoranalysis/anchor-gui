@@ -38,8 +38,8 @@ class DisplayStackViewportUtilities {
     public static Point2i clipToImage(
             Point2i val, Extent canvasExtent, ImageDimensions dimensions) {
         return new Point2i(
-                clipToImage(val.getX(), dimensions.getX(), canvasExtent.getX()),
-                clipToImage(val.getY(), dimensions.getY(), canvasExtent.getY()));
+                clipToImage(val.x(), dimensions.x(), canvasExtent.x()),
+                clipToImage(val.y(), dimensions.y(), canvasExtent.y()));
     }
 
     private static int clipToImage(int val, int entireExtent, int canvasWidth) {

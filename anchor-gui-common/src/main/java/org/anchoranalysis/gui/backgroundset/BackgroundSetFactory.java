@@ -189,7 +189,7 @@ public class BackgroundSetFactory {
         try {
             return imageStackCollection
                     .getException(imageStackCollection.keys().iterator().next())
-                    .getDimensions();
+                    .dimensions();
         } catch (NamedProviderGetException e) {
             throw new OperationFailedException(e.summarize());
         }

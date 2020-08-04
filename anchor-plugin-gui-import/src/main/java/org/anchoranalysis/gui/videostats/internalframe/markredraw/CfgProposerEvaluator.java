@@ -84,7 +84,7 @@ public class CfgProposerEvaluator implements ProposalOperationCreator {
                 er.setCfgToRedraw(cfgProp.get().createMerged(coloredCfg.getCfg()));
                 er.setCfgCore(cfgProp.get());
 
-                er.setSuggestedSliceNum((int) cfgProp.get().get(0).centerPoint().getZ());
+                er.setSuggestedSliceNum((int) cfgProp.get().get(0).centerPoint().z());
             }
             return er;
         };

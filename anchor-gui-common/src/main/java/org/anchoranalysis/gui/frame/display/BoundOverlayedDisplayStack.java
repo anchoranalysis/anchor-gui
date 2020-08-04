@@ -36,7 +36,7 @@ import org.anchoranalysis.image.voxel.datatype.VoxelDataType;
 
 public class BoundOverlayedDisplayStack {
 
-    private DisplayStack background;
+    private final DisplayStack background;
     private BoundColoredOverlayCollection overlay;
     private RegionExtracter regionExtracter;
 
@@ -61,14 +61,14 @@ public class BoundOverlayedDisplayStack {
         }
     }
 
-    public ImageDimensions getDimensions() {
-        return background.getDimensions();
+    public ImageDimensions dimensions() {
+        return background.dimensions();
     }
 
     // Creates a new DisplayStack after imposing the overlay on the background
     public DisplayStack extractFullyOverlayed() throws OperationFailedException {
         RegionExtracter re = background.createRegionExtracter();
-        return re.extractRegionFrom(new BoundingBox(background.getDimensions().getExtent()), 1.0);
+        return re.extractRegionFrom(new BoundingBox(background.dimensions().extent()), 1.0);
     }
 
     public final int getNumChnl() {

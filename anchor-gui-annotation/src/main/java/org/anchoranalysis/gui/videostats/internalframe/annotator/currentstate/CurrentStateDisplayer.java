@@ -143,7 +143,7 @@ public class CurrentStateDisplayer {
         @Override
         public void addCurrentProposedCfgFromSelectedPoints(Mark mark) {
             currentState.addCurrentProposedCfgFromSelectedPoints(mark);
-            cfgShower.showAtSlice(currentState, (int) mark.centerPoint().getZ());
+            cfgShower.showAtSlice(currentState, (int) mark.centerPoint().z());
             alreadyConfirmedOnce = false;
         }
 

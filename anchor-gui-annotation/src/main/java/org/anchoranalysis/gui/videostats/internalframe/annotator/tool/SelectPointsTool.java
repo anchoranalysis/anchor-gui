@@ -60,7 +60,7 @@ public class SelectPointsTool extends AnnotationTool {
     @Override
     public void proposed(ProposedCfg proposedCfg) {
 
-        dimensions = proposedCfg.getDimensions();
+        dimensions = proposedCfg.dimensions();
 
         // Extract what should be the only mark
         assert (proposedCfg.getCfgCore().getMarks().size() == 1);

@@ -87,8 +87,8 @@ public class ZoomScale {
 
         // The smallest zoom that keeps out size above 10, or 1
         // ceil( x = log2( minWidth / actualWidth ) )
-        int smallestZoomX = smallestZoom(MIN_WIDTH, dimensions.getX());
-        int smallestZoomY = smallestZoom(MIN_HEIGHT, dimensions.getY());
+        int smallestZoomX = smallestZoom(MIN_WIDTH, dimensions.x());
+        int smallestZoomY = smallestZoom(MIN_HEIGHT, dimensions.y());
         int smallestZoomExp = Math.max(smallestZoomX, smallestZoomY);
 
         // The largest zoom is 10
@@ -119,8 +119,8 @@ public class ZoomScale {
 
     public Point2i applyScale(Point2i point) {
         Point2i out = new Point2i();
-        out.setX(applyScale(point.getX()));
-        out.setY(applyScale(point.getY()));
+        out.setX(applyScale(point.x()));
+        out.setY(applyScale(point.y()));
         return out;
     }
 
@@ -129,18 +129,18 @@ public class ZoomScale {
     }
 
     public Extent applyScale(Extent e) {
-        return new Extent(applyScale(e.getX()), applyScale(e.getY()), e.getZ());
+        return new Extent(applyScale(e.x()), applyScale(e.y()), e.z());
     }
 
     public Point2i removeScale(Point2i point) {
         Point2i out = new Point2i();
-        out.setX(removeScale(point.getX()));
-        out.setY(removeScale(point.getY()));
+        out.setX(removeScale(point.x()));
+        out.setY(removeScale(point.y()));
         return out;
     }
 
     public Extent removeScale(Extent e) {
-        return new Extent(removeScale(e.getX()), removeScale(e.getY()), e.getZ());
+        return new Extent(removeScale(e.x()), removeScale(e.y()), e.z());
     }
 
     // Resolves a value expressed in scaled coordinates into image-ocordinates

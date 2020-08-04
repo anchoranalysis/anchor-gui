@@ -31,5 +31,5 @@ import org.anchoranalysis.image.extent.ImageDimensions;
 
 public interface ExtractOverlays extends GetOverlayCollection {
 
-    ImageDimensions getDimensions();
+    ImageDimensions dimensions();
 }

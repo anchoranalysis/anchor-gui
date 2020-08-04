@@ -77,8 +77,7 @@ public class MarkMergeProposerEvaluator implements ProposalOperationCreator {
                         markMergeProposer.propose(
                                 markMemo1, markMemo2, context.replaceError(errorNode));
 
-                ProposedCfg er = new ProposedCfg();
-                er.setDimensions(context.getDimensions());
+                ProposedCfg er = new ProposedCfg(context.dimensions());
 
                 if (proposedMark.isPresent()) {
                     er.setSuccess(true);

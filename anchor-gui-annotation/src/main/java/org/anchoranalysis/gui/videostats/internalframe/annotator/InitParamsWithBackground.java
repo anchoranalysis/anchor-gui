@@ -35,7 +35,7 @@ public abstract class InitParamsWithBackground implements AnnotationInitParams {
 
     private AnnotationBackground annotationBackground;
 
-    public ImageDimensions getDimensionsViewer() {
+    public ImageDimensions dimensionsViewer() {
         return annotationBackground.getDimensionsViewer();
     }
 

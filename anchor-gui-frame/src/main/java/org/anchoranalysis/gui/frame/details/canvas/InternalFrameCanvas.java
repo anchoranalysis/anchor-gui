@@ -202,7 +202,7 @@ public class InternalFrameCanvas {
         } catch (OperationFailedException e1) {
             throw new InitException(e1);
         }
-        ChnlSliceRange sliceBounds = new ChnlSliceRange(initialStack.getDimensions());
+        ChnlSliceRange sliceBounds = new ChnlSliceRange(initialStack.dimensions());
 
         // Responsible for all the stack conversion
 
@@ -268,8 +268,8 @@ public class InternalFrameCanvas {
         titleBoundsUpdater.updateTitle();
     }
 
-    public ImageDimensions getDimensions() {
-        return canvas.getDimensions();
+    public ImageDimensions dimensions() {
+        return canvas.dimensions();
     }
 
     public void addMouseMotionListener(MouseMotionListener arg0, boolean absCoord) {

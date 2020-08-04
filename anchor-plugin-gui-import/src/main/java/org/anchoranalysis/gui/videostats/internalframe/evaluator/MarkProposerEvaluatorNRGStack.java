@@ -77,8 +77,7 @@ public class MarkProposerEvaluatorNRGStack implements ProposalOperationCreator {
 
                         VoxelizedMarkMemo pmm = context.create(m);
 
-                        ProposedCfg er = new ProposedCfg();
-                        er.setDimensions(context.getDimensions());
+                        ProposedCfg er = new ProposedCfg(context.dimensions());
 
                         // assumes only called once
                         boolean succ = markProposer.propose(pmm, context);
@@ -94,7 +93,7 @@ public class MarkProposerEvaluatorNRGStack implements ProposalOperationCreator {
                                             markProposer,
                                             detailedVisualization));
 
-                            er.setSuggestedSliceNum((int) m.centerPoint().getZ());
+                            er.setSuggestedSliceNum((int) m.centerPoint().z());
                             er.setCfgCore(new Cfg(pmm.getMark()));
                         }
 

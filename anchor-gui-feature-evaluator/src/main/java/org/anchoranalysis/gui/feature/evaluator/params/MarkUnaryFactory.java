@@ -37,6 +37,6 @@ public class MarkUnaryFactory extends UnaryFactory {
     @Override
     public FeatureInput create(VoxelizedMarkMemo pmm, NRGStackWithParams raster)
             throws CreateException {
-        return new FeatureInputMark(pmm.getMark(), raster.getDimensions(), raster.getParams());
+        return new FeatureInputMark(pmm.getMark(), raster.dimensions(), raster.getParams());
     }
 }

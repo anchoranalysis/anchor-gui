@@ -60,7 +60,7 @@ public class RetrieveElementsImage extends RetrieveElements {
             assert false;
         }
 
-        if (stack.getDimensions().getZ() > 1) {
+        if (stack.dimensions().z() > 1) {
             MIPGenerator generatorMIP = new MIPGenerator(true, "selectedStackMIP");
 
             OperationGenerator<Stack, Stack> generator = new OperationGenerator<>(generatorMIP);

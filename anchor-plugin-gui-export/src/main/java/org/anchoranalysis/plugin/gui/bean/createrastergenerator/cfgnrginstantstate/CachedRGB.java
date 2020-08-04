@@ -95,7 +95,7 @@ class CachedRGB {
         if (update.getRedrawParts() == null) {
 
             List<BoundingBox> bboxListReset =
-                    currentCfg.bboxList(drawOverlay, backgroundOriginal.getDimensions());
+                    currentCfg.bboxList(drawOverlay, backgroundOriginal.dimensions());
 
             if (update.getColoredCfg() != null) {
                 ColoredOverlayCollection cfgNew = update.getColoredCfg();
@@ -110,7 +110,7 @@ class CachedRGB {
 
         } else {
             List<BoundingBox> listBBox =
-                    update.getRedrawParts().bboxList(drawOverlay, backgroundOriginal.getDimensions());
+                    update.getRedrawParts().bboxList(drawOverlay, backgroundOriginal.dimensions());
 
             if (update.getColoredCfg() != null) {
                 ColoredOverlayCollection cfgNew = update.getColoredCfg();
@@ -150,15 +150,15 @@ class CachedRGB {
 
         for (BoundingBox bbox : listBBox) {
 
-            BoundingBox bboxClipped = bbox.clipTo(backgroundOriginal.getDimensions().getExtent());
+            BoundingBox bboxClipped = bbox.clipTo(backgroundOriginal.dimensions().extent());
 
             for (int c = 0; c < 3; c++) {
-                Channel rgbTarget = rgb.getChnl(c);
+                Channel rgbTarget = rgb.channelAt(c);
 
-                Voxels<ByteBuffer> vbTarget = rgbTarget.voxels().asByte();
+                Voxels<ByteBuffer> voxelsTarget = rgbTarget.voxels().asByte();
 
                 int bgChnl = selectBackgroundChnl(c, backgroundOriginal.getNumberChannels());
-                backgroundOriginal.copyPixelsTo(bgChnl, bboxClipped, vbTarget, bboxClipped);
+                backgroundOriginal.copyPixelsTo(bgChnl, bboxClipped, voxelsTarget, bboxClipped);
             }
         }
     }

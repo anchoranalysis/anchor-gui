@@ -70,13 +70,13 @@ class StringHelper {
 
     public String genResString() {
         ImageResolution sr = internalFrameCanvas.getRes();
-        if (sr.getX() == sr.getY()) {
+        if (sr.x() == sr.y()) {
             return String.format(
-                    "resXY=%s resZ=%s", formatUnits(sr.getX()), formatUnits(sr.getZ()));
+                    "resXY=%s resZ=%s", formatUnits(sr.x()), formatUnits(sr.z()));
         } else {
             return String.format(
                     "resX=%s resY=%s resZ=%s)",
-                    formatUnits(sr.getX()), formatUnits(sr.getY()), formatUnits(sr.getZ()));
+                    formatUnits(sr.x()), formatUnits(sr.y()), formatUnits(sr.z()));
         }
     }
 

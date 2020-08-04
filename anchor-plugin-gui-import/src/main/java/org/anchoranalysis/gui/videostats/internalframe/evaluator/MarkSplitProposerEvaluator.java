@@ -98,8 +98,7 @@ public class MarkSplitProposerEvaluator implements ProposalOperationCreator {
                 }
 
                 if (pair.isPresent()) {
-                    ProposedCfg er = new ProposedCfg();
-                    er.setDimensions(context.getDimensions());
+                    ProposedCfg er = new ProposedCfg(context.dimensions());
                     er.setSuccess(true);
                     er.setColoredCfg(cfgForLast());
                     er.setCfgToRedraw(cfg);

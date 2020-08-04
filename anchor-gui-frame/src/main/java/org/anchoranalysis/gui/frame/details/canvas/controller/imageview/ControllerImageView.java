@@ -111,7 +111,7 @@ public class ControllerImageView {
     }
 
     private void configure(Extent frame, Extent zoom) {
-        configure(frame.getX(), frame.getY(), zoom.getX(), zoom.getY());
+        configure(frame.x(), frame.y(), zoom.x(), zoom.y());
     }
 
     /**

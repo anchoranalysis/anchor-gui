@@ -52,7 +52,7 @@ public class CreateNavigationPanel {
                 new CurrentStateDisplayer(
                         new ShowCurrentState(controllers.showOverlays(), params.getErrorReporter()),
                         params.getSaveMonitor(),
-                        paramsInit.getDimensionsViewer(),
+                        paramsInit.dimensionsViewer(),
                         paramsInit
                                 .getMarkAnnotator()
                                 .getRegionMap(), // How we calculate the overlap

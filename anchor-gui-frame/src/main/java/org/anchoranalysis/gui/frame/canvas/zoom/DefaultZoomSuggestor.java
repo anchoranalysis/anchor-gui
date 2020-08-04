@@ -36,8 +36,8 @@ public class DefaultZoomSuggestor {
     private final int maxY;
 
     public ZoomScale suggestDefaultZoomFor(ImageDimensions dimensions) {
-        int maxExpX = getMaxExpForDim(maxX, dimensions.getX());
-        int maxExpY = getMaxExpForDim(maxY, dimensions.getY());
+        int maxExpX = getMaxExpForDim(maxX, dimensions.x());
+        int maxExpY = getMaxExpForDim(maxY, dimensions.y());
         int exp = Math.min(maxExpX, maxExpY);
         return new ZoomScale(exp);
     }

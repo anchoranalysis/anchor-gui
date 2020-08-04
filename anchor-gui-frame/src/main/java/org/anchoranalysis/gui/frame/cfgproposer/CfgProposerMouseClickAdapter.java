@@ -107,7 +107,7 @@ public class CfgProposerMouseClickAdapter extends MouseAdapter {
             throws ProposalAbnormalFailureException {
 
         // We exit early if position is outside our scene size
-        if (!extractOverlays.getDimensions().contains(position)) {
+        if (!extractOverlays.dimensions().contains(position)) {
             return;
         }
 

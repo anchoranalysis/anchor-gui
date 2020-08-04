@@ -42,6 +42,6 @@ class ChnlSliceRange implements BoundedRange {
 
     @Override
     public int getMaximumIndex() {
-        return (dimensions.getZ() - 1);
+        return (dimensions.z() - 1);
     }
 }

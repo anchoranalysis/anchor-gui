@@ -86,7 +86,7 @@ public class DisplayUpdateCreator
                 DisplayStack currentBackground = update.getBackgroundStack();
                 boundOverlay =
                         new BoundColoredOverlayCollection(
-                                drawOverlay, idGetter, currentBackground.getDimensions());
+                                drawOverlay, idGetter, currentBackground.dimensions());
             }
 
             return update.applyAndCreateDisplayUpdate(boundOverlay);

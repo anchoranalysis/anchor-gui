@@ -62,8 +62,7 @@ public class MarkSphereOnPointProposerEvaluator implements ProposalOperationCrea
             throws OperationFailedException {
 
         return errorNode -> {
-            ProposedCfg proposedCfg = new ProposedCfg();
-            proposedCfg.setDimensions(dimensions);
+            ProposedCfg proposedCfg = new ProposedCfg(dimensions);
             proposedCfg.setSuccess(true);
 
             MarkSphere markSphere = new MarkSphere();
@@ -75,7 +74,7 @@ public class MarkSphereOnPointProposerEvaluator implements ProposalOperationCrea
             proposedCfg
                     .getColoredCfg()
                     .add(new OverlayMark(markSphere, regionMembership), colorMark);
-            proposedCfg.setSuggestedSliceNum((int) position.getZ());
+            proposedCfg.setSuggestedSliceNum((int) position.z());
 
             return proposedCfg;
         };

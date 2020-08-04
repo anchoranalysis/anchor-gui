@@ -165,7 +165,7 @@ public class ImageCanvas {
 
             if (enforceMinimumSizeAfterGuessZoom) {
                 Extent e = displayStackViewport.getBBox().extent();
-                panel.setMinimumSize(new Dimension(e.getX(), e.getY()));
+                panel.setMinimumSize(new Dimension(e.x(), e.y()));
             }
 
         } catch (OperationFailedException e) {
@@ -246,7 +246,7 @@ public class ImageCanvas {
         assert (displayStackViewport.createDimensionsEntireScaled().contains(shiftedBox));
 
         extentScrollbars.setValue(
-                new Point2i(shiftedBox.cornerMin().getX(), shiftedBox.cornerMin().getY()));
+                new Point2i(shiftedBox.cornerMin().x(), shiftedBox.cornerMin().y()));
 
         updateStackViewportForImageExtent(shiftedBox.extent());
     }
@@ -274,10 +274,10 @@ public class ImageCanvas {
         if (zoomScaleNew == null) {
             zoomScaleNew =
                     defaultZoomSuggestor.suggestDefaultZoomFor(
-                            displayStackViewport.getDisplayStackEntireImage().getDimensions());
+                            displayStackViewport.getDisplayStackEntireImage().dimensions());
         }
 
-        zoomScaleNew.establishBounds(displayStackViewport.getDimensionsEntire());
+        zoomScaleNew.establishBounds(displayStackViewport.dimensionsEntire());
         updateViewportOnly(zoomScaleNew, null);
     }
 
@@ -318,7 +318,7 @@ public class ImageCanvas {
         Point2i scrollValNew;
         // Only if we have a mouse point, and we are retrieving the same sized extent as previously
         if (mousePoint != null
-                && extentNew.getVolume() == canvasExtentOld.getVolume()
+                && extentNew.calculateVolume() == canvasExtentOld.calculateVolume()
                 && zoomScaleNew.equals(zoomScaleOld)) {
             scrollValNew =
                     displayStackViewport.calcNewCrnrPosToMaintainMousePoint(
@@ -343,13 +343,13 @@ public class ImageCanvas {
         if (imageCanvas.getWidth() > 0) {
             int sx = imageCanvas.getWidth();
             int sy = imageCanvas.getHeight();
-            sx = Math.min(sx, sdScaled.getX());
-            sy = Math.min(sy, sdScaled.getY());
+            sx = Math.min(sx, sdScaled.x());
+            sy = Math.min(sy, sdScaled.y());
             return new Extent(sx, sy);
         } else {
             ImageDimensions sdEntire = displayStackViewport.createDimensionsEntireScaled();
-            int sx = Math.min(sdEntire.getX(), sdScaled.getX());
-            int sy = Math.min(sdEntire.getY(), sdScaled.getY());
+            int sx = Math.min(sdEntire.x(), sdScaled.x());
+            int sy = Math.min(sdEntire.y(), sdScaled.y());
             return new Extent(sx, sy, 1);
         }
     }
@@ -361,7 +361,7 @@ public class ImageCanvas {
                 .contains(new BoundingBox(extentImageSc)));
 
         Point2i scrollVal = extentScrollbars.value();
-        Point3i cornerMin = new Point3i(scrollVal.getX(), scrollVal.getY(), slice);
+        Point3i cornerMin = new Point3i(scrollVal.x(), scrollVal.y(), slice);
         BoundingBox bboxView = new BoundingBox(cornerMin, extentImageSc);
 
         // We ignore nulls, as it means nothing has changed
@@ -374,8 +374,8 @@ public class ImageCanvas {
             ImageDimensions sd = displayStackViewport.createDimensionsEntireScaled();
             panel.setPreferredSize(
                     new Dimension(
-                            sd.getX() + extentScrollbars.getPreferredWidth(),
-                            sd.getY() + extentScrollbars.getPreferredHeight()));
+                            sd.x() + extentScrollbars.getPreferredWidth(),
+                            sd.y() + extentScrollbars.getPreferredHeight()));
         }
     }
 
@@ -398,8 +398,8 @@ public class ImageCanvas {
                 // Then redraw parts should be null, as we have to change the displaystack anyway
                 assert (ds.getRedrawParts() == null);
 
-                if (slice > ds.getDisplayStack().getDimensions().getZ()) {
-                    slice = ds.getDisplayStack().getDimensions().getZ() - 1;
+                if (slice > ds.getDisplayStack().dimensions().z()) {
+                    slice = ds.getDisplayStack().dimensions().z() - 1;
                 }
 
                 // Let's avoid unnecessary updates
@@ -417,7 +417,7 @@ public class ImageCanvas {
             }
 
             // If we get to here then we only update the region with redraw parts
-            BoundingBox bboxCurrentDisplayed = displayStackViewport.getUnzoomed().getBBox();
+            BoundingBox bboxCurrentDisplayed = displayStackViewport.getUnzoomed().boundingBox();
 
             // If we get to here, we don't change the viewport, but simply repaint some
             //   of the canvas using a section of the viewport
@@ -432,8 +432,8 @@ public class ImageCanvas {
                                             bboxCurrentDisplayed,
                                             displayStackViewport
                                                     .getUnzoomed()
-                                                    .getDimensionsEntire()
-                                                    .getExtent())
+                                                    .dimensionsEntire()
+                                                    .extent())
                                     .orElseThrow(
                                             () ->
                                                     new OperationFailedException(
@@ -447,10 +447,10 @@ public class ImageCanvas {
                     // Impose the bi on top of the existing fi
                     int xCanvas =
                             displayStackViewport.cnvrtImageXToCanvas(
-                                    bboxIntersect.cornerMin().getX());
+                                    bboxIntersect.cornerMin().x());
                     int yCanvas =
                             displayStackViewport.cnvrtImageYToCanvas(
-                                    bboxIntersect.cornerMin().getY());
+                                    bboxIntersect.cornerMin().y());
 
                     assert (xCanvas >= 0);
                     assert (yCanvas >= 0);
@@ -501,7 +501,7 @@ public class ImageCanvas {
         //   disappearing, causing flickering, so we only do with the size is less than the approz
         // size of the scrollbar
 
-        Extent entireImageExtent = displayStackViewport.createDimensionsEntireScaled().getExtent();
+        Extent entireImageExtent = displayStackViewport.createDimensionsEntireScaled().extent();
 
         boolean alwaysAllowChangeInVisibility =
                 minSizeDifferenceXY(canvasExtent, entireImageExtent)
@@ -568,8 +568,8 @@ public class ImageCanvas {
 
     // START Getters and Setters
 
-    public ImageDimensions getDimensions() {
-        return displayStackViewport.getDimensionsEntire();
+    public ImageDimensions dimensions() {
+        return displayStackViewport.dimensionsEntire();
     }
 
     public Component getPanel() {
@@ -601,8 +601,8 @@ public class ImageCanvas {
     }
 
     private static int minSizeDifferenceXY(Extent first, Extent second) {
-        int diffX = first.getX() - second.getX();
-        int diffY = first.getY() - second.getY();
+        int diffX = first.x() - second.x();
+        int diffY = first.y() - second.y();
         return Math.min(diffX, diffY);
     }
 }

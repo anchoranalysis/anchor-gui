@@ -49,7 +49,7 @@ public class ObjectPairwiseFactory extends PairwiseFactory {
         ObjectMask object1 =
                 pmm1.getMark()
                         .deriveObject(
-                                nrgStack.getDimensions(),
+                                nrgStack.dimensions(),
                                 pmm1.getRegionMap().membershipWithFlagsForIndex(regionID),
                                 BinaryValuesByte.getDefault())
                         .withoutProperties();
@@ -57,7 +57,7 @@ public class ObjectPairwiseFactory extends PairwiseFactory {
         ObjectMask object2 =
                 pmm1.getMark()
                         .deriveObject(
-                                nrgStack.getDimensions(),
+                                nrgStack.dimensions(),
                                 pmm2.getRegionMap().membershipWithFlagsForIndex(regionID),
                                 BinaryValuesByte.getDefault())
                         .withoutProperties();

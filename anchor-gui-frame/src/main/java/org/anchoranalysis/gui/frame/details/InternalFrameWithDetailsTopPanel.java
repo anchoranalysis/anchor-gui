@@ -111,8 +111,8 @@ public class InternalFrameWithDetailsTopPanel {
         delegate.setIndexSliderVisible(visibility);
     }
 
-    public ImageDimensions getDimensions() {
-        return delegate.getDimensions();
+    public ImageDimensions dimensions() {
+        return delegate.dimensions();
     }
 
     public void flush() {

@@ -57,7 +57,7 @@ public class CombineRGBBoundedIndexContainer implements BoundedIndexContainer<Di
     private void setDimensionsIfNeeded(BoundedIndexContainer<DisplayStack> cntr)
             throws GetOperationFailedException {
         if (cntr != null && dimensions == null) {
-            dimensions = cntr.get(cntr.getMinimumIndex()).getDimensions();
+            dimensions = cntr.get(cntr.getMinimumIndex()).dimensions();
         }
     }
 

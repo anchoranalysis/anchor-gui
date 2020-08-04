@@ -53,7 +53,7 @@ class OverlayDescription extends TitleValueTableModel implements UpdatableSingle
         }
 
         ImageResolution sr =
-                raster.getDimensions() != null ? raster.getDimensions().getResolution() : null;
+                raster.dimensions() != null ? raster.dimensions().resolution() : null;
         addOverlayDetails(overlay, "", sr);
 
         fireTableDataChanged();
@@ -71,8 +71,8 @@ class OverlayDescription extends TitleValueTableModel implements UpdatableSingle
 
         addEntry(new SimpleTitleValue("Pair", pair.toString()));
 
-        addOverlayDetails(pair.getSource(), "Source: ", raster.getDimensions().getResolution());
-        addOverlayDetails(pair.getDestination(), "Dest: ", raster.getDimensions().getResolution());
+        addOverlayDetails(pair.getSource(), "Source: ", raster.dimensions().resolution());
+        addOverlayDetails(pair.getDestination(), "Dest: ", raster.dimensions().resolution());
 
         fireTableDataChanged();
     }

@@ -333,7 +333,7 @@ public class OverlayPrecalculatedCache implements OverlayRetriever {
                 && scaled.get()
                         .getFirst()
                         .withoutProperties()
-                        .getBoundingBox()
+                        .boundingBox()
                         .intersection()
                         .existsWith(bboxViewZoomed)) {
 

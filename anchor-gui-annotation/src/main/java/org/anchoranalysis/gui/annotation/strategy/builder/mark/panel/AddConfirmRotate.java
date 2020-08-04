@@ -74,9 +74,9 @@ public class AddConfirmRotate {
                         () -> confirm(panelTool, panelMark), // Middle-Mouse
 
                         // Left-Mouse
-                        e -> {
+                        event -> {
                             Point3d point =
-                                    new Point3d(e.getX(), e.getY(), sliderState.getSliceNum());
+                                    new Point3d(event.getX(), event.getY(), sliderState.getSliceNum());
                             panelTool.getTool().leftMouseClickedAtPoint(point);
                         }),
                 false);

@@ -50,7 +50,7 @@ public class ObjectCollectionUnaryFactory extends UnaryFactory {
         ObjectMask object =
                 pmm.getMark()
                         .deriveObject(
-                                nrgStack.getDimensions(),
+                                nrgStack.dimensions(),
                                 regionMembership,
                                 BinaryValuesByte.getDefault())
                         .withoutProperties();

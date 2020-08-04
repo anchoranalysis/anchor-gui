@@ -114,8 +114,8 @@ class InternalFrameOverlaysOnRGB {
         }
 
         @Override
-        public ImageDimensions getDimensions() {
-            return delegate.getDimensions();
+        public ImageDimensions dimensions() {
+            return delegate.dimensions();
         }
     }
 

@@ -85,9 +85,9 @@ class FindPoints {
     }
 
     private static int distanceFromPoints(Point3i p1, Point3i p2) {
-        int px = p1.getX() - p2.getX();
-        int py = p1.getY() - p2.getY();
-        int pz = p1.getZ() - p2.getZ();
+        int px = p1.x() - p2.x();
+        int py = p1.y() - p2.y();
+        int pz = p1.z() - p2.z();
 
         return (px * px) + (py * py) + (pz * pz);
     }

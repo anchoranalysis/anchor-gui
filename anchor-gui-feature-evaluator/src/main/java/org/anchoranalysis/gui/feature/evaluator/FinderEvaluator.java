@@ -173,7 +173,7 @@ class FinderEvaluator {
                             PxlMarkMemoFactory.create(m2, raster.getNrgStack(), regionMap),
                             raster,
                             session,
-                            raster.getDimensions().getZ() > 1)
+                            raster.dimensions().z() > 1)
                     .isPresent();
         }
 

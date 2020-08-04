@@ -58,7 +58,7 @@ class HelperPanelBuilder {
         PanelTool panelTool =
                 createPanelTool(
                         currentStateDisplayer,
-                        paramsInit.getDimensionsViewer(),
+                        paramsInit.dimensionsViewer(),
                         paramsInit.getMarkAnnotator(),
                         params.getErrorReporter());
 

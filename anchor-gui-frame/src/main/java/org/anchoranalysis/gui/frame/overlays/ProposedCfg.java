@@ -35,20 +35,33 @@ import org.anchoranalysis.anchor.mpp.overlay.OverlayCollectionMarkFactory;
 import org.anchoranalysis.anchor.mpp.proposer.error.ProposerFailureDescription;
 import org.anchoranalysis.anchor.overlay.collection.ColoredOverlayCollection;
 import org.anchoranalysis.image.extent.ImageDimensions;
+import lombok.Getter;
+import lombok.Setter;
 
 public class ProposedCfg {
 
-    private ColoredOverlayCollection overlays =
-            new ColoredOverlayCollection(); // The total cfg to be drawn
-    private Cfg cfgToRedraw = new Cfg(); // The marks that need to be redrawn, as they have changed
-    private Cfg cfgCore = new Cfg(); // The core part of the cfg
+    /** The total cfg to be drawn */
+    private ColoredOverlayCollection overlays = new ColoredOverlayCollection();
+    
+    /**
+     * The marks that need to be redrawn, as they have changed
+     * <p>
+     * Optional. The marks that have changed from the previous time (to avoid redrawing everything),
+     * otherwise NULL.
+     */
+    @Getter @Setter private Cfg cfgToRedraw = new Cfg();
+    
+    /** The core part of the cfg */
+    @Getter @Setter private Cfg cfgCore = new Cfg(); 
+    
     private ImageDimensions dimensions;
 
     private ProposerFailureDescription pfd;
     private boolean success = false;
 
     private boolean hasSuggestedSliceNum = false;
-    private int suggestedSliceNum = -1;
+    
+    @Getter private int suggestedSliceNum = -1;
 
     private RegionMembershipWithFlags regionMembership;
 
@@ -57,6 +70,11 @@ public class ProposedCfg {
         this.regionMembership =
                 RegionMapSingleton.instance()
                         .membershipWithFlagsForIndex(GlobalRegionIdentifiers.SUBMARK_INSIDE);
+    }
+    
+    public ProposedCfg(ImageDimensions dimensions) {
+        this();
+        this.dimensions = dimensions;
     }
 
     public RegionMembershipWithFlags getRegionMembership() {
@@ -95,38 +113,12 @@ public class ProposedCfg {
         return hasSuggestedSliceNum;
     }
 
-    public int getSuggestedSliceNum() {
-        return suggestedSliceNum;
-    }
-
     public void setSuggestedSliceNum(int suggestedSliceNum) {
         this.hasSuggestedSliceNum = true;
         this.suggestedSliceNum = suggestedSliceNum;
     }
 
-    // Optional. The marks that have changed from the previous time (to avoid redrawing everything),
-    // otherwise NULL.
-    public Cfg getCfgToRedraw() {
-        return cfgToRedraw;
-    }
-
-    public void setCfgToRedraw(Cfg cfgToRedraw) {
-        this.cfgToRedraw = cfgToRedraw;
-    }
-
-    public Cfg getCfgCore() {
-        return cfgCore;
-    }
-
-    public void setCfgCore(Cfg cfgCore) {
-        this.cfgCore = cfgCore;
-    }
-
-    public ImageDimensions getDimensions() {
+    public ImageDimensions dimensions() {
         return dimensions;
-    }
-
-    public void setDimensions(ImageDimensions dim) {
-        this.dimensions = dim;
     }
 }

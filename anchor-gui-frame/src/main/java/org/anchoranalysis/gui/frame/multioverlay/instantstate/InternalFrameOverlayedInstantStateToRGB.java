@@ -148,8 +148,8 @@ class InternalFrameOverlayedInstantStateToRGB {
         delegate.flush();
     }
 
-    public ImageDimensions getDimensions() {
-        return delegate.getDimensions();
+    public ImageDimensions dimensions() {
+        return delegate.dimensions();
     }
 
     public IndexGettableSettable getIndexGettableSettable() {

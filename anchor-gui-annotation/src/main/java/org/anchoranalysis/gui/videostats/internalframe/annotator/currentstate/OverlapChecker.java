@@ -101,9 +101,9 @@ class OverlapChecker {
     private static boolean boundingBoxIntersectionExists(
             VoxelizedMarkMemo pmProp, VoxelizedMarkMemo pmExst) {
         return pmProp.voxelized()
-                .getBoundingBox()
+                .boundingBox()
                 .intersection()
-                .existsWith(pmExst.voxelized().getBoundingBox());
+                .existsWith(pmExst.voxelized().boundingBox());
     }
 
     private static double calcMinVolume(

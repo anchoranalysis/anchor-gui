@@ -202,9 +202,9 @@ class CurrentState implements IQuerySelectedPoints {
             Mark m = currentSelectedPointsCfg.get(i);
 
             Point3d cp = m.centerPoint();
-            if (cp.getX() == point.getX()
-                    && cp.getY() == point.getY()
-                    && cp.getZ() == point.getZ()) {
+            if (cp.x() == point.x()
+                    && cp.y() == point.y()
+                    && cp.z() == point.z()) {
                 return i;
             }
         }
@@ -221,7 +221,7 @@ class CurrentState implements IQuerySelectedPoints {
         List<Point3i> listOut = new ArrayList<>();
         for (Mark m : currentSelectedPointsCfg) {
             Point3d cp = m.centerPoint();
-            listOut.add(new Point3i((int) cp.getX(), (int) cp.getY(), (int) cp.getZ()));
+            listOut.add(new Point3i((int) cp.x(), (int) cp.y(), (int) cp.z()));
         }
         return listOut;
     }
@@ -231,7 +231,7 @@ class CurrentState implements IQuerySelectedPoints {
         List<Point3f> listOut = new ArrayList<>();
         for (Mark m : currentSelectedPointsCfg) {
             Point3d cp = m.centerPoint();
-            listOut.add(new Point3f((float) cp.getX(), (float) cp.getY(), (float) cp.getZ()));
+            listOut.add(new Point3f((float) cp.x(), (float) cp.y(), (float) cp.z()));
         }
         return listOut;
     }

@@ -154,7 +154,7 @@ public class OperationCreateBackgroundSetWithAdder {
                         .getLinkStateManager()
                         .getSendableSliceNum();
         if (sliceNumSetter != null) {
-            sliceNumSetter.setPropertyValue(stack.getDimensions().getZ() / 2, false);
+            sliceNumSetter.setPropertyValue(stack.dimensions().z() / 2, false);
         }
     }
 }

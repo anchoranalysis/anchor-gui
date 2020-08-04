@@ -79,8 +79,7 @@ public class MarkProposerEvaluatorDimensions implements ProposalOperationCreator
                         VoxelizedMarkMemo pmm =
                                 PxlMarkMemoFactory.create(m, null, context.getRegionMap());
 
-                        ProposedCfg er = new ProposedCfg();
-                        er.setDimensions(dimensions);
+                        ProposedCfg er = new ProposedCfg(dimensions);
 
                         assert (markProposer.isInitialized());
 
@@ -96,7 +95,7 @@ public class MarkProposerEvaluatorDimensions implements ProposalOperationCreator
                                             position,
                                             markProposer,
                                             detailedVisualization));
-                            er.setSuggestedSliceNum((int) m.centerPoint().getZ());
+                            er.setSuggestedSliceNum((int) m.centerPoint().z());
                             er.setCfgCore(new Cfg(pmm.getMark()));
                         }
 

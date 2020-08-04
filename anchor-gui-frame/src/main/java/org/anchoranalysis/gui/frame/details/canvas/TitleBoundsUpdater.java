@@ -77,7 +77,7 @@ class TitleBoundsUpdater implements ChangeListener {
     // Maybe this gets called before init
     public void updateSliceBounds() throws OperationFailedException {
         BoundOverlayedDisplayStack initialStack = this.stackProvider.getCurrentDisplayStack();
-        ChnlSliceRange sliceBounds = new ChnlSliceRange(initialStack.getDimensions());
+        ChnlSliceRange sliceBounds = new ChnlSliceRange(initialStack.dimensions());
 
         if (slider == null) {
             return;

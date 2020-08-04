@@ -64,11 +64,11 @@ class DisplayStackViewport {
         regionExtracter = displayStack.createRegionExtracter();
     }
 
-    public ImageDimensions getDimensionsEntire() {
-        return displayStackEntireImage.getDimensions();
+    public ImageDimensions dimensionsEntire() {
+        return displayStackEntireImage.dimensions();
     }
 
-    public BoundingBox getBBox() {
+    public BoundingBox boundingBox() {
         return bboxViewport;
     }
 
@@ -79,25 +79,25 @@ class DisplayStackViewport {
     public BoundingBox createBoxForShiftedView(Point2i shift, Extent canvasExtent) {
         ReadableTuple3i cornerMin = this.bboxViewport.cornerMin();
 
-        int xNew = cornerMin.getX() + shift.getX();
-        int yNew = cornerMin.getY() + shift.getY();
+        int xNew = cornerMin.x() + shift.x();
+        int yNew = cornerMin.y() + shift.y();
 
         Point2i point = new Point2i(xNew, yNew);
         point =
                 DisplayStackViewportUtilities.clipToImage(
-                        point, bboxViewport.extent(), getDimensionsEntire());
+                        point, bboxViewport.extent(), dimensionsEntire());
         point =
                 DisplayStackViewportUtilities.clipToImage(
-                        point, canvasExtent, getDimensionsEntire());
-        assert (point.getX() >= 0);
-        assert (point.getY() >= 0);
+                        point, canvasExtent, dimensionsEntire());
+        assert (point.x() >= 0);
+        assert (point.y() >= 0);
         // We need to clip
 
         Point3i point3 =
-                new Point3i(point.getX(), point.getY(), this.bboxViewport.cornerMin().getZ());
+                new Point3i(point.x(), point.y(), this.bboxViewport.cornerMin().z());
 
-        assert (point3.getX() >= 0);
-        assert (point3.getY() >= 0);
+        assert (point3.x() >= 0);
+        assert (point3.y() >= 0);
 
         return new BoundingBox(point3, bboxViewport.extent());
     }
@@ -109,7 +109,7 @@ class DisplayStackViewport {
 
         this.bboxViewport = bbox;
         this.zoomScale = zoomScale;
-        assert (displayStackEntireImage.getDimensions().contains(bbox));
+        assert (displayStackEntireImage.dimensions().contains(bbox));
 
         try {
             return regionExtracter
@@ -142,22 +142,22 @@ class DisplayStackViewport {
         addCond(scrollValImage, diff, extentOld);
 
         return DisplayStackViewportUtilities.clipToImage(
-                scrollValImage, extentNew, getDimensionsEntire());
+                scrollValImage, extentNew, dimensionsEntire());
     }
 
     private static void addCond(Point2i scrollVal, Extent toAdd, Extent cond) {
-        if (cond.getX() > 0 && toAdd.getX() != 0) {
-            scrollVal.setX(scrollVal.getX() + toAdd.getX());
+        if (cond.x() > 0 && toAdd.x() != 0) {
+            scrollVal.setX(scrollVal.x() + toAdd.x());
         }
 
-        if (cond.getY() > 0 && toAdd.getY() != 0) {
-            scrollVal.setY(scrollVal.getY() + toAdd.getY());
+        if (cond.y() > 0 && toAdd.y() != 0) {
+            scrollVal.setY(scrollVal.y() + toAdd.y());
         }
     }
 
     // If the image point x,y is contained within the canvas
     public boolean canvasContainsAbs(int x, int y, int z) {
-        return displayStackEntireImage.getDimensions().contains(new Point3i(x, y, z));
+        return displayStackEntireImage.dimensions().contains(new Point3i(x, y, z));
     }
 
     // Returns a string describing the intensity values at a particular absolute point in the
@@ -190,6 +190,6 @@ class DisplayStackViewport {
     }
 
     public ImageDimensions dim() {
-        return displayStackEntireImage.getDimensions();
+        return displayStackEntireImage.dimensions();
     }
 }
