@@ -47,13 +47,13 @@ class RegionExtracterFromOverlay implements RegionExtracter {
     }
 
     @Override
-    public DisplayStack extractRegionFrom(BoundingBox bbox, double zoomFactor)
+    public DisplayStack extractRegionFrom(BoundingBox box, double zoomFactor)
             throws OperationFailedException {
-        DisplayStack ds = regionExtracter.extractRegionFrom(bbox, zoomFactor);
+        DisplayStack ds = regionExtracter.extractRegionFrom(box, zoomFactor);
 
         try {
             RGBStack rgbStack = ConvertDisplayStackToRGB.convert(ds);
-            overlay.drawRGB(rgbStack, bbox, zoomFactor);
+            overlay.drawRGB(rgbStack, box, zoomFactor);
             return DisplayStack.create(rgbStack);
         } catch (CreateException e) {
             throw new OperationFailedException(e);

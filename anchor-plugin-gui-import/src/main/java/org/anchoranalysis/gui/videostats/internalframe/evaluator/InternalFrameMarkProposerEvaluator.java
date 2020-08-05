@@ -153,7 +153,7 @@ public class InternalFrameMarkProposerEvaluator {
     private class AddToHistoryNavigator implements IShowEvaluationResult {
 
         @Override
-        public void showEvaluationResult(ProposedCfg er, Cfg bboxRedraw) {
+        public void showEvaluationResult(ProposedCfg er, Cfg boxRedraw) {
             historyNavigator.add(er);
         }
     }
@@ -168,7 +168,7 @@ public class InternalFrameMarkProposerEvaluator {
         }
 
         @Override
-        public void showEvaluationResult(ProposedCfg er, Cfg bboxRedraw) {
+        public void showEvaluationResult(ProposedCfg er, Cfg boxRedraw) {
 
             try {
                 // We the marks back from the overlays

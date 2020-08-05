@@ -86,15 +86,15 @@ public class BoundColoredOverlayCollection {
         this.cache.setOverlayCollection(oc);
     }
 
-    public void drawRGB(RGBStack stack, BoundingBox bbox, double zoomFactor)
+    public void drawRGB(RGBStack stack, BoundingBox box, double zoomFactor)
             throws OperationFailedException {
 
         // Create a containing bounding box with the zoom
         BoundingBox container =
-                createZoomedContainer(bbox, zoomFactor, stack.dimensions().extent());
+                createZoomedContainer(box, zoomFactor, stack.dimensions().extent());
 
         OverlayPrecalculatedCache marksWithinView =
-                cache.subsetWithinView(bbox, container, zoomFactor);
+                cache.subsetWithinView(box, container, zoomFactor);
 
         drawOverlay.writePrecalculatedOverlays(
                 marksWithinView.getGeneratedObjectsZoomed(),
@@ -106,8 +106,8 @@ public class BoundColoredOverlayCollection {
     }
 
     private static BoundingBox createZoomedContainer(
-            BoundingBox bbox, double zoomFactor, Extent stackExtent) {
-        Point3i cornerMin = new Point3i(bbox.cornerMin());
+            BoundingBox box, double zoomFactor, Extent stackExtent) {
+        Point3i cornerMin = new Point3i(box.cornerMin());
         cornerMin.scaleXY(zoomFactor);
         return new BoundingBox(cornerMin, stackExtent);
     }
@@ -115,12 +115,12 @@ public class BoundColoredOverlayCollection {
     // Note the overlay do not actually have to be contained in the OverlayCollection for this to
     // work
     //  it will work with any overlay.... simply using the settings from the bound drawOverlay
-    public List<BoundingBox> bboxList(ColoredOverlayCollection oc) {
-        return oc.bboxList(drawOverlay, dimEntireImage);
+    public List<BoundingBox> boxList(ColoredOverlayCollection oc) {
+        return oc.boxList(drawOverlay, dimEntireImage);
     }
 
-    public List<BoundingBox> bboxList(OverlayCollection oc) {
-        return oc.bboxList(drawOverlay, dimEntireImage);
+    public List<BoundingBox> boxList(OverlayCollection oc) {
+        return oc.boxList(drawOverlay, dimEntireImage);
     }
 
     public synchronized OverlayPrecalculatedCache getPrecalculatedCache() {

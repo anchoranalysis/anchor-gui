@@ -46,7 +46,7 @@ import org.anchoranalysis.image.voxel.datatype.VoxelDataType;
 // Shows a certain amount of a stack at any given time
 class DisplayStackViewport {
 
-    private BoundingBox bboxViewport = null;
+    private BoundingBox boxViewport = null;
     private ZoomScale zoomScale;
 
     private BoundOverlayedDisplayStack displayStackEntireImage;
@@ -69,7 +69,7 @@ class DisplayStackViewport {
     }
 
     public BoundingBox boundingBox() {
-        return bboxViewport;
+        return boxViewport;
     }
 
     public BufferedImage createBufferedImageFromView() throws CreateException {
@@ -77,7 +77,7 @@ class DisplayStackViewport {
     }
 
     public BoundingBox createBoxForShiftedView(Point2i shift, Extent canvasExtent) {
-        ReadableTuple3i cornerMin = this.bboxViewport.cornerMin();
+        ReadableTuple3i cornerMin = this.boxViewport.cornerMin();
 
         int xNew = cornerMin.x() + shift.x();
         int yNew = cornerMin.y() + shift.y();
@@ -85,7 +85,7 @@ class DisplayStackViewport {
         Point2i point = new Point2i(xNew, yNew);
         point =
                 DisplayStackViewportUtilities.clipToImage(
-                        point, bboxViewport.extent(), dimensionsEntire());
+                        point, boxViewport.extent(), dimensionsEntire());
         point =
                 DisplayStackViewportUtilities.clipToImage(
                         point, canvasExtent, dimensionsEntire());
@@ -94,26 +94,26 @@ class DisplayStackViewport {
         // We need to clip
 
         Point3i point3 =
-                new Point3i(point.x(), point.y(), this.bboxViewport.cornerMin().z());
+                new Point3i(point.x(), point.y(), this.boxViewport.cornerMin().z());
 
         assert (point3.x() >= 0);
         assert (point3.y() >= 0);
 
-        return new BoundingBox(point3, bboxViewport.extent());
+        return new BoundingBox(point3, boxViewport.extent());
     }
 
     // Either updates the view and creates a new BufferedImage, or returns null if nothing changes
-    public BufferedImage updateView(BoundingBox bbox, ZoomScale zoomScale)
+    public BufferedImage updateView(BoundingBox box, ZoomScale zoomScale)
             throws OperationFailedException {
         assert (regionExtracter != null);
 
-        this.bboxViewport = bbox;
+        this.boxViewport = box;
         this.zoomScale = zoomScale;
-        assert (displayStackEntireImage.dimensions().contains(bbox));
+        assert (displayStackEntireImage.dimensions().contains(box));
 
         try {
             return regionExtracter
-                    .extractRegionFrom(bbox, zoomScale.getScale())
+                    .extractRegionFrom(box, zoomScale.getScale())
                     .createBufferedImage();
         } catch (CreateException e) {
             throw new OperationFailedException(e);
@@ -121,13 +121,13 @@ class DisplayStackViewport {
     }
 
     // Using global coord
-    public BufferedImage createPartOfCurrentView(BoundingBox bboxUpdate)
+    public BufferedImage createPartOfCurrentView(BoundingBox boxUpdate)
             throws OperationFailedException {
         assert (regionExtracter != null);
-        assert (bboxViewport.contains().box(bboxUpdate));
+        assert (boxViewport.contains().box(boxUpdate));
 
         try {
-            DisplayStack ds = regionExtracter.extractRegionFrom(bboxUpdate, zoomScale.getScale());
+            DisplayStack ds = regionExtracter.extractRegionFrom(boxUpdate, zoomScale.getScale());
             return ds.createBufferedImage();
 
         } catch (CreateException e) {

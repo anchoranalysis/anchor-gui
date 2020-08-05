@@ -179,7 +179,7 @@ public class OverlayedDisplayStackUpdate {
                     //					System.out.println("Assuming existing redraw parts knows best");
                     //					boundOverlay.updateColoredCfg( getColoredCfg() );
                     //					return DisplayUpdate.redrawParts(
-                    // boundOverlay.bboxListForCfg(getRedrawParts()) );
+                    // boundOverlay.boxListForCfg(getRedrawParts()) );
                     //				}
                     // assert( update.getRedrawParts()==null );
 
@@ -211,13 +211,13 @@ public class OverlayedDisplayStackUpdate {
                         // System.out.printf( "Diff: added=%d, removed=%s\n", added.size(),
                         // removed.size() );
 
-                        List<BoundingBox> bboxToRefresh = new ArrayList<BoundingBox>();
-                        bboxToRefresh.addAll(boundOverlay.bboxList(removed));
+                        List<BoundingBox> boxToRefresh = new ArrayList<BoundingBox>();
+                        boxToRefresh.addAll(boundOverlay.boxList(removed));
 
                         boundOverlay.removeOverlays(removedIndices);
                         boundOverlay.addOverlays(added);
 
-                        bboxToRefresh.addAll(boundOverlay.bboxList(added));
+                        boxToRefresh.addAll(boundOverlay.boxList(added));
 
                         if (getRedrawParts() != null) {
 
@@ -225,10 +225,10 @@ public class OverlayedDisplayStackUpdate {
                             // getRedrawParts() );
                             // boundOverlay.updateColorSpecificIndices( getColoredCfg(), indices );
 
-                            bboxToRefresh.addAll(boundOverlay.bboxList(getRedrawParts()));
+                            boxToRefresh.addAll(boundOverlay.boxList(getRedrawParts()));
                         }
 
-                        return DisplayUpdate.redrawParts(bboxToRefresh);
+                        return DisplayUpdate.redrawParts(boxToRefresh);
 
                     } else {
 
@@ -237,19 +237,19 @@ public class OverlayedDisplayStackUpdate {
                                         cachedOverlayCollection, getColoredCfg());
                         boundOverlay.setOverlayCollection(getColoredCfg());
 
-                        List<BoundingBox> bboxToRefresh = boundOverlay.bboxList(cfgForUpdate);
+                        List<BoundingBox> boxToRefresh = boundOverlay.boxList(cfgForUpdate);
 
                         if (getRedrawParts() != null) {
-                            bboxToRefresh.addAll(boundOverlay.bboxList(getRedrawParts()));
+                            boxToRefresh.addAll(boundOverlay.boxList(getRedrawParts()));
                         }
 
-                        return DisplayUpdate.redrawParts(bboxToRefresh);
+                        return DisplayUpdate.redrawParts(boxToRefresh);
                     }
                 }
 
                 // Otherwise we just have a redraw parts command
                 if (isRedrawSpecific()) {
-                    return DisplayUpdate.redrawParts(boundOverlay.bboxList(getRedrawParts()));
+                    return DisplayUpdate.redrawParts(boundOverlay.boxList(getRedrawParts()));
                 } else {
                     // Then we update everything
                     return DisplayUpdate.redrawEverything();

@@ -36,17 +36,17 @@ import org.anchoranalysis.gui.frame.overlays.RedrawUpdate;
 
 public class RedrawUpdateFromProposal {
 
-    public static RedrawUpdate apply(ProposedCfg er, Cfg bboxRedraw) {
+    public static RedrawUpdate apply(ProposedCfg er, Cfg boxRedraw) {
         return new RedrawUpdate(
-                selectUpdate(er, bboxRedraw), overlaysForTrigger(er), suggestedSliceNum(er));
+                selectUpdate(er, boxRedraw), overlaysForTrigger(er), suggestedSliceNum(er));
     }
 
-    private static OverlayedDisplayStackUpdate selectUpdate(ProposedCfg cfg, Cfg bboxRedraw) {
+    private static OverlayedDisplayStackUpdate selectUpdate(ProposedCfg cfg, Cfg boxRedraw) {
         ColoredOverlayCollection oc = cfg.getColoredCfg();
-        if (bboxRedraw != null) {
+        if (boxRedraw != null) {
             OverlayCollection ocRedraw =
                     OverlayCollectionMarkFactory.createWithoutColor(
-                            bboxRedraw, cfg.getRegionMembership());
+                            boxRedraw, cfg.getRegionMembership());
             return OverlayedDisplayStackUpdate.updateOverlaysWithSimilar(oc, ocRedraw);
         } else {
             return OverlayedDisplayStackUpdate.updateOverlaysWithSimilar(oc);

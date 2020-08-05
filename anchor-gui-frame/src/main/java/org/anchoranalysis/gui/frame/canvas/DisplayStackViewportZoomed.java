@@ -54,15 +54,15 @@ class DisplayStackViewportZoomed {
     // Updates the view to bind to a new location, and returns a BufferedImage if has changed
     //   or null otherwise
     // The bounding box should refer to the Scaled space
-    public BufferedImage updateView(BoundingBox bbox) throws OperationFailedException {
-        BoundingBox bboxScaled = bbox.scale(new ScaleFactor(zoomScale.getScaleInv()));
+    public BufferedImage updateView(BoundingBox box) throws OperationFailedException {
+        BoundingBox boxScaled = box.scale(new ScaleFactor(zoomScale.getScaleInv()));
 
-        // Scaling seemingly can produce a bbox that is slightly too-big
-        bboxScaled =
-                bboxScaled.clipTo(
+        // Scaling seemingly can produce a box that is slightly too-big
+        boxScaled =
+                boxScaled.clipTo(
                         delegate.getDisplayStackEntireImage().dimensions().extent());
-        assert (delegate.getDisplayStackEntireImage().dimensions().contains(bboxScaled));
-        return delegate.updateView(bboxScaled, zoomScale);
+        assert (delegate.getDisplayStackEntireImage().dimensions().contains(boxScaled));
+        return delegate.updateView(boxScaled, zoomScale);
     }
 
     public BoundingBox createBoxForShiftedView(Point2i shift, Extent canvasExtent) {

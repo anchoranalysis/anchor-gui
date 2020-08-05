@@ -61,26 +61,25 @@ class FindNrgStackFromStacks {
 
     private static Stack allChannelsInStack(NamedProvider<Stack> namedStacks) throws OperationFailedException {
 
-        Stack out = new Stack();
-
         int size = namedStacks.keys().size();
-        for (int c = 0; c < size; c++) {
+        
+        Stack out = new Stack();
+        for (int channelIndex = 0; channelIndex < size; channelIndex++) {
 
             try {
-                out.addChannel(channelFromStack(namedStacks, c));
+                out.addChannel(channelFromStack(namedStacks, channelIndex));
             } catch (IncorrectImageSizeException e) {
                 throw new OperationFailedException(e);
             }
         }
-
         return out;
     }
 
-    private static Channel channelFromStack(NamedProvider<Stack> stackProvider, int c)
+    private static Channel channelFromStack(NamedProvider<Stack> stackProvider, int channelIndex)
             throws OperationFailedException {
 
         try {
-            Stack chnlStack = stackProvider.getException(Integer.toString(c));
+            Stack chnlStack = stackProvider.getException(Integer.toString(channelIndex));
 
             if (chnlStack.getNumberChannels() != 1) {
                 throw new OperationFailedException("Stack should have only a single channel");

@@ -48,7 +48,7 @@ class CurrentState implements IQuerySelectedPoints {
     private Cfg currentProposedCfg = new Cfg();
     private Cfg currentSelectedPointsCfg = new Cfg();
     private ColoredCfg currentCfgDisplayed = null;
-    private Cfg bboxListForRefresh = new Cfg();
+    private Cfg listForRefresh = new Cfg();
 
     private static RGBColor colorAccepted = new RGBColor(Color.RED);
     private static RGBColor colorRejected = new RGBColor(Color.PINK);
@@ -70,7 +70,7 @@ class CurrentState implements IQuerySelectedPoints {
         out.currentCfgDisplayed =
                 currentCfgDisplayed != null ? currentCfgDisplayed.shallowCopy() : null;
 
-        out.bboxListForRefresh = bboxListForRefresh.shallowCopy();
+        out.listForRefresh = listForRefresh.shallowCopy();
         return out;
     }
 
@@ -81,8 +81,8 @@ class CurrentState implements IQuerySelectedPoints {
     public void initAcceptedCfg(DualCfg in) {
         // We don't alter the changedSinceLastSave variable
         cfg.addAll(in);
-        bboxListForRefresh.addAll(in.getCfgAccepted());
-        bboxListForRefresh.addAll(in.getCfgRejected());
+        listForRefresh.addAll(in.getCfgAccepted());
+        listForRefresh.addAll(in.getCfgRejected());
     }
 
     public boolean hasCurrentProposedState() {
@@ -91,9 +91,9 @@ class CurrentState implements IQuerySelectedPoints {
 
     public void addCurrentProposedCfgFromSelectedPoints(Mark mark) {
         if (currentCfgDisplayed != null) {
-            bboxListForRefresh.addAll(currentCfgDisplayed.getCfg());
+            listForRefresh.addAll(currentCfgDisplayed.getCfg());
         }
-        bboxListForRefresh.addAll(new Cfg(mark));
+        listForRefresh.addAll(new Cfg(mark));
         this.currentProposedCfg = new Cfg(mark);
         this.currentCfgDisplayed = new ColoredCfg(mark, colorBlue);
         confirmReset.triggerConfirmResetStateChangedEvent();
@@ -102,25 +102,25 @@ class CurrentState implements IQuerySelectedPoints {
     public void replaceCurrentProposedCfg(Cfg cfgCore, ColoredCfg cfgDisplayed) {
 
         if (this.currentCfgDisplayed != null) {
-            bboxListForRefresh.addAll(currentCfgDisplayed.getCfg());
+            listForRefresh.addAll(currentCfgDisplayed.getCfg());
         }
 
-        bboxListForRefresh.addAll(currentSelectedPointsCfg);
+        listForRefresh.addAll(currentSelectedPointsCfg);
         this.currentSelectedPointsCfg = new Cfg();
 
         this.currentProposedCfg = cfgCore;
         this.currentCfgDisplayed = cfgDisplayed;
-        bboxListForRefresh.addAll(currentCfgDisplayed.getCfg());
+        listForRefresh.addAll(currentCfgDisplayed.getCfg());
         confirmReset.triggerConfirmResetStateChangedEvent();
     }
 
     public void removeCurrentProposedCfg() {
 
         if (this.currentCfgDisplayed != null) {
-            bboxListForRefresh.addAll(currentCfgDisplayed.getCfg());
+            listForRefresh.addAll(currentCfgDisplayed.getCfg());
         }
 
-        bboxListForRefresh.addAll(currentSelectedPointsCfg);
+        listForRefresh.addAll(currentSelectedPointsCfg);
         this.currentSelectedPointsCfg = new Cfg();
 
         this.currentProposedCfg = new Cfg();
@@ -143,7 +143,7 @@ class CurrentState implements IQuerySelectedPoints {
         currentSelectedPointsCfg.add(mark);
         currentProposedCfg = new Cfg();
         currentCfgDisplayed = null;
-        bboxListForRefresh.add(mark);
+        listForRefresh.add(mark);
         confirmReset.triggerConfirmResetStateChangedEvent();
     }
 
@@ -162,7 +162,7 @@ class CurrentState implements IQuerySelectedPoints {
 
         cfg.removeFromEither(mark);
 
-        bboxListForRefresh.add(mark);
+        listForRefresh.add(mark);
         confirmReset.triggerConfirmResetStateChangedEvent();
     }
 
@@ -183,16 +183,16 @@ class CurrentState implements IQuerySelectedPoints {
         currentProposedCfg = new Cfg();
         currentCfgDisplayed = null;
 
-        bboxListForRefresh.addAll(toDelete);
+        listForRefresh.addAll(toDelete);
         confirmReset.triggerConfirmResetStateChangedEvent();
     }
 
     public Cfg getRefreshListAndReset() {
-        Cfg refreshList = bboxListForRefresh;
-        bboxListForRefresh = new Cfg();
+        Cfg refreshList = listForRefresh;
+        listForRefresh = new Cfg();
 
         if (currentCfgDisplayed != null) {
-            bboxListForRefresh.addAll(currentCfgDisplayed.getCfg());
+            listForRefresh.addAll(currentCfgDisplayed.getCfg());
         }
         return refreshList;
     }
@@ -273,9 +273,9 @@ class CurrentState implements IQuerySelectedPoints {
         public void reset() {
             currentProposedCfg = new Cfg();
             if (currentCfgDisplayed != null) {
-                bboxListForRefresh.addAll(currentCfgDisplayed.getCfg());
+                listForRefresh.addAll(currentCfgDisplayed.getCfg());
             }
-            bboxListForRefresh.addAll(currentSelectedPointsCfg);
+            listForRefresh.addAll(currentSelectedPointsCfg);
             currentCfgDisplayed = null;
             currentSelectedPointsCfg = new Cfg();
             triggerConfirmResetStateChangedEvent();
@@ -293,9 +293,9 @@ class CurrentState implements IQuerySelectedPoints {
 
             currentProposedCfg = new Cfg();
             if (currentCfgDisplayed != null) {
-                bboxListForRefresh.addAll(currentCfgDisplayed.getCfg());
+                listForRefresh.addAll(currentCfgDisplayed.getCfg());
             }
-            bboxListForRefresh.addAll(currentSelectedPointsCfg);
+            listForRefresh.addAll(currentSelectedPointsCfg);
             currentCfgDisplayed = null;
             currentSelectedPointsCfg = new Cfg();
             triggerConfirmResetStateChangedEvent();

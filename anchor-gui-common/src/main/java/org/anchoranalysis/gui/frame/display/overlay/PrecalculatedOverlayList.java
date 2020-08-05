@@ -100,7 +100,7 @@ class PrecalculatedOverlayList {
                         drawOverlay,
                         dimEntireImage,
                         BinaryValues.getDefault().createByte());
-        listBoundingBox = overlayCollection.bboxList(drawOverlay, dimEntireImage);
+        listBoundingBox = overlayCollection.boxList(drawOverlay, dimEntireImage);
         generatedObjectsZoomed = null;
     }
 
@@ -108,11 +108,11 @@ class PrecalculatedOverlayList {
             Overlay overlay,
             RGBColor color,
             PrecalcOverlay precalc,
-            BoundingBox bbox,
+            BoundingBox box,
             Optional<PrecalcOverlay> precalcZoomed) {
         overlayCollection.add(overlay, color);
         generatedObjects.add(precalc);
-        listBoundingBox.add(bbox);
+        listBoundingBox.add(box);
         precalcZoomed.ifPresent(generatedObjectsZoomed::add);
     }
 

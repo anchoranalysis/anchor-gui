@@ -337,19 +337,19 @@ public class ImageCanvas {
                 .contains(new BoundingBox(extentNew)));
     }
 
-    private Extent calcExtentToRetrieveScaled(ImageDimensions sdScaled) {
+    private Extent calcExtentToRetrieveScaled(ImageDimensions dimensionsScaled) {
         // We calculate the size of the region based upon the current size of the canvas (if we can)
 
         if (imageCanvas.getWidth() > 0) {
             int sx = imageCanvas.getWidth();
             int sy = imageCanvas.getHeight();
-            sx = Math.min(sx, sdScaled.x());
-            sy = Math.min(sy, sdScaled.y());
+            sx = Math.min(sx, dimensionsScaled.x());
+            sy = Math.min(sy, dimensionsScaled.y());
             return new Extent(sx, sy);
         } else {
-            ImageDimensions sdEntire = displayStackViewport.createDimensionsEntireScaled();
-            int sx = Math.min(sdEntire.x(), sdScaled.x());
-            int sy = Math.min(sdEntire.y(), sdScaled.y());
+            ImageDimensions dimensionsEntire = displayStackViewport.createDimensionsEntireScaled();
+            int sx = Math.min(dimensionsEntire.x(), dimensionsScaled.x());
+            int sy = Math.min(dimensionsEntire.y(), dimensionsScaled.y());
             return new Extent(sx, sy, 1);
         }
     }
@@ -362,20 +362,20 @@ public class ImageCanvas {
 
         Point2i scrollVal = extentScrollbars.value();
         Point3i cornerMin = new Point3i(scrollVal.x(), scrollVal.y(), slice);
-        BoundingBox bboxView = new BoundingBox(cornerMin, extentImageSc);
+        BoundingBox boxView = new BoundingBox(cornerMin, extentImageSc);
 
         // We ignore nulls, as it means nothing has changed
-        BufferedImage biUpdate = displayStackViewport.updateView(bboxView);
+        BufferedImage biUpdate = displayStackViewport.updateView(boxView);
         if (biUpdate != null) {
             imageCanvas.updated(biUpdate);
         }
 
         {
-            ImageDimensions sd = displayStackViewport.createDimensionsEntireScaled();
+            ImageDimensions dimensions = displayStackViewport.createDimensionsEntireScaled();
             panel.setPreferredSize(
                     new Dimension(
-                            sd.x() + extentScrollbars.getPreferredWidth(),
-                            sd.y() + extentScrollbars.getPreferredHeight()));
+                            dimensions.x() + extentScrollbars.getPreferredWidth(),
+                            dimensions.y() + extentScrollbars.getPreferredHeight()));
         }
     }
 
@@ -417,19 +417,19 @@ public class ImageCanvas {
             }
 
             // If we get to here then we only update the region with redraw parts
-            BoundingBox bboxCurrentDisplayed = displayStackViewport.getUnzoomed().boundingBox();
+            BoundingBox boxCurrentDisplayed = displayStackViewport.getUnzoomed().boundingBox();
 
             // If we get to here, we don't change the viewport, but simply repaint some
             //   of the canvas using a section of the viewport
-            for (BoundingBox bbox : ds.getRedrawParts()) {
+            for (BoundingBox box : ds.getRedrawParts()) {
 
                 // If it intersects with our current viewport
-                if (bbox.intersection().existsWith(bboxCurrentDisplayed)) {
+                if (box.intersection().existsWith(boxCurrentDisplayed)) {
 
-                    BoundingBox bboxIntersect =
-                            bbox.intersection()
+                    BoundingBox boxIntersect =
+                            box.intersection()
                                     .withInside(
-                                            bboxCurrentDisplayed,
+                                            boxCurrentDisplayed,
                                             displayStackViewport
                                                     .getUnzoomed()
                                                     .dimensionsEntire()
@@ -442,15 +442,15 @@ public class ImageCanvas {
                     BufferedImage bi =
                             displayStackViewport
                                     .getUnzoomed()
-                                    .createPartOfCurrentView(bboxIntersect);
+                                    .createPartOfCurrentView(boxIntersect);
 
                     // Impose the bi on top of the existing fi
                     int xCanvas =
                             displayStackViewport.cnvrtImageXToCanvas(
-                                    bboxIntersect.cornerMin().x());
+                                    boxIntersect.cornerMin().x());
                     int yCanvas =
                             displayStackViewport.cnvrtImageYToCanvas(
-                                    bboxIntersect.cornerMin().y());
+                                    boxIntersect.cornerMin().y());
 
                     assert (xCanvas >= 0);
                     assert (yCanvas >= 0);

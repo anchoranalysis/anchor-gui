@@ -124,8 +124,8 @@ public class ZoomScale {
         return out;
     }
 
-    public BoundingBox applyScale(BoundingBox bbox) {
-        return bbox.scale(new ScaleFactor(scale));
+    public BoundingBox applyScale(BoundingBox box) {
+        return box.scale(new ScaleFactor(scale));
     }
 
     public Extent applyScale(Extent e) {
@@ -133,10 +133,7 @@ public class ZoomScale {
     }
 
     public Point2i removeScale(Point2i point) {
-        Point2i out = new Point2i();
-        out.setX(removeScale(point.x()));
-        out.setY(removeScale(point.y()));
-        return out;
+        return new Point2i(removeScale(point.x()), removeScale(point.y()));
     }
 
     public Extent removeScale(Extent e) {

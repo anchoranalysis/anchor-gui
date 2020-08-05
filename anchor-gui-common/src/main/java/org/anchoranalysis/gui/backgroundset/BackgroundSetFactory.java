@@ -169,14 +169,13 @@ public class BackgroundSetFactory {
     }
 
     public static void addEmpty(
-            BackgroundSet backgroundSet, NamedProvider<TimeSequence> imageStackCollection) {
+            BackgroundSet backgroundSet, NamedProvider<TimeSequence> stacks) {
 
         backgroundSet.addItem(
                 "blank (all black)",
                 () -> {
                     try {
-                        ImageDimensions sd = guessDimensions(imageStackCollection);
-                        Stack stack = createEmptyStack(sd);
+                        Stack stack = createEmptyStack( guessDimensions(stacks) );
                         return BackgroundStackContainerFactory.singleSavedStack(stack);
                     } catch (OperationFailedException e) {
                         throw new BackgroundStackContainerException("blank", e);
@@ -259,16 +258,11 @@ public class BackgroundSetFactory {
             BackgroundSet backgroundSet, Stack stack, String prefix)
             throws OperationFailedException {
 
-        try {
-            for (int c = 0; c < stack.getNumberChannels(); c++) {
-                // We create a stack just with this channel
-                Stack stackSingle = new Stack();
-                stackSingle.addChannel(stack.getChannel(c));
-
-                backgroundSet.addItem(String.format("%s%d", prefix, c), stackSingle);
-            }
-        } catch (IncorrectImageSizeException e) {
-            throw new OperationFailedException(e);
+        for (int index = 0; index < stack.getNumberChannels(); index++) {
+            // We create a stack just with this channel
+            String name = String.format("%s%d", prefix, index);
+            Stack stackSingle = new Stack( stack.getChannel(index) );
+            backgroundSet.addItem(name, stackSingle);
         }
     }
 }

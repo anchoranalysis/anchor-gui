@@ -80,7 +80,7 @@ class RedrawFromCfgGetter implements PropertyValueChangeListener<IntArray> {
             assert (merged != null);
             redrawable.applyRedrawUpdate(OverlayedDisplayStackUpdate.updateChanged(merged));
 
-            // cnvtr.update(old, bboxList);
+            // cnvtr.update(old, boxList);
 
         }
 

@@ -94,23 +94,23 @@ class CachedRGB {
         // We do the whole image
         if (update.getRedrawParts() == null) {
 
-            List<BoundingBox> bboxListReset =
-                    currentCfg.bboxList(drawOverlay, backgroundOriginal.dimensions());
+            List<BoundingBox> boxListReset =
+                    currentCfg.boxList(drawOverlay, backgroundOriginal.dimensions());
 
             if (update.getColoredCfg() != null) {
                 ColoredOverlayCollection cfgNew = update.getColoredCfg();
-                resetToChnlOrig(bboxListReset);
+                resetToChnlOrig(boxListReset);
                 drawCfg(cfgNew);
                 this.currentCfg = cfgNew;
 
             } else {
-                resetToChnlOrig(bboxListReset);
+                resetToChnlOrig(boxListReset);
                 drawCfg(currentCfg);
             }
 
         } else {
             List<BoundingBox> listBBox =
-                    update.getRedrawParts().bboxList(drawOverlay, backgroundOriginal.dimensions());
+                    update.getRedrawParts().boxList(drawOverlay, backgroundOriginal.dimensions());
 
             if (update.getColoredCfg() != null) {
                 ColoredOverlayCollection cfgNew = update.getColoredCfg();
@@ -148,9 +148,9 @@ class CachedRGB {
             resetToOriginalChannelAll();
         }
 
-        for (BoundingBox bbox : listBBox) {
+        for (BoundingBox box : listBBox) {
 
-            BoundingBox bboxClipped = bbox.clipTo(backgroundOriginal.dimensions().extent());
+            BoundingBox boxClipped = box.clipTo(backgroundOriginal.dimensions().extent());
 
             for (int c = 0; c < 3; c++) {
                 Channel rgbTarget = rgb.channelAt(c);
@@ -158,7 +158,7 @@ class CachedRGB {
                 Voxels<ByteBuffer> voxelsTarget = rgbTarget.voxels().asByte();
 
                 int bgChnl = selectBackgroundChnl(c, backgroundOriginal.getNumberChannels());
-                backgroundOriginal.copyPixelsTo(bgChnl, bboxClipped, voxelsTarget, bboxClipped);
+                backgroundOriginal.copyPixelsTo(bgChnl, boxClipped, voxelsTarget, boxClipped);
             }
         }
     }
@@ -183,11 +183,11 @@ class CachedRGB {
         drawOverlay.writeOverlays(cfg, rgb, idGetter);
     }
 
-    private void drawCfgIfIntersects(ColoredOverlayCollection oc, List<BoundingBox> bboxList)
+    private void drawCfgIfIntersects(ColoredOverlayCollection oc, List<BoundingBox> boxList)
             throws OperationFailedException {
 
         // We only draw marks which intersect with the bounding box
-        drawOverlay.writeOverlaysIfIntersects(oc, rgb, idGetter, bboxList);
+        drawOverlay.writeOverlaysIfIntersects(oc, rgb, idGetter, boxList);
     }
 
     private void createRGBFromChnl(DisplayStack background) {
