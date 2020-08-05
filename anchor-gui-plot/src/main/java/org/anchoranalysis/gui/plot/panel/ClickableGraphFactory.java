@@ -29,7 +29,7 @@ package org.anchoranalysis.gui.plot.panel;
 import java.util.Iterator;
 import java.util.Optional;
 import org.anchoranalysis.anchor.plot.AxisLimits;
-import org.anchoranalysis.anchor.plot.GraphInstance;
+import org.anchoranalysis.anchor.plot.PlotInstance;
 import org.anchoranalysis.anchor.plot.bean.GraphDefinition;
 import org.anchoranalysis.core.error.CreateException;
 import org.jfree.data.general.Dataset;
@@ -42,12 +42,12 @@ public class ClickableGraphFactory {
             Optional<AxisLimits> domainLimits,
             Optional<AxisLimits> rangeLimits)
             throws CreateException {
-        GraphInstance instance = definition.create(items, domainLimits, rangeLimits);
+        PlotInstance instance = definition.create(items, domainLimits, rangeLimits);
         return createWithXAxisIndex(instance, domainLimits);
     }
 
     private static <T, S extends Dataset> ClickableGraphInstance createWithXAxisIndex(
-            GraphInstance graphInstance, Optional<AxisLimits> domainLimits) throws CreateException {
+            PlotInstance graphInstance, Optional<AxisLimits> domainLimits) throws CreateException {
 
         ClickableGraphInstance gl = new ClickableGraphInstance(graphInstance);
 

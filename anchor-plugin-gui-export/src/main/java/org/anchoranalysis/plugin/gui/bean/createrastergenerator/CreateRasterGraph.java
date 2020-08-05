@@ -28,7 +28,7 @@ package org.anchoranalysis.plugin.gui.bean.createrastergenerator;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.anchoranalysis.anchor.plot.GraphInstance;
+import org.anchoranalysis.anchor.plot.PlotInstance;
 import org.anchoranalysis.anchor.plot.bean.GraphDefinition;
 import org.anchoranalysis.bean.annotation.BeanField;
 import org.anchoranalysis.core.error.CreateException;
@@ -47,7 +47,7 @@ public abstract class CreateRasterGraph<T, S> extends CreateRasterGenerator<S> {
     @BeanField @Getter @Setter private int height = 768;
     // END BEAN PARAMETERS
 
-    protected IterableObjectGenerator<GraphInstance, Stack> createGraphInstanceGenerator() {
+    protected IterableObjectGenerator<PlotInstance, Stack> createGraphInstanceGenerator() {
         return new GraphInstanceGenerator(width, height);
     }
 

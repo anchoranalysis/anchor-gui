@@ -29,7 +29,7 @@ package org.anchoranalysis.plugin.gui.bean.graphdefinition.line;
 import java.util.Iterator;
 import java.util.Optional;
 import org.anchoranalysis.anchor.plot.AxisLimits;
-import org.anchoranalysis.anchor.plot.GraphInstance;
+import org.anchoranalysis.anchor.plot.PlotInstance;
 import org.anchoranalysis.anchor.plot.bean.GraphDefinition;
 import org.anchoranalysis.anchor.plot.bean.colorscheme.GraphColorScheme;
 import org.anchoranalysis.anchor.plot.index.LinePlot;
@@ -70,7 +70,7 @@ public abstract class GraphDefinitionLineIterVsCSVStatistic extends GraphDefinit
     }
 
     @Override
-    public GraphInstance create(
+    public PlotInstance create(
             Iterator<CSVStatistic> items,
             Optional<AxisLimits> domainLimits,
             Optional<AxisLimits> rangeLimits)

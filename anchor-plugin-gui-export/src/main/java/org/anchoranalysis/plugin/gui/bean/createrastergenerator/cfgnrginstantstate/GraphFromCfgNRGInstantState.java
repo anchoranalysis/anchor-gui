@@ -28,7 +28,7 @@ package org.anchoranalysis.plugin.gui.bean.createrastergenerator.cfgnrginstantst
 
 import org.anchoranalysis.anchor.mpp.feature.instantstate.CfgNRGInstantState;
 import org.anchoranalysis.anchor.mpp.plot.NRGGraphItem;
-import org.anchoranalysis.anchor.plot.GraphInstance;
+import org.anchoranalysis.anchor.plot.PlotInstance;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.gui.bean.exporttask.ExportTaskParams;
 import org.anchoranalysis.gui.plot.creator.GenerateGraphNRGBreakdownFromInstantState;
@@ -46,7 +46,7 @@ public class GraphFromCfgNRGInstantState
     public IterableObjectGenerator<MappedFrom<CfgNRGInstantState>, Stack> createGenerator(
             ExportTaskParams params) throws CreateException {
 
-        IterableObjectGenerator<GraphInstance, Stack> generator = createGraphInstanceGenerator();
+        IterableObjectGenerator<PlotInstance, Stack> generator = createGraphInstanceGenerator();
 
         return new IterableObjectGeneratorBridge<>(
                 createBridge(generator, params), elem -> elem.getObj());
@@ -54,10 +54,10 @@ public class GraphFromCfgNRGInstantState
 
     private IterableObjectGeneratorBridge<Stack, CfgNRGInstantState, ClickableGraphInstance>
             createBridge(
-                    IterableObjectGenerator<GraphInstance, Stack> generator,
+                    IterableObjectGenerator<PlotInstance, Stack> generator,
                     ExportTaskParams params) {
         // Presents a generator for a GraphInstance as a generator for ClickableGraphInstance
-        IterableObjectGeneratorBridge<Stack, ClickableGraphInstance, GraphInstance>
+        IterableObjectGeneratorBridge<Stack, ClickableGraphInstance, PlotInstance>
                 clickableGenerator =
                         new IterableObjectGeneratorBridge<>(generator, a -> a.getGraphInstance());
 

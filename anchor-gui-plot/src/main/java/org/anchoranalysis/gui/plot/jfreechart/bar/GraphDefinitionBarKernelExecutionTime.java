@@ -31,7 +31,7 @@ import java.util.Optional;
 import org.anchoranalysis.anchor.mpp.plot.execution.KernelExecutionTime;
 import org.anchoranalysis.anchor.plot.AxisLimits;
 import org.anchoranalysis.anchor.plot.GetForSeries;
-import org.anchoranalysis.anchor.plot.GraphInstance;
+import org.anchoranalysis.anchor.plot.PlotInstance;
 import org.anchoranalysis.anchor.plot.bean.GraphDefinition;
 import org.anchoranalysis.anchor.plot.bean.colorscheme.GraphColorScheme;
 import org.anchoranalysis.anchor.plot.index.BarChart;
@@ -90,7 +90,7 @@ public abstract class GraphDefinitionBarKernelExecutionTime
     }
 
     @Override
-    public GraphInstance create(
+    public PlotInstance create(
             Iterator<KernelExecutionTime> items,
             Optional<AxisLimits> domainLimits,
             Optional<AxisLimits> rangeLimits)

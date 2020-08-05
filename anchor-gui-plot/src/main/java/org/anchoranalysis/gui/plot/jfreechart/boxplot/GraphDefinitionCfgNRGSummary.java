@@ -31,7 +31,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 import org.anchoranalysis.anchor.plot.AxisLimits;
-import org.anchoranalysis.anchor.plot.GraphInstance;
+import org.anchoranalysis.anchor.plot.PlotInstance;
 import org.anchoranalysis.anchor.plot.bean.GraphDefinition;
 import org.anchoranalysis.anchor.plot.index.BoxPlot;
 import org.anchoranalysis.core.error.CreateException;
@@ -77,7 +77,7 @@ public class GraphDefinitionCfgNRGSummary extends GraphDefinition<Integer> {
     }
 
     @Override
-    public GraphInstance create(
+    public PlotInstance create(
             Iterator<Integer> items,
             Optional<AxisLimits> domainLimits,
             Optional<AxisLimits> rangeLimits)

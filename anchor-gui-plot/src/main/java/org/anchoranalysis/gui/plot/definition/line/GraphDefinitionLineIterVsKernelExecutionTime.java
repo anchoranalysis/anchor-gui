@@ -31,7 +31,7 @@ import java.util.Optional;
 import lombok.Getter;
 import lombok.Setter;
 import org.anchoranalysis.anchor.plot.AxisLimits;
-import org.anchoranalysis.anchor.plot.GraphInstance;
+import org.anchoranalysis.anchor.plot.PlotInstance;
 import org.anchoranalysis.anchor.plot.bean.GraphDefinition;
 import org.anchoranalysis.anchor.plot.bean.colorscheme.GraphColorScheme;
 import org.anchoranalysis.anchor.plot.index.LinePlot;
@@ -85,7 +85,7 @@ public class GraphDefinitionLineIterVsKernelExecutionTime
     }
 
     @Override
-    public GraphInstance create(
+    public PlotInstance create(
             Iterator<IterAndExecutionTime> itr,
             Optional<AxisLimits> domainLimits,
             Optional<AxisLimits> rangeLimits)

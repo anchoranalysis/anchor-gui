@@ -31,7 +31,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.Optional;
-import org.anchoranalysis.anchor.plot.GraphInstance;
+import org.anchoranalysis.anchor.plot.PlotInstance;
 import org.anchoranalysis.anchor.plot.io.GraphOutputter;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.image.stack.Stack;
@@ -44,9 +44,9 @@ import org.anchoranalysis.io.output.error.OutputWriteFailedException;
 import org.jfree.chart.ChartUtils;
 
 class GraphInstanceGenerator extends ObjectGenerator<Stack>
-        implements IterableObjectGenerator<GraphInstance, Stack> {
+        implements IterableObjectGenerator<PlotInstance, Stack> {
 
-    private GraphInstance object;
+    private PlotInstance object;
 
     private int width;
     private int height;
@@ -59,7 +59,7 @@ class GraphInstanceGenerator extends ObjectGenerator<Stack>
         this.height = height;
     }
 
-    public GraphInstanceGenerator(GraphInstance object, int width, int height) {
+    public GraphInstanceGenerator(PlotInstance object, int width, int height) {
         super();
         this.object = object;
         this.width = width;
@@ -67,12 +67,12 @@ class GraphInstanceGenerator extends ObjectGenerator<Stack>
     }
 
     @Override
-    public GraphInstance getIterableElement() {
+    public PlotInstance getIterableElement() {
         return object;
     }
 
     @Override
-    public void setIterableElement(GraphInstance element) {
+    public void setIterableElement(PlotInstance element) {
         object = element;
     }
 

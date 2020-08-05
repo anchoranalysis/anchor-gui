@@ -34,7 +34,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.anchoranalysis.anchor.plot.AxisLimits;
-import org.anchoranalysis.anchor.plot.GraphInstance;
+import org.anchoranalysis.anchor.plot.PlotInstance;
 import org.anchoranalysis.anchor.plot.bean.GraphDefinition;
 import org.anchoranalysis.anchor.plot.bean.colorscheme.GraphColorScheme;
 import org.anchoranalysis.anchor.plot.index.LinePlot;
@@ -63,7 +63,7 @@ public class GraphDefinitionLineIterVsNRG
     }
 
     @Override
-    public GraphInstance create(
+    public PlotInstance create(
             Iterator<GraphDefinitionLineIterVsNRG.Item> items,
             Optional<AxisLimits> domainLimits,
             Optional<AxisLimits> rangeLimits)
