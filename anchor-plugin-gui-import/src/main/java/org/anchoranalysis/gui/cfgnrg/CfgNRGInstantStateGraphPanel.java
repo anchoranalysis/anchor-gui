@@ -42,13 +42,11 @@ public class CfgNRGInstantStateGraphPanel extends StatePanel<CfgNRGInstantState>
 
     private GraphPanel graphPanel;
 
-    private CheckedFunction<
-                    CfgNRGInstantState, ClickableGraphInstance, OperationFailedException>
+    private CheckedFunction<CfgNRGInstantState, ClickableGraphInstance, OperationFailedException>
             graphGenerator;
 
     public CfgNRGInstantStateGraphPanel(
-            CheckedFunction<
-                            CfgNRGInstantState, ClickableGraphInstance, OperationFailedException>
+            CheckedFunction<CfgNRGInstantState, ClickableGraphInstance, OperationFailedException>
                     graphGenerator) {
         this.graphGenerator = graphGenerator;
     }

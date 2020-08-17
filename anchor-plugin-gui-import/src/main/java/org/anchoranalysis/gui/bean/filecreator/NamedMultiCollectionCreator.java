@@ -33,9 +33,8 @@ import org.anchoranalysis.mpp.io.input.MultiInput;
 public class NamedMultiCollectionCreator extends FileCreatorFromInputManager<MultiInput> {
 
     @Override
-    protected InteractiveFile create(MultiInput providesStackInput,
-            MarkCreatorParams markCreatorParams) {
+    protected InteractiveFile create(
+            MultiInput providesStackInput, MarkCreatorParams markCreatorParams) {
         return new FileMultiCollection(providesStackInput, markCreatorParams);
     }
-
 }

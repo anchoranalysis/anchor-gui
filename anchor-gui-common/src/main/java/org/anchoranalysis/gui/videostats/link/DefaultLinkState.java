@@ -48,8 +48,7 @@ public class DefaultLinkState {
     @Getter @Setter private OverlayCollectionWithNrgStack cfgWithStack;
 
     @Getter @Setter
-    private CheckedFunction<Integer, DisplayStack, BackgroundStackContainerException>
-            background;
+    private CheckedFunction<Integer, DisplayStack, BackgroundStackContainerException> background;
 
     DefaultLinkState duplicate() {
         DefaultLinkState dms = new DefaultLinkState();

@@ -71,7 +71,7 @@ public class RasterAsChnlCollection extends OpenFileType {
 
         NamedSingleStackCreator creator = new NamedSingleStackCreator();
         creator.setCustomName(String.format("raster-set: %s", createName(files)));
-        creator.setInput( inputManager);
+        creator.setInput(inputManager);
 
         List<FileCreator> out = new ArrayList<>();
         out.add(creator);

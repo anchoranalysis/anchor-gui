@@ -53,8 +53,7 @@ class SizeOfZoomedImage {
 
     /** The size of a zoomed-image after being zoomed to fit within bounds */
     private static Extent sizeWithinBounds(ImageDimensions imageSize, Extent maxBounds) {
-        DefaultZoomSuggestor zoomSugg =
-                new DefaultZoomSuggestor(maxBounds.x(), maxBounds.y());
+        DefaultZoomSuggestor zoomSugg = new DefaultZoomSuggestor(maxBounds.x(), maxBounds.y());
         ZoomScale zs = zoomSugg.suggestDefaultZoomFor(imageSize);
 
         // The size of the image after it has been zoomed

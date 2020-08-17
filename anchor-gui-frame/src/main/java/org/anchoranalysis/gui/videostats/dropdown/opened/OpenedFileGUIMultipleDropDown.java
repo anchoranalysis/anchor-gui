@@ -38,8 +38,8 @@ import org.anchoranalysis.gui.file.opened.IOpenedFileGUI;
 import org.anchoranalysis.gui.frame.multioverlay.RasterMultiCreator;
 import org.anchoranalysis.gui.frame.multiraster.NamedRasterSet;
 import org.anchoranalysis.gui.mark.MarkDisplaySettings;
-import org.anchoranalysis.gui.videostats.dropdown.DualMenuWrapper;
 import org.anchoranalysis.gui.videostats.dropdown.AddVideoStatsModule;
+import org.anchoranalysis.gui.videostats.dropdown.DualMenuWrapper;
 import org.anchoranalysis.gui.videostats.dropdown.VideoStatsModuleCreatorAndAdder;
 import org.anchoranalysis.gui.videostats.dropdown.VideoStatsModuleGlobalParams;
 import org.anchoranalysis.gui.videostats.internalframe.cfgtorgb.MultiInput;
@@ -217,9 +217,15 @@ public class OpenedFileGUIMultipleDropDown {
             if (combine.getNrgBackground() != null
                     && getObjFromOperationCombine.getObj(combine).isPresent()) {
 
-                getObjFromOperationCombine.getObj(combine).ifPresent( obj->
-                    list.add( new MultiInput<>(combine.generateName(), combine.getNrgBackground(), obj) )
-                );
+                getObjFromOperationCombine
+                        .getObj(combine)
+                        .ifPresent(
+                                obj ->
+                                        list.add(
+                                                new MultiInput<>(
+                                                        combine.generateName(),
+                                                        combine.getNrgBackground(),
+                                                        obj)));
             }
         }
 
@@ -241,8 +247,7 @@ public class OpenedFileGUIMultipleDropDown {
 
     @FunctionalInterface
     private interface GetObjFromOperationCombine<T> {
-        public Optional<OverlayCollectionSupplier<T>> getObj(
-                VideoStatsOperationCombine op);
+        public Optional<OverlayCollectionSupplier<T>> getObj(VideoStatsOperationCombine op);
     }
 
     private void addMenu(
@@ -275,7 +280,7 @@ public class OpenedFileGUIMultipleDropDown {
 
         for (VideoStatsOperationOrMenu vsoom : menu.getListOperations()) {
             if (vsoom.isOperation() && src.getName().equals(vsoom.getOperation().getName())) {
-               return vsoom.getOperation();
+                return vsoom.getOperation();
             }
         }
         return null;

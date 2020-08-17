@@ -34,8 +34,8 @@ import org.anchoranalysis.plugin.io.bean.input.stack.StackSequenceInput;
 public class StackCollectionCreator extends FileCreatorFromInputManager<StackSequenceInput> {
 
     @Override
-    protected InteractiveFile create(StackSequenceInput providesStackInput,
-            MarkCreatorParams markCreatorParams) {
+    protected InteractiveFile create(
+            StackSequenceInput providesStackInput, MarkCreatorParams markCreatorParams) {
         return new FileStackCollection(providesStackInput, markCreatorParams);
     }
 }

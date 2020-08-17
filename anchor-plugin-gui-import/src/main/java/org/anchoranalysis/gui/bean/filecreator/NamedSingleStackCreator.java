@@ -34,8 +34,8 @@ import org.anchoranalysis.image.io.input.ProvidesStackInput;
 public class NamedSingleStackCreator extends FileCreatorFromInputManager<ProvidesStackInput> {
 
     @Override
-    protected InteractiveFile create(ProvidesStackInput providesStackInput,
-            MarkCreatorParams markCreatorParams) {
+    protected InteractiveFile create(
+            ProvidesStackInput providesStackInput, MarkCreatorParams markCreatorParams) {
         return new FileSingleStack(providesStackInput, markCreatorParams);
     }
 }

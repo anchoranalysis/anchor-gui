@@ -55,8 +55,8 @@ import org.anchoranalysis.gui.io.loader.manifest.finder.historyfolder.FinderHist
 import org.anchoranalysis.gui.mark.MarkDisplaySettings;
 import org.anchoranalysis.gui.series.TimeSequenceProvider;
 import org.anchoranalysis.gui.series.TimeSequenceProviderSupplier;
-import org.anchoranalysis.gui.videostats.dropdown.BoundVideoStatsModuleDropDown;
 import org.anchoranalysis.gui.videostats.dropdown.AddVideoStatsModule;
+import org.anchoranalysis.gui.videostats.dropdown.BoundVideoStatsModuleDropDown;
 import org.anchoranalysis.gui.videostats.dropdown.OperationCreateBackgroundSetWithAdder;
 import org.anchoranalysis.gui.videostats.dropdown.VideoStatsModuleGlobalParams;
 import org.anchoranalysis.gui.videostats.dropdown.common.DropDownUtilities;
@@ -104,17 +104,21 @@ public class ManifestDropDown {
 
         // We try to read a nrgStack from the manifest. If none exists, we guess instead from the
         // image-stacks.
-        NRGBackground nrgBackground = NRGBackground.createStack(stacks, () -> firstOrSecond(
-                finderNrgStack.nrgStackSupplier(),
-                () -> GuessNRGStackFromStacks.guess(asSequence(stacks))
-        ));
+        NRGBackground nrgBackground =
+                NRGBackground.createStack(
+                        stacks,
+                        () ->
+                                firstOrSecond(
+                                        finderNrgStack.nrgStackSupplier(),
+                                        () -> GuessNRGStackFromStacks.guess(asSequence(stacks))));
 
         return new OperationCreateBackgroundSetWithAdder(
                 nrgBackground, adder, mpg.getThreadPool(), mpg.getLogger().errorReporter());
     }
 
     /** Gets from the first supplier, and if it returns null, then gets from the second instead */
-    private static NRGStackWithParams firstOrSecond(NRGStackSupplier first, NRGStackSupplier second) throws GetOperationFailedException {
+    private static NRGStackWithParams firstOrSecond(NRGStackSupplier first, NRGStackSupplier second)
+            throws GetOperationFailedException {
 
         NRGStackWithParams firstResult = first.get();
 

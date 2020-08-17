@@ -36,8 +36,7 @@ import org.anchoranalysis.io.generator.IterableObjectGenerator;
 import org.anchoranalysis.io.output.error.OutputWriteFailedException;
 
 class NoOverlayBridgeFromGenerator
-        implements CheckedFunction<
-                Integer, DisplayUpdate, BackgroundStackContainerException> {
+        implements CheckedFunction<Integer, DisplayUpdate, BackgroundStackContainerException> {
 
     private IterableObjectGenerator<Integer, DisplayStack> generator;
 

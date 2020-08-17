@@ -54,8 +54,7 @@ public class ControllerPopupMenuWithBackground {
     }
 
     public BackgroundUpdater add(
-            VideoStatsModuleGlobalParams mpg,
-            BackgroundSetProgressingSupplier backgroundSet) {
+            VideoStatsModuleGlobalParams mpg, BackgroundSetProgressingSupplier backgroundSet) {
         return addDefinition(mpg, new ChangeableBackgroundDefinitionSimple(backgroundSet));
     }
 

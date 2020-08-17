@@ -7,8 +7,9 @@ import org.anchoranalysis.gui.container.background.BackgroundStackContainerExcep
 @FunctionalInterface
 public interface AddVideoStatsModuleSupplier {
 
-    AddVideoStatsModule get(ProgressReporter progressReporter) throws BackgroundStackContainerException;
-    
+    AddVideoStatsModule get(ProgressReporter progressReporter)
+            throws BackgroundStackContainerException;
+
     public static AddVideoStatsModuleSupplier cache(AddVideoStatsModuleSupplier supplier) {
         return CachedProgressingSupplier.cache(supplier::get)::get;
     }

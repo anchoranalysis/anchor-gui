@@ -26,6 +26,8 @@
 
 package org.anchoranalysis.gui.io.loader.manifest.finder;
 
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.anchoranalysis.anchor.mpp.feature.instantstate.CfgNRGInstantState;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.index.container.BoundedIndexContainer;
@@ -37,8 +39,6 @@ import org.anchoranalysis.gui.videostats.dropdown.MenuAddException;
 import org.anchoranalysis.io.manifest.ManifestRecorder;
 import org.anchoranalysis.io.manifest.deserializer.folder.LoadContainer;
 import org.anchoranalysis.io.manifest.finder.Finder;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 public class FinderCfgNRGSet implements Finder, ContainerGetter<CfgNRGInstantState> {
@@ -127,7 +127,8 @@ public class FinderCfgNRGSet implements Finder, ContainerGetter<CfgNRGInstantSta
     }
 
     @Override
-    public BoundedIndexContainer<CfgNRGInstantState> getContainer() throws OperationFailedException {
+    public BoundedIndexContainer<CfgNRGInstantState> getContainer()
+            throws OperationFailedException {
         return getHistory().getContainer();
     }
 }

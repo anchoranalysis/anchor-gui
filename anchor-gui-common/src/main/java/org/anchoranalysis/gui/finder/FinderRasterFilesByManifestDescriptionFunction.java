@@ -89,7 +89,11 @@ public class FinderRasterFilesByManifestDescriptionFunction implements Finder {
             out.addImageStack(
                     name,
                     StoreSupplier.cache(
-                            () -> openStack(fileWrite.calcPath(), rasterReader, ProgressReporterNull.get() )));
+                            () ->
+                                    openStack(
+                                            fileWrite.calcPath(),
+                                            rasterReader,
+                                            ProgressReporterNull.get())));
         }
         return out;
     }

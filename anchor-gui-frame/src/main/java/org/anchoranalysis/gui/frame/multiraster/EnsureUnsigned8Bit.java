@@ -30,8 +30,7 @@ import org.anchoranalysis.core.functional.function.CheckedFunction;
 import org.anchoranalysis.image.stack.DisplayStack;
 
 // Ensure unsigned 8-bit
-class EnsureUnsigned8Bit<E extends Exception>
-        implements CheckedFunction<Integer, DisplayStack, E> {
+class EnsureUnsigned8Bit<E extends Exception> implements CheckedFunction<Integer, DisplayStack, E> {
 
     private CheckedFunction<Integer, DisplayStack, E> bridge;
 

@@ -63,8 +63,7 @@ public abstract class BridgedGraphFromDualFinderCreator<T>
         }
     }
 
-    public abstract CheckedFunction<CSVStatistic, T, CreateException>
-            createCSVStatisticBridge();
+    public abstract CheckedFunction<CSVStatistic, T, CreateException> createCSVStatisticBridge();
 
     public abstract CheckedFunction<CfgNRGInstantState, T, CreateException>
             createCfgNRGInstantStateBridge();

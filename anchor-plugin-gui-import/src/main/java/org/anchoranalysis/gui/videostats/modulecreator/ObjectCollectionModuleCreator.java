@@ -37,11 +37,15 @@ import org.anchoranalysis.gui.videostats.internalframe.InternalFrameStaticOverla
 import org.anchoranalysis.gui.videostats.operation.combine.OverlayCollectionSupplier;
 import org.anchoranalysis.image.object.ObjectCollection;
 
-public class ObjectCollectionModuleCreator extends OverlayedCollectionModuleCreator<ObjectCollection> {
-    
-    public ObjectCollectionModuleCreator(String fileIdentifier, String name,
+public class ObjectCollectionModuleCreator
+        extends OverlayedCollectionModuleCreator<ObjectCollection> {
+
+    public ObjectCollectionModuleCreator(
+            String fileIdentifier,
+            String name,
             OverlayCollectionSupplier<ObjectCollection> supplier,
-            NRGBackground nrgBackground, VideoStatsModuleGlobalParams mpg) {
+            NRGBackground nrgBackground,
+            VideoStatsModuleGlobalParams mpg) {
         super(fileIdentifier, name, supplier, nrgBackground, mpg);
     }
 
@@ -55,7 +59,7 @@ public class ObjectCollectionModuleCreator extends OverlayedCollectionModuleCrea
     protected InternalFrameStaticOverlaySelectable createFrame(String frameName) {
         return new InternalFrameStaticOverlaySelectable(frameName, false);
     }
-    
+
     @Override
     protected Optional<OverlayCollectionSupplier<Cfg>> cfgSupplier() {
         return Optional.empty();

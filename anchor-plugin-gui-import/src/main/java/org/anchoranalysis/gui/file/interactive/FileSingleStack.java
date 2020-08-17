@@ -80,7 +80,7 @@ public class FileSingleStack extends InteractiveFile {
         MultiCollectionDropDown dropDown =
                 new MultiCollectionDropDown(
                         TimeSequenceProviderSupplier.cache(
-                                progressReporter -> createTimeSeries(progressReporter, 0) ),
+                                progressReporter -> createTimeSeries(progressReporter, 0)),
                         null,
                         null,
                         new EagerEvaluationStore<>(),
@@ -95,8 +95,9 @@ public class FileSingleStack extends InteractiveFile {
 
         return new OpenedFileGUI(this, dropDown.openedFileGUI());
     }
-    
-    private TimeSequenceProvider createTimeSeries(ProgressReporter progressReporter, int seriesNum) throws CreateException {
+
+    private TimeSequenceProvider createTimeSeries(ProgressReporter progressReporter, int seriesNum)
+            throws CreateException {
         try {
             LazyEvaluationStore<TimeSequence> stackCollection =
                     new LazyEvaluationStore<>("createTimeSeries");

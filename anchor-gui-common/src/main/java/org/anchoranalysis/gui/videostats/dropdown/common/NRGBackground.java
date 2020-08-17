@@ -38,39 +38,37 @@ import org.anchoranalysis.core.progress.ProgressReporterNull;
 import org.anchoranalysis.gui.container.background.BackgroundStackContainerException;
 import org.anchoranalysis.gui.series.TimeSequenceProvider;
 import org.anchoranalysis.gui.series.TimeSequenceProviderSupplier;
+import org.anchoranalysis.gui.videostats.dropdown.AddVideoStatsModule;
 import org.anchoranalysis.gui.videostats.dropdown.AdderAppendNRGStack;
 import org.anchoranalysis.gui.videostats.dropdown.BackgroundSetProgressingSupplier;
 import org.anchoranalysis.gui.videostats.dropdown.CreateBackgroundSetFactory;
-import org.anchoranalysis.gui.videostats.dropdown.AddVideoStatsModule;
 import org.anchoranalysis.image.stack.NamedStacksSupplier;
 import org.anchoranalysis.image.stack.wrap.WrapStackAsTimeSequence;
 
-@AllArgsConstructor(access=AccessLevel.PRIVATE)
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class NRGBackground {
 
     @Getter private BackgroundSetProgressingSupplier backgroundSet;
-    
+
     @Getter private NRGStackSupplier nrgStack;
-    
+
     private CheckedProgressingSupplier<Integer, OperationFailedException> numberFrames;
 
     public static NRGBackground createFromBackground(
-            BackgroundSetProgressingSupplier backgroundSet,
-            NRGStackSupplier nrgStack) {
+            BackgroundSetProgressingSupplier backgroundSet, NRGStackSupplier nrgStack) {
         return new NRGBackground(backgroundSet, nrgStack, progresssReporter -> 1);
     }
 
-    public static NRGBackground createStack(NamedStacksSupplier backgroundSupplier, NRGStackSupplier nrgStack) {
+    public static NRGBackground createStack(
+            NamedStacksSupplier backgroundSupplier, NRGStackSupplier nrgStack) {
 
-        return createStackSequence(progressReporter ->
-            sequenceProviderFrom(progressReporter, backgroundSupplier),
-            nrgStack
-        );
+        return createStackSequence(
+                progressReporter -> sequenceProviderFrom(progressReporter, backgroundSupplier),
+                nrgStack);
     }
-    
+
     public static NRGBackground createStackSequence(
-            TimeSequenceProviderSupplier backgroundSet,
-            NRGStackSupplier nrgStack) {
+            TimeSequenceProviderSupplier backgroundSet, NRGStackSupplier nrgStack) {
         return new NRGBackground(
                 CreateBackgroundSetFactory.createCached(backgroundSet),
                 nrgStack,
@@ -88,7 +86,7 @@ public class NRGBackground {
     }
 
     // Assumes the number of frames does not change
-    public NRGBackground copyChangeOp( BackgroundSetProgressingSupplier backgroundSetToAssign) {
+    public NRGBackground copyChangeOp(BackgroundSetProgressingSupplier backgroundSetToAssign) {
         return new NRGBackground(backgroundSetToAssign, nrgStack, numberFrames);
     }
 
@@ -105,14 +103,14 @@ public class NRGBackground {
         }
     }
 
-    private static TimeSequenceProvider sequenceProviderFrom(ProgressReporter progressReporter, NamedStacksSupplier backgroundSupplier) throws CreateException {
+    private static TimeSequenceProvider sequenceProviderFrom(
+            ProgressReporter progressReporter, NamedStacksSupplier backgroundSupplier)
+            throws CreateException {
         try {
             return new TimeSequenceProvider(
-                    new WrapStackAsTimeSequence(backgroundSupplier.get(progressReporter)),
-                    1
-            );
+                    new WrapStackAsTimeSequence(backgroundSupplier.get(progressReporter)), 1);
         } catch (OperationFailedException e) {
-           throw new CreateException(e);
+            throw new CreateException(e);
         }
     }
 }

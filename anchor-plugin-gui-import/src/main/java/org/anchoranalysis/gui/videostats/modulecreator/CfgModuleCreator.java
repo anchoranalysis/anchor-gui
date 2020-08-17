@@ -40,10 +40,14 @@ import org.anchoranalysis.image.object.ObjectCollection;
 public class CfgModuleCreator extends OverlayedCollectionModuleCreator<Cfg> {
 
     private MarkDisplaySettings markDisplaySettings;
-    
-    public CfgModuleCreator(String fileIdentifier, String name,
-            OverlayCollectionSupplier<Cfg> supplier, NRGBackground nrgBackground,
-            VideoStatsModuleGlobalParams mpg, MarkDisplaySettings markDisplaySettings) {
+
+    public CfgModuleCreator(
+            String fileIdentifier,
+            String name,
+            OverlayCollectionSupplier<Cfg> supplier,
+            NRGBackground nrgBackground,
+            VideoStatsModuleGlobalParams mpg,
+            MarkDisplaySettings markDisplaySettings) {
         super(fileIdentifier, name, supplier, nrgBackground, mpg);
         this.markDisplaySettings = markDisplaySettings;
     }
@@ -58,7 +62,7 @@ public class CfgModuleCreator extends OverlayedCollectionModuleCreator<Cfg> {
     protected InternalFrameStaticOverlaySelectable createFrame(String frameName) {
         return new InternalFrameStaticOverlaySelectable(frameName, true);
     }
-    
+
     @Override
     protected Optional<OverlayCollectionSupplier<Cfg>> cfgSupplier() {
         return Optional.of(supplier());

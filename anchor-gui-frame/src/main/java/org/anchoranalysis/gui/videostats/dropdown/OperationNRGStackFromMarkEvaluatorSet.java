@@ -26,13 +26,13 @@
 
 package org.anchoranalysis.gui.videostats.dropdown;
 
+import lombok.RequiredArgsConstructor;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.progress.CheckedProgressingSupplier;
 import org.anchoranalysis.core.progress.ProgressReporter;
 import org.anchoranalysis.feature.nrg.NRGStackWithParams;
 import org.anchoranalysis.gui.interactivebrowser.MarkEvaluatorSetForImage;
-import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 public class OperationNRGStackFromMarkEvaluatorSet
@@ -42,7 +42,7 @@ public class OperationNRGStackFromMarkEvaluatorSet
     // START REQUIRED ARGUMENTS
     private final MarkEvaluatorSetForImage markEvaluatorSet;
     // END REQUIRED ARGUMENTS
-    
+
     private String markEvaluatorIdentifier;
 
     @Override

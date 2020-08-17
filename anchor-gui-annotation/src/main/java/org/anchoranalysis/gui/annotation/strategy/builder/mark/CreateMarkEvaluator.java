@@ -68,17 +68,18 @@ class CreateMarkEvaluator {
             NamedStacksSupplier stacks)
             throws CreateException {
         return markEvaluatorManager.createSetForStackCollection(
-                stacks, () -> paramsFromGenerator(pathForBinding, strategy.paramsFilePathGenerator()));
+                stacks,
+                () -> paramsFromGenerator(pathForBinding, strategy.paramsFilePathGenerator()));
     }
 
     private static Optional<KeyValueParams> paramsFromGenerator(
             Path pathForBinding, Optional<FilePathGenerator> filePathGenerator) throws IOException {
         return OptionalUtilities.map(
-                filePathGenerator,
-                generator -> readParams(generator, pathForBinding) );
+                filePathGenerator, generator -> readParams(generator, pathForBinding));
     }
-    
-    private static KeyValueParams readParams( FilePathGenerator filePathGenerator, Path pathForBinding ) throws IOException {
+
+    private static KeyValueParams readParams(
+            FilePathGenerator filePathGenerator, Path pathForBinding) throws IOException {
         try {
             return KeyValueParams.readFromFile(
                     PathFromGenerator.derivePath(filePathGenerator, pathForBinding));

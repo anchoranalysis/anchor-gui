@@ -28,6 +28,8 @@ package org.anchoranalysis.gui.annotation.strategy.builder.mark.panel;
 
 import javax.swing.AbstractAction;
 import javax.swing.ActionMap;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import org.anchoranalysis.core.geometry.Point3d;
 import org.anchoranalysis.gui.annotation.WrapAction;
 import org.anchoranalysis.gui.frame.details.canvas.ControllerKeyboard;
@@ -35,10 +37,8 @@ import org.anchoranalysis.gui.frame.details.canvas.ControllerMouse;
 import org.anchoranalysis.gui.image.frame.ISliderState;
 import org.anchoranalysis.gui.videostats.internalframe.annotator.navigation.PanelMark;
 import org.anchoranalysis.gui.videostats.internalframe.annotator.navigation.PanelTool;
-import lombok.AccessLevel;
-import lombok.NoArgsConstructor;
 
-@NoArgsConstructor(access=AccessLevel.PRIVATE)
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class AddConfirmRotate {
 
     public static void apply(
@@ -79,7 +79,8 @@ public class AddConfirmRotate {
                         // Left-Mouse
                         event -> {
                             Point3d point =
-                                    new Point3d(event.getX(), event.getY(), sliderState.getSliceNum());
+                                    new Point3d(
+                                            event.getX(), event.getY(), sliderState.getSliceNum());
                             panelTool.getTool().leftMouseClickedAtPoint(point);
                         }),
                 false);

@@ -37,8 +37,7 @@ public class ChangeableBackgroundDefinitionMapped
     private final StringMap labelMap;
 
     public ChangeableBackgroundDefinitionMapped(
-            BackgroundSetProgressingSupplier backgroundSet,
-            StringMap labelMap) {
+            BackgroundSetProgressingSupplier backgroundSet, StringMap labelMap) {
         super(backgroundSet);
         this.labelMap = labelMap;
     }

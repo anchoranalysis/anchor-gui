@@ -49,8 +49,7 @@ public abstract class ExportTaskRasterGeneratorFromBoundedIndexContainer<T>
     }
 
     public void setBridge(
-            CheckedFunction<
-                            ExportTaskParams, BoundedIndexContainer<T>, OperationFailedException>
+            CheckedFunction<ExportTaskParams, BoundedIndexContainer<T>, OperationFailedException>
                     containerBridge) {
         delegate.setContainerBridge(containerBridge);
     }

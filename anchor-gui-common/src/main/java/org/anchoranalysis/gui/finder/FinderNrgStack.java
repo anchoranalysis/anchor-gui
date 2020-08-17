@@ -55,8 +55,9 @@ public class FinderNrgStack implements Finder {
     public FinderNrgStack(RasterReader rasterReader, ErrorReporter errorReporter) {
         finderRasterFolder = new FinderRasterFolder("nrgStack", "nrgStack", rasterReader);
 
-        this.operationStacks = 
-                NamedStacksSupplier.cache( progressReporter -> finderRasterFolder.createStackCollection(true) );
+        this.operationStacks =
+                NamedStacksSupplier.cache(
+                        progressReporter -> finderRasterFolder.createStackCollection(true));
 
         this.finderImageParams = new FinderKeyValueParams("nrgStackParams", errorReporter);
         this.finderImageParamsLegacy =
@@ -83,7 +84,7 @@ public class FinderNrgStack implements Finder {
     public NRGStackSupplier nrgStackSupplier() {
         return nrgStackSupplier;
     }
-    
+
     private NRGStackWithParams findStack() throws GetOperationFailedException {
 
         try {

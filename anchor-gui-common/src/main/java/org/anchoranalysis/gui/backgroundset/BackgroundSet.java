@@ -43,10 +43,7 @@ import org.anchoranalysis.image.stack.Stack;
 @NoArgsConstructor
 public class BackgroundSet {
 
-    private HashMap<
-                    String,
-                    BackgroundSetSupplier<BackgroundStackContainer>>
-            map = new HashMap<>();
+    private HashMap<String, BackgroundSetSupplier<BackgroundStackContainer>> map = new HashMap<>();
 
     public void addAll(BackgroundSet src) {
         for (String srcItem : src.map.keySet()) {
@@ -55,7 +52,7 @@ public class BackgroundSet {
     }
 
     public void addItem(String name, BackgroundStackContainer rasterBackground) {
-        addItem(name, ()->rasterBackground);
+        addItem(name, () -> rasterBackground);
     }
 
     public void addItem(String name, final Stack stack) throws OperationFailedException {
@@ -63,9 +60,7 @@ public class BackgroundSet {
     }
 
     public void addItem(
-            String name,
-            BackgroundSetSupplier<BackgroundStackContainer>
-                    rasterBackground) {
+            String name, BackgroundSetSupplier<BackgroundStackContainer> rasterBackground) {
         map.put(name, rasterBackground);
     }
 
@@ -94,8 +89,8 @@ public class BackgroundSet {
 
     // Gives us a stack container for a particular name, or NULL if none exists
     // NOTE: There is only a mapping between 0 and a single image
-    public CheckedFunction<Integer, DisplayStack, BackgroundStackContainerException>
-            stackCntr(String name) throws GetOperationFailedException {
+    public CheckedFunction<Integer, DisplayStack, BackgroundStackContainerException> stackCntr(
+            String name) throws GetOperationFailedException {
         try {
 
             BackgroundSetSupplier<BackgroundStackContainer> op = map.get(name);

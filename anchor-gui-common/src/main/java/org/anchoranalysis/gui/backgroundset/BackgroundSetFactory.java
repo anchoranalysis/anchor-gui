@@ -110,7 +110,8 @@ public class BackgroundSetFactory {
         // We assume every LoadContainer contains the same rasters in the BackgroundSet
         ///  and use the first one to get the names
 
-        BackgroundSet first = lc.getContainer().get(lc.getContainer().getMinimumIndex()).getBackgroundSet();
+        BackgroundSet first =
+                lc.getContainer().get(lc.getContainer().getMinimumIndex()).getBackgroundSet();
 
         for (String name : first.names()) {
             backgroundSet.addItem(name, new SingleBackgroundStackCntr(rasterBridge(lc, name)));
@@ -130,8 +131,10 @@ public class BackgroundSetFactory {
                     return sourceObject.getBackgroundSet().singleStack(name);
                 });
     }
-    
-    private static BackgroundStackContainer addBackgroundSetItem(NamedProvider<TimeSequence> imageStackCollection, String id) throws BackgroundStackContainerException {
+
+    private static BackgroundStackContainer addBackgroundSetItem(
+            NamedProvider<TimeSequence> imageStackCollection, String id)
+            throws BackgroundStackContainerException {
 
         try {
             TimeSequence seq = imageStackCollection.getException(id);
@@ -168,14 +171,13 @@ public class BackgroundSetFactory {
         addEmpty(backgroundSet, imageStackCollection);
     }
 
-    public static void addEmpty(
-            BackgroundSet backgroundSet, NamedProvider<TimeSequence> stacks) {
+    public static void addEmpty(BackgroundSet backgroundSet, NamedProvider<TimeSequence> stacks) {
 
         backgroundSet.addItem(
                 "blank (all black)",
                 () -> {
                     try {
-                        Stack stack = createEmptyStack( guessDimensions(stacks) );
+                        Stack stack = createEmptyStack(guessDimensions(stacks));
                         return BackgroundStackContainerFactory.singleSavedStack(stack);
                     } catch (OperationFailedException e) {
                         throw new BackgroundStackContainerException("blank", e);
@@ -200,8 +202,7 @@ public class BackgroundSetFactory {
             Stack stack = new Stack();
             stack.addChannel(
                     ChannelFactory.instance()
-                            .create(
-                                    dimensions, VoxelDataTypeUnsignedByte.INSTANCE));
+                            .create(dimensions, VoxelDataTypeUnsignedByte.INSTANCE));
             return stack;
         } catch (IncorrectImageSizeException e) {
             throw new OperationFailedException(e);
@@ -228,8 +229,8 @@ public class BackgroundSetFactory {
             // The way we handle this means we cannot add the (only first three) brackets on the
             // name, as the image has not yet been evaluated
             for (String id : keys) {
-                BackgroundSetSupplier<BackgroundStackContainer>
-                        operation = CachedSupplier.cache(()-> addBackgroundSetItem(namedStacks, id))::get;
+                BackgroundSetSupplier<BackgroundStackContainer> operation =
+                        CachedSupplier.cache(() -> addBackgroundSetItem(namedStacks, id))::get;
                 backgroundSet.addItem(id, operation);
                 pri.update();
             }
@@ -261,7 +262,7 @@ public class BackgroundSetFactory {
         for (int index = 0; index < stack.getNumberChannels(); index++) {
             // We create a stack just with this channel
             String name = String.format("%s%d", prefix, index);
-            Stack stackSingle = new Stack( stack.getChannel(index) );
+            Stack stackSingle = new Stack(stack.getChannel(index));
             backgroundSet.addItem(name, stackSingle);
         }
     }

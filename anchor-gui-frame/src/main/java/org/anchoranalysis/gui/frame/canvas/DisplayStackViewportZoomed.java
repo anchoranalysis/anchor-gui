@@ -59,9 +59,7 @@ class DisplayStackViewportZoomed {
         BoundingBox boxScaled = box.scale(new ScaleFactor(zoomScale.getScaleInv()));
 
         // Scaling seemingly can produce a box that is slightly too-big
-        boxScaled =
-                boxScaled.clipTo(
-                        delegate.getDisplayStackEntireImage().dimensions().extent());
+        boxScaled = boxScaled.clipTo(delegate.getDisplayStackEntireImage().dimensions().extent());
         assert (delegate.getDisplayStackEntireImage().dimensions().contains(boxScaled));
         return delegate.updateView(boxScaled, zoomScale);
     }

@@ -28,6 +28,9 @@ package org.anchoranalysis.gui.videostats.dropdown;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.log.Logger;
 import org.anchoranalysis.gui.IconFactory;
@@ -39,11 +42,8 @@ import org.anchoranalysis.gui.videostats.modulecreator.VideoStatsModuleCreator;
 import org.anchoranalysis.gui.videostats.operation.VideoStatsOperationFromCreatorAndAdder;
 import org.anchoranalysis.gui.videostats.operation.VideoStatsOperationMenu;
 import org.anchoranalysis.gui.videostats.threading.InteractiveThreadPool;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
 
-@AllArgsConstructor(access=AccessLevel.PRIVATE)
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class BoundVideoStatsModuleDropDown {
 
     private VideoStatsModuleDropdown delegate;
@@ -84,8 +84,7 @@ public class BoundVideoStatsModuleDropDown {
             AddVideoStatsModuleSupplier adder,
             SingleContextualModuleCreator creator,
             String namePrefix,
-            VideoStatsModuleGlobalParams mpg)
-            {
+            VideoStatsModuleGlobalParams mpg) {
         addModule(
                 creator.createSingle(namePrefix, adder, mpg), mpg.getThreadPool(), mpg.getLogger());
     }
@@ -115,8 +114,7 @@ public class BoundVideoStatsModuleDropDown {
         addModule(itemName, creatorAndAdder, threadPool, logger);
     }
 
-    public IAddModuleToMenu createAddModuleToMenu(
-            AddVideoStatsModuleSupplier adder) {
+    public IAddModuleToMenu createAddModuleToMenu(AddVideoStatsModuleSupplier adder) {
         return new IAddModuleToMenu() {
 
             @Override

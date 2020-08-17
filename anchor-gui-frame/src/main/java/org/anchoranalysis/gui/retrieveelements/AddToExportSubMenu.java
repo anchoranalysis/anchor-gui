@@ -36,10 +36,7 @@ import org.anchoranalysis.io.output.bound.BoundOutputManagerRouteErrors;
 
 public interface AddToExportSubMenu {
 
-    void addExportItemStackGenerator(
-            String outputName,
-            String label,
-            Supplier<Stack> stack)
+    void addExportItemStackGenerator(String outputName, String label, Supplier<Stack> stack)
             throws OperationFailedException;
 
     <T> void addExportItem(

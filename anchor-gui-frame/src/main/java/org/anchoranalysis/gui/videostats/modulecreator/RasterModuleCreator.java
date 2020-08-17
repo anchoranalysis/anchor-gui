@@ -61,8 +61,7 @@ public class RasterModuleCreator extends VideoStatsModuleCreator {
                 }
 
                 @Override
-                public Optional<OverlayCollectionSupplier<ObjectCollection>>
-                        getObjects() {
+                public Optional<OverlayCollectionSupplier<ObjectCollection>> getObjects() {
                     return Optional.empty();
                 }
 

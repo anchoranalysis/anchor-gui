@@ -54,8 +54,7 @@ public class MarkEvaluatorSetForImage {
     private final BoundIOContext context;
     // END REQUIRED ARGUMENTS
 
-    private Map<String, StoreSupplier<MarkEvaluatorResolved>>
-            map = new HashMap<>();
+    private Map<String, StoreSupplier<MarkEvaluatorResolved>> map = new HashMap<>();
 
     private class Resolved {
 
@@ -66,7 +65,7 @@ public class MarkEvaluatorSetForImage {
             this.me = me;
             operationProposerSharedObjects =
                     /// TODO Do we need this duplication?
-                    CachedSupplier.cache( ()->deriveInitParams( me.getDefine().duplicateBean()) );
+                    CachedSupplier.cache(() -> deriveInitParams(me.getDefine().duplicateBean()));
 
             try {
                 // TODO owen, this is causing a bug in the annotorator, we need to get our feature
@@ -90,7 +89,7 @@ public class MarkEvaluatorSetForImage {
                 throw new OperationFailedException(e);
             }
         }
-        
+
         private MPPInitParams deriveInitParams(Define define) throws CreateException {
 
             // We initialise the markEvaluator
@@ -110,7 +109,7 @@ public class MarkEvaluatorSetForImage {
 
     public void add(String key, MarkEvaluator me) throws OperationFailedException {
         try {
-            map.put(key, StoreSupplier.cache( new Resolved(me)::get ));
+            map.put(key, StoreSupplier.cache(new Resolved(me)::get));
         } catch (CreateException e) {
             throw new OperationFailedException(e);
         }

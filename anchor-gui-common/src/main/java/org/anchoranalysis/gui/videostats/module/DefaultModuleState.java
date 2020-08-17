@@ -26,13 +26,14 @@
 
 package org.anchoranalysis.gui.videostats.module;
 
-import org.anchoranalysis.gui.mark.MarkDisplaySettings;
-import org.anchoranalysis.gui.videostats.link.DefaultLinkState;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.anchoranalysis.gui.mark.MarkDisplaySettings;
+import org.anchoranalysis.gui.videostats.link.DefaultLinkState;
 
-@AllArgsConstructor @NoArgsConstructor
+@AllArgsConstructor
+@NoArgsConstructor
 public class DefaultModuleState {
 
     @Getter private DefaultLinkState linkState = new DefaultLinkState();

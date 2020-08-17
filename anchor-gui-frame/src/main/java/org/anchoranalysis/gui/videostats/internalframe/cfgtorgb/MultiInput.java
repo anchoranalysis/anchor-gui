@@ -26,11 +26,11 @@
 
 package org.anchoranalysis.gui.videostats.internalframe.cfgtorgb;
 
-import org.anchoranalysis.gui.videostats.dropdown.common.NRGBackground;
-import org.anchoranalysis.gui.videostats.operation.combine.OverlayCollectionSupplier;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
+import org.anchoranalysis.gui.videostats.dropdown.common.NRGBackground;
+import org.anchoranalysis.gui.videostats.operation.combine.OverlayCollectionSupplier;
 
 @AllArgsConstructor
 public class MultiInput<T> {

@@ -27,14 +27,15 @@
 package org.anchoranalysis.gui.io.loader.manifest.finder;
 
 import javax.swing.JFrame;
+import lombok.AllArgsConstructor;
+import lombok.Value;
 import org.anchoranalysis.gui.videostats.dropdown.BoundVideoStatsModuleDropDown;
 import org.anchoranalysis.gui.videostats.dropdown.VideoStatsModuleGlobalParams;
 import org.anchoranalysis.gui.videostats.dropdown.common.NRGBackgroundAdder;
 import org.anchoranalysis.gui.videostats.operation.VideoStatsOperationMenu;
-import lombok.AllArgsConstructor;
-import lombok.Value;
 
-@Value @AllArgsConstructor
+@Value
+@AllArgsConstructor
 public class FinderContext {
 
     private NRGBackgroundAdder nrgBackground;

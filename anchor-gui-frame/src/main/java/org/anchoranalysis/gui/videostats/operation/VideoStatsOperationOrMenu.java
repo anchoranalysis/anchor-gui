@@ -29,7 +29,7 @@ package org.anchoranalysis.gui.videostats.operation;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
-@NoArgsConstructor(access=AccessLevel.PRIVATE)
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class VideoStatsOperationOrMenu {
 
     private boolean separator = false;

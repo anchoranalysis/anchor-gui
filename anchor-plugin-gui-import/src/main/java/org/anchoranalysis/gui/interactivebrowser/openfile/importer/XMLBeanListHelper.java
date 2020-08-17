@@ -30,6 +30,8 @@ import static org.anchoranalysis.gui.interactivebrowser.openfile.importer.Creato
 
 import java.io.File;
 import java.util.List;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import org.anchoranalysis.bean.AnchorBean;
 import org.anchoranalysis.bean.NamedBean;
 import org.anchoranalysis.core.error.CreateException;
@@ -41,10 +43,8 @@ import org.anchoranalysis.gui.bean.filecreator.NamedSingleStackCreator;
 import org.anchoranalysis.gui.interactivebrowser.openfile.type.NrgSchemeCreatorState;
 import org.anchoranalysis.image.io.input.ProvidesStackInput;
 import org.anchoranalysis.io.bean.input.InputManager;
-import lombok.AccessLevel;
-import lombok.NoArgsConstructor;
 
-@NoArgsConstructor(access=AccessLevel.PRIVATE)
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 class XMLBeanListHelper {
 
     public static <T extends ProvidesStackInput> FileCreator createSingleStack(

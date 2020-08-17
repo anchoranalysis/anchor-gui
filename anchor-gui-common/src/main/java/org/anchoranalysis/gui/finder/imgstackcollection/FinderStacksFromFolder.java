@@ -40,9 +40,8 @@ public class FinderStacksFromFolder implements FinderStacks {
 
     private FinderRasterFolder delegate;
 
-    private NamedStacksSupplier
-            operationStacks =
-                    NamedStacksSupplier.cache(pr -> delegate.createStackCollection(false));
+    private NamedStacksSupplier operationStacks =
+            NamedStacksSupplier.cache(pr -> delegate.createStackCollection(false));
 
     public FinderStacksFromFolder(RasterReader rasterReader, String folderName) {
         delegate = new FinderRasterFolder(folderName, "stackFromCollection", rasterReader);
@@ -54,8 +53,7 @@ public class FinderStacksFromFolder implements FinderStacks {
     }
 
     @Override
-    public NamedStacksSupplier
-            getStacksAsOperation() {
+    public NamedStacksSupplier getStacksAsOperation() {
         return operationStacks;
     }
 

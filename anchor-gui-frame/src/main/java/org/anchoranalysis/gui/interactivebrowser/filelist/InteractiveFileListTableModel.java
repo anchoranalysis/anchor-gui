@@ -44,8 +44,7 @@ public interface InteractiveFileListTableModel {
         return out;
     }
 
-    void refreshEntireTable(ProgressReporter progressReporter)
-            throws OperationFailedException;
+    void refreshEntireTable(ProgressReporter progressReporter) throws OperationFailedException;
 
     TableModel getTableModel();
 

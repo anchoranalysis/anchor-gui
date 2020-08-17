@@ -98,10 +98,11 @@ public class FileAnnotationNamedChnlCollection extends InteractiveFile {
             AddVideoStatsModule globalSubgroupAdder, BoundOutputManagerRouteErrors outputManager)
             throws OperationFailedException {
 
-        AnnotationRefresher refresherResetCache = () -> {
-            invalidateProgressState();
-            annotationRefresher.refreshAnnotation();
-        };
+        AnnotationRefresher refresherResetCache =
+                () -> {
+                    invalidateProgressState();
+                    annotationRefresher.refreshAnnotation();
+                };
 
         AnnotationDropDown dropDown =
                 new AnnotationDropDown(

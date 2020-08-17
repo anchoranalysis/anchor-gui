@@ -39,13 +39,11 @@ class IndexToRedrawUpdate
                 Integer, OverlayedDisplayStack, BackgroundStackContainerException> {
 
     private BoundedIndexBridge<ColoredOverlayedInstantState> delegate;
-    private CheckedFunction<Integer, DisplayStack, BackgroundStackContainerException>
-            background;
+    private CheckedFunction<Integer, DisplayStack, BackgroundStackContainerException> background;
 
     public IndexToRedrawUpdate(
             BoundedIndexContainer<ColoredOverlayedInstantState> cntr,
-            CheckedFunction<Integer, DisplayStack, BackgroundStackContainerException>
-                    background) {
+            CheckedFunction<Integer, DisplayStack, BackgroundStackContainerException> background) {
         delegate = new BoundedIndexBridge<>(cntr);
         this.background = background;
     }

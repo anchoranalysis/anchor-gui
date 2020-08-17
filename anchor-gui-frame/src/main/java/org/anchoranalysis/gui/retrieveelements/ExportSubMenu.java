@@ -57,10 +57,7 @@ public class ExportSubMenu implements AddToExportSubMenu {
     private JMenu menu = new JMenu("Export");
 
     @Override
-    public void addExportItemStackGenerator(
-            String outputName,
-            String label,
-            Supplier<Stack> stack)
+    public void addExportItemStackGenerator(String outputName, String label, Supplier<Stack> stack)
             throws OperationFailedException {
 
         StackGenerator stackGenerator = new StackGenerator(true, outputName);

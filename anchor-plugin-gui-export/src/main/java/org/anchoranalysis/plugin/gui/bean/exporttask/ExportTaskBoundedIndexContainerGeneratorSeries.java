@@ -57,8 +57,7 @@ public class ExportTaskBoundedIndexContainerGeneratorSeries<T>
     // END BEAN PARAMETERS
 
     @Setter
-    private CheckedFunction<
-                    ExportTaskParams, BoundedIndexContainer<T>, OperationFailedException>
+    private CheckedFunction<ExportTaskParams, BoundedIndexContainer<T>, OperationFailedException>
             containerBridge;
 
     public boolean execute(
@@ -95,8 +94,7 @@ public class ExportTaskBoundedIndexContainerGeneratorSeries<T>
         return String.format("incrementSize=%d", this.incrementSize);
     }
 
-    public CheckedFunction<
-                    ExportTaskParams, BoundedIndexContainer<T>, OperationFailedException>
+    public CheckedFunction<ExportTaskParams, BoundedIndexContainer<T>, OperationFailedException>
             getContainerBridge() {
         return containerBridge;
     }

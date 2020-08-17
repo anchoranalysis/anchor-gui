@@ -370,16 +370,16 @@ public class ImageCanvas {
         if (biUpdate != null) {
             imageCanvas.updated(biUpdate);
         }
-        
+
         updateSizeOnPanel();
     }
-    
+
     private void updateSizeOnPanel() {
         ImageDimensions dimensions = displayStackViewport.createDimensionsEntireScaled();
         panel.setPreferredSize(
                 new Dimension(
                         dimensions.x() + extentScrollbars.getPreferredWidth(),
-                        dimensions.y() + extentScrollbars.getPreferredHeight()));        
+                        dimensions.y() + extentScrollbars.getPreferredHeight()));
     }
 
     // Applies any pending changes, and then updates the image
@@ -449,11 +449,9 @@ public class ImageCanvas {
 
                     // Impose the bi on top of the existing fi
                     int xCanvas =
-                            displayStackViewport.cnvrtImageXToCanvas(
-                                    boxIntersect.cornerMin().x());
+                            displayStackViewport.cnvrtImageXToCanvas(boxIntersect.cornerMin().x());
                     int yCanvas =
-                            displayStackViewport.cnvrtImageYToCanvas(
-                                    boxIntersect.cornerMin().y());
+                            displayStackViewport.cnvrtImageYToCanvas(boxIntersect.cornerMin().y());
 
                     assert (xCanvas >= 0);
                     assert (yCanvas >= 0);
@@ -518,11 +516,11 @@ public class ImageCanvas {
 
     /** If the image point x,y is contained within the canvas? */
     public boolean canvasContainsAbsolute(Point2i point) {
-        return displayStackViewport.canvasContainsAbs( PointConverter.convertTo3i(point,slice) );
+        return displayStackViewport.canvasContainsAbs(PointConverter.convertTo3i(point, slice));
     }
 
     public String intensityStrAtAbsolute(Point2i point) {
-        return displayStackViewport.intensityStrAtAbs( PointConverter.convertTo3i(point,slice) );
+        return displayStackViewport.intensityStrAtAbs(PointConverter.convertTo3i(point, slice));
     }
 
     // Null means it cannot be determined

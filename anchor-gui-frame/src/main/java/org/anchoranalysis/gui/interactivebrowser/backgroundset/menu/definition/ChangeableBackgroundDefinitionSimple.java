@@ -33,8 +33,7 @@ import org.anchoranalysis.gui.videostats.dropdown.BackgroundSetProgressingSuppli
 public class ChangeableBackgroundDefinitionSimple
         extends ChangeableBackgroundDefinitionWithDefault {
 
-    public ChangeableBackgroundDefinitionSimple(
-            BackgroundSetProgressingSupplier backgroundSet) {
+    public ChangeableBackgroundDefinitionSimple(BackgroundSetProgressingSupplier backgroundSet) {
         super(backgroundSet);
     }
 

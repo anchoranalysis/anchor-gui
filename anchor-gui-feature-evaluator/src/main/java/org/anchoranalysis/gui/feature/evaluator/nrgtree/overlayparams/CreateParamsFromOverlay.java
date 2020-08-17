@@ -78,8 +78,10 @@ public class CreateParamsFromOverlay {
 
         } else if (pair.getSource() instanceof OverlayObjectMask) {
 
-            ObjectMask source = ((OverlayObjectMask) pair.getSource()).getObject().withoutProperties();
-            ObjectMask dest = ((OverlayObjectMask) pair.getDestination()).getObject().withoutProperties();
+            ObjectMask source =
+                    ((OverlayObjectMask) pair.getSource()).getObject().withoutProperties();
+            ObjectMask dest =
+                    ((OverlayObjectMask) pair.getDestination()).getObject().withoutProperties();
 
             return new CreatePairFromObj(source, dest, raster);
         } else {

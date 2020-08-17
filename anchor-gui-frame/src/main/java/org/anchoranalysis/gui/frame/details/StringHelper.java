@@ -71,8 +71,7 @@ class StringHelper {
     public String resolution() {
         ImageResolution sr = internalFrameCanvas.getRes();
         if (sr.x() == sr.y()) {
-            return String.format(
-                    "resXY=%s resZ=%s", formatUnits(sr.x()), formatUnits(sr.z()));
+            return String.format("resXY=%s resZ=%s", formatUnits(sr.x()), formatUnits(sr.z()));
         } else {
             return String.format(
                     "resX=%s resY=%s resZ=%s)",

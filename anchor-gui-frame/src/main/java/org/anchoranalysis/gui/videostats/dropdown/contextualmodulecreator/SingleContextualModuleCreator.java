@@ -42,9 +42,7 @@ public class SingleContextualModuleCreator extends ContextualModuleCreator {
 
     @Override
     public NamedModule[] create(
-            String namePrefix,
-            AddVideoStatsModuleSupplier adder,
-            VideoStatsModuleGlobalParams mpg)
+            String namePrefix, AddVideoStatsModuleSupplier adder, VideoStatsModuleGlobalParams mpg)
             throws CreateException {
 
         NamedModule namedModuleSingle = createSingle(namePrefix, adder, mpg);

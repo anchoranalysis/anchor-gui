@@ -31,12 +31,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
+import lombok.AllArgsConstructor;
 import org.anchoranalysis.bean.shared.StringMap;
 import org.anchoranalysis.core.error.reporter.ErrorReporter;
 import org.anchoranalysis.core.progress.ProgressReporterNull;
 import org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.IGetNames;
 import org.anchoranalysis.gui.videostats.dropdown.BackgroundSetProgressingSupplier;
-import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
 class NamesFromMap implements IGetNames {
@@ -44,7 +44,7 @@ class NamesFromMap implements IGetNames {
     private StringMap map;
     private BackgroundSetProgressingSupplier backgroundSet;
     private ErrorReporter errorReporter;
-    
+
     @Override
     public List<String> names() {
         try {

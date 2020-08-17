@@ -8,7 +8,7 @@ import org.anchoranalysis.core.params.KeyValueParams;
 public interface KeyValueParamsSupplier {
 
     Optional<KeyValueParams> get() throws IOException;
-    
+
     public static KeyValueParamsSupplier cache(KeyValueParamsSupplier supplier) {
         return CachedSupplier.cache(supplier::get)::get;
     }

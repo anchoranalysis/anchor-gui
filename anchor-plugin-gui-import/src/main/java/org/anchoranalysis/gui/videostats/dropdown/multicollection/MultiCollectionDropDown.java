@@ -40,8 +40,8 @@ import org.anchoranalysis.gui.file.opened.IOpenedFileGUI;
 import org.anchoranalysis.gui.interactivebrowser.MarkEvaluatorManager;
 import org.anchoranalysis.gui.interactivebrowser.MarkEvaluatorSetForImage;
 import org.anchoranalysis.gui.series.TimeSequenceProviderSupplier;
-import org.anchoranalysis.gui.videostats.dropdown.BoundVideoStatsModuleDropDown;
 import org.anchoranalysis.gui.videostats.dropdown.AddVideoStatsModule;
+import org.anchoranalysis.gui.videostats.dropdown.BoundVideoStatsModuleDropDown;
 import org.anchoranalysis.gui.videostats.dropdown.OperationCreateBackgroundSetWithAdder;
 import org.anchoranalysis.gui.videostats.dropdown.VideoStatsModuleGlobalParams;
 import org.anchoranalysis.gui.videostats.dropdown.common.DropDownUtilities;
@@ -87,7 +87,8 @@ public class MultiCollectionDropDown {
         OperationCreateBackgroundSetWithAdder operationBwsa =
                 new OperationCreateBackgroundSetWithAdder(
                         NRGBackground.createStackSequence(
-                                rasterProvider, () -> GuessNRGStackFromStacks.guess(rasterProvider)),
+                                rasterProvider,
+                                () -> GuessNRGStackFromStacks.guess(rasterProvider)),
                         adder,
                         params.getModuleParams().getThreadPool(),
                         params.getModuleParams().getLogger().errorReporter());
@@ -130,7 +131,7 @@ public class MultiCollectionDropDown {
                     outputManager);
         }
     }
-    
+
     private void addProposerEvaluator(
             MarkEvaluatorManager markEvaluatorManager,
             OperationCreateBackgroundSetWithAdder operationBwsa,
@@ -144,8 +145,8 @@ public class MultiCollectionDropDown {
 
         try {
             MarkEvaluatorSetForImage markEvaluatorSet =
-                    markEvaluatorManager.createSetForStackCollection(this::extractFromRasterProvider,
-                            () -> extractParams(mpg));
+                    markEvaluatorManager.createSetForStackCollection(
+                            this::extractFromRasterProvider, () -> extractParams(mpg));
 
             // If we have a markEvaluator, then we add some extra menus
             if (markEvaluatorSet.hasItems()) {
@@ -174,20 +175,17 @@ public class MultiCollectionDropDown {
     public String getName() {
         return delegate.getName();
     }
-    
-    private WrapTimeSequenceAsStack extractFromRasterProvider(ProgressReporter progressReporter) throws OperationFailedException {
+
+    private WrapTimeSequenceAsStack extractFromRasterProvider(ProgressReporter progressReporter)
+            throws OperationFailedException {
         try {
-            return new WrapTimeSequenceAsStack(
-                    rasterProvider.get(progressReporter).getSequence());
+            return new WrapTimeSequenceAsStack(rasterProvider.get(progressReporter).getSequence());
         } catch (CreateException e) {
             throw new OperationFailedException(e);
         }
     }
-    
+
     private Optional<KeyValueParams> extractParams(VideoStatsModuleGlobalParams mpg) {
-        return Optional.of(
-                ParamsUtils.apply(
-                        paramsCollection,
-                        mpg.getLogger().errorReporter()));
+        return Optional.of(ParamsUtils.apply(paramsCollection, mpg.getLogger().errorReporter()));
     }
 }

@@ -36,10 +36,10 @@ import org.anchoranalysis.core.name.provider.NamedProviderGetException;
 import org.anchoranalysis.core.progress.ProgressReporterNull;
 import org.anchoranalysis.gui.interactivebrowser.MarkEvaluatorSetForImage;
 import org.anchoranalysis.gui.mark.MarkDisplaySettings;
-import org.anchoranalysis.gui.videostats.dropdown.BoundVideoStatsModuleDropDown;
 import org.anchoranalysis.gui.videostats.dropdown.AddVideoStatsModule;
 import org.anchoranalysis.gui.videostats.dropdown.AddVideoStatsModuleSupplier;
 import org.anchoranalysis.gui.videostats.dropdown.BackgroundSetProgressingSupplier;
+import org.anchoranalysis.gui.videostats.dropdown.BoundVideoStatsModuleDropDown;
 import org.anchoranalysis.gui.videostats.dropdown.OperationNRGStackFromMarkEvaluatorSet;
 import org.anchoranalysis.gui.videostats.dropdown.VideoStatsModuleCreatorAndAdder;
 import org.anchoranalysis.gui.videostats.dropdown.VideoStatsModuleGlobalParams;
@@ -71,7 +71,8 @@ public class DropDownUtilities {
                 new OperationNRGStackFromMarkEvaluatorSet(markEvaluatorSet);
 
         NRGBackground nrgBackground =
-                NRGBackground.createFromBackground(backgroundSet, () -> operationGetNRGStack.get(ProgressReporterNull.get()));
+                NRGBackground.createFromBackground(
+                        backgroundSet, () -> operationGetNRGStack.get(ProgressReporterNull.get()));
 
         AddVideoStatsModuleSupplier adderOp =
                 AddVideoStatsModuleSupplier.cache(

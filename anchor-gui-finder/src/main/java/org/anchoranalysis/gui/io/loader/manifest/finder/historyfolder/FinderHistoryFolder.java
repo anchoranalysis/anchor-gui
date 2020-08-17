@@ -92,7 +92,7 @@ public abstract class FinderHistoryFolder<T> extends FinderSingleFolder
 
     protected abstract LoadContainer<T> createFromSerialized(FolderWrite folder)
             throws DeserializationFailedException;
-    
+
     public LoadContainer<T> get() throws OperationFailedException {
 
         try {

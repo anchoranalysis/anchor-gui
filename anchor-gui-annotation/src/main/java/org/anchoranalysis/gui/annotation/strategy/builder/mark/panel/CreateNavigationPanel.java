@@ -28,6 +28,8 @@ package org.anchoranalysis.gui.annotation.strategy.builder.mark.panel;
 
 import java.nio.file.Path;
 import java.util.Optional;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import org.anchoranalysis.gui.annotation.AnnotationRefresher;
 import org.anchoranalysis.gui.annotation.InitAnnotation;
 import org.anchoranalysis.gui.annotation.strategy.builder.mark.InitParamsProposeMarks;
@@ -40,10 +42,8 @@ import org.anchoranalysis.gui.videostats.internalframe.annotator.currentstate.Cu
 import org.anchoranalysis.gui.videostats.internalframe.annotator.currentstate.IQueryAcceptedRejected;
 import org.anchoranalysis.gui.videostats.internalframe.annotator.currentstate.ShowCurrentState;
 import org.anchoranalysis.gui.videostats.internalframe.annotator.navigation.PanelNavigation;
-import lombok.AccessLevel;
-import lombok.NoArgsConstructor;
 
-@NoArgsConstructor(access=AccessLevel.PRIVATE)
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class CreateNavigationPanel {
 
     public static PanelNavigation apply(

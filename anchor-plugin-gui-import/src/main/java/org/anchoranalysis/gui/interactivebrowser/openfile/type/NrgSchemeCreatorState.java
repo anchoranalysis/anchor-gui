@@ -26,19 +26,18 @@
 
 package org.anchoranalysis.gui.interactivebrowser.openfile.type;
 
-import org.anchoranalysis.anchor.mpp.feature.bean.nrgscheme.NRGSchemeCreator;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.anchoranalysis.anchor.mpp.feature.bean.nrgscheme.NRGSchemeCreator;
 
 /**
- * <p>Note item can be null
- * 
- * @author Owen Feehan
+ * Note item can be null
  *
+ * @author Owen Feehan
  */
-@NoArgsConstructor(access=AccessLevel.PRIVATE)
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class NrgSchemeCreatorState {
 
     private static NrgSchemeCreatorState instance;

@@ -86,15 +86,12 @@ class DisplayStackViewport {
         point =
                 DisplayStackViewportUtilities.clipToImage(
                         point, boxViewport.extent(), dimensionsEntire());
-        point =
-                DisplayStackViewportUtilities.clipToImage(
-                        point, canvasExtent, dimensionsEntire());
+        point = DisplayStackViewportUtilities.clipToImage(point, canvasExtent, dimensionsEntire());
         assert (point.x() >= 0);
         assert (point.y() >= 0);
         // We need to clip
 
-        Point3i point3 =
-                new Point3i(point.x(), point.y(), this.boxViewport.cornerMin().z());
+        Point3i point3 = new Point3i(point.x(), point.y(), this.boxViewport.cornerMin().z());
 
         assert (point3.x() >= 0);
         assert (point3.y() >= 0);

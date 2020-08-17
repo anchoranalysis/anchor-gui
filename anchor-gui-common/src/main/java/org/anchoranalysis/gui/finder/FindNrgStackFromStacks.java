@@ -38,14 +38,15 @@ import org.anchoranalysis.image.extent.IncorrectImageSizeException;
 import org.anchoranalysis.image.stack.NamedStacksSupplier;
 import org.anchoranalysis.image.stack.Stack;
 
-@NoArgsConstructor(access=AccessLevel.PRIVATE)
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 class FindNrgStackFromStacks {
 
     /**
      * We first retrieve a namedimgcollection which we use to construct our real NrgStack for
      * purposes of good caching
      */
-    public static NRGStackWithParams find( NamedStacksSupplier stacks ) throws OperationFailedException {
+    public static NRGStackWithParams find(NamedStacksSupplier stacks)
+            throws OperationFailedException {
         // NB Note assumption about named-stack ordering
         NamedProvider<Stack> nic = stacks.get(ProgressReporterNull.get());
 
@@ -59,10 +60,11 @@ class FindNrgStackFromStacks {
         }
     }
 
-    private static Stack allChannelsInStack(NamedProvider<Stack> namedStacks) throws OperationFailedException {
+    private static Stack allChannelsInStack(NamedProvider<Stack> namedStacks)
+            throws OperationFailedException {
 
         int size = namedStacks.keys().size();
-        
+
         Stack out = new Stack();
         for (int channelIndex = 0; channelIndex < size; channelIndex++) {
 

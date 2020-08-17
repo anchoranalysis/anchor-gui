@@ -8,9 +8,8 @@ import org.anchoranalysis.feature.nrg.NRGStackWithParams;
 public interface NRGStackSupplier {
 
     NRGStackWithParams get() throws GetOperationFailedException;
-    
-    public static NRGStackSupplier cache( NRGStackSupplier supplier ) {
-        return CachedSupplier.cache( supplier::get )::get;
+
+    public static NRGStackSupplier cache(NRGStackSupplier supplier) {
+        return CachedSupplier.cache(supplier::get)::get;
     }
 }
-

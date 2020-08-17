@@ -34,8 +34,7 @@ import org.anchoranalysis.gui.videostats.dropdown.BackgroundSetProgressingSuppli
 public abstract class ChangeableBackgroundDefinitionWithDefault
         implements ChangeableBackgroundDefinition {
 
-    @Getter
-    private BackgroundSetProgressingSupplier backgroundSet;
+    @Getter private BackgroundSetProgressingSupplier backgroundSet;
 
     @Override
     public void update(BackgroundSetProgressingSupplier backgroundSet) {

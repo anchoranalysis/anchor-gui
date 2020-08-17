@@ -4,9 +4,8 @@ import org.anchoranalysis.gui.container.background.BackgroundStackContainerExcep
 
 /**
  * Supplier of an object for a store
- * 
- * @author Owen Feehan
  *
+ * @author Owen Feehan
  * @param <T> type supplied to the store
  */
 @FunctionalInterface

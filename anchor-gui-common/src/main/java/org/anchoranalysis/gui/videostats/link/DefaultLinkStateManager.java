@@ -80,8 +80,7 @@ public class DefaultLinkStateManager {
     }
 
     public void setBackground(
-            CheckedFunction<Integer, DisplayStack, BackgroundStackContainerException>
-                    background) {
+            CheckedFunction<Integer, DisplayStack, BackgroundStackContainerException> background) {
         getState().setBackground(background);
     }
 
@@ -98,8 +97,7 @@ public class DefaultLinkStateManager {
 
     /** Provides a copy of the default module state with a changed background */
     public DefaultLinkState copyChangeBackground(
-            CheckedFunction<Integer, DisplayStack, BackgroundStackContainerException>
-                    background) {
+            CheckedFunction<Integer, DisplayStack, BackgroundStackContainerException> background) {
         DefaultLinkState dup = delegate.duplicate();
         dup.setBackground(background);
         return dup;

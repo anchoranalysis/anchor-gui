@@ -93,8 +93,7 @@ public class SimpleVideoStatsFileListTableModel implements InteractiveFileListTa
             };
 
     public SimpleVideoStatsFileListTableModel(
-            InteractiveFileSupplier opFileInputList,
-            ProgressReporter progressReporter)
+            InteractiveFileSupplier opFileInputList, ProgressReporter progressReporter)
             throws OperationFailedException {
         this.opFileInputList = opFileInputList;
         refreshEntireTable(progressReporter);

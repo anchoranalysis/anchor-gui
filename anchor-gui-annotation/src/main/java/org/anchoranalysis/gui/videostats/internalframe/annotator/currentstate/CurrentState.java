@@ -202,9 +202,7 @@ class CurrentState implements IQuerySelectedPoints {
             Mark m = currentSelectedPointsCfg.get(i);
 
             Point3d cp = m.centerPoint();
-            if (cp.x() == point.x()
-                    && cp.y() == point.y()
-                    && cp.z() == point.z()) {
+            if (cp.x() == point.x() && cp.y() == point.y() && cp.z() == point.z()) {
                 return i;
             }
         }

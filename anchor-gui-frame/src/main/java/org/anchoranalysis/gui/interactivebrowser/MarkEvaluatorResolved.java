@@ -40,7 +40,8 @@ import org.anchoranalysis.feature.nrg.NRGStackWithParams;
 //  it into a ProposerSharedObjectsImageSpecific and other necessary components
 public class MarkEvaluatorResolved {
 
-    private final CachedSupplier<MPPInitParams, CreateException> operationCreateProposerSharedObjects;
+    private final CachedSupplier<MPPInitParams, CreateException>
+            operationCreateProposerSharedObjects;
     private final CachedSupplier<NRGStackWithParams, CreateException> operationCreateNrgStack;
 
     @Getter private final CfgGen cfgGen;
@@ -58,7 +59,10 @@ public class MarkEvaluatorResolved {
         this.nrgScheme = nrgScheme;
 
         this.operationCreateNrgStack =
-                CachedSupplier.cache( ()->CreateNrgStackHelper.create(operationCreateProposerSharedObjects, params));
+                CachedSupplier.cache(
+                        () ->
+                                CreateNrgStackHelper.create(
+                                        operationCreateProposerSharedObjects, params));
     }
 
     public CachedSupplier<MPPInitParams, CreateException> getProposerSharedObjectsOperation() {

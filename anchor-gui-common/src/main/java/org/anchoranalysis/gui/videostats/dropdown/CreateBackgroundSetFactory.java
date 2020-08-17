@@ -41,7 +41,8 @@ import org.anchoranalysis.image.stack.wrap.WrapStackAsTimeSequence;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class CreateBackgroundSetFactory {
 
-    public static BackgroundSetProgressingSupplier createCached(NamedProvider<Stack> namedProvider) {
+    public static BackgroundSetProgressingSupplier createCached(
+            NamedProvider<Stack> namedProvider) {
         return createCached(
                 progressReporter ->
                         new TimeSequenceProvider(new WrapStackAsTimeSequence(namedProvider), 1));
@@ -49,7 +50,8 @@ public class CreateBackgroundSetFactory {
 
     public static BackgroundSetProgressingSupplier createCached(
             TimeSequenceProviderSupplier stacksOverTime) {
-        return BackgroundSetProgressingSupplier.cache( progressReporter -> {
+        return BackgroundSetProgressingSupplier.cache(
+                progressReporter -> {
                     try {
                         NamedProvider<TimeSequence> stacks =
                                 stacksOverTime.get(progressReporter).getSequence();

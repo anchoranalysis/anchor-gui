@@ -116,16 +116,14 @@ class InternalFrameOverlayedInstantStateToRGB {
     @AllArgsConstructor
     private static class BackgroundSendable
             implements IPropertyValueSendable<
-                    CheckedFunction<
-                            Integer, DisplayStack, BackgroundStackContainerException>> {
+                    CheckedFunction<Integer, DisplayStack, BackgroundStackContainerException>> {
 
         private IndexToRedrawUpdate indexToRedrawUpdate;
         private IRedrawable redrawable;
 
         @Override
         public void setPropertyValue(
-                CheckedFunction<Integer, DisplayStack, BackgroundStackContainerException>
-                        value,
+                CheckedFunction<Integer, DisplayStack, BackgroundStackContainerException> value,
                 boolean adjusting) {
             indexToRedrawUpdate.setImageStackCntr(value);
             redrawable.applyRedrawUpdate(OverlayedDisplayStackUpdate.redrawAll());

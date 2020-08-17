@@ -51,7 +51,9 @@ public class GraphDefinitionLineIterVsNRG
     @BeanField @Getter @Setter private int minMaxIgnoreBeforeIndex = 0;
     // END BEAN PROPERTIES
 
-    @Data @NoArgsConstructor @AllArgsConstructor
+    @Data
+    @NoArgsConstructor
+    @AllArgsConstructor
     public static class Item implements IndexGetter {
         private int iter;
         private double nrg;

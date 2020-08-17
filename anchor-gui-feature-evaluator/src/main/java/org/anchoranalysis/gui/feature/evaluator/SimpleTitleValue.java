@@ -26,9 +26,9 @@
 
 package org.anchoranalysis.gui.feature.evaluator;
 
+import lombok.AllArgsConstructor;
 import org.anchoranalysis.anchor.mpp.feature.instantstate.CfgNRGInstantState;
 import org.anchoranalysis.gui.cfgnrgtable.TitleValueTableModel.TitleValueRow;
-import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
 class SimpleTitleValue implements TitleValueRow {

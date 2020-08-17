@@ -73,8 +73,9 @@ public abstract class FileCreatorGeneralList extends FileCreator {
             FileCreatorParams params,
             ProgressReporter progressReporter)
             throws OperationFailedException;
-    
-    private List<InteractiveFile> files(ProgressReporter progressReporter, FileCreatorParams params) throws OperationFailedException {
+
+    private List<InteractiveFile> files(ProgressReporter progressReporter, FileCreatorParams params)
+            throws OperationFailedException {
         List<InteractiveFile> out = new ArrayList<>();
         addFilesToList(out, params, progressReporter);
 

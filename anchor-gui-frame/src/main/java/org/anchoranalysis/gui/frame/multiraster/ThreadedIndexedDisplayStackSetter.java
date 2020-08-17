@@ -87,8 +87,8 @@ public class ThreadedIndexedDisplayStackSetter implements IBackgroundSetter, ITh
         delegate.dispose();
     }
 
-    private CheckedFunction<Integer, DisplayUpdate, BackgroundStackContainerException>
-            ensure8bit(CheckedFunction<Integer, DisplayStack, ? extends Throwable> cntr) {
+    private CheckedFunction<Integer, DisplayUpdate, BackgroundStackContainerException> ensure8bit(
+            CheckedFunction<Integer, DisplayStack, ? extends Throwable> cntr) {
         return new NoOverlayBridgeFromGenerator(
                 new IterableObjectGeneratorBridge<>(
                         stackGenerator, new EnsureUnsigned8Bit<>(cntr)));

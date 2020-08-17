@@ -26,9 +26,9 @@
 
 package org.anchoranalysis.gui.videostats.internalframe.annotator;
 
+import lombok.AllArgsConstructor;
 import org.anchoranalysis.gui.annotation.AnnotationBackground;
 import org.anchoranalysis.image.extent.ImageDimensions;
-import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
 public abstract class InitParamsWithBackground implements AnnotationInitParams {

@@ -26,6 +26,8 @@
 
 package org.anchoranalysis.gui.frame.overlays;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.anchoranalysis.anchor.mpp.bean.regionmap.RegionMembershipWithFlags;
 import org.anchoranalysis.anchor.mpp.cfg.Cfg;
 import org.anchoranalysis.anchor.mpp.cfg.ColoredCfg;
@@ -35,32 +37,30 @@ import org.anchoranalysis.anchor.mpp.overlay.OverlayCollectionMarkFactory;
 import org.anchoranalysis.anchor.mpp.proposer.error.ProposerFailureDescription;
 import org.anchoranalysis.anchor.overlay.collection.ColoredOverlayCollection;
 import org.anchoranalysis.image.extent.ImageDimensions;
-import lombok.Getter;
-import lombok.Setter;
 
 public class ProposedCfg {
 
     /** The total cfg to be drawn */
     private ColoredOverlayCollection overlays = new ColoredOverlayCollection();
-    
+
     /**
      * The marks that need to be redrawn, as they have changed
-     * <p>
-     * Optional. The marks that have changed from the previous time (to avoid redrawing everything),
-     * otherwise NULL.
+     *
+     * <p>Optional. The marks that have changed from the previous time (to avoid redrawing
+     * everything), otherwise NULL.
      */
     @Getter @Setter private Cfg cfgToRedraw = new Cfg();
-    
+
     /** The core part of the cfg */
-    @Getter @Setter private Cfg cfgCore = new Cfg(); 
-    
+    @Getter @Setter private Cfg cfgCore = new Cfg();
+
     private ImageDimensions dimensions;
 
     private ProposerFailureDescription pfd;
     private boolean success = false;
 
     private boolean hasSuggestedSliceNum = false;
-    
+
     @Getter private int suggestedSliceNum = -1;
 
     private RegionMembershipWithFlags regionMembership;
@@ -71,7 +71,7 @@ public class ProposedCfg {
                 RegionMapSingleton.instance()
                         .membershipWithFlagsForIndex(GlobalRegionIdentifiers.SUBMARK_INSIDE);
     }
-    
+
     public ProposedCfg(ImageDimensions dimensions) {
         this();
         this.dimensions = dimensions;

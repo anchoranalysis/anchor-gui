@@ -52,8 +52,7 @@ class OverlayDescription extends TitleValueTableModel implements UpdatableSingle
             return;
         }
 
-        ImageResolution sr =
-                raster.dimensions() != null ? raster.dimensions().resolution() : null;
+        ImageResolution sr = raster.dimensions() != null ? raster.dimensions().resolution() : null;
         addOverlayDetails(overlay, "", sr);
 
         fireTableDataChanged();

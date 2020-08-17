@@ -39,8 +39,7 @@ import org.anchoranalysis.io.output.error.OutputWriteFailedException;
 
 @RequiredArgsConstructor
 class OperationGenerator<S, T> extends ObjectGenerator<S>
-        implements IterableObjectGenerator<
-                Supplier<T>, S> {
+        implements IterableObjectGenerator<Supplier<T>, S> {
 
     // START REQUIRED ARGUMENTS
     private final IterableObjectGenerator<T, S> delegate;
@@ -49,8 +48,7 @@ class OperationGenerator<S, T> extends ObjectGenerator<S>
     private Supplier<T> element;
 
     @Override
-    public void setIterableElement(Supplier<T> element)
-            throws SetOperationFailedException {
+    public void setIterableElement(Supplier<T> element) throws SetOperationFailedException {
         this.element = element;
         delegate.setIterableElement(element.get());
     }

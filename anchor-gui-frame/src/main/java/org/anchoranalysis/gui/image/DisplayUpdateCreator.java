@@ -26,6 +26,7 @@
 
 package org.anchoranalysis.gui.image;
 
+import lombok.RequiredArgsConstructor;
 import org.anchoranalysis.anchor.overlay.Overlay;
 import org.anchoranalysis.anchor.overlay.writer.DrawOverlay;
 import org.anchoranalysis.core.error.CreateException;
@@ -39,12 +40,10 @@ import org.anchoranalysis.gui.frame.display.DisplayUpdate;
 import org.anchoranalysis.gui.frame.display.OverlayedDisplayStackUpdate;
 import org.anchoranalysis.gui.frame.display.overlay.OverlayRetriever;
 import org.anchoranalysis.image.stack.DisplayStack;
-import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 public class DisplayUpdateCreator
-        implements CheckedFunction<
-                Integer, DisplayUpdate, BackgroundStackContainerException> {
+        implements CheckedFunction<Integer, DisplayUpdate, BackgroundStackContainerException> {
 
     // START REQUIRED ARGUMENTS
     private final CheckedFunction<
@@ -55,7 +54,7 @@ public class DisplayUpdateCreator
     // END REQUIRED ARGUMENTS
 
     private DrawOverlay drawOverlay;
-    
+
     // This keeps track of the current over
     private BoundColoredOverlayCollection boundOverlay = null;
 

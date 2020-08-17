@@ -37,17 +37,17 @@ import org.anchoranalysis.feature.nrg.NRGStackWithParams;
 import org.anchoranalysis.gui.series.TimeSequenceProviderSupplier;
 import org.anchoranalysis.image.stack.TimeSequence;
 
-@NoArgsConstructor(access=AccessLevel.PRIVATE)
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class GuessNRGStackFromStacks {
 
-    public static NRGStackWithParams guess(TimeSequenceProviderSupplier stackSequenceProvider) throws GetOperationFailedException {
+    public static NRGStackWithParams guess(TimeSequenceProviderSupplier stackSequenceProvider)
+            throws GetOperationFailedException {
         // If a time sequence, assume nrg stack is always t=0
-        return new NRGStackWithParams( selectArbitrarySequence(stackSequenceProvider).get(0) );
+        return new NRGStackWithParams(selectArbitrarySequence(stackSequenceProvider).get(0));
     }
 
     private static TimeSequence selectArbitrarySequence(
-            TimeSequenceProviderSupplier stackSequenceProvider)
-            throws GetOperationFailedException {
+            TimeSequenceProviderSupplier stackSequenceProvider) throws GetOperationFailedException {
         try {
             NamedProvider<TimeSequence> stacks =
                     stackSequenceProvider.get(ProgressReporterNull.get()).getSequence();

@@ -48,7 +48,7 @@ public class OperationCreateBackgroundSetWithAdder {
     private final AddVideoStatsModule parentAdder;
     private final InteractiveThreadPool threadPool;
     private final ErrorReporter errorReporter;
-    
+
     private final NRGBackgroundAdder nrgBackgroundNew;
 
     private final AddVideoStatsModuleSupplier addVideoStatsModule;
@@ -69,7 +69,8 @@ public class OperationCreateBackgroundSetWithAdder {
         this.threadPool = threadPool;
         this.errorReporter = errorReporter;
 
-        this.withAdderSupplier = CachedProgressingSupplier.cache(this::createBackgroundSetWithAdder);
+        this.withAdderSupplier =
+                CachedProgressingSupplier.cache(this::createBackgroundSetWithAdder);
 
         this.addVideoStatsModule =
                 AddVideoStatsModuleSupplier.cache(
@@ -77,13 +78,13 @@ public class OperationCreateBackgroundSetWithAdder {
 
         this.backgroundSetSupplier =
                 BackgroundSetProgressingSupplier.cache(
-                        progressReporter -> withAdderSupplier.get(progressReporter).getBackgroundSet());
+                        progressReporter ->
+                                withAdderSupplier.get(progressReporter).getBackgroundSet());
 
         // A new nrgBackground that includes the changed operation for the background
         this.nrgBackgroundNew =
                 new NRGBackgroundAdder(
-                        nrgBackground.copyChangeOp(backgroundSetSupplier),
-                        addVideoStatsModule);
+                        nrgBackground.copyChangeOp(backgroundSetSupplier), addVideoStatsModule);
     }
 
     private BackgroundSetWithAdder createBackgroundSetWithAdder(ProgressReporter progressReporter)
@@ -99,8 +100,7 @@ public class OperationCreateBackgroundSetWithAdder {
 
         childAdder = nrgBackground.addNrgStackToAdder(childAdder);
 
-        CheckedFunction<Integer, DisplayStack, BackgroundStackContainerException>
-                initialBackground;
+        CheckedFunction<Integer, DisplayStack, BackgroundStackContainerException> initialBackground;
         try {
             initialBackground = initialBackground(backgroundSet);
         } catch (GetOperationFailedException e) {

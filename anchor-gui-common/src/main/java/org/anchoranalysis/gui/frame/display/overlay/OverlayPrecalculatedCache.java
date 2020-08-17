@@ -95,8 +95,7 @@ public class OverlayPrecalculatedCache implements OverlayRetriever {
         }
     }
 
-    public synchronized void setDrawer(DrawOverlay drawOverlay)
-            throws SetOperationFailedException {
+    public synchronized void setDrawer(DrawOverlay drawOverlay) throws SetOperationFailedException {
         this.drawOverlay = drawOverlay;
         try {
             rebuildCache();
@@ -164,8 +163,7 @@ public class OverlayPrecalculatedCache implements OverlayRetriever {
                 Overlay ol = overlaysToAdd.get(i);
 
                 ObjectWithProperties om = ol.createObject(drawOverlay, dimEntireImage, bvOut);
-                PrecalcOverlay precalc =
-                        DrawOverlay.createPrecalc(drawOverlay, om, dimEntireImage);
+                PrecalcOverlay precalc = DrawOverlay.createPrecalc(drawOverlay, om, dimEntireImage);
 
                 BoundingBox box = ol.box(drawOverlay, dimEntireImage);
 
@@ -255,10 +253,12 @@ public class OverlayPrecalculatedCache implements OverlayRetriever {
     }
 
     /**
-     * Gets a scaled overlay if it can from the cache for a particular object. Otherwise creates a new one
+     * Gets a scaled overlay if it can from the cache for a particular object. Otherwise creates a
+     * new one
      *
      * @param zoomFactorNew
-     * @param object used as reference to find a corresponding overlay in cache, or else used to derive one.
+     * @param object used as reference to find a corresponding overlay in cache, or else used to
+     *     derive one.
      * @param overlay
      * @param index
      * @param dimScaled
@@ -290,9 +290,16 @@ public class OverlayPrecalculatedCache implements OverlayRetriever {
 
             ObjectWithProperties omScaledProps =
                     overlay.createScaleObject(
-                            drawOverlay, zoomFactorNew, object, overlay, dimEntireImage, dimScaled, bvOut);
+                            drawOverlay,
+                            zoomFactorNew,
+                            object,
+                            overlay,
+                            dimEntireImage,
+                            dimScaled,
+                            bvOut);
 
-            // If the object-mask we make from the overlay has no pixels, then we reject it by returning
+            // If the object-mask we make from the overlay has no pixels, then we reject it by
+            // returning
             // NULL
             if (!omScaledProps.withoutProperties().voxelsOn().anyExists()) {
                 return Optional.empty();
@@ -326,7 +333,8 @@ public class OverlayPrecalculatedCache implements OverlayRetriever {
 
         // We scale our object, retrieving from the cache if we can
         Optional<PrecalcOverlay> scaled =
-                getOrCreateScaledOverlayForObject(zoomFactorNew, originalSize.getFirst(), ol, i, dimScaled);
+                getOrCreateScaledOverlayForObject(
+                        zoomFactorNew, originalSize.getFirst(), ol, i, dimScaled);
 
         // We check that our zoomed-version also has an intersection, as sometimes it doesn't
         if (scaled.isPresent()

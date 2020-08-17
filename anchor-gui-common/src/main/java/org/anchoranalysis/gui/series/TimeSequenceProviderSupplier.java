@@ -8,7 +8,7 @@ import org.anchoranalysis.core.progress.ProgressReporter;
 public interface TimeSequenceProviderSupplier {
 
     TimeSequenceProvider get(ProgressReporter progressReporter) throws CreateException;
-    
+
     public static TimeSequenceProviderSupplier cache(TimeSequenceProviderSupplier supplier) {
         return CachedProgressingSupplier.cache(supplier::get)::get;
     }

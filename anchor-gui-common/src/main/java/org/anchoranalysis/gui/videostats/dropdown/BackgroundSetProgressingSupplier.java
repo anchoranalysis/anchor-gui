@@ -9,9 +9,9 @@ import org.anchoranalysis.gui.container.background.BackgroundStackContainerExcep
 public interface BackgroundSetProgressingSupplier {
 
     BackgroundSet get(ProgressReporter progressReporter) throws BackgroundStackContainerException;
-    
-    public static BackgroundSetProgressingSupplier cache( BackgroundSetProgressingSupplier supplier ) {
-        return CachedProgressingSupplier.cache( supplier::get )::get;
+
+    public static BackgroundSetProgressingSupplier cache(
+            BackgroundSetProgressingSupplier supplier) {
+        return CachedProgressingSupplier.cache(supplier::get)::get;
     }
 }
-

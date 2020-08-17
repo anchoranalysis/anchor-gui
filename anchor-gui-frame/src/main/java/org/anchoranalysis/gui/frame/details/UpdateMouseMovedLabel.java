@@ -29,9 +29,9 @@ package org.anchoranalysis.gui.frame.details;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
 import javax.swing.JLabel;
+import lombok.AllArgsConstructor;
 import org.anchoranalysis.core.geometry.Point2i;
 import org.anchoranalysis.gui.frame.details.canvas.InternalFrameCanvas;
-import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
 class UpdateMouseMovedLabel extends MouseMotionAdapter {

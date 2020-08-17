@@ -42,8 +42,7 @@ import org.anchoranalysis.image.stack.Stack;
 
 public class AnnotationBackground {
 
-    @Getter
-    private BackgroundSetProgressingSupplier backgroundSetOp;
+    @Getter private BackgroundSetProgressingSupplier backgroundSetOp;
 
     @Getter
     private CheckedFunction<Integer, DisplayStack, BackgroundStackContainerException>

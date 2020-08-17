@@ -51,8 +51,7 @@ public class ShowComparers {
     private final ColorSetGenerator colorSetGenerator;
     private final Path matchPath;
     private final String name;
-    private final CheckedFunction<Integer, DisplayStack, ? extends Throwable>
-            defaultBackground;
+    private final CheckedFunction<Integer, DisplayStack, ? extends Throwable> defaultBackground;
     private final Path modelDirectory;
     private final Logger logger;
 

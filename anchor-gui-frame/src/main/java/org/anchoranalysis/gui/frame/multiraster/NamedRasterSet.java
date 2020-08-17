@@ -36,6 +36,5 @@ public class NamedRasterSet {
 
     @Getter @Setter private String name;
 
-    @Getter @Setter
-    private BackgroundSetProgressingSupplier backgroundSet;
+    @Getter @Setter private BackgroundSetProgressingSupplier backgroundSet;
 }

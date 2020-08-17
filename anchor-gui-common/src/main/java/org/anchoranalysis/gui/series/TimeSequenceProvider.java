@@ -26,12 +26,13 @@
 
 package org.anchoranalysis.gui.series;
 
-import org.anchoranalysis.core.name.provider.NamedProvider;
-import org.anchoranalysis.image.stack.TimeSequence;
 import lombok.AllArgsConstructor;
 import lombok.Value;
+import org.anchoranalysis.core.name.provider.NamedProvider;
+import org.anchoranalysis.image.stack.TimeSequence;
 
-@Value @AllArgsConstructor
+@Value
+@AllArgsConstructor
 public class TimeSequenceProvider {
 
     private NamedProvider<TimeSequence> sequence;

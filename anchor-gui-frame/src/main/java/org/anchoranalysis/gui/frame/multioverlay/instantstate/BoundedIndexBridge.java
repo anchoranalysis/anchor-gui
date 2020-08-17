@@ -33,8 +33,7 @@ import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.index.container.BoundedIndexContainer;
 
 @AllArgsConstructor
-class BoundedIndexBridge<T>
-        implements CheckedFunction<Integer, T, GetOperationFailedException> {
+class BoundedIndexBridge<T> implements CheckedFunction<Integer, T, GetOperationFailedException> {
 
     /** The container associated with the bridge */
     @Setter private BoundedIndexContainer<T> container;

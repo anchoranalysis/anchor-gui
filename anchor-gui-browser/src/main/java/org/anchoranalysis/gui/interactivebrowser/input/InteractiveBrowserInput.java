@@ -94,7 +94,8 @@ public class InteractiveBrowserInput implements InputFromManager {
     private void addKeyValueParams(KeyValueParamsInitParams soParams)
             throws OperationFailedException {
 
-        for (NamedBean<KeyValueParamsProvider> provider : this.namedItemKeyValueParamsProviderList) {
+        for (NamedBean<KeyValueParamsProvider> provider :
+                this.namedItemKeyValueParamsProviderList) {
             soParams.getNamedKeyValueParamsCollection()
                     .add(provider.getName(), cachedCreationFromProvider(provider.getValue()));
         }

@@ -38,12 +38,15 @@ import org.anchoranalysis.feature.nrg.NRGStackWithParams;
 import org.anchoranalysis.image.experiment.identifiers.StackIdentifiers;
 import org.anchoranalysis.image.stack.Stack;
 
-@NoArgsConstructor(access=AccessLevel.PRIVATE)
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 class CreateNrgStackHelper {
 
     // We first retrieve a NamedImgCollection which we use to construct our real NrgStack for
     // purposes of good caching
-    public static NRGStackWithParams create(CheckedSupplier<MPPInitParams, ? extends Throwable> operationProposerSharedObjects, KeyValueParams params) throws CreateException {
+    public static NRGStackWithParams create(
+            CheckedSupplier<MPPInitParams, ? extends Throwable> operationProposerSharedObjects,
+            KeyValueParams params)
+            throws CreateException {
         try {
             Stack stack;
 

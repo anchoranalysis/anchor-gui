@@ -26,9 +26,9 @@
 
 package org.anchoranalysis.gui.videostats.internalframe.annotator.currentstate;
 
+import lombok.NoArgsConstructor;
 import org.anchoranalysis.anchor.mpp.cfg.Cfg;
 import org.anchoranalysis.anchor.mpp.mark.Mark;
-import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
 public class DualCfg implements IQueryAcceptedRejected {

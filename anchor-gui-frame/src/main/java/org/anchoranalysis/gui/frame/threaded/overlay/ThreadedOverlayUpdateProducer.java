@@ -94,8 +94,7 @@ class ThreadedOverlayUpdateProducer implements IRedrawable, IThreadedProducer, I
     }
 
     public void init(
-            final CheckedFunction<
-                            Integer, OverlayedDisplayStack, BackgroundStackContainerException>
+            final CheckedFunction<Integer, OverlayedDisplayStack, BackgroundStackContainerException>
                     integerToCfgBridge,
             final MarkDisplaySettingsWrapper markDisplaySettingsWrapper,
             int defaultIndex,
@@ -109,8 +108,7 @@ class ThreadedOverlayUpdateProducer implements IRedrawable, IThreadedProducer, I
         // When our Mark display settings change
         markDisplaySettingsWrapper.addChangeListener(propertyValueChange);
 
-        CheckedFunction<
-                        Integer, OverlayedDisplayStackUpdate, BackgroundStackContainerException>
+        CheckedFunction<Integer, OverlayedDisplayStackUpdate, BackgroundStackContainerException>
                 findCorrectUpdate =
                         new FindCorrectUpdate(integerToCfgBridge, () -> consumer != null, this);
 
@@ -184,8 +182,7 @@ class ThreadedOverlayUpdateProducer implements IRedrawable, IThreadedProducer, I
     }
 
     private static DisplayUpdateCreator setupDisplayUpdateCreator(
-            CheckedFunction<
-                            Integer, OverlayedDisplayStackUpdate, BackgroundStackContainerException>
+            CheckedFunction<Integer, OverlayedDisplayStackUpdate, BackgroundStackContainerException>
                     findCorrectUpdate,
             IDGetter<Overlay> idGetter,
             DrawOverlay drawOverlay)

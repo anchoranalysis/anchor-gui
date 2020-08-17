@@ -36,8 +36,7 @@ public class AdderGUICountToolbar implements AddVideoStatsModule {
     private AddVideoStatsModule delegate;
     private OpenedFileCounter openedFileCounter;
 
-    public AdderGUICountToolbar(
-            AddVideoStatsModule delegate, OpenedFileCounter openedFileCounter) {
+    public AdderGUICountToolbar(AddVideoStatsModule delegate, OpenedFileCounter openedFileCounter) {
         super();
         this.delegate = delegate;
         this.openedFileCounter = openedFileCounter;

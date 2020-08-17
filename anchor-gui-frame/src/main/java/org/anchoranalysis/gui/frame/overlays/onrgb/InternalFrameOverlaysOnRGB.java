@@ -85,8 +85,8 @@ class InternalFrameOverlaysOnRGB {
 
         cntr.setItem(overlayedDisplayStack, 0);
 
-        CheckedFunction<Integer, OverlayedDisplayStack, BackgroundStackContainerException>
-                bridge = new CfgCntrBridge(cntr);
+        CheckedFunction<Integer, OverlayedDisplayStack, BackgroundStackContainerException> bridge =
+                new CfgCntrBridge(cntr);
 
         delegate.beforeInit(bridge, idGetter, 0, markDisplaySettingsWrapper, mpg);
 

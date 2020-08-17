@@ -90,11 +90,12 @@ class ProposerEvaluatorModuleCreator extends VideoStatsModuleCreator {
                     e -> {
                         if (e.getMarkEvaluator() != null) {
                             backgroundUpdater.update(
-                                    BackgroundSetProgressingSupplier.cache( progressReporter->
-                                            createBackgroundSetFromExisting(
-                                                    progressReporter,
-                                                    e.getMarkEvaluator()
-                                                            .getProposerSharedObjectsOperation())));
+                                    BackgroundSetProgressingSupplier.cache(
+                                            progressReporter ->
+                                                    createBackgroundSetFromExisting(
+                                                            progressReporter,
+                                                            e.getMarkEvaluator()
+                                                                    .getProposerSharedObjectsOperation())));
                             markEvaluatorUpdater.setMarkEvaluatorIdentifier(
                                     e.getMarkEvaluatorName());
                         } else {
@@ -110,8 +111,9 @@ class ProposerEvaluatorModuleCreator extends VideoStatsModuleCreator {
             mpg.getLogger().errorReporter().recordError(ProposerEvaluatorModuleCreator.class, e);
         }
     }
-    
-    private BackgroundSet createBackgroundSetFromExisting(ProgressReporter progressReporter, CachedSupplier<MPPInitParams, CreateException> pso)
+
+    private BackgroundSet createBackgroundSetFromExisting(
+            ProgressReporter progressReporter, CachedSupplier<MPPInitParams, CreateException> pso)
             throws BackgroundStackContainerException {
 
         try {

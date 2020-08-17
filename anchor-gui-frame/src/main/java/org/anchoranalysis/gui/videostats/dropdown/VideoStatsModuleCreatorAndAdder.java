@@ -29,6 +29,7 @@ package org.anchoranalysis.gui.videostats.dropdown;
 import java.awt.Component;
 import java.util.concurrent.ExecutionException;
 import javax.swing.JOptionPane;
+import lombok.AllArgsConstructor;
 import org.anchoranalysis.core.log.Logger;
 import org.anchoranalysis.core.progress.ProgressReporter;
 import org.anchoranalysis.core.progress.ProgressReporterMultiple;
@@ -38,7 +39,6 @@ import org.anchoranalysis.gui.videostats.module.VideoStatsModuleCreateException;
 import org.anchoranalysis.gui.videostats.modulecreator.VideoStatsModuleCreator;
 import org.anchoranalysis.gui.videostats.threading.InteractiveThreadPool;
 import org.anchoranalysis.gui.videostats.threading.InteractiveWorker;
-import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
 public class VideoStatsModuleCreatorAndAdder {

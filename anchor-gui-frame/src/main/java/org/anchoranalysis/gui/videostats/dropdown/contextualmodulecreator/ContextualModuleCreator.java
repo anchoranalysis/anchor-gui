@@ -35,8 +35,6 @@ import org.anchoranalysis.gui.videostats.dropdown.VideoStatsModuleGlobalParams;
 public abstract class ContextualModuleCreator {
 
     public abstract NamedModule[] create(
-            String namePrefix,
-            AddVideoStatsModuleSupplier adder,
-            VideoStatsModuleGlobalParams mpg)
+            String namePrefix, AddVideoStatsModuleSupplier adder, VideoStatsModuleGlobalParams mpg)
             throws CreateException;
 }

@@ -76,7 +76,7 @@ public class ShowRaster {
                 rasterName);
     }
 
-    public void show( BackgroundSetProgressingSupplier backgroundSetCreator, String rasterName) {
+    public void show(BackgroundSetProgressingSupplier backgroundSetCreator, String rasterName) {
         try {
             DefaultModuleState defaultModuleState =
                     adder.getSubgroup()
