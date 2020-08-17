@@ -44,7 +44,7 @@ public class ParamsSource {
     public double calc(Feature<FeatureInput> feature) throws NamedFeatureCalculationException {
         try {
             FeatureInput params = createParams.createForFeature(feature);
-            return featureCalculator.calc(params, FeatureListFactory.from(feature)).get(0);
+            return featureCalculator.calculate(params, FeatureListFactory.from(feature)).get(0);
 
         } catch (CreateException e) {
             throw new NamedFeatureCalculationException(e);

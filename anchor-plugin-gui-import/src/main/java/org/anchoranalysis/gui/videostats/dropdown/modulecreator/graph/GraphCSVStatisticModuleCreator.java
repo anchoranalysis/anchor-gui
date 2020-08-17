@@ -39,7 +39,7 @@ import org.anchoranalysis.gui.plot.BoundedIndexContainerIterator;
 import org.anchoranalysis.gui.plot.panel.ClickableGraphFactory;
 import org.anchoranalysis.gui.plot.panel.ClickableGraphInstance;
 import org.anchoranalysis.gui.plot.visualvm.InternalFrameGraphAsModule;
-import org.anchoranalysis.gui.reassign.FrameTitleGenerator;
+import org.anchoranalysis.gui.reassign.FrameTitleCreator;
 import org.anchoranalysis.gui.videostats.IModuleCreatorDefaultState;
 import org.anchoranalysis.gui.videostats.dropdown.VideoStatsModuleGlobalParams;
 import org.anchoranalysis.gui.videostats.module.DefaultModuleStateManager;
@@ -87,7 +87,7 @@ public class GraphCSVStatisticModuleCreator extends VideoStatsModuleCreatorConte
             ClickableGraphInstance graphInstance =
                     ClickableGraphFactory.create(definition, itr, null, null);
 
-            String graphFrameTitle = new FrameTitleGenerator().genFramePrefix(namePrefix, title());
+            String graphFrameTitle = new FrameTitleCreator().prefix(namePrefix, title());
 
             InternalFrameGraphAsModule frame =
                     new InternalFrameGraphAsModule(graphFrameTitle, graphInstance);

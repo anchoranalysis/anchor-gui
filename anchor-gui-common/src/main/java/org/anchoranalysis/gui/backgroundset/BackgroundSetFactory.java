@@ -200,7 +200,7 @@ public class BackgroundSetFactory {
             Stack stack = new Stack();
             stack.addChannel(
                     ChannelFactory.instance()
-                            .createEmptyInitialised(
+                            .create(
                                     dimensions, VoxelDataTypeUnsignedByte.INSTANCE));
             return stack;
         } catch (IncorrectImageSizeException e) {

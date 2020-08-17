@@ -40,7 +40,7 @@ import org.anchoranalysis.gui.videostats.module.VideoStatsModuleCreateException;
 import org.anchoranalysis.io.deserializer.DeserializationFailedException;
 import org.anchoranalysis.io.error.AnchorIOException;
 
-public class OpenAnnotationMPP implements IOpenAnnotation {
+public class OpenAnnotationMPP implements OpenAnnotation {
 
     private MarkAnnotationReader annotationReader;
     private Path annotationPath;
@@ -87,7 +87,7 @@ public class OpenAnnotationMPP implements IOpenAnnotation {
         if (annotationExst.isAccepted()) {
             return new InitAnnotation(Optional.of(annotationExst), initCfg);
         } else {
-            String initMsg = genErrorMsg(annotationExst.getRejectionReason());
+            String initMsg = errorMessage(annotationExst.getRejectionReason());
             return new InitAnnotation(Optional.of(annotationExst), initCfg, initMsg);
         }
     }
@@ -103,7 +103,7 @@ public class OpenAnnotationMPP implements IOpenAnnotation {
         }
     }
 
-    private static String genErrorMsg(RejectionReason reason) {
+    private static String errorMessage(RejectionReason reason) {
         StringBuilder sb = new StringBuilder("Annotation was SKIPPED due to ");
         switch (reason) {
             case INCORRECT_BOUNDARY:

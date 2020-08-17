@@ -36,7 +36,7 @@ import org.anchoranalysis.core.index.SetOperationFailedException;
 import org.anchoranalysis.core.index.container.BoundedIndexContainer;
 import org.anchoranalysis.core.property.IPropertyValueSendable;
 import org.anchoranalysis.gui.container.background.BackgroundStackContainerException;
-import org.anchoranalysis.gui.frame.details.IGenerateExtraDetail;
+import org.anchoranalysis.gui.frame.details.GenerateExtraDetail;
 import org.anchoranalysis.gui.frame.details.canvas.ControllerAction;
 import org.anchoranalysis.gui.frame.details.canvas.InternalFrameCanvas;
 import org.anchoranalysis.gui.frame.details.canvas.controller.imageview.ControllerImageView;
@@ -156,7 +156,7 @@ class InternalFrameOverlayedInstantStateToRGB {
         return delegate.getIndexGettableSettable();
     }
 
-    public boolean addAdditionalDetails(IGenerateExtraDetail arg0) {
+    public boolean addAdditionalDetails(GenerateExtraDetail arg0) {
         return delegate.addAdditionalDetails(arg0);
     }
 

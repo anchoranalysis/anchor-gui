@@ -37,7 +37,7 @@ import org.anchoranalysis.gui.io.loader.manifest.finder.historyfolder.FinderHist
 import org.anchoranalysis.gui.plot.BoundedIndexContainerIterator;
 import org.anchoranalysis.gui.plot.panel.ClickableGraphFactory;
 import org.anchoranalysis.gui.plot.visualvm.InternalFrameGraphAsModule;
-import org.anchoranalysis.gui.reassign.FrameTitleGenerator;
+import org.anchoranalysis.gui.reassign.FrameTitleCreator;
 import org.anchoranalysis.gui.videostats.dropdown.AddVideoStatsModule;
 import org.anchoranalysis.gui.videostats.dropdown.ModuleAddUtilities;
 import org.anchoranalysis.gui.videostats.module.VideoStatsModuleCreateException;
@@ -82,8 +82,8 @@ public interface GraphFromDualFinderCreator<T> {
                     Iterator<T> itr = new BoundedIndexContainerIterator<>(cntr, 1000);
 
                     String graphFrameTitle =
-                            new FrameTitleGenerator()
-                                    .genFramePrefix(windowTitlePrefix, definition.getTitle());
+                            new FrameTitleCreator()
+                                    .prefix(windowTitlePrefix, definition.getTitle());
 
                     InternalFrameGraphAsModule frame =
                             new InternalFrameGraphAsModule(

@@ -33,7 +33,7 @@ import org.anchoranalysis.core.error.reporter.ErrorReporter;
 import org.anchoranalysis.core.index.IndexGettableSettable;
 import org.anchoranalysis.gui.displayupdate.ProvidesOverlayedDisplayStack;
 import org.anchoranalysis.gui.frame.display.BoundOverlayedDisplayStack;
-import org.anchoranalysis.gui.reassign.FrameTitleGenerator;
+import org.anchoranalysis.gui.reassign.FrameTitleCreator;
 
 class TitleBoundsUpdater implements ChangeListener {
 
@@ -86,16 +86,16 @@ class TitleBoundsUpdater implements ChangeListener {
         slider.setSliceBounds(sliceBounds);
     }
 
-    private String genTitle(int iter) {
+    private String title(int iter) {
         if (slider.getIndexSliderVisible()) {
-            return new FrameTitleGenerator().genTitleString(this.frameName, iter);
+            return new FrameTitleCreator().title(this.frameName, iter);
         } else {
-            return new FrameTitleGenerator().genTitleString(this.frameName);
+            return new FrameTitleCreator().title(this.frameName);
         }
     }
 
     public void updateTitle() {
-        String titleStr = genTitle(indexCntr.getIndex());
+        String titleStr = title(indexCntr.getIndex());
         // System.out.println("InternalFrameCanvas:StackProviderChanged:stateChanged:updateTitle:setTitle start");
         frame.setTitle(titleStr);
         // System.out.println("InternalFrameCanvas:StackProviderChanged:stateChanged:updateTitle:setTitle end");

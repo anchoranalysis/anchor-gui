@@ -1,6 +1,6 @@
 /*-
  * #%L
- * anchor-gui-frame
+ * anchor-gui-common
  * %%
  * Copyright (C) 2010 - 2020 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann-La Roche
  * %%
@@ -24,9 +24,24 @@
  * #L%
  */
 
-package org.anchoranalysis.gui.frame.details;
+package org.anchoranalysis.gui.reassign;
 
-@FunctionalInterface
-public interface IGenerateExtraDetail {
-    String genStr(int index);
+public class FrameTitleCreator {
+
+    public String title(String frameName) {
+        return frameName;
+    }
+
+    public String title(String prefixName, int iter) {
+        return String.format("%s: iter=%09d", prefixName, iter);
+    }
+
+    public String prefix(String prefixName, String subTitle) {
+
+        if (!prefixName.isEmpty()) {
+            return String.format("%s: %s", prefixName, subTitle);
+        } else {
+            return subTitle;
+        }
+    }
 }

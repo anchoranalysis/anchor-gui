@@ -124,7 +124,7 @@ public class InternalFrameWithDetailsTopPanel {
     }
 
     // Detail generator
-    public boolean addAdditionalDetails(IGenerateExtraDetail arg0) {
+    public boolean addAdditionalDetails(GenerateExtraDetail arg0) {
         return stringConstructor.addAdditionalDetails(arg0);
     }
 

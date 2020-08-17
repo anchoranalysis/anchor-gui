@@ -30,7 +30,7 @@ import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.index.IndexGettableSettable;
 import org.anchoranalysis.core.index.container.BoundedRangeIncompleteDynamic;
 import org.anchoranalysis.gui.frame.details.ControllerPopupMenu;
-import org.anchoranalysis.gui.frame.details.IGenerateExtraDetail;
+import org.anchoranalysis.gui.frame.details.GenerateExtraDetail;
 import org.anchoranalysis.gui.frame.details.InternalFrameWithDetailsTopPanel;
 import org.anchoranalysis.gui.frame.details.canvas.ControllerAction;
 import org.anchoranalysis.gui.frame.details.canvas.InitialSliderState;
@@ -132,7 +132,7 @@ public class InternalFrameThreadedProvider {
         delegate.setIndexSliderVisible(visibility);
     }
 
-    public boolean addAdditionalDetails(IGenerateExtraDetail arg0) {
+    public boolean addAdditionalDetails(GenerateExtraDetail arg0) {
         return delegate.addAdditionalDetails(arg0);
     }
 

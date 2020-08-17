@@ -38,7 +38,7 @@ import org.anchoranalysis.gui.cfgnrg.CfgNRGInstantStateGraphPanel;
 import org.anchoranalysis.gui.cfgnrg.StatePanelFrameHistoryCfgNRGInstantState;
 import org.anchoranalysis.gui.io.loader.manifest.finder.historyfolder.FinderHistoryFolder;
 import org.anchoranalysis.gui.plot.creator.GenerateGraphNRGBreakdownFromInstantState;
-import org.anchoranalysis.gui.reassign.FrameTitleGenerator;
+import org.anchoranalysis.gui.reassign.FrameTitleCreator;
 import org.anchoranalysis.gui.videostats.IModuleCreatorDefaultState;
 import org.anchoranalysis.gui.videostats.dropdown.VideoStatsModuleGlobalParams;
 import org.anchoranalysis.gui.videostats.module.DefaultModuleStateManager;
@@ -78,7 +78,7 @@ public class GraphNRGBreakdownModuleCreator extends VideoStatsModuleCreatorConte
                 new GenerateGraphNRGBreakdownFromInstantState(definition, colorIndex);
 
         String graphFrameTitle =
-                new FrameTitleGenerator().genFramePrefix(namePrefix, definition.getTitle());
+                new FrameTitleCreator().prefix(namePrefix, definition.getTitle());
 
         try {
             CfgNRGInstantStateGraphPanel tablePanel = new CfgNRGInstantStateGraphPanel(generator);

@@ -72,16 +72,18 @@ class CreateMarkEvaluator {
     }
 
     private static Optional<KeyValueParams> paramsFromGenerator(
-            Path pathForBinding, Optional<FilePathGenerator> generator) throws IOException {
+            Path pathForBinding, Optional<FilePathGenerator> filePathGenerator) throws IOException {
         return OptionalUtilities.map(
-                generator,
-                gen -> {
-                    try {
-                        return KeyValueParams.readFromFile(
-                                PathFromGenerator.derivePath(gen, pathForBinding));
-                    } catch (AnchorIOException e) {
-                        throw new IOException(e);
-                    }
-                });
+                filePathGenerator,
+                generator -> readParams(generator, pathForBinding) );
+    }
+    
+    private static KeyValueParams readParams( FilePathGenerator filePathGenerator, Path pathForBinding ) throws IOException {
+        try {
+            return KeyValueParams.readFromFile(
+                    PathFromGenerator.derivePath(filePathGenerator, pathForBinding));
+        } catch (AnchorIOException e) {
+            throw new IOException(e);
+        }
     }
 }

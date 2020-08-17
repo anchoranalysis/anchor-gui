@@ -35,7 +35,7 @@ import org.anchoranalysis.core.index.container.BoundedRangeIncompleteDynamic;
 import org.anchoranalysis.gui.container.background.BackgroundStackContainerException;
 import org.anchoranalysis.gui.displayupdate.OverlayedDisplayStack;
 import org.anchoranalysis.gui.frame.details.ControllerPopupMenu;
-import org.anchoranalysis.gui.frame.details.IGenerateExtraDetail;
+import org.anchoranalysis.gui.frame.details.GenerateExtraDetail;
 import org.anchoranalysis.gui.frame.details.canvas.ControllerAction;
 import org.anchoranalysis.gui.frame.details.canvas.InternalFrameCanvas;
 import org.anchoranalysis.gui.frame.details.canvas.controller.imageview.ControllerImageView;
@@ -131,7 +131,7 @@ public class InternalFrameThreadedOverlayProvider {
         delegate.setIndexSliderVisible(visibility);
     }
 
-    public boolean addAdditionalDetails(IGenerateExtraDetail arg0) {
+    public boolean addAdditionalDetails(GenerateExtraDetail arg0) {
         return delegate.addAdditionalDetails(arg0);
     }
 

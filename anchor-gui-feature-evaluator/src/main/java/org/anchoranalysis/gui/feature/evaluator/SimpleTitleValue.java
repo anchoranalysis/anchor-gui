@@ -27,26 +27,22 @@
 package org.anchoranalysis.gui.feature.evaluator;
 
 import org.anchoranalysis.anchor.mpp.feature.instantstate.CfgNRGInstantState;
-import org.anchoranalysis.gui.cfgnrgtable.TitleValueTableModel.ITitleValueRow;
+import org.anchoranalysis.gui.cfgnrgtable.TitleValueTableModel.TitleValueRow;
+import lombok.AllArgsConstructor;
 
-class SimpleTitleValue implements ITitleValueRow {
+@AllArgsConstructor
+class SimpleTitleValue implements TitleValueRow {
 
     private String title;
     private String value;
 
-    public SimpleTitleValue(String title, String value) {
-        super();
-        this.title = title;
-        this.value = value;
-    }
-
     @Override
-    public String genTitle() {
+    public String title() {
         return title;
     }
 
     @Override
-    public String genValue(CfgNRGInstantState state) {
+    public String value(CfgNRGInstantState state) {
         return value;
     }
 }

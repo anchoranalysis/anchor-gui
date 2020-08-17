@@ -210,7 +210,7 @@ public class CombineRGBBoundedIndexContainer implements BoundedIndexContainer<Di
                 assert (dimensions != null);
                 Channel chnlNew =
                         ChannelFactory.instance()
-                                .createEmptyInitialised(
+                                .create(
                                         dimensions, VoxelDataTypeUnsignedByte.INSTANCE);
                 stackNew.addChannel(chnlNew);
             }

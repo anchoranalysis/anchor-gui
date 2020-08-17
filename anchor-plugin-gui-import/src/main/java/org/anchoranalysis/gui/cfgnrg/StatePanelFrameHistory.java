@@ -36,7 +36,7 @@ import org.anchoranalysis.core.property.change.PropertyValueChangeEvent;
 import org.anchoranalysis.core.property.change.PropertyValueChangeListener;
 import org.anchoranalysis.gui.image.IndexSlider;
 import org.anchoranalysis.gui.image.frame.ControllerSize;
-import org.anchoranalysis.gui.reassign.FrameTitleGenerator;
+import org.anchoranalysis.gui.reassign.FrameTitleCreator;
 import org.anchoranalysis.gui.videostats.IModuleCreatorDefaultState;
 import org.anchoranalysis.gui.videostats.link.LinkModules;
 import org.anchoranalysis.gui.videostats.module.VideoStatsModule;
@@ -127,7 +127,7 @@ public class StatePanelFrameHistory<T> {
     }
 
     private void updateTitle(int iter) {
-        delegate.updateTitle(new FrameTitleGenerator().genTitleString(title, iter));
+        delegate.updateTitle(new FrameTitleCreator().title(title, iter));
     }
 
     public IModuleCreatorDefaultState moduleCreator() {

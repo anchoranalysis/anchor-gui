@@ -38,7 +38,7 @@ import org.anchoranalysis.core.index.container.BoundedIndexContainer;
 import org.anchoranalysis.core.index.container.bridge.BoundedIndexContainerBridgeWithoutIndex;
 import org.anchoranalysis.core.property.IPropertyValueReceivable;
 import org.anchoranalysis.core.property.PropertyValueReceivableFromIndicesSelection;
-import org.anchoranalysis.gui.frame.details.IGenerateExtraDetail;
+import org.anchoranalysis.gui.frame.details.GenerateExtraDetail;
 import org.anchoranalysis.gui.frame.details.canvas.InternalFrameCanvas;
 import org.anchoranalysis.gui.frame.display.overlay.GetOverlayCollection;
 import org.anchoranalysis.gui.frame.display.overlay.OverlayRetriever;
@@ -130,11 +130,11 @@ public class InternalFrameOverlayedInstantStateToRGBSelectable {
                         createElementRetriever(),
                         mpg);
 
-        IGenerateExtraDetail cfgSizeDetail =
-                new IGenerateExtraDetail() {
+        GenerateExtraDetail cfgSizeDetail =
+                new GenerateExtraDetail() {
 
                     @Override
-                    public String genStr(int index) {
+                    public String extraDetail(int index) {
                         OverlayRetriever or = delegate.getOverlayRetriever();
                         return String.format(
                                 "cfgSize=%s",
@@ -234,7 +234,7 @@ public class InternalFrameOverlayedInstantStateToRGBSelectable {
         return delegate.getElementRetriever();
     }
 
-    public boolean addAdditionalDetails(IGenerateExtraDetail arg0) {
+    public boolean addAdditionalDetails(GenerateExtraDetail arg0) {
         return delegate.addAdditionalDetails(arg0);
     }
 

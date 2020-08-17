@@ -54,13 +54,13 @@ class UpdateMouseMovedLabel extends MouseMotionAdapter {
 
     private void updateLabelOutside(int x, int y) {
         StringBuilder sb = new StringBuilder();
-        sb.append(stringConstructor.posString(x, y));
+        sb.append(stringConstructor.position(x, y));
         sb.append(" ");
-        sb.append(stringConstructor.zoomString());
+        sb.append(stringConstructor.zoom());
         sb.append(" ");
-        sb.append(stringConstructor.typeString());
+        sb.append(stringConstructor.dataType());
         sb.append(" ");
-        sb.append(stringConstructor.genResString());
+        sb.append(stringConstructor.resolution());
         sb.append(" ");
         sb.append(stringConstructor.extraString());
         detailsLabel.setText(sb.toString());
@@ -68,15 +68,15 @@ class UpdateMouseMovedLabel extends MouseMotionAdapter {
 
     private void updateLabelInside(int x, int y, String intensityStr) {
         StringBuilder sb = new StringBuilder();
-        sb.append(stringConstructor.posString(x, y));
+        sb.append(stringConstructor.position(x, y));
         sb.append(" ");
         sb.append(intensityStr);
         sb.append(" ");
-        sb.append(stringConstructor.zoomString());
+        sb.append(stringConstructor.zoom());
         sb.append(" ");
-        sb.append(stringConstructor.typeString());
+        sb.append(stringConstructor.dataType());
         sb.append(" ");
-        sb.append(stringConstructor.genResString());
+        sb.append(stringConstructor.resolution());
         sb.append(" ");
         sb.append(stringConstructor.extraString());
         detailsLabel.setText(sb.toString());

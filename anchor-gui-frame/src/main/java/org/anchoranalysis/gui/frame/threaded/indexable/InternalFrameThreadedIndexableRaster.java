@@ -30,7 +30,7 @@ import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.index.IndexBridge;
 import org.anchoranalysis.core.index.container.BoundedIndexContainer;
 import org.anchoranalysis.gui.frame.details.ControllerPopupMenu;
-import org.anchoranalysis.gui.frame.details.IGenerateExtraDetail;
+import org.anchoranalysis.gui.frame.details.GenerateExtraDetail;
 import org.anchoranalysis.gui.frame.multiraster.ThreadedIndexedDisplayStackSetter;
 import org.anchoranalysis.gui.frame.threaded.stack.InternalFrameThreadedProvider;
 import org.anchoranalysis.gui.image.frame.ISliderState;
@@ -55,7 +55,7 @@ public class InternalFrameThreadedIndexableRaster {
         return delegate.controllerPopupMenu();
     }
 
-    public boolean addAdditionalDetails(IGenerateExtraDetail arg0) {
+    public boolean addAdditionalDetails(GenerateExtraDetail arg0) {
         return delegate.addAdditionalDetails(arg0);
     }
 

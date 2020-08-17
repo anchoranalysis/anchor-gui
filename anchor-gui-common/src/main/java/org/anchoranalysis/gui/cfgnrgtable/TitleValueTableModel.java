@@ -27,6 +27,7 @@
 package org.anchoranalysis.gui.cfgnrgtable;
 
 import java.util.ArrayList;
+import java.util.List;
 import javax.swing.table.AbstractTableModel;
 import org.anchoranalysis.anchor.mpp.feature.instantstate.CfgNRGInstantState;
 
@@ -34,14 +35,14 @@ public class TitleValueTableModel extends AbstractTableModel {
 
     private static final long serialVersionUID = 4158592575997677838L;
 
-    private CfgNRGInstantState crnt;
+    private transient CfgNRGInstantState current;
 
-    private ArrayList<ITitleValueRow> entryList = new ArrayList<>();
+    private transient List<TitleValueRow> entryList = new ArrayList<>();
 
-    public static interface ITitleValueRow {
-        String genTitle();
+    public static interface TitleValueRow {
+        String title();
 
-        String genValue(CfgNRGInstantState state);
+        String value(CfgNRGInstantState state);
     }
 
     // Constructor
@@ -51,11 +52,11 @@ public class TitleValueTableModel extends AbstractTableModel {
     }
 
     public void updateTableData(CfgNRGInstantState state) {
-        this.crnt = state;
+        this.current = state;
         fireTableDataChanged();
     }
 
-    public void addEntry(ITitleValueRow entry) {
+    public void addEntry(TitleValueRow entry) {
         this.entryList.add(entry);
     }
 
@@ -90,11 +91,10 @@ public class TitleValueTableModel extends AbstractTableModel {
     private String getTitle(int index) {
 
         if (index >= this.entryList.size()) {
-            // assert false;
             return "";
         }
 
-        return this.entryList.get(index).genTitle();
+        return this.entryList.get(index).title();
     }
 
     private String getValue(int index) {
@@ -103,6 +103,6 @@ public class TitleValueTableModel extends AbstractTableModel {
             return "";
         }
 
-        return this.entryList.get(index).genValue(crnt);
+        return this.entryList.get(index).value(current);
     }
 }

@@ -34,23 +34,23 @@ public class SummaryTableModel extends TitleValueTableModel implements IUpdateTa
 
     public SummaryTableModel() {
         addEntry(
-                new ITitleValueRow() {
+                new TitleValueRow() {
 
                     @Override
-                    public String genValue(CfgNRGInstantState state) {
+                    public String value(CfgNRGInstantState state) {
                         return Integer.toString(state.getIndex());
                     }
 
                     @Override
-                    public String genTitle() {
+                    public String title() {
                         return "Iteration";
                     }
                 });
         addEntry(
-                new ITitleValueRow() {
+                new TitleValueRow() {
 
                     @Override
-                    public String genValue(CfgNRGInstantState state) {
+                    public String value(CfgNRGInstantState state) {
                         if (state.getCfgNRG() != null) {
                             return Integer.toString(state.getCfgNRG().getCfg().size());
                         } else {
@@ -59,15 +59,15 @@ public class SummaryTableModel extends TitleValueTableModel implements IUpdateTa
                     }
 
                     @Override
-                    public String genTitle() {
+                    public String title() {
                         return "Size";
                     }
                 });
         addEntry(
-                new ITitleValueRow() {
+                new TitleValueRow() {
 
                     @Override
-                    public String genValue(CfgNRGInstantState state) {
+                    public String value(CfgNRGInstantState state) {
                         if (state.getCfgNRG() != null) {
                             return String.format("%f", state.getCfgNRG().getNrgTotal());
                         } else {
@@ -76,15 +76,15 @@ public class SummaryTableModel extends TitleValueTableModel implements IUpdateTa
                     }
 
                     @Override
-                    public String genTitle() {
+                    public String title() {
                         return "NRG Total";
                     }
                 });
         addEntry(
-                new ITitleValueRow() {
+                new TitleValueRow() {
 
                     @Override
-                    public String genValue(CfgNRGInstantState state) {
+                    public String value(CfgNRGInstantState state) {
                         if (state.getCfgNRG() != null) {
                             return String.format(
                                     "%f", state.getCfgNRG().getCalcMarkInd().getNrgTotal());
@@ -94,15 +94,15 @@ public class SummaryTableModel extends TitleValueTableModel implements IUpdateTa
                     }
 
                     @Override
-                    public String genTitle() {
+                    public String title() {
                         return "NRG Total - Individual";
                     }
                 });
         addEntry(
-                new ITitleValueRow() {
+                new TitleValueRow() {
 
                     @Override
-                    public String genValue(CfgNRGInstantState state) {
+                    public String value(CfgNRGInstantState state) {
                         if (state.getCfgNRG() != null) {
                             return String.format(
                                     "%f", state.getCfgNRG().getCalcMarkPair().getNRGTotal());
@@ -112,15 +112,15 @@ public class SummaryTableModel extends TitleValueTableModel implements IUpdateTa
                     }
 
                     @Override
-                    public String genTitle() {
+                    public String title() {
                         return "NRG Total - Pairs";
                     }
                 });
         addEntry(
-                new ITitleValueRow() {
+                new TitleValueRow() {
 
                     @Override
-                    public String genValue(CfgNRGInstantState state) {
+                    public String value(CfgNRGInstantState state) {
                         if (state.getCfgNRG() != null) {
                             return String.format(
                                     "%f", state.getCfgNRG().getCalcMarkAll().getNRGTotal());
@@ -130,7 +130,7 @@ public class SummaryTableModel extends TitleValueTableModel implements IUpdateTa
                     }
 
                     @Override
-                    public String genTitle() {
+                    public String title() {
                         return "NRG Total - All";
                     }
                 });
