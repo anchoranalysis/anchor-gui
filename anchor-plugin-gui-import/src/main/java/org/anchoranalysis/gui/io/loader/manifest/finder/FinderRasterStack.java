@@ -58,7 +58,7 @@ public abstract class FinderRasterStack extends FinderSingleFile
 
     private Stack createStack(FileWrite fileWrite) throws RasterIOException {
         // Assume single series, single channel
-        return RasterReaderUtilities.openStackFromPath(rasterReader, fileWrite.calcPath());
+        return RasterReaderUtilities.openStackFromPath(rasterReader, fileWrite.calculatePath());
     }
 
     public Stack get() throws OperationFailedException {

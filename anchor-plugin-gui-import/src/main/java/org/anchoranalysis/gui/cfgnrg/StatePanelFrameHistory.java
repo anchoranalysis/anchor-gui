@@ -69,16 +69,12 @@ public class StatePanelFrameHistory<T> {
                     int index = boundedIndexCntr.previousEqualIndex(evt.getValue());
                     T crntState = boundedIndexCntr.get(index);
 
-                    // tablePanel.updateState(evt.getIndexNew(), crnt);
                     delegate.updateState(crntState);
                     updateTitle(index);
                 }
 
-            } catch (GetOperationFailedException e) {
+            } catch (GetOperationFailedException | StatePanelUpdateException e) {
                 errorReporter.recordError(StatePanelFrameHistory.class, e);
-            } catch (StatePanelUpdateException e) {
-                errorReporter.recordError(StatePanelFrameHistory.class, e);
-                // throw new PropertyValueChangedException(e);
             }
         }
     }
@@ -108,7 +104,6 @@ public class StatePanelFrameHistory<T> {
                 indexSlider =
                         new IndexSlider(
                                 selectedHistory.getContainer(), !selectedHistory.isExpensiveLoad());
-                // frameSlider = new FrameSlider( selectedHistory.getCfgNRGCntnr(), false );
                 indexSlider.setIndex(initialIndex, false);
 
                 indexSlider
@@ -119,15 +114,13 @@ public class StatePanelFrameHistory<T> {
             }
 
             updateTitle(actualPhysicalIndex);
-        } catch (GetOperationFailedException e) {
-            throw new InitException(e);
-        } catch (StatePanelUpdateException e) {
+        } catch (GetOperationFailedException | StatePanelUpdateException e) {
             throw new InitException(e);
         }
     }
 
     private void updateTitle(int iter) {
-        delegate.updateTitle(new FrameTitleCreator().title(title, iter));
+        delegate.updateTitle(FrameTitleCreator.title(title, iter));
     }
 
     public IModuleCreatorDefaultState moduleCreator() {

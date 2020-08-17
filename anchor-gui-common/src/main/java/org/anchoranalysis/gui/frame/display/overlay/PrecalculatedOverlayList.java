@@ -32,7 +32,7 @@ import java.util.Optional;
 import org.anchoranalysis.anchor.overlay.Overlay;
 import org.anchoranalysis.anchor.overlay.collection.ColoredOverlayCollection;
 import org.anchoranalysis.anchor.overlay.writer.DrawOverlay;
-import org.anchoranalysis.anchor.overlay.writer.PrecalcOverlay;
+import org.anchoranalysis.anchor.overlay.writer.PrecalculationOverlay;
 import org.anchoranalysis.core.color.RGBColor;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.image.binary.values.BinaryValues;
@@ -45,7 +45,7 @@ class PrecalculatedOverlayList {
     private ColoredOverlayCollection overlayCollection;
 
     /** Obj-masks generated from overlayCollection. No nulls. */
-    private List<PrecalcOverlay> generatedObjects;
+    private List<PrecalculationOverlay> generatedObjects;
 
     /** Bounding-boxes derived from overlayCollection. No nulls. */
     private List<BoundingBox> listBoundingBox;
@@ -54,7 +54,7 @@ class PrecalculatedOverlayList {
      * obj-masks at different zoomlevel. Can contain nulls (meaning not yet calculated). Should
      * either be null (not-existing). Or be the same size as generatedObjects;
      */
-    private List<PrecalcOverlay> generatedObjectsZoomed;
+    private List<PrecalculationOverlay> generatedObjectsZoomed;
 
     public PrecalculatedOverlayList() {
         overlayCollection = new ColoredOverlayCollection();
@@ -107,13 +107,13 @@ class PrecalculatedOverlayList {
     public void add(
             Overlay overlay,
             RGBColor color,
-            PrecalcOverlay precalc,
+            PrecalculationOverlay precalculation,
             BoundingBox box,
-            Optional<PrecalcOverlay> precalcZoomed) {
+            Optional<PrecalculationOverlay> precalculationZoomed) {
         overlayCollection.add(overlay, color);
-        generatedObjects.add(precalc);
+        generatedObjects.add(precalculation);
         listBoundingBox.add(box);
-        precalcZoomed.ifPresent(generatedObjectsZoomed::add);
+        precalculationZoomed.ifPresent(generatedObjectsZoomed::add);
     }
 
     public void remove(int index) {
@@ -138,23 +138,19 @@ class PrecalculatedOverlayList {
         return overlayCollection.getColor(index);
     }
 
-    public PrecalcOverlay getPrecalcOverlay(int index) {
+    public PrecalculationOverlay getPrecalculation(int index) {
         return generatedObjects.get(index);
     }
 
-    public PrecalcOverlay getPrecalc(int index) {
-        return generatedObjects.get(index);
-    }
-
-    public PrecalcOverlay getPrecalcZoomed(int index) {
+    public PrecalculationOverlay getPrecalculationZoomed(int index) {
         return generatedObjectsZoomed.get(index);
     }
 
-    public List<PrecalcOverlay> getListGeneratedObjects() {
+    public List<PrecalculationOverlay> getListGeneratedObjects() {
         return generatedObjects;
     }
 
-    public List<PrecalcOverlay> getListGeneratedObjectsZoomed() {
+    public List<PrecalculationOverlay> getListGeneratedObjectsZoomed() {
         return generatedObjectsZoomed;
     }
 
@@ -178,12 +174,12 @@ class PrecalculatedOverlayList {
         return listBoundingBox.size();
     }
 
-    public PrecalcOverlay setPrecalcZoomed(int index, PrecalcOverlay element) {
+    public PrecalculationOverlay setPrecalculationZoomed(int index, PrecalculationOverlay element) {
         return generatedObjectsZoomed.set(index, element);
     }
 
-    private static List<PrecalcOverlay> createCollectionWithNulls(int size) {
-        List<PrecalcOverlay> out = new ArrayList<>();
+    private static List<PrecalculationOverlay> createCollectionWithNulls(int size) {
+        List<PrecalculationOverlay> out = new ArrayList<>();
         for (int i = 0; i < size; i++) {
             out.add(null);
         }

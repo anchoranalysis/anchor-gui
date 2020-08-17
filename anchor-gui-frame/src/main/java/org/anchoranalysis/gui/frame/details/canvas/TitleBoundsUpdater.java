@@ -34,9 +34,11 @@ import org.anchoranalysis.core.index.IndexGettableSettable;
 import org.anchoranalysis.gui.displayupdate.ProvidesOverlayedDisplayStack;
 import org.anchoranalysis.gui.frame.display.BoundOverlayedDisplayStack;
 import org.anchoranalysis.gui.reassign.FrameTitleCreator;
+import lombok.AllArgsConstructor;
 
+@AllArgsConstructor
 class TitleBoundsUpdater implements ChangeListener {
-
+    
     private ErrorReporter errorReporter;
     private IndexGettableSettable indexCntr;
     private ProvidesOverlayedDisplayStack stackProvider;
@@ -44,26 +46,8 @@ class TitleBoundsUpdater implements ChangeListener {
     private InternalFrameDelegate frame;
     private String frameName;
 
-    public TitleBoundsUpdater(
-            ErrorReporter errorReporter,
-            IndexGettableSettable indexCntr,
-            ProvidesOverlayedDisplayStack stackProvider,
-            SliceIndexSlider slider,
-            InternalFrameDelegate frame,
-            String frameName) {
-        super();
-        this.errorReporter = errorReporter;
-        this.indexCntr = indexCntr;
-        this.stackProvider = stackProvider;
-        this.slider = slider;
-        this.frame = frame;
-        this.frameName = frameName;
-    }
-
     @Override
     public void stateChanged(ChangeEvent e) {
-
-        // System.out.println("InternalFrameCanvas:StackProviderChanged:stateChanged start");
 
         // Just in case our slice bounds change as the provided image changes
         try {
@@ -88,16 +72,13 @@ class TitleBoundsUpdater implements ChangeListener {
 
     private String title(int iter) {
         if (slider.getIndexSliderVisible()) {
-            return new FrameTitleCreator().title(this.frameName, iter);
+            return FrameTitleCreator.title(this.frameName, iter);
         } else {
-            return new FrameTitleCreator().title(this.frameName);
+            return FrameTitleCreator.title(this.frameName);
         }
     }
 
     public void updateTitle() {
-        String titleStr = title(indexCntr.getIndex());
-        // System.out.println("InternalFrameCanvas:StackProviderChanged:stateChanged:updateTitle:setTitle start");
-        frame.setTitle(titleStr);
-        // System.out.println("InternalFrameCanvas:StackProviderChanged:stateChanged:updateTitle:setTitle end");
+        frame.setTitle( title(indexCntr.getIndex()) );
     }
 }

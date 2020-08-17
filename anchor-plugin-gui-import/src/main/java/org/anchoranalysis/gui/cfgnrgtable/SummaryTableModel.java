@@ -87,7 +87,7 @@ public class SummaryTableModel extends TitleValueTableModel implements IUpdateTa
                     public String value(CfgNRGInstantState state) {
                         if (state.getCfgNRG() != null) {
                             return String.format(
-                                    "%f", state.getCfgNRG().getCalcMarkInd().getNrgTotal());
+                                    "%f", state.getCfgNRG().getIndividual().getNrgTotal());
                         } else {
                             return "";
                         }
@@ -105,7 +105,7 @@ public class SummaryTableModel extends TitleValueTableModel implements IUpdateTa
                     public String value(CfgNRGInstantState state) {
                         if (state.getCfgNRG() != null) {
                             return String.format(
-                                    "%f", state.getCfgNRG().getCalcMarkPair().getNRGTotal());
+                                    "%f", state.getCfgNRG().getPair().getNRGTotal());
                         } else {
                             return "";
                         }
@@ -123,7 +123,7 @@ public class SummaryTableModel extends TitleValueTableModel implements IUpdateTa
                     public String value(CfgNRGInstantState state) {
                         if (state.getCfgNRG() != null) {
                             return String.format(
-                                    "%f", state.getCfgNRG().getCalcMarkAll().getNRGTotal());
+                                    "%f", state.getCfgNRG().getAll().getNRGTotal());
                         } else {
                             return "";
                         }

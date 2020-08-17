@@ -32,7 +32,7 @@ import cern.colt.matrix.DoubleMatrix2D;
 import cern.jet.math.Functions;
 import java.util.ArrayList;
 import java.util.List;
-import org.anchoranalysis.feature.calc.results.ResultsVector;
+import org.anchoranalysis.feature.calculate.results.ResultsVector;
 
 public class CalculatedFeatureValues {
 

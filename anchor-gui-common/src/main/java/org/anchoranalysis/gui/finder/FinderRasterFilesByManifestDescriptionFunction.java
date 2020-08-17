@@ -91,7 +91,7 @@ public class FinderRasterFilesByManifestDescriptionFunction implements Finder {
                     StoreSupplier.cache(
                             () ->
                                     openStack(
-                                            fileWrite.calcPath(),
+                                            fileWrite.calculatePath(),
                                             rasterReader,
                                             ProgressReporterNull.get())));
         }

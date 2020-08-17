@@ -36,7 +36,7 @@ import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.reporter.ErrorReporter;
 import org.anchoranalysis.feature.bean.Feature;
 import org.anchoranalysis.feature.bean.list.FeatureList;
-import org.anchoranalysis.feature.calc.results.ResultsVector;
+import org.anchoranalysis.feature.calculate.results.ResultsVector;
 import org.anchoranalysis.feature.input.FeatureInput;
 
 //
@@ -46,7 +46,7 @@ abstract class FeatureListNode extends Node {
 
     private FeatureList<FeatureInput> childFeatures;
 
-    private List<FeatureValueNode> calcList = null;
+    private List<FeatureValueNode> nodes = null;
     private ParamsSource params;
     private ErrorReporter errorReporter;
 
@@ -62,7 +62,7 @@ abstract class FeatureListNode extends Node {
     }
 
     protected void resetCalcList() {
-        calcList = null;
+        nodes = null;
     }
 
     @Override
@@ -70,23 +70,23 @@ abstract class FeatureListNode extends Node {
 
         this.params = params;
 
-        if (calcList == null) {
+        if (nodes == null) {
             // We skip the update, if it's never been calculated, as there is no need to update
             // createCalcList();
         } else {
-            ResultsVector rv = calcResults();
-            updateNodes(rv, childFeatures, calcList);
+            ResultsVector results = calculateResults();
+            updateNodes(results, childFeatures, nodes);
         }
     }
 
     @Override
     public Enumeration<? extends TreeNode> children() {
 
-        if (calcList == null) {
-            createCalcList();
+        if (nodes == null) {
+            createNodes();
         }
 
-        return Collections.enumeration(calcList);
+        return Collections.enumeration(nodes);
     }
 
     private static void setNodeFromResultsVector(
@@ -135,16 +135,16 @@ abstract class FeatureListNode extends Node {
         }
     }
 
-    private ResultsVector calcResults() {
-        return calcSubsetSuppressErrors(childFeatures, params, errorReporter);
+    private ResultsVector calculateResults() {
+        return calculateSubsetSuppressErrors(childFeatures, params, errorReporter);
     }
 
-    private void createCalcList() {
+    private void createNodes() {
         try {
-            calcList = new ArrayList<>();
+            nodes = new ArrayList<>();
 
-            ResultsVector rv = calcResults();
-            createAndAddNodes(rv, calcList, this);
+            ResultsVector rv = calculateResults();
+            createAndAddNodes(rv, nodes, this);
 
         } catch (CreateException e) {
             errorReporter.recordError(FeatureListNode.class, e);
@@ -159,12 +159,12 @@ abstract class FeatureListNode extends Node {
     @Override
     public TreeNode getChildAt(int arg0) {
 
-        if (calcList == null) {
-            createCalcList();
+        if (nodes == null) {
+            createNodes();
         }
 
-        assert (arg0 < calcList.size());
-        return calcList.get(arg0);
+        assert (arg0 < nodes.size());
+        return nodes.get(arg0);
     }
 
     @Override
@@ -174,7 +174,7 @@ abstract class FeatureListNode extends Node {
 
     @Override
     public int getIndex(TreeNode arg0) {
-        return calcList.indexOf(arg0);
+        return nodes.indexOf(arg0);
     }
 
     @Override
@@ -194,7 +194,7 @@ abstract class FeatureListNode extends Node {
      * Calculates with different parameters for every feature. No cache invalidation is occuring
      * here. TODO Fix
      */
-    private static ResultsVector calcSubsetSuppressErrors(
+    private static ResultsVector calculateSubsetSuppressErrors(
             FeatureList<FeatureInput> features, ParamsSource params, ErrorReporter errorReporter) {
         ResultsVector res = new ResultsVector(features.size());
 

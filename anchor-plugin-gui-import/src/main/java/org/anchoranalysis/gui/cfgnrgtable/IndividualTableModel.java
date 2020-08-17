@@ -55,7 +55,7 @@ public class IndividualTableModel extends AbstractTableModel implements IUpdateT
 
         if (state.getCfgNRG() != null) {
             this.cfg = state.getCfgNRG().getCfg();
-            this.nrgSavedInd = state.getCfgNRG().getCalcMarkInd();
+            this.nrgSavedInd = state.getCfgNRG().getIndividual();
         } else {
             this.cfg = new Cfg();
         }

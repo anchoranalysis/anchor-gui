@@ -40,7 +40,7 @@ public class CfgSizeStringFromCfgNRGInstantState extends CreateStringRasterGener
     // END BEAN PROPERTIES
 
     @Override
-    public String getBeanDscr() {
+    public String descriptionBean() {
         return getBeanName();
     }
 

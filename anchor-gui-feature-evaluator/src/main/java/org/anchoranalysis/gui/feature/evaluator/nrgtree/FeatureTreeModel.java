@@ -34,7 +34,7 @@ import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.log.Logger;
 import org.anchoranalysis.feature.bean.list.FeatureList;
-import org.anchoranalysis.feature.calc.FeatureInitParams;
+import org.anchoranalysis.feature.calculate.FeatureInitParams;
 import org.anchoranalysis.feature.input.FeatureInput;
 import org.anchoranalysis.feature.nrg.NRGStackWithParams;
 import org.anchoranalysis.feature.session.CreateFeatureInput;
@@ -45,7 +45,7 @@ import org.anchoranalysis.gui.feature.FeatureListWithRegionMap;
 import org.anchoranalysis.gui.feature.evaluator.nrgtree.overlayparams.CreateParamsFromOverlay;
 import org.anchoranalysis.gui.feature.evaluator.singlepair.UpdatableSinglePair;
 
-public class FeatureCalcDescriptionTreeModel extends DefaultTreeModel
+public class FeatureTreeModel extends DefaultTreeModel
         implements UpdatableSinglePair {
 
     private static final long serialVersionUID = -5795973516009041187L;
@@ -56,13 +56,11 @@ public class FeatureCalcDescriptionTreeModel extends DefaultTreeModel
     private Logger logger;
     private SharedFeatureMulti sharedFeatures;
 
-    private FeatureCalculatorMulti<FeatureInput> session = null;
-
-    // private static Log log = LogFactory.getLog(FeatureCalcDescriptionTreeModel.class);
+    private FeatureCalculatorMulti<FeatureInput> session;
 
     private boolean first = true;
 
-    public FeatureCalcDescriptionTreeModel(
+    public FeatureTreeModel(
             FeatureListWithRegionMap<FeatureInput> featureListWithRegions,
             SharedFeatureMulti sharedFeatures,
             Logger logger) {
@@ -100,7 +98,7 @@ public class FeatureCalcDescriptionTreeModel extends DefaultTreeModel
             updateOrReload(featureList, createParams, nrgStack);
 
         } catch (OperationFailedException e) {
-            logger.errorReporter().recordError(FeatureCalcDescriptionTreeModel.class, e);
+            logger.errorReporter().recordError(FeatureTreeModel.class, e);
         }
     }
 
@@ -120,7 +118,7 @@ public class FeatureCalcDescriptionTreeModel extends DefaultTreeModel
             updateOrReload(featureList, createParams, nrgStack);
 
         } catch (OperationFailedException e) {
-            logger.errorReporter().recordError(FeatureCalcDescriptionTreeModel.class, e);
+            logger.errorReporter().recordError(FeatureTreeModel.class, e);
         }
     }
 

@@ -28,15 +28,12 @@ package org.anchoranalysis.gui.feature.evaluator.nrgtree;
 
 import org.anchoranalysis.core.error.reporter.ErrorReporter;
 import org.netbeans.swing.outline.RenderDataProvider;
+import lombok.AllArgsConstructor;
 
-public class FeatureCalcDescriptionTreeRenderData implements RenderDataProvider {
+@AllArgsConstructor
+public class FeatureTreeRenderData implements RenderDataProvider {
 
     private ErrorReporter errorReporter;
-
-    public FeatureCalcDescriptionTreeRenderData(ErrorReporter errorReporter) {
-        super();
-        this.errorReporter = errorReporter;
-    }
 
     @Override
     public java.awt.Color getBackground(Object o) {
@@ -46,7 +43,7 @@ public class FeatureCalcDescriptionTreeRenderData implements RenderDataProvider 
     @Override
     public String getDisplayName(Object o) {
         try {
-            return ((Node) o).getFeature().getDscrWithCustomName();
+            return ((Node) o).getFeature().descriptionWithCustomName();
         } catch (Exception e) {
             errorReporter.recordError(getClass(), e);
             return "errorCalculatingName";
@@ -70,7 +67,7 @@ public class FeatureCalcDescriptionTreeRenderData implements RenderDataProvider 
     @Override
     public String getTooltipText(Object o) {
         Node f = (Node) o;
-        return f.getFeature().getBeanDscr();
+        return f.getFeature().descriptionBean();
     }
 
     @Override

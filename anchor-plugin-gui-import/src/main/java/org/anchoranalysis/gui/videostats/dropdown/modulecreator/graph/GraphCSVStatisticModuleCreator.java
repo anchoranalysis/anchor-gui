@@ -87,7 +87,7 @@ public class GraphCSVStatisticModuleCreator extends VideoStatsModuleCreatorConte
             ClickableGraphInstance graphInstance =
                     ClickableGraphFactory.create(definition, itr, null, null);
 
-            String graphFrameTitle = new FrameTitleCreator().prefix(namePrefix, title());
+            String graphFrameTitle = FrameTitleCreator.prefix(namePrefix, title());
 
             InternalFrameGraphAsModule frame =
                     new InternalFrameGraphAsModule(graphFrameTitle, graphInstance);

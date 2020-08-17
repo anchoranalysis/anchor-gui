@@ -107,9 +107,9 @@ public class ObjectWriterFromCfgNRGInstantState extends CreateRasterGenerator<Cf
     }
 
     @Override
-    public String getBeanDscr() {
+    public String descriptionBean() {
         return String.format(
-                "%s(mip=%d, drawObject=%s)", getBeanName(), mip ? 1 : 0, drawObject.getBeanDscr());
+                "%s(mip=%d, drawObject=%s)", getBeanName(), mip ? 1 : 0, drawObject.descriptionBean());
     }
 
     private static Cfg extractOrEmpty(CfgNRG cfgNRG) {

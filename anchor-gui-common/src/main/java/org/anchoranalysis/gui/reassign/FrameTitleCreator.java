@@ -26,17 +26,21 @@
 
 package org.anchoranalysis.gui.reassign;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+
+@NoArgsConstructor(access=AccessLevel.PRIVATE)
 public class FrameTitleCreator {
 
-    public String title(String frameName) {
+    public static String title(String frameName) {
         return frameName;
     }
 
-    public String title(String prefixName, int iter) {
+    public static String title(String prefixName, int iter) {
         return String.format("%s: iter=%09d", prefixName, iter);
     }
 
-    public String prefix(String prefixName, String subTitle) {
+    public static String prefix(String prefixName, String subTitle) {
 
         if (!prefixName.isEmpty()) {
             return String.format("%s: %s", prefixName, subTitle);

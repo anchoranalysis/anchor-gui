@@ -124,11 +124,11 @@ class DisplayStackViewportZoomed {
         return dimensionsEntire().scaleXYBy(new ScaleFactor(zoomScale.getScale()));
     }
 
-    public ImageResolution getRes() {
+    public ImageResolution getResolution() {
         return delegate.dimensionsEntire().resolution();
     }
 
-    public Point2i calcNewCrnrPosToMaintainMousePoint(Point2i mousePoint, ZoomScale zoomScaleOld) {
+    public Point2i cornerToMaintainMousePoint(Point2i mousePoint, ZoomScale zoomScaleOld) {
 
         // Mouse point is already in image-cordinates
         Point2i imgPointOld =
@@ -150,7 +150,7 @@ class DisplayStackViewportZoomed {
         return crnrPoint;
     }
 
-    public Point2i calcNewCrnrPosAfterChangeInZoom(
+    public Point2i cornerAfterChangeInZoom(
             Extent canvasExtentOld,
             ZoomScale zoomScaleOld,
             Extent canvasExtentNew,
@@ -160,7 +160,7 @@ class DisplayStackViewportZoomed {
         Extent canvasExtentOldImage = zoomScaleOld.removeScale(canvasExtentOld);
 
         Point2i scaleFree =
-                delegate.calcNewCrnrPosAfterChangeInViewSize(
+                delegate.cornerAfterChangeInViewSize(
                         canvasExtentOldImage, canvasExtentNewImage, scrollValImage);
         return zoomScale.applyScale(scaleFree);
     }

@@ -59,7 +59,7 @@ public abstract class CreateRasterGraph<T, S> extends CreateRasterGenerator<S> {
     public abstract boolean hasNecessaryParams(ExportTaskParams params);
 
     @Override
-    public String getBeanDscr() {
+    public String descriptionBean() {
         return String.format(
                 "graph=%s, width=%d, height=%d", graphDefinition.getTitle(), width, height);
     }

@@ -87,7 +87,7 @@ public class GenerateGraphNRGBreakdownFromInstantState
 
         // Each single nrg item
         int i = 0;
-        for (NRGTotal nrg : state.getCfgNRG().getCalcMarkInd()) {
+        for (NRGTotal nrg : state.getCfgNRG().getIndividual()) {
             Mark m = state.getCfgNRG().getCfg().get(i++);
 
             NRGGraphItem item = new NRGGraphItem();
@@ -99,7 +99,7 @@ public class GenerateGraphNRGBreakdownFromInstantState
         }
 
         // Each double nrg item
-        for (NRGPair pair : state.getCfgNRG().getCalcMarkPair().createPairsUnique()) {
+        for (NRGPair pair : state.getCfgNRG().getPair().createPairsUnique()) {
 
             NRGGraphItem item = new NRGGraphItem();
             item.setNrg(pair.getNRG().getTotal());

@@ -66,7 +66,7 @@ public class IndividualTablePanel {
                 // kick in
                 //   but the selectionIndices should prevent any global changes from filtering
                 // through
-                int[] selectedIDs = calcSelectedIDs();
+                int[] selectedIDs = calculateSelectedIdentifiers();
                 selectionIndices.setCurrentSelection(selectedIDs);
             }
         }
@@ -121,7 +121,7 @@ public class IndividualTablePanel {
                 .addListSelectionListener(this.selectionUpdater);
     }
 
-    private int[] calcSelectedIDs() {
+    private int[] calculateSelectedIdentifiers() {
         int[] selectedIndices = this.tablePanel.getTable().getSelectedRows();
 
         int markIDs[] = new int[selectedIndices.length];

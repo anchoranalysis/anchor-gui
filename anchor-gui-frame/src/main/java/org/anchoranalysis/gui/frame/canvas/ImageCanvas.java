@@ -260,7 +260,7 @@ public class ImageCanvas {
             // applyPending();
 
             Extent e =
-                    calcExtentToRetrieveScaled(displayStackViewport.createDimensionsEntireScaled());
+                    extentToRetrieveScaled(displayStackViewport.createDimensionsEntireScaled());
             updateStackViewportForImageExtent(e);
 
         } catch (OperationFailedException e) {
@@ -293,7 +293,7 @@ public class ImageCanvas {
         {
             // We interpolate a region from the image
             Extent extentNew =
-                    calcExtentToRetrieveScaled(displayStackViewport.createDimensionsEntireScaled());
+                    extentToRetrieveScaled(displayStackViewport.createDimensionsEntireScaled());
 
             // We update the scrollbars as well
             updateScollBarsWithNewExtent(
@@ -322,11 +322,11 @@ public class ImageCanvas {
                 && extentNew.calculateVolume() == canvasExtentOld.calculateVolume()
                 && zoomScaleNew.equals(zoomScaleOld)) {
             scrollValNew =
-                    displayStackViewport.calcNewCrnrPosToMaintainMousePoint(
+                    displayStackViewport.cornerToMaintainMousePoint(
                             mousePoint, zoomScaleOld);
         } else {
             scrollValNew =
-                    displayStackViewport.calcNewCrnrPosAfterChangeInZoom(
+                    displayStackViewport.cornerAfterChangeInZoom(
                             canvasExtentOld, zoomScaleOld, extentNew, scrollVal);
         }
 
@@ -338,7 +338,7 @@ public class ImageCanvas {
                 .contains(new BoundingBox(extentNew)));
     }
 
-    private Extent calcExtentToRetrieveScaled(ImageDimensions dimensionsScaled) {
+    private Extent extentToRetrieveScaled(ImageDimensions dimensionsScaled) {
         // We calculate the size of the region based upon the current size of the canvas (if we can)
 
         if (imageCanvas.getWidth() > 0) {
@@ -586,7 +586,7 @@ public class ImageCanvas {
     }
 
     public ImageResolution getRes() {
-        return displayStackViewport.getRes();
+        return displayStackViewport.getResolution();
     }
 
     public ZoomScale getZoomScale() {

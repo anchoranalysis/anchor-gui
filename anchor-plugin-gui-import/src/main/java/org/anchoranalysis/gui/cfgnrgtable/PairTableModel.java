@@ -53,7 +53,7 @@ public class PairTableModel extends AbstractTableModel implements IUpdateTableDa
     public void updateTableData(CfgNRGInstantState state) {
 
         if (state.getCfgNRG() != null) {
-            this.nrgSavedPairs = state.getCfgNRG().getCalcMarkPair();
+            this.nrgSavedPairs = state.getCfgNRG().getPair();
             this.pairArr = this.nrgSavedPairs.createPairsUnique().toArray(new NRGPair[] {});
         } else {
             this.pairArr = new NRGPair[] {};

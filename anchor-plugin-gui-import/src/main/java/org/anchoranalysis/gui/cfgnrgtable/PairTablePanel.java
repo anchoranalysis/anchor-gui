@@ -67,7 +67,7 @@ public class PairTablePanel {
                 //   but the selectionIndices should prevent any global changes from filtering
                 // through
 
-                int[] selectedIDs = calcSelectedIDs();
+                int[] selectedIDs = calculateSelectedIdentifiers();
                 selectionIndices.setCurrentSelection(selectedIDs);
             }
         }
@@ -131,8 +131,6 @@ public class PairTablePanel {
                 .getColumn(4)
                 .setCellRenderer(new AlignRenderer(SwingConstants.RIGHT));
 
-        // this.tablePanel.getTable().getColumnModel().getColumn(4).setHorizontalAlignment(SwingConstants.RIGHT);
-
         this.selectionUpdater = new SelectionUpdater();
 
         this.tablePanel.getTable().getSelectionModel().addListSelectionListener(selectionUpdater);
@@ -150,7 +148,7 @@ public class PairTablePanel {
         return selectionIndices.getCurrentSelection();
     }
 
-    public int[] calcSelectedIDs() {
+    public int[] calculateSelectedIdentifiers() {
 
         HashSet<Integer> idSet = new HashSet<>();
 

@@ -28,7 +28,7 @@ package org.anchoranalysis.gui.feature.evaluator.nrgtree;
 
 import org.netbeans.swing.outline.RowModel;
 
-public class FeatureCalcDescriptionTreeRowModel implements RowModel {
+public class FeatureTreeRowModel implements RowModel {
 
     @SuppressWarnings("rawtypes")
     @Override
@@ -36,8 +36,6 @@ public class FeatureCalcDescriptionTreeRowModel implements RowModel {
         switch (column) {
             case 0:
                 return String.class;
-                // case 1:
-                //   return Long.class;
             default:
                 assert false;
         }
@@ -54,8 +52,6 @@ public class FeatureCalcDescriptionTreeRowModel implements RowModel {
         switch (column) {
             case 0:
                 return "Value";
-                // case 1:
-                //   return Long.class;
             default:
                 assert false;
         }

@@ -32,7 +32,7 @@ import org.anchoranalysis.anchor.mpp.mark.Mark;
 import org.anchoranalysis.anchor.mpp.mark.voxelized.memo.VoxelizedMarkMemo;
 import org.anchoranalysis.anchor.mpp.overlap.OverlapUtilities;
 import org.anchoranalysis.core.error.OperationFailedException;
-import org.anchoranalysis.feature.calc.FeatureCalculationException;
+import org.anchoranalysis.feature.calculate.FeatureCalculationException;
 import org.anchoranalysis.feature.nrg.NRGStack;
 import org.anchoranalysis.gui.videostats.internalframe.annotator.tool.ToolErrorReporter;
 import org.anchoranalysis.image.extent.ImageDimensions;
@@ -56,10 +56,10 @@ class OverlapChecker {
         this.regionMap = regionMap;
     }
 
-    public static double calcOverlapRatio(
+    public static double calculateOverlapRatio(
             VoxelizedMarkMemo obj1, VoxelizedMarkMemo obj2, double overlap, int regionID)
             throws FeatureCalculationException {
-        return overlap / calcMinVolume(obj1, obj2, regionID);
+        return overlap / calculateMinVolume(obj1, obj2, regionID);
     }
 
     // We look for larger overlap to warn the user
@@ -91,7 +91,7 @@ class OverlapChecker {
             throws OperationFailedException {
         try {
             double overlap = OverlapUtilities.overlapWith(pmProp1, pmProp2, 0);
-            double overlapRatio = calcOverlapRatio(pmProp1, pmProp2, overlap, 0);
+            double overlapRatio = calculateOverlapRatio(pmProp1, pmProp2, overlap, 0);
             return (overlapRatio > largeOverlapThreshold);
         } catch (FeatureCalculationException e) {
             throw new OperationFailedException(e);
@@ -106,9 +106,8 @@ class OverlapChecker {
                 .existsWith(pmExst.voxelized().boundingBox());
     }
 
-    private static double calcMinVolume(
-            VoxelizedMarkMemo obj1, VoxelizedMarkMemo obj2, int regionID)
-            throws FeatureCalculationException {
-        return Math.min(obj1.getMark().volume(0), obj2.getMark().volume(0));
+    private static double calculateMinVolume(
+            VoxelizedMarkMemo obj1, VoxelizedMarkMemo obj2, int regionID) {
+        return Math.min(obj1.getMark().volume(regionID), obj2.getMark().volume(regionID));
     }
 }

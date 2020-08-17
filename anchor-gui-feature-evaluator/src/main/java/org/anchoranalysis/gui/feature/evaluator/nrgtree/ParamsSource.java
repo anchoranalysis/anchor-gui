@@ -30,7 +30,7 @@ import lombok.AllArgsConstructor;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.feature.bean.Feature;
 import org.anchoranalysis.feature.bean.list.FeatureListFactory;
-import org.anchoranalysis.feature.calc.NamedFeatureCalculationException;
+import org.anchoranalysis.feature.calculate.NamedFeatureCalculateException;
 import org.anchoranalysis.feature.input.FeatureInput;
 import org.anchoranalysis.feature.session.CreateFeatureInput;
 import org.anchoranalysis.feature.session.calculator.FeatureCalculatorMulti;
@@ -41,13 +41,13 @@ public class ParamsSource {
     private CreateFeatureInput<FeatureInput> createParams;
     private FeatureCalculatorMulti<FeatureInput> featureCalculator;
 
-    public double calc(Feature<FeatureInput> feature) throws NamedFeatureCalculationException {
+    public double calc(Feature<FeatureInput> feature) throws NamedFeatureCalculateException {
         try {
             FeatureInput params = createParams.createForFeature(feature);
             return featureCalculator.calculate(params, FeatureListFactory.from(feature)).get(0);
 
         } catch (CreateException e) {
-            throw new NamedFeatureCalculationException(e);
+            throw new NamedFeatureCalculateException(e);
         }
     }
 }

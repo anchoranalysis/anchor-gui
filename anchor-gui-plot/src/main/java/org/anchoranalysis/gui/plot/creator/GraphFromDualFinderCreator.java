@@ -82,8 +82,7 @@ public interface GraphFromDualFinderCreator<T> {
                     Iterator<T> itr = new BoundedIndexContainerIterator<>(cntr, 1000);
 
                     String graphFrameTitle =
-                            new FrameTitleCreator()
-                                    .prefix(windowTitlePrefix, definition.getTitle());
+                            FrameTitleCreator.prefix(windowTitlePrefix, definition.getTitle());
 
                     InternalFrameGraphAsModule frame =
                             new InternalFrameGraphAsModule(

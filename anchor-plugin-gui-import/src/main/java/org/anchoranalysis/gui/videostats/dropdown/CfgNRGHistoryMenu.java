@@ -279,7 +279,7 @@ public class CfgNRGHistoryMenu {
 
                             try {
                                 for (int i = 0;
-                                        i < finderKernelProposer.get().getNumKernel();
+                                        i < finderKernelProposer.get().getNumberKernels();
                                         i++) {
                                     addCSVStatistic(
                                             acceptedSubMenu,
@@ -300,7 +300,7 @@ public class CfgNRGHistoryMenu {
                                     graphSubMenu.createSubMenu("Kernel - Rate of Proposal", false);
                             try {
                                 for (int i = 0;
-                                        i < finderKernelProposer.get().getNumKernel();
+                                        i < finderKernelProposer.get().getNumberKernels();
                                         i++) {
                                     addCSVStatistic(
                                             propSubMenu,

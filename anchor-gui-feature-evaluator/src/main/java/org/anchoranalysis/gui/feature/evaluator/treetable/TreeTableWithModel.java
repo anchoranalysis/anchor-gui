@@ -34,7 +34,7 @@ import org.anchoranalysis.feature.input.FeatureInput;
 import org.anchoranalysis.feature.nrg.NRGStackWithParams;
 import org.anchoranalysis.feature.shared.SharedFeatureMulti;
 import org.anchoranalysis.gui.feature.FeatureListWithRegionMap;
-import org.anchoranalysis.gui.feature.evaluator.nrgtree.FeatureCalcDescriptionTreeModel;
+import org.anchoranalysis.gui.feature.evaluator.nrgtree.FeatureTreeModel;
 import org.netbeans.swing.outline.Outline;
 
 // Has a number of different tables for cliques sizes (0, 1, 2) all of which remain memory, but only
@@ -43,7 +43,7 @@ import org.netbeans.swing.outline.Outline;
 public class TreeTableWithModel implements ITreeTableModel {
 
     private TreeTable delegate;
-    private FeatureCalcDescriptionTreeModel featureTree;
+    private FeatureTreeModel featureTree;
 
     public TreeTableWithModel(
             TreeTableProperties properties,
@@ -51,7 +51,7 @@ public class TreeTableWithModel implements ITreeTableModel {
             SharedFeatureMulti sharedFeatures) {
         super();
         this.featureTree =
-                new FeatureCalcDescriptionTreeModel(
+                new FeatureTreeModel(
                         featureList, sharedFeatures, properties.getLogErrorReporter());
         this.delegate = new TreeTable(featureTree, properties);
     }

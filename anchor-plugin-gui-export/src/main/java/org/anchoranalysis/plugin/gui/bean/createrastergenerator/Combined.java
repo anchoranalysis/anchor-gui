@@ -74,7 +74,7 @@ public class Combined<T> extends CreateRasterGenerator<T> {
     }
 
     @Override
-    public String getBeanDscr() {
+    public String descriptionBean() {
         return getBeanName();
     }
 }

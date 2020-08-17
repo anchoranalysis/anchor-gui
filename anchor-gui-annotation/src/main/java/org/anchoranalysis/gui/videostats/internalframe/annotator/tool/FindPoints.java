@@ -56,7 +56,7 @@ class FindPoints {
 
         // Find marks that contain the point x, y
         for (Mark m : cfg) {
-            byte membership = m.evalPointInside(point);
+            byte membership = m.isPointInside(point);
             if (rm.isMemberFlag(membership)) {
                 cfgOut.add(m);
             }

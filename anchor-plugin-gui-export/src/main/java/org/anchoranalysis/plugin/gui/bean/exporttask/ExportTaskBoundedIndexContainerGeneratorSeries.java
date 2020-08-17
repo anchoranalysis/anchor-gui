@@ -108,7 +108,7 @@ public class ExportTaskBoundedIndexContainerGeneratorSeries<T>
         int min = cfgNRGCntr.getMinimumIndex();
         int max = cfgNRGCntr.getMaximumIndex();
 
-        int numAdd = calcIncrements(min, max);
+        int numAdd = calculateIncrements(min, max);
 
         int indexOut = 0;
         IncrementalSequenceType sequenceType = new IncrementalSequenceType(indexOut);
@@ -163,7 +163,7 @@ public class ExportTaskBoundedIndexContainerGeneratorSeries<T>
         return true;
     }
 
-    private int calcIncrements(int min, int max) {
+    private int calculateIncrements(int min, int max) {
         double incr = (double) (max - min) / incrementSize;
         return (int) Math.floor(incr) + 1;
     }

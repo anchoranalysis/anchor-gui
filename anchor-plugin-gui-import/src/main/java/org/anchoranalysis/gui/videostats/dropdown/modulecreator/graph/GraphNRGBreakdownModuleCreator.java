@@ -77,7 +77,7 @@ public class GraphNRGBreakdownModuleCreator extends VideoStatsModuleCreatorConte
         GenerateGraphNRGBreakdownFromInstantState generator =
                 new GenerateGraphNRGBreakdownFromInstantState(definition, colorIndex);
 
-        String graphFrameTitle = new FrameTitleCreator().prefix(namePrefix, definition.getTitle());
+        String graphFrameTitle = FrameTitleCreator.prefix(namePrefix, definition.getTitle());
 
         try {
             CfgNRGInstantStateGraphPanel tablePanel = new CfgNRGInstantStateGraphPanel(generator);

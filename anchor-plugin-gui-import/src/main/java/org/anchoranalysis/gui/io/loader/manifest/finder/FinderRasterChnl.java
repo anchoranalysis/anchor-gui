@@ -81,7 +81,7 @@ public abstract class FinderRasterChnl extends FinderSingleFile implements Finde
     private Channel createChnl(FileWrite fileWrite) throws RasterIOException, CreateException {
 
         // Assume single series, single channel
-        Path filePath = fileWrite.calcPath();
+        Path filePath = fileWrite.calculatePath();
 
         try (OpenedRaster openedRaster = rasterReader.openFile(filePath)) {
             if (openedRaster.numberSeries() != 1) {

@@ -75,7 +75,7 @@ public class KernelMatchPanel {
             comboKernelType = new JComboBox<>();
             comboKernelType.addItem(new NameIntValue("any", -1));
 
-            for (int i = 0; i < kernelProposer.getNumKernel(); i++) {
+            for (int i = 0; i < kernelProposer.getNumberKernels(); i++) {
                 WeightedKernel<CfgNRGPixelized> kf = kernelProposer.getAllKernelFactories().get(i);
                 comboKernelType.addItem(new NameIntValue(kf.getName(), i));
             }

@@ -42,7 +42,7 @@ public class GraphDefinitionLineIterVsKernelExecutionTimeByKernel
 
     private static int[] createKernelIDArr(KernelProposer<CfgNRGPixelized> kernelProposer) {
 
-        int numKernels = kernelProposer.getNumKernel();
+        int numKernels = kernelProposer.getNumberKernels();
         int[] kernelID = new int[numKernels + 1];
 
         kernelID[0] = -1;
@@ -55,7 +55,7 @@ public class GraphDefinitionLineIterVsKernelExecutionTimeByKernel
 
     private static String[] createKernelTitleArr(KernelProposer<CfgNRGPixelized> kernelProposer) {
 
-        int numKernels = kernelProposer.getNumKernel();
+        int numKernels = kernelProposer.getNumberKernels();
         String[] kernelTitleArr = new String[numKernels + 1];
 
         kernelTitleArr[0] = "any";
