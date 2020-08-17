@@ -66,7 +66,7 @@ class FindPoints {
 
     public static List<Point3i> findSelectedPointsNear(
             Point3d point, IQuerySelectedPoints selectedPoints) {
-        return findSelectedPointsNear(PointConverter.intFromDouble(point), selectedPoints);
+        return findSelectedPointsNear(PointConverter.intFromDoubleFloor(point), selectedPoints);
     }
 
     private static List<Point3i> findSelectedPointsNear(

@@ -294,7 +294,7 @@ public class OverlayPrecalculatedCache implements OverlayRetriever {
 
             // If the object-mask we make from the overlay has no pixels, then we reject it by returning
             // NULL
-            if (!omScaledProps.withoutProperties().hasPixelsGreaterThan(0)) {
+            if (!omScaledProps.withoutProperties().voxelsOn().anyExists()) {
                 return Optional.empty();
             }
 

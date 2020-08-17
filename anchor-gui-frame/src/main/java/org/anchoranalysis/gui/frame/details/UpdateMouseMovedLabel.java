@@ -29,30 +29,24 @@ package org.anchoranalysis.gui.frame.details;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
 import javax.swing.JLabel;
+import org.anchoranalysis.core.geometry.Point2i;
 import org.anchoranalysis.gui.frame.details.canvas.InternalFrameCanvas;
+import lombok.AllArgsConstructor;
 
+@AllArgsConstructor
 class UpdateMouseMovedLabel extends MouseMotionAdapter {
 
     private StringHelper stringConstructor;
     private JLabel detailsLabel;
     private InternalFrameCanvas internalFrameCanvas;
 
-    public UpdateMouseMovedLabel(
-            StringHelper stringConstructor,
-            JLabel detailsLabel,
-            InternalFrameCanvas internalFrameCanvas) {
-        super();
-        this.stringConstructor = stringConstructor;
-        this.detailsLabel = detailsLabel;
-        this.internalFrameCanvas = internalFrameCanvas;
-    }
-
     @Override
     public void mouseMoved(MouseEvent e) {
         super.mouseMoved(e);
-        if (internalFrameCanvas.canvasContainsAbs(e.getX(), e.getY())) {
+        Point2i point = new Point2i(e.getX(), e.getY());
+        if (internalFrameCanvas.canvasContainsAbsolute(point)) {
             updateLabelInside(
-                    e.getX(), e.getY(), internalFrameCanvas.intensityStrAtAbs(e.getX(), e.getY()));
+                    e.getX(), e.getY(), internalFrameCanvas.intensityStrAtAbsolute(point));
         } else {
             updateLabelOutside(e.getX(), e.getY());
         }

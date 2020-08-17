@@ -49,6 +49,7 @@ import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.error.reporter.ErrorReporter;
 import org.anchoranalysis.core.geometry.Point2i;
 import org.anchoranalysis.core.geometry.Point3i;
+import org.anchoranalysis.core.geometry.PointConverter;
 import org.anchoranalysis.core.index.SetOperationFailedException;
 import org.anchoranalysis.gui.displayupdate.ProvidesDisplayUpdate;
 import org.anchoranalysis.gui.frame.canvas.zoom.DefaultZoomSuggestor;
@@ -369,14 +370,16 @@ public class ImageCanvas {
         if (biUpdate != null) {
             imageCanvas.updated(biUpdate);
         }
-
-        {
-            ImageDimensions dimensions = displayStackViewport.createDimensionsEntireScaled();
-            panel.setPreferredSize(
-                    new Dimension(
-                            dimensions.x() + extentScrollbars.getPreferredWidth(),
-                            dimensions.y() + extentScrollbars.getPreferredHeight()));
-        }
+        
+        updateSizeOnPanel();
+    }
+    
+    private void updateSizeOnPanel() {
+        ImageDimensions dimensions = displayStackViewport.createDimensionsEntireScaled();
+        panel.setPreferredSize(
+                new Dimension(
+                        dimensions.x() + extentScrollbars.getPreferredWidth(),
+                        dimensions.y() + extentScrollbars.getPreferredHeight()));        
     }
 
     // Applies any pending changes, and then updates the image
@@ -513,13 +516,13 @@ public class ImageCanvas {
         return slice;
     }
 
-    // If the image point x,y is contained within the canvas
-    public boolean canvasContainsAbs(int x, int y) {
-        return displayStackViewport.canvasContainsAbs(x, y, slice);
+    /** If the image point x,y is contained within the canvas? */
+    public boolean canvasContainsAbsolute(Point2i point) {
+        return displayStackViewport.canvasContainsAbs( PointConverter.convertTo3i(point,slice) );
     }
 
-    public String intensityStrAtAbs(int x, int y) {
-        return displayStackViewport.intensityStrAtAbs(x, y, slice);
+    public String intensityStrAtAbsolute(Point2i point) {
+        return displayStackViewport.intensityStrAtAbs( PointConverter.convertTo3i(point,slice) );
     }
 
     // Null means it cannot be determined

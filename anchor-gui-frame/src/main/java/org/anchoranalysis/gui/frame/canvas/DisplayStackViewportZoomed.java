@@ -30,6 +30,7 @@ import java.awt.image.BufferedImage;
 import java.util.Optional;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.geometry.Point2i;
+import org.anchoranalysis.core.geometry.Point3i;
 import org.anchoranalysis.core.index.SetOperationFailedException;
 import org.anchoranalysis.gui.frame.canvas.zoom.ZoomScale;
 import org.anchoranalysis.gui.frame.display.BoundOverlayedDisplayStack;
@@ -175,12 +176,12 @@ class DisplayStackViewportZoomed {
     }
 
     // If the image point x,y is contained within the canvas
-    public boolean canvasContainsAbs(int x, int y, int z) {
-        return delegate.canvasContainsAbs(x, y, z);
+    public boolean canvasContainsAbs(Point3i point) {
+        return delegate.canvasContainsAbs(point);
     }
 
-    public String intensityStrAtAbs(int x, int y, int z) {
-        return delegate.intensityStrAtAbs(x, y, z);
+    public String intensityStrAtAbs(Point3i point) {
+        return delegate.intensityStrAtAbs(point);
     }
 
     // empty() means it cannot be determined

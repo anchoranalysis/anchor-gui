@@ -46,6 +46,7 @@ import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.error.reporter.ErrorReporter;
+import org.anchoranalysis.core.geometry.Point2i;
 import org.anchoranalysis.core.index.IndexGettableSettable;
 import org.anchoranalysis.core.index.container.BoundedRangeIncompleteDynamic;
 import org.anchoranalysis.gui.displayupdate.DisplayUpdateRememberStack;
@@ -284,12 +285,12 @@ public class InternalFrameCanvas {
         return canvas.getRes();
     }
 
-    public boolean canvasContainsAbs(int x, int y) {
-        return canvas.canvasContainsAbs(x, y);
+    public boolean canvasContainsAbsolute(Point2i point) {
+        return canvas.canvasContainsAbsolute(point);
     }
 
-    public String intensityStrAtAbs(int x, int y) {
-        return canvas.intensityStrAtAbs(x, y);
+    public String intensityStrAtAbsolute(Point2i point) {
+        return canvas.intensityStrAtAbsolute(point);
     }
 
     // empty() means it cannot be determined

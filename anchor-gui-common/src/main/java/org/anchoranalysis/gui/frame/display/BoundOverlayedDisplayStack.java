@@ -28,6 +28,7 @@ package org.anchoranalysis.gui.frame.display;
 
 import java.util.Optional;
 import org.anchoranalysis.core.error.OperationFailedException;
+import org.anchoranalysis.core.geometry.Point3i;
 import org.anchoranalysis.image.extent.BoundingBox;
 import org.anchoranalysis.image.extent.ImageDimensions;
 import org.anchoranalysis.image.stack.DisplayStack;
@@ -68,10 +69,10 @@ public class BoundOverlayedDisplayStack {
     // Creates a new DisplayStack after imposing the overlay on the background
     public DisplayStack extractFullyOverlayed() throws OperationFailedException {
         RegionExtracter re = background.createRegionExtracter();
-        return re.extractRegionFrom(new BoundingBox(background.dimensions().extent()), 1.0);
+        return re.extractRegionFrom(new BoundingBox(background.dimensions()), 1.0);
     }
 
-    public final int getNumChnl() {
+    public final int getNumberChannels() {
         return background.getNumberChannels();
     }
 
@@ -79,8 +80,8 @@ public class BoundOverlayedDisplayStack {
         return background.unconvertedDataType();
     }
 
-    public int getUnconvertedVoxelAt(int c, int x, int y, int z) {
-        return background.getUnconvertedVoxelAt(c, x, y, z);
+    public int getUnconvertedVoxelAt(int channelIndex, Point3i point) {
+        return background.getUnconvertedVoxelAt(channelIndex, point);
     }
 
     public RegionExtracter createRegionExtracter() {

@@ -156,23 +156,23 @@ class DisplayStackViewport {
     }
 
     // If the image point x,y is contained within the canvas
-    public boolean canvasContainsAbs(int x, int y, int z) {
-        return displayStackEntireImage.dimensions().contains(new Point3i(x, y, z));
+    public boolean canvasContainsAbs(Point3i point) {
+        return displayStackEntireImage.dimensions().contains(point);
     }
 
     // Returns a string describing the intensity values at a particular absolute point in the
     // display stack
-    public String intensityStrAtAbs(int x, int y, int z) {
+    public String intensityStrAtAbs(Point3i point) {
 
         StringBuilder sb = new StringBuilder();
 
-        int numChnl = displayStackEntireImage.getNumChnl();
-        for (int c = 0; c < numChnl; c++) {
+        int numberChannels = displayStackEntireImage.getNumberChannels();
+        for (int c = 0; c < numberChannels; c++) {
 
-            int intensVal = displayStackEntireImage.getUnconvertedVoxelAt(c, x, y, z);
-            sb.append(String.format("%6d", intensVal));
+            int intensity = displayStackEntireImage.getUnconvertedVoxelAt(c, point);
+            sb.append(String.format("%6d", intensity));
 
-            if (c != (numChnl - 1)) {
+            if (c != (numberChannels - 1)) {
                 sb.append(",");
             }
         }
