@@ -127,7 +127,6 @@ public class ImageCanvas {
 
         this.displayStackViewport = new DisplayStackViewportZoomed();
 
-        assert (errorReporter != null);
         this.errorReporter = errorReporter;
         this.imageProvider = imageProvider;
         this.imageProvider.addChangeListener(new UpdateImageListener());
@@ -142,14 +141,10 @@ public class ImageCanvas {
 
         this.imageCanvas.addMouseWheelListener(new MouseWheelListenerZoom(this));
 
-        // createDisplayStackCurrentlyShown();
-
         MouseMotionListenerDragView mmlDragView =
                 new MouseMotionListenerDragView(this, displayStackViewport, errorReporter);
         this.imageCanvas.addMouseListener(mmlDragView);
         this.imageCanvas.addMouseMotionListener(mmlDragView);
-        // eventList.add( MouseListener.class, mmlDragView );
-        // eventList.add( MouseMotionListener.class, mmlDragView );
 
         this.extentScrollbars = new ExtentScrollBars();
         this.extentScrollbars.addChangeListener(new UpdateViewportOnlyListener());
@@ -158,7 +153,6 @@ public class ImageCanvas {
         this.panel.add(extentScrollbars.getScrollVer(), BorderLayout.EAST);
         this.panel.add(extentScrollbars.getScrollHor(), BorderLayout.SOUTH);
 
-        // this.panel.setMinimumSize( new Dimension(700,700) );
         try {
             // We look for any changes that might have happened since last time
             // Selecting a zoom level of null, means it's automatically selected
@@ -179,12 +173,12 @@ public class ImageCanvas {
                     @Override
                     public void componentResized(ComponentEvent e) {
                         super.componentResized(e);
-                        resizeEventFromFrame(e);
+                        resizeEventFromFrame();
                     }
                 });
     }
 
-    public void resizeEventFromFrame(ComponentEvent e) {
+    public void resizeEventFromFrame() {
         try {
             setScrollBarExtent();
 
@@ -255,13 +249,10 @@ public class ImageCanvas {
     public void changeSlice(int z) {
         this.slice = z;
 
-        // System.out.printf("Changing slice to %d%n", z);
         try {
-            // applyPending();
-
-            Extent e =
+            Extent extent =
                     extentToRetrieveScaled(displayStackViewport.createDimensionsEntireScaled());
-            updateStackViewportForImageExtent(e);
+            updateStackViewportForImageExtent(extent);
 
         } catch (OperationFailedException e) {
             errorReporter.recordError(ImageCanvas.class, e);

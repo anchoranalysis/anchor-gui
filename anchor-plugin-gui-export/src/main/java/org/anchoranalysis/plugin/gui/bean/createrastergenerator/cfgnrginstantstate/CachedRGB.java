@@ -150,7 +150,7 @@ class CachedRGB {
 
         for (BoundingBox box : listBBox) {
 
-            BoundingBox boxClipped = box.clipTo(backgroundOriginal.dimensions().extent());
+            BoundingBox boxClipped = box.clipTo(backgroundOriginal.extent());
 
             for (int c = 0; c < 3; c++) {
                 Channel rgbTarget = rgb.channelAt(c);
@@ -178,7 +178,6 @@ class CachedRGB {
     private void drawCfg(ColoredOverlayCollection cfg) throws OperationFailedException {
         assert (cfg.getColorList() != null);
         assert (cfg.getColorList().size() == cfg.size());
-        // assert( cfg.getColorList().numUniqueColors() > 0 );
         // TODO We only draw marks which intersect with the bounding box
         drawOverlay.writeOverlays(cfg, rgb, idGetter);
     }

@@ -90,7 +90,7 @@ public class BoundColoredOverlayCollection {
             throws OperationFailedException {
 
         // Create a containing bounding box with the zoom
-        BoundingBox container = createZoomedContainer(box, zoomFactor, stack.dimensions().extent());
+        BoundingBox container = createZoomedContainer(box, zoomFactor, stack.extent());
 
         OverlayPrecalculatedCache marksWithinView =
                 cache.subsetWithinView(box, container, zoomFactor);

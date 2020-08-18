@@ -28,7 +28,6 @@ package org.anchoranalysis.gui.frame.details.canvas;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
-import java.awt.event.ComponentEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.util.Optional;
@@ -309,10 +308,6 @@ public class InternalFrameCanvas {
 
     public boolean equals(Object obj) {
         return canvas.equals(obj);
-    }
-
-    public void resizeEventFromFrame(ComponentEvent e) {
-        canvas.resizeEventFromFrame(e);
     }
 
     public void zoomIn() {
