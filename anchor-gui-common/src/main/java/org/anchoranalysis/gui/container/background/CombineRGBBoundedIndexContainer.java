@@ -38,7 +38,7 @@ import org.anchoranalysis.image.extent.ImageDimensions;
 import org.anchoranalysis.image.extent.IncorrectImageSizeException;
 import org.anchoranalysis.image.stack.DisplayStack;
 import org.anchoranalysis.image.stack.Stack;
-import org.anchoranalysis.image.voxel.datatype.VoxelDataTypeUnsignedByte;
+import org.anchoranalysis.image.voxel.datatype.UnsignedByte;
 
 public class CombineRGBBoundedIndexContainer implements BoundedIndexContainer<DisplayStack> {
 
@@ -210,7 +210,7 @@ public class CombineRGBBoundedIndexContainer implements BoundedIndexContainer<Di
                 assert (dimensions != null);
                 Channel chnlNew =
                         ChannelFactory.instance()
-                                .create(dimensions, VoxelDataTypeUnsignedByte.INSTANCE);
+                                .create(dimensions, UnsignedByte.INSTANCE);
                 stackNew.addChannel(chnlNew);
             }
         } catch (IncorrectImageSizeException | GetOperationFailedException e) {

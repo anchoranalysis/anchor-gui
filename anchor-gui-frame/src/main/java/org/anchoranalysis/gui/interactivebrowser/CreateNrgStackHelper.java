@@ -52,7 +52,7 @@ class CreateNrgStackHelper {
 
             MPPInitParams soMPP = operationProposerSharedObjects.get();
 
-            NamedProvider<Stack> nic = soMPP.getImage().getStackCollection();
+            NamedProvider<Stack> nic = soMPP.getImage().stacks();
 
             // We expects the keys to be the indexes
             {

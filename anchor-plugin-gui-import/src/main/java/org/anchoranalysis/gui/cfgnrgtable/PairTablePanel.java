@@ -34,6 +34,7 @@ import javax.swing.JTable;
 import javax.swing.SwingConstants;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.table.TableColumn;
 import org.anchoranalysis.anchor.mpp.feature.nrg.NRGPair;
 import org.anchoranalysis.core.color.ColorIndex;
 import org.anchoranalysis.core.index.IndicesSelection;
@@ -89,47 +90,15 @@ public class PairTablePanel {
 
         // We set the column widths
         int col = 0;
-        this.tablePanel
-                .getTable()
-                .getColumnModel()
-                .getColumn(col++)
-                .setPreferredWidth(TableColumnConstants.WIDTH_COLOR);
-        this.tablePanel
-                .getTable()
-                .getColumnModel()
-                .getColumn(col++)
-                .setPreferredWidth(TableColumnConstants.WIDTH_COLOR);
-        this.tablePanel
-                .getTable()
-                .getColumnModel()
-                .getColumn(col++)
-                .setPreferredWidth(TableColumnConstants.WIDTH_ID);
-        this.tablePanel
-                .getTable()
-                .getColumnModel()
-                .getColumn(col++)
-                .setPreferredWidth(TableColumnConstants.WIDTH_ID);
-        this.tablePanel
-                .getTable()
-                .getColumnModel()
-                .getColumn(col++)
-                .setPreferredWidth(TableColumnConstants.WIDTH_NRG);
+        columnAt(col++).setPreferredWidth(TableColumnConstants.WIDTH_COLOR);
+        columnAt(col++).setPreferredWidth(TableColumnConstants.WIDTH_COLOR);
+        columnAt(col++).setPreferredWidth(TableColumnConstants.WIDTH_ID);
+        columnAt(col++).setPreferredWidth(TableColumnConstants.WIDTH_ID);
+        columnAt(col++).setPreferredWidth(TableColumnConstants.WIDTH_NRG);
 
-        this.tablePanel
-                .getTable()
-                .getColumnModel()
-                .getColumn(0)
-                .setCellRenderer(new ColorRenderer());
-        this.tablePanel
-                .getTable()
-                .getColumnModel()
-                .getColumn(1)
-                .setCellRenderer(new ColorRenderer());
-        this.tablePanel
-                .getTable()
-                .getColumnModel()
-                .getColumn(4)
-                .setCellRenderer(new AlignRenderer(SwingConstants.RIGHT));
+        columnAt(0).setCellRenderer(new ColorRenderer());
+        columnAt(1).setCellRenderer(new ColorRenderer());
+        columnAt(4).setCellRenderer(new AlignRenderer(SwingConstants.RIGHT));
 
         this.selectionUpdater = new SelectionUpdater();
 
@@ -171,36 +140,32 @@ public class PairTablePanel {
     }
 
     public ISelectIndicesSendable getSelectMarksSendable() {
-        return new ISelectIndicesSendable() {
+        return ids -> {
 
-            @Override
-            public void selectIndicesOnly(int[] ids) {
+            selectionIndices.setCurrentSelection(ids);
 
-                selectionIndices.setCurrentSelection(ids);
+            Set<Integer> idSet = IDUtilities.setFromIntArr(ids);
 
-                Set<Integer> idSet = IDUtilities.setFromIntArr(ids);
+            // We disable the selection updater, so no update occurs after set the selection
+            //   as it might only be a subset of the overall ids, which would then change
+            //   our current selection vlaue
+            selectionUpdater.setEnabled(false);
 
-                // We disable the selection updater, so no update occurs after set the selection
-                //   as it might only be a subset of the overall ids, which would then change
-                //   our current selection vlaue
-                selectionUpdater.setEnabled(false);
+            tablePanel.getTable().getSelectionModel().clearSelection();
 
-                tablePanel.getTable().getSelectionModel().clearSelection();
+            // We loop through every set of pairs, and select if both are in our hashset
+            for (int i = 0; i < tableModel.getPairs().length; i++) {
 
-                // We loop through every set of pairs, and select if both are in our hashset
-                for (int i = 0; i < tableModel.getPairs().length; i++) {
+                NRGPair pair = tableModel.getPairs()[i];
 
-                    NRGPair pair = tableModel.getPairs()[i];
-
-                    if (idSet.contains(pair.getPair().getSource().getId())
-                            && idSet.contains(pair.getPair().getDestination().getId())) {
-                        tablePanel.getTable().getSelectionModel().addSelectionInterval(i, i);
-                        IDUtilities.scrollJTableToRow(tablePanel.getTable(), i);
-                    }
+                if (idSet.contains(pair.getPair().getSource().getId())
+                        && idSet.contains(pair.getPair().getDestination().getId())) {
+                    tablePanel.getTable().getSelectionModel().addSelectionInterval(i, i);
+                    IDUtilities.scrollJTableToRow(tablePanel.getTable(), i);
                 }
-
-                selectionUpdater.setEnabled(true);
             }
+
+            selectionUpdater.setEnabled(true);
         };
     }
 
@@ -210,5 +175,13 @@ public class PairTablePanel {
 
     public void removeMouseListener(MouseListener l) {
         tablePanel.removeMouseListener(l);
+    }
+    
+    
+    private TableColumn columnAt(int index) {
+        return this.tablePanel
+            .getTable()
+            .getColumnModel()
+            .getColumn(index);
     }
 }

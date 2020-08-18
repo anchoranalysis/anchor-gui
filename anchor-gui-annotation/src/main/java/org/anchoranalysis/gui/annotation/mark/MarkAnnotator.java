@@ -69,7 +69,7 @@ public class MarkAnnotator {
         // Nullable
         markProposerGuess = setupGuess(soMPP, annotationStrategy, logger);
 
-        this.backgroundStacks = soMPP.getImage().getStackCollection();
+        this.backgroundStacks = soMPP.getImage().stacks();
     }
 
     public RegionMap getRegionMap() {

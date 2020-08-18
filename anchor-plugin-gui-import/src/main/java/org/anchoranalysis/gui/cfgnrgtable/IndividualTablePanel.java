@@ -146,42 +146,38 @@ public class IndividualTablePanel {
     }
 
     public ISelectIndicesSendable getSelectMarksSendable() {
-        return new ISelectIndicesSendable() {
-            @Override
-            public void selectIndicesOnly(int[] ids) {
+        return ids -> {
+            // If the ids are the same as our current selection, we don't need to change
+            // anything
+            selectionIndices.setCurrentSelection(ids);
+            //	return;
+            // }
 
-                // If the ids are the same as our current selection, we don't need to change
-                // anything
-                selectionIndices.setCurrentSelection(ids);
-                //	return;
-                // }
+            Set<Integer> idSet = IDUtilities.setFromIntArr(ids);
 
-                Set<Integer> idSet = IDUtilities.setFromIntArr(ids);
+            selectionUpdater.setEnabled(false);
 
-                selectionUpdater.setEnabled(false);
+            tablePanel.getTable().getSelectionModel().clearSelection();
 
-                tablePanel.getTable().getSelectionModel().clearSelection();
+            int i = 0;
+            for (Mark mark : tableModel.getCfg()) {
 
-                int i = 0;
-                for (Mark m : tableModel.getCfg()) {
-
-                    if (idSet.contains(m.getId())) {
-                        tablePanel.getTable().getSelectionModel().addSelectionInterval(i, i);
-                        IDUtilities.scrollJTableToRow(tablePanel.getTable(), i);
-                    }
-                    i++;
+                if (idSet.contains(mark.getId())) {
+                    tablePanel.getTable().getSelectionModel().addSelectionInterval(i, i);
+                    IDUtilities.scrollJTableToRow(tablePanel.getTable(), i);
                 }
-
-                selectionUpdater.setEnabled(true);
+                i++;
             }
+
+            selectionUpdater.setEnabled(true);
         };
     }
 
-    public void addMouseListener(MouseListener l) {
-        tablePanel.addMouseListener(l);
+    public void addMouseListener(MouseListener listener) {
+        tablePanel.addMouseListener(listener);
     }
 
-    public void removeMouseListener(MouseListener l) {
-        tablePanel.removeMouseListener(l);
+    public void removeMouseListener(MouseListener listener) {
+        tablePanel.removeMouseListener(listener);
     }
 }
