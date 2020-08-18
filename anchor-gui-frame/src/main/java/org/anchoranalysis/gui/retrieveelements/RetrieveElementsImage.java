@@ -30,6 +30,7 @@ import java.util.Optional;
 import java.util.function.Supplier;
 import lombok.AllArgsConstructor;
 import org.anchoranalysis.core.cache.CachedSupplier;
+import org.anchoranalysis.core.error.AnchorNeverOccursException;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.image.io.generator.raster.MIPGenerator;
 import org.anchoranalysis.image.stack.DisplayStack;
@@ -84,6 +85,7 @@ public class RetrieveElementsImage extends RetrieveElements {
     }
 
     private Supplier<Stack> cachedOpFromDisplayStack(DisplayStack stack) {
-        return CachedSupplier.cache(() -> stack.deriveStack(false))::get;
+        CachedSupplier<Stack,AnchorNeverOccursException> cachedSupplier = CachedSupplier.cache(() -> stack.deriveStack(false));
+        return cachedSupplier::get;
     }
 }
