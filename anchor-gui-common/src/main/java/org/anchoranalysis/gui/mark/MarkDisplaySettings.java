@@ -101,8 +101,7 @@ public class MarkDisplaySettings {
         DrawObject trueWriter = new Filled();
 
         // FALSE writer is for when not selected
-        Outline falseWriter = new Outline(borderSize);
-        falseWriter.setForce2D(true);
+        Outline falseWriter = new Outline(borderSize, false);
 
         // Combining both situations gives us a selectable
         return new IfElse(conditionSelected, trueWriter, falseWriter);
@@ -139,8 +138,7 @@ public class MarkDisplaySettings {
     private void addShowShell(
             List<DrawObject> insideList, List<DrawObject> shellList, int borderSize) {
 
-        Outline outlineWriter = new Outline(borderSize);
-        outlineWriter.setForce2D(true);
+        Outline outlineWriter = new Outline(borderSize, false);
         shellList.add(outlineWriter);
 
         if (showBoundingBox) {

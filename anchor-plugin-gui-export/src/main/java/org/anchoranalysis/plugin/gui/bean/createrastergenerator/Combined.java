@@ -43,7 +43,7 @@ public class Combined<T> extends CreateRasterGenerator<T> {
     // START BEAN PROPERTIES
     @BeanField @Getter @Setter private List<CreateRasterGenerator<T>> createRasterGeneratorList;
 
-    @BeanField @Getter @Setter private ArrangeRasterBean arrangeRaster;
+    @BeanField @Getter @Setter private ArrangeRasterBean arrange;
     // END BEAN PROPERTIES
 
     @Override
@@ -51,7 +51,7 @@ public class Combined<T> extends CreateRasterGenerator<T> {
             throws CreateException {
 
         CombineRasterGenerator<MappedFrom<T>> combineGenerator = new CombineRasterGenerator<>();
-        combineGenerator.setArrangeRaster(arrangeRaster);
+        combineGenerator.setArrange(arrange);
 
         for (CreateRasterGenerator<T> creator : createRasterGeneratorList) {
             combineGenerator.add(creator.createGenerator(params));
