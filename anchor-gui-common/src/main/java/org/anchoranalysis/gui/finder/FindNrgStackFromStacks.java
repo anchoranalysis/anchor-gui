@@ -81,13 +81,13 @@ class FindNrgStackFromStacks {
             throws OperationFailedException {
 
         try {
-            Stack chnlStack = stackProvider.getException(Integer.toString(channelIndex));
+            Stack channelStack = stackProvider.getException(Integer.toString(channelIndex));
 
-            if (chnlStack.getNumberChannels() != 1) {
+            if (channelStack.getNumberChannels() != 1) {
                 throw new OperationFailedException("Stack should have only a single channel");
             }
 
-            return chnlStack.getChannel(0);
+            return channelStack.getChannel(0);
         } catch (NamedProviderGetException e) {
             throw new OperationFailedException(e);
         }

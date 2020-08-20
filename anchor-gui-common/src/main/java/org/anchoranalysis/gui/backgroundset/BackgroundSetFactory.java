@@ -239,12 +239,12 @@ public class BackgroundSetFactory {
             // We add each part of the NRG Stack separately
 
             if (hasNrgStack) {
-                addStackAsSeparateChnl(
+                addStackAsSeparateChannel(
                         backgroundSet,
                         namedStacks
                                 .getException(StackIdentifiers.NRG_STACK)
                                 .get(0), // Only take first
-                        "nrgStack-chnl");
+                        "nrgStack-channel");
                 pri.update();
             }
 
@@ -255,7 +255,7 @@ public class BackgroundSetFactory {
         }
     }
 
-    private static void addStackAsSeparateChnl(
+    private static void addStackAsSeparateChannel(
             BackgroundSet backgroundSet, Stack stack, String prefix)
             throws OperationFailedException {
 

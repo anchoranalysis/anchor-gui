@@ -50,7 +50,7 @@ public class ImporterFromAnnotation extends ImporterFromBean {
                         file));
     }
 
-    // For now we assume we are always dealing with NamedChnlCollectionInputObject
+    // For now we assume we are always dealing with NamedChannelCollectionInputObject
     private static FileCreator createAnnotation(
             AnnotationInputManager<ProvidesStackInput, ?> inputManager, File f) {
         return CreatorFactory.create(

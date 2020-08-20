@@ -79,7 +79,7 @@ public class FinderStacksFromNrgStack implements FinderStacks {
             // Should we mention when we only have the first 3?
             stackCollection.addImageStack("nrgStack", StoreSupplier.cache(this::extractStack));
 
-            stackCollection.addFromWithPrefix(delegate.getNamedStacks(), "nrgChnl-");
+            stackCollection.addFromWithPrefix(delegate.getNamedStacks(), "nrgChannel-");
         }
         return stackCollection;
     }

@@ -75,7 +75,7 @@ class CachedRGB {
     // resets it all to the orginal, but doesn't draw any cfg
     private void resetToOriginalChannelAll() {
 
-        createRGBFromChnl(backgroundOriginal);
+        createRGBFromChannel(backgroundOriginal);
 
         needsBackgroundRefresh = false;
     }
@@ -99,12 +99,12 @@ class CachedRGB {
 
             if (update.getColoredCfg() != null) {
                 ColoredOverlayCollection cfgNew = update.getColoredCfg();
-                resetToChnlOrig(boxListReset);
+                resetToChannelOrig(boxListReset);
                 drawCfg(cfgNew);
                 this.currentCfg = cfgNew;
 
             } else {
-                resetToChnlOrig(boxListReset);
+                resetToChannelOrig(boxListReset);
                 drawCfg(currentCfg);
             }
 
@@ -114,12 +114,12 @@ class CachedRGB {
 
             if (update.getColoredCfg() != null) {
                 ColoredOverlayCollection cfgNew = update.getColoredCfg();
-                resetToChnlOrig(listBBox);
+                resetToChannelOrig(listBBox);
                 drawCfgIfIntersects(cfgNew, listBBox);
                 this.currentCfg = cfgNew;
 
             } else {
-                resetToChnlOrig(listBBox);
+                resetToChannelOrig(listBBox);
                 drawCfgIfIntersects(currentCfg, listBBox);
             }
         }
@@ -137,7 +137,7 @@ class CachedRGB {
 
     // STOP - we will remove these
 
-    private void resetToChnlOrig(List<BoundingBox> listBBox) {
+    private void resetToChannelOrig(List<BoundingBox> listBBox) {
 
         if (needsBackgroundRefresh) {
             resetToOriginalChannelAll();
@@ -157,17 +157,17 @@ class CachedRGB {
 
                 Voxels<ByteBuffer> voxelsTarget = rgbTarget.voxels().asByte();
 
-                int bgChnl = selectBackgroundChnl(c, backgroundOriginal.getNumberChannels());
-                backgroundOriginal.copyPixelsTo(bgChnl, boxClipped, voxelsTarget, boxClipped);
+                int bgChannel = selectBackgroundChannel(c, backgroundOriginal.getNumberChannels());
+                backgroundOriginal.copyPixelsTo(bgChannel, boxClipped, voxelsTarget, boxClipped);
             }
         }
     }
 
-    private static int selectBackgroundChnl(int iter, int numChnlsInBackground) {
+    private static int selectBackgroundChannel(int iter, int numChannelsInBackground) {
         // If backgroundOrig is single channel always take from 0
-        if (numChnlsInBackground == 1) {
+        if (numChannelsInBackground == 1) {
             return 0;
-        } else if (numChnlsInBackground == 3) {
+        } else if (numChannelsInBackground == 3) {
             return iter;
         } else {
             assert false;
@@ -189,7 +189,7 @@ class CachedRGB {
         drawOverlay.writeOverlaysIfIntersects(oc, rgb, idGetter, boxList);
     }
 
-    private void createRGBFromChnl(DisplayStack background) {
+    private void createRGBFromChannel(DisplayStack background) {
         rgb = ConvertDisplayStackToRGB.convert(background);
     }
 

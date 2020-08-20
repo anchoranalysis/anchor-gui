@@ -151,7 +151,7 @@ public class ManifestDropDown {
 
         // Disabled, as they not be the same size as the existing image
         combined.add(new FinderStacksFromRootFiles(rasterReader, "stackFromCollection"));
-        combined.add(new FinderStacksFromFolder(rasterReader, "chnlScaledCollection"));
+        combined.add(new FinderStacksFromFolder(rasterReader, "channelScaledCollection"));
 
         try {
             if (!combined.doFind(manifests.getFileManifest().get())) {

@@ -47,20 +47,20 @@ public abstract class FinderRasterChannel extends FinderSingleFile implements Fi
 
     private RasterReader rasterReader;
 
-    private boolean normalizeChnl;
+    private boolean normalizeChannel;
 
     public FinderRasterChannel(
-            RasterReader rasterReader, boolean normalizeChnl, ErrorReporter errorReporter) {
+            RasterReader rasterReader, boolean normalizeChannel, ErrorReporter errorReporter) {
         super(errorReporter);
         this.rasterReader = rasterReader;
-        this.normalizeChnl = normalizeChnl;
+        this.normalizeChannel = normalizeChannel;
     }
 
     public Channel get() throws OperationFailedException {
         assert (exists());
         if (!result.isPresent()) {
             try {
-                result = Optional.of(createChnl(getFoundFile()));
+                result = Optional.of(createChannel(getFoundFile()));
             } catch (RasterIOException | CreateException e) {
                 throw new OperationFailedException(e);
             }
@@ -78,7 +78,7 @@ public abstract class FinderRasterChannel extends FinderSingleFile implements Fi
         return 1;
     }
 
-    private Channel createChnl(FileWrite fileWrite) throws RasterIOException, CreateException {
+    private Channel createChannel(FileWrite fileWrite) throws RasterIOException, CreateException {
 
         // Assume single series, single channel
         Path filePath = fileWrite.calculatePath();
@@ -94,7 +94,7 @@ public abstract class FinderRasterChannel extends FinderSingleFile implements Fi
                 throw new CreateException("there must be exactly one channel");
             }
 
-            if (normalizeChnl) {
+            if (normalizeChannel) {
                 stack.getChannel(0).arithmetic().multiplyBy(255);
             }
 

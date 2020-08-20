@@ -65,7 +65,7 @@ public class FinderProbMap implements BackgroundStackContainer, FinderRasterSing
     @Override
     public boolean doFind(ManifestRecorder manifestRecorder) {
 
-        // We find both in case we do a singleChnl() call later on
+        // We find both in case we do a singleChannel() call later on
         boolean series = rasterSeries.doFind(manifestRecorder);
 
         if (series) {
@@ -99,7 +99,7 @@ public class FinderProbMap implements BackgroundStackContainer, FinderRasterSing
     }
 
     // Returns a single channel the probMap, o series allowed
-    public Channel singleChnl() throws OperationFailedException {
+    public Channel singleChannel() throws OperationFailedException {
         if (singleRaster.exists()) {
             return singleRaster.get();
         }
@@ -124,10 +124,10 @@ public class FinderProbMap implements BackgroundStackContainer, FinderRasterSing
 
         try {
             if (isSingle()) {
-                Channel chnl = singleRaster.get();
+                Channel channel = singleRaster.get();
 
                 Stack stack = new Stack();
-                stack.addChannel(chnl);
+                stack.addChannel(channel);
                 stack.addBlankChannel();
                 stack.addBlankChannel();
 
@@ -158,7 +158,7 @@ public class FinderProbMap implements BackgroundStackContainer, FinderRasterSing
 
     @Override
     public Channel getFirstChannel() throws OperationFailedException {
-        return singleChnl();
+        return singleChannel();
     }
 
     @Override
