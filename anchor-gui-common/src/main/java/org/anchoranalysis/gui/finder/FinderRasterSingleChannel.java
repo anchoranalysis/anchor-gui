@@ -1,6 +1,6 @@
 /*-
  * #%L
- * anchor-plugin-gui-import
+ * anchor-gui-common
  * %%
  * Copyright (C) 2010 - 2020 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann-La Roche
  * %%
@@ -24,27 +24,16 @@
  * #L%
  */
 
-package org.anchoranalysis.gui.interactivebrowser.openfile.importer;
+package org.anchoranalysis.gui.finder;
 
-import java.io.File;
-import java.util.Optional;
-import org.anchoranalysis.gui.bean.filecreator.FileCreator;
-import org.anchoranalysis.image.io.input.ProvidesStackInput;
-import org.anchoranalysis.io.bean.input.InputManager;
-import org.anchoranalysis.plugin.io.bean.input.chnl.NamedChnlsBase;
+import org.anchoranalysis.core.error.OperationFailedException;
+import org.anchoranalysis.image.channel.Channel;
 
-public class ImporterFromNamedChnls extends ImporterFromBean {
+public interface FinderRasterSingleChannel {
 
-    @Override
-    public boolean isApplicable(Object bean) {
-        return bean instanceof NamedChnlsBase;
-    }
+    boolean exists();
 
-    @SuppressWarnings("unchecked")
-    @Override
-    public Optional<FileCreator> create(Object bean, File file) {
-        return Optional.of(
-                XMLBeanListHelper.createSingleStack(
-                        (InputManager<? extends ProvidesStackInput>) bean, file));
-    }
+    Channel getFirstChannel() throws OperationFailedException;
+
+    int getNumberChannels() throws OperationFailedException;
 }

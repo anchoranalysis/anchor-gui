@@ -65,8 +65,8 @@ import org.anchoranalysis.gui.retrieveelements.InternalFrameIJPopupClickListener
 import org.anchoranalysis.gui.retrieveelements.RetrieveElements;
 import org.anchoranalysis.gui.retrieveelements.RetrieveElementsImage;
 import org.anchoranalysis.gui.videostats.dropdown.VideoStatsModuleGlobalParams;
-import org.anchoranalysis.image.extent.ImageDimensions;
-import org.anchoranalysis.image.extent.ImageResolution;
+import org.anchoranalysis.image.extent.Dimensions;
+import org.anchoranalysis.image.extent.Resolution;
 import org.anchoranalysis.image.stack.DisplayStack;
 import org.anchoranalysis.image.voxel.datatype.VoxelDataType;
 
@@ -202,7 +202,7 @@ public class InternalFrameCanvas {
         } catch (OperationFailedException e1) {
             throw new InitException(e1);
         }
-        ChnlSliceRange sliceBounds = new ChnlSliceRange(initialStack.dimensions());
+        ChannelSliceRange sliceBounds = new ChannelSliceRange(initialStack.dimensions());
 
         // Responsible for all the stack conversion
 
@@ -268,7 +268,7 @@ public class InternalFrameCanvas {
         titleBoundsUpdater.updateTitle();
     }
 
-    public ImageDimensions dimensions() {
+    public Dimensions dimensions() {
         return canvas.dimensions();
     }
 
@@ -280,7 +280,7 @@ public class InternalFrameCanvas {
         return canvas.getZoomScale();
     }
 
-    public ImageResolution getRes() {
+    public Resolution getRes() {
         return canvas.getRes();
     }
 

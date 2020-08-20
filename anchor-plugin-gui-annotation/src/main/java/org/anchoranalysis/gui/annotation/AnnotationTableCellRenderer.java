@@ -64,7 +64,7 @@ public class AnnotationTableCellRenderer extends DefaultTableCellRenderer {
         } else if (column == 2) {
 
             // THIRD COLUMN (background color comiing from the Builder)
-            FileAnnotationNamedChnlCollection fileAnnotation =
+            FileAnnotationNamedChannels fileAnnotation =
                     model.getAnnotationProject().get(row);
             backgroundColor(label, fileAnnotation.summary().getColor());
         }

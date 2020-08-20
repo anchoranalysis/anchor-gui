@@ -33,7 +33,7 @@ import java.awt.GraphicsConfiguration;
 import org.anchoranalysis.gui.frame.canvas.zoom.DefaultZoomSuggestor;
 import org.anchoranalysis.gui.frame.canvas.zoom.ZoomScale;
 import org.anchoranalysis.image.extent.Extent;
-import org.anchoranalysis.image.extent.ImageDimensions;
+import org.anchoranalysis.image.extent.Dimensions;
 
 class SizeOfZoomedImage {
 
@@ -43,7 +43,7 @@ class SizeOfZoomedImage {
             int zoomWidthSubtract,
             int zoomHeightSubtract,
             GraphicsConfiguration graphicsConfiguration,
-            ImageDimensions imageSize) {
+            Dimensions imageSize) {
         Extent e =
                 fractionScreenBounds(
                         widthFractionScreen, heightFractionScreen, graphicsConfiguration);
@@ -52,7 +52,7 @@ class SizeOfZoomedImage {
     }
 
     /** The size of a zoomed-image after being zoomed to fit within bounds */
-    private static Extent sizeWithinBounds(ImageDimensions imageSize, Extent maxBounds) {
+    private static Extent sizeWithinBounds(Dimensions imageSize, Extent maxBounds) {
         DefaultZoomSuggestor zoomSugg = new DefaultZoomSuggestor(maxBounds.x(), maxBounds.y());
         ZoomScale zs = zoomSugg.suggestDefaultZoomFor(imageSize);
 

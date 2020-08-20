@@ -42,15 +42,16 @@ import org.anchoranalysis.gui.videostats.dropdown.AddVideoStatsModule;
 import org.anchoranalysis.gui.videostats.dropdown.VideoStatsModuleGlobalParams;
 import org.anchoranalysis.io.output.bound.BoundOutputManagerRouteErrors;
 
-public class FileAnnotationNamedChnlCollection extends InteractiveFile {
+public class FileAnnotationNamedChannels extends InteractiveFile {
 
     private AnnotationGuiBuilder<?> annotation;
-    private VideoStatsModuleGlobalParams mpg;
     private AnnotationRefresher annotationRefresher;
-    private CachedSupplier<AnnotationSummary, ? extends Throwable> op;
+    private VideoStatsModuleGlobalParams mpg;
     private MarkEvaluatorManager markEvaluatorManager;
-
-    public FileAnnotationNamedChnlCollection(
+    
+    private CachedSupplier<AnnotationSummary, ? extends Throwable> op;
+    
+    public FileAnnotationNamedChannels(
             AnnotationGuiBuilder<?> annotation,
             AnnotationRefresher annotationRefresher,
             MarkEvaluatorManager markEvaluatorManager,
@@ -66,7 +67,7 @@ public class FileAnnotationNamedChnlCollection extends InteractiveFile {
         try {
             op.get();
         } catch (Exception e) {
-            mpg.getLogger().errorReporter().recordError(FileAnnotationNamedChnlCollection.class, e);
+            mpg.getLogger().errorReporter().recordError(FileAnnotationNamedChannels.class, e);
         }
     }
 
@@ -83,14 +84,14 @@ public class FileAnnotationNamedChnlCollection extends InteractiveFile {
         try {
             return op.get();
         } catch (Exception e) {
-            mpg.getLogger().errorReporter().recordError(FileAnnotationNamedChnlCollection.class, e);
+            mpg.getLogger().errorReporter().recordError(FileAnnotationNamedChannels.class, e);
             return null;
         }
     }
 
     @Override
     public String type() {
-        return FileAnnotationNamedChnlCollection.class.getSimpleName();
+        return FileAnnotationNamedChannels.class.getSimpleName();
     }
 
     @Override

@@ -41,14 +41,14 @@ class WrappedSlider implements ISliderState {
     private SliceIndexSlider delegate;
 
     private InitialSliderState initialState;
-    private ChnlSliceRange sliceBounds;
+    private ChannelSliceRange sliceBounds;
     private IndexGettableSettable indexCntr;
 
     private IPropertyValueSendable<Integer> sliceSendable;
     private IPropertyValueSendable<Integer> indexSendable;
 
     public WrappedSlider(
-            ChnlSliceRange sliceBounds,
+            ChannelSliceRange sliceBounds,
             BoundedRangeIncompleteDynamic indexBounds,
             InitialSliderState initialState,
             IndexGettableSettable indexCntr) {
@@ -119,7 +119,7 @@ class WrappedSlider implements ISliderState {
         delegate.setIndexToMaximum();
     }
 
-    private void setSliderSlice(int initialSliceNum, ChnlSliceRange sliceBounds) {
+    private void setSliderSlice(int initialSliceNum, ChannelSliceRange sliceBounds) {
         // If it's an invalid negative number, then let's set it to the center, as the user
         //   probably doesn't have any clear slice number preference
         if (initialSliceNum >= sliceBounds.getMinimumIndex()

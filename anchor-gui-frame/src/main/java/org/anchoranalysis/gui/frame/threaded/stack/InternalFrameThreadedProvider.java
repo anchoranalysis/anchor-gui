@@ -43,7 +43,7 @@ import org.anchoranalysis.gui.videostats.dropdown.VideoStatsModuleGlobalParams;
 import org.anchoranalysis.gui.videostats.link.LinkModules;
 import org.anchoranalysis.gui.videostats.module.DefaultModuleState;
 import org.anchoranalysis.gui.videostats.module.VideoStatsModule;
-import org.anchoranalysis.image.extent.ImageDimensions;
+import org.anchoranalysis.image.extent.Dimensions;
 
 public class InternalFrameThreadedProvider {
 
@@ -144,7 +144,7 @@ public class InternalFrameThreadedProvider {
         delegate.flush();
     }
 
-    public ImageDimensions dimensions() {
+    public Dimensions dimensions() {
         return delegate.dimensions();
     }
 

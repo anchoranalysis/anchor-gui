@@ -36,7 +36,7 @@ import org.anchoranalysis.anchor.mpp.mark.conic.RegionMapSingleton;
 import org.anchoranalysis.anchor.mpp.overlay.OverlayCollectionMarkFactory;
 import org.anchoranalysis.anchor.mpp.proposer.error.ProposerFailureDescription;
 import org.anchoranalysis.anchor.overlay.collection.ColoredOverlayCollection;
-import org.anchoranalysis.image.extent.ImageDimensions;
+import org.anchoranalysis.image.extent.Dimensions;
 
 public class ProposedCfg {
 
@@ -54,7 +54,7 @@ public class ProposedCfg {
     /** The core part of the cfg */
     @Getter @Setter private Cfg cfgCore = new Cfg();
 
-    private ImageDimensions dimensions;
+    private Dimensions dimensions;
 
     private ProposerFailureDescription pfd;
     private boolean success = false;
@@ -72,7 +72,7 @@ public class ProposedCfg {
                         .membershipWithFlagsForIndex(GlobalRegionIdentifiers.SUBMARK_INSIDE);
     }
 
-    public ProposedCfg(ImageDimensions dimensions) {
+    public ProposedCfg(Dimensions dimensions) {
         this();
         this.dimensions = dimensions;
     }
@@ -118,7 +118,7 @@ public class ProposedCfg {
         this.suggestedSliceNum = suggestedSliceNum;
     }
 
-    public ImageDimensions dimensions() {
+    public Dimensions dimensions() {
         return dimensions;
     }
 }

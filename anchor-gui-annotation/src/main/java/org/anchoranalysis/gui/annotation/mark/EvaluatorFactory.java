@@ -38,7 +38,7 @@ import org.anchoranalysis.gui.videostats.internalframe.annotator.tool.ToolErrorR
 import org.anchoranalysis.gui.videostats.internalframe.evaluator.EvaluatorWithContext;
 import org.anchoranalysis.gui.videostats.internalframe.evaluator.MarkProposerEvaluatorDimensions;
 import org.anchoranalysis.gui.videostats.internalframe.evaluator.MarkSphereOnPointProposerEvaluator;
-import org.anchoranalysis.image.extent.ImageDimensions;
+import org.anchoranalysis.image.extent.Dimensions;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 class EvaluatorFactory {
@@ -69,7 +69,7 @@ class EvaluatorFactory {
     }
 
     public static Optional<EvaluatorWithContext> createSelectPointsEvaluator(
-            ImageDimensions dimViewer,
+            Dimensions dimViewer,
             MarkEvaluatorResolved markEvaluatorResolved,
             RegionMap regionMap,
             ToolErrorReporter errorReporter) {

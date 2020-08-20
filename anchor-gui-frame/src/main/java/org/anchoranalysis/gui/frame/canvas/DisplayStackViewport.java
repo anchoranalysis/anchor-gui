@@ -38,7 +38,7 @@ import org.anchoranalysis.gui.frame.canvas.zoom.ZoomScale;
 import org.anchoranalysis.gui.frame.display.BoundOverlayedDisplayStack;
 import org.anchoranalysis.image.extent.BoundingBox;
 import org.anchoranalysis.image.extent.Extent;
-import org.anchoranalysis.image.extent.ImageDimensions;
+import org.anchoranalysis.image.extent.Dimensions;
 import org.anchoranalysis.image.stack.DisplayStack;
 import org.anchoranalysis.image.stack.region.RegionExtracter;
 import org.anchoranalysis.image.voxel.datatype.VoxelDataType;
@@ -64,7 +64,7 @@ class DisplayStackViewport {
         regionExtracter = displayStack.createRegionExtracter();
     }
 
-    public ImageDimensions dimensionsEntire() {
+    public Dimensions dimensionsEntire() {
         return displayStackEntireImage.dimensions();
     }
 
@@ -186,7 +186,7 @@ class DisplayStackViewport {
         return displayStackEntireImage;
     }
 
-    public ImageDimensions dim() {
+    public Dimensions dim() {
         return displayStackEntireImage.dimensions();
     }
 }

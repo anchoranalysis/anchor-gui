@@ -37,7 +37,7 @@ import org.anchoranalysis.core.index.container.SingleContainer;
 import org.anchoranalysis.core.index.container.bridge.BoundedIndexContainerBridgeWithoutIndex;
 import org.anchoranalysis.gui.container.background.BackgroundStackContainer;
 import org.anchoranalysis.gui.container.background.BackgroundStackContainerException;
-import org.anchoranalysis.gui.finder.FinderRasterSingleChnl;
+import org.anchoranalysis.gui.finder.FinderRasterSingleChannel;
 import org.anchoranalysis.image.channel.Channel;
 import org.anchoranalysis.image.extent.IncorrectImageSizeException;
 import org.anchoranalysis.image.io.bean.rasterreader.RasterReader;
@@ -46,7 +46,7 @@ import org.anchoranalysis.image.stack.Stack;
 import org.anchoranalysis.io.manifest.ManifestRecorder;
 import org.anchoranalysis.io.manifest.finder.Finder;
 
-public class FinderProbMap implements BackgroundStackContainer, FinderRasterSingleChnl, Finder {
+public class FinderProbMap implements BackgroundStackContainer, FinderRasterSingleChannel, Finder {
 
     private final FinderProbMapSingleRaster singleRaster;
 
@@ -157,12 +157,12 @@ public class FinderProbMap implements BackgroundStackContainer, FinderRasterSing
     }
 
     @Override
-    public Channel getFirstChnl() throws OperationFailedException {
+    public Channel getFirstChannel() throws OperationFailedException {
         return singleChnl();
     }
 
     @Override
-    public int getNumChnl() {
+    public int getNumberChannels() {
         return 1;
     }
 

@@ -28,12 +28,12 @@ package org.anchoranalysis.gui.frame.details.canvas;
 
 import lombok.AllArgsConstructor;
 import org.anchoranalysis.core.index.container.BoundedRange;
-import org.anchoranalysis.image.extent.ImageDimensions;
+import org.anchoranalysis.image.extent.Dimensions;
 
 @AllArgsConstructor
-class ChnlSliceRange implements BoundedRange {
+class ChannelSliceRange implements BoundedRange {
 
-    private final ImageDimensions dimensions;
+    private final Dimensions dimensions;
 
     @Override
     public int getMinimumIndex() {

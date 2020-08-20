@@ -28,14 +28,14 @@ package org.anchoranalysis.gui.videostats.internalframe.annotator;
 
 import lombok.AllArgsConstructor;
 import org.anchoranalysis.gui.annotation.AnnotationBackground;
-import org.anchoranalysis.image.extent.ImageDimensions;
+import org.anchoranalysis.image.extent.Dimensions;
 
 @AllArgsConstructor
 public abstract class InitParamsWithBackground implements AnnotationInitParams {
 
     private AnnotationBackground annotationBackground;
 
-    public ImageDimensions dimensionsViewer() {
+    public Dimensions dimensionsViewer() {
         return annotationBackground.getDimensionsViewer();
     }
 

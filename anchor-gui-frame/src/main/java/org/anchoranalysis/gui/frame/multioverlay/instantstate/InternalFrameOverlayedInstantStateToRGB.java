@@ -55,7 +55,7 @@ import org.anchoranalysis.gui.videostats.internalframe.cfgtorgb.markdisplay.Mark
 import org.anchoranalysis.gui.videostats.link.LinkModules;
 import org.anchoranalysis.gui.videostats.module.DefaultModuleState;
 import org.anchoranalysis.gui.videostats.module.VideoStatsModule;
-import org.anchoranalysis.image.extent.ImageDimensions;
+import org.anchoranalysis.image.extent.Dimensions;
 import org.anchoranalysis.image.stack.DisplayStack;
 
 class InternalFrameOverlayedInstantStateToRGB {
@@ -146,7 +146,7 @@ class InternalFrameOverlayedInstantStateToRGB {
         delegate.flush();
     }
 
-    public ImageDimensions dimensions() {
+    public Dimensions dimensions() {
         return delegate.dimensions();
     }
 

@@ -36,8 +36,8 @@ import org.anchoranalysis.gui.frame.canvas.zoom.ZoomScale;
 import org.anchoranalysis.gui.frame.display.BoundOverlayedDisplayStack;
 import org.anchoranalysis.image.extent.BoundingBox;
 import org.anchoranalysis.image.extent.Extent;
-import org.anchoranalysis.image.extent.ImageDimensions;
-import org.anchoranalysis.image.extent.ImageResolution;
+import org.anchoranalysis.image.extent.Dimensions;
+import org.anchoranalysis.image.extent.Resolution;
 import org.anchoranalysis.image.scale.ScaleFactor;
 import org.anchoranalysis.image.voxel.datatype.VoxelDataType;
 
@@ -108,7 +108,7 @@ class DisplayStackViewportZoomed {
         delegate.setDisplayStackEntireImage(displayStack);
     }
 
-    public ImageDimensions dimensionsEntire() {
+    public Dimensions dimensionsEntire() {
         return delegate.dimensionsEntire();
     }
 
@@ -120,11 +120,11 @@ class DisplayStackViewportZoomed {
         this.zoomScale = zoomScale;
     }
 
-    public ImageDimensions createDimensionsEntireScaled() {
+    public Dimensions createDimensionsEntireScaled() {
         return dimensionsEntire().scaleXYBy(new ScaleFactor(zoomScale.getScale()));
     }
 
-    public ImageResolution getResolution() {
+    public Resolution getResolution() {
         return delegate.dimensionsEntire().resolution();
     }
 

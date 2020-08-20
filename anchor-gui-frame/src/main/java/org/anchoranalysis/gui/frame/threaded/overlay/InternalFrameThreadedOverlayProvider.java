@@ -49,7 +49,7 @@ import org.anchoranalysis.gui.videostats.dropdown.VideoStatsModuleGlobalParams;
 import org.anchoranalysis.gui.videostats.internalframe.cfgtorgb.markdisplay.MarkDisplaySettingsWrapper;
 import org.anchoranalysis.gui.videostats.module.DefaultModuleState;
 import org.anchoranalysis.gui.videostats.module.VideoStatsModule;
-import org.anchoranalysis.image.extent.ImageDimensions;
+import org.anchoranalysis.image.extent.Dimensions;
 
 public class InternalFrameThreadedOverlayProvider {
 
@@ -143,7 +143,7 @@ public class InternalFrameThreadedOverlayProvider {
         delegate.flush();
     }
 
-    public ImageDimensions dimensions() {
+    public Dimensions dimensions() {
         return delegate.dimensions();
     }
 

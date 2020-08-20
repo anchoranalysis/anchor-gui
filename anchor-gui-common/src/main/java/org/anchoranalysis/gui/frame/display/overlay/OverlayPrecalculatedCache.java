@@ -42,7 +42,7 @@ import org.anchoranalysis.core.index.SetOperationFailedException;
 import org.anchoranalysis.image.binary.values.BinaryValues;
 import org.anchoranalysis.image.binary.values.BinaryValuesByte;
 import org.anchoranalysis.image.extent.BoundingBox;
-import org.anchoranalysis.image.extent.ImageDimensions;
+import org.anchoranalysis.image.extent.Dimensions;
 import org.anchoranalysis.image.index.BoundingBoxRTree;
 import org.anchoranalysis.image.object.properties.ObjectWithProperties;
 import org.anchoranalysis.image.scale.ScaleFactor;
@@ -65,16 +65,16 @@ public class OverlayPrecalculatedCache implements OverlayRetriever {
 
     private DrawOverlay drawOverlay;
 
-    private ImageDimensions dimEntireImage;
+    private Dimensions dimEntireImage;
 
-    private ImageDimensions dimScaled;
+    private Dimensions dimScaled;
 
     /** The binary values we use for making object-masks */
     private static final BinaryValuesByte bvOut = BinaryValues.getDefault().createByte();
 
     public OverlayPrecalculatedCache(
             ColoredOverlayCollection overlayCollection,
-            ImageDimensions dimEntireImage,
+            Dimensions dimEntireImage,
             DrawOverlay drawOverlay)
             throws CreateException {
         super();
@@ -239,7 +239,7 @@ public class OverlayPrecalculatedCache implements OverlayRetriever {
     }
 
     private OverlayPrecalculatedCache(
-            PrecalculatedOverlayList overlayList, double zoomFactor, ImageDimensions dim) {
+            PrecalculatedOverlayList overlayList, double zoomFactor, Dimensions dim) {
         this.overlayList = overlayList;
         overlayList.assertListsSizeMatch();
         this.zoomFactor = zoomFactor;
@@ -270,7 +270,7 @@ public class OverlayPrecalculatedCache implements OverlayRetriever {
             ObjectWithProperties object,
             Overlay overlay,
             int index,
-            ImageDimensions dimScaled)
+            Dimensions dimScaled)
             throws OperationFailedException {
         overlayList.assertZoomedExists();
         if (zoomFactorNew == 1) {
@@ -350,7 +350,7 @@ public class OverlayPrecalculatedCache implements OverlayRetriever {
         }
     }
 
-    private ImageDimensions createDimensionsScaled(double zoomFactorNew) {
+    private Dimensions createDimensionsScaled(double zoomFactorNew) {
         // We create a scaled version of our dimensions
         return dimEntireImage.scaleXYBy(new ScaleFactor(zoomFactorNew));
     }

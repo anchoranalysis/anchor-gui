@@ -45,12 +45,12 @@ import org.anchoranalysis.gui.container.background.SingleBackgroundStackCntr;
 import org.anchoranalysis.gui.serializedobjectset.MarkWithRaster;
 import org.anchoranalysis.image.channel.factory.ChannelFactory;
 import org.anchoranalysis.image.experiment.identifiers.StackIdentifiers;
-import org.anchoranalysis.image.extent.ImageDimensions;
+import org.anchoranalysis.image.extent.Dimensions;
 import org.anchoranalysis.image.extent.IncorrectImageSizeException;
 import org.anchoranalysis.image.stack.DisplayStack;
 import org.anchoranalysis.image.stack.Stack;
 import org.anchoranalysis.image.stack.TimeSequence;
-import org.anchoranalysis.image.voxel.datatype.UnsignedByte;
+import org.anchoranalysis.image.voxel.datatype.UnsignedByteVoxelType;
 import org.anchoranalysis.io.manifest.deserializer.folder.LoadContainer;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
@@ -185,7 +185,7 @@ public class BackgroundSetFactory {
                 });
     }
 
-    private static ImageDimensions guessDimensions(NamedProvider<TimeSequence> imageStackCollection)
+    private static Dimensions guessDimensions(NamedProvider<TimeSequence> imageStackCollection)
             throws OperationFailedException {
         try {
             return imageStackCollection
@@ -196,13 +196,13 @@ public class BackgroundSetFactory {
         }
     }
 
-    private static Stack createEmptyStack(ImageDimensions dimensions)
+    private static Stack createEmptyStack(Dimensions dimensions)
             throws OperationFailedException {
         try {
             Stack stack = new Stack();
             stack.addChannel(
                     ChannelFactory.instance()
-                            .create(dimensions, UnsignedByte.INSTANCE));
+                            .create(dimensions, UnsignedByteVoxelType.INSTANCE));
             return stack;
         } catch (IncorrectImageSizeException e) {
             throw new OperationFailedException(e);

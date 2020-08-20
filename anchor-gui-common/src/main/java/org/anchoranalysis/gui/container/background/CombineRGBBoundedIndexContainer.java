@@ -34,11 +34,11 @@ import org.anchoranalysis.core.index.container.BoundChangeListener;
 import org.anchoranalysis.core.index.container.BoundedIndexContainer;
 import org.anchoranalysis.image.channel.Channel;
 import org.anchoranalysis.image.channel.factory.ChannelFactory;
-import org.anchoranalysis.image.extent.ImageDimensions;
+import org.anchoranalysis.image.extent.Dimensions;
 import org.anchoranalysis.image.extent.IncorrectImageSizeException;
 import org.anchoranalysis.image.stack.DisplayStack;
 import org.anchoranalysis.image.stack.Stack;
-import org.anchoranalysis.image.voxel.datatype.UnsignedByte;
+import org.anchoranalysis.image.voxel.datatype.UnsignedByteVoxelType;
 
 public class CombineRGBBoundedIndexContainer implements BoundedIndexContainer<DisplayStack> {
 
@@ -49,7 +49,7 @@ public class CombineRGBBoundedIndexContainer implements BoundedIndexContainer<Di
     private int min;
     private int max;
 
-    private ImageDimensions dimensions;
+    private Dimensions dimensions;
 
     // We assume we will never have an index above this number
     private static int MAX_NEVER_REACHED = 1000000;
@@ -210,7 +210,7 @@ public class CombineRGBBoundedIndexContainer implements BoundedIndexContainer<Di
                 assert (dimensions != null);
                 Channel chnlNew =
                         ChannelFactory.instance()
-                                .create(dimensions, UnsignedByte.INSTANCE);
+                                .create(dimensions, UnsignedByteVoxelType.INSTANCE);
                 stackNew.addChannel(chnlNew);
             }
         } catch (IncorrectImageSizeException | GetOperationFailedException e) {

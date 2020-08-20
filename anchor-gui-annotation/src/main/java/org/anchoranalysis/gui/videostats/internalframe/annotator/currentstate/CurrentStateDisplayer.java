@@ -37,7 +37,7 @@ import org.anchoranalysis.gui.videostats.internalframe.annotator.navigation.Conf
 import org.anchoranalysis.gui.videostats.internalframe.annotator.tool.ToolErrorReporter;
 import org.anchoranalysis.gui.videostats.internalframe.annotator.undoredo.IUndoRedo;
 import org.anchoranalysis.gui.videostats.internalframe.annotator.undoredo.UndoRedoRecorder;
-import org.anchoranalysis.image.extent.ImageDimensions;
+import org.anchoranalysis.image.extent.Dimensions;
 
 public class CurrentStateDisplayer {
 
@@ -66,7 +66,7 @@ public class CurrentStateDisplayer {
     public CurrentStateDisplayer(
             ShowCurrentState cfgShower,
             SaveMonitor saveMonitor,
-            ImageDimensions dimensions,
+            Dimensions dimensions,
             RegionMap regionMap,
             ToolErrorReporter errorReporter) {
         this.cfgShower = cfgShower;

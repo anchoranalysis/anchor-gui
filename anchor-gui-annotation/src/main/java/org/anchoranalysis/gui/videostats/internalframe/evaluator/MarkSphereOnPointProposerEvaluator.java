@@ -41,13 +41,13 @@ import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.geometry.Point3d;
 import org.anchoranalysis.gui.frame.overlays.ProposedCfg;
 import org.anchoranalysis.gui.videostats.internalframe.ProposalOperation;
-import org.anchoranalysis.image.extent.ImageDimensions;
+import org.anchoranalysis.image.extent.Dimensions;
 
 @RequiredArgsConstructor
 public class MarkSphereOnPointProposerEvaluator implements ProposalOperationCreator {
 
     // START REQUIRED ARGUMENTS
-    private final ImageDimensions dimensions;
+    private final Dimensions dimensions;
     // END REQUIRED ARGUMENTS
 
     private RGBColor colorMark = new RGBColor(Color.YELLOW);

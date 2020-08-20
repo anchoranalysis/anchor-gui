@@ -41,7 +41,7 @@ import org.anchoranalysis.core.index.SetOperationFailedException;
 import org.anchoranalysis.gui.frame.display.overlay.OverlayPrecalculatedCache;
 import org.anchoranalysis.image.extent.BoundingBox;
 import org.anchoranalysis.image.extent.Extent;
-import org.anchoranalysis.image.extent.ImageDimensions;
+import org.anchoranalysis.image.extent.Dimensions;
 import org.anchoranalysis.image.stack.rgb.RGBStack;
 
 public class BoundColoredOverlayCollection {
@@ -50,13 +50,13 @@ public class BoundColoredOverlayCollection {
 
     private IDGetter<Overlay> idGetter;
 
-    private ImageDimensions dimEntireImage;
+    private Dimensions dimEntireImage;
 
     // The current overlay, with additional cached objects
     private OverlayPrecalculatedCache cache;
 
     public BoundColoredOverlayCollection(
-            DrawOverlay drawOverlay, IDGetter<Overlay> idGetter, ImageDimensions dim)
+            DrawOverlay drawOverlay, IDGetter<Overlay> idGetter, Dimensions dim)
             throws CreateException {
         super();
         this.drawOverlay = drawOverlay;

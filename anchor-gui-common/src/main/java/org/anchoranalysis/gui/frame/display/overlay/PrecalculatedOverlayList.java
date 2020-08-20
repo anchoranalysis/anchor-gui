@@ -37,7 +37,7 @@ import org.anchoranalysis.core.color.RGBColor;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.image.binary.values.BinaryValues;
 import org.anchoranalysis.image.extent.BoundingBox;
-import org.anchoranalysis.image.extent.ImageDimensions;
+import org.anchoranalysis.image.extent.Dimensions;
 
 class PrecalculatedOverlayList {
 
@@ -65,7 +65,7 @@ class PrecalculatedOverlayList {
 
     public PrecalculatedOverlayList(
             ColoredOverlayCollection overlayCollection,
-            ImageDimensions dimEntireImage,
+            Dimensions dimEntireImage,
             DrawOverlay drawOverlay)
             throws CreateException {
         this.overlayCollection = overlayCollection;
@@ -92,7 +92,7 @@ class PrecalculatedOverlayList {
         this.overlayCollection = overlayCollection;
     }
 
-    public void rebuild(ImageDimensions dimEntireImage, DrawOverlay drawOverlay)
+    public void rebuild(Dimensions dimEntireImage, DrawOverlay drawOverlay)
             throws CreateException {
         generatedObjects =
                 DrawOverlay.precalculate(

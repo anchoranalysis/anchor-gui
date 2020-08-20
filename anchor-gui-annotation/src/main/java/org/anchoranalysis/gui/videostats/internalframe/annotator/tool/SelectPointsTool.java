@@ -38,7 +38,7 @@ import org.anchoranalysis.gui.videostats.internalframe.annotator.currentstate.IA
 import org.anchoranalysis.gui.videostats.internalframe.annotator.currentstate.IChangeSelectedPoints;
 import org.anchoranalysis.gui.videostats.internalframe.annotator.currentstate.IQuerySelectedPoints;
 import org.anchoranalysis.gui.videostats.internalframe.evaluator.EvaluatorWithContext;
-import org.anchoranalysis.image.extent.ImageDimensions;
+import org.anchoranalysis.image.extent.Dimensions;
 
 @RequiredArgsConstructor
 public class SelectPointsTool extends AnnotationTool {
@@ -50,7 +50,7 @@ public class SelectPointsTool extends AnnotationTool {
     private final IQuerySelectedPoints selectedPoints;
     private final ToolErrorReporter errorReporter;
 
-    private ImageDimensions dimensions;
+    private Dimensions dimensions;
 
     @Override
     public void leftMouseClickedAtPoint(Point3d point) {

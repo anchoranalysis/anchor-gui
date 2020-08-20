@@ -32,7 +32,7 @@ import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.error.reporter.ErrorReporter;
 import org.anchoranalysis.core.progress.ProgressReporterNull;
-import org.anchoranalysis.gui.finder.FinderRasterSingleChnl;
+import org.anchoranalysis.gui.finder.FinderRasterSingleChannel;
 import org.anchoranalysis.image.channel.Channel;
 import org.anchoranalysis.image.io.RasterIOException;
 import org.anchoranalysis.image.io.bean.rasterreader.RasterReader;
@@ -41,7 +41,7 @@ import org.anchoranalysis.image.stack.Stack;
 import org.anchoranalysis.io.manifest.file.FileWrite;
 import org.anchoranalysis.io.manifest.finder.FinderSingleFile;
 
-public abstract class FinderRasterChnl extends FinderSingleFile implements FinderRasterSingleChnl {
+public abstract class FinderRasterChannel extends FinderSingleFile implements FinderRasterSingleChannel {
 
     private Optional<Channel> result = Optional.empty();
 
@@ -49,7 +49,7 @@ public abstract class FinderRasterChnl extends FinderSingleFile implements Finde
 
     private boolean normalizeChnl;
 
-    public FinderRasterChnl(
+    public FinderRasterChannel(
             RasterReader rasterReader, boolean normalizeChnl, ErrorReporter errorReporter) {
         super(errorReporter);
         this.rasterReader = rasterReader;
@@ -69,12 +69,12 @@ public abstract class FinderRasterChnl extends FinderSingleFile implements Finde
     }
 
     @Override
-    public Channel getFirstChnl() throws OperationFailedException {
+    public Channel getFirstChannel() throws OperationFailedException {
         return get();
     }
 
     @Override
-    public int getNumChnl() {
+    public int getNumberChannels() {
         return 1;
     }
 

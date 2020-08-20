@@ -41,7 +41,7 @@ import org.anchoranalysis.gui.interactivebrowser.MarkEvaluatorResolved;
 import org.anchoranalysis.gui.interactivebrowser.MarkEvaluatorSetForImage;
 import org.anchoranalysis.gui.videostats.internalframe.annotator.tool.ToolErrorReporter;
 import org.anchoranalysis.gui.videostats.internalframe.evaluator.EvaluatorWithContext;
-import org.anchoranalysis.image.extent.ImageDimensions;
+import org.anchoranalysis.image.extent.Dimensions;
 import org.anchoranalysis.image.stack.Stack;
 import org.anchoranalysis.plugin.annotation.bean.strategy.MarkProposerStrategy;
 
@@ -86,7 +86,7 @@ public class MarkAnnotator {
     }
 
     public Optional<EvaluatorWithContext> createSelectPointsEvaluator(
-            ImageDimensions dimViewer, ToolErrorReporter errorReporter) {
+            Dimensions dimViewer, ToolErrorReporter errorReporter) {
         return EvaluatorFactory.createSelectPointsEvaluator(
                 dimViewer, markEvaluatorResolved, getRegionMap(), errorReporter);
     }

@@ -57,8 +57,8 @@ import org.anchoranalysis.gui.frame.canvas.zoom.ZoomScale;
 import org.anchoranalysis.gui.frame.display.DisplayUpdate;
 import org.anchoranalysis.image.extent.BoundingBox;
 import org.anchoranalysis.image.extent.Extent;
-import org.anchoranalysis.image.extent.ImageDimensions;
-import org.anchoranalysis.image.extent.ImageResolution;
+import org.anchoranalysis.image.extent.Dimensions;
+import org.anchoranalysis.image.extent.Resolution;
 import org.anchoranalysis.image.voxel.datatype.VoxelDataType;
 
 public class ImageCanvas {
@@ -329,7 +329,7 @@ public class ImageCanvas {
                 .contains(new BoundingBox(extentNew)));
     }
 
-    private Extent extentToRetrieveScaled(ImageDimensions dimensionsScaled) {
+    private Extent extentToRetrieveScaled(Dimensions dimensionsScaled) {
         // We calculate the size of the region based upon the current size of the canvas (if we can)
 
         if (imageCanvas.getWidth() > 0) {
@@ -339,7 +339,7 @@ public class ImageCanvas {
             sy = Math.min(sy, dimensionsScaled.y());
             return new Extent(sx, sy);
         } else {
-            ImageDimensions dimensionsEntire = displayStackViewport.createDimensionsEntireScaled();
+            Dimensions dimensionsEntire = displayStackViewport.createDimensionsEntireScaled();
             int sx = Math.min(dimensionsEntire.x(), dimensionsScaled.x());
             int sy = Math.min(dimensionsEntire.y(), dimensionsScaled.y());
             return new Extent(sx, sy, 1);
@@ -366,7 +366,7 @@ public class ImageCanvas {
     }
 
     private void updateSizeOnPanel() {
-        ImageDimensions dimensions = displayStackViewport.createDimensionsEntireScaled();
+        Dimensions dimensions = displayStackViewport.createDimensionsEntireScaled();
         panel.setPreferredSize(
                 new Dimension(
                         dimensions.x() + extentScrollbars.getPreferredWidth(),
@@ -560,7 +560,7 @@ public class ImageCanvas {
 
     // START Getters and Setters
 
-    public ImageDimensions dimensions() {
+    public Dimensions dimensions() {
         return displayStackViewport.dimensionsEntire();
     }
 
@@ -576,7 +576,7 @@ public class ImageCanvas {
         return panel.getPreferredSize();
     }
 
-    public ImageResolution getRes() {
+    public Resolution getRes() {
         return displayStackViewport.getResolution();
     }
 
