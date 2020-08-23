@@ -28,7 +28,7 @@ package org.anchoranalysis.plugin.gui.bean.createrastergenerator;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.anchoranalysis.anchor.mpp.feature.nrg.cfg.CfgNRG;
+import org.anchoranalysis.anchor.mpp.feature.energy.marks.MarksWithEnergyBreakdown;
 import org.anchoranalysis.bean.annotation.BeanField;
 
 public class ConstantStringRasterGenerator extends CreateStringRasterGenerator {
@@ -38,7 +38,7 @@ public class ConstantStringRasterGenerator extends CreateStringRasterGenerator {
     // END BEAN PROPERTIES
 
     @Override
-    protected String extractStringFrom(CfgNRG cfgNRG) {
+    protected String extractStringFrom(MarksWithEnergyBreakdown marks) {
         return text;
     }
 }

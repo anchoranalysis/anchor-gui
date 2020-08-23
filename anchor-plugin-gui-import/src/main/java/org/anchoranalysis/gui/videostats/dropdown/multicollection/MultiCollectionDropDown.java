@@ -27,7 +27,7 @@
 package org.anchoranalysis.gui.videostats.dropdown.multicollection;
 
 import java.util.Optional;
-import org.anchoranalysis.anchor.mpp.cfg.Cfg;
+import org.anchoranalysis.anchor.mpp.mark.MarkCollection;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.error.OperationFailedException;
@@ -46,8 +46,8 @@ import org.anchoranalysis.gui.videostats.dropdown.OperationCreateBackgroundSetWi
 import org.anchoranalysis.gui.videostats.dropdown.VideoStatsModuleGlobalParams;
 import org.anchoranalysis.gui.videostats.dropdown.common.DropDownUtilities;
 import org.anchoranalysis.gui.videostats.dropdown.common.DropDownUtilitiesRaster;
-import org.anchoranalysis.gui.videostats.dropdown.common.GuessNRGStackFromStacks;
-import org.anchoranalysis.gui.videostats.dropdown.common.NRGBackground;
+import org.anchoranalysis.gui.videostats.dropdown.common.GuessEnergyFromStacks;
+import org.anchoranalysis.gui.videostats.dropdown.common.EnergyBackground;
 import org.anchoranalysis.image.object.ObjectCollection;
 import org.anchoranalysis.image.stack.wrap.WrapTimeSequenceAsStack;
 import org.anchoranalysis.io.output.bound.BoundOutputManagerRouteErrors;
@@ -57,7 +57,7 @@ public class MultiCollectionDropDown {
     private BoundVideoStatsModuleDropDown delegate;
 
     private TimeSequenceProviderSupplier rasterProvider;
-    private NamedProvider<Cfg> cfgCollection;
+    private NamedProvider<MarkCollection> cfgCollection;
     private NamedProvider<ObjectCollection> objCollection;
     private NamedProviderStore<KeyValueParams> paramsCollection;
     private boolean addProposerEvaluator;
@@ -65,7 +65,7 @@ public class MultiCollectionDropDown {
     // A dropdown menu representing a particular manifest
     public MultiCollectionDropDown(
             TimeSequenceProviderSupplier rasterProvider,
-            NamedProvider<Cfg> cfgCollection,
+            NamedProvider<MarkCollection> cfgCollection,
             NamedProvider<ObjectCollection> objCollection,
             NamedProviderStore<KeyValueParams> paramsCollection,
             String name,
@@ -86,9 +86,9 @@ public class MultiCollectionDropDown {
 
         OperationCreateBackgroundSetWithAdder operationBwsa =
                 new OperationCreateBackgroundSetWithAdder(
-                        NRGBackground.createStackSequence(
+                        EnergyBackground.createStackSequence(
                                 rasterProvider,
-                                () -> GuessNRGStackFromStacks.guess(rasterProvider)),
+                                () -> GuessEnergyFromStacks.guess(rasterProvider)),
                         adder,
                         params.getModuleParams().getThreadPool(),
                         params.getModuleParams().getLogger().errorReporter());
@@ -96,7 +96,7 @@ public class MultiCollectionDropDown {
         DropDownUtilitiesRaster.addRaster(
                 delegate.getRootMenu(),
                 delegate,
-                operationBwsa.nrgBackground(),
+                operationBwsa.energyBackground(),
                 "Raster",
                 params.getModuleParams(),
                 true // Adds as default operation
@@ -107,7 +107,7 @@ public class MultiCollectionDropDown {
                     delegate.getRootMenu(),
                     delegate,
                     cfgCollection,
-                    operationBwsa.nrgBackground(),
+                    operationBwsa.energyBackground(),
                     params.getModuleParams(),
                     params.getMarkDisplaySettings(),
                     false);
@@ -118,7 +118,7 @@ public class MultiCollectionDropDown {
                     delegate.getRootMenu(),
                     delegate,
                     objCollection,
-                    operationBwsa.nrgBackground(),
+                    operationBwsa.energyBackground(),
                     params.getModuleParams(),
                     false);
         }
@@ -156,7 +156,7 @@ public class MultiCollectionDropDown {
                 DropDownUtilities.addAllProposerEvaluator(
                         delegate,
                         operationBwsa.operationAdder(),
-                        operationBwsa.nrgBackground().getBackground().getBackgroundSet(),
+                        operationBwsa.energyBackground().getBackground().getBackgroundSet(),
                         markEvaluatorSet,
                         outputManagerSub.getOutputWriteSettings(),
                         true,

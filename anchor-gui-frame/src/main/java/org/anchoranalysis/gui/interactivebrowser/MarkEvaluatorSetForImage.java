@@ -82,8 +82,8 @@ public class MarkEvaluatorSetForImage {
             try {
                 return new MarkEvaluatorResolved(
                         operationProposerSharedObjects,
-                        me.getCfgGen(),
-                        me.getNrgSchemeCreator().create(),
+                        me.getMarkFactory(),
+                        me.getEnergySchemeCreator().create(),
                         keyParams.get().get());
             } catch (CreateException | IOException e) {
                 throw new OperationFailedException(e);

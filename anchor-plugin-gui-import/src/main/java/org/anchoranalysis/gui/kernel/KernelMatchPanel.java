@@ -31,7 +31,7 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import org.anchoranalysis.anchor.mpp.feature.nrg.cfg.CfgNRGPixelized;
+import org.anchoranalysis.anchor.mpp.feature.energy.marks.VoxelizedMarksWithEnergy;
 import org.anchoranalysis.core.index.IndicesSelection;
 import org.anchoranalysis.gui.kernel.match.MatchKernel;
 import org.anchoranalysis.gui.kernel.match.MatchKernelAccptd;
@@ -66,7 +66,7 @@ public class KernelMatchPanel {
     private static final int MARKSELECTION_ANY = 1;
     private static final int MARKSELECTION_ALL = 0;
 
-    public KernelMatchPanel(KernelProposer<CfgNRGPixelized> kernelProposer) {
+    public KernelMatchPanel(KernelProposer<VoxelizedMarksWithEnergy> kernelProposer) {
 
         delegate.setLayout(new GridLayout(6, 2));
 
@@ -76,7 +76,7 @@ public class KernelMatchPanel {
             comboKernelType.addItem(new NameIntValue("any", -1));
 
             for (int i = 0; i < kernelProposer.getNumberKernels(); i++) {
-                WeightedKernel<CfgNRGPixelized> kf = kernelProposer.getAllKernelFactories().get(i);
+                WeightedKernel<VoxelizedMarksWithEnergy> kf = kernelProposer.getAllKernelFactories().get(i);
                 comboKernelType.addItem(new NameIntValue(kf.getName(), i));
             }
 

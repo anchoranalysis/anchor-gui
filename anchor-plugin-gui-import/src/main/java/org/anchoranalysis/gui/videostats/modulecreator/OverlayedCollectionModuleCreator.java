@@ -2,7 +2,7 @@ package org.anchoranalysis.gui.videostats.modulecreator;
 
 import java.util.Optional;
 import lombok.AllArgsConstructor;
-import org.anchoranalysis.anchor.mpp.cfg.Cfg;
+import org.anchoranalysis.anchor.mpp.mark.MarkCollection;
 import org.anchoranalysis.anchor.overlay.collection.OverlayCollection;
 import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.error.OperationFailedException;
@@ -10,7 +10,7 @@ import org.anchoranalysis.gui.image.frame.ISliderState;
 import org.anchoranalysis.gui.videostats.dropdown.AddVideoStatsModule;
 import org.anchoranalysis.gui.videostats.dropdown.ModuleAddUtilities;
 import org.anchoranalysis.gui.videostats.dropdown.VideoStatsModuleGlobalParams;
-import org.anchoranalysis.gui.videostats.dropdown.common.NRGBackground;
+import org.anchoranalysis.gui.videostats.dropdown.common.EnergyBackground;
 import org.anchoranalysis.gui.videostats.internalframe.InternalFrameStaticOverlaySelectable;
 import org.anchoranalysis.gui.videostats.module.VideoStatsModuleCreateException;
 import org.anchoranalysis.gui.videostats.operation.combine.OverlayCollectionSupplier;
@@ -27,7 +27,7 @@ public abstract class OverlayedCollectionModuleCreator<T> extends VideoStatsModu
     private String fileIdentifier;
     private String name;
     private OverlayCollectionSupplier<T> supplier;
-    private NRGBackground nrgBackground;
+    private EnergyBackground energyBackground;
     private VideoStatsModuleGlobalParams mpg;
 
     @Override
@@ -47,7 +47,7 @@ public abstract class OverlayedCollectionModuleCreator<T> extends VideoStatsModu
                 new VideoStatsOperationCombine() {
 
                     @Override
-                    public Optional<OverlayCollectionSupplier<Cfg>> getCfg() {
+                    public Optional<OverlayCollectionSupplier<MarkCollection>> getCfg() {
                         return cfgSupplier();
                     }
 
@@ -62,8 +62,8 @@ public abstract class OverlayedCollectionModuleCreator<T> extends VideoStatsModu
                     }
 
                     @Override
-                    public NRGBackground getNrgBackground() {
-                        return nrgBackground;
+                    public EnergyBackground getEnergyBackground() {
+                        return energyBackground;
                     }
                 });
     }
@@ -72,7 +72,7 @@ public abstract class OverlayedCollectionModuleCreator<T> extends VideoStatsModu
 
     protected abstract InternalFrameStaticOverlaySelectable createFrame(String frameName);
 
-    protected abstract Optional<OverlayCollectionSupplier<Cfg>> cfgSupplier();
+    protected abstract Optional<OverlayCollectionSupplier<MarkCollection>> cfgSupplier();
 
     protected abstract Optional<OverlayCollectionSupplier<ObjectCollection>> objectsSupplier();
 
@@ -92,7 +92,7 @@ public abstract class OverlayedCollectionModuleCreator<T> extends VideoStatsModu
 
             imageFrame
                     .controllerBackgroundMenu(sliderState)
-                    .add(mpg, nrgBackground.getBackgroundSet());
+                    .add(mpg, energyBackground.getBackgroundSet());
             ModuleAddUtilities.add(adder, imageFrame.moduleCreator(sliderState));
         } catch (InitException e) {
             throw new VideoStatsModuleCreateException(e);

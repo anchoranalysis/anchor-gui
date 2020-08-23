@@ -27,7 +27,7 @@
 package org.anchoranalysis.gui.videostats.internalframe;
 
 import org.anchoranalysis.anchor.overlay.Overlay;
-import org.anchoranalysis.anchor.overlay.OverlayedInstantState;
+import org.anchoranalysis.anchor.overlay.IndexableOverlays;
 import org.anchoranalysis.anchor.overlay.collection.OverlayCollection;
 import org.anchoranalysis.anchor.overlay.id.IDGetterOverlayID;
 import org.anchoranalysis.core.error.InitException;
@@ -54,9 +54,9 @@ public class InternalFrameStaticOverlaySelectable {
             OverlayCollection oc, DefaultModuleState defaultState, VideoStatsModuleGlobalParams mpg)
             throws InitException {
 
-        OverlayedInstantState cis = new OverlayedInstantState(0, oc);
+        IndexableOverlays cis = new IndexableOverlays(0, oc);
 
-        SingleContainer<OverlayedInstantState> cfgCntr = new SingleContainer<>(false);
+        SingleContainer<IndexableOverlays> cfgCntr = new SingleContainer<>(false);
         cfgCntr.setItem(cis, cis.getIndex());
 
         IDGetter<Overlay> idGetter = new IDGetterOverlayID();

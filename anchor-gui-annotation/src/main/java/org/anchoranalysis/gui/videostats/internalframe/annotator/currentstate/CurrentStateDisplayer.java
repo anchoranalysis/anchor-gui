@@ -28,9 +28,9 @@ package org.anchoranalysis.gui.videostats.internalframe.annotator.currentstate;
 
 import java.util.List;
 import org.anchoranalysis.anchor.mpp.bean.regionmap.RegionMap;
-import org.anchoranalysis.anchor.mpp.cfg.Cfg;
-import org.anchoranalysis.anchor.mpp.cfg.ColoredCfg;
+import org.anchoranalysis.anchor.mpp.mark.ColoredMarks;
 import org.anchoranalysis.anchor.mpp.mark.Mark;
+import org.anchoranalysis.anchor.mpp.mark.MarkCollection;
 import org.anchoranalysis.core.geometry.Point3i;
 import org.anchoranalysis.gui.videostats.internalframe.annotator.SaveMonitor;
 import org.anchoranalysis.gui.videostats.internalframe.annotator.navigation.ConfirmResetStateChangedListener;
@@ -116,7 +116,7 @@ public class CurrentStateDisplayer {
     private class ReplaceRemove implements IReplaceRemove {
 
         @Override
-        public void replaceCurrentProposedCfg(Cfg cfgCore, ColoredCfg cfgDisplayed, int sliceZ) {
+        public void replaceCurrentProposedCfg(MarkCollection cfgCore, ColoredMarks cfgDisplayed, int sliceZ) {
             currentState.replaceCurrentProposedCfg(cfgCore, cfgDisplayed);
             cfgShower.showAtSlice(currentState, sliceZ);
             alreadyConfirmedOnce = false;
@@ -130,7 +130,7 @@ public class CurrentStateDisplayer {
         }
 
         @Override
-        public void removeAcceptedMarksAndSelectedPoints(Cfg cfg, List<Point3i> points) {
+        public void removeAcceptedMarksAndSelectedPoints(MarkCollection cfg, List<Point3i> points) {
             currentState.removeAcceptedMarksAndSelectedPoints(cfg, points);
             cfgShower.show(currentState);
             alreadyConfirmedOnce = false;

@@ -31,9 +31,9 @@ import lombok.AllArgsConstructor;
 import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.gui.image.frame.ISliderState;
-import org.anchoranalysis.gui.io.loader.manifest.finder.FinderCfgNRGSet;
+import org.anchoranalysis.gui.io.loader.manifest.finder.FinderMarksWithEnergy;
 import org.anchoranalysis.gui.videostats.IModuleCreatorDefaultState;
-import org.anchoranalysis.gui.videostats.internalframe.MergedCfgNRGHistoryInternalFrame;
+import org.anchoranalysis.gui.videostats.internalframe.MergedMarksHistoryInternalFrame;
 import org.anchoranalysis.gui.videostats.module.DefaultModuleStateManager;
 import org.anchoranalysis.gui.videostats.module.VideoStatsModuleCreateException;
 import org.anchoranalysis.gui.videostats.modulecreator.VideoStatsModuleCreatorContext;
@@ -41,8 +41,8 @@ import org.anchoranalysis.gui.videostats.modulecreator.VideoStatsModuleCreatorCo
 @AllArgsConstructor
 class CombinationCreator extends VideoStatsModuleCreatorContext {
 
-    private FinderCfgNRGSet finderFirst;
-    private FinderCfgNRGSet finderSecond;
+    private FinderMarksWithEnergy finderFirst;
+    private FinderMarksWithEnergy finderSecond;
     private String combinationName;
     private BackgroundSetProgressingSupplier backgroundSet;
 
@@ -60,8 +60,8 @@ class CombinationCreator extends VideoStatsModuleCreatorContext {
 
         try {
 
-            MergedCfgNRGHistoryInternalFrame imageFrame =
-                    new MergedCfgNRGHistoryInternalFrame(combinationName);
+            MergedMarksHistoryInternalFrame imageFrame =
+                    new MergedMarksHistoryInternalFrame(combinationName);
 
             try {
                 ISliderState sliderState =

@@ -28,12 +28,12 @@ package org.anchoranalysis.gui.plot.visualvm;
 
 import java.util.ArrayList;
 import java.util.Iterator;
-import org.anchoranalysis.anchor.mpp.feature.nrg.cfg.CfgWithNRGTotal;
+import org.anchoranalysis.anchor.mpp.feature.energy.marks.MarksWithTotalEnergy;
 import org.anchoranalysis.gui.plot.definition.GraphDefinition;
-import org.anchoranalysis.gui.videostats.ICfgNRGUpdater;
+import org.anchoranalysis.gui.videostats.EnergyUpdater;
 import org.anchoranalysis.mpp.sgmn.optscheme.feedback.aggregate.Aggregator;
 
-public class GraphPanelList implements ICfgNRGUpdater, Iterable<GraphPanel> {
+public class GraphPanelList implements EnergyUpdater, Iterable<GraphPanel> {
 
     private ArrayList<GraphPanel> delegate = new ArrayList<>();
 
@@ -42,14 +42,14 @@ public class GraphPanelList implements ICfgNRGUpdater, Iterable<GraphPanel> {
     }
 
     @Override
-    public void updateCrnt(int iter, long timeStamp, CfgWithNRGTotal crnt, Aggregator agg) {
+    public void updateCurrent(int iter, long timeStamp, MarksWithTotalEnergy current, Aggregator aggregator) {
         for (GraphPanel gp : delegate) {
-            gp.updateCrnt(iter, timeStamp, crnt, agg);
+            gp.updateCurrent(iter, timeStamp, current, aggregator);
         }
     }
 
     @Override
-    public void updateBest(int iter, long timeStamp, CfgWithNRGTotal best) {
+    public void updateBest(int iter, long timeStamp, MarksWithTotalEnergy best) {
         for (GraphPanel gp : delegate) {
             gp.updateBest(iter, timeStamp, best);
         }

@@ -28,24 +28,23 @@ package org.anchoranalysis.gui.videostats.dropdown.manifest;
 
 import java.io.IOException;
 import lombok.AllArgsConstructor;
-import org.anchoranalysis.anchor.mpp.cfg.Cfg;
-import org.anchoranalysis.anchor.mpp.feature.instantstate.CfgNRGInstantState;
-import org.anchoranalysis.anchor.mpp.feature.instantstate.CfgNRGNonHandleInstantState;
-import org.anchoranalysis.anchor.mpp.feature.nrg.cfg.CfgNRG;
+import org.anchoranalysis.anchor.mpp.feature.energy.IndexableMarksWithEnergy;
+import org.anchoranalysis.anchor.mpp.feature.energy.marks.MarksWithEnergyBreakdown;
+import org.anchoranalysis.anchor.mpp.mark.MarkCollection;
 import org.anchoranalysis.core.cache.CachedSupplier;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.index.container.SingleContainer;
 import org.anchoranalysis.core.name.provider.NamedProvider;
 import org.anchoranalysis.core.name.provider.NamedProviderGetException;
-import org.anchoranalysis.gui.finder.FinderNrgStack;
+import org.anchoranalysis.gui.finder.FinderEnergyStack;
 import org.anchoranalysis.gui.io.loader.manifest.finder.FinderCfgFolder;
 import org.anchoranalysis.gui.io.loader.manifest.finder.FinderObjectCollectionFolder;
-import org.anchoranalysis.gui.mark.MarkDisplaySettings;
+import org.anchoranalysis.gui.marks.MarkDisplaySettings;
 import org.anchoranalysis.gui.videostats.dropdown.BoundVideoStatsModuleDropDown;
 import org.anchoranalysis.gui.videostats.dropdown.OperationCreateBackgroundSetWithAdder;
 import org.anchoranalysis.gui.videostats.dropdown.VideoStatsModuleGlobalParams;
 import org.anchoranalysis.gui.videostats.dropdown.common.DropDownUtilities;
-import org.anchoranalysis.gui.videostats.dropdown.contextualmodulecreator.NRGTableCreator;
+import org.anchoranalysis.gui.videostats.dropdown.contextualmodulecreator.EnergyTableCreator;
 import org.anchoranalysis.gui.videostats.dropdown.contextualmodulecreator.SingleContextualModuleCreator;
 import org.anchoranalysis.gui.videostats.operation.VideoStatsOperationMenu;
 import org.anchoranalysis.gui.videostats.operation.combine.OverlayCollectionSupplier;
@@ -60,32 +59,32 @@ class AddObjects {
 
     private BoundVideoStatsModuleDropDown delegate;
     private CoupledManifests manifests;
-    private FinderNrgStack finderNrgStack;
+    private FinderEnergyStack finderEnergyStack;
     private VideoStatsModuleGlobalParams mpg;
     private MarkDisplaySettings markDisplaySettings;
 
-    public boolean apply(OperationCreateBackgroundSetWithAdder operationBwsaWithNRG) {
+    public boolean apply(OperationCreateBackgroundSetWithAdder operationBwsaWithEnergy) {
 
         VideoStatsOperationMenu subMenu = delegate.getRootMenu().createSubMenu("Objects", true);
 
         boolean defaultAdded = false;
 
-        if (fromObjectCollectionFolder(subMenu, operationBwsaWithNRG)) {
+        if (fromObjectCollectionFolder(subMenu, operationBwsaWithEnergy)) {
             defaultAdded = true;
         }
 
-        if (fromSerializedCfgNRG(operationBwsaWithNRG)) {
+        if (fromSerializedMarks(operationBwsaWithEnergy)) {
             defaultAdded = true;
         }
 
-        fromCfg(operationBwsaWithNRG);
+        fromCfg(operationBwsaWithEnergy);
 
         return defaultAdded;
     }
 
     private boolean fromObjectCollectionFolder(
             VideoStatsOperationMenu subMenu,
-            OperationCreateBackgroundSetWithAdder operationBwsaWithNRG) {
+            OperationCreateBackgroundSetWithAdder operationBwsaWithEnergy) {
         try {
             final FinderObjectCollectionFolder finderObjects =
                     new FinderObjectCollectionFolder(OutputterDirectories.OBJECT);
@@ -109,7 +108,7 @@ class AddObjects {
                                         }
                                     }),
                             key,
-                            operationBwsaWithNRG.nrgBackground(),
+                            operationBwsaWithEnergy.energyBackground(),
                             mpg,
                             true);
                 }
@@ -123,43 +122,43 @@ class AddObjects {
         return false;
     }
 
-    private boolean fromSerializedCfgNRG(
-            OperationCreateBackgroundSetWithAdder operationBwsaWithNRG) {
+    private boolean fromSerializedMarks(
+            OperationCreateBackgroundSetWithAdder operationBwsaWithEnergy) {
         try {
-            final FinderSerializedObject<CfgNRG> finderFinalCfgNRG =
-                    new FinderSerializedObject<>("cfgNRG", mpg.getLogger().errorReporter());
-            finderFinalCfgNRG.doFind(manifests.getFileManifest().get());
+            final FinderSerializedObject<MarksWithEnergyBreakdown> finderFinalMarks =
+                    new FinderSerializedObject<>("marks", mpg.getLogger().errorReporter());
+            finderFinalMarks.doFind(manifests.getFileManifest().get());
 
-            if (finderFinalCfgNRG.exists()) {
+            if (finderFinalMarks.exists()) {
 
-                CachedSupplier<LoadContainer<CfgNRGInstantState>, OperationFailedException> op =
+                CachedSupplier<LoadContainer<IndexableMarksWithEnergy>, OperationFailedException> op =
                         CachedSupplier.cache(
                                 () -> {
-                                    CfgNRGInstantState instantState;
+                                    IndexableMarksWithEnergy instantState;
                                     try {
                                         instantState =
-                                                new CfgNRGNonHandleInstantState(
-                                                        0, finderFinalCfgNRG.get());
+                                                new IndexableMarksWithEnergy(
+                                                        0, finderFinalMarks.get());
                                     } catch (IOException e) {
                                         throw new OperationFailedException(e);
                                     }
 
-                                    LoadContainer<CfgNRGInstantState> lc = new LoadContainer<>();
+                                    LoadContainer<IndexableMarksWithEnergy> lc = new LoadContainer<>();
                                     lc.setExpensiveLoad(false);
                                     lc.setContainer(new SingleContainer<>(instantState, 0, false));
                                     return lc;
                                 });
 
-                if (finderNrgStack.exists()) {
-                    // NRG Table
+                if (finderEnergyStack.exists()) {
+                    // Energy Table
                     SingleContextualModuleCreator creator =
                             new SingleContextualModuleCreator(
-                                    new NRGTableCreator(
+                                    new EnergyTableCreator(
                                             op,
-                                            finderNrgStack.nrgStackSupplier(),
+                                            finderEnergyStack.energyStackSupplier(),
                                             mpg.getDefaultColorIndexForMarks()));
                     delegate.addModule(
-                            operationBwsaWithNRG.operationAdder(), creator, "NRG Table", mpg);
+                            operationBwsaWithEnergy.operationAdder(), creator, "Energy Table", mpg);
                 }
 
                 return true;
@@ -170,18 +169,18 @@ class AddObjects {
         return false;
     }
 
-    private void fromCfg(OperationCreateBackgroundSetWithAdder operationBwsaWithNRG) {
+    private void fromCfg(OperationCreateBackgroundSetWithAdder operationBwsaWithEnergy) {
 
         try {
             FinderCfgFolder finder = new FinderCfgFolder("cfgCollection", "cfg");
             finder.doFind(manifests.getFileManifest().get());
 
-            NamedProvider<Cfg> provider = finder.createNamedProvider(false);
+            NamedProvider<MarkCollection> provider = finder.createNamedProvider(false);
             DropDownUtilities.addCfgSubmenu(
                     delegate.getRootMenu(),
                     delegate,
                     provider,
-                    operationBwsaWithNRG.nrgBackground(),
+                    operationBwsaWithEnergy.energyBackground(),
                     mpg,
                     markDisplaySettings,
                     false);

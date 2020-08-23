@@ -31,7 +31,7 @@ import java.util.Iterator;
 import java.util.List;
 import lombok.Getter;
 import lombok.Setter;
-import org.anchoranalysis.anchor.mpp.feature.nrg.scheme.NRGScheme;
+import org.anchoranalysis.anchor.mpp.feature.energy.scheme.EnergyScheme;
 import org.anchoranalysis.bean.annotation.BeanField;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.progress.ProgressReporter;
@@ -105,10 +105,10 @@ public class ExecutedExperimentFileCreator extends FileCreatorGeneralList {
             List<InteractiveFile> listFiles) {
         experimentNames.add(manifestExperiment.getRootFolder().getRelativePath().toString());
 
-        FinderSerializedObject<NRGScheme> finderNRGScheme =
+        FinderSerializedObject<EnergyScheme> finderEnergyScheme =
                 new FinderSerializedObject<>(
-                        "nrgScheme", params.getLogErrorReporter().errorReporter());
-        finderNRGScheme.doFind(manifestExperiment);
+                        "energyScheme", params.getLogErrorReporter().errorReporter());
+        finderEnergyScheme.doFind(manifestExperiment);
 
         for (Iterator<CoupledManifests> i =
                         manifestCouplingDefinition.iteratorCoupledManifestsFor(manifestExperiment);

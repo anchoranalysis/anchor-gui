@@ -28,14 +28,14 @@ package org.anchoranalysis.gui.videostats.dropdown.modulecreator.graph;
 
 import java.io.IOException;
 import java.util.Optional;
-import org.anchoranalysis.anchor.mpp.feature.nrg.cfg.CfgNRGPixelized;
+import org.anchoranalysis.anchor.mpp.feature.energy.marks.VoxelizedMarksWithEnergy;
 import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.error.reporter.ErrorReporter;
-import org.anchoranalysis.gui.cfgnrg.StatePanel;
-import org.anchoranalysis.gui.cfgnrg.StatePanelFrameHistory;
 import org.anchoranalysis.gui.io.loader.manifest.finder.historyfolder.FinderHistoryFolder;
 import org.anchoranalysis.gui.kernel.KernelIterDescriptionNavigatorPanel;
+import org.anchoranalysis.gui.marks.StatePanel;
+import org.anchoranalysis.gui.marks.StatePanelFrameHistory;
 import org.anchoranalysis.gui.videostats.IModuleCreatorDefaultState;
 import org.anchoranalysis.gui.videostats.dropdown.VideoStatsModuleGlobalParams;
 import org.anchoranalysis.gui.videostats.module.DefaultModuleStateManager;
@@ -43,33 +43,22 @@ import org.anchoranalysis.gui.videostats.module.VideoStatsModuleCreateException;
 import org.anchoranalysis.gui.videostats.modulecreator.VideoStatsModuleCreatorContext;
 import org.anchoranalysis.io.manifest.finder.FinderSerializedObject;
 import org.anchoranalysis.mpp.sgmn.bean.kernel.proposer.KernelProposer;
-import org.anchoranalysis.mpp.sgmn.kernel.proposer.KernelIterDescription;
+import org.anchoranalysis.mpp.sgmn.kernel.proposer.KernelDescision;
+import lombok.AllArgsConstructor;
 
+@AllArgsConstructor
 public class KernelIterDescriptionModuleCreator extends VideoStatsModuleCreatorContext {
 
-    private final FinderHistoryFolder<KernelIterDescription> finderKernelIterDescriptionHistory;
-    private final FinderSerializedObject<KernelProposer<CfgNRGPixelized>> finderKernelProposer;
-
-    // private static Log log = LogFactory.getLog(GraphNRGModuleCreator.class);
-
-    public KernelIterDescriptionModuleCreator(
-            FinderHistoryFolder<KernelIterDescription> finderKernelIterDescriptionHistory,
-            FinderSerializedObject<KernelProposer<CfgNRGPixelized>> finderKernelProposer) {
-        super();
-        this.finderKernelIterDescriptionHistory = finderKernelIterDescriptionHistory;
-        this.finderKernelProposer = finderKernelProposer;
-    }
+    private final FinderHistoryFolder<KernelDescision> finderKernelDecisionHistory;
+    private final FinderSerializedObject<KernelProposer<VoxelizedMarksWithEnergy>> finderKernelProposer;
 
     @Override
     public boolean precondition() {
-        if (!finderKernelIterDescriptionHistory.exists()) {
+        if (!finderKernelDecisionHistory.exists()) {
             return false;
         }
 
-        if (!finderKernelProposer.exists()) {
-            return false;
-        }
-        return true;
+        return !finderKernelProposer.exists();
     }
 
     @Override
@@ -82,21 +71,21 @@ public class KernelIterDescriptionModuleCreator extends VideoStatsModuleCreatorC
         ErrorReporter errorReporter = mpg.getLogger().errorReporter();
 
         try {
-            KernelProposer<CfgNRGPixelized> kp = finderKernelProposer.get();
+            KernelProposer<VoxelizedMarksWithEnergy> kp = finderKernelProposer.get();
 
             // TODO We might end up calling this multiple times, let's some up with a more elegant
             // solution at some point
             kp.init();
 
-            StatePanel<KernelIterDescription> panel =
+            StatePanel<KernelDescision> panel =
                     new KernelIterDescriptionNavigatorPanel(
-                            finderKernelIterDescriptionHistory.get().getContainer(), kp);
+                            finderKernelDecisionHistory.get().getContainer(), kp);
 
-            StatePanelFrameHistory<KernelIterDescription> frame =
+            StatePanelFrameHistory<KernelDescision> frame =
                     new StatePanelFrameHistory<>(namePrefix, true);
             frame.init(
                     defaultStateManager.getState().getLinkState().getFrameIndex(),
-                    finderKernelIterDescriptionHistory.get(),
+                    finderKernelDecisionHistory.get(),
                     panel,
                     errorReporter);
             frame.controllerSize().configureSize(500, 500);

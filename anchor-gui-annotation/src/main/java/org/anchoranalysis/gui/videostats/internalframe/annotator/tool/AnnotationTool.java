@@ -28,7 +28,7 @@ package org.anchoranalysis.gui.videostats.internalframe.annotator.tool;
 
 import java.util.Optional;
 import org.anchoranalysis.core.geometry.Point3d;
-import org.anchoranalysis.gui.frame.overlays.ProposedCfg;
+import org.anchoranalysis.gui.frame.overlays.ProposedMarks;
 import org.anchoranalysis.gui.videostats.internalframe.evaluator.EvaluatorWithContext;
 
 public abstract class AnnotationTool {
@@ -44,7 +44,7 @@ public abstract class AnnotationTool {
     //
     public abstract void leftMouseClickedAtPoint(Point3d point);
 
-    public abstract void proposed(ProposedCfg proposedCfg);
+    public abstract void proposed(ProposedMarks proposedCfg);
 
     public abstract void confirm(boolean accepted);
 

@@ -30,7 +30,7 @@ import java.util.ArrayList;
 import java.util.List;
 import lombok.Getter;
 import lombok.Setter;
-import org.anchoranalysis.anchor.mpp.feature.bean.nrgscheme.NRGSchemeCreator;
+import org.anchoranalysis.anchor.mpp.feature.bean.energy.scheme.EnergySchemeCreator;
 import org.anchoranalysis.bean.NamedBean;
 import org.anchoranalysis.bean.annotation.BeanField;
 import org.anchoranalysis.bean.annotation.NonEmpty;
@@ -58,7 +58,7 @@ public class FileFeatureEvaluatorCreator extends FileCreator {
     @BeanField @NonEmpty @Getter @Setter
     private List<NamedBean<FeatureListProvider<FeatureInput>>> listFeatures = new ArrayList<>();
 
-    @BeanField @OptionalBean @Getter @Setter private NRGSchemeCreator nrgSchemeCreator;
+    @BeanField @OptionalBean @Getter @Setter private EnergySchemeCreator energySchemeCreator;
     // END BEAN PROPERTIES
 
     @Override
@@ -88,7 +88,7 @@ public class FileFeatureEvaluatorCreator extends FileCreator {
 
     private FeatureListSrc createSrc(CommonContext context) throws CreateException {
         return new FeatureListSrcBuilder(context.getLogger())
-                .build(createInitParams(context), nrgSchemeCreator);
+                .build(createInitParams(context), energySchemeCreator);
     }
 
     private SharedFeaturesInitParams createInitParams(CommonContext context)

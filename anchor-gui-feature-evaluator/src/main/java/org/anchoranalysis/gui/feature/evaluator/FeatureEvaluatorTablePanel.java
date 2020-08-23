@@ -38,12 +38,12 @@ import org.anchoranalysis.core.index.IntArray;
 import org.anchoranalysis.core.log.Logger;
 import org.anchoranalysis.core.property.IPropertyValueReceivable;
 import org.anchoranalysis.core.property.IPropertyValueSendable;
-import org.anchoranalysis.gui.cfgnrg.StatePanel;
-import org.anchoranalysis.gui.cfgnrg.StatePanelUpdateException;
 import org.anchoranalysis.gui.feature.evaluator.treetable.FeatureListSrc;
-import org.anchoranalysis.gui.image.OverlayCollectionWithNrgStack;
+import org.anchoranalysis.gui.image.OverlaysWithEnergyStack;
+import org.anchoranalysis.gui.marks.StatePanel;
+import org.anchoranalysis.gui.marks.StatePanelUpdateException;
 
-public class FeatureEvaluatorTablePanel extends StatePanel<OverlayCollectionWithNrgStack> {
+public class FeatureEvaluatorTablePanel extends StatePanel<OverlaysWithEnergyStack> {
 
     private JPanel delegate;
 
@@ -119,7 +119,7 @@ public class FeatureEvaluatorTablePanel extends StatePanel<OverlayCollectionWith
     }
 
     @Override
-    public void updateState(OverlayCollectionWithNrgStack state) throws StatePanelUpdateException {
+    public void updateState(OverlaysWithEnergyStack state) throws StatePanelUpdateException {
 
         try {
             updater.updateModel(state);

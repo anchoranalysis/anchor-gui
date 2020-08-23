@@ -32,9 +32,9 @@ import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import org.anchoranalysis.core.error.reporter.ErrorReporter;
 import org.anchoranalysis.core.random.RandomNumberGenerator;
-import org.anchoranalysis.gui.frame.cfgproposer.CfgProposerMouseClickAdapter;
 import org.anchoranalysis.gui.frame.details.canvas.ControllerAction;
 import org.anchoranalysis.gui.frame.details.canvas.ControllerMouse;
+import org.anchoranalysis.gui.frame.marks.proposer.MarksProposerMouseClickAdapter;
 import org.anchoranalysis.gui.frame.overlays.ExtractOverlays;
 import org.anchoranalysis.gui.image.frame.ISliderState;
 import org.anchoranalysis.gui.videostats.internalframe.annotator.AnnotationPanelParams;
@@ -86,8 +86,8 @@ class HelperAddActions {
             ISliderState sliderState,
             RandomNumberGenerator rng,
             ErrorReporter errorReporter) {
-        CfgProposerMouseClickAdapter clickListener =
-                new CfgProposerMouseClickAdapter(
+        MarksProposerMouseClickAdapter clickListener =
+                new MarksProposerMouseClickAdapter(
                         extractOverlays,
                         sliderState,
                         () -> panelTool.getTool().evaluatorWithContextGetter(),

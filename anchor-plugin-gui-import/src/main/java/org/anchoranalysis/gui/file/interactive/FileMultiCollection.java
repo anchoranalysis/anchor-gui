@@ -29,7 +29,7 @@ package org.anchoranalysis.gui.file.interactive;
 import java.io.File;
 import java.nio.file.Path;
 import java.util.Optional;
-import org.anchoranalysis.anchor.mpp.cfg.Cfg;
+import org.anchoranalysis.anchor.mpp.mark.MarkCollection;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.error.OperationFailedException;
@@ -80,7 +80,7 @@ public class FileMultiCollection extends InteractiveFile {
         LazyEvaluationStore<TimeSequence> stacks = new LazyEvaluationStore<>("stacks");
         inputObject.stack().addToStore(stacks);
 
-        LazyEvaluationStore<Cfg> cfgs = new LazyEvaluationStore<>("cfg");
+        LazyEvaluationStore<MarkCollection> cfgs = new LazyEvaluationStore<>("cfg");
         inputObject.cfg().addToStore(cfgs);
 
         LazyEvaluationStore<KeyValueParams> keyValueParams =

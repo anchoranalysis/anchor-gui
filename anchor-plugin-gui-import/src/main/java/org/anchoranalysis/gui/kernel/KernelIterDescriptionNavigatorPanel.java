@@ -41,7 +41,7 @@ import javax.swing.JSplitPane;
 import javax.swing.JTextArea;
 import javax.swing.JToggleButton;
 import javax.swing.event.EventListenerList;
-import org.anchoranalysis.anchor.mpp.feature.nrg.cfg.CfgNRGPixelized;
+import org.anchoranalysis.anchor.mpp.feature.energy.marks.VoxelizedMarksWithEnergy;
 import org.anchoranalysis.anchor.overlay.collection.OverlayCollection;
 import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.index.IndicesSelection;
@@ -51,26 +51,26 @@ import org.anchoranalysis.core.property.IPropertyValueReceivable;
 import org.anchoranalysis.core.property.IPropertyValueSendable;
 import org.anchoranalysis.core.property.change.PropertyValueChangeEvent;
 import org.anchoranalysis.core.property.change.PropertyValueChangeListener;
-import org.anchoranalysis.gui.cfgnrg.StatePanel;
-import org.anchoranalysis.gui.cfgnrg.StatePanelUpdateException;
 import org.anchoranalysis.gui.kernel.match.MatchKernel;
+import org.anchoranalysis.gui.marks.StatePanel;
+import org.anchoranalysis.gui.marks.StatePanelUpdateException;
 import org.anchoranalysis.gui.reassign.SimpleToggleAction;
 import org.anchoranalysis.mpp.sgmn.bean.kernel.proposer.KernelProposer;
-import org.anchoranalysis.mpp.sgmn.kernel.proposer.KernelIterDescription;
+import org.anchoranalysis.mpp.sgmn.kernel.proposer.KernelDescision;
 import org.anchoranalysis.mpp.sgmn.kernel.proposer.WeightedKernel;
 
-public class KernelIterDescriptionNavigatorPanel extends StatePanel<KernelIterDescription> {
+public class KernelIterDescriptionNavigatorPanel extends StatePanel<KernelDescision> {
 
     private JPanel panel;
 
     private JTextArea label;
     private ProposerFailureDescriptionPanel kernelFailurePanel;
 
-    private KernelProposer<CfgNRGPixelized> kernelProposer;
+    private KernelProposer<VoxelizedMarksWithEnergy> kernelProposer;
 
     private int currentIndex;
 
-    private BoundedIndexContainer<KernelIterDescription> cntr;
+    private BoundedIndexContainer<KernelDescision> cntr;
 
     private EventListenerList listeners = new EventListenerList();
 
@@ -95,7 +95,7 @@ public class KernelIterDescriptionNavigatorPanel extends StatePanel<KernelIterDe
                 return -1;
             }
 
-            KernelIterDescription kid = cntr.get(currentIndex);
+            KernelDescision kid = cntr.get(currentIndex);
 
             // Does it meet our criteria
             if (match.matches(kid)) {
@@ -159,8 +159,8 @@ public class KernelIterDescriptionNavigatorPanel extends StatePanel<KernelIterDe
     }
 
     public KernelIterDescriptionNavigatorPanel(
-            BoundedIndexContainer<KernelIterDescription> cntr,
-            KernelProposer<CfgNRGPixelized> kernelProposer) {
+            BoundedIndexContainer<KernelDescision> cntr,
+            KernelProposer<VoxelizedMarksWithEnergy> kernelProposer) {
 
         this.kernelProposer = kernelProposer;
         this.cntr = cntr;
@@ -247,13 +247,13 @@ public class KernelIterDescriptionNavigatorPanel extends StatePanel<KernelIterDe
     }
 
     @Override
-    public void updateState(KernelIterDescription state) throws StatePanelUpdateException {
+    public void updateState(KernelDescision state) throws StatePanelUpdateException {
 
         this.currentIndex = state.getIndex();
 
         String newline = System.getProperty("line.separator");
 
-        WeightedKernel<CfgNRGPixelized> kernelFactory =
+        WeightedKernel<VoxelizedMarksWithEnergy> kernelFactory =
                 kernelProposer.getAllKernelFactories().get(state.getId());
 
         StringBuilder s = new StringBuilder();

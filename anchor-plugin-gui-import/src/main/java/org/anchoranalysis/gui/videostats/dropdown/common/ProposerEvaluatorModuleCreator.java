@@ -40,7 +40,7 @@ import org.anchoranalysis.gui.interactivebrowser.MarkEvaluatorSetForImage;
 import org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.BackgroundUpdater;
 import org.anchoranalysis.gui.videostats.dropdown.AddVideoStatsModule;
 import org.anchoranalysis.gui.videostats.dropdown.BackgroundSetProgressingSupplier;
-import org.anchoranalysis.gui.videostats.dropdown.IUpdatableMarkEvaluator;
+import org.anchoranalysis.gui.videostats.dropdown.UpdatableMarkEvaluator;
 import org.anchoranalysis.gui.videostats.dropdown.ModuleAddUtilities;
 import org.anchoranalysis.gui.videostats.dropdown.VideoStatsModuleGlobalParams;
 import org.anchoranalysis.gui.videostats.internalframe.evaluator.InternalFrameMarkProposerEvaluator;
@@ -55,9 +55,9 @@ import org.anchoranalysis.io.output.bean.OutputWriteSettings;
 class ProposerEvaluatorModuleCreator extends VideoStatsModuleCreator {
 
     private MarkEvaluatorSetForImage markEvaluatorSet;
-    private NRGBackground nrgBackground;
+    private EnergyBackground energyBackground;
     private OutputWriteSettings outputWriteSettings;
-    private IUpdatableMarkEvaluator markEvaluatorUpdater;
+    private UpdatableMarkEvaluator markEvaluatorUpdater;
     private VideoStatsModuleGlobalParams mpg;
 
     @Override
@@ -73,7 +73,7 @@ class ProposerEvaluatorModuleCreator extends VideoStatsModuleCreator {
                     .controllerImageView()
                     .configure(0.8, 0.6, 0, 50, mpg.getGraphicsCurrentScreen());
 
-            // Here we optionally set an adder to send back nrg_stacks
+            // Here we optionally set an adder to send back energy-stacks
             ISliderState sliderState =
                     imageFrame.init(
                             markEvaluatorSet,
@@ -84,7 +84,7 @@ class ProposerEvaluatorModuleCreator extends VideoStatsModuleCreator {
             BackgroundUpdater backgroundUpdater =
                     imageFrame
                             .controllerBackgroundMenu()
-                            .add(mpg, nrgBackground.getBackgroundSet());
+                            .add(mpg, energyBackground.getBackgroundSet());
 
             imageFrame.addMarkEvaluatorChangedListener(
                     e -> {
@@ -100,7 +100,7 @@ class ProposerEvaluatorModuleCreator extends VideoStatsModuleCreator {
                                     e.getMarkEvaluatorName());
                         } else {
 
-                            backgroundUpdater.update(nrgBackground.getBackgroundSet());
+                            backgroundUpdater.update(energyBackground.getBackgroundSet());
                             markEvaluatorUpdater.setMarkEvaluatorIdentifier(null);
                         }
                     });
@@ -117,7 +117,7 @@ class ProposerEvaluatorModuleCreator extends VideoStatsModuleCreator {
             throws BackgroundStackContainerException {
 
         try {
-            BackgroundSet bsExisting = nrgBackground.getBackgroundSet().get(progressReporter);
+            BackgroundSet bsExisting = energyBackground.getBackgroundSet().get(progressReporter);
 
             MPPInitParams so = pso.get();
             ImageInitParams soImage = so.getImage();

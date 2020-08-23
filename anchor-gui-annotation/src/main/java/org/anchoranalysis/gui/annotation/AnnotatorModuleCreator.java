@@ -141,7 +141,7 @@ public class AnnotatorModuleCreator<T extends AnnotationInitParams>
                 .configureLinkManager(
                         adder.getSubgroup().getDefaultModuleState().getLinkStateManager());
 
-        // Here we optionally set an adder to send back nrg_stacks
+        // Here we optionally set an adder to send back energy-stacks
         ISliderState sliderState =
                 imageFrame.init(
                         annotation,

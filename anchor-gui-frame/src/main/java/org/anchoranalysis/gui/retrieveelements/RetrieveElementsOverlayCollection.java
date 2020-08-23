@@ -28,8 +28,8 @@ package org.anchoranalysis.gui.retrieveelements;
 
 import java.util.Collection;
 import java.util.Optional;
-import org.anchoranalysis.anchor.mpp.cfg.Cfg;
 import org.anchoranalysis.anchor.mpp.mark.Mark;
+import org.anchoranalysis.anchor.mpp.mark.MarkCollection;
 import org.anchoranalysis.anchor.mpp.overlay.OverlayCollectionMarkFactory;
 import org.anchoranalysis.anchor.overlay.collection.OverlayCollection;
 import org.anchoranalysis.anchor.overlay.collection.OverlayCollectionObjectFactory;
@@ -48,14 +48,14 @@ public class RetrieveElementsOverlayCollection extends RetrieveElements {
     public void addToPopUp(AddToExportSubMenu popUp) {
 
         if (currentObjects != null) {
-            Cfg cfg = OverlayCollectionMarkFactory.cfgFromOverlays(currentObjects);
+            MarkCollection cfg = OverlayCollectionMarkFactory.cfgFromOverlays(currentObjects);
             addAllMarksAsConfiguration(popUp, cfg);
         }
 
         if (currentSelectedObjects != null) {
 
             // Selected Marks as Configuration
-            Cfg cfg = OverlayCollectionMarkFactory.cfgFromOverlays(currentSelectedObjects);
+            MarkCollection cfg = OverlayCollectionMarkFactory.cfgFromOverlays(currentSelectedObjects);
             ObjectCollection objects =
                     OverlayCollectionObjectFactory.objectsFromOverlays(currentSelectedObjects);
 
@@ -78,7 +78,7 @@ public class RetrieveElementsOverlayCollection extends RetrieveElements {
                 1);
     }
 
-    private void addSelectedMarksSerialized(AddToExportSubMenu popUp, Cfg cfg) {
+    private void addSelectedMarksSerialized(AddToExportSubMenu popUp, MarkCollection cfg) {
         Collection<Mark> marks = cfg.createSet();
         ObjectOutputStreamGenerator<Mark> generatorMark =
                 new ObjectOutputStreamGenerator<>(Optional.of("mark"));
@@ -98,8 +98,8 @@ public class RetrieveElementsOverlayCollection extends RetrieveElements {
                 marks.size());
     }
 
-    private void addSelectedMarksAsConfiguration(AddToExportSubMenu popUp, Cfg cfg) {
-        ObjectOutputStreamGenerator<Cfg> generatorCfg =
+    private void addSelectedMarksAsConfiguration(AddToExportSubMenu popUp, MarkCollection cfg) {
+        ObjectOutputStreamGenerator<MarkCollection> generatorCfg =
                 new ObjectOutputStreamGenerator<>(Optional.of("cfg"));
         popUp.addExportItem(
                 generatorCfg,
@@ -110,8 +110,8 @@ public class RetrieveElementsOverlayCollection extends RetrieveElements {
                 1);
     }
 
-    private void addAllMarksAsConfiguration(AddToExportSubMenu popUp, Cfg cfg) {
-        ObjectOutputStreamGenerator<Cfg> generator =
+    private void addAllMarksAsConfiguration(AddToExportSubMenu popUp, MarkCollection cfg) {
+        ObjectOutputStreamGenerator<MarkCollection> generator =
                 new ObjectOutputStreamGenerator<>(Optional.of("cfg"));
         popUp.addExportItem(
                 generator,

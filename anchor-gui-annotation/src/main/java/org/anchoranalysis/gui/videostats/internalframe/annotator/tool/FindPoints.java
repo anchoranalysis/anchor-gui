@@ -31,8 +31,8 @@ import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import org.anchoranalysis.anchor.mpp.bean.regionmap.RegionMap;
 import org.anchoranalysis.anchor.mpp.bean.regionmap.RegionMembershipWithFlags;
-import org.anchoranalysis.anchor.mpp.cfg.Cfg;
 import org.anchoranalysis.anchor.mpp.mark.Mark;
+import org.anchoranalysis.anchor.mpp.mark.MarkCollection;
 import org.anchoranalysis.core.functional.FunctionalList;
 import org.anchoranalysis.core.functional.OptionalUtilities;
 import org.anchoranalysis.core.geometry.Point3d;
@@ -47,10 +47,10 @@ class FindPoints {
 
     private static final int DISTANCE_THRESHOLD_SQUARED = DISTANCE_THRESHOLD * DISTANCE_THRESHOLD;
 
-    public static Cfg findMarksContainingPoint(
-            Cfg cfg, Point3d point, RegionMap regionMap, int regionID) {
+    public static MarkCollection findMarksContainingPoint(
+            MarkCollection cfg, Point3d point, RegionMap regionMap, int regionID) {
 
-        Cfg cfgOut = new Cfg();
+        MarkCollection cfgOut = new MarkCollection();
 
         RegionMembershipWithFlags rm = regionMap.membershipWithFlagsForIndex(regionID);
 

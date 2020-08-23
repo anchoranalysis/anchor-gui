@@ -27,16 +27,16 @@
 package org.anchoranalysis.gui.videostats.internalframe.annotator.currentstate;
 
 import lombok.NoArgsConstructor;
-import org.anchoranalysis.anchor.mpp.cfg.Cfg;
 import org.anchoranalysis.anchor.mpp.mark.Mark;
+import org.anchoranalysis.anchor.mpp.mark.MarkCollection;
 
 @NoArgsConstructor
 public class DualCfg implements IQueryAcceptedRejected {
 
-    private Cfg cfgAccepted = new Cfg();
-    private Cfg cfgRejected = new Cfg();
+    private MarkCollection cfgAccepted = new MarkCollection();
+    private MarkCollection cfgRejected = new MarkCollection();
 
-    public DualCfg(Cfg cfgAccepted, Cfg cfgRejected) {
+    public DualCfg(MarkCollection cfgAccepted, MarkCollection cfgRejected) {
         super();
         this.cfgAccepted = cfgAccepted;
 
@@ -46,11 +46,11 @@ public class DualCfg implements IQueryAcceptedRejected {
             // Replace null initialisation with an empty set
             // This is handle backwards compatiblility from serialized annotation files
             //   when cfgRejected was not present
-            this.cfgRejected = new Cfg();
+            this.cfgRejected = new MarkCollection();
         }
     }
 
-    public void addAll(boolean accepted, Cfg src) {
+    public void addAll(boolean accepted, MarkCollection src) {
         if (accepted) {
             cfgAccepted.addAll(src);
         } else {
@@ -75,12 +75,12 @@ public class DualCfg implements IQueryAcceptedRejected {
     }
 
     @Override
-    public Cfg getCfgAccepted() {
+    public MarkCollection getCfgAccepted() {
         return cfgAccepted;
     }
 
     @Override
-    public Cfg getCfgRejected() {
+    public MarkCollection getCfgRejected() {
         return cfgRejected;
     }
 

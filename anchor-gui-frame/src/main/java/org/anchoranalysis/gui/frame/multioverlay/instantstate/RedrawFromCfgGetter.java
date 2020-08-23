@@ -70,9 +70,9 @@ class RedrawFromCfgGetter implements PropertyValueChangeListener<IntArray> {
 
             // redrawable.redraw(cfg)
 
-            // cfgGenerator.redraw( cfgNew );
-            // cfgGenerator.generate();
-            // cfgGenerator.redrawAll();
+            // markFactoryerator.redraw( cfgNew );
+            // markFactoryerator.generate();
+            // markFactoryerator.redrawAll();
         } else {
             OverlayCollection merged = old.withoutColor().createMerged(cfgNew.withoutColor());
             // redrawable.redrawParts(  );

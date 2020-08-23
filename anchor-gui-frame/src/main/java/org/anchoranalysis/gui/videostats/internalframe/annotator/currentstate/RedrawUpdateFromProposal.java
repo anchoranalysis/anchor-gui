@@ -26,22 +26,22 @@
 
 package org.anchoranalysis.gui.videostats.internalframe.annotator.currentstate;
 
-import org.anchoranalysis.anchor.mpp.cfg.Cfg;
+import org.anchoranalysis.anchor.mpp.mark.MarkCollection;
 import org.anchoranalysis.anchor.mpp.overlay.OverlayCollectionMarkFactory;
 import org.anchoranalysis.anchor.overlay.collection.ColoredOverlayCollection;
 import org.anchoranalysis.anchor.overlay.collection.OverlayCollection;
 import org.anchoranalysis.gui.frame.display.OverlayedDisplayStackUpdate;
-import org.anchoranalysis.gui.frame.overlays.ProposedCfg;
+import org.anchoranalysis.gui.frame.overlays.ProposedMarks;
 import org.anchoranalysis.gui.frame.overlays.RedrawUpdate;
 
 public class RedrawUpdateFromProposal {
 
-    public static RedrawUpdate apply(ProposedCfg er, Cfg boxRedraw) {
+    public static RedrawUpdate apply(ProposedMarks er, MarkCollection boxRedraw) {
         return new RedrawUpdate(
                 selectUpdate(er, boxRedraw), overlaysForTrigger(er), suggestedSliceNum(er));
     }
 
-    private static OverlayedDisplayStackUpdate selectUpdate(ProposedCfg cfg, Cfg boxRedraw) {
+    private static OverlayedDisplayStackUpdate selectUpdate(ProposedMarks cfg, MarkCollection boxRedraw) {
         ColoredOverlayCollection oc = cfg.getColoredCfg();
         if (boxRedraw != null) {
             OverlayCollection ocRedraw =
@@ -56,7 +56,7 @@ public class RedrawUpdateFromProposal {
     // HACK
     // Let's just always send the fist item
     // We create a cfg with just the first item
-    private static OverlayCollection overlaysForTrigger(ProposedCfg er) {
+    private static OverlayCollection overlaysForTrigger(ProposedMarks er) {
         // We the marks back from the overlays
         // Cfg cfg = OverlayCollectionMarkFactory.cfgFromOverlays(
         // er.getColoredCfg().getOverlayCollection() );
@@ -70,7 +70,7 @@ public class RedrawUpdateFromProposal {
         return ocFirst;
     }
 
-    private static int suggestedSliceNum(ProposedCfg er) {
+    private static int suggestedSliceNum(ProposedMarks er) {
         // Slice Nums
         if (er.isSuccess() && er.hasSugestedSliceNum()) {
             return er.getSuggestedSliceNum();

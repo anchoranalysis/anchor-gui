@@ -38,10 +38,10 @@ import org.anchoranalysis.image.stack.Stack;
 import org.anchoranalysis.io.generator.IterableObjectGenerator;
 import org.anchoranalysis.plugin.gui.bean.exporttask.MappedFrom;
 
-public class Combined<T> extends CreateRasterGenerator<T> {
+public class Combined<T> extends GeneratorFactory<T> {
 
     // START BEAN PROPERTIES
-    @BeanField @Getter @Setter private List<CreateRasterGenerator<T>> createRasterGeneratorList;
+    @BeanField @Getter @Setter private List<GeneratorFactory<T>> createRasterGeneratorList;
 
     @BeanField @Getter @Setter private ArrangeRasterBean arrange;
     // END BEAN PROPERTIES
@@ -53,7 +53,7 @@ public class Combined<T> extends CreateRasterGenerator<T> {
         CombineRasterGenerator<MappedFrom<T>> combineGenerator = new CombineRasterGenerator<>();
         combineGenerator.setArrange(arrange);
 
-        for (CreateRasterGenerator<T> creator : createRasterGeneratorList) {
+        for (GeneratorFactory<T> creator : createRasterGeneratorList) {
             combineGenerator.add(creator.createGenerator(params));
         }
 
@@ -63,7 +63,7 @@ public class Combined<T> extends CreateRasterGenerator<T> {
     @Override
     public boolean hasNecessaryParams(ExportTaskParams params) {
 
-        for (CreateRasterGenerator<T> creator : createRasterGeneratorList) {
+        for (GeneratorFactory<T> creator : createRasterGeneratorList) {
 
             if (!creator.hasNecessaryParams(params)) {
                 return false;

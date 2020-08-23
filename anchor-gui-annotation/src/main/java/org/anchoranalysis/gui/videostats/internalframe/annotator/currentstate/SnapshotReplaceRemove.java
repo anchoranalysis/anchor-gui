@@ -27,8 +27,8 @@
 package org.anchoranalysis.gui.videostats.internalframe.annotator.currentstate;
 
 import java.util.List;
-import org.anchoranalysis.anchor.mpp.cfg.Cfg;
-import org.anchoranalysis.anchor.mpp.cfg.ColoredCfg;
+import org.anchoranalysis.anchor.mpp.mark.ColoredMarks;
+import org.anchoranalysis.anchor.mpp.mark.MarkCollection;
 import org.anchoranalysis.core.geometry.Point3i;
 import org.anchoranalysis.gui.videostats.internalframe.annotator.undoredo.IRecordSnapshot;
 
@@ -50,13 +50,13 @@ class SnapshotReplaceRemove implements IReplaceRemove {
     }
 
     @Override
-    public void replaceCurrentProposedCfg(Cfg cfgCore, ColoredCfg cfgDisplayed, int sliceZ) {
+    public void replaceCurrentProposedCfg(MarkCollection cfgCore, ColoredMarks cfgDisplayed, int sliceZ) {
         recorder.recordSnapshot();
         delegate.removeCurrentProposedCfg();
     }
 
     @Override
-    public void removeAcceptedMarksAndSelectedPoints(Cfg cfg, List<Point3i> points) {
+    public void removeAcceptedMarksAndSelectedPoints(MarkCollection cfg, List<Point3i> points) {
         recorder.recordSnapshot();
         delegate.removeAcceptedMarksAndSelectedPoints(cfg, points);
     }

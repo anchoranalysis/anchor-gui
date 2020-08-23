@@ -29,7 +29,7 @@ package org.anchoranalysis.gui.io.loader.manifest.finder;
 import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
-import org.anchoranalysis.anchor.mpp.cfg.Cfg;
+import org.anchoranalysis.anchor.mpp.mark.MarkCollection;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.name.provider.NameValueSet;
 import org.anchoranalysis.core.name.provider.NamedProvider;
@@ -54,7 +54,7 @@ public class FinderCfgFolder extends FinderSingleFolder {
     private final String folderName;
     // END REQUIRED ARGUMENTS
 
-    private Deserializer<Cfg> deserializer = new XStreamDeserializer<>();
+    private Deserializer<MarkCollection> deserializer = new XStreamDeserializer<>();
 
     @Override
     protected Optional<FolderWrite> findFolder(ManifestRecorder manifestRecorder) {
@@ -73,16 +73,16 @@ public class FinderCfgFolder extends FinderSingleFolder {
         }
     }
 
-    public NamedProvider<Cfg> createNamedProvider(boolean namesAsIndexes)
+    public NamedProvider<MarkCollection> createNamedProvider(boolean namesAsIndexes)
             throws OperationFailedException {
 
         if (getFoundFolder() == null) {
             return new NameValueSet<>();
         }
 
-        LazyEvaluationStore<Cfg> out = new LazyEvaluationStore<>("finderCfgFolder");
+        LazyEvaluationStore<MarkCollection> out = new LazyEvaluationStore<>("finderCfgFolder");
 
-        SequencedFolderDeserializer<Cfg> sfrr =
+        SequencedFolderDeserializer<MarkCollection> sfrr =
                 new SequencedFolderDeserializer<>(getFoundFolder(), deserializer);
 
         AddFromSequenceHelper.addFromSequence(

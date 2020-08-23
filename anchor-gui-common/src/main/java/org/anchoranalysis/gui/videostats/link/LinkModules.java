@@ -37,7 +37,7 @@ import org.anchoranalysis.core.property.IPropertyValueSendable;
 import org.anchoranalysis.core.property.PropertyValueReceivableAdapter;
 import org.anchoranalysis.core.property.change.PropertyValueChangeEvent;
 import org.anchoranalysis.gui.container.background.BackgroundStackContainerException;
-import org.anchoranalysis.gui.image.OverlayCollectionWithNrgStack;
+import org.anchoranalysis.gui.image.OverlaysWithEnergyStack;
 import org.anchoranalysis.gui.videostats.module.VideoStatsModule;
 import org.anchoranalysis.gui.videostats.module.VideoStatsModule.ReceivableSendablePair;
 import org.anchoranalysis.image.stack.DisplayStack;
@@ -52,7 +52,7 @@ public class LinkModules {
     }
 
     private Adder<OverlayCollection> overlays = new Adder<>(LinkFramesUniqueID.OVERLAYS);
-    private Adder<OverlayCollectionWithNrgStack> overlaysWithStack =
+    private Adder<OverlaysWithEnergyStack> overlaysWithStack =
             new Adder<>(LinkFramesUniqueID.OVERLAYS_WITH_STACK);
     private Adder<Integer> frameIndex = new Adder<>(LinkFramesUniqueID.FRAME_INDEX);
     private Adder<IntArray> markIndices = new Adder<>(LinkFramesUniqueID.MARK_INDICES);
@@ -151,7 +151,7 @@ public class LinkModules {
         return sliceNum;
     }
 
-    public Adder<OverlayCollectionWithNrgStack> getOverlaysWithStack() {
+    public Adder<OverlaysWithEnergyStack> getOverlaysWithStack() {
         return overlaysWithStack;
     }
 

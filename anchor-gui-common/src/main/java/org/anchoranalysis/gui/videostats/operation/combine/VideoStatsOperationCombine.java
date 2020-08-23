@@ -27,16 +27,16 @@
 package org.anchoranalysis.gui.videostats.operation.combine;
 
 import java.util.Optional;
-import org.anchoranalysis.anchor.mpp.cfg.Cfg;
-import org.anchoranalysis.gui.videostats.dropdown.common.NRGBackground;
+import org.anchoranalysis.anchor.mpp.mark.MarkCollection;
+import org.anchoranalysis.gui.videostats.dropdown.common.EnergyBackground;
 import org.anchoranalysis.image.object.ObjectCollection;
 
 //
 public interface VideoStatsOperationCombine {
 
-    NRGBackground getNrgBackground();
+    EnergyBackground getEnergyBackground();
 
-    Optional<OverlayCollectionSupplier<Cfg>> getCfg();
+    Optional<OverlayCollectionSupplier<MarkCollection>> getCfg();
 
     Optional<OverlayCollectionSupplier<ObjectCollection>> getObjects();
 

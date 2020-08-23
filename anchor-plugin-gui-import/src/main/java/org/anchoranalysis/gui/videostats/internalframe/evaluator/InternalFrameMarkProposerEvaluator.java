@@ -32,22 +32,22 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JPanel;
 import org.anchoranalysis.anchor.mpp.bean.init.MPPInitParams;
-import org.anchoranalysis.anchor.mpp.cfg.Cfg;
+import org.anchoranalysis.anchor.mpp.mark.MarkCollection;
 import org.anchoranalysis.anchor.mpp.overlay.OverlayCollectionMarkFactory;
 import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.error.reporter.ErrorReporter;
 import org.anchoranalysis.core.name.provider.NamedProvider;
-import org.anchoranalysis.gui.cfgnrg.StatePanelUpdateException;
-import org.anchoranalysis.gui.frame.cfgproposer.CfgProposerMouseClickAdapter;
 import org.anchoranalysis.gui.frame.details.canvas.controller.imageview.ControllerImageView;
+import org.anchoranalysis.gui.frame.marks.proposer.MarksProposerMouseClickAdapter;
 import org.anchoranalysis.gui.frame.overlays.IShowEvaluationResult;
 import org.anchoranalysis.gui.frame.overlays.IShowOverlays;
 import org.anchoranalysis.gui.frame.overlays.InternalFrameOverlaysRedraw;
-import org.anchoranalysis.gui.frame.overlays.ProposedCfg;
+import org.anchoranalysis.gui.frame.overlays.ProposedMarks;
 import org.anchoranalysis.gui.image.frame.ISliderState;
 import org.anchoranalysis.gui.interactivebrowser.MarkEvaluatorSetForImage;
 import org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.ControllerPopupMenuWithBackground;
 import org.anchoranalysis.gui.kernel.ProposerFailureDescriptionPanel;
+import org.anchoranalysis.gui.marks.StatePanelUpdateException;
 import org.anchoranalysis.gui.videostats.IModuleCreatorDefaultStateSliderState;
 import org.anchoranalysis.gui.videostats.dropdown.VideoStatsModuleGlobalParams;
 import org.anchoranalysis.gui.videostats.internalframe.OutputPanel;
@@ -60,7 +60,7 @@ import org.anchoranalysis.gui.videostats.internalframe.evaluator.fromproposer.Fr
 import org.anchoranalysis.gui.videostats.internalframe.evaluator.fromproposer.ProposalOperationCreatorFromProposer;
 import org.anchoranalysis.gui.videostats.module.DefaultModuleState;
 import org.anchoranalysis.io.output.bean.OutputWriteSettings;
-import org.anchoranalysis.mpp.io.cfg.CfgWithDisplayStack;
+import org.anchoranalysis.mpp.io.marks.MarksWithDisplayStack;
 
 public class InternalFrameMarkProposerEvaluator {
 
@@ -109,8 +109,8 @@ public class InternalFrameMarkProposerEvaluator {
 
         delegate.controllerAction().order().setAsBottomComponent(createBottomPanel());
 
-        CfgProposerMouseClickAdapter clickListener =
-                new CfgProposerMouseClickAdapter(
+        MarksProposerMouseClickAdapter clickListener =
+                new MarksProposerMouseClickAdapter(
                         delegate.extractOverlays(),
                         sliderState,
                         evaluatorChooser.evaluatorWithContext(),
@@ -153,7 +153,7 @@ public class InternalFrameMarkProposerEvaluator {
     private class AddToHistoryNavigator implements IShowEvaluationResult {
 
         @Override
-        public void showEvaluationResult(ProposedCfg er, Cfg boxRedraw) {
+        public void showEvaluationResult(ProposedMarks er, MarkCollection boxRedraw) {
             historyNavigator.add(er);
         }
     }
@@ -168,15 +168,15 @@ public class InternalFrameMarkProposerEvaluator {
         }
 
         @Override
-        public void showEvaluationResult(ProposedCfg er, Cfg boxRedraw) {
+        public void showEvaluationResult(ProposedMarks er, MarkCollection boxRedraw) {
 
             try {
                 // We the marks back from the overlays
-                Cfg cfg =
+                MarkCollection cfg =
                         OverlayCollectionMarkFactory.cfgFromOverlays(
                                 er.getColoredCfg().getOverlays());
 
-                outputPanel.output(new CfgWithDisplayStack(cfg, delegate.getBackground()));
+                outputPanel.output(new MarksWithDisplayStack(cfg, delegate.getBackground()));
 
                 showResult.showOverlays(RedrawUpdateFromProposal.apply(er, null));
 

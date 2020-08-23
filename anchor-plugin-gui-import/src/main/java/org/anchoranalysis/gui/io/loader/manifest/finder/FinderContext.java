@@ -31,17 +31,17 @@ import lombok.AllArgsConstructor;
 import lombok.Value;
 import org.anchoranalysis.gui.videostats.dropdown.BoundVideoStatsModuleDropDown;
 import org.anchoranalysis.gui.videostats.dropdown.VideoStatsModuleGlobalParams;
-import org.anchoranalysis.gui.videostats.dropdown.common.NRGBackgroundAdder;
+import org.anchoranalysis.gui.videostats.dropdown.common.EnergyBackgroundAdder;
 import org.anchoranalysis.gui.videostats.operation.VideoStatsOperationMenu;
 
 @Value
 @AllArgsConstructor
 public class FinderContext {
 
-    private NRGBackgroundAdder nrgBackground;
+    private EnergyBackgroundAdder energyBackground;
     private BoundVideoStatsModuleDropDown boundVideoStats;
     private VideoStatsOperationMenu parentMenu;
-    private CfgNRGFinderContext context;
+    private MarksWithEnergyFinderContext context;
 
     public VideoStatsModuleGlobalParams getMpg() {
         return context.getMpg();

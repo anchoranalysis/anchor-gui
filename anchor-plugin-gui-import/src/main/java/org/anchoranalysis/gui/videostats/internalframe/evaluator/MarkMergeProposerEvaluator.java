@@ -30,12 +30,12 @@ import java.awt.Color;
 import java.util.List;
 import java.util.Optional;
 import lombok.AllArgsConstructor;
-import org.anchoranalysis.anchor.mpp.bean.cfg.CfgGen;
+import org.anchoranalysis.anchor.mpp.bean.cfg.MarkWithIdentifierFactory;
 import org.anchoranalysis.anchor.mpp.bean.proposer.MarkMergeProposer;
-import org.anchoranalysis.anchor.mpp.cfg.Cfg;
-import org.anchoranalysis.anchor.mpp.cfg.ColoredCfg;
+import org.anchoranalysis.anchor.mpp.mark.ColoredMarks;
 import org.anchoranalysis.anchor.mpp.mark.Mark;
-import org.anchoranalysis.anchor.mpp.mark.points.MarkPointListFactory;
+import org.anchoranalysis.anchor.mpp.mark.MarkCollection;
+import org.anchoranalysis.anchor.mpp.mark.points.PointListFactory;
 import org.anchoranalysis.anchor.mpp.mark.voxelized.memo.VoxelizedMarkMemo;
 import org.anchoranalysis.anchor.mpp.proposer.ProposalAbnormalFailureException;
 import org.anchoranalysis.anchor.mpp.proposer.ProposerContext;
@@ -44,7 +44,7 @@ import org.anchoranalysis.core.color.RGBColor;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.geometry.Point3d;
 import org.anchoranalysis.core.geometry.Point3f;
-import org.anchoranalysis.gui.frame.overlays.ProposedCfg;
+import org.anchoranalysis.gui.frame.overlays.ProposedMarks;
 import org.anchoranalysis.gui.videostats.internalframe.ProposalOperation;
 
 @AllArgsConstructor
@@ -54,7 +54,7 @@ public class MarkMergeProposerEvaluator implements ProposalOperationCreator {
 
     @Override
     public ProposalOperation create(
-            final Cfg cfg, Point3d position, final ProposerContext context, final CfgGen cfgGen)
+            final MarkCollection cfg, Point3d position, final ProposerContext context, final MarkWithIdentifierFactory markFactory)
             throws OperationFailedException {
 
         if (cfg.size() != 2) {
@@ -64,7 +64,7 @@ public class MarkMergeProposerEvaluator implements ProposalOperationCreator {
 
         return new ProposalOperation() {
             @Override
-            public ProposedCfg propose(ErrorNode errorNode)
+            public ProposedMarks propose(ErrorNode errorNode)
                     throws ProposalAbnormalFailureException {
 
                 Mark mark1 = cfg.get(0);
@@ -77,26 +77,26 @@ public class MarkMergeProposerEvaluator implements ProposalOperationCreator {
                         markMergeProposer.propose(
                                 markMemo1, markMemo2, context.replaceError(errorNode));
 
-                ProposedCfg er = new ProposedCfg(context.dimensions());
+                ProposedMarks er = new ProposedMarks(context.dimensions());
 
                 if (proposedMark.isPresent()) {
                     er.setSuccess(true);
 
-                    ColoredCfg coloredCfg = cfgForMark(proposedMark);
+                    ColoredMarks coloredCfg = cfgForMark(proposedMark);
                     er.setColoredCfg(coloredCfg);
-                    er.setCfgToRedraw(cfg.createMerged(coloredCfg.getCfg()));
-                    er.setCfgCore(new Cfg(proposedMark.get()));
+                    er.setMarksToRedraw(cfg.createMerged(coloredCfg.getMarks()));
+                    er.setMarksCore(new MarkCollection(proposedMark.get()));
                 } else {
-                    er.setCfgToRedraw(cfg);
+                    er.setMarksToRedraw(cfg);
                 }
                 return er;
             }
         };
     }
 
-    private ColoredCfg cfgForMark(Optional<Mark> mark) {
+    private ColoredMarks cfgForMark(Optional<Mark> mark) {
 
-        ColoredCfg cfgOut = new ColoredCfg();
+        ColoredMarks cfgOut = new ColoredMarks();
         if (mark.isPresent()) {
 
             Mark markNew = mark.get().duplicate();
@@ -114,10 +114,10 @@ public class MarkMergeProposerEvaluator implements ProposalOperationCreator {
         return cfgOut;
     }
 
-    private static void addToOut(Optional<List<Point3f>> points, Color color, ColoredCfg cfgOut) {
+    private static void addToOut(Optional<List<Point3f>> points, Color color, ColoredMarks cfgOut) {
         if (points.isPresent()) {
             cfgOut.addChangeID(
-                    MarkPointListFactory.createMarkFromPoints3f(points.get()),
+                    PointListFactory.createMarkFromPoints3f(points.get()),
                     new RGBColor(color)); // 1 is just to give us a different color
         }
     }

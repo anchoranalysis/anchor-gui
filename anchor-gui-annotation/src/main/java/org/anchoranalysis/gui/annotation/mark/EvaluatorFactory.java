@@ -58,8 +58,8 @@ class EvaluatorFactory {
             return Optional.of(
                     new EvaluatorWithContext(
                             new MarkProposerEvaluatorDimensions(markProposerGuess, false),
-                            markEvaluatorResolved.getNRGStack(),
-                            markEvaluatorResolved.getCfgGen(),
+                            markEvaluatorResolved.getEnergyStack(),
+                            markEvaluatorResolved.getMarkFactory(),
                             regionMap));
         } catch (OperationFailedException e) {
             errorReporter.showError(
@@ -77,8 +77,8 @@ class EvaluatorFactory {
             return Optional.of(
                     new EvaluatorWithContext(
                             new MarkSphereOnPointProposerEvaluator(dimViewer),
-                            markEvaluatorResolved.getNRGStack(),
-                            markEvaluatorResolved.getCfgGen(),
+                            markEvaluatorResolved.getEnergyStack(),
+                            markEvaluatorResolved.getMarkFactory(),
                             regionMap));
         } catch (OperationFailedException e) {
             errorReporter.showError(

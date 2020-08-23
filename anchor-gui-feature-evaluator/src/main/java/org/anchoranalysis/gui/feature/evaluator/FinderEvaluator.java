@@ -29,14 +29,14 @@ package org.anchoranalysis.gui.feature.evaluator;
 import java.util.Optional;
 import lombok.AllArgsConstructor;
 import org.anchoranalysis.anchor.mpp.bean.regionmap.RegionMap;
+import org.anchoranalysis.anchor.mpp.bean.regionmap.RegionMapSingleton;
 import org.anchoranalysis.anchor.mpp.bean.regionmap.RegionMembershipWithFlags;
-import org.anchoranalysis.anchor.mpp.cfg.Cfg;
 import org.anchoranalysis.anchor.mpp.feature.addcriteria.AddCriteriaPair;
-import org.anchoranalysis.anchor.mpp.feature.addcriteria.BBoxIntersection;
+import org.anchoranalysis.anchor.mpp.feature.addcriteria.BoundingBoxIntersection;
 import org.anchoranalysis.anchor.mpp.feature.input.memo.FeatureInputPairMemo;
 import org.anchoranalysis.anchor.mpp.mark.GlobalRegionIdentifiers;
 import org.anchoranalysis.anchor.mpp.mark.Mark;
-import org.anchoranalysis.anchor.mpp.mark.conic.RegionMapSingleton;
+import org.anchoranalysis.anchor.mpp.mark.MarkCollection;
 import org.anchoranalysis.anchor.mpp.mark.voxelized.memo.PxlMarkMemoFactory;
 import org.anchoranalysis.anchor.mpp.overlay.OverlayCollectionMarkFactory;
 import org.anchoranalysis.anchor.mpp.overlay.OverlayMark;
@@ -48,7 +48,7 @@ import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.log.Logger;
 import org.anchoranalysis.feature.bean.list.FeatureList;
 import org.anchoranalysis.feature.calculate.FeatureInitParams;
-import org.anchoranalysis.feature.nrg.NRGStackWithParams;
+import org.anchoranalysis.feature.energy.EnergyStack;
 import org.anchoranalysis.feature.session.FeatureSession;
 import org.anchoranalysis.feature.session.calculator.FeatureCalculatorMulti;
 import org.anchoranalysis.feature.shared.SharedFeatureMulti;
@@ -70,12 +70,12 @@ class FinderEvaluator {
     }
 
     public IdentifiablePair<Overlay> findPairFromCurrentSelection(
-            OverlayCollection overlays, NRGStackWithParams nrgStack) throws CreateException {
+            OverlayCollection overlays, EnergyStack energyStack) throws CreateException {
 
         if (doMarkOrObject(overlays)) {
-            Cfg cfg = OverlayCollectionMarkFactory.cfgFromOverlays(overlays);
+            MarkCollection cfg = OverlayCollectionMarkFactory.cfgFromOverlays(overlays);
             return FinderEvaluator.findPairFromCurrentSelectionMark(
-                    cfg, nrgStack, sharedFeatureList, logger);
+                    cfg, energyStack, sharedFeatureList, logger);
         } else {
             return FinderEvaluator.findPairFromCurrentSelectionObject(overlays);
         }
@@ -108,7 +108,7 @@ class FinderEvaluator {
     }
 
     private static IdentifiablePair<Overlay> findPairFromCurrentSelectionMark(
-            Cfg cfg, NRGStackWithParams raster, SharedFeatureMulti sharedFeatureList, Logger logger)
+            MarkCollection cfg, EnergyStack raster, SharedFeatureMulti sharedFeatureList, Logger logger)
             throws CreateException {
 
         RegionMembershipWithFlags regionMembership =
@@ -150,16 +150,16 @@ class FinderEvaluator {
     public static class EdgeTester {
 
         // WE HARDCODE AN OVERLAP CRITERIA FOR NOW
-        private AddCriteriaPair addCriteria = new BBoxIntersection();
+        private AddCriteriaPair addCriteria = new BoundingBoxIntersection();
 
         // We always use a simple RegionMap
         private RegionMap regionMap = new RegionMap(0);
 
-        private NRGStackWithParams raster;
+        private EnergyStack raster;
         private Optional<FeatureCalculatorMulti<FeatureInputPairMemo>> session;
 
         public EdgeTester(
-                NRGStackWithParams raster, SharedFeatureMulti sharedFeatureList, Logger logger)
+                EnergyStack raster, SharedFeatureMulti sharedFeatureList, Logger logger)
                 throws CreateException {
 
             this.raster = raster;
@@ -169,8 +169,8 @@ class FinderEvaluator {
         public boolean canGenerateEdge(Mark m1, Mark m2) throws CreateException {
             return addCriteria
                     .generateEdge(
-                            PxlMarkMemoFactory.create(m1, raster.getNrgStack(), regionMap),
-                            PxlMarkMemoFactory.create(m2, raster.getNrgStack(), regionMap),
+                            PxlMarkMemoFactory.create(m1, raster.getEnergyStack(), regionMap),
+                            PxlMarkMemoFactory.create(m2, raster.getEnergyStack(), regionMap),
                             raster,
                             session,
                             raster.dimensions().z() > 1)

@@ -28,9 +28,9 @@ package org.anchoranalysis.gui.plot.definition;
 
 import com.sun.tools.visualvm.charts.SimpleXYChartDescriptor;
 import com.sun.tools.visualvm.charts.SimpleXYChartSupport;
-import org.anchoranalysis.gui.videostats.ICfgNRGUpdater;
+import org.anchoranalysis.gui.videostats.EnergyUpdater;
 
-public abstract class GraphDefinition implements ICfgNRGUpdater {
+public abstract class GraphDefinition implements EnergyUpdater {
 
     public abstract String title();
 
@@ -44,8 +44,8 @@ public abstract class GraphDefinition implements ICfgNRGUpdater {
 
     public abstract SimpleXYChartDescriptor descriptor();
 
-    public abstract long[] valueArr(int iter, long timeStamp);
+    public abstract long[] valueArray(int iter, long timeStamp);
 
-    public abstract String[] detailsArr(
+    public abstract String[] detailsArray(
             int iter, long timeStamp, long timeZoneOffset, SimpleXYChartSupport support);
 }

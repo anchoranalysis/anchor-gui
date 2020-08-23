@@ -28,7 +28,7 @@ package org.anchoranalysis.gui.annotation.opener;
 
 import java.nio.file.Path;
 import java.util.Optional;
-import org.anchoranalysis.anchor.mpp.cfg.Cfg;
+import org.anchoranalysis.anchor.mpp.mark.MarkCollection;
 import org.anchoranalysis.annotation.io.mark.MarkAnnotationReader;
 import org.anchoranalysis.annotation.mark.MarkAnnotation;
 import org.anchoranalysis.annotation.mark.RejectionReason;
@@ -82,7 +82,7 @@ public class OpenAnnotationMPP implements OpenAnnotation {
 
     private static InitAnnotation readCfgFromAnnotation(MarkAnnotation annotationExst) {
 
-        DualCfg initCfg = new DualCfg(annotationExst.getCfg(), annotationExst.getCfgReject());
+        DualCfg initCfg = new DualCfg(annotationExst.getMarks(), annotationExst.getCfgReject());
 
         if (annotationExst.isAccepted()) {
             return new InitAnnotation(Optional.of(annotationExst), initCfg);
@@ -94,8 +94,8 @@ public class OpenAnnotationMPP implements OpenAnnotation {
 
     private InitAnnotation readDefaultCfg(Path defaultCfgPath, Logger logger) {
         try {
-            Cfg defaultCfg = annotationReader.readDefaultCfg(defaultCfgPath);
-            return new InitAnnotation(Optional.empty(), new DualCfg(defaultCfg, new Cfg()));
+            MarkCollection defaultCfg = annotationReader.readDefaultCfg(defaultCfgPath);
+            return new InitAnnotation(Optional.empty(), new DualCfg(defaultCfg, new MarkCollection()));
         } catch (DeserializationFailedException e) {
             logger.messageLogger().logFormatted("Cannot open defaultCfg at %s", defaultCfgPath);
             logger.errorReporter().recordError(AnnotatorModuleCreator.class, e);

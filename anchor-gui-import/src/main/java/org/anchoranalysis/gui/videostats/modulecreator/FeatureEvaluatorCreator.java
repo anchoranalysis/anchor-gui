@@ -27,9 +27,9 @@
 package org.anchoranalysis.gui.videostats.modulecreator;
 
 import org.anchoranalysis.core.log.Logger;
-import org.anchoranalysis.gui.cfgnrg.StatePanelUpdateException;
 import org.anchoranalysis.gui.feature.evaluator.FeatureEvaluatorTableFrame;
 import org.anchoranalysis.gui.feature.evaluator.treetable.FeatureListSrc;
+import org.anchoranalysis.gui.marks.StatePanelUpdateException;
 import org.anchoranalysis.gui.videostats.dropdown.AddVideoStatsModule;
 import org.anchoranalysis.gui.videostats.module.VideoStatsModule;
 import org.anchoranalysis.gui.videostats.module.VideoStatsModuleCreateException;

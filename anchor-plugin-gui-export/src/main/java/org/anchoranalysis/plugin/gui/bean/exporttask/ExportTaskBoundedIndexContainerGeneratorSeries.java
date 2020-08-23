@@ -100,13 +100,13 @@ public class ExportTaskBoundedIndexContainerGeneratorSeries<T>
     }
 
     private boolean execute(
-            BoundedIndexContainer<T> cfgNRGCntr,
+            BoundedIndexContainer<T> container,
             ProgressMonitor progressMonitor,
             GeneratorSequenceNonIncremental<MappedFrom<T>> generatorSequenceWriter)
             throws OutputWriteFailedException, GetOperationFailedException {
 
-        int min = cfgNRGCntr.getMinimumIndex();
-        int max = cfgNRGCntr.getMaximumIndex();
+        int min = container.getMinimumIndex();
+        int max = container.getMaximumIndex();
 
         int numAdd = calculateIncrements(min, max);
 
@@ -135,7 +135,7 @@ public class ExportTaskBoundedIndexContainerGeneratorSeries<T>
                     return false;
                 }
 
-                addToWriter(cfgNRGCntr, generatorSequenceWriter, i, indexOut);
+                addToWriter(container, generatorSequenceWriter, i, indexOut);
 
                 progressMonitor.setProgress(indexOut++);
             }
@@ -151,7 +151,7 @@ public class ExportTaskBoundedIndexContainerGeneratorSeries<T>
                     return false;
                 }
 
-                addToWriter(cfgNRGCntr, generatorSequenceWriter, i, indexOut);
+                addToWriter(container, generatorSequenceWriter, i, indexOut);
 
                 progressMonitor.setProgress(indexOut++);
             }

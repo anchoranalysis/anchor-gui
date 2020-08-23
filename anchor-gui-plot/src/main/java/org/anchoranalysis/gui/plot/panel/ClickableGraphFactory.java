@@ -30,14 +30,14 @@ import java.util.Iterator;
 import java.util.Optional;
 import org.anchoranalysis.anchor.plot.AxisLimits;
 import org.anchoranalysis.anchor.plot.PlotInstance;
-import org.anchoranalysis.anchor.plot.bean.GraphDefinition;
+import org.anchoranalysis.anchor.plot.bean.Plot;
 import org.anchoranalysis.core.error.CreateException;
 import org.jfree.data.general.Dataset;
 
 public class ClickableGraphFactory {
 
     public static <T> ClickableGraphInstance create(
-            GraphDefinition<T> definition,
+            Plot<T> definition,
             Iterator<T> items,
             Optional<AxisLimits> domainLimits,
             Optional<AxisLimits> rangeLimits)

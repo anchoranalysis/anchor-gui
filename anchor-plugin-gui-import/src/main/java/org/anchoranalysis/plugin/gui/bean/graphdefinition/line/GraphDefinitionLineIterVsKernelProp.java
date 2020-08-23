@@ -26,7 +26,7 @@
 
 package org.anchoranalysis.plugin.gui.bean.graphdefinition.line;
 
-import org.anchoranalysis.anchor.mpp.feature.nrg.cfg.CfgNRGPixelized;
+import org.anchoranalysis.anchor.mpp.feature.energy.marks.VoxelizedMarksWithEnergy;
 import org.anchoranalysis.anchor.plot.bean.colorscheme.GraphColorScheme;
 import org.anchoranalysis.anchor.plot.index.LinePlot.YValGetter;
 import org.anchoranalysis.core.index.GetOperationFailedException;
@@ -36,7 +36,7 @@ import org.anchoranalysis.mpp.sgmn.bean.kernel.proposer.KernelProposer;
 public class GraphDefinitionLineIterVsKernelProp extends GraphDefinitionLineIterVsCSVStatistic {
 
     public GraphDefinitionLineIterVsKernelProp(
-            KernelProposer<CfgNRGPixelized> kernelProposer,
+            KernelProposer<VoxelizedMarksWithEnergy> kernelProposer,
             final int index,
             GraphColorScheme graphColorScheme) {
 

@@ -34,7 +34,7 @@ import javax.swing.JTextField;
 import javax.swing.JToggleButton;
 import org.anchoranalysis.anchor.mpp.proposer.ProposalAbnormalFailureException;
 import org.anchoranalysis.anchor.mpp.proposer.error.ErrorNode;
-import org.anchoranalysis.gui.frame.overlays.ProposedCfg;
+import org.anchoranalysis.gui.frame.overlays.ProposedMarks;
 
 // Makes multile proposals in a loop until success, and allows the user
 //  to configure-this and get feedback
@@ -80,12 +80,12 @@ public class ProposeLoopPanel {
         }
     }
 
-    public ProposedCfg propose(ProposalOperation proposable, ErrorNode errorNode)
+    public ProposedMarks propose(ProposalOperation proposable, ErrorNode errorNode)
             throws ProposalAbnormalFailureException {
 
         int maxNumLoopsUntilProposal = Integer.valueOf(textMaxNumTries.getText());
 
-        ProposedCfg succ;
+        ProposedMarks succ;
 
         int i = 0;
         while (true) {

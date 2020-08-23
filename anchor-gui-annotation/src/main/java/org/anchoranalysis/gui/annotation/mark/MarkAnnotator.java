@@ -73,7 +73,7 @@ public class MarkAnnotator {
     }
 
     public RegionMap getRegionMap() {
-        return markEvaluatorResolved.getNrgScheme().getRegionMap();
+        return markEvaluatorResolved.getEnergyScheme().getRegionMap();
     }
 
     public NamedProviderStore<Stack> getBackgroundStacks() {

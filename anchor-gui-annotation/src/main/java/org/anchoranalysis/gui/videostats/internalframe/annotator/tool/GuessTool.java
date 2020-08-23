@@ -30,7 +30,7 @@ import java.util.Optional;
 import lombok.AllArgsConstructor;
 import org.anchoranalysis.anchor.mpp.overlay.OverlayCollectionMarkFactory;
 import org.anchoranalysis.core.geometry.Point3d;
-import org.anchoranalysis.gui.frame.overlays.ProposedCfg;
+import org.anchoranalysis.gui.frame.overlays.ProposedMarks;
 import org.anchoranalysis.gui.videostats.internalframe.annotator.currentstate.IAcceptProposal;
 import org.anchoranalysis.gui.videostats.internalframe.annotator.currentstate.IReplaceRemove;
 import org.anchoranalysis.gui.videostats.internalframe.evaluator.EvaluatorWithContext;
@@ -48,7 +48,7 @@ public class GuessTool extends AnnotationTool {
     }
 
     @Override
-    public void proposed(ProposedCfg proposedCfg) {
+    public void proposed(ProposedMarks proposedCfg) {
 
         if (!isEnabled()) {
             return;
@@ -56,7 +56,7 @@ public class GuessTool extends AnnotationTool {
 
         if (proposedCfg.isSuccess()) {
             replaceRemove.replaceCurrentProposedCfg(
-                    proposedCfg.getCfgCore(),
+                    proposedCfg.getMarksCore(),
                     OverlayCollectionMarkFactory.cfgFromOverlays(proposedCfg.getColoredCfg()),
                     proposedCfg.getSuggestedSliceNum());
         } else {

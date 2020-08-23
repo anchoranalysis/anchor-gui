@@ -27,7 +27,7 @@
 package org.anchoranalysis.gui.frame.multioverlay.instantstate;
 
 import org.anchoranalysis.anchor.overlay.Overlay;
-import org.anchoranalysis.anchor.overlay.OverlayedInstantState;
+import org.anchoranalysis.anchor.overlay.IndexableOverlays;
 import org.anchoranalysis.anchor.overlay.collection.ColoredOverlayCollection;
 import org.anchoranalysis.anchor.overlay.collection.OverlayCollection;
 import org.anchoranalysis.core.color.ColorIndex;
@@ -35,41 +35,37 @@ import org.anchoranalysis.core.color.ColorList;
 import org.anchoranalysis.core.error.AnchorNeverOccursException;
 import org.anchoranalysis.core.functional.function.CheckedFunction;
 import org.anchoranalysis.core.idgetter.IDGetter;
-import org.anchoranalysis.gui.videostats.internalframe.cfgtorgb.ColoredOverlayedInstantState;
+import org.anchoranalysis.gui.videostats.internalframe.cfgtorgb.IndexableColoredOverlays;
+import lombok.AllArgsConstructor;
 
+@AllArgsConstructor
 class AddColorBridge
         implements CheckedFunction<
-                OverlayedInstantState, ColoredOverlayedInstantState, AnchorNeverOccursException> {
+                IndexableOverlays, IndexableColoredOverlays, AnchorNeverOccursException> {
 
-    private ColorIndex colorIndex;
-    private IDGetter<Overlay> colorIDGetter;
-
-    public AddColorBridge(ColorIndex colorIndex, IDGetter<Overlay> colorIDGetter) {
-        super();
-        this.colorIndex = colorIndex;
-        this.colorIDGetter = colorIDGetter;
-    }
+    private final ColorIndex colorIndex;
+    private final IDGetter<Overlay> colorIDGetter;
 
     @Override
-    public ColoredOverlayedInstantState apply(OverlayedInstantState sourceObject) {
+    public IndexableColoredOverlays apply(IndexableOverlays sourceObject) {
 
-        OverlayCollection oc = sourceObject.getOverlayCollection();
+        OverlayCollection overlays = sourceObject.getOverlays();
 
-        ColoredOverlayCollection coc =
-                new ColoredOverlayCollection(oc, createColorListForOverlays(oc));
+        ColoredOverlayCollection coloredOverlays =
+                new ColoredOverlayCollection(overlays, createColorListForOverlays(overlays));
 
-        return new ColoredOverlayedInstantState(sourceObject.getIndex(), coc);
+        return new IndexableColoredOverlays(sourceObject.getIndex(), coloredOverlays);
     }
 
-    private ColorList createColorListForOverlays(OverlayCollection oc) {
+    private ColorList createColorListForOverlays(OverlayCollection overlays) {
 
-        ColorList colorList = new ColorList();
+        ColorList colors = new ColorList();
 
-        for (int i = 0; i < oc.size(); i++) {
-            Overlay ol = oc.get(i);
-            colorList.add(colorIndex.get(colorIDGetter.getID(ol, i)));
+        for (int i = 0; i < overlays.size(); i++) {
+            Overlay overlay = overlays.get(i);
+            colors.add(colorIndex.get(colorIDGetter.getID(overlay, i)));
         }
 
-        return colorList;
+        return colors;
     }
 }

@@ -30,11 +30,11 @@ import javax.swing.SwingUtilities;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.error.reporter.ErrorReporter;
 import org.anchoranalysis.core.log.Logger;
-import org.anchoranalysis.gui.cfgnrg.StatePanelFrame;
-import org.anchoranalysis.gui.cfgnrg.StatePanelUpdateException;
 import org.anchoranalysis.gui.feature.evaluator.treetable.FeatureListSrc;
-import org.anchoranalysis.gui.image.OverlayCollectionWithNrgStack;
+import org.anchoranalysis.gui.image.OverlaysWithEnergyStack;
 import org.anchoranalysis.gui.image.frame.ControllerSize;
+import org.anchoranalysis.gui.marks.StatePanelFrame;
+import org.anchoranalysis.gui.marks.StatePanelUpdateException;
 import org.anchoranalysis.gui.videostats.IModuleCreatorDefaultState;
 import org.anchoranalysis.gui.videostats.link.LinkModules;
 import org.anchoranalysis.gui.videostats.module.DefaultModuleState;
@@ -42,7 +42,7 @@ import org.anchoranalysis.gui.videostats.module.VideoStatsModule;
 
 public class FeatureEvaluatorTableFrame {
 
-    private StatePanelFrame<OverlayCollectionWithNrgStack> delegate;
+    private StatePanelFrame<OverlaysWithEnergyStack> delegate;
 
     private ErrorReporter errorReporter;
     private FeatureListSrc featureListSrc;
@@ -76,7 +76,7 @@ public class FeatureEvaluatorTableFrame {
         };
     }
 
-    private void showIncomingState(final OverlayCollectionWithNrgStack value) {
+    private void showIncomingState(final OverlaysWithEnergyStack value) {
         SwingUtilities.invokeLater(
                 () -> {
                     try {
@@ -88,7 +88,7 @@ public class FeatureEvaluatorTableFrame {
                 });
     }
 
-    private OverlayCollectionWithNrgStack maybeAugmentParams(OverlayCollectionWithNrgStack oc)
+    private OverlaysWithEnergyStack maybeAugmentParams(OverlaysWithEnergyStack oc)
             throws OperationFailedException {
         return oc.copyChangeStack(featureListSrc.maybeAugmentParams(oc.getStack()));
     }

@@ -27,8 +27,8 @@
 package org.anchoranalysis.gui.feature.evaluator;
 
 import lombok.AllArgsConstructor;
-import org.anchoranalysis.anchor.mpp.feature.instantstate.CfgNRGInstantState;
-import org.anchoranalysis.gui.cfgnrgtable.TitleValueTableModel.TitleValueRow;
+import org.anchoranalysis.anchor.mpp.feature.energy.IndexableMarksWithEnergy;
+import org.anchoranalysis.gui.marks.table.TitleValueTableModel.TitleValueRow;
 
 @AllArgsConstructor
 class SimpleTitleValue implements TitleValueRow {
@@ -42,7 +42,7 @@ class SimpleTitleValue implements TitleValueRow {
     }
 
     @Override
-    public String value(CfgNRGInstantState state) {
+    public String value(IndexableMarksWithEnergy state) {
         return value;
     }
 }

@@ -27,20 +27,20 @@
 package org.anchoranalysis.gui.videostats.internalframe.evaluator.fromproposer;
 
 import org.anchoranalysis.anchor.mpp.bean.init.MPPInitParams;
-import org.anchoranalysis.anchor.mpp.bean.proposer.CfgProposer;
+import org.anchoranalysis.anchor.mpp.bean.proposer.MarkCollectionProposer;
 import org.anchoranalysis.core.name.provider.NamedProvider;
 import org.anchoranalysis.gui.videostats.internalframe.evaluator.ProposalOperationCreator;
-import org.anchoranalysis.gui.videostats.internalframe.markredraw.CfgProposerEvaluator;
+import org.anchoranalysis.gui.videostats.internalframe.markredraw.MarksProposerEvaluator;
 
-public class FromCfgProposer extends ProposalOperationCreatorFromProposer<CfgProposer> {
+public class FromCfgProposer extends ProposalOperationCreatorFromProposer<MarkCollectionProposer> {
 
     @Override
-    public ProposalOperationCreator creatorFromProposer(CfgProposer proposer) {
-        return new CfgProposerEvaluator(proposer);
+    public ProposalOperationCreator creatorFromProposer(MarkCollectionProposer proposer) {
+        return new MarksProposerEvaluator(proposer);
     }
 
     @Override
-    public NamedProvider<CfgProposer> allProposers(MPPInitParams so) {
+    public NamedProvider<MarkCollectionProposer> allProposers(MPPInitParams so) {
         return so.getCfgProposerSet();
     }
 

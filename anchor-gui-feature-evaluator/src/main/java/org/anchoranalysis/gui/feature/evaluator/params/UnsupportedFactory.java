@@ -29,28 +29,28 @@ package org.anchoranalysis.gui.feature.evaluator.params;
 import org.anchoranalysis.anchor.mpp.feature.mark.MemoCollection;
 import org.anchoranalysis.anchor.mpp.mark.voxelized.memo.VoxelizedMarkMemo;
 import org.anchoranalysis.core.error.CreateException;
+import org.anchoranalysis.feature.energy.EnergyStack;
 import org.anchoranalysis.feature.input.FeatureInput;
-import org.anchoranalysis.feature.nrg.NRGStackWithParams;
 
 public class UnsupportedFactory implements FeatureInputFactory {
 
     private static final String UNSUPPORTED_MESSAGE = "unsupported";
 
     @Override
-    public FeatureInput create(VoxelizedMarkMemo pmm, NRGStackWithParams nrgStack)
+    public FeatureInput create(VoxelizedMarkMemo pmm, EnergyStack energyStack)
             throws CreateException {
         throw new CreateException(UNSUPPORTED_MESSAGE);
     }
 
     @Override
     public FeatureInput create(
-            VoxelizedMarkMemo pmm1, VoxelizedMarkMemo pmm2, NRGStackWithParams raster)
+            VoxelizedMarkMemo pmm1, VoxelizedMarkMemo pmm2, EnergyStack raster)
             throws CreateException {
         throw new CreateException(UNSUPPORTED_MESSAGE);
     }
 
     @Override
-    public FeatureInput create(MemoCollection pmmhList, NRGStackWithParams raster)
+    public FeatureInput create(MemoCollection pmmhList, EnergyStack raster)
             throws CreateException {
         throw new CreateException(UNSUPPORTED_MESSAGE);
     }

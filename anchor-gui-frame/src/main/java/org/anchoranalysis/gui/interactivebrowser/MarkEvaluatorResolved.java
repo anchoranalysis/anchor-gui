@@ -27,14 +27,14 @@
 package org.anchoranalysis.gui.interactivebrowser;
 
 import lombok.Getter;
-import org.anchoranalysis.anchor.mpp.bean.cfg.CfgGen;
+import org.anchoranalysis.anchor.mpp.bean.cfg.MarkWithIdentifierFactory;
 import org.anchoranalysis.anchor.mpp.bean.init.MPPInitParams;
-import org.anchoranalysis.anchor.mpp.feature.nrg.scheme.NRGScheme;
+import org.anchoranalysis.anchor.mpp.feature.energy.scheme.EnergyScheme;
 import org.anchoranalysis.core.cache.CachedSupplier;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.params.KeyValueParams;
-import org.anchoranalysis.feature.nrg.NRGStackWithParams;
+import org.anchoranalysis.feature.energy.EnergyStack;
 
 // A MarkEvaluator after it has been resolved for usage by converting
 //  it into a ProposerSharedObjectsImageSpecific and other necessary components
@@ -42,26 +42,26 @@ public class MarkEvaluatorResolved {
 
     private final CachedSupplier<MPPInitParams, CreateException>
             operationCreateProposerSharedObjects;
-    private final CachedSupplier<NRGStackWithParams, CreateException> operationCreateNrgStack;
+    private final CachedSupplier<EnergyStack, CreateException> operationCreateEnergyStack;
 
-    @Getter private final CfgGen cfgGen;
+    @Getter private final MarkWithIdentifierFactory markFactory;
 
-    @Getter private final NRGScheme nrgScheme;
+    @Getter private final EnergyScheme energyScheme;
 
     public MarkEvaluatorResolved(
             CachedSupplier<MPPInitParams, CreateException> proposerSharedObjects,
-            CfgGen cfgGen,
-            NRGScheme nrgScheme,
+            MarkWithIdentifierFactory markFactory,
+            EnergyScheme energyScheme,
             KeyValueParams params) {
         super();
         this.operationCreateProposerSharedObjects = proposerSharedObjects;
-        this.cfgGen = cfgGen;
-        this.nrgScheme = nrgScheme;
+        this.markFactory = markFactory;
+        this.energyScheme = energyScheme;
 
-        this.operationCreateNrgStack =
+        this.operationCreateEnergyStack =
                 CachedSupplier.cache(
                         () ->
-                                CreateNrgStackHelper.create(
+                                CreateEnergyStackHelper.create(
                                         operationCreateProposerSharedObjects, params));
     }
 
@@ -69,9 +69,9 @@ public class MarkEvaluatorResolved {
         return operationCreateProposerSharedObjects;
     }
 
-    public NRGStackWithParams getNRGStack() throws OperationFailedException {
+    public EnergyStack getEnergyStack() throws OperationFailedException {
         try {
-            return operationCreateNrgStack.get();
+            return operationCreateEnergyStack.get();
         } catch (CreateException e) {
             throw new OperationFailedException(e);
         }

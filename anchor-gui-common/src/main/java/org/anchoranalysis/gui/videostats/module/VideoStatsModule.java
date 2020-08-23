@@ -34,7 +34,7 @@ import org.anchoranalysis.core.event.RoutableEventSourceObject;
 import org.anchoranalysis.core.event.RoutableReceivable;
 import org.anchoranalysis.core.property.IPropertyValueSendable;
 import org.anchoranalysis.core.property.change.PropertyValueChangeEvent;
-import org.anchoranalysis.gui.videostats.AssociatedNRGStackGetter;
+import org.anchoranalysis.gui.videostats.AssociatedEnergyStackGetter;
 import org.anchoranalysis.gui.videostats.action.changemarkdisplay.IChangeMarkDisplaySendable;
 
 public class VideoStatsModule implements RoutableEventSourceObject {
@@ -98,7 +98,7 @@ public class VideoStatsModule implements RoutableEventSourceObject {
 
     private IChangeMarkDisplaySendable selectChangeMarkDisplaySendable;
 
-    private AssociatedNRGStackGetter nrgStackGetter;
+    private AssociatedEnergyStackGetter energyStackGetter;
 
     private boolean fixedSize = false;
 
@@ -130,11 +130,11 @@ public class VideoStatsModule implements RoutableEventSourceObject {
         return receivableSendablePairMap;
     }
 
-    public AssociatedNRGStackGetter getNrgStackGetter() {
-        return nrgStackGetter;
+    public AssociatedEnergyStackGetter getEnergyStackGetter() {
+        return energyStackGetter;
     }
 
-    public void setNrgStackGetter(AssociatedNRGStackGetter nrgStackGetter) {
-        this.nrgStackGetter = nrgStackGetter;
+    public void setEnergyStackGetter(AssociatedEnergyStackGetter energyStackGetter) {
+        this.energyStackGetter = energyStackGetter;
     }
 }

@@ -29,13 +29,13 @@ package org.anchoranalysis.gui.videostats.internalframe.cfgtorgb;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
-import org.anchoranalysis.gui.videostats.dropdown.common.NRGBackground;
+import org.anchoranalysis.gui.videostats.dropdown.common.EnergyBackground;
 import org.anchoranalysis.gui.videostats.operation.combine.OverlayCollectionSupplier;
 
 @AllArgsConstructor
 public class MultiInput<T> {
 
     @Getter @Setter private String name;
-    @Getter private NRGBackground nrgBackground;
+    @Getter private EnergyBackground energyBackground;
     @Getter private OverlayCollectionSupplier<T> associatedObjects;
 }

@@ -26,16 +26,16 @@
 
 package org.anchoranalysis.gui.mergebridge;
 
-import org.anchoranalysis.anchor.mpp.cfg.Cfg;
-import org.anchoranalysis.anchor.mpp.feature.instantstate.CfgNRGInstantState;
-import org.anchoranalysis.gui.mergebridge.DualCfgNRGContainer.TransformInstanteState;
+import org.anchoranalysis.anchor.mpp.feature.energy.IndexableMarksWithEnergy;
+import org.anchoranalysis.anchor.mpp.mark.MarkCollection;
+import org.anchoranalysis.gui.mergebridge.DualStateContainer.TransformInstanteState;
 
-public class TransformToCfg implements TransformInstanteState<Cfg> {
+public class TransformToCfg implements TransformInstanteState<MarkCollection> {
 
     @Override
-    public Cfg transform(CfgNRGInstantState state) {
-        if (state != null && state.getCfgNRG() != null) {
-            return state.getCfgNRG().getCfg();
+    public MarkCollection transform(IndexableMarksWithEnergy state) {
+        if (state != null && state.getMarks() != null) {
+            return state.getMarks().getMarks();
         } else {
             return null;
         }

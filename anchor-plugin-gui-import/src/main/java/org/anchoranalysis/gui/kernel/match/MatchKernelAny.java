@@ -26,7 +26,7 @@
 
 package org.anchoranalysis.gui.kernel.match;
 
-import org.anchoranalysis.mpp.sgmn.kernel.proposer.KernelIterDescription;
+import org.anchoranalysis.mpp.sgmn.kernel.proposer.KernelDescision;
 
 public class MatchKernelAny extends MatchKernel {
 
@@ -38,7 +38,7 @@ public class MatchKernelAny extends MatchKernel {
     }
 
     @Override
-    public boolean matches(KernelIterDescription kid) {
+    public boolean matches(KernelDescision kid) {
 
         // Special case to disable kernelID matching
         if (kernelID == -1) {

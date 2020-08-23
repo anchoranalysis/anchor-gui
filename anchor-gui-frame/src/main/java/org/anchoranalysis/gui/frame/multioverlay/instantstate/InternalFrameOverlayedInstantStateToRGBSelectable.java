@@ -28,7 +28,7 @@ package org.anchoranalysis.gui.frame.multioverlay.instantstate;
 
 import java.util.Optional;
 import org.anchoranalysis.anchor.overlay.Overlay;
-import org.anchoranalysis.anchor.overlay.OverlayedInstantState;
+import org.anchoranalysis.anchor.overlay.IndexableOverlays;
 import org.anchoranalysis.anchor.overlay.collection.ColoredOverlayCollection;
 import org.anchoranalysis.anchor.overlay.collection.OverlayCollection;
 import org.anchoranalysis.core.color.ColorIndex;
@@ -51,7 +51,7 @@ import org.anchoranalysis.gui.retrieveelements.RetrieveElementsList;
 import org.anchoranalysis.gui.retrieveelements.RetrieveElementsOverlayCollection;
 import org.anchoranalysis.gui.videostats.IModuleCreatorDefaultState;
 import org.anchoranalysis.gui.videostats.dropdown.VideoStatsModuleGlobalParams;
-import org.anchoranalysis.gui.videostats.internalframe.cfgtorgb.ColoredOverlayedInstantState;
+import org.anchoranalysis.gui.videostats.internalframe.cfgtorgb.IndexableColoredOverlays;
 import org.anchoranalysis.gui.videostats.internalframe.cfgtorgb.markdisplay.MarkDisplaySettingsWrapper;
 import org.anchoranalysis.gui.videostats.link.LinkModules;
 import org.anchoranalysis.gui.videostats.module.DefaultModuleState;
@@ -96,7 +96,7 @@ public class InternalFrameOverlayedInstantStateToRGBSelectable {
 
     // Must be called before usage
     public ISliderState init(
-            BoundedIndexContainer<OverlayedInstantState> cfgCntr,
+            BoundedIndexContainer<IndexableOverlays> cfgCntr,
             ColorIndex colorIndex,
             IDGetter<Overlay> idGetter,
             IDGetter<Overlay> idColorGetter,
@@ -116,7 +116,7 @@ public class InternalFrameOverlayedInstantStateToRGBSelectable {
                         (ObjectWithProperties object, RGBStack stack, int id) ->
                                 selectionIndices.getCurrentSelection().contains(id));
 
-        BoundedIndexContainer<ColoredOverlayedInstantState> cfgCntrColored =
+        BoundedIndexContainer<IndexableColoredOverlays> cfgCntrColored =
                 new BoundedIndexContainerBridgeWithoutIndex<>(
                         cfgCntr, new AddColorBridge(colorIndex, idColorGetter));
 

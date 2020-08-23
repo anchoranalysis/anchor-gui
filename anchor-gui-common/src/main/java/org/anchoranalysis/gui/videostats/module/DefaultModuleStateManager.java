@@ -28,7 +28,7 @@ package org.anchoranalysis.gui.videostats.module;
 
 import org.anchoranalysis.core.functional.function.CheckedFunction;
 import org.anchoranalysis.gui.container.background.BackgroundStackContainerException;
-import org.anchoranalysis.gui.mark.MarkDisplaySettings;
+import org.anchoranalysis.gui.marks.MarkDisplaySettings;
 import org.anchoranalysis.gui.videostats.link.DefaultLinkState;
 import org.anchoranalysis.gui.videostats.link.DefaultLinkStateManager;
 import org.anchoranalysis.image.stack.DisplayStack;

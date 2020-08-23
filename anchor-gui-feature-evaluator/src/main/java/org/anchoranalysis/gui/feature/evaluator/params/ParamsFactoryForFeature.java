@@ -28,18 +28,18 @@ package org.anchoranalysis.gui.feature.evaluator.params;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
-import org.anchoranalysis.anchor.mpp.feature.bean.cfg.FeatureInputCfg;
+import org.anchoranalysis.anchor.mpp.bean.regionmap.RegionMapSingleton;
 import org.anchoranalysis.anchor.mpp.feature.bean.mark.FeatureInputMark;
+import org.anchoranalysis.anchor.mpp.feature.bean.mark.collection.FeatureInputMarkCollection;
 import org.anchoranalysis.anchor.mpp.feature.input.memo.FeatureInputAllMemo;
 import org.anchoranalysis.anchor.mpp.feature.input.memo.FeatureInputPairMemo;
 import org.anchoranalysis.anchor.mpp.feature.input.memo.FeatureInputSingleMemo;
 import org.anchoranalysis.anchor.mpp.mark.GlobalRegionIdentifiers;
-import org.anchoranalysis.anchor.mpp.mark.conic.RegionMapSingleton;
 import org.anchoranalysis.feature.bean.Feature;
 import org.anchoranalysis.feature.input.FeatureInput;
-import org.anchoranalysis.feature.input.FeatureInputNRG;
+import org.anchoranalysis.feature.input.FeatureInputEnergy;
 import org.anchoranalysis.feature.input.FeatureInputParams;
-import org.anchoranalysis.feature.resultsvectorcollection.FeatureInputResults;
+import org.anchoranalysis.feature.input.FeatureInputResults;
 import org.anchoranalysis.image.feature.histogram.FeatureInputHistogram;
 import org.anchoranalysis.image.feature.object.input.FeatureInputObjectCollection;
 import org.anchoranalysis.image.feature.object.input.FeatureInputPairObjects;
@@ -73,10 +73,10 @@ public class ParamsFactoryForFeature {
         }
 
         if (paramType.equals(FeatureInputAllMemo.class)) {
-            return new NRGElemAllCalcParamsFactory();
+            return new EnergyAllInputsFactory();
         }
 
-        if (paramType.equals(FeatureInputCfg.class)) {
+        if (paramType.equals(FeatureInputMarkCollection.class)) {
             return new UnsupportedFactory();
         }
 
@@ -98,7 +98,7 @@ public class ParamsFactoryForFeature {
             return new UnsupportedFactory();
         }
 
-        if (paramType.equals(FeatureInputNRG.class)) {
+        if (paramType.equals(FeatureInputEnergy.class)) {
             return new ObjectUnaryFactory(GlobalRegionIdentifiers.SUBMARK_INSIDE);
         }
 

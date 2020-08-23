@@ -29,12 +29,12 @@ package org.anchoranalysis.gui.videostats.internalframe.annotator.tool;
 import java.util.List;
 import java.util.Optional;
 import org.anchoranalysis.anchor.mpp.bean.regionmap.RegionMap;
-import org.anchoranalysis.anchor.mpp.cfg.Cfg;
+import org.anchoranalysis.anchor.mpp.bean.regionmap.RegionMapSingleton;
 import org.anchoranalysis.anchor.mpp.mark.GlobalRegionIdentifiers;
-import org.anchoranalysis.anchor.mpp.mark.conic.RegionMapSingleton;
+import org.anchoranalysis.anchor.mpp.mark.MarkCollection;
 import org.anchoranalysis.core.geometry.Point3d;
 import org.anchoranalysis.core.geometry.Point3i;
-import org.anchoranalysis.gui.frame.overlays.ProposedCfg;
+import org.anchoranalysis.gui.frame.overlays.ProposedMarks;
 import org.anchoranalysis.gui.videostats.internalframe.annotator.currentstate.IQueryAcceptedRejected;
 import org.anchoranalysis.gui.videostats.internalframe.annotator.currentstate.IQuerySelectedPoints;
 import org.anchoranalysis.gui.videostats.internalframe.annotator.currentstate.IReplaceRemove;
@@ -67,11 +67,11 @@ public class DeleteTool extends AnnotationTool {
     @Override
     public void leftMouseClickedAtPoint(Point3d point) {
 
-        Cfg cfg = new Cfg();
+        MarkCollection cfg = new MarkCollection();
         cfg.addAll(queryAcceptReject.getCfgAccepted());
         cfg.addAll(queryAcceptReject.getCfgRejected());
 
-        Cfg marksToRemove = FindPoints.findMarksContainingPoint(cfg, point, regionMap, regionID);
+        MarkCollection marksToRemove = FindPoints.findMarksContainingPoint(cfg, point, regionMap, regionID);
 
         List<Point3i> selectedPointsToRemove =
                 FindPoints.findSelectedPointsNear(point, selectedPoints);
@@ -83,7 +83,7 @@ public class DeleteTool extends AnnotationTool {
     }
 
     @Override
-    public void proposed(ProposedCfg proposedCfg) {
+    public void proposed(ProposedMarks proposedCfg) {
         // This should never be called as EvaluatorWithContext is null
     }
 

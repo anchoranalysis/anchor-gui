@@ -27,7 +27,7 @@
 package org.anchoranalysis.gui.videostats.internalframe.annotator.currentstate;
 
 import org.anchoranalysis.gui.frame.overlays.IShowOverlays;
-import org.anchoranalysis.gui.frame.overlays.ProposedCfg;
+import org.anchoranalysis.gui.frame.overlays.ProposedMarks;
 
 public class ShowCurrentState {
 
@@ -63,14 +63,14 @@ public class ShowCurrentState {
         showError.showError(message);
     }
 
-    private ProposedCfg cfg(CurrentState currentState, boolean success, int suggestedSliceNum) {
-        ProposedCfg plainCfg = cfg(currentState, success);
+    private ProposedMarks cfg(CurrentState currentState, boolean success, int suggestedSliceNum) {
+        ProposedMarks plainCfg = cfg(currentState, success);
         plainCfg.setSuggestedSliceNum(suggestedSliceNum);
         return plainCfg;
     }
 
-    private ProposedCfg cfg(CurrentState currentState, boolean success) {
-        ProposedCfg plainCfg = new ProposedCfg();
+    private ProposedMarks cfg(CurrentState currentState, boolean success) {
+        ProposedMarks plainCfg = new ProposedMarks();
         plainCfg.setSuccess(success);
         plainCfg.setColoredCfg(currentState.generateFullCfg());
         return plainCfg;

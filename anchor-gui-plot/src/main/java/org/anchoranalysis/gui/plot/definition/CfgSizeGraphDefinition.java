@@ -28,20 +28,19 @@ package org.anchoranalysis.gui.plot.definition;
 
 import com.sun.tools.visualvm.charts.SimpleXYChartDescriptor;
 import com.sun.tools.visualvm.charts.SimpleXYChartSupport;
-import org.anchoranalysis.anchor.mpp.feature.nrg.cfg.CfgWithNRGTotal;
+import lombok.RequiredArgsConstructor;
+import org.anchoranalysis.anchor.mpp.feature.energy.marks.MarksWithTotalEnergy;
 import org.anchoranalysis.mpp.sgmn.optscheme.feedback.aggregate.Aggregator;
 
+@RequiredArgsConstructor
 public class CfgSizeGraphDefinition extends GraphDefinition {
 
-    private double sizeCrnt;
+    // START REQUIRED ARGUMENTS
+    private final int windowSize;
+    // END REQUIRED ARGUMENTS
+    
+    private double sizeCurrent;
     private int sizeBest;
-
-    private int windowSize;
-
-    public CfgSizeGraphDefinition(int windowSize) {
-        super();
-        this.windowSize = windowSize;
-    }
 
     @Override
     public String title() {
@@ -66,32 +65,32 @@ public class CfgSizeGraphDefinition extends GraphDefinition {
     }
 
     @Override
-    public long[] valueArr(int iter, long timeStamp) {
+    public long[] valueArray(int iter, long timeStamp) {
 
         long[] values = new long[2];
         values[0] = this.sizeBest;
-        values[1] = (long) this.sizeCrnt;
+        values[1] = (long) this.sizeCurrent;
         return values;
     }
 
     @Override
-    public String[] detailsArr(
+    public String[] detailsArray(
             int iter, long timeStamp, long timeZoneOffset, SimpleXYChartSupport support) {
         return new String[] {
             iter + "",
             support.formatTime(timeStamp - timeZoneOffset),
             String.format("%4.1f", (double) this.sizeBest),
-            String.format("%4.1f", this.sizeCrnt)
+            String.format("%4.1f", this.sizeCurrent)
         };
     }
 
     @Override
-    public void updateCrnt(int iter, long timeStamp, CfgWithNRGTotal crnt, Aggregator agg) {
-        this.sizeCrnt = agg.getSize();
+    public void updateCurrent(int iter, long timeStamp, MarksWithTotalEnergy crnt, Aggregator agg) {
+        this.sizeCurrent = agg.getSize();
     }
 
     @Override
-    public void updateBest(int iter, long timeStamp, CfgWithNRGTotal best) {
-        this.sizeBest = best.getCfg().size();
+    public void updateBest(int iter, long timeStamp, MarksWithTotalEnergy best) {
+        this.sizeBest = best.size();
     }
 }

@@ -31,18 +31,18 @@ import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.index.container.BoundedIndexContainer;
 import org.anchoranalysis.gui.container.background.BackgroundStackContainerException;
 import org.anchoranalysis.gui.displayupdate.OverlayedDisplayStack;
-import org.anchoranalysis.gui.videostats.internalframe.cfgtorgb.ColoredOverlayedInstantState;
+import org.anchoranalysis.gui.videostats.internalframe.cfgtorgb.IndexableColoredOverlays;
 import org.anchoranalysis.image.stack.DisplayStack;
 
 class IndexToRedrawUpdate
         implements CheckedFunction<
                 Integer, OverlayedDisplayStack, BackgroundStackContainerException> {
 
-    private BoundedIndexBridge<ColoredOverlayedInstantState> delegate;
+    private BoundedIndexBridge<IndexableColoredOverlays> delegate;
     private CheckedFunction<Integer, DisplayStack, BackgroundStackContainerException> background;
 
     public IndexToRedrawUpdate(
-            BoundedIndexContainer<ColoredOverlayedInstantState> cntr,
+            BoundedIndexContainer<IndexableColoredOverlays> cntr,
             CheckedFunction<Integer, DisplayStack, BackgroundStackContainerException> background) {
         delegate = new BoundedIndexBridge<>(cntr);
         this.background = background;
@@ -53,7 +53,7 @@ class IndexToRedrawUpdate
             throws BackgroundStackContainerException {
 
         try {
-            ColoredOverlayedInstantState found = delegate.apply(sourceObject);
+            IndexableColoredOverlays found = delegate.apply(sourceObject);
 
             return new OverlayedDisplayStack(
                     found.getOverlayCollection(), background.apply(sourceObject));

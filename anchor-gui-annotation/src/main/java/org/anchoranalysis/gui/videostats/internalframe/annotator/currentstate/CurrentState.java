@@ -30,9 +30,9 @@ import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.event.EventListenerList;
-import org.anchoranalysis.anchor.mpp.cfg.Cfg;
-import org.anchoranalysis.anchor.mpp.cfg.ColoredCfg;
+import org.anchoranalysis.anchor.mpp.mark.ColoredMarks;
 import org.anchoranalysis.anchor.mpp.mark.Mark;
+import org.anchoranalysis.anchor.mpp.mark.MarkCollection;
 import org.anchoranalysis.core.color.RGBColor;
 import org.anchoranalysis.core.geometry.Point3d;
 import org.anchoranalysis.core.geometry.Point3f;
@@ -45,10 +45,10 @@ class CurrentState implements IQuerySelectedPoints {
     private SaveMonitor saveMonitor;
 
     private DualCfg cfg = new DualCfg();
-    private Cfg currentProposedCfg = new Cfg();
-    private Cfg currentSelectedPointsCfg = new Cfg();
-    private ColoredCfg currentCfgDisplayed = null;
-    private Cfg listForRefresh = new Cfg();
+    private MarkCollection currentProposedCfg = new MarkCollection();
+    private MarkCollection currentSelectedPointsCfg = new MarkCollection();
+    private ColoredMarks currentCfgDisplayed = null;
+    private MarkCollection listForRefresh = new MarkCollection();
 
     private static RGBColor colorAccepted = new RGBColor(Color.RED);
     private static RGBColor colorRejected = new RGBColor(Color.PINK);
@@ -91,45 +91,45 @@ class CurrentState implements IQuerySelectedPoints {
 
     public void addCurrentProposedCfgFromSelectedPoints(Mark mark) {
         if (currentCfgDisplayed != null) {
-            listForRefresh.addAll(currentCfgDisplayed.getCfg());
+            listForRefresh.addAll(currentCfgDisplayed.getMarks());
         }
-        listForRefresh.addAll(new Cfg(mark));
-        this.currentProposedCfg = new Cfg(mark);
-        this.currentCfgDisplayed = new ColoredCfg(mark, colorBlue);
+        listForRefresh.addAll(new MarkCollection(mark));
+        this.currentProposedCfg = new MarkCollection(mark);
+        this.currentCfgDisplayed = new ColoredMarks(mark, colorBlue);
         confirmReset.triggerConfirmResetStateChangedEvent();
     }
 
-    public void replaceCurrentProposedCfg(Cfg cfgCore, ColoredCfg cfgDisplayed) {
+    public void replaceCurrentProposedCfg(MarkCollection cfgCore, ColoredMarks cfgDisplayed) {
 
         if (this.currentCfgDisplayed != null) {
-            listForRefresh.addAll(currentCfgDisplayed.getCfg());
+            listForRefresh.addAll(currentCfgDisplayed.getMarks());
         }
 
         listForRefresh.addAll(currentSelectedPointsCfg);
-        this.currentSelectedPointsCfg = new Cfg();
+        this.currentSelectedPointsCfg = new MarkCollection();
 
         this.currentProposedCfg = cfgCore;
         this.currentCfgDisplayed = cfgDisplayed;
-        listForRefresh.addAll(currentCfgDisplayed.getCfg());
+        listForRefresh.addAll(currentCfgDisplayed.getMarks());
         confirmReset.triggerConfirmResetStateChangedEvent();
     }
 
     public void removeCurrentProposedCfg() {
 
         if (this.currentCfgDisplayed != null) {
-            listForRefresh.addAll(currentCfgDisplayed.getCfg());
+            listForRefresh.addAll(currentCfgDisplayed.getMarks());
         }
 
         listForRefresh.addAll(currentSelectedPointsCfg);
-        this.currentSelectedPointsCfg = new Cfg();
+        this.currentSelectedPointsCfg = new MarkCollection();
 
-        this.currentProposedCfg = new Cfg();
-        this.currentCfgDisplayed = new ColoredCfg();
+        this.currentProposedCfg = new MarkCollection();
+        this.currentCfgDisplayed = new ColoredMarks();
         confirmReset.triggerConfirmResetStateChangedEvent();
     }
 
-    public ColoredCfg generateFullCfg() {
-        ColoredCfg coloredCfg = new ColoredCfg();
+    public ColoredMarks generateFullCfg() {
+        ColoredMarks coloredCfg = new ColoredMarks();
         if (currentCfgDisplayed != null) {
             coloredCfg.addAll(currentCfgDisplayed);
         }
@@ -141,13 +141,13 @@ class CurrentState implements IQuerySelectedPoints {
 
     public void addSelectedPoint(Mark mark) {
         currentSelectedPointsCfg.add(mark);
-        currentProposedCfg = new Cfg();
+        currentProposedCfg = new MarkCollection();
         currentCfgDisplayed = null;
         listForRefresh.add(mark);
         confirmReset.triggerConfirmResetStateChangedEvent();
     }
 
-    public void removeAcceptedMarksAndSelectedPoints(Cfg cfg, List<Point3i> points) {
+    public void removeAcceptedMarksAndSelectedPoints(MarkCollection cfg, List<Point3i> points) {
         for (Mark m : cfg) {
             removeAcceptedMark(m);
         }
@@ -171,7 +171,7 @@ class CurrentState implements IQuerySelectedPoints {
     //  but as we don't call it often, it shouldn't be so bad
     private void removeSelectedPoints(List<Point3i> points) {
 
-        Cfg toDelete = new Cfg();
+        MarkCollection toDelete = new MarkCollection();
 
         points.forEach(
                 point -> {
@@ -180,19 +180,19 @@ class CurrentState implements IQuerySelectedPoints {
                     currentSelectedPointsCfg.remove(index);
                 });
 
-        currentProposedCfg = new Cfg();
+        currentProposedCfg = new MarkCollection();
         currentCfgDisplayed = null;
 
         listForRefresh.addAll(toDelete);
         confirmReset.triggerConfirmResetStateChangedEvent();
     }
 
-    public Cfg getRefreshListAndReset() {
-        Cfg refreshList = listForRefresh;
-        listForRefresh = new Cfg();
+    public MarkCollection getRefreshListAndReset() {
+        MarkCollection refreshList = listForRefresh;
+        listForRefresh = new MarkCollection();
 
         if (currentCfgDisplayed != null) {
-            listForRefresh.addAll(currentCfgDisplayed.getCfg());
+            listForRefresh.addAll(currentCfgDisplayed.getMarks());
         }
         return refreshList;
     }
@@ -238,7 +238,7 @@ class CurrentState implements IQuerySelectedPoints {
         saveMonitor.markAsChanged();
     }
 
-    public Cfg getProposedCfg() {
+    public MarkCollection getProposedCfg() {
         return currentProposedCfg;
     }
 
@@ -269,13 +269,13 @@ class CurrentState implements IQuerySelectedPoints {
         // Resets any unconfirmed activity
         @Override
         public void reset() {
-            currentProposedCfg = new Cfg();
+            currentProposedCfg = new MarkCollection();
             if (currentCfgDisplayed != null) {
-                listForRefresh.addAll(currentCfgDisplayed.getCfg());
+                listForRefresh.addAll(currentCfgDisplayed.getMarks());
             }
             listForRefresh.addAll(currentSelectedPointsCfg);
             currentCfgDisplayed = null;
-            currentSelectedPointsCfg = new Cfg();
+            currentSelectedPointsCfg = new MarkCollection();
             triggerConfirmResetStateChangedEvent();
         }
 
@@ -289,13 +289,13 @@ class CurrentState implements IQuerySelectedPoints {
             saveMonitor.markAsChanged();
             cfg.addAll(accepted, currentProposedCfg.deepCopy());
 
-            currentProposedCfg = new Cfg();
+            currentProposedCfg = new MarkCollection();
             if (currentCfgDisplayed != null) {
-                listForRefresh.addAll(currentCfgDisplayed.getCfg());
+                listForRefresh.addAll(currentCfgDisplayed.getMarks());
             }
             listForRefresh.addAll(currentSelectedPointsCfg);
             currentCfgDisplayed = null;
-            currentSelectedPointsCfg = new Cfg();
+            currentSelectedPointsCfg = new MarkCollection();
             triggerConfirmResetStateChangedEvent();
             return true;
         }

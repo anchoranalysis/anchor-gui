@@ -27,14 +27,14 @@
 package org.anchoranalysis.gui.videostats.modulecreator;
 
 import java.util.Optional;
-import org.anchoranalysis.anchor.mpp.cfg.Cfg;
+import org.anchoranalysis.anchor.mpp.mark.MarkCollection;
 import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.gui.frame.singleraster.InternalFrameSingleRaster;
 import org.anchoranalysis.gui.image.frame.ISliderState;
 import org.anchoranalysis.gui.videostats.dropdown.AddVideoStatsModule;
 import org.anchoranalysis.gui.videostats.dropdown.VideoStatsModuleGlobalParams;
-import org.anchoranalysis.gui.videostats.dropdown.common.NRGBackground;
+import org.anchoranalysis.gui.videostats.dropdown.common.EnergyBackground;
 import org.anchoranalysis.gui.videostats.module.VideoStatsModuleCreateException;
 import org.anchoranalysis.gui.videostats.operation.combine.OverlayCollectionSupplier;
 import org.anchoranalysis.gui.videostats.operation.combine.VideoStatsOperationCombine;
@@ -42,7 +42,7 @@ import org.anchoranalysis.image.object.ObjectCollection;
 
 public class RasterModuleCreator extends VideoStatsModuleCreator {
 
-    private final NRGBackground nrgBackground;
+    private final EnergyBackground energyBackground;
     private final String fileDscr;
     private final String frameName;
     private final VideoStatsModuleGlobalParams mpg;
@@ -51,7 +51,7 @@ public class RasterModuleCreator extends VideoStatsModuleCreator {
             new VideoStatsOperationCombine() {
 
                 @Override
-                public Optional<OverlayCollectionSupplier<Cfg>> getCfg() {
+                public Optional<OverlayCollectionSupplier<MarkCollection>> getCfg() {
                     return Optional.empty();
                 }
 
@@ -66,19 +66,19 @@ public class RasterModuleCreator extends VideoStatsModuleCreator {
                 }
 
                 @Override
-                public NRGBackground getNrgBackground() {
-                    return nrgBackground;
+                public EnergyBackground getEnergyBackground() {
+                    return energyBackground;
                 }
             };
 
     public RasterModuleCreator(
-            NRGBackground nrgBackground,
+            EnergyBackground energyBackground,
             String fileDscr,
             String frameName,
             VideoStatsModuleGlobalParams mpg) {
         super();
         this.fileDscr = fileDscr;
-        this.nrgBackground = nrgBackground;
+        this.energyBackground = energyBackground;
         this.frameName = frameName;
         this.mpg = mpg;
     }
@@ -92,11 +92,11 @@ public class RasterModuleCreator extends VideoStatsModuleCreator {
                     new InternalFrameSingleRaster(String.format("%s: %s", fileDscr, frameName));
             ISliderState sliderState =
                     imageFrame.init(
-                            nrgBackground.numFrames(),
+                            energyBackground.numberFrames(),
                             adder.getSubgroup().getDefaultModuleState().getState(),
                             mpg);
 
-            imageFrame.controllerBackgroundMenu().add(mpg, nrgBackground.getBackgroundSet());
+            imageFrame.controllerBackgroundMenu().add(mpg, energyBackground.getBackgroundSet());
 
             adder.addVideoStatsModule(
                     imageFrame

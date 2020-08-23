@@ -33,7 +33,7 @@ import org.anchoranalysis.core.color.RGBColor;
 public class MergedColorIndex implements ColorIndex {
 
     private ColorList colorList = new ColorList();
-    private MergeCfgBridge mergeCfgBridge;
+    private MergeMarksBridge mergeCfgBridge;
 
     private static RGBColor colorForProposalState(ProposalState proposalState) {
         switch (proposalState) {
@@ -53,7 +53,7 @@ public class MergedColorIndex implements ColorIndex {
         }
     }
 
-    public MergedColorIndex(MergeCfgBridge mergeCfgBridge) {
+    public MergedColorIndex(MergeMarksBridge mergeCfgBridge) {
         super();
         colorList.add(new RGBColor(0, 0, 0)); // 0
         colorList.add(new RGBColor(0, 0, 255)); // 1

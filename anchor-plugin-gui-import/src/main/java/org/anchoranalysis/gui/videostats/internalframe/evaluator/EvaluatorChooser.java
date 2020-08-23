@@ -26,8 +26,6 @@
 
 package org.anchoranalysis.gui.videostats.internalframe.evaluator;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -42,10 +40,11 @@ import org.anchoranalysis.core.error.reporter.ErrorReporter;
 import org.anchoranalysis.gui.interactivebrowser.MarkEvaluatorResolved;
 import org.anchoranalysis.gui.interactivebrowser.MarkEvaluatorSetForImage;
 import org.anchoranalysis.gui.videostats.internalframe.evaluator.fromproposer.ProposalOperationCreatorFromProposer;
+import lombok.Getter;
 
 public class EvaluatorChooser {
 
-    private JPanel panel = new JPanel();
+    @Getter private JPanel panel = new JPanel();
 
     private JComboBox<String> comboType;
     private JComboBox<String> comboProposer;
@@ -82,44 +81,24 @@ public class EvaluatorChooser {
         panel.add(comboType);
         panel.add(comboProposer);
 
-        comboMarkEvaluator.addActionListener(
-                new ActionListener() {
+        comboMarkEvaluator.addActionListener( e -> selectMarkEvaluator() );
+        comboType.addActionListener( e-> populateComboProposer() );
+        comboProposer.addActionListener( e -> {
+                @SuppressWarnings("unchecked")
+                JComboBox<String> cb = (JComboBox<String>) e.getSource();
 
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        selectMarkEvaluator();
-                    }
-                });
-        comboType.addActionListener(
-                new ActionListener() {
+                String itemName = (String) cb.getSelectedItem();
 
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        populateComboProposer();
-                    }
-                });
-        comboProposer.addActionListener(
-                new ActionListener() {
+                if (itemName == null) {
+                    return;
+                }
 
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-
-                        @SuppressWarnings("unchecked")
-                        JComboBox<String> cb = (JComboBox<String>) e.getSource();
-
-                        String itemName = (String) cb.getSelectedItem();
-
-                        if (itemName == null) {
-                            return;
-                        }
-
-                        try {
-                            evaluator = Optional.of(createProposerEvaluator(itemName));
-                        } catch (CreateException e1) {
-                            errorReporter.recordError(EvaluatorChooser.class, e1);
-                        }
-                    }
-                });
+                try {
+                    evaluator = Optional.of(createProposerEvaluator(itemName));
+                } catch (CreateException e1) {
+                    errorReporter.recordError(EvaluatorChooser.class, e1);
+                }
+        });
     }
 
     public void init(MarkEvaluatorSetForImage markEvaluatorSet) {
@@ -224,10 +203,6 @@ public class EvaluatorChooser {
         throw new AnchorImpossibleSituationException();
     }
 
-    public JPanel getPanel() {
-        return panel;
-    }
-
     public Optional<ProposalOperationCreator> evaluator() {
         return evaluator;
     }
@@ -241,9 +216,9 @@ public class EvaluatorChooser {
             return Optional.of(
                     new EvaluatorWithContext(
                             evaluator.get(),
-                            markEvaluatorSelected.getNRGStack(),
-                            markEvaluatorSelected.getCfgGen(),
-                            markEvaluatorSelected.getNrgScheme().getRegionMap()));
+                            markEvaluatorSelected.getEnergyStack(),
+                            markEvaluatorSelected.getMarkFactory(),
+                            markEvaluatorSelected.getEnergyScheme().getRegionMap()));
         };
     }
 }

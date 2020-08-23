@@ -42,9 +42,9 @@ import org.anchoranalysis.io.manifest.ManifestDescription;
 import org.anchoranalysis.io.namestyle.IndexableOutputNameStyle;
 import org.anchoranalysis.io.namestyle.IntegerSuffixOutputNameStyle;
 import org.anchoranalysis.io.output.bound.BoundOutputManagerRouteErrors;
-import org.anchoranalysis.mpp.io.cfg.CfgWithDisplayStack;
-import org.anchoranalysis.mpp.io.cfg.ColoredCfgWithDisplayStack;
-import org.anchoranalysis.mpp.io.cfg.generator.CfgGenerator;
+import org.anchoranalysis.mpp.io.marks.ColoredMarksWithDisplayStack;
+import org.anchoranalysis.mpp.io.marks.MarksWithDisplayStack;
+import org.anchoranalysis.mpp.io.marks.generator.MarksGenerator;
 
 public class OutputPanel {
 
@@ -52,7 +52,7 @@ public class OutputPanel {
 
     private BoundOutputManagerRouteErrors outputManager;
 
-    private GeneratorSequenceIncrementalRerouteErrors<ColoredCfgWithDisplayStack> sequenceWriter;
+    private GeneratorSequenceIncrementalRerouteErrors<ColoredMarksWithDisplayStack> sequenceWriter;
 
     private ColorIndex colorIndex;
 
@@ -68,7 +68,7 @@ public class OutputPanel {
 
         @Override
         public void actionPerformed(ActionEvent arg0) {
-            CfgGenerator generator = new CfgGenerator(new Outline(2), new IDGetterOverlayID());
+            MarksGenerator generator = new MarksGenerator(new Outline(2), new IDGetterOverlayID());
 
             IndexableOutputNameStyle outputNameStyle =
                     new IntegerSuffixOutputNameStyle("markEvaluator", 6);
@@ -133,11 +133,11 @@ public class OutputPanel {
         return panel;
     }
 
-    public void output(CfgWithDisplayStack cws) {
+    public void output(MarksWithDisplayStack cws) {
         if (sequenceWriter != null) {
 
-            ColoredCfgWithDisplayStack colored =
-                    new ColoredCfgWithDisplayStack(cws, colorIndex, new IDGetterMarkID());
+            ColoredMarksWithDisplayStack colored =
+                    new ColoredMarksWithDisplayStack(cws, colorIndex, new IDGetterMarkID());
             sequenceWriter.add(colored);
         }
     }

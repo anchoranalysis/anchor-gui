@@ -42,16 +42,16 @@ public class DropDownUtilitiesRaster {
     public static void addRaster(
             VideoStatsOperationMenu menu,
             BoundVideoStatsModuleDropDown delegate,
-            NRGBackgroundAdder nrgBackground,
+            EnergyBackgroundAdder energyBackground,
             String name,
             VideoStatsModuleGlobalParams mpg,
             boolean addAsDefault) {
         RasterModuleCreator creator =
                 new RasterModuleCreator(
-                        nrgBackground.getBackground(), delegate.getName(), name, mpg);
+                        energyBackground.getBackground(), delegate.getName(), name, mpg);
 
         VideoStatsModuleCreatorAndAdder creatorAndAdder =
-                new VideoStatsModuleCreatorAndAdder(nrgBackground.getAdder(), creator);
+                new VideoStatsModuleCreatorAndAdder(energyBackground.getAdder(), creator);
         if (addAsDefault) {
             menu.addAsDefault(
                     new VideoStatsOperationFromCreatorAndAdder(

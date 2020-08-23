@@ -28,14 +28,14 @@ package org.anchoranalysis.gui.serializedobjectset;
 
 import org.anchoranalysis.anchor.mpp.mark.Mark;
 import org.anchoranalysis.core.index.IndexGetter;
-import org.anchoranalysis.feature.nrg.NRGStackWithParams;
+import org.anchoranalysis.feature.energy.EnergyStack;
 import org.anchoranalysis.gui.backgroundset.BackgroundSet;
 
 public class MarkWithRaster implements IndexGetter, Comparable<IndexGetter> {
 
     private int index;
     private Mark mark;
-    private NRGStackWithParams nrgStack;
+    private EnergyStack energyStack;
     private BackgroundSet backgroundSet;
 
     public Mark getMark() {
@@ -68,11 +68,11 @@ public class MarkWithRaster implements IndexGetter, Comparable<IndexGetter> {
         this.backgroundSet = backgroundSet;
     }
 
-    public NRGStackWithParams getNRGStack() {
-        return nrgStack;
+    public EnergyStack getEnergyStack() {
+        return energyStack;
     }
 
-    public void setNRGStack(NRGStackWithParams nrgStack) {
-        this.nrgStack = nrgStack;
+    public void setEnergyStack(EnergyStack energyStack) {
+        this.energyStack = energyStack;
     }
 }

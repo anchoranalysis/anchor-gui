@@ -148,12 +148,12 @@ public class InteractiveBrowser {
             throw new InitException(e);
         }
 
-        AdderWithNrg adderWithNrg =
-                new AdderWithNrg(moduleParams, featureListSrc, globalSubgroupAdder);
+        AdderWithEnergy adderWithEnergy =
+                new AdderWithEnergy(moduleParams, featureListSrc, globalSubgroupAdder);
 
         FileCreatorLoader fileCreatorLoader =
                 creatorLoader(
-                        adderWithNrg,
+                        adderWithEnergy,
                         interactiveBrowserInput.getRasterReader(),
                         fileOpenManager,
                         interactiveBrowserInput.getImporterSettings());
@@ -168,18 +168,18 @@ public class InteractiveBrowser {
 
         // We add the GUI components
         addGUIComponentsInner(
-                adderWithNrg,
+                adderWithEnergy,
                 fileCreatorLoader,
                 fileOpenManager,
                 interactiveBrowserInput.getListFileCreators());
     }
 
     private FileCreatorLoader creatorLoader(
-            AdderWithNrg adderWithNrg,
+            AdderWithEnergy adderWithEnergy,
             RasterReader rasterReader,
             FileOpenManager fileOpenManager,
             ImporterSettings importerSettings) {
-        return adderWithNrg.createFileCreatorLoader(
+        return adderWithEnergy.createFileCreatorLoader(
                 rasterReader,
                 fileOpenManager,
                 markEvaluatorManager,
@@ -188,7 +188,7 @@ public class InteractiveBrowser {
     }
 
     private void addGUIComponentsInner(
-            AdderWithNrg adderNrg,
+            AdderWithEnergy adderWithEnergy,
             FileCreatorLoader fileCreatorLoader,
             FileOpenManager fileOpenManager,
             List<FileCreator> fileCreators)
@@ -201,7 +201,7 @@ public class InteractiveBrowser {
 
         videoStatsFrame.getToolbar().addSeparator();
 
-        adderNrg.addGlobalSet(videoStatsFrame.getToolbar());
+        adderWithEnergy.addGlobalSet(videoStatsFrame.getToolbar());
 
         videoStatsFrame.getToolbar().addSeparator();
 

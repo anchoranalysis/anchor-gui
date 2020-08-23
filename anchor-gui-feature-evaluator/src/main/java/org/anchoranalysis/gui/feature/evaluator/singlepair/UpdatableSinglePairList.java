@@ -29,7 +29,7 @@ package org.anchoranalysis.gui.feature.evaluator.singlepair;
 import java.util.ArrayList;
 import org.anchoranalysis.anchor.mpp.pair.IdentifiablePair;
 import org.anchoranalysis.anchor.overlay.Overlay;
-import org.anchoranalysis.feature.nrg.NRGStackWithParams;
+import org.anchoranalysis.feature.energy.EnergyStack;
 
 public class UpdatableSinglePairList implements UpdatableSinglePair {
 
@@ -40,7 +40,7 @@ public class UpdatableSinglePairList implements UpdatableSinglePair {
     }
 
     @Override
-    public void updateSingle(Overlay overlay, NRGStackWithParams raster) {
+    public void updateSingle(Overlay overlay, EnergyStack raster) {
 
         for (UpdatableSinglePair iup : delegate) {
             iup.updateSingle(overlay, raster);
@@ -48,7 +48,7 @@ public class UpdatableSinglePairList implements UpdatableSinglePair {
     }
 
     @Override
-    public void updatePair(IdentifiablePair<Overlay> pair, NRGStackWithParams raster) {
+    public void updatePair(IdentifiablePair<Overlay> pair, EnergyStack raster) {
 
         for (UpdatableSinglePair iup : delegate) {
             iup.updatePair(pair, raster);

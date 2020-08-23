@@ -33,9 +33,9 @@ import org.anchoranalysis.anchor.overlay.Overlay;
 import org.anchoranalysis.anchor.overlay.OverlayProperties;
 import org.anchoranalysis.core.name.value.ComparatorOrderByName;
 import org.anchoranalysis.core.name.value.NameValue;
-import org.anchoranalysis.feature.nrg.NRGStackWithParams;
-import org.anchoranalysis.gui.cfgnrgtable.TitleValueTableModel;
+import org.anchoranalysis.feature.energy.EnergyStack;
 import org.anchoranalysis.gui.feature.evaluator.singlepair.UpdatableSinglePair;
+import org.anchoranalysis.gui.marks.table.TitleValueTableModel;
 import org.anchoranalysis.image.extent.Resolution;
 
 class OverlayDescription extends TitleValueTableModel implements UpdatableSinglePair {
@@ -43,7 +43,7 @@ class OverlayDescription extends TitleValueTableModel implements UpdatableSingle
     private static final long serialVersionUID = -5093139154944903750L;
 
     @Override
-    public void updateSingle(final Overlay overlay, NRGStackWithParams raster) {
+    public void updateSingle(final Overlay overlay, EnergyStack raster) {
         clear();
 
         // If we have no mark matching the current id
@@ -59,7 +59,7 @@ class OverlayDescription extends TitleValueTableModel implements UpdatableSingle
     }
 
     @Override
-    public void updatePair(final IdentifiablePair<Overlay> pair, NRGStackWithParams raster) {
+    public void updatePair(final IdentifiablePair<Overlay> pair, EnergyStack raster) {
 
         clear();
         // If we have no mark matching the current id

@@ -31,13 +31,13 @@ import java.util.List;
 import java.util.Optional;
 import javax.swing.JPopupMenu;
 import lombok.Getter;
-import org.anchoranalysis.anchor.overlay.OverlayedInstantState;
+import org.anchoranalysis.anchor.overlay.IndexableOverlays;
 import org.anchoranalysis.core.bridge.BridgeElementWithIndex;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.gui.file.opened.IOpenedFileGUI;
 import org.anchoranalysis.gui.frame.multioverlay.RasterMultiCreator;
 import org.anchoranalysis.gui.frame.multiraster.NamedRasterSet;
-import org.anchoranalysis.gui.mark.MarkDisplaySettings;
+import org.anchoranalysis.gui.marks.MarkDisplaySettings;
 import org.anchoranalysis.gui.videostats.dropdown.AddVideoStatsModule;
 import org.anchoranalysis.gui.videostats.dropdown.DualMenuWrapper;
 import org.anchoranalysis.gui.videostats.dropdown.VideoStatsModuleCreatorAndAdder;
@@ -172,12 +172,12 @@ public class OpenedFileGUIMultipleDropDown {
 
         List<NamedRasterSet> list = new ArrayList<>();
         for (VideoStatsOperationCombine op : listCombined) {
-            if (op.getNrgBackground() != null
+            if (op.getEnergyBackground() != null
                     && !op.getCfg().isPresent()
                     && !op.getObjects().isPresent()) {
                 list.add(
                         new NamedRasterSet(
-                                op.generateName(), op.getNrgBackground().getBackgroundSet()));
+                                op.generateName(), op.getEnergyBackground().getBackgroundSet()));
             }
         }
 
@@ -207,14 +207,14 @@ public class OpenedFileGUIMultipleDropDown {
             VideoStatsOperationMenu outMenu,
             VideoStatsOperation rootOperation,
             String subMenuName,
-            BridgeElementWithIndex<MultiInput<T>, OverlayedInstantState, OperationFailedException>
+            BridgeElementWithIndex<MultiInput<T>, IndexableOverlays, OperationFailedException>
                     bridge,
             GetObjFromOperationCombine<T> getObjFromOperationCombine) {
 
         // First we make a MultRaster, from all that suppport MultiRaster
         List<MultiInput<T>> list = new ArrayList<>();
         for (VideoStatsOperationCombine combine : listCombined) {
-            if (combine.getNrgBackground() != null
+            if (combine.getEnergyBackground() != null
                     && getObjFromOperationCombine.getObj(combine).isPresent()) {
 
                 getObjFromOperationCombine
@@ -224,7 +224,7 @@ public class OpenedFileGUIMultipleDropDown {
                                         list.add(
                                                 new MultiInput<>(
                                                         combine.generateName(),
-                                                        combine.getNrgBackground(),
+                                                        combine.getEnergyBackground(),
                                                         obj)));
             }
         }

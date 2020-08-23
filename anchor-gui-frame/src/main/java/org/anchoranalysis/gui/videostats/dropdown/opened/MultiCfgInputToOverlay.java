@@ -26,18 +26,18 @@
 
 package org.anchoranalysis.gui.videostats.dropdown.opened;
 
-import org.anchoranalysis.anchor.mpp.cfg.Cfg;
+import org.anchoranalysis.anchor.mpp.mark.MarkCollection;
 import org.anchoranalysis.anchor.mpp.overlay.OverlayCollectionMarkFactory;
-import org.anchoranalysis.anchor.overlay.OverlayedInstantState;
+import org.anchoranalysis.anchor.overlay.IndexableOverlays;
 import org.anchoranalysis.anchor.overlay.collection.OverlayCollection;
 import org.anchoranalysis.core.bridge.BridgeElementWithIndex;
 import org.anchoranalysis.core.error.OperationFailedException;
-import org.anchoranalysis.gui.mark.MarkDisplaySettings;
+import org.anchoranalysis.gui.marks.MarkDisplaySettings;
 import org.anchoranalysis.gui.videostats.internalframe.cfgtorgb.MultiInput;
 
 class MultiCfgInputToOverlay
         implements BridgeElementWithIndex<
-                MultiInput<Cfg>, OverlayedInstantState, OperationFailedException> {
+                MultiInput<MarkCollection>, IndexableOverlays, OperationFailedException> {
 
     private MarkDisplaySettings markDisplaySettings;
 
@@ -47,14 +47,14 @@ class MultiCfgInputToOverlay
     }
 
     @Override
-    public OverlayedInstantState bridgeElement(int index, MultiInput<Cfg> sourceObject)
+    public IndexableOverlays bridgeElement(int index, MultiInput<MarkCollection> sourceObject)
             throws OperationFailedException {
 
-        Cfg cfg = sourceObject.getAssociatedObjects().get();
+        MarkCollection cfg = sourceObject.getAssociatedObjects().get();
 
         OverlayCollection oc =
                 OverlayCollectionMarkFactory.createWithoutColor(
                         cfg, markDisplaySettings.regionMembership());
-        return new OverlayedInstantState(index, oc);
+        return new IndexableOverlays(index, oc);
     }
 }

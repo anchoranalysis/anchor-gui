@@ -28,22 +28,21 @@ package org.anchoranalysis.gui.plot.definition;
 
 import com.sun.tools.visualvm.charts.SimpleXYChartDescriptor;
 import com.sun.tools.visualvm.charts.SimpleXYChartSupport;
-import org.anchoranalysis.anchor.mpp.feature.nrg.cfg.CfgWithNRGTotal;
+import lombok.RequiredArgsConstructor;
+import org.anchoranalysis.anchor.mpp.feature.energy.marks.MarksWithTotalEnergy;
 import org.anchoranalysis.mpp.sgmn.optscheme.feedback.aggregate.Aggregator;
 
+@RequiredArgsConstructor
 public class TemperatureGraphDefinition extends GraphDefinition {
 
+    // START REQUIRED ARGUMENTS
+    private final int windowSize;
+    // END REQUIRED ARGUMENTS
+    
     private double temperature;
 
-    private int windowSize;
-
-    public TemperatureGraphDefinition(int windowSize) {
-        super();
-        this.windowSize = windowSize;
-    }
-
-    private long resolve(double nrg) {
-        return (long) (100 * nrg);
+    private long resolve(double energy) {
+        return (long) (100 * energy);
     }
 
     @Override
@@ -65,7 +64,7 @@ public class TemperatureGraphDefinition extends GraphDefinition {
     }
 
     @Override
-    public long[] valueArr(int iter, long timeStamp) {
+    public long[] valueArray(int iter, long timeStamp) {
 
         long[] values = new long[1];
         values[0] = resolve(this.temperature);
@@ -73,7 +72,7 @@ public class TemperatureGraphDefinition extends GraphDefinition {
     }
 
     @Override
-    public String[] detailsArr(
+    public String[] detailsArray(
             int iter, long timeStamp, long timeZoneOffset, SimpleXYChartSupport support) {
         return new String[] {
             iter + "",
@@ -83,10 +82,12 @@ public class TemperatureGraphDefinition extends GraphDefinition {
     }
 
     @Override
-    public void updateCrnt(int iter, long timeStamp, CfgWithNRGTotal crnt, Aggregator agg) {
+    public void updateCurrent(int iter, long timeStamp, MarksWithTotalEnergy crnt, Aggregator agg) {
         this.temperature = agg.getTemperature();
     }
 
     @Override
-    public void updateBest(int iter, long timeStamp, CfgWithNRGTotal best) {}
+    public void updateBest(int iter, long timeStamp, MarksWithTotalEnergy best) {
+        // NOTHING TO DO
+    }
 }

@@ -34,12 +34,12 @@ import org.anchoranalysis.gui.bean.exporttask.ExportTaskBean;
 import org.anchoranalysis.gui.bean.exporttask.ExportTaskParams;
 import org.anchoranalysis.io.generator.sequence.GeneratorSequenceFactory;
 import org.anchoranalysis.io.generator.sequence.GeneratorSequenceNonIncremental;
-import org.anchoranalysis.plugin.gui.bean.createrastergenerator.CreateRasterGenerator;
+import org.anchoranalysis.plugin.gui.bean.createrastergenerator.GeneratorFactory;
 
 public abstract class ExportTaskRasterGeneratorSequence<T> extends ExportTaskBean {
 
     // START BEAN PARAMETERS
-    @BeanField @Getter @Setter private CreateRasterGenerator<T> createRasterGenerator;
+    @BeanField @Getter @Setter private GeneratorFactory<T> createRasterGenerator;
 
     @BeanField @Setter private String outputName = "defaultOutputName";
     // END BEAN PARAMETERS

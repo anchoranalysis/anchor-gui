@@ -31,9 +31,9 @@ import java.util.Optional;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import org.anchoranalysis.anchor.mpp.bean.proposer.MarkProposer;
-import org.anchoranalysis.anchor.mpp.cfg.ColoredCfg;
+import org.anchoranalysis.anchor.mpp.mark.ColoredMarks;
 import org.anchoranalysis.anchor.mpp.mark.Mark;
-import org.anchoranalysis.anchor.mpp.mark.MarkAbstractPosition;
+import org.anchoranalysis.anchor.mpp.mark.MarkWithPosition;
 import org.anchoranalysis.anchor.mpp.mark.conic.MarkConicFactory;
 import org.anchoranalysis.anchor.mpp.proposer.visualization.CreateProposalVisualization;
 import org.anchoranalysis.core.color.RGBColor;
@@ -50,20 +50,20 @@ public class MarkProposerEvaluatorUtilities {
 
         final Mark me = templateMark.duplicate();
 
-        if (!(me instanceof MarkAbstractPosition)) {
+        if (!(me instanceof MarkWithPosition)) {
             throw new IllegalArgumentException("templateMark is not MarkAbstractPosition");
         }
 
-        MarkAbstractPosition meCast = (MarkAbstractPosition) me;
+        MarkWithPosition meCast = (MarkWithPosition) me;
         meCast.setPos(position);
 
         return me;
     }
 
-    public static ColoredCfg generateCfgFromMark(
+    public static ColoredMarks generateCfgFromMark(
             Mark mark, Point3d position, MarkProposer markProposer, boolean detailedVisualization) {
 
-        ColoredCfg cfg = new ColoredCfg();
+        ColoredMarks cfg = new ColoredMarks();
 
         if (mark != null) {
             cfg.addChangeID(mark, new RGBColor(Color.BLUE));
@@ -76,7 +76,7 @@ public class MarkProposerEvaluatorUtilities {
         return cfg;
     }
 
-    private static void addMarkAtMousePoint(Point3d position, ColoredCfg cfg, boolean do3D) {
+    private static void addMarkAtMousePoint(Point3d position, ColoredMarks cfg, boolean do3D) {
         Mark mousePoint = MarkConicFactory.createMarkFromPoint(position, 1, do3D);
         cfg.addChangeID(mousePoint, new RGBColor(Color.GREEN));
     }

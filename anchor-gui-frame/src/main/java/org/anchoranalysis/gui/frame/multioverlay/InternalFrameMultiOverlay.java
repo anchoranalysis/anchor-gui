@@ -30,7 +30,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import org.anchoranalysis.anchor.overlay.Overlay;
-import org.anchoranalysis.anchor.overlay.OverlayedInstantState;
+import org.anchoranalysis.anchor.overlay.IndexableOverlays;
 import org.anchoranalysis.anchor.overlay.id.IDGetterOverlayID;
 import org.anchoranalysis.core.bridge.BridgeElementWithIndex;
 import org.anchoranalysis.core.error.InitException;
@@ -50,7 +50,7 @@ import org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.definition.I
 import org.anchoranalysis.gui.retrieveelements.IRetrieveElements;
 import org.anchoranalysis.gui.videostats.IModuleCreatorDefaultState;
 import org.anchoranalysis.gui.videostats.dropdown.VideoStatsModuleGlobalParams;
-import org.anchoranalysis.gui.videostats.dropdown.common.NRGBackground;
+import org.anchoranalysis.gui.videostats.dropdown.common.EnergyBackground;
 import org.anchoranalysis.gui.videostats.internalframe.cfgtorgb.MultiInput;
 import org.anchoranalysis.gui.videostats.module.DefaultModuleState;
 import org.anchoranalysis.gui.videostats.module.DefaultModuleStateManager;
@@ -62,9 +62,9 @@ class InternalFrameMultiOverlay<T> {
         delegate = new InternalFrameOverlayedInstantStateToRGBSelectable(frameName, false, true);
     }
 
-    public SliderNRGState init(
+    public SliderEnergyState init(
             final List<MultiInput<T>> list,
-            BridgeElementWithIndex<MultiInput<T>, OverlayedInstantState, OperationFailedException>
+            BridgeElementWithIndex<MultiInput<T>, IndexableOverlays, OperationFailedException>
                     bridge,
             DefaultModuleStateManager defaultState,
             final VideoStatsModuleGlobalParams mpg)
@@ -72,9 +72,9 @@ class InternalFrameMultiOverlay<T> {
 
         ImageStackContainerFromName imageStackCntrFromName = createImageStackCntr(list);
 
-        // We assume all NRGBackgrounds have the same stack-names, so it doesn't
+        // We assume all EnergyBackgrounds have the same stack-names, so it doesn't
         //  matter which is picked
-        String arbitraryStackName = list.get(0).getNrgBackground().arbitraryBackgroundStackName();
+        String arbitraryStackName = list.get(0).getEnergyBackground().arbitraryBackgroundStackName();
         DefaultModuleState defaultStateNew =
                 assignInitialBackground(defaultState, arbitraryStackName, imageStackCntrFromName);
 
@@ -93,9 +93,9 @@ class InternalFrameMultiOverlay<T> {
         addExtraDetail(list);
         addBackgroundMenu(list, sliderState, imageStackCntrFromName, mpg);
 
-        NRGBackground nrgBackground = list.get(sliderState.getIndex()).getNrgBackground();
+        EnergyBackground energyBackground = list.get(sliderState.getIndex()).getEnergyBackground();
 
-        return new SliderNRGState(sliderState, nrgBackground);
+        return new SliderEnergyState(sliderState, energyBackground);
     }
 
     private static <T> ImageStackContainerFromName createImageStackCntr(
@@ -103,16 +103,16 @@ class InternalFrameMultiOverlay<T> {
         return name ->
                 sourceObject -> {
                     return list.get(sourceObject)
-                            .getNrgBackground()
+                            .getEnergyBackground()
                             .getBackgroundSet()
                             .get(ProgressReporterNull.get())
                             .singleStack(name);
                 };
     }
 
-    private static <T> BoundedIndexContainer<OverlayedInstantState> bridgeList(
+    private static <T> BoundedIndexContainer<IndexableOverlays> bridgeList(
             List<T> list,
-            BridgeElementWithIndex<T, OverlayedInstantState, OperationFailedException> bridge) {
+            BridgeElementWithIndex<T, IndexableOverlays, OperationFailedException> bridge) {
         BoundedIndexContainerFromList<T> cntr = new BoundedIndexContainerFromList<>(list);
         return new BoundedIndexContainerBridgeWithIndex<>(cntr, bridge);
     }
@@ -152,7 +152,7 @@ class InternalFrameMultiOverlay<T> {
             try {
                 Set<String> names =
                         list.get(sliderState.getIndex())
-                                .getNrgBackground()
+                                .getEnergyBackground()
                                 .getBackgroundSet()
                                 .get(ProgressReporterNull.get())
                                 .names();

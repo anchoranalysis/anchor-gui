@@ -34,14 +34,14 @@ import org.anchoranalysis.gui.bean.exporttask.ExportTaskParams;
 import org.anchoranalysis.image.stack.Stack;
 import org.anchoranalysis.io.generator.IterableObjectGenerator;
 import org.anchoranalysis.io.generator.IterableObjectGeneratorBridge;
-import org.anchoranalysis.plugin.gui.bean.createrastergenerator.CreateRasterGenerator;
+import org.anchoranalysis.plugin.gui.bean.createrastergenerator.GeneratorFactory;
 
-public class DemuxDualState<T> extends CreateRasterGenerator<DualStateWithoutIndex<T>> {
+public class DemuxDualState<T> extends GeneratorFactory<DualStateWithoutIndex<T>> {
 
     // START BEAN PROPERTIES
     @BeanField @Getter @Setter private int index = 0;
 
-    @BeanField @Getter @Setter private CreateRasterGenerator<T> item;
+    @BeanField @Getter @Setter private GeneratorFactory<T> item;
     // END BEAN PROPERTIES
 
     private T demux(DualStateWithoutIndex<T> in) {
@@ -58,7 +58,7 @@ public class DemuxDualState<T> extends CreateRasterGenerator<DualStateWithoutInd
                 generator,
                 sourceObject ->
                         new MappedFrom<>(
-                                sourceObject.getOriginalIter(), demux(sourceObject.getObj())));
+                                sourceObject.getOriginalIter(), demux(sourceObject.getObject())));
     }
 
     @Override

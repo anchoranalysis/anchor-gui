@@ -27,8 +27,8 @@
 package org.anchoranalysis.gui.plot.creator;
 
 import java.util.Iterator;
-import org.anchoranalysis.anchor.mpp.feature.instantstate.CfgNRGInstantState;
-import org.anchoranalysis.anchor.plot.bean.GraphDefinition;
+import org.anchoranalysis.anchor.mpp.feature.energy.IndexableMarksWithEnergy;
+import org.anchoranalysis.anchor.plot.bean.Plot;
 import org.anchoranalysis.anchor.plot.bean.colorscheme.GraphColorScheme;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.index.container.BoundedIndexContainer;
@@ -48,18 +48,18 @@ public interface GraphFromDualFinderCreator<T> {
     BoundedIndexContainer<T> createContainer(final FinderCSVStats finderCSVStats)
             throws CreateException;
 
-    BoundedIndexContainer<T> createCntr(
-            final FinderHistoryFolder<CfgNRGInstantState> finderCfgNRGHistory)
+    BoundedIndexContainer<T> createContainer(
+            final FinderHistoryFolder<IndexableMarksWithEnergy> finderMarksHistory)
             throws CreateException;
 
-    GraphDefinition<T> createGraphDefinition(GraphColorScheme graphColorScheme)
+    Plot<T> createGraphDefinition(GraphColorScheme graphColorScheme)
             throws CreateException;
 
     // useCSV is a flag indicating which of the two to use
     public default VideoStatsModuleCreator createGraphModule(
             final String windowTitlePrefix,
-            final GraphDefinition<T> definition,
-            final FinderHistoryFolder<CfgNRGInstantState> finderCfgNRGHistory,
+            final Plot<T> definition,
+            final FinderHistoryFolder<IndexableMarksWithEnergy> finderMarksHistory,
             final FinderCSVStats finderCSVStats,
             final boolean useCSV) {
         return new VideoStatsModuleCreator() {
@@ -73,8 +73,8 @@ public interface GraphFromDualFinderCreator<T> {
                     BoundedIndexContainer<T> cntr;
                     if (useCSV && finderCSVStats.exists()) {
                         cntr = createContainer(finderCSVStats);
-                    } else if (finderCfgNRGHistory.exists()) {
-                        cntr = createCntr(finderCfgNRGHistory);
+                    } else if (finderMarksHistory.exists()) {
+                        cntr = createContainer(finderMarksHistory);
                     } else {
                         return;
                     }

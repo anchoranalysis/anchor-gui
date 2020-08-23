@@ -27,11 +27,10 @@
 package org.anchoranalysis.gui.videostats.dropdown.manifest;
 
 import java.io.IOException;
-import org.anchoranalysis.anchor.mpp.cfg.Cfg;
-import org.anchoranalysis.anchor.mpp.feature.instantstate.CfgNRGInstantState;
-import org.anchoranalysis.anchor.mpp.feature.instantstate.CfgNRGNonHandleInstantState;
-import org.anchoranalysis.anchor.mpp.feature.nrg.cfg.CfgNRG;
-import org.anchoranalysis.anchor.mpp.feature.nrg.cfg.CfgNRGPixelized;
+import org.anchoranalysis.anchor.mpp.feature.energy.IndexableMarksWithEnergy;
+import org.anchoranalysis.anchor.mpp.feature.energy.marks.MarksWithEnergyBreakdown;
+import org.anchoranalysis.anchor.mpp.feature.energy.marks.VoxelizedMarksWithEnergy;
+import org.anchoranalysis.anchor.mpp.mark.MarkCollection;
 import org.anchoranalysis.core.cache.CachedSupplier;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.InitException;
@@ -40,19 +39,19 @@ import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.index.container.SingleContainer;
 import org.anchoranalysis.core.name.provider.NamedProvider;
 import org.anchoranalysis.core.params.KeyValueParams;
-import org.anchoranalysis.feature.nrg.NRGStackWithParams;
+import org.anchoranalysis.feature.energy.EnergyStack;
 import org.anchoranalysis.gui.file.opened.IOpenedFileGUI;
-import org.anchoranalysis.gui.finder.FinderNrgStack;
+import org.anchoranalysis.gui.finder.FinderEnergyStack;
 import org.anchoranalysis.gui.finder.imgstackcollection.FinderStacksCombine;
 import org.anchoranalysis.gui.finder.imgstackcollection.FinderStacksFromFolder;
-import org.anchoranalysis.gui.finder.imgstackcollection.FinderStacksFromNrgStack;
+import org.anchoranalysis.gui.finder.imgstackcollection.FinderStacksFromEnergyStack;
 import org.anchoranalysis.gui.finder.imgstackcollection.FinderStacksFromRootFiles;
 import org.anchoranalysis.gui.interactivebrowser.MarkEvaluatorManager;
 import org.anchoranalysis.gui.interactivebrowser.MarkEvaluatorSetForImage;
-import org.anchoranalysis.gui.io.loader.manifest.finder.CfgNRGFinderContext;
+import org.anchoranalysis.gui.io.loader.manifest.finder.MarksWithEnergyFinderContext;
 import org.anchoranalysis.gui.io.loader.manifest.finder.FinderCfgFolder;
-import org.anchoranalysis.gui.io.loader.manifest.finder.historyfolder.FinderHistoryFolderKernelIterDescription;
-import org.anchoranalysis.gui.mark.MarkDisplaySettings;
+import org.anchoranalysis.gui.io.loader.manifest.finder.historyfolder.FinderHistoryFolderKernelDecision;
+import org.anchoranalysis.gui.marks.MarkDisplaySettings;
 import org.anchoranalysis.gui.series.TimeSequenceProvider;
 import org.anchoranalysis.gui.series.TimeSequenceProviderSupplier;
 import org.anchoranalysis.gui.videostats.dropdown.AddVideoStatsModule;
@@ -61,10 +60,10 @@ import org.anchoranalysis.gui.videostats.dropdown.OperationCreateBackgroundSetWi
 import org.anchoranalysis.gui.videostats.dropdown.VideoStatsModuleGlobalParams;
 import org.anchoranalysis.gui.videostats.dropdown.common.DropDownUtilities;
 import org.anchoranalysis.gui.videostats.dropdown.common.DropDownUtilitiesRaster;
-import org.anchoranalysis.gui.videostats.dropdown.common.GuessNRGStackFromStacks;
-import org.anchoranalysis.gui.videostats.dropdown.common.NRGBackground;
-import org.anchoranalysis.gui.videostats.dropdown.common.NRGStackSupplier;
-import org.anchoranalysis.gui.videostats.dropdown.contextualmodulecreator.NRGTableCreator;
+import org.anchoranalysis.gui.videostats.dropdown.common.GuessEnergyFromStacks;
+import org.anchoranalysis.gui.videostats.dropdown.common.EnergyBackground;
+import org.anchoranalysis.gui.videostats.dropdown.common.EnergyStackSupplier;
+import org.anchoranalysis.gui.videostats.dropdown.contextualmodulecreator.EnergyTableCreator;
 import org.anchoranalysis.gui.videostats.dropdown.contextualmodulecreator.SingleContextualModuleCreator;
 import org.anchoranalysis.gui.videostats.dropdown.modulecreator.graph.KernelIterDescriptionModuleCreator;
 import org.anchoranalysis.gui.videostats.operation.combine.OverlayCollectionSupplier;
@@ -94,33 +93,33 @@ public class ManifestDropDown {
                         manifests.descriptiveName(), "/toolbarIcon/rectangle.png");
     }
 
-    private OperationCreateBackgroundSetWithAdder createBackgroundSetWithNRG(
-            FinderNrgStack finderNrgStack,
+    private OperationCreateBackgroundSetWithAdder createBackgroundSetWithEnergy(
+            FinderEnergyStack finderEnergyStack,
             FinderStacksCombine finderStacks,
             AddVideoStatsModule adder,
             VideoStatsModuleGlobalParams mpg) {
 
         NamedStacksSupplier stacks = finderStacks.getStacksAsOperation();
 
-        // We try to read a nrgStack from the manifest. If none exists, we guess instead from the
+        // We try to read a energyStack from the manifest. If none exists, we guess instead from the
         // image-stacks.
-        NRGBackground nrgBackground =
-                NRGBackground.createStack(
+        EnergyBackground energyBackground =
+                EnergyBackground.createStack(
                         stacks,
                         () ->
                                 firstOrSecond(
-                                        finderNrgStack.nrgStackSupplier(),
-                                        () -> GuessNRGStackFromStacks.guess(asSequence(stacks))));
+                                        finderEnergyStack.energyStackSupplier(),
+                                        () -> GuessEnergyFromStacks.guess(asSequence(stacks))));
 
         return new OperationCreateBackgroundSetWithAdder(
-                nrgBackground, adder, mpg.getThreadPool(), mpg.getLogger().errorReporter());
+                energyBackground, adder, mpg.getThreadPool(), mpg.getLogger().errorReporter());
     }
 
     /** Gets from the first supplier, and if it returns null, then gets from the second instead */
-    private static NRGStackWithParams firstOrSecond(NRGStackSupplier first, NRGStackSupplier second)
+    private static EnergyStack firstOrSecond(EnergyStackSupplier first, EnergyStackSupplier second)
             throws GetOperationFailedException {
 
-        NRGStackWithParams firstResult = first.get();
+        EnergyStack firstResult = first.get();
 
         if (firstResult == null) {
             return second.get();
@@ -140,14 +139,14 @@ public class ManifestDropDown {
     }
 
     private FinderStacksCombine createFinderStacks(
-            FinderNrgStack finderNrgStack, RasterReader rasterReader) throws InitException {
+            FinderEnergyStack finderEnergyStack, RasterReader rasterReader) throws InitException {
         // Finders
         FinderStacksCombine combined = new FinderStacksCombine();
         combined.add(new FinderStacksFromFolder(rasterReader, "stackCollection"));
         combined.add(new FinderStacksFromRootFiles(rasterReader, "out"));
         combined.add(
-                new FinderStacksFromNrgStack(
-                        finderNrgStack)); // Adds the NRG stack to the input stack collection
+                new FinderStacksFromEnergyStack(
+                        finderEnergyStack)); // Adds the energy stack to the input stack collection
 
         // Disabled, as they not be the same size as the existing image
         combined.add(new FinderStacksFromRootFiles(rasterReader, "stackFromCollection"));
@@ -164,21 +163,21 @@ public class ManifestDropDown {
         return combined;
     }
 
-    private FinderNrgStack createFinderNrgStack(
+    private FinderEnergyStack createFinderEnergyStack(
             RasterReader rasterReader, VideoStatsModuleGlobalParams mpg) throws InitException {
-        FinderNrgStack finderNrgStack =
-                new FinderNrgStack(rasterReader, mpg.getLogger().errorReporter());
+        FinderEnergyStack finderEnergyStack =
+                new FinderEnergyStack(rasterReader, mpg.getLogger().errorReporter());
         try {
-            finderNrgStack.doFind(manifests.getFileManifest().get());
+            finderEnergyStack.doFind(manifests.getFileManifest().get());
         } catch (OperationFailedException e) {
             throw new InitException(e);
         }
-        return finderNrgStack;
+        return finderEnergyStack;
     }
 
-    private FinderSerializedObject<KernelProposer<CfgNRGPixelized>> createFinderKernelProposer(
+    private FinderSerializedObject<KernelProposer<VoxelizedMarksWithEnergy>> createFinderKernelProposer(
             VideoStatsModuleGlobalParams mpg) {
-        FinderSerializedObject<KernelProposer<CfgNRGPixelized>> finderKernelProposer =
+        FinderSerializedObject<KernelProposer<VoxelizedMarksWithEnergy>> finderKernelProposer =
                 new FinderSerializedObject<>("kernelProposer", mpg.getLogger().errorReporter());
         finderKernelProposer.doFind(
                 manifests.getExperimentManifest().get() // NOSONAR
@@ -198,11 +197,11 @@ public class ManifestDropDown {
         return finderGroupParams;
     }
 
-    private FinderHistoryFolderKernelIterDescription createFinderKernelIterDescription()
+    private FinderHistoryFolderKernelDecision createFinderKernelIterDescription()
             throws InitException {
 
-        final FinderHistoryFolderKernelIterDescription finderKernelIterDescription =
-                new FinderHistoryFolderKernelIterDescription("kernelIterDescription");
+        final FinderHistoryFolderKernelDecision finderKernelIterDescription =
+                new FinderHistoryFolderKernelDecision("kernelIterDescription");
         try {
             finderKernelIterDescription.doFind(manifests.getFileManifest().get());
         } catch (OperationFailedException e) {
@@ -233,27 +232,27 @@ public class ManifestDropDown {
             throws InitException {
 
         // Some necessary Finders and Objects
-        FinderNrgStack finderNrgStack = createFinderNrgStack(rasterReader, mpg);
-        FinderStacksCombine finderStacks = createFinderStacks(finderNrgStack, rasterReader);
-        OperationCreateBackgroundSetWithAdder backgroundNRG =
-                createBackgroundSetWithNRG(finderNrgStack, finderStacks, adder, mpg);
+        FinderEnergyStack finderEnergyStack = createFinderEnergyStack(rasterReader, mpg);
+        FinderStacksCombine finderStacks = createFinderStacks(finderEnergyStack, rasterReader);
+        OperationCreateBackgroundSetWithAdder backgroundEnergy =
+                createBackgroundSetWithEnergy(finderEnergyStack, finderStacks, adder, mpg);
 
         // Add: Cfgs, Rasters and object-masks
-        boolean defaultAdded = addCfgs(backgroundNRG, finderNrgStack, mpg);
-        addRaster(backgroundNRG, mpg, defaultAdded);
-        new AddObjects(delegate, manifests, finderNrgStack, mpg, markDisplaySettings)
-                .apply(backgroundNRG);
+        boolean defaultAdded = addCfgs(backgroundEnergy, finderEnergyStack, mpg);
+        addRaster(backgroundEnergy, mpg, defaultAdded);
+        new AddObjects(delegate, manifests, finderEnergyStack, mpg, markDisplaySettings)
+                .apply(backgroundEnergy);
 
         // Various useful finders
-        FinderSerializedObject<KernelProposer<CfgNRGPixelized>> finderKernelProposer =
+        FinderSerializedObject<KernelProposer<VoxelizedMarksWithEnergy>> finderKernelProposer =
                 createFinderKernelProposer(mpg);
 
         FinderSerializedObject<KeyValueParams> finderGroupParams = createFinderGroupParams(mpg);
-        FinderHistoryFolderKernelIterDescription finderKernelIterDescription =
+        FinderHistoryFolderKernelDecision finderKernelIterDescription =
                 createFinderKernelIterDescription();
 
         addKernelHistoryNavigator(
-                finderKernelIterDescription, finderKernelProposer, backgroundNRG, mpg);
+                finderKernelIterDescription, finderKernelProposer, backgroundEnergy, mpg);
 
         outputManager =
                 DropDownUtilities.createOutputManagerForSubfolder(
@@ -263,14 +262,14 @@ public class ManifestDropDown {
         MarkEvaluatorSetForImage markEvaluatorSet =
                 createMarkEvaluatorSet(markEvaluatorManager, finderStacks, finderGroupParams);
         addProposerEvaluator(
-                finderStacks, finderNrgStack, markEvaluatorSet, outputManager, adder, mpg);
+                finderStacks, finderEnergyStack, markEvaluatorSet, outputManager, adder, mpg);
 
         delegate.getRootMenu().addSeparator();
 
         addSetsWrap(
-                finderNrgStack,
+                finderEnergyStack,
                 finderStacks,
-                backgroundNRG,
+                backgroundEnergy,
                 finderKernelProposer,
                 outputManager,
                 adder,
@@ -278,25 +277,25 @@ public class ManifestDropDown {
     }
 
     private void addSetsWrap(
-            FinderNrgStack finderNrgStack,
+            FinderEnergyStack finderEnergyStack,
             FinderStacksCombine finderStacks,
-            OperationCreateBackgroundSetWithAdder backgroundNRG,
-            FinderSerializedObject<KernelProposer<CfgNRGPixelized>> finderKernelProposer,
+            OperationCreateBackgroundSetWithAdder backgroundEnergy,
+            FinderSerializedObject<KernelProposer<VoxelizedMarksWithEnergy>> finderKernelProposer,
             BoundOutputManagerRouteErrors outputManager,
             AddVideoStatsModule adder,
             VideoStatsModuleGlobalParams mpg) {
         try {
-            CfgNRGFinderContext context =
-                    new CfgNRGFinderContext(
+            MarksWithEnergyFinderContext context =
+                    new MarksWithEnergyFinderContext(
                             finderStacks,
                             finderKernelProposer,
                             adder.getParentFrame(),
                             outputManager,
                             mpg);
 
-            AddSets addSets = new AddSets(delegate, backgroundNRG, context);
+            AddSets addSets = new AddSets(delegate, backgroundEnergy, context);
 
-            addSets.apply(manifests, finderNrgStack);
+            addSets.apply(manifests, finderEnergyStack);
 
         } catch (OperationFailedException e) {
             mpg.getLogger().errorReporter().recordError(ManifestDropDown.class, e);
@@ -305,16 +304,16 @@ public class ManifestDropDown {
 
     private void addProposerEvaluator(
             FinderStacksCombine finderStacks,
-            FinderNrgStack finderNrgStack,
+            FinderEnergyStack finderEnergyStack,
             MarkEvaluatorSetForImage markEvaluatorSet,
             BoundOutputManagerRouteErrors outputManager,
             AddVideoStatsModule adder,
             VideoStatsModuleGlobalParams mpg) {
         OperationCreateBackgroundSetWithAdder operationBwsa =
                 new OperationCreateBackgroundSetWithAdder(
-                        NRGBackground.createStack(
+                        EnergyBackground.createStack(
                                 finderStacks.getStacksAsOperation(),
-                                finderNrgStack.nrgStackSupplier()),
+                                finderEnergyStack.energyStackSupplier()),
                         adder,
                         mpg.getThreadPool(),
                         mpg.getLogger().errorReporter());
@@ -324,7 +323,7 @@ public class ManifestDropDown {
         DropDownUtilities.addAllProposerEvaluator(
                 delegate,
                 operationBwsa.operationAdder(),
-                operationBwsa.nrgBackground().getBackground().getBackgroundSet(),
+                operationBwsa.energyBackground().getBackground().getBackgroundSet(),
                 markEvaluatorSet,
                 outputManager.getOutputWriteSettings(),
                 true,
@@ -332,14 +331,14 @@ public class ManifestDropDown {
     }
 
     private void addKernelHistoryNavigator(
-            FinderHistoryFolderKernelIterDescription finderKernelIterDescription,
-            FinderSerializedObject<KernelProposer<CfgNRGPixelized>> finderKernelProposer,
-            OperationCreateBackgroundSetWithAdder backgroundNRG,
+            FinderHistoryFolderKernelDecision finderKernelIterDescription,
+            FinderSerializedObject<KernelProposer<VoxelizedMarksWithEnergy>> finderKernelProposer,
+            OperationCreateBackgroundSetWithAdder backgroundEnergy,
             VideoStatsModuleGlobalParams mpg)
             throws InitException {
         if (finderKernelIterDescription.exists() && finderKernelProposer.exists()) {
             delegate.addModule(
-                    backgroundNRG.operationAdder(),
+                    backgroundEnergy.operationAdder(),
                     new SingleContextualModuleCreator(
                             new KernelIterDescriptionModuleCreator(
                                     finderKernelIterDescription, finderKernelProposer)),
@@ -355,7 +354,7 @@ public class ManifestDropDown {
         DropDownUtilitiesRaster.addRaster(
                 delegate.getRootMenu(),
                 delegate,
-                background.nrgBackground(),
+                background.energyBackground(),
                 "Raster",
                 mpg,
                 !defaultAdded // Adds as default operation
@@ -364,14 +363,14 @@ public class ManifestDropDown {
 
     // Returns TRUE if it's added a default, FALSE otherwise
     private boolean addCfgs(
-            OperationCreateBackgroundSetWithAdder operationBwsaWithNRG,
-            FinderNrgStack finderNrgStack,
+            OperationCreateBackgroundSetWithAdder operationBwsaWithEnergy,
+            FinderEnergyStack finderEnergyStack,
             VideoStatsModuleGlobalParams mpg) {
 
         boolean defaultAdded = false;
 
         try {
-            final FinderSerializedObject<Cfg> finderFinalCfg =
+            final FinderSerializedObject<MarkCollection> finderFinalCfg =
                     new FinderSerializedObject<>("cfg", mpg.getLogger().errorReporter());
             finderFinalCfg.doFind(manifests.getFileManifest().get());
 
@@ -382,7 +381,7 @@ public class ManifestDropDown {
                         delegate,
                         getCfgChangeException(finderFinalCfg),
                         "Final Cfg",
-                        operationBwsaWithNRG.nrgBackground(),
+                        operationBwsaWithEnergy.energyBackground(),
                         mpg,
                         markDisplaySettings,
                         true);
@@ -392,16 +391,16 @@ public class ManifestDropDown {
             mpg.getLogger().errorReporter().recordError(ManifestDropDown.class, e);
         }
 
-        if (addNRGTable(operationBwsaWithNRG, finderNrgStack, mpg)) {
+        if (addEnergyTable(operationBwsaWithEnergy, finderEnergyStack, mpg)) {
             defaultAdded = true;
         }
 
-        addCfgSubMenu(operationBwsaWithNRG, mpg);
+        addCfgSubMenu(operationBwsaWithEnergy, mpg);
         return defaultAdded;
     }
 
-    private OverlayCollectionSupplier<Cfg> getCfgChangeException(
-            FinderSerializedObject<Cfg> finderFinalCfg) {
+    private OverlayCollectionSupplier<MarkCollection> getCfgChangeException(
+            FinderSerializedObject<MarkCollection> finderFinalCfg) {
         return () -> {
             try {
                 return finderFinalCfg.get();
@@ -411,45 +410,45 @@ public class ManifestDropDown {
         };
     }
 
-    private boolean addNRGTable(
-            OperationCreateBackgroundSetWithAdder operationBwsaWithNRG,
-            FinderNrgStack finderNrgStack,
+    private boolean addEnergyTable(
+            OperationCreateBackgroundSetWithAdder operationBwsaWithEnergy,
+            FinderEnergyStack finderEnergyStack,
             VideoStatsModuleGlobalParams mpg) {
         try {
-            final FinderSerializedObject<CfgNRG> finderFinalCfgNRG =
-                    new FinderSerializedObject<>("cfgNRG", mpg.getLogger().errorReporter());
-            finderFinalCfgNRG.doFind(manifests.getFileManifest().get());
+            final FinderSerializedObject<MarksWithEnergyBreakdown> finderFinalMarks =
+                    new FinderSerializedObject<>("marks", mpg.getLogger().errorReporter());
+            finderFinalMarks.doFind(manifests.getFileManifest().get());
 
-            if (finderFinalCfgNRG.exists()) {
+            if (finderFinalMarks.exists()) {
 
-                CachedSupplier<LoadContainer<CfgNRGInstantState>, OperationFailedException> op =
+                CachedSupplier<LoadContainer<IndexableMarksWithEnergy>, OperationFailedException> op =
                         CachedSupplier.cache(
                                 () -> {
-                                    CfgNRGInstantState instantState;
+                                    IndexableMarksWithEnergy instantState;
                                     try {
                                         instantState =
-                                                new CfgNRGNonHandleInstantState(
-                                                        0, finderFinalCfgNRG.get());
+                                                new IndexableMarksWithEnergy(
+                                                        0, finderFinalMarks.get());
                                     } catch (IOException e) {
                                         throw new OperationFailedException(e);
                                     }
 
-                                    LoadContainer<CfgNRGInstantState> lc = new LoadContainer<>();
+                                    LoadContainer<IndexableMarksWithEnergy> lc = new LoadContainer<>();
                                     lc.setExpensiveLoad(false);
                                     lc.setContainer(new SingleContainer<>(instantState, 0, false));
                                     return lc;
                                 });
 
-                if (finderNrgStack.exists()) {
-                    // NRG Table
+                if (finderEnergyStack.exists()) {
+                    // Energy Table
                     SingleContextualModuleCreator creator =
                             new SingleContextualModuleCreator(
-                                    new NRGTableCreator(
+                                    new EnergyTableCreator(
                                             op,
-                                            finderNrgStack.nrgStackSupplier(),
+                                            finderEnergyStack.energyStackSupplier(),
                                             mpg.getDefaultColorIndexForMarks()));
                     delegate.addModule(
-                            operationBwsaWithNRG.operationAdder(), creator, "NRG Table", mpg);
+                            operationBwsaWithEnergy.operationAdder(), creator, "Energy Table", mpg);
                 }
 
                 return true;
@@ -461,18 +460,18 @@ public class ManifestDropDown {
     }
 
     private void addCfgSubMenu(
-            OperationCreateBackgroundSetWithAdder operationBwsaWithNRG,
+            OperationCreateBackgroundSetWithAdder operationBwsaWithEnergy,
             VideoStatsModuleGlobalParams mpg) {
         try {
             FinderCfgFolder finder = new FinderCfgFolder("cfgCollection", "cfg");
             finder.doFind(manifests.getFileManifest().get());
 
-            NamedProvider<Cfg> provider = finder.createNamedProvider(false);
+            NamedProvider<MarkCollection> provider = finder.createNamedProvider(false);
             DropDownUtilities.addCfgSubmenu(
                     delegate.getRootMenu(),
                     delegate,
                     provider,
-                    operationBwsaWithNRG.nrgBackground(),
+                    operationBwsaWithEnergy.energyBackground(),
                     mpg,
                     markDisplaySettings,
                     false);

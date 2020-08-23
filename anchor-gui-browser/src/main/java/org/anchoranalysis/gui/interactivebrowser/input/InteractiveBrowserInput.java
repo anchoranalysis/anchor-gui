@@ -31,8 +31,8 @@ import java.util.List;
 import java.util.Optional;
 import lombok.Getter;
 import lombok.Setter;
+import org.anchoranalysis.anchor.mpp.feature.bean.energy.scheme.EnergySchemeCreator;
 import org.anchoranalysis.anchor.mpp.feature.bean.mark.MarkEvaluator;
-import org.anchoranalysis.anchor.mpp.feature.bean.nrgscheme.NRGSchemeCreator;
 import org.anchoranalysis.bean.NamedBean;
 import org.anchoranalysis.bean.Provider;
 import org.anchoranalysis.bean.shared.params.keyvalue.KeyValueParamsInitParams;
@@ -58,7 +58,7 @@ public class InteractiveBrowserInput implements InputFromManager {
 
     @Getter @Setter private List<FileCreator> listFileCreators;
 
-    @Setter private NRGSchemeCreator nrgSchemeCreator;
+    @Setter private EnergySchemeCreator energySchemeCreator;
 
     @Setter private List<NamedBean<FeatureListProvider<FeatureInput>>> namedItemSharedFeatureList;
 
@@ -88,7 +88,7 @@ public class InteractiveBrowserInput implements InputFromManager {
             throw new CreateException(e);
         }
 
-        return new FeatureListSrcBuilder(context.getLogger()).build(soFeature, nrgSchemeCreator);
+        return new FeatureListSrcBuilder(context.getLogger()).build(soFeature, energySchemeCreator);
     }
 
     private void addKeyValueParams(KeyValueParamsInitParams soParams)

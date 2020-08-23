@@ -32,8 +32,8 @@ import javax.swing.TransferHandler;
 import javax.swing.border.Border;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableModel;
-import org.anchoranalysis.gui.cfgnrgtable.CellSelectedListener;
-import org.anchoranalysis.gui.cfgnrgtable.TablePanel;
+import org.anchoranalysis.gui.marks.table.CellSelectedListener;
+import org.anchoranalysis.gui.marks.table.TablePanel;
 
 public class InteractiveFileListTablePanel {
 

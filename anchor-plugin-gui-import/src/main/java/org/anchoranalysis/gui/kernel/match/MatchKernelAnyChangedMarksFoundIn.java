@@ -27,7 +27,7 @@
 package org.anchoranalysis.gui.kernel.match;
 
 import org.anchoranalysis.core.index.IndicesSelection;
-import org.anchoranalysis.mpp.sgmn.kernel.proposer.KernelIterDescription;
+import org.anchoranalysis.mpp.sgmn.kernel.proposer.KernelDescision;
 
 public class MatchKernelAnyChangedMarksFoundIn extends MatchKernel {
 
@@ -39,7 +39,7 @@ public class MatchKernelAnyChangedMarksFoundIn extends MatchKernel {
     }
 
     @Override
-    public boolean matches(KernelIterDescription kid) {
+    public boolean matches(KernelDescision kid) {
         return markSelection.anyFoundIn(kid.getChangedMarkIDArr());
     }
 }

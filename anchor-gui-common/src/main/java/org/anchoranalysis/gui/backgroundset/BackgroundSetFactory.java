@@ -216,11 +216,11 @@ public class BackgroundSetFactory {
             ProgressReporter progressReporter)
             throws OperationFailedException {
 
-        boolean hasNrgStack = keys.contains(StackIdentifiers.NRG_STACK);
+        boolean hasEnergyStack = keys.contains(StackIdentifiers.ENERGY_STACK);
 
         ProgressReporterIncrement pri = new ProgressReporterIncrement(progressReporter);
         pri.setMin(0);
-        pri.setMax(keys.size() + (hasNrgStack ? 1 : 0));
+        pri.setMax(keys.size() + (hasEnergyStack ? 1 : 0));
 
         pri.open();
 
@@ -235,16 +235,16 @@ public class BackgroundSetFactory {
                 pri.update();
             }
 
-            // TODO fix, this will always evaluate the NRG stack
-            // We add each part of the NRG Stack separately
+            // TODO fix, this will always evaluate the energy stack
+            // We add each part of the energy stack separately
 
-            if (hasNrgStack) {
+            if (hasEnergyStack) {
                 addStackAsSeparateChannel(
                         backgroundSet,
                         namedStacks
-                                .getException(StackIdentifiers.NRG_STACK)
+                                .getException(StackIdentifiers.ENERGY_STACK)
                                 .get(0), // Only take first
-                        "nrgStack-channel");
+                        "energyStack-channel");
                 pri.update();
             }
 

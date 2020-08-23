@@ -50,7 +50,7 @@ import org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.IBackgroundS
 import org.anchoranalysis.gui.retrieveelements.IRetrieveElements;
 import org.anchoranalysis.gui.videostats.IModuleCreatorDefaultState;
 import org.anchoranalysis.gui.videostats.dropdown.VideoStatsModuleGlobalParams;
-import org.anchoranalysis.gui.videostats.internalframe.cfgtorgb.ColoredOverlayedInstantState;
+import org.anchoranalysis.gui.videostats.internalframe.cfgtorgb.IndexableColoredOverlays;
 import org.anchoranalysis.gui.videostats.internalframe.cfgtorgb.markdisplay.MarkDisplaySettingsWrapper;
 import org.anchoranalysis.gui.videostats.link.LinkModules;
 import org.anchoranalysis.gui.videostats.module.DefaultModuleState;
@@ -70,7 +70,7 @@ class InternalFrameOverlayedInstantStateToRGB {
 
     // Must be called before usage
     public ISliderState init(
-            BoundedIndexContainer<ColoredOverlayedInstantState> overlaysCntr,
+            BoundedIndexContainer<IndexableColoredOverlays> overlaysCntr,
             IDGetter<Overlay> idGetter,
             boolean includeFrameAdjusting,
             DefaultModuleState initialState,

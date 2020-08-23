@@ -46,7 +46,7 @@ import org.anchoranalysis.gui.frame.display.overlay.OverlayRetriever;
 import org.anchoranalysis.gui.frame.threaded.stack.IThreadedProducer;
 import org.anchoranalysis.gui.frame.threaded.stack.ThreadedDisplayUpdateConsumer;
 import org.anchoranalysis.gui.image.DisplayUpdateCreator;
-import org.anchoranalysis.gui.mark.MarkDisplaySettings;
+import org.anchoranalysis.gui.marks.MarkDisplaySettings;
 import org.anchoranalysis.gui.videostats.internalframe.cfgtorgb.markdisplay.MarkDisplaySettingsWrapper;
 import org.anchoranalysis.gui.videostats.threading.InteractiveThreadPool;
 
@@ -80,7 +80,7 @@ class ThreadedOverlayUpdateProducer implements IRedrawable, IThreadedProducer, I
                 displayStackCreator.updateDrawer(drawOverlay);
                 applyRedrawUpdate(OverlayedDisplayStackUpdate.redrawAll());
 
-                // cfgGenerator.applyRedrawUpdate( new ColoredCfgRedrawUpdate(null) );
+                // markFactoryerator.applyRedrawUpdate( new ColoredCfgRedrawUpdate(null) );
             } catch (SetOperationFailedException e) {
                 logger.errorReporter().recordError(ThreadedOverlayUpdateProducer.class, e);
             }

@@ -27,9 +27,9 @@
 package org.anchoranalysis.gui.videostats.dropdown.manifest;
 
 import org.anchoranalysis.core.error.OperationFailedException;
-import org.anchoranalysis.gui.finder.FinderNrgStack;
-import org.anchoranalysis.gui.io.loader.manifest.finder.CfgNRGFinderContext;
-import org.anchoranalysis.gui.io.loader.manifest.finder.FinderCfgNRGSet;
+import org.anchoranalysis.gui.finder.FinderEnergyStack;
+import org.anchoranalysis.gui.io.loader.manifest.finder.MarksWithEnergyFinderContext;
+import org.anchoranalysis.gui.io.loader.manifest.finder.FinderMarksWithEnergy;
 import org.anchoranalysis.gui.io.loader.manifest.finder.FinderContext;
 import org.anchoranalysis.gui.videostats.dropdown.BoundVideoStatsModuleDropDown;
 import org.anchoranalysis.gui.videostats.dropdown.CombinedMenu;
@@ -48,42 +48,42 @@ class AddSets {
     public AddSets(
             BoundVideoStatsModuleDropDown dropDown,
             OperationCreateBackgroundSetWithAdder operationBwsa,
-            CfgNRGFinderContext context) {
+            MarksWithEnergyFinderContext context) {
         super();
         this.dropDown = dropDown;
         this.operationBwsa = operationBwsa;
         this.finderContext =
                 new FinderContext(
-                        operationBwsa.nrgBackground(), dropDown, dropDown.getRootMenu(), context);
+                        operationBwsa.energyBackground(), dropDown, dropDown.getRootMenu(), context);
     }
 
-    public void apply(CoupledManifests manifests, FinderNrgStack finderNrgStack)
+    public void apply(CoupledManifests manifests, FinderEnergyStack finderEnergyStack)
             throws OperationFailedException {
 
         // INDIVIDUAL SETS
-        FinderCfgNRGSet finderProposedSecondary =
+        FinderMarksWithEnergy finderProposedSecondary =
                 createFinder(
                         "Proposed (Secondary)",
                         "csvStatsAgg",
-                        "cfgNRGProposalSecondary",
+                        "marksProposalSecondary",
                         null,
                         null);
-        FinderCfgNRGSet finderProposed =
+        FinderMarksWithEnergy finderProposed =
                 createFinder(
-                        "Proposed", "csvStatsAgg", "cfgNRGProposal", finderProposedSecondary, null);
+                        "Proposed", "csvStatsAgg", "marksProposal", finderProposedSecondary, null);
 
-        FinderCfgNRGSet finderSelected =
+        FinderMarksWithEnergy finderSelected =
                 createFinder(
                         "Selected",
                         "csvStatsAgg",
-                        "cfgNRG",
+                        "marks",
                         finderProposed,
                         finderProposedSecondary);
-        FinderCfgNRGSet finderBest =
+        FinderMarksWithEnergy finderBest =
                 createFinder(
                         "Best",
                         "csvStatsBest",
-                        "cfgNRGSerializedBest",
+                        "marksSerializedBest",
                         finderProposed,
                         finderProposedSecondary);
 
@@ -98,43 +98,45 @@ class AddSets {
         addCombinedSets(finderSelected, finderBest, finderProposed);
     }
 
-    private FinderCfgNRGSet createFinder(
+    private FinderMarksWithEnergy createFinder(
             String setName,
             String csvStatsName,
-            String manifestNameCfgNRGHistory,
-            FinderCfgNRGSet secondary,
-            FinderCfgNRGSet tertiary) {
-        return new FinderCfgNRGSet(
+            String manifestNameMarksHistory,
+            FinderMarksWithEnergy secondary,
+            FinderMarksWithEnergy tertiary) {
+        return new FinderMarksWithEnergy(
                 setName,
                 csvStatsName,
-                manifestNameCfgNRGHistory,
+                manifestNameMarksHistory,
                 finderContext,
                 secondary,
                 tertiary);
     }
 
     private void addIndividualSets(
-            FinderCfgNRGSet finderSelected,
-            FinderCfgNRGSet finderBest,
-            FinderCfgNRGSet finderProposed,
-            FinderCfgNRGSet finderProposedSecondary,
+            FinderMarksWithEnergy finderSelected,
+            FinderMarksWithEnergy finderBest,
+            FinderMarksWithEnergy finderProposed,
+            FinderMarksWithEnergy finderProposedSecondary,
             CoupledManifests manifests)
             throws OperationFailedException {
 
-        FinderCfgNRGSet[] allFinderCfgNRG =
-                new FinderCfgNRGSet[] {
+        FinderMarksWithEnergy[] allFinderMarks =
+                new FinderMarksWithEnergy[] {
                     finderSelected, finderBest, finderProposed, finderProposedSecondary
                 };
 
-        for (FinderCfgNRGSet finder : allFinderCfgNRG) {
-            if (finder.doFind(manifests.getFileManifest().get())) {}
+        for (FinderMarksWithEnergy finder : allFinderMarks) {
+            if (finder.doFind(manifests.getFileManifest().get())) { 
+                // NOTHING TO DO
+            }
         }
     }
 
     private void addCombinedSets(
-            FinderCfgNRGSet finderSelected,
-            FinderCfgNRGSet finderBest,
-            FinderCfgNRGSet finderProposed)
+            FinderMarksWithEnergy finderSelected,
+            FinderMarksWithEnergy finderBest,
+            FinderMarksWithEnergy finderProposed)
             throws OperationFailedException {
         CombinedMenu combinedDropDown =
                 new CombinedMenu(
@@ -151,14 +153,14 @@ class AddSets {
     }
 
     private void addCombined(
-            FinderCfgNRGSet finderFirst,
-            FinderCfgNRGSet finderSecond,
+            FinderMarksWithEnergy finderFirst,
+            FinderMarksWithEnergy finderSecond,
             CombinedMenu combinedDropDown)
             throws MenuAddException {
         combinedDropDown.addCombination(
                 finderFirst,
                 finderSecond,
-                operationBwsa.nrgBackground().getBackground().getBackgroundSet(),
+                operationBwsa.energyBackground().getBackground().getBackgroundSet(),
                 finderContext.getContext());
     }
 }

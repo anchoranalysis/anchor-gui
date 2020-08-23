@@ -36,20 +36,20 @@ import org.anchoranalysis.core.property.IPropertyValueSendable;
 import org.anchoranalysis.gui.backgroundset.BackgroundSet;
 import org.anchoranalysis.gui.container.background.BackgroundStackContainerException;
 import org.anchoranalysis.gui.videostats.dropdown.addoverlays.AdderAddOverlaysWithStack;
-import org.anchoranalysis.gui.videostats.dropdown.common.NRGBackground;
-import org.anchoranalysis.gui.videostats.dropdown.common.NRGBackgroundAdder;
+import org.anchoranalysis.gui.videostats.dropdown.common.EnergyBackground;
+import org.anchoranalysis.gui.videostats.dropdown.common.EnergyBackgroundAdder;
 import org.anchoranalysis.gui.videostats.threading.InteractiveThreadPool;
 import org.anchoranalysis.image.experiment.identifiers.StackIdentifiers;
 import org.anchoranalysis.image.stack.DisplayStack;
 
 public class OperationCreateBackgroundSetWithAdder {
 
-    private final NRGBackground nrgBackground;
+    private final EnergyBackground energyBackground;
     private final AddVideoStatsModule parentAdder;
     private final InteractiveThreadPool threadPool;
     private final ErrorReporter errorReporter;
 
-    private final NRGBackgroundAdder nrgBackgroundNew;
+    private final EnergyBackgroundAdder energyBackgroundNew;
 
     private final AddVideoStatsModuleSupplier addVideoStatsModule;
 
@@ -60,11 +60,11 @@ public class OperationCreateBackgroundSetWithAdder {
             withAdderSupplier;
 
     public OperationCreateBackgroundSetWithAdder(
-            NRGBackground nrgBackground,
+            EnergyBackground energyBackground,
             AddVideoStatsModule parentAdder,
             InteractiveThreadPool threadPool,
             ErrorReporter errorReporter) {
-        this.nrgBackground = nrgBackground;
+        this.energyBackground = energyBackground;
         this.parentAdder = parentAdder;
         this.threadPool = threadPool;
         this.errorReporter = errorReporter;
@@ -81,24 +81,24 @@ public class OperationCreateBackgroundSetWithAdder {
                         progressReporter ->
                                 withAdderSupplier.get(progressReporter).getBackgroundSet());
 
-        // A new nrgBackground that includes the changed operation for the background
-        this.nrgBackgroundNew =
-                new NRGBackgroundAdder(
-                        nrgBackground.copyChangeOp(backgroundSetSupplier), addVideoStatsModule);
+        // A new energyBackground that includes the changed operation for the background
+        this.energyBackgroundNew =
+                new EnergyBackgroundAdder(
+                        energyBackground.copyChangeOp(backgroundSetSupplier), addVideoStatsModule);
     }
 
     private BackgroundSetWithAdder createBackgroundSetWithAdder(ProgressReporter progressReporter)
             throws BackgroundStackContainerException {
         BackgroundSetWithAdder bwsa = new BackgroundSetWithAdder();
 
-        BackgroundSet backgroundSet = nrgBackground.getBackgroundSet().get(progressReporter);
+        BackgroundSet backgroundSet = energyBackground.getBackgroundSet().get(progressReporter);
 
         bwsa.setBackgroundSet(backgroundSet);
 
         AddVideoStatsModule childAdder = parentAdder.createChild();
         childAdder = new AdderAddOverlaysWithStack(childAdder, threadPool, errorReporter);
 
-        childAdder = nrgBackground.addNrgStackToAdder(childAdder);
+        childAdder = energyBackground.addEnergyStackToAdder(childAdder);
 
         CheckedFunction<Integer, DisplayStack, BackgroundStackContainerException> initialBackground;
         try {
@@ -129,8 +129,8 @@ public class OperationCreateBackgroundSetWithAdder {
         return addVideoStatsModule;
     }
 
-    public NRGBackgroundAdder nrgBackground() {
-        return nrgBackgroundNew;
+    public EnergyBackgroundAdder energyBackground() {
+        return energyBackgroundNew;
     }
 
     private static CheckedFunction<Integer, DisplayStack, BackgroundStackContainerException>

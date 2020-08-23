@@ -29,7 +29,7 @@ package org.anchoranalysis.gui.videostats.module;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.anchoranalysis.gui.mark.MarkDisplaySettings;
+import org.anchoranalysis.gui.marks.MarkDisplaySettings;
 import org.anchoranalysis.gui.videostats.link.DefaultLinkState;
 
 @AllArgsConstructor

@@ -28,11 +28,11 @@ package org.anchoranalysis.gui.feature.evaluator.singlepair;
 
 import org.anchoranalysis.anchor.mpp.pair.IdentifiablePair;
 import org.anchoranalysis.anchor.overlay.Overlay;
-import org.anchoranalysis.feature.nrg.NRGStackWithParams;
+import org.anchoranalysis.feature.energy.EnergyStack;
 
 public interface UpdatableSinglePair {
 
-    void updateSingle(final Overlay overlay, NRGStackWithParams raster);
+    void updateSingle(final Overlay overlay, EnergyStack raster);
 
-    void updatePair(final IdentifiablePair<Overlay> pair, NRGStackWithParams raster);
+    void updatePair(final IdentifiablePair<Overlay> pair, EnergyStack raster);
 }

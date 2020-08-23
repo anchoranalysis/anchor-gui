@@ -30,7 +30,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.JOptionPane;
 import org.anchoranalysis.core.error.reporter.ErrorReporter;
-import org.anchoranalysis.gui.feature.evaluator.nrgtree.Node;
+import org.anchoranalysis.gui.feature.evaluator.energytree.Node;
 import org.anchoranalysis.gui.feature.evaluator.treetable.ITreeTableModel;
 import org.netbeans.swing.outline.Outline;
 

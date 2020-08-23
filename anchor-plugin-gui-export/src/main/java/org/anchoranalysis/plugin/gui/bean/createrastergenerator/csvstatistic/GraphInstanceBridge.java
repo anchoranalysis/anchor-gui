@@ -30,7 +30,7 @@ import java.util.Iterator;
 import java.util.Optional;
 import org.anchoranalysis.anchor.plot.AxisLimits;
 import org.anchoranalysis.anchor.plot.PlotInstance;
-import org.anchoranalysis.anchor.plot.bean.GraphDefinition;
+import org.anchoranalysis.anchor.plot.bean.Plot;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.functional.function.CheckedFunction;
 import org.anchoranalysis.core.index.container.BoundedIndexContainer;
@@ -43,7 +43,7 @@ class GraphInstanceBridge<T>
         implements CheckedFunction<MappedFrom<CSVStatistic>, PlotInstance, CreateException> {
 
     // START: PARAMETERS IN
-    private GraphDefinition<T> graphDefinition;
+    private Plot<T> graphDefinition;
     private BoundedIndexContainer<CSVStatistic> cntr;
     private CheckedFunction<CSVStatistic, T, ? extends Exception> elementBridge;
     // END: PARAMETERS IN
@@ -51,7 +51,7 @@ class GraphInstanceBridge<T>
     private Optional<AxisLimits> rangeLimits = Optional.empty();
 
     public GraphInstanceBridge(
-            GraphDefinition<T> graphDefinition,
+            Plot<T> graphDefinition,
             BoundedIndexContainer<CSVStatistic> cntr,
             CheckedFunction<CSVStatistic, T, ? extends Exception> elementBridge) {
         super();

@@ -28,7 +28,7 @@ package org.anchoranalysis.gui.videostats.dropdown.modulecreator.graph;
 
 import java.util.Optional;
 import lombok.AllArgsConstructor;
-import org.anchoranalysis.anchor.mpp.feature.instantstate.CfgNRGInstantState;
+import org.anchoranalysis.anchor.mpp.feature.energy.IndexableMarksWithEnergy;
 import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.gui.image.frame.ISliderState;
@@ -36,7 +36,7 @@ import org.anchoranalysis.gui.io.loader.manifest.finder.historyfolder.FinderHist
 import org.anchoranalysis.gui.videostats.IModuleCreatorDefaultState;
 import org.anchoranalysis.gui.videostats.dropdown.BackgroundSetProgressingSupplier;
 import org.anchoranalysis.gui.videostats.dropdown.VideoStatsModuleGlobalParams;
-import org.anchoranalysis.gui.videostats.internalframe.InternalFrameCfgNRGHistoryFolder;
+import org.anchoranalysis.gui.videostats.internalframe.InternalFrameMarksHistoryFolder;
 import org.anchoranalysis.gui.videostats.module.DefaultModuleStateManager;
 import org.anchoranalysis.gui.videostats.module.VideoStatsModuleCreateException;
 import org.anchoranalysis.gui.videostats.modulecreator.VideoStatsModuleCreatorContext;
@@ -44,12 +44,12 @@ import org.anchoranalysis.gui.videostats.modulecreator.VideoStatsModuleCreatorCo
 @AllArgsConstructor
 public class ColoredOutlineCreator extends VideoStatsModuleCreatorContext {
 
-    private final FinderHistoryFolder<CfgNRGInstantState> finderCfgNRGHistory;
+    private final FinderHistoryFolder<IndexableMarksWithEnergy> finderMarksHistory;
     private final BackgroundSetProgressingSupplier backgroundSet;
 
     @Override
     public boolean precondition() {
-        return finderCfgNRGHistory.exists();
+        return finderMarksHistory.exists();
     }
 
     @Override
@@ -59,12 +59,12 @@ public class ColoredOutlineCreator extends VideoStatsModuleCreatorContext {
             VideoStatsModuleGlobalParams mpg)
             throws VideoStatsModuleCreateException {
 
-        InternalFrameCfgNRGHistoryFolder imageFrame =
-                new InternalFrameCfgNRGHistoryFolder(namePrefix);
+        InternalFrameMarksHistoryFolder imageFrame =
+                new InternalFrameMarksHistoryFolder(namePrefix);
         try {
             ISliderState sliderState =
                     imageFrame.init(
-                            finderCfgNRGHistory.get(),
+                            finderMarksHistory.get(),
                             defaultStateManager.getState(),
                             backgroundSet,
                             mpg);

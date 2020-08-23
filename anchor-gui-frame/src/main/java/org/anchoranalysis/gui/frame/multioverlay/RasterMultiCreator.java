@@ -27,7 +27,7 @@
 package org.anchoranalysis.gui.frame.multioverlay;
 
 import java.util.List;
-import org.anchoranalysis.anchor.overlay.OverlayedInstantState;
+import org.anchoranalysis.anchor.overlay.IndexableOverlays;
 import org.anchoranalysis.core.bridge.BridgeElementWithIndex;
 import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.error.OperationFailedException;
@@ -45,14 +45,14 @@ public class RasterMultiCreator<T> extends VideoStatsModuleCreator {
     private final String frameName;
     private final VideoStatsModuleGlobalParams moduleParamsGlobal;
     private final BridgeElementWithIndex<
-                    MultiInput<T>, OverlayedInstantState, OperationFailedException>
+                    MultiInput<T>, IndexableOverlays, OperationFailedException>
             bridge;
 
     public RasterMultiCreator(
             List<MultiInput<T>> list,
             String frameName,
             VideoStatsModuleGlobalParams moduleParamsGlobal,
-            BridgeElementWithIndex<MultiInput<T>, OverlayedInstantState, OperationFailedException>
+            BridgeElementWithIndex<MultiInput<T>, IndexableOverlays, OperationFailedException>
                     bridge) {
         super();
         this.list = list;
@@ -68,7 +68,7 @@ public class RasterMultiCreator<T> extends VideoStatsModuleCreator {
 
         try {
             InternalFrameMultiOverlay<T> internalFrame = new InternalFrameMultiOverlay<>(frameName);
-            SliderNRGState state =
+            SliderEnergyState state =
                     internalFrame.init(
                             list,
                             bridge,
@@ -82,7 +82,7 @@ public class RasterMultiCreator<T> extends VideoStatsModuleCreator {
                             moduleParamsGlobal.getThreadPool(),
                             moduleParamsGlobal.getLogger().errorReporter());
 
-            adder = state.addNrgStackToAdder(adder);
+            adder = state.addEnergyStackToAdder(adder);
 
             ModuleAddUtilities.add(adder, internalFrame.moduleCreator(state.getSlider()));
 

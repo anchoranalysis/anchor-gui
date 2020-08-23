@@ -63,7 +63,7 @@ public class AdderAddOverlaysWithStack implements AddVideoStatsModule {
         //  by adding a stack
         if (link.getOverlays().exists()
                 && !link.getOverlaysWithStack().exists()
-                && module.getNrgStackGetter() != null) {
+                && module.getEnergyStackGetter() != null) {
             RoutableReceivable<PropertyValueChangeEvent<OverlayCollection>> rec =
                     link.getOverlays().getReceivable();
             if (rec != null) {
@@ -72,7 +72,7 @@ public class AdderAddOverlaysWithStack implements AddVideoStatsModule {
                         .add(
                                 new OverlayCollectionWithStackAdaptorRouted(
                                         rec,
-                                        module.getNrgStackGetter(),
+                                        module.getEnergyStackGetter(),
                                         threadPool,
                                         errorReporter));
             }

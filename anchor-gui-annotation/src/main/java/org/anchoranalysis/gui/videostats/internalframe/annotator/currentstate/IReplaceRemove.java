@@ -27,15 +27,15 @@
 package org.anchoranalysis.gui.videostats.internalframe.annotator.currentstate;
 
 import java.util.List;
-import org.anchoranalysis.anchor.mpp.cfg.Cfg;
-import org.anchoranalysis.anchor.mpp.cfg.ColoredCfg;
+import org.anchoranalysis.anchor.mpp.mark.ColoredMarks;
+import org.anchoranalysis.anchor.mpp.mark.MarkCollection;
 import org.anchoranalysis.core.geometry.Point3i;
 
 public interface IReplaceRemove {
 
     void removeCurrentProposedCfg();
 
-    void replaceCurrentProposedCfg(Cfg cfgCore, ColoredCfg cfgDisplayed, int sliceZ);
+    void replaceCurrentProposedCfg(MarkCollection cfgCore, ColoredMarks cfgDisplayed, int sliceZ);
 
-    void removeAcceptedMarksAndSelectedPoints(Cfg cfg, List<Point3i> points);
+    void removeAcceptedMarksAndSelectedPoints(MarkCollection cfg, List<Point3i> points);
 }

@@ -26,9 +26,9 @@
 
 package org.anchoranalysis.gui.kernel.match;
 
-import org.anchoranalysis.mpp.sgmn.kernel.proposer.KernelIterDescription;
+import org.anchoranalysis.mpp.sgmn.kernel.proposer.KernelDescision;
 
 public abstract class MatchKernel {
 
-    public abstract boolean matches(KernelIterDescription kid);
+    public abstract boolean matches(KernelDescision kid);
 }

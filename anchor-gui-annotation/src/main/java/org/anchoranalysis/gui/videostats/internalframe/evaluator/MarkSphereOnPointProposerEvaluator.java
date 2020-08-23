@@ -28,18 +28,18 @@ package org.anchoranalysis.gui.videostats.internalframe.evaluator;
 
 import java.awt.Color;
 import lombok.RequiredArgsConstructor;
-import org.anchoranalysis.anchor.mpp.bean.cfg.CfgGen;
+import org.anchoranalysis.anchor.mpp.bean.cfg.MarkWithIdentifierFactory;
+import org.anchoranalysis.anchor.mpp.bean.regionmap.RegionMapSingleton;
 import org.anchoranalysis.anchor.mpp.bean.regionmap.RegionMembershipWithFlags;
-import org.anchoranalysis.anchor.mpp.cfg.Cfg;
 import org.anchoranalysis.anchor.mpp.mark.GlobalRegionIdentifiers;
-import org.anchoranalysis.anchor.mpp.mark.conic.MarkSphere;
-import org.anchoranalysis.anchor.mpp.mark.conic.RegionMapSingleton;
+import org.anchoranalysis.anchor.mpp.mark.MarkCollection;
+import org.anchoranalysis.anchor.mpp.mark.conic.Sphere;
 import org.anchoranalysis.anchor.mpp.overlay.OverlayMark;
 import org.anchoranalysis.anchor.mpp.proposer.ProposerContext;
 import org.anchoranalysis.core.color.RGBColor;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.geometry.Point3d;
-import org.anchoranalysis.gui.frame.overlays.ProposedCfg;
+import org.anchoranalysis.gui.frame.overlays.ProposedMarks;
 import org.anchoranalysis.gui.videostats.internalframe.ProposalOperation;
 import org.anchoranalysis.image.extent.Dimensions;
 
@@ -58,19 +58,19 @@ public class MarkSphereOnPointProposerEvaluator implements ProposalOperationCrea
 
     @Override
     public ProposalOperation create(
-            Cfg cfg, final Point3d position, ProposerContext context, CfgGen cfgGen)
+            MarkCollection cfg, final Point3d position, ProposerContext context, MarkWithIdentifierFactory markFactory)
             throws OperationFailedException {
 
         return errorNode -> {
-            ProposedCfg proposedCfg = new ProposedCfg(dimensions);
+            ProposedMarks proposedCfg = new ProposedMarks(dimensions);
             proposedCfg.setSuccess(true);
 
-            MarkSphere markSphere = new MarkSphere();
+            Sphere markSphere = new Sphere();
             markSphere.setRadius(1);
             markSphere.setPos(position);
 
-            proposedCfg.getCfgCore().add(markSphere);
-            proposedCfg.getCfgToRedraw().add(markSphere);
+            proposedCfg.getMarksCore().add(markSphere);
+            proposedCfg.getMarksToRedraw().add(markSphere);
             proposedCfg
                     .getColoredCfg()
                     .add(new OverlayMark(markSphere, regionMembership), colorMark);

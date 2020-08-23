@@ -26,11 +26,11 @@
 
 package org.anchoranalysis.gui.videostats.internalframe.annotator.currentstate;
 
-import org.anchoranalysis.anchor.mpp.cfg.Cfg;
+import org.anchoranalysis.anchor.mpp.mark.MarkCollection;
 
 public interface IQueryAcceptedRejected {
 
-    Cfg getCfgAccepted();
+    MarkCollection getCfgAccepted();
 
-    Cfg getCfgRejected();
+    MarkCollection getCfgRejected();
 }

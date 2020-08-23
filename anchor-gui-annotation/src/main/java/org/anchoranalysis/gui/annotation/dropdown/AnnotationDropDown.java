@@ -38,7 +38,7 @@ import org.anchoranalysis.gui.videostats.dropdown.OperationCreateBackgroundSetWi
 import org.anchoranalysis.gui.videostats.dropdown.VideoStatsModuleCreatorAndAdder;
 import org.anchoranalysis.gui.videostats.dropdown.VideoStatsModuleGlobalParams;
 import org.anchoranalysis.gui.videostats.dropdown.common.DropDownUtilitiesRaster;
-import org.anchoranalysis.gui.videostats.dropdown.common.NRGBackground;
+import org.anchoranalysis.gui.videostats.dropdown.common.EnergyBackground;
 import org.anchoranalysis.gui.videostats.modulecreator.VideoStatsModuleCreator;
 import org.anchoranalysis.gui.videostats.operation.VideoStatsOperationFromCreatorAndAdder;
 import org.anchoranalysis.io.output.bean.OutputWriteSettings;
@@ -114,7 +114,7 @@ public class AnnotationDropDown {
     private void addChannelViewer(AddVideoStatsModule adder, VideoStatsModuleGlobalParams mpg) {
         OperationCreateBackgroundSetWithAdder operationBwsa =
                 new OperationCreateBackgroundSetWithAdder(
-                        NRGBackground.createStack(annotation.stacks(), null),
+                        EnergyBackground.createStack(annotation.stacks(), null),
                         adder,
                         mpg.getThreadPool(),
                         mpg.getLogger().errorReporter());
@@ -122,7 +122,7 @@ public class AnnotationDropDown {
         DropDownUtilitiesRaster.addRaster(
                 delegate.getRootMenu(),
                 delegate,
-                operationBwsa.nrgBackground(),
+                operationBwsa.energyBackground(),
                 "Channel Viewer",
                 mpg,
                 false);

@@ -29,13 +29,13 @@ package org.anchoranalysis.plugin.gui.bean.exporttask;
 import java.util.function.Supplier;
 import lombok.RequiredArgsConstructor;
 import org.anchoranalysis.anchor.mpp.bean.regionmap.RegionMembershipWithFlags;
-import org.anchoranalysis.anchor.mpp.cfg.Cfg;
-import org.anchoranalysis.anchor.mpp.feature.instantstate.CfgNRGInstantState;
-import org.anchoranalysis.anchor.mpp.feature.instantstate.CfgNRGNonHandleInstantState;
-import org.anchoranalysis.anchor.mpp.feature.nrg.cfg.CfgNRG;
-import org.anchoranalysis.anchor.mpp.feature.nrg.cfg.CfgWithNRGTotal;
+import org.anchoranalysis.anchor.mpp.feature.energy.IndexableMarksWithEnergy;
+import org.anchoranalysis.anchor.mpp.feature.energy.marks.MarksWithEnergyBreakdown;
+import org.anchoranalysis.anchor.mpp.feature.energy.marks.MarksWithTotalEnergy;
+import org.anchoranalysis.anchor.mpp.feature.energy.scheme.EnergySchemeWithSharedFeatures;
+import org.anchoranalysis.anchor.mpp.mark.MarkCollection;
 import org.anchoranalysis.anchor.mpp.overlay.OverlayCollectionMarkFactory;
-import org.anchoranalysis.anchor.overlay.OverlayedInstantState;
+import org.anchoranalysis.anchor.overlay.IndexableOverlays;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.error.friendly.AnchorImpossibleSituationException;
 import org.anchoranalysis.core.functional.function.CheckedFunction;
@@ -43,8 +43,8 @@ import org.anchoranalysis.core.index.container.BoundedIndexContainer;
 import org.anchoranalysis.core.index.container.bridge.BoundedIndexContainerBridgeWithoutIndex;
 import org.anchoranalysis.gui.bean.exporttask.ExportTaskParams;
 import org.anchoranalysis.gui.container.ContainerUtilities;
-import org.anchoranalysis.gui.mergebridge.DualCfgNRGContainer;
-import org.anchoranalysis.gui.mergebridge.MergeCfgBridge;
+import org.anchoranalysis.gui.mergebridge.DualStateContainer;
+import org.anchoranalysis.gui.mergebridge.MergeMarksBridge;
 import org.anchoranalysis.gui.mergebridge.MergedColorIndex;
 import org.anchoranalysis.gui.mergebridge.TransformToCfg;
 
@@ -52,55 +52,61 @@ import org.anchoranalysis.gui.mergebridge.TransformToCfg;
 class MergedContainerBridge
         implements CheckedFunction<
                 ExportTaskParams,
-                BoundedIndexContainer<CfgNRGInstantState>,
+                BoundedIndexContainer<IndexableMarksWithEnergy>,
                 OperationFailedException> {
 
     // START REQUIRED ARGUMENTS
     private final Supplier<RegionMembershipWithFlags> regionMembership;
+    
+    private final EnergySchemeWithSharedFeatures energyScheme;
     // END REQUIRED ARGUMENTS
 
     private BoundedIndexContainerBridgeWithoutIndex<
-                    OverlayedInstantState, CfgNRGInstantState, AnchorImpossibleSituationException>
+                    IndexableOverlays, IndexableMarksWithEnergy, AnchorImpossibleSituationException>
             retBridge = null;
 
     @Override
-    public BoundedIndexContainer<CfgNRGInstantState> apply(ExportTaskParams sourceObject)
+    public BoundedIndexContainer<IndexableMarksWithEnergy> apply(ExportTaskParams sourceObject)
             throws OperationFailedException {
 
         // TODO fix
         if (retBridge == null) {
 
-            DualCfgNRGContainer<Cfg> dualHistory =
-                    new DualCfgNRGContainer<>(
-                            ContainerUtilities.listCntrs(sourceObject.getAllFinderCfgNRGHistory()),
+            DualStateContainer<MarkCollection> dualHistory =
+                    new DualStateContainer<>(
+                            ContainerUtilities.listCntrs(sourceObject.getAllFinderMarksHistory()),
                             new TransformToCfg());
 
             dualHistory.init();
 
-            MergeCfgBridge mergeCfgBridge = new MergeCfgBridge(regionMembership);
+            MergeMarksBridge mergeBridge = new MergeMarksBridge(regionMembership);
 
-            BoundedIndexContainer<OverlayedInstantState> cfgCntr =
-                    new BoundedIndexContainerBridgeWithoutIndex<>(dualHistory, mergeCfgBridge);
+            BoundedIndexContainer<IndexableOverlays> container =
+                    new BoundedIndexContainerBridgeWithoutIndex<>(dualHistory, mergeBridge);
 
             // TODO HACK to allow exportparams to work
-            sourceObject.setColorIndexMarks(new MergedColorIndex(mergeCfgBridge));
+            sourceObject.setColorIndexMarks(new MergedColorIndex(mergeBridge));
 
+            // TODO this doesn't seem correct
             retBridge =
                     new BoundedIndexContainerBridgeWithoutIndex<>(
-                            cfgCntr,
-                            s -> {
-                                Cfg cfg =
+                            container,
+                            source -> {
+                                MarkCollection marks =
                                         OverlayCollectionMarkFactory.cfgFromOverlays(
-                                                s.getOverlayCollection());
-                                return new CfgNRGNonHandleInstantState(
-                                        s.getIndex(),
-                                        new CfgNRG(
-                                                new CfgWithNRGTotal(
-                                                        cfg,
-                                                        null)) // TODO This null seems wrong, fix!
-                                        );
+                                                source.getOverlays());
+                                return createIndexableMarks(marks, source.getIndex());
                             });
         }
         return retBridge;
+    }
+    
+    private IndexableMarksWithEnergy createIndexableMarks(MarkCollection marks, int index) {
+        return new IndexableMarksWithEnergy(
+                index,
+                new MarksWithEnergyBreakdown(
+                        new MarksWithTotalEnergy(marks, energyScheme))
+                        
+                );
     }
 }

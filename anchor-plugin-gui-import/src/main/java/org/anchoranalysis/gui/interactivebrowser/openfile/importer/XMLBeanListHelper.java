@@ -40,7 +40,7 @@ import org.anchoranalysis.feature.input.FeatureInput;
 import org.anchoranalysis.gui.bean.filecreator.FileCreator;
 import org.anchoranalysis.gui.bean.filecreator.FileFeatureEvaluatorCreator;
 import org.anchoranalysis.gui.bean.filecreator.NamedSingleStackCreator;
-import org.anchoranalysis.gui.interactivebrowser.openfile.type.NrgSchemeCreatorState;
+import org.anchoranalysis.gui.interactivebrowser.openfile.type.EnergySchemeCreatorState;
 import org.anchoranalysis.image.io.input.ProvidesStackInput;
 import org.anchoranalysis.io.bean.input.InputManager;
 
@@ -104,7 +104,7 @@ class XMLBeanListHelper {
                 features,
                 (creator, fl) -> {
                     creator.setListFeatures(fl);
-                    creator.setNrgSchemeCreator(NrgSchemeCreatorState.instance().getItem());
+                    creator.setEnergySchemeCreator(EnergySchemeCreatorState.instance().getItem());
                 },
                 f,
                 "feature evaluator");

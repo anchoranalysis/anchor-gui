@@ -36,13 +36,13 @@ import javax.swing.JComponent;
 import javax.swing.JPanel;
 import javax.swing.KeyStroke;
 import org.anchoranalysis.gui.frame.overlays.IShowEvaluationResult;
-import org.anchoranalysis.gui.frame.overlays.ProposedCfg;
+import org.anchoranalysis.gui.frame.overlays.ProposedMarks;
 
 public class HistoryNavigator {
 
     private JPanel panel = new JPanel();
 
-    private ArrayList<ProposedCfg> history;
+    private ArrayList<ProposedMarks> history;
 
     private int historyMaxSize = 100;
 
@@ -124,7 +124,7 @@ public class HistoryNavigator {
         buttonBackward.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put( (KeyStroke) forwardAction.getValue(Action.ACCELERATOR_KEY), "forwardAction");*/
     }
 
-    public void add(ProposedCfg er) {
+    public void add(ProposedMarks er) {
 
         if (currentIndex != (history.size() - 1)) {
 
@@ -147,7 +147,7 @@ public class HistoryNavigator {
     }
 
     private void showIndex(int index) {
-        ProposedCfg er = history.get(index);
+        ProposedMarks er = history.get(index);
         showEvaluationResult.showEvaluationResult(er, null);
 
         if (index == (history.size() - 1)) {

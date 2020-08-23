@@ -33,7 +33,7 @@ import org.anchoranalysis.anchor.mpp.bean.points.fitter.PointsFitter;
 import org.anchoranalysis.anchor.mpp.bean.points.fitter.PointsFitterException;
 import org.anchoranalysis.anchor.mpp.mark.Mark;
 import org.anchoranalysis.core.geometry.Point3d;
-import org.anchoranalysis.gui.frame.overlays.ProposedCfg;
+import org.anchoranalysis.gui.frame.overlays.ProposedMarks;
 import org.anchoranalysis.gui.videostats.internalframe.annotator.currentstate.IAcceptProposal;
 import org.anchoranalysis.gui.videostats.internalframe.annotator.currentstate.IChangeSelectedPoints;
 import org.anchoranalysis.gui.videostats.internalframe.annotator.currentstate.IQuerySelectedPoints;
@@ -58,13 +58,13 @@ public class SelectPointsTool extends AnnotationTool {
     }
 
     @Override
-    public void proposed(ProposedCfg proposedCfg) {
+    public void proposed(ProposedMarks proposedCfg) {
 
         dimensions = proposedCfg.dimensions();
 
         // Extract what should be the only mark
-        assert (proposedCfg.getCfgCore().getMarks().size() == 1);
-        Mark m = proposedCfg.getCfgCore().getMarks().get(0);
+        assert (proposedCfg.getMarksCore().getMarks().size() == 1);
+        Mark m = proposedCfg.getMarksCore().getMarks().get(0);
 
         changeSelectedPoints.addSelectedPoint(m);
     }
@@ -117,7 +117,7 @@ public class SelectPointsTool extends AnnotationTool {
 
     private Mark proposeMark(EvaluatorWithContext eval)
             throws PointsFitterException, InsufficientPointsException {
-        Mark mark = eval.getCfgGen().getTemplateMark().create();
+        Mark mark = eval.getMarkFactory().getTemplateMark().create();
         pointsFitter.fit(selectedPoints.selectedPointsAsFloats(), mark, dimensions);
         return mark;
     }

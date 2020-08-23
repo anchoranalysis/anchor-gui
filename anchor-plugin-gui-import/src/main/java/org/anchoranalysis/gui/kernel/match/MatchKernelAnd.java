@@ -28,7 +28,7 @@ package org.anchoranalysis.gui.kernel.match;
 
 import java.util.ArrayList;
 import lombok.NoArgsConstructor;
-import org.anchoranalysis.mpp.sgmn.kernel.proposer.KernelIterDescription;
+import org.anchoranalysis.mpp.sgmn.kernel.proposer.KernelDescision;
 
 @NoArgsConstructor
 public class MatchKernelAnd extends MatchKernel {
@@ -45,7 +45,7 @@ public class MatchKernelAnd extends MatchKernel {
     }
 
     @Override
-    public boolean matches(KernelIterDescription kid) {
+    public boolean matches(KernelDescision kid) {
 
         // Try all conditions
         for (MatchKernel condition : conditions) {
