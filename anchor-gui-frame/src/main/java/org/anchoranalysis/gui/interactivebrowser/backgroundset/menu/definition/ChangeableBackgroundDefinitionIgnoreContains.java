@@ -59,6 +59,6 @@ public class ChangeableBackgroundDefinitionIgnoreContains
     }
 
     private List<String> filterList(List<String> list) {
-        return FunctionalList.filterToList(list, a -> !a.contains(contains));
+        return FunctionalList.filterToList(list, item -> !item.contains(contains));
     }
 }
