@@ -32,7 +32,7 @@ import org.anchoranalysis.core.index.IndexGettableSettable;
 import org.anchoranalysis.gui.container.background.BackgroundStackContainerException;
 import org.anchoranalysis.gui.displayupdate.DisplayUpdateRememberStack;
 import org.anchoranalysis.gui.frame.display.DisplayUpdate;
-import org.anchoranalysis.gui.frame.threaded.stack.IThreadedProducer;
+import org.anchoranalysis.gui.frame.threaded.stack.ThreadedProducer;
 import org.anchoranalysis.gui.frame.threaded.stack.ThreadedDisplayUpdateConsumer;
 import org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.IBackgroundSetter;
 import org.anchoranalysis.gui.videostats.threading.InteractiveThreadPool;
@@ -41,7 +41,7 @@ import org.anchoranalysis.image.stack.DisplayStack;
 import org.anchoranalysis.io.generator.IterableObjectGenerator;
 import org.anchoranalysis.io.generator.IterableObjectGeneratorBridge;
 
-public class ThreadedIndexedDisplayStackSetter implements IBackgroundSetter, IThreadedProducer {
+public class ThreadedIndexedDisplayStackSetter implements IBackgroundSetter, ThreadedProducer {
 
     private ThreadedDisplayUpdateConsumer delegate;
 

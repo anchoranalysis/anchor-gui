@@ -35,7 +35,7 @@ import org.anchoranalysis.gui.container.background.BackgroundStackContainerExcep
 import org.anchoranalysis.gui.frame.details.canvas.ControllerAction;
 import org.anchoranalysis.gui.frame.details.canvas.controller.imageview.ControllerImageView;
 import org.anchoranalysis.gui.frame.overlays.background.InternalFrameEditableOverlays;
-import org.anchoranalysis.gui.image.frame.ISliderState;
+import org.anchoranalysis.gui.image.frame.SliderState;
 import org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.ControllerPopupMenuWithBackground;
 import org.anchoranalysis.gui.propertyvalue.PropertyValueChangeListenerList;
 import org.anchoranalysis.gui.videostats.IModuleCreatorDefaultStateSliderState;
@@ -61,10 +61,10 @@ public class InternalFrameOverlaysRedraw {
         this.delegate.controllerImageView().setEnforceMinimumSizeAfterGuessZoom(true);
     }
 
-    public ISliderState init(DefaultModuleState defaultState, VideoStatsModuleGlobalParams mpg)
+    public SliderState init(DefaultModuleState defaultState, VideoStatsModuleGlobalParams mpg)
             throws InitException {
 
-        ISliderState sliderState = delegate.init(defaultState, mpg);
+        SliderState sliderState = delegate.init(defaultState, mpg);
 
         // For now we keep background as it is
         try {
@@ -77,7 +77,7 @@ public class InternalFrameOverlaysRedraw {
     }
 
     // Note due to synchronisation issues, should only be called once per frame
-    public IShowOverlays showOverlays(ISliderState sliderState) {
+    public IShowOverlays showOverlays(SliderState sliderState) {
         return (redrawUpdate) -> {
             synchronized (this) {
                 delegate.applyUpdate(redrawUpdate.getUpdate());
@@ -90,7 +90,7 @@ public class InternalFrameOverlaysRedraw {
     }
 
     public IModuleCreatorDefaultStateSliderState moduleCreator() {
-        return (DefaultModuleState defaultFrameState, ISliderState sliderState) -> {
+        return (DefaultModuleState defaultFrameState, SliderState sliderState) -> {
             VideoStatsModule module =
                     delegate.moduleCreator(sliderState).createVideoStatsModule(defaultFrameState);
 
@@ -124,7 +124,7 @@ public class InternalFrameOverlaysRedraw {
         return delegate.controllerAction();
     }
 
-    private static void maybeChangeSlice(ISliderState sliderState, int suggestedSliceNum) {
+    private static void maybeChangeSlice(SliderState sliderState, int suggestedSliceNum) {
         if (suggestedSliceNum != -1) {
             sliderState.setSliceNum(suggestedSliceNum);
         }

@@ -93,7 +93,7 @@ class CachedRGBGenerator extends CacheableOverlaysToRGBGenerator {
         this.element = element;
 
         try {
-            cachedRGB.updateCfg(element);
+            cachedRGB.updateMarks(element);
         } catch (OperationFailedException e) {
             throw new SetOperationFailedException(e);
         }

@@ -24,7 +24,7 @@
  * #L%
  */
 
-package org.anchoranalysis.gui.videostats.internalframe.cfgtorgb.markdisplay;
+package org.anchoranalysis.gui.videostats.internalframe.markstorgb.markdisplay;
 
 import org.anchoranalysis.anchor.overlay.writer.DrawOverlay;
 import org.anchoranalysis.core.property.change.PropertyValueChangeEvent;

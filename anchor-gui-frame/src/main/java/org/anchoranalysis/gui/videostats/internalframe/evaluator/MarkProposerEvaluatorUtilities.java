@@ -60,24 +60,24 @@ public class MarkProposerEvaluatorUtilities {
         return me;
     }
 
-    public static ColoredMarks generateCfgFromMark(
+    public static ColoredMarks generateMarksFromMark(
             Mark mark, Point3d position, MarkProposer markProposer, boolean detailedVisualization) {
 
-        ColoredMarks cfg = new ColoredMarks();
+        ColoredMarks marks = new ColoredMarks();
 
         if (mark != null) {
-            cfg.addChangeID(mark, new RGBColor(Color.BLUE));
-            addMarkAtMousePoint(position, cfg, mark.numDims() == 3);
+            marks.addChangeID(mark, new RGBColor(Color.BLUE));
+            addMarkAtMousePoint(position, marks, mark.numDims() == 3);
         }
 
         Optional<CreateProposalVisualization> proposalVisualization =
                 markProposer.proposalVisualization(detailedVisualization);
-        proposalVisualization.ifPresent(pv -> pv.addToCfg(cfg));
-        return cfg;
+        proposalVisualization.ifPresent(pv -> pv.addToMarks(marks));
+        return marks;
     }
 
-    private static void addMarkAtMousePoint(Point3d position, ColoredMarks cfg, boolean do3D) {
+    private static void addMarkAtMousePoint(Point3d position, ColoredMarks marks, boolean do3D) {
         Mark mousePoint = MarkConicFactory.createMarkFromPoint(position, 1, do3D);
-        cfg.addChangeID(mousePoint, new RGBColor(Color.GREEN));
+        marks.addChangeID(mousePoint, new RGBColor(Color.GREEN));
     }
 }

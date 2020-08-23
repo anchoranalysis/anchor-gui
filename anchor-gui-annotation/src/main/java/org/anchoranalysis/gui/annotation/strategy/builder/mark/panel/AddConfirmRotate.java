@@ -34,7 +34,7 @@ import org.anchoranalysis.core.geometry.Point3d;
 import org.anchoranalysis.gui.annotation.WrapAction;
 import org.anchoranalysis.gui.frame.details.canvas.ControllerKeyboard;
 import org.anchoranalysis.gui.frame.details.canvas.ControllerMouse;
-import org.anchoranalysis.gui.image.frame.ISliderState;
+import org.anchoranalysis.gui.image.frame.SliderState;
 import org.anchoranalysis.gui.videostats.internalframe.annotator.navigation.PanelMark;
 import org.anchoranalysis.gui.videostats.internalframe.annotator.navigation.PanelTool;
 
@@ -44,7 +44,7 @@ public class AddConfirmRotate {
     public static void apply(
             PanelTool panelTool,
             PanelMark panelMark,
-            ISliderState sliderState,
+            SliderState sliderState,
             ControllerKeyboard controllerKeyboard,
             ControllerMouse controllerMouse) {
 
@@ -69,7 +69,7 @@ public class AddConfirmRotate {
     private static void bindMiddleMouseButton(
             PanelTool panelTool,
             PanelMark panelMark,
-            ISliderState sliderState,
+            SliderState sliderState,
             ControllerMouse controllerMouse) {
         // We bind the middle mouse button to be the same as "confirmMark"
         controllerMouse.addMouseListener(

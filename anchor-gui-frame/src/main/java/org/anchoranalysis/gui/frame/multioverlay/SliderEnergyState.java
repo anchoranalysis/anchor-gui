@@ -26,7 +26,7 @@
 
 package org.anchoranalysis.gui.frame.multioverlay;
 
-import org.anchoranalysis.gui.image.frame.ISliderState;
+import org.anchoranalysis.gui.image.frame.SliderState;
 import org.anchoranalysis.gui.videostats.dropdown.AddVideoStatsModule;
 import org.anchoranalysis.gui.videostats.dropdown.common.EnergyBackground;
 import lombok.AllArgsConstructor;
@@ -35,7 +35,7 @@ import lombok.Getter;
 @AllArgsConstructor
 class SliderEnergyState {
 
-    @Getter private ISliderState slider;
+    @Getter private SliderState slider;
     private EnergyBackground energyBackground;
 
     public AddVideoStatsModule addEnergyStackToAdder(AddVideoStatsModule adder) {

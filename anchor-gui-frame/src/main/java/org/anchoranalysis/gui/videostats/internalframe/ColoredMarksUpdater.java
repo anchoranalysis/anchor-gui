@@ -1,6 +1,6 @@
 /*-
  * #%L
- * anchor-gui-annotation
+ * anchor-gui-frame
  * %%
  * Copyright (C) 2010 - 2020 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann-La Roche
  * %%
@@ -24,13 +24,10 @@
  * #L%
  */
 
-package org.anchoranalysis.gui.videostats.internalframe.annotator.currentstate;
+package org.anchoranalysis.gui.videostats.internalframe;
 
-import org.anchoranalysis.anchor.mpp.mark.MarkCollection;
+import org.anchoranalysis.gui.frame.display.OverlayedDisplayStackUpdate;
 
-public interface IQueryAcceptedRejected {
-
-    MarkCollection getCfgAccepted();
-
-    MarkCollection getCfgRejected();
+public interface ColoredMarksUpdater {
+    void applyUpdate(OverlayedDisplayStackUpdate update);
 }

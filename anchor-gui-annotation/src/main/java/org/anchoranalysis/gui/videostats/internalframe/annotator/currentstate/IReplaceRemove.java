@@ -33,9 +33,9 @@ import org.anchoranalysis.core.geometry.Point3i;
 
 public interface IReplaceRemove {
 
-    void removeCurrentProposedCfg();
+    void removeCurrentProposedMarks();
 
-    void replaceCurrentProposedCfg(MarkCollection cfgCore, ColoredMarks cfgDisplayed, int sliceZ);
+    void replaceCurrentProposedMarks(MarkCollection marksCore, ColoredMarks marksDisplayed, int sliceZ);
 
-    void removeAcceptedMarksAndSelectedPoints(MarkCollection cfg, List<Point3i> points);
+    void removeAcceptedMarksAndSelectedPoints(MarkCollection marks, List<Point3i> points);
 }

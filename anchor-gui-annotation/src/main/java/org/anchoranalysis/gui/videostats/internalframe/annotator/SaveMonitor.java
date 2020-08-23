@@ -28,7 +28,7 @@ package org.anchoranalysis.gui.videostats.internalframe.annotator;
 
 public class SaveMonitor {
 
-    // If a change has occurred to cfgAccepted since the lastSave
+    // If a change has occurred to marksAccepted since the lastSave
     private boolean changedSinceLastSave = false;
 
     public boolean isChangedSinceLastSave() {

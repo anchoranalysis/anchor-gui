@@ -29,61 +29,46 @@ package org.anchoranalysis.gui.frame.multioverlay.instantstate;
 import org.anchoranalysis.anchor.overlay.collection.ColoredOverlayCollection;
 import org.anchoranalysis.anchor.overlay.collection.OverlayCollection;
 import org.anchoranalysis.core.index.IntArray;
-import org.anchoranalysis.core.log.Logger;
 import org.anchoranalysis.core.property.change.PropertyValueChangeEvent;
 import org.anchoranalysis.core.property.change.PropertyValueChangeListener;
-import org.anchoranalysis.gui.frame.display.IRedrawable;
+import org.anchoranalysis.gui.frame.display.Redrawable;
 import org.anchoranalysis.gui.frame.display.OverlayedDisplayStackUpdate;
 import org.anchoranalysis.gui.frame.display.overlay.GetOverlayCollection;
+import lombok.RequiredArgsConstructor;
 
-class RedrawFromCfgGetter implements PropertyValueChangeListener<IntArray> {
+@RequiredArgsConstructor
+class RedrawFromMarksGetter implements PropertyValueChangeListener<IntArray> {
 
+    // START REQUIRED ARGUMENTS
     // Gives us the currently selected marks
-    private GetOverlayCollection cfgGetter;
-    private IRedrawable redrawable;
+    private final GetOverlayCollection marksGetter;
+    private final Redrawable redrawable;
+    /// END REQUIRED ARGUMENTS
+    
     private ColoredOverlayCollection old;
-
-    public RedrawFromCfgGetter(
-            GetOverlayCollection cfgGetter, IRedrawable redrawable, Logger logger) {
-        super();
-        assert (cfgGetter != null);
-        assert (redrawable != null);
-        this.cfgGetter = cfgGetter;
-        this.redrawable = redrawable;
-    }
 
     @Override
     public synchronized void propertyValueChanged(PropertyValueChangeEvent<IntArray> evt) {
 
-        ColoredOverlayCollection cfgNew = cfgGetter.getOverlays();
+        ColoredOverlayCollection overlays = marksGetter.getOverlays();
 
         if (old == null) {
 
             // TODO THIS IS A HACK TO SOLVE, WE CAN MAKE THIS MORE EFFICIENT
 
             // change to trigger a full redraw
-            // and draw with a particular cfg
-            // redrawable.redrawAll();
+            // and draw with a particular marks
 
             redrawable.applyRedrawUpdate(
-                    OverlayedDisplayStackUpdate.updateChanged(cfgNew.withoutColor()));
+                    OverlayedDisplayStackUpdate.updateChanged(overlays.withoutColor()));
 
-            // redrawable.redraw(cfg)
-
-            // markFactoryerator.redraw( cfgNew );
-            // markFactoryerator.generate();
-            // markFactoryerator.redrawAll();
         } else {
-            OverlayCollection merged = old.withoutColor().createMerged(cfgNew.withoutColor());
-            // redrawable.redrawParts(  );
+            OverlayCollection merged = old.withoutColor().createMerged(overlays.withoutColor());
 
             assert (merged != null);
             redrawable.applyRedrawUpdate(OverlayedDisplayStackUpdate.updateChanged(merged));
-
-            // cnvtr.update(old, boxList);
-
         }
 
-        old = cfgNew;
+        old = overlays;
     }
 }

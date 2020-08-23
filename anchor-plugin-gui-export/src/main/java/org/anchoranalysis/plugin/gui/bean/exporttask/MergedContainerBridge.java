@@ -46,7 +46,7 @@ import org.anchoranalysis.gui.container.ContainerUtilities;
 import org.anchoranalysis.gui.mergebridge.DualStateContainer;
 import org.anchoranalysis.gui.mergebridge.MergeMarksBridge;
 import org.anchoranalysis.gui.mergebridge.MergedColorIndex;
-import org.anchoranalysis.gui.mergebridge.TransformToCfg;
+import org.anchoranalysis.gui.mergebridge.TransformToMarks;
 
 @RequiredArgsConstructor
 class MergedContainerBridge
@@ -75,7 +75,7 @@ class MergedContainerBridge
             DualStateContainer<MarkCollection> dualHistory =
                     new DualStateContainer<>(
                             ContainerUtilities.listCntrs(sourceObject.getAllFinderMarksHistory()),
-                            new TransformToCfg());
+                            new TransformToMarks());
 
             dualHistory.init();
 
@@ -93,7 +93,7 @@ class MergedContainerBridge
                             container,
                             source -> {
                                 MarkCollection marks =
-                                        OverlayCollectionMarkFactory.cfgFromOverlays(
+                                        OverlayCollectionMarkFactory.marksFromOverlays(
                                                 source.getOverlays());
                                 return createIndexableMarks(marks, source.getIndex());
                             });

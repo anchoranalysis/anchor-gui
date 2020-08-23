@@ -32,5 +32,5 @@ import org.anchoranalysis.gui.frame.overlays.ProposedMarks;
 @FunctionalInterface
 public interface ProposedMarksListener extends EventListener {
 
-    void proposed(ProposedMarks proposedCfg);
+    void proposed(ProposedMarks proposedMarks);
 }

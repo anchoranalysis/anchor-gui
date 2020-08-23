@@ -38,12 +38,12 @@ import org.anchoranalysis.core.idgetter.IDGetterIter;
 import org.anchoranalysis.core.index.container.BoundedIndexContainer;
 import org.anchoranalysis.core.index.container.bridge.BoundedIndexContainerBridgeWithoutIndex;
 import org.anchoranalysis.gui.frame.multioverlay.instantstate.InternalFrameOverlayedInstantStateToRGBSelectable;
-import org.anchoranalysis.gui.image.frame.ISliderState;
+import org.anchoranalysis.gui.image.frame.SliderState;
 import org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.ControllerPopupMenuWithBackground;
 import org.anchoranalysis.gui.mergebridge.DualStateContainer;
 import org.anchoranalysis.gui.mergebridge.MergeMarksBridge;
 import org.anchoranalysis.gui.mergebridge.MergedColorIndex;
-import org.anchoranalysis.gui.mergebridge.TransformToCfg;
+import org.anchoranalysis.gui.mergebridge.TransformToMarks;
 import org.anchoranalysis.gui.videostats.IModuleCreatorDefaultState;
 import org.anchoranalysis.gui.videostats.dropdown.VideoStatsModuleGlobalParams;
 import org.anchoranalysis.gui.videostats.module.DefaultModuleState;
@@ -57,34 +57,34 @@ public class MergedMarksHistoryInternalFrame {
         this.delegate = new InternalFrameOverlayedInstantStateToRGBSelectable(title, true, true);
     }
 
-    public ISliderState init(
+    public SliderState init(
             LoadContainer<IndexableMarksWithEnergy> selectedHistory,
             LoadContainer<IndexableMarksWithEnergy> proposalHistory,
             DefaultModuleState defaultState,
             VideoStatsModuleGlobalParams mpg)
             throws InitException {
 
-        // A container that supplies DualCfgInstantState
+        // A container that supplies DualMarksInstantState
         DualStateContainer<MarkCollection> dualHistory =
                 new DualStateContainer<>(
-                        createInputList(selectedHistory, proposalHistory), new TransformToCfg());
+                        createInputList(selectedHistory, proposalHistory), new TransformToMarks());
 
         dualHistory.init();
 
-        MergeMarksBridge mergeCfgBridge =
+        MergeMarksBridge mergeMarksBridge =
                 new MergeMarksBridge(() -> defaultState.getMarkDisplaySettings().regionMembership());
 
-        // We map each DualCfgInstantState
-        BoundedIndexContainer<IndexableOverlays> cfgCntnr =
-                new BoundedIndexContainerBridgeWithoutIndex<>(dualHistory, mergeCfgBridge);
+        // We map each DualMarksInstantState
+        BoundedIndexContainer<IndexableOverlays> marksCntnr =
+                new BoundedIndexContainerBridgeWithoutIndex<>(dualHistory, mergeMarksBridge);
 
         boolean eitherExpensiveLoad =
                 selectedHistory.isExpensiveLoad() || proposalHistory.isExpensiveLoad();
 
-        ColorIndex mergedColorIndex = new MergedColorIndex(mergeCfgBridge);
+        ColorIndex mergedColorIndex = new MergedColorIndex(mergeMarksBridge);
 
         return this.delegate.init(
-                cfgCntnr,
+                marksCntnr,
                 mergedColorIndex,
                 new IDGetterOverlayID(),
                 new IDGetterIter<>(),
@@ -93,11 +93,11 @@ public class MergedMarksHistoryInternalFrame {
                 mpg);
     }
 
-    public IModuleCreatorDefaultState moduleCreator(ISliderState sliderState) {
+    public IModuleCreatorDefaultState moduleCreator(SliderState sliderState) {
         return delegate.moduleCreator(sliderState);
     }
 
-    public ControllerPopupMenuWithBackground controllerBackgroundMenu(ISliderState sliderState) {
+    public ControllerPopupMenuWithBackground controllerBackgroundMenu(SliderState sliderState) {
         return delegate.controllerBackgroundMenu(sliderState);
     }
 

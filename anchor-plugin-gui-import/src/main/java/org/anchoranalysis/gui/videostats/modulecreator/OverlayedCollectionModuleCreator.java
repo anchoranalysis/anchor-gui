@@ -6,7 +6,7 @@ import org.anchoranalysis.anchor.mpp.mark.MarkCollection;
 import org.anchoranalysis.anchor.overlay.collection.OverlayCollection;
 import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.error.OperationFailedException;
-import org.anchoranalysis.gui.image.frame.ISliderState;
+import org.anchoranalysis.gui.image.frame.SliderState;
 import org.anchoranalysis.gui.videostats.dropdown.AddVideoStatsModule;
 import org.anchoranalysis.gui.videostats.dropdown.ModuleAddUtilities;
 import org.anchoranalysis.gui.videostats.dropdown.VideoStatsModuleGlobalParams;
@@ -47,8 +47,8 @@ public abstract class OverlayedCollectionModuleCreator<T> extends VideoStatsModu
                 new VideoStatsOperationCombine() {
 
                     @Override
-                    public Optional<OverlayCollectionSupplier<MarkCollection>> getCfg() {
-                        return cfgSupplier();
+                    public Optional<OverlayCollectionSupplier<MarkCollection>> getMarks() {
+                        return marksSupplier();
                     }
 
                     @Override
@@ -72,7 +72,7 @@ public abstract class OverlayedCollectionModuleCreator<T> extends VideoStatsModu
 
     protected abstract InternalFrameStaticOverlaySelectable createFrame(String frameName);
 
-    protected abstract Optional<OverlayCollectionSupplier<MarkCollection>> cfgSupplier();
+    protected abstract Optional<OverlayCollectionSupplier<MarkCollection>> marksSupplier();
 
     protected abstract Optional<OverlayCollectionSupplier<ObjectCollection>> objectsSupplier();
 
@@ -86,7 +86,7 @@ public abstract class OverlayedCollectionModuleCreator<T> extends VideoStatsModu
             AddVideoStatsModule adder)
             throws VideoStatsModuleCreateException {
         try {
-            ISliderState sliderState =
+            SliderState sliderState =
                     imageFrame.init(
                             overlays, adder.getSubgroup().getDefaultModuleState().getState(), mpg);
 

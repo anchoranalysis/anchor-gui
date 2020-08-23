@@ -29,22 +29,22 @@ package org.anchoranalysis.gui.annotation.save;
 import javax.swing.JComponent;
 import org.anchoranalysis.annotation.Annotation;
 import org.anchoranalysis.gui.videostats.internalframe.annotator.AnnotationWriterGUI;
-import org.anchoranalysis.gui.videostats.internalframe.annotator.currentstate.IQueryAcceptedRejected;
+import org.anchoranalysis.gui.videostats.internalframe.annotator.currentstate.QueryAcceptedRejected;
 
 public interface ISaveAnnotation<T extends Annotation> {
 
     void saveFinished(
-            IQueryAcceptedRejected query,
+            QueryAcceptedRejected query,
             AnnotationWriterGUI<T> annotationWriter,
             JComponent dialogParent);
 
     void savePaused(
-            IQueryAcceptedRejected query,
+            QueryAcceptedRejected query,
             AnnotationWriterGUI<T> annotationWriter,
             JComponent dialogParent);
 
     void skipAnnotation(
-            IQueryAcceptedRejected query,
+            QueryAcceptedRejected query,
             AnnotationWriterGUI<T> annotationWriter,
             JComponent dialogParent);
 }

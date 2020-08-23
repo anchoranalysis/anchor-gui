@@ -43,7 +43,7 @@ import org.anchoranalysis.core.index.container.bridge.BoundedIndexContainerBridg
 import org.anchoranalysis.core.progress.ProgressReporterNull;
 import org.anchoranalysis.gui.container.background.BackgroundStackContainerException;
 import org.anchoranalysis.gui.frame.multioverlay.instantstate.InternalFrameOverlayedInstantStateToRGBSelectable;
-import org.anchoranalysis.gui.image.frame.ISliderState;
+import org.anchoranalysis.gui.image.frame.SliderState;
 import org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.ControllerPopupMenuWithBackground;
 import org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.IGetNames;
 import org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.definition.ImageStackContainerFromName;
@@ -51,7 +51,7 @@ import org.anchoranalysis.gui.retrieveelements.IRetrieveElements;
 import org.anchoranalysis.gui.videostats.IModuleCreatorDefaultState;
 import org.anchoranalysis.gui.videostats.dropdown.VideoStatsModuleGlobalParams;
 import org.anchoranalysis.gui.videostats.dropdown.common.EnergyBackground;
-import org.anchoranalysis.gui.videostats.internalframe.cfgtorgb.MultiInput;
+import org.anchoranalysis.gui.videostats.internalframe.markstorgb.MultiInput;
 import org.anchoranalysis.gui.videostats.module.DefaultModuleState;
 import org.anchoranalysis.gui.videostats.module.DefaultModuleStateManager;
 
@@ -80,7 +80,7 @@ class InternalFrameMultiOverlay<T> {
 
         IDGetter<Overlay> idGetter = new IDGetterOverlayID();
 
-        ISliderState sliderState =
+        SliderState sliderState =
                 delegate.init(
                         bridgeList(list, bridge),
                         mpg.getDefaultColorIndexForMarks(),
@@ -135,7 +135,7 @@ class InternalFrameMultiOverlay<T> {
 
     private void addBackgroundMenu(
             List<MultiInput<T>> list,
-            ISliderState sliderState,
+            SliderState sliderState,
             ImageStackContainerFromName imageStackCntrFromName,
             VideoStatsModuleGlobalParams mpg) {
         ControllerPopupMenuWithBackground controller =
@@ -147,7 +147,7 @@ class InternalFrameMultiOverlay<T> {
     }
 
     private IGetNames namesFromCurrentBackground(
-            List<MultiInput<T>> list, ISliderState sliderState, ErrorReporter errorReporter) {
+            List<MultiInput<T>> list, SliderState sliderState, ErrorReporter errorReporter) {
         return () -> {
             try {
                 Set<String> names =
@@ -174,7 +174,7 @@ class InternalFrameMultiOverlay<T> {
         return delegate.getElementRetriever();
     }
 
-    public IModuleCreatorDefaultState moduleCreator(ISliderState sliderState) {
+    public IModuleCreatorDefaultState moduleCreator(SliderState sliderState) {
         return delegate.moduleCreator(sliderState);
     }
 }

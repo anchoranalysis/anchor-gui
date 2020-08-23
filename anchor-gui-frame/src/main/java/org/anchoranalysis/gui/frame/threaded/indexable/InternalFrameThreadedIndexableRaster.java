@@ -33,7 +33,7 @@ import org.anchoranalysis.gui.frame.details.ControllerPopupMenu;
 import org.anchoranalysis.gui.frame.details.GenerateExtraDetail;
 import org.anchoranalysis.gui.frame.multiraster.ThreadedIndexedDisplayStackSetter;
 import org.anchoranalysis.gui.frame.threaded.stack.InternalFrameThreadedProvider;
-import org.anchoranalysis.gui.image.frame.ISliderState;
+import org.anchoranalysis.gui.image.frame.SliderState;
 import org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.IBackgroundSetter;
 import org.anchoranalysis.gui.retrieveelements.IRetrieveElements;
 import org.anchoranalysis.gui.videostats.IModuleCreatorDefaultState;
@@ -59,7 +59,7 @@ public class InternalFrameThreadedIndexableRaster {
         return delegate.addAdditionalDetails(arg0);
     }
 
-    public ISliderState init(
+    public SliderState init(
             BoundedIndexContainer<DisplayStack> cntr,
             DefaultModuleState initialState,
             boolean includeFrameAdjusting,
@@ -69,7 +69,7 @@ public class InternalFrameThreadedIndexableRaster {
 
         threadedProvider = setupProvider(cntr, mpg);
 
-        ISliderState sliderState =
+        SliderState sliderState =
                 delegate.init(
                         threadedProvider,
                         cntr,
@@ -85,7 +85,7 @@ public class InternalFrameThreadedIndexableRaster {
         return threadedProvider;
     }
 
-    public IModuleCreatorDefaultState moduleCreator(ISliderState sliderState) {
+    public IModuleCreatorDefaultState moduleCreator(SliderState sliderState) {
         return delegate.moduleCreator(sliderState);
     }
 

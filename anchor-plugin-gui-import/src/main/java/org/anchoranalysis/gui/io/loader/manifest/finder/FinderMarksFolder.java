@@ -47,7 +47,7 @@ import org.anchoranalysis.io.manifest.match.FolderWritePath;
 import org.anchoranalysis.io.manifest.match.helper.folderwrite.FolderWriteFileFunctionType;
 
 @RequiredArgsConstructor
-public class FinderCfgFolder extends FinderSingleFolder {
+public class FinderMarksFolder extends FinderSingleFolder {
 
     // START REQUIRED ARGUMENTS
     private final String manifestFunction;
@@ -80,7 +80,7 @@ public class FinderCfgFolder extends FinderSingleFolder {
             return new NameValueSet<>();
         }
 
-        LazyEvaluationStore<MarkCollection> out = new LazyEvaluationStore<>("finderCfgFolder");
+        LazyEvaluationStore<MarkCollection> out = new LazyEvaluationStore<>("finderMarksFolder");
 
         SequencedFolderDeserializer<MarkCollection> sfrr =
                 new SequencedFolderDeserializer<>(getFoundFolder(), deserializer);

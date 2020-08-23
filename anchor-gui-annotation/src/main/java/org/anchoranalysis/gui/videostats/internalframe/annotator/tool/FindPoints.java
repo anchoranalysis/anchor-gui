@@ -48,20 +48,20 @@ class FindPoints {
     private static final int DISTANCE_THRESHOLD_SQUARED = DISTANCE_THRESHOLD * DISTANCE_THRESHOLD;
 
     public static MarkCollection findMarksContainingPoint(
-            MarkCollection cfg, Point3d point, RegionMap regionMap, int regionID) {
+            MarkCollection marks, Point3d point, RegionMap regionMap, int regionID) {
 
-        MarkCollection cfgOut = new MarkCollection();
+        MarkCollection marksOut = new MarkCollection();
 
         RegionMembershipWithFlags rm = regionMap.membershipWithFlagsForIndex(regionID);
 
         // Find marks that contain the point x, y
-        for (Mark m : cfg) {
+        for (Mark m : marks) {
             byte membership = m.isPointInside(point);
             if (rm.isMemberFlag(membership)) {
-                cfgOut.add(m);
+                marksOut.add(m);
             }
         }
-        return cfgOut;
+        return marksOut;
     }
 
     public static List<Point3i> findSelectedPointsNear(

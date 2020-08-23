@@ -44,20 +44,20 @@ class SnapshotReplaceRemove implements IReplaceRemove {
     }
 
     @Override
-    public void removeCurrentProposedCfg() {
+    public void removeCurrentProposedMarks() {
         recorder.recordSnapshot();
-        delegate.removeCurrentProposedCfg();
+        delegate.removeCurrentProposedMarks();
     }
 
     @Override
-    public void replaceCurrentProposedCfg(MarkCollection cfgCore, ColoredMarks cfgDisplayed, int sliceZ) {
+    public void replaceCurrentProposedMarks(MarkCollection marksCore, ColoredMarks marksDisplayed, int sliceZ) {
         recorder.recordSnapshot();
-        delegate.removeCurrentProposedCfg();
+        delegate.removeCurrentProposedMarks();
     }
 
     @Override
-    public void removeAcceptedMarksAndSelectedPoints(MarkCollection cfg, List<Point3i> points) {
+    public void removeAcceptedMarksAndSelectedPoints(MarkCollection marks, List<Point3i> points) {
         recorder.recordSnapshot();
-        delegate.removeAcceptedMarksAndSelectedPoints(cfg, points);
+        delegate.removeAcceptedMarksAndSelectedPoints(marks, points);
     }
 }

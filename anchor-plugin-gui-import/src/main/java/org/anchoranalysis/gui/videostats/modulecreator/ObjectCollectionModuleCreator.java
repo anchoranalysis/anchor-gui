@@ -61,7 +61,7 @@ public class ObjectCollectionModuleCreator
     }
 
     @Override
-    protected Optional<OverlayCollectionSupplier<MarkCollection>> cfgSupplier() {
+    protected Optional<OverlayCollectionSupplier<MarkCollection>> marksSupplier() {
         return Optional.empty();
     }
 

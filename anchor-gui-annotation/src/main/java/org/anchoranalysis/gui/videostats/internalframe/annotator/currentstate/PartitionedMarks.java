@@ -30,44 +30,50 @@ import lombok.NoArgsConstructor;
 import org.anchoranalysis.anchor.mpp.mark.Mark;
 import org.anchoranalysis.anchor.mpp.mark.MarkCollection;
 
+/**
+ * A marks-collection partitioned into accepted and rejected collections
+ * 
+ * @author Owen Feehan
+ *
+ */
 @NoArgsConstructor
-public class DualCfg implements IQueryAcceptedRejected {
+public class PartitionedMarks implements QueryAcceptedRejected {
 
-    private MarkCollection cfgAccepted = new MarkCollection();
-    private MarkCollection cfgRejected = new MarkCollection();
+    private MarkCollection marksAccepted = new MarkCollection();
+    private MarkCollection marksRejected = new MarkCollection();
 
-    public DualCfg(MarkCollection cfgAccepted, MarkCollection cfgRejected) {
+    public PartitionedMarks(MarkCollection marksAccepted, MarkCollection marksRejected) {
         super();
-        this.cfgAccepted = cfgAccepted;
+        this.marksAccepted = marksAccepted;
 
-        if (cfgRejected != null) {
-            this.cfgRejected = cfgRejected;
+        if (marksRejected != null) {
+            this.marksRejected = marksRejected;
         } else {
             // Replace null initialisation with an empty set
             // This is handle backwards compatiblility from serialized annotation files
-            //   when cfgRejected was not present
-            this.cfgRejected = new MarkCollection();
+            //   when marksRejected was not present
+            this.marksRejected = new MarkCollection();
         }
     }
 
     public void addAll(boolean accepted, MarkCollection src) {
         if (accepted) {
-            cfgAccepted.addAll(src);
+            marksAccepted.addAll(src);
         } else {
-            cfgRejected.addAll(src);
+            marksRejected.addAll(src);
         }
     }
 
-    // Remove from either cfgAccepted or cfgRejected depending on where it can be found
+    // Remove from either marksAccepted or marksRejected depending on where it can be found
     public void removeFromEither(Mark mark) {
-        int index = cfgAccepted.indexOf(mark);
+        int index = marksAccepted.indexOf(mark);
         if (index != -1) {
-            cfgAccepted.remove(index);
+            marksAccepted.remove(index);
         } else {
 
-            index = cfgRejected.indexOf(mark);
+            index = marksRejected.indexOf(mark);
             if (index != -1) {
-                cfgRejected.remove(index);
+                marksRejected.remove(index);
             } else {
                 assert false;
             }
@@ -75,24 +81,24 @@ public class DualCfg implements IQueryAcceptedRejected {
     }
 
     @Override
-    public MarkCollection getCfgAccepted() {
-        return cfgAccepted;
+    public MarkCollection getMarksAccepted() {
+        return marksAccepted;
     }
 
     @Override
-    public MarkCollection getCfgRejected() {
-        return cfgRejected;
+    public MarkCollection getMarksRejected() {
+        return marksRejected;
     }
 
-    public DualCfg shallowCopy() {
-        DualCfg out = new DualCfg();
-        out.cfgAccepted = cfgAccepted.shallowCopy();
-        out.cfgRejected = cfgRejected.shallowCopy();
+    public PartitionedMarks shallowCopy() {
+        PartitionedMarks out = new PartitionedMarks();
+        out.marksAccepted = marksAccepted.shallowCopy();
+        out.marksRejected = marksRejected.shallowCopy();
         return out;
     }
 
-    public void addAll(DualCfg in) {
-        cfgAccepted.addAll(in.cfgAccepted);
-        cfgRejected.addAll(in.cfgRejected);
+    public void addAll(PartitionedMarks in) {
+        marksAccepted.addAll(in.marksAccepted);
+        marksRejected.addAll(in.marksRejected);
     }
 }

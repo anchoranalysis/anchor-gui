@@ -32,7 +32,7 @@ import org.anchoranalysis.gui.container.background.BackgroundStackContainerExcep
 import org.anchoranalysis.gui.displayupdate.OverlayedDisplayStack;
 import org.anchoranalysis.gui.frame.display.OverlayedDisplayStackUpdate;
 
-// Finds ColoredCfgRedrawUpdate which implement changes to existing ColoredCfg
+// Finds ColoredMarksRedrawUpdate which implement changes to existing ColoredMarks
 class FindCorrectUpdate
         implements CheckedFunction<
                 Integer, OverlayedDisplayStackUpdate, BackgroundStackContainerException> {

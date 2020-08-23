@@ -72,7 +72,7 @@ public class BuilderWholeImage
             ProgressReporterMultiple prm,
             AnnotationGuiContext context,
             Logger logger,
-            boolean useDefaultCfg)
+            boolean useDefaultMarks)
             throws CreateException {
 
         try {

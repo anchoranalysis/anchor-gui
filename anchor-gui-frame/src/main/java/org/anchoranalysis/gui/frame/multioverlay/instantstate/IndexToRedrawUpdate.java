@@ -31,7 +31,7 @@ import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.index.container.BoundedIndexContainer;
 import org.anchoranalysis.gui.container.background.BackgroundStackContainerException;
 import org.anchoranalysis.gui.displayupdate.OverlayedDisplayStack;
-import org.anchoranalysis.gui.videostats.internalframe.cfgtorgb.IndexableColoredOverlays;
+import org.anchoranalysis.gui.videostats.internalframe.markstorgb.IndexableColoredOverlays;
 import org.anchoranalysis.image.stack.DisplayStack;
 
 class IndexToRedrawUpdate

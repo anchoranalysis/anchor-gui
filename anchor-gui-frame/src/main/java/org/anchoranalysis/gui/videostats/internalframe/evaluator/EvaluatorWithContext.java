@@ -27,7 +27,7 @@
 package org.anchoranalysis.gui.videostats.internalframe.evaluator;
 
 import lombok.Value;
-import org.anchoranalysis.anchor.mpp.bean.cfg.MarkWithIdentifierFactory;
+import org.anchoranalysis.anchor.mpp.bean.mark.MarkWithIdentifierFactory;
 import org.anchoranalysis.anchor.mpp.bean.regionmap.RegionMap;
 import org.anchoranalysis.feature.energy.EnergyStack;
 

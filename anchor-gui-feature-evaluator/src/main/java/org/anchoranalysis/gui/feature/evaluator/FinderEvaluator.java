@@ -73,9 +73,9 @@ class FinderEvaluator {
             OverlayCollection overlays, EnergyStack energyStack) throws CreateException {
 
         if (doMarkOrObject(overlays)) {
-            MarkCollection cfg = OverlayCollectionMarkFactory.cfgFromOverlays(overlays);
+            MarkCollection marks = OverlayCollectionMarkFactory.marksFromOverlays(overlays);
             return FinderEvaluator.findPairFromCurrentSelectionMark(
-                    cfg, energyStack, sharedFeatureList, logger);
+                    marks, energyStack, sharedFeatureList, logger);
         } else {
             return FinderEvaluator.findPairFromCurrentSelectionObject(overlays);
         }
@@ -108,14 +108,14 @@ class FinderEvaluator {
     }
 
     private static IdentifiablePair<Overlay> findPairFromCurrentSelectionMark(
-            MarkCollection cfg, EnergyStack raster, SharedFeatureMulti sharedFeatureList, Logger logger)
+            MarkCollection marks, EnergyStack raster, SharedFeatureMulti sharedFeatureList, Logger logger)
             throws CreateException {
 
         RegionMembershipWithFlags regionMembership =
                 RegionMapSingleton.instance()
                         .membershipWithFlagsForIndex(GlobalRegionIdentifiers.SUBMARK_INSIDE);
 
-        if (cfg.size() <= 1) {
+        if (marks.size() <= 1) {
             return null;
         }
 
@@ -123,11 +123,11 @@ class FinderEvaluator {
 
         // We loop through all permutations of selected Marks, and test if a pair
         //  can be found amongst them
-        for (Mark m1 : cfg) {
+        for (Mark m1 : marks) {
 
             assert (m1 != null);
 
-            for (Mark m2 : cfg) {
+            for (Mark m2 : marks) {
 
                 // Let's only do each combination once
                 if (m1.getId() >= m2.getId()) {

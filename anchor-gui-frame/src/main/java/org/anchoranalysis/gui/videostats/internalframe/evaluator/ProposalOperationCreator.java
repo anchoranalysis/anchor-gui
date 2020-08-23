@@ -26,7 +26,7 @@
 
 package org.anchoranalysis.gui.videostats.internalframe.evaluator;
 
-import org.anchoranalysis.anchor.mpp.bean.cfg.MarkWithIdentifierFactory;
+import org.anchoranalysis.anchor.mpp.bean.mark.MarkWithIdentifierFactory;
 import org.anchoranalysis.anchor.mpp.mark.MarkCollection;
 import org.anchoranalysis.anchor.mpp.proposer.ProposerContext;
 import org.anchoranalysis.core.error.OperationFailedException;
@@ -35,6 +35,6 @@ import org.anchoranalysis.gui.videostats.internalframe.ProposalOperation;
 
 public interface ProposalOperationCreator {
 
-    ProposalOperation create(MarkCollection cfg, Point3d position, ProposerContext context, MarkWithIdentifierFactory markFactory)
+    ProposalOperation create(MarkCollection marks, Point3d position, ProposerContext context, MarkWithIdentifierFactory markFactory)
             throws OperationFailedException;
 }

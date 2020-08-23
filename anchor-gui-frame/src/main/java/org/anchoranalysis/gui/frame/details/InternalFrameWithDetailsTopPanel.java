@@ -45,7 +45,7 @@ import org.anchoranalysis.gui.frame.details.canvas.ControllerAction;
 import org.anchoranalysis.gui.frame.details.canvas.InitialSliderState;
 import org.anchoranalysis.gui.frame.details.canvas.InternalFrameCanvas;
 import org.anchoranalysis.gui.frame.details.canvas.controller.imageview.ControllerImageView;
-import org.anchoranalysis.gui.image.frame.ISliderState;
+import org.anchoranalysis.gui.image.frame.SliderState;
 import org.anchoranalysis.gui.retrieveelements.IRetrieveElements;
 import org.anchoranalysis.gui.videostats.dropdown.VideoStatsModuleGlobalParams;
 import org.anchoranalysis.image.extent.Dimensions;
@@ -71,7 +71,7 @@ public class InternalFrameWithDetailsTopPanel {
         delegate = new InternalFrameCanvas(frameName);
     }
 
-    public ISliderState init(
+    public SliderState init(
             BoundedRangeIncompleteDynamic indexBounds,
             IndexGettableSettable indexCntr,
             DisplayUpdateRememberStack stackProvider,
@@ -82,7 +82,7 @@ public class InternalFrameWithDetailsTopPanel {
 
         setupTopPanel();
 
-        ISliderState sliderState =
+        SliderState sliderState =
                 delegate.init(
                         indexBounds,
                         indexCntr,

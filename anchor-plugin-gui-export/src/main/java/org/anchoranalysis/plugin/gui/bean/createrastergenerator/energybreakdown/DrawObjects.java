@@ -137,7 +137,7 @@ public class DrawObjects extends GeneratorFactory<IndexableMarksWithEnergy> {
 
             DisplayStack backgroundStack = DisplayStack.create(backgroundStackSrc);
 
-            ColoredMarks coloredCfg =
+            ColoredMarks coloredMarks =
                     new ColoredMarks(
                             extractOrEmpty(sourceObject.getObject().getMarks()),
                             params.getColorIndexMarks(),
@@ -148,7 +148,7 @@ public class DrawObjects extends GeneratorFactory<IndexableMarksWithEnergy> {
                             .membershipWithFlagsForIndex(GlobalRegionIdentifiers.SUBMARK_INSIDE);
 
             ColoredOverlayCollection oc =
-                    OverlayCollectionMarkFactory.createColor(coloredCfg, regionMembership);
+                    OverlayCollectionMarkFactory.createColor(coloredMarks, regionMembership);
             return OverlayedDisplayStackUpdate.assignOverlaysAndBackground(oc, backgroundStack);
 
         } catch (CreateException e) {

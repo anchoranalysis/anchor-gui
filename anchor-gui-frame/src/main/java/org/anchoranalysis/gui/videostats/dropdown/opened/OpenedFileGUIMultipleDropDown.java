@@ -42,7 +42,7 @@ import org.anchoranalysis.gui.videostats.dropdown.AddVideoStatsModule;
 import org.anchoranalysis.gui.videostats.dropdown.DualMenuWrapper;
 import org.anchoranalysis.gui.videostats.dropdown.VideoStatsModuleCreatorAndAdder;
 import org.anchoranalysis.gui.videostats.dropdown.VideoStatsModuleGlobalParams;
-import org.anchoranalysis.gui.videostats.internalframe.cfgtorgb.MultiInput;
+import org.anchoranalysis.gui.videostats.internalframe.markstorgb.MultiInput;
 import org.anchoranalysis.gui.videostats.modulecreator.RasterMultiModuleCreator;
 import org.anchoranalysis.gui.videostats.operation.VideoStatsOperation;
 import org.anchoranalysis.gui.videostats.operation.VideoStatsOperationFromCreatorAndAdder;
@@ -150,14 +150,14 @@ public class OpenedFileGUIMultipleDropDown {
             MarkDisplaySettings markDisplaySettings) {
         addBackgroundSetAndNoObjects(listCombined, out);
 
-        // Get cfg menu
+        // Get marks menu
         addMulti(
                 listCombined,
                 out,
                 rootOperation,
-                "Cfg",
-                new MultiCfgInputToOverlay(markDisplaySettings),
-                VideoStatsOperationCombine::getCfg);
+                "Marks",
+                new MultiInputMarksToOverlay(markDisplaySettings),
+                VideoStatsOperationCombine::getMarks);
         addMulti(
                 listCombined,
                 out,
@@ -173,7 +173,7 @@ public class OpenedFileGUIMultipleDropDown {
         List<NamedRasterSet> list = new ArrayList<>();
         for (VideoStatsOperationCombine op : listCombined) {
             if (op.getEnergyBackground() != null
-                    && !op.getCfg().isPresent()
+                    && !op.getMarks().isPresent()
                     && !op.getObjects().isPresent()) {
                 list.add(
                         new NamedRasterSet(

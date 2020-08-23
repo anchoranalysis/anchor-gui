@@ -1,6 +1,6 @@
 /*-
  * #%L
- * anchor-gui-common
+ * anchor-gui-frame
  * %%
  * Copyright (C) 2010 - 2020 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann-La Roche
  * %%
@@ -24,20 +24,34 @@
  * #L%
  */
 
-package org.anchoranalysis.gui.mergebridge;
+package org.anchoranalysis.gui.videostats.dropdown.opened;
 
-import org.anchoranalysis.anchor.mpp.feature.energy.IndexableMarksWithEnergy;
 import org.anchoranalysis.anchor.mpp.mark.MarkCollection;
-import org.anchoranalysis.gui.mergebridge.DualStateContainer.TransformInstanteState;
+import org.anchoranalysis.anchor.mpp.overlay.OverlayCollectionMarkFactory;
+import org.anchoranalysis.anchor.overlay.IndexableOverlays;
+import org.anchoranalysis.anchor.overlay.collection.OverlayCollection;
+import org.anchoranalysis.core.bridge.BridgeElementWithIndex;
+import org.anchoranalysis.core.error.OperationFailedException;
+import org.anchoranalysis.gui.marks.MarkDisplaySettings;
+import org.anchoranalysis.gui.videostats.internalframe.markstorgb.MultiInput;
+import lombok.RequiredArgsConstructor;
 
-public class TransformToCfg implements TransformInstanteState<MarkCollection> {
+@RequiredArgsConstructor
+class MultiInputMarksToOverlay
+        implements BridgeElementWithIndex<
+                MultiInput<MarkCollection>, IndexableOverlays, OperationFailedException> {
 
+    private final MarkDisplaySettings markDisplaySettings;
+    
     @Override
-    public MarkCollection transform(IndexableMarksWithEnergy state) {
-        if (state != null && state.getMarks() != null) {
-            return state.getMarks().getMarks();
-        } else {
-            return null;
-        }
+    public IndexableOverlays bridgeElement(int index, MultiInput<MarkCollection> sourceObject)
+            throws OperationFailedException {
+
+        MarkCollection marks = sourceObject.getAssociatedObjects().get();
+
+        OverlayCollection overlays =
+                OverlayCollectionMarkFactory.createWithoutColor(
+                        marks, markDisplaySettings.regionMembership());
+        return new IndexableOverlays(index, overlays);
     }
 }

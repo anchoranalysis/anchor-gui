@@ -24,18 +24,20 @@
  * #L%
  */
 
-package org.anchoranalysis.gui.image.frame;
+package org.anchoranalysis.gui.mergebridge;
 
-import org.anchoranalysis.gui.image.ISliceNumGetter;
-import org.anchoranalysis.gui.videostats.link.LinkModules.Adder;
+import org.anchoranalysis.anchor.mpp.feature.energy.IndexableMarksWithEnergy;
+import org.anchoranalysis.anchor.mpp.mark.MarkCollection;
+import org.anchoranalysis.gui.mergebridge.DualStateContainer.TransformInstanteState;
 
-public interface ISliderState extends ISliceNumGetter {
+public class TransformToMarks implements TransformInstanteState<MarkCollection> {
 
-    int getIndex();
-
-    void setSliceNum(int sliceNum);
-
-    void addSliceTo(Adder<Integer> adder);
-
-    void addIndexTo(Adder<Integer> adder);
+    @Override
+    public MarkCollection transform(IndexableMarksWithEnergy state) {
+        if (state != null && state.getMarks() != null) {
+            return state.getMarks().getMarks();
+        } else {
+            return null;
+        }
+    }
 }

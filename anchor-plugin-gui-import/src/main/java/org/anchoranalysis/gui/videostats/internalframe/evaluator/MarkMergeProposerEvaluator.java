@@ -30,7 +30,7 @@ import java.awt.Color;
 import java.util.List;
 import java.util.Optional;
 import lombok.AllArgsConstructor;
-import org.anchoranalysis.anchor.mpp.bean.cfg.MarkWithIdentifierFactory;
+import org.anchoranalysis.anchor.mpp.bean.mark.MarkWithIdentifierFactory;
 import org.anchoranalysis.anchor.mpp.bean.proposer.MarkMergeProposer;
 import org.anchoranalysis.anchor.mpp.mark.ColoredMarks;
 import org.anchoranalysis.anchor.mpp.mark.Mark;
@@ -54,10 +54,10 @@ public class MarkMergeProposerEvaluator implements ProposalOperationCreator {
 
     @Override
     public ProposalOperation create(
-            final MarkCollection cfg, Point3d position, final ProposerContext context, final MarkWithIdentifierFactory markFactory)
+            final MarkCollection marks, Point3d position, final ProposerContext context, final MarkWithIdentifierFactory markFactory)
             throws OperationFailedException {
 
-        if (cfg.size() != 2) {
+        if (marks.size() != 2) {
             throw new IllegalArgumentException(
                     "The existing configuration must have exactly 2 items");
         }
@@ -67,8 +67,8 @@ public class MarkMergeProposerEvaluator implements ProposalOperationCreator {
             public ProposedMarks propose(ErrorNode errorNode)
                     throws ProposalAbnormalFailureException {
 
-                Mark mark1 = cfg.get(0);
-                Mark mark2 = cfg.get(1);
+                Mark mark1 = marks.get(0);
+                Mark mark2 = marks.get(1);
 
                 VoxelizedMarkMemo markMemo1 = context.create(mark1);
                 VoxelizedMarkMemo markMemo2 = context.create(mark2);
@@ -82,41 +82,41 @@ public class MarkMergeProposerEvaluator implements ProposalOperationCreator {
                 if (proposedMark.isPresent()) {
                     er.setSuccess(true);
 
-                    ColoredMarks coloredCfg = cfgForMark(proposedMark);
-                    er.setColoredCfg(coloredCfg);
-                    er.setMarksToRedraw(cfg.createMerged(coloredCfg.getMarks()));
+                    ColoredMarks coloredMarks = marksForMark(proposedMark);
+                    er.setColoredMarks(coloredMarks);
+                    er.setMarksToRedraw(marks.createMerged(coloredMarks.getMarks()));
                     er.setMarksCore(new MarkCollection(proposedMark.get()));
                 } else {
-                    er.setMarksToRedraw(cfg);
+                    er.setMarksToRedraw(marks);
                 }
                 return er;
             }
         };
     }
 
-    private ColoredMarks cfgForMark(Optional<Mark> mark) {
+    private ColoredMarks marksForMark(Optional<Mark> mark) {
 
-        ColoredMarks cfgOut = new ColoredMarks();
+        ColoredMarks marksOut = new ColoredMarks();
         if (mark.isPresent()) {
 
             Mark markNew = mark.get().duplicate();
             markNew.setId(0);
 
-            cfgOut.addChangeID(markNew, new RGBColor(Color.BLUE));
+            marksOut.addChangeID(markNew, new RGBColor(Color.BLUE));
         }
 
         // Allows us to associate a list of points with  the mark
-        addToOut(markMergeProposer.getLastPoints1(), Color.GREEN, cfgOut);
+        addToOut(markMergeProposer.getLastPoints1(), Color.GREEN, marksOut);
 
         // Allows us to associate a list of points with  the mark
-        addToOut(markMergeProposer.getLastPoints2(), Color.YELLOW, cfgOut);
+        addToOut(markMergeProposer.getLastPoints2(), Color.YELLOW, marksOut);
 
-        return cfgOut;
+        return marksOut;
     }
 
-    private static void addToOut(Optional<List<Point3f>> points, Color color, ColoredMarks cfgOut) {
+    private static void addToOut(Optional<List<Point3f>> points, Color color, ColoredMarks marksOut) {
         if (points.isPresent()) {
-            cfgOut.addChangeID(
+            marksOut.addChangeID(
                     PointListFactory.createMarkFromPoints3f(points.get()),
                     new RGBColor(color)); // 1 is just to give us a different color
         }

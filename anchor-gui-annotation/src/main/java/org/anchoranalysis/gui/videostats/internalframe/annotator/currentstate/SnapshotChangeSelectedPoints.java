@@ -41,9 +41,9 @@ class SnapshotChangeSelectedPoints implements IChangeSelectedPoints {
     }
 
     @Override
-    public void addCurrentProposedCfgFromSelectedPoints(Mark mark) {
+    public void addCurrentProposedMarksFromSelectedPoints(Mark mark) {
         recorder.recordSnapshot();
-        delegate.addCurrentProposedCfgFromSelectedPoints(mark);
+        delegate.addCurrentProposedMarksFromSelectedPoints(mark);
     }
 
     @Override

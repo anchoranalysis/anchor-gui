@@ -24,24 +24,18 @@
  * #L%
  */
 
-package org.anchoranalysis.gui.videostats.internalframe.cfgtorgb;
+package org.anchoranalysis.gui.videostats.internalframe.markstorgb;
 
-import lombok.EqualsAndHashCode;
-import org.anchoranalysis.anchor.overlay.collection.ColoredOverlayCollection;
-import org.anchoranalysis.core.index.Indexable;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
+import org.anchoranalysis.gui.videostats.dropdown.common.EnergyBackground;
+import org.anchoranalysis.gui.videostats.operation.combine.OverlayCollectionSupplier;
 
-@EqualsAndHashCode(callSuper = true)
-public class IndexableColoredOverlays extends Indexable {
+@AllArgsConstructor
+public class MultiInput<T> {
 
-    private final ColoredOverlayCollection coloredOverlayCollection;
-
-    public IndexableColoredOverlays(
-            int iter, ColoredOverlayCollection coloredOverlayCollection) {
-        super(iter);
-        this.coloredOverlayCollection = coloredOverlayCollection;
-    }
-
-    public ColoredOverlayCollection getOverlayCollection() {
-        return coloredOverlayCollection;
-    }
+    @Getter @Setter private String name;
+    @Getter private EnergyBackground energyBackground;
+    @Getter private OverlayCollectionSupplier<T> associatedObjects;
 }

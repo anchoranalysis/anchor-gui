@@ -1,6 +1,6 @@
 /*-
  * #%L
- * anchor-plugin-gui-import
+ * anchor-gui-annotation
  * %%
  * Copyright (C) 2010 - 2020 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann-La Roche
  * %%
@@ -24,28 +24,13 @@
  * #L%
  */
 
-package org.anchoranalysis.gui.videostats.internalframe.evaluator.fromproposer;
+package org.anchoranalysis.gui.videostats.internalframe.annotator.currentstate;
 
-import org.anchoranalysis.anchor.mpp.bean.init.MPPInitParams;
-import org.anchoranalysis.anchor.mpp.bean.proposer.MarkCollectionProposer;
-import org.anchoranalysis.core.name.provider.NamedProvider;
-import org.anchoranalysis.gui.videostats.internalframe.evaluator.ProposalOperationCreator;
-import org.anchoranalysis.gui.videostats.internalframe.markredraw.MarksProposerEvaluator;
+import org.anchoranalysis.anchor.mpp.mark.MarkCollection;
 
-public class FromCfgProposer extends ProposalOperationCreatorFromProposer<MarkCollectionProposer> {
+public interface QueryAcceptedRejected {
 
-    @Override
-    public ProposalOperationCreator creatorFromProposer(MarkCollectionProposer proposer) {
-        return new MarksProposerEvaluator(proposer);
-    }
+    MarkCollection getMarksAccepted();
 
-    @Override
-    public NamedProvider<MarkCollectionProposer> allProposers(MPPInitParams so) {
-        return so.getCfgProposerSet();
-    }
-
-    @Override
-    public String getEvaluatorName() {
-        return "Cfg Proposer";
-    }
+    MarkCollection getMarksRejected();
 }

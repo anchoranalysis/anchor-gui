@@ -26,7 +26,7 @@
 
 package org.anchoranalysis.gui.videostats.internalframe.evaluator;
 
-import org.anchoranalysis.anchor.mpp.bean.cfg.MarkWithIdentifierFactory;
+import org.anchoranalysis.anchor.mpp.bean.mark.MarkWithIdentifierFactory;
 import org.anchoranalysis.anchor.mpp.bean.proposer.MarkProposer;
 import org.anchoranalysis.anchor.mpp.mark.Mark;
 import org.anchoranalysis.anchor.mpp.mark.MarkCollection;
@@ -46,7 +46,7 @@ public class MarkProposerEvaluatorEnergyStack implements ProposalOperationCreato
 
     @Override
     public ProposalOperation create(
-            MarkCollection cfg, final Point3d position, final ProposerContext context, final MarkWithIdentifierFactory markFactory)
+            MarkCollection marks, final Point3d position, final ProposerContext context, final MarkWithIdentifierFactory markFactory)
             throws OperationFailedException {
 
         final Mark mark =
@@ -68,8 +68,8 @@ public class MarkProposerEvaluatorEnergyStack implements ProposalOperationCreato
                 proposal.setSuccess(success);
 
                 if (success) {
-                    proposal.setColoredCfg(
-                            MarkProposerEvaluatorUtilities.generateCfgFromMark(
+                    proposal.setColoredMarks(
+                            MarkProposerEvaluatorUtilities.generateMarksFromMark(
                                     pmm.getMark(),
                                     position,
                                     markProposer,

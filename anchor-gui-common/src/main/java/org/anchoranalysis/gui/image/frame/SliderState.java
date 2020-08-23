@@ -1,6 +1,6 @@
 /*-
  * #%L
- * anchor-gui-frame
+ * anchor-gui-common
  * %%
  * Copyright (C) 2010 - 2020 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann-La Roche
  * %%
@@ -24,18 +24,18 @@
  * #L%
  */
 
-package org.anchoranalysis.gui.frame.threaded.stack;
+package org.anchoranalysis.gui.image.frame;
 
-import org.anchoranalysis.core.index.IndexGettableSettable;
-import org.anchoranalysis.gui.displayupdate.DisplayUpdateRememberStack;
+import org.anchoranalysis.gui.image.ISliceNumGetter;
+import org.anchoranalysis.gui.videostats.link.LinkModules.Adder;
 
-public interface IThreadedProducer {
+public interface SliderState extends ISliceNumGetter {
 
-    // How it provides stacks to other applications (the output)
-    DisplayUpdateRememberStack getStackProvider();
+    int getIndex();
 
-    // How it is updated with indexes from other classes (the input control mechanism)
-    IndexGettableSettable getIndexGettableSettable();
+    void setSliceNum(int sliceNum);
 
-    void dispose();
+    void addSliceTo(Adder<Integer> adder);
+
+    void addIndexTo(Adder<Integer> adder);
 }

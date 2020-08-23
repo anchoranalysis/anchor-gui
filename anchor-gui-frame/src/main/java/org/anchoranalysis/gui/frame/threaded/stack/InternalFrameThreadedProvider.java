@@ -36,7 +36,7 @@ import org.anchoranalysis.gui.frame.details.canvas.ControllerAction;
 import org.anchoranalysis.gui.frame.details.canvas.InitialSliderState;
 import org.anchoranalysis.gui.frame.details.canvas.InternalFrameCanvas;
 import org.anchoranalysis.gui.frame.details.canvas.controller.imageview.ControllerImageView;
-import org.anchoranalysis.gui.image.frame.ISliderState;
+import org.anchoranalysis.gui.image.frame.SliderState;
 import org.anchoranalysis.gui.retrieveelements.IRetrieveElements;
 import org.anchoranalysis.gui.videostats.IModuleCreatorDefaultState;
 import org.anchoranalysis.gui.videostats.dropdown.VideoStatsModuleGlobalParams;
@@ -51,15 +51,15 @@ public class InternalFrameThreadedProvider {
 
     private boolean indexesAreFrames = false;
 
-    private IThreadedProducer producer;
+    private ThreadedProducer producer;
 
     public InternalFrameThreadedProvider(String title, boolean indexesAreFrames) {
         delegate = new InternalFrameWithDetailsTopPanel(title);
         this.indexesAreFrames = indexesAreFrames;
     }
 
-    public ISliderState init(
-            IThreadedProducer producer,
+    public SliderState init(
+            ThreadedProducer producer,
             BoundedRangeIncompleteDynamic indexBounds,
             boolean includeFrameAdjusting,
             DefaultModuleState initialState,
@@ -87,7 +87,7 @@ public class InternalFrameThreadedProvider {
         return indexesAreFrames ? initialState.getLinkState().getFrameIndex() : 0;
     }
 
-    public IModuleCreatorDefaultState moduleCreator(ISliderState sliderState) {
+    public IModuleCreatorDefaultState moduleCreator(SliderState sliderState) {
         return defaultFrameState -> {
             VideoStatsModule module = new VideoStatsModule();
 
@@ -102,7 +102,7 @@ public class InternalFrameThreadedProvider {
         };
     }
 
-    private void configureLink(VideoStatsModule module, ISliderState sliderState) {
+    private void configureLink(VideoStatsModule module, SliderState sliderState) {
         LinkModules link = new LinkModules(module);
 
         if (indexesAreFrames) {

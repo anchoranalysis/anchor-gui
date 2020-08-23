@@ -35,7 +35,7 @@ import org.anchoranalysis.gui.frame.details.canvas.ControllerAction;
 import org.anchoranalysis.gui.frame.details.canvas.controller.imageview.ControllerImageView;
 import org.anchoranalysis.gui.frame.display.OverlayedDisplayStackUpdate;
 import org.anchoranalysis.gui.frame.overlays.ExtractOverlays;
-import org.anchoranalysis.gui.image.frame.ISliderState;
+import org.anchoranalysis.gui.image.frame.SliderState;
 import org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.ControllerPopupMenuWithBackground;
 import org.anchoranalysis.gui.retrieveelements.IRetrieveElements;
 import org.anchoranalysis.gui.retrieveelements.RetrieveElements;
@@ -43,11 +43,11 @@ import org.anchoranalysis.gui.retrieveelements.RetrieveElementsList;
 import org.anchoranalysis.gui.retrieveelements.RetrieveElementsOverlayCollection;
 import org.anchoranalysis.gui.videostats.IModuleCreatorDefaultState;
 import org.anchoranalysis.gui.videostats.dropdown.VideoStatsModuleGlobalParams;
-import org.anchoranalysis.gui.videostats.internalframe.IColoredCfgUpdater;
-import org.anchoranalysis.gui.videostats.internalframe.cfgtorgb.markdisplay.MarkDisplaySettingsWrapper;
+import org.anchoranalysis.gui.videostats.internalframe.ColoredMarksUpdater;
+import org.anchoranalysis.gui.videostats.internalframe.markstorgb.markdisplay.MarkDisplaySettingsWrapper;
 import org.anchoranalysis.gui.videostats.module.DefaultModuleState;
 
-public class InternalFrameEditableOverlays implements IColoredCfgUpdater {
+public class InternalFrameEditableOverlays implements ColoredMarksUpdater {
 
     private InternalFrameOverlaysOnRGB delegate;
 
@@ -55,7 +55,7 @@ public class InternalFrameEditableOverlays implements IColoredCfgUpdater {
         this.delegate = new InternalFrameOverlaysOnRGB(title, false);
     }
 
-    public ISliderState init(DefaultModuleState defaultState, VideoStatsModuleGlobalParams mpg)
+    public SliderState init(DefaultModuleState defaultState, VideoStatsModuleGlobalParams mpg)
             throws InitException {
 
         // We define our mark display settings without making them conditional on anything
@@ -63,7 +63,7 @@ public class InternalFrameEditableOverlays implements IColoredCfgUpdater {
                 new MarkDisplaySettingsWrapper(defaultState.getMarkDisplaySettings().duplicate());
 
         try {
-            ISliderState sliderState =
+            SliderState sliderState =
                     this.delegate.init(
                             new OverlayedDisplayStack(
                                     new ColoredOverlayCollection(),
@@ -82,7 +82,7 @@ public class InternalFrameEditableOverlays implements IColoredCfgUpdater {
         }
     }
 
-    // We send an update to the Cfg
+    // We send an update to the Marks
     @Override
     public synchronized void applyUpdate(OverlayedDisplayStackUpdate update) {
         this.delegate.getRedrawable().applyRedrawUpdate(update);
@@ -115,7 +115,7 @@ public class InternalFrameEditableOverlays implements IColoredCfgUpdater {
         return new RetrieveElementsLocal(delegate);
     }
 
-    public IModuleCreatorDefaultState moduleCreator(ISliderState sliderState) {
+    public IModuleCreatorDefaultState moduleCreator(SliderState sliderState) {
         return delegate.moduleCreator(sliderState);
     }
 

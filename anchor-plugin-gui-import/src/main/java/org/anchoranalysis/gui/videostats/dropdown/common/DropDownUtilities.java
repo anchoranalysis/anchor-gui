@@ -104,7 +104,7 @@ public class DropDownUtilities {
                                 mpg.getLogger()));
     }
 
-    public static void addCfg(
+    public static void addMarks(
             VideoStatsOperationMenu menu,
             BoundVideoStatsModuleDropDown delegate,
             OverlayCollectionSupplier<MarkCollection> op,
@@ -139,26 +139,26 @@ public class DropDownUtilities {
         addModule(module, menu, energyBackground.getAdder(), name, mpg, addAsDefault);
     }
 
-    public static void addCfgSubmenu(
+    public static void addMarksSubmenu(
             VideoStatsOperationMenu menu,
             BoundVideoStatsModuleDropDown delegate,
-            NamedProvider<MarkCollection> cfgProvider,
+            NamedProvider<MarkCollection> marks,
             EnergyBackgroundAdder energyBackground,
             VideoStatsModuleGlobalParams mpg,
             MarkDisplaySettings markDisplaySettings,
             boolean addAsDefault) {
-        if (cfgProvider.keys().isEmpty()) {
+        if (marks.keys().isEmpty()) {
             return;
         }
 
-        VideoStatsOperationMenu subMenu = menu.createSubMenu("Cfg", true);
+        VideoStatsOperationMenu subMenu = menu.createSubMenu("Marks", true);
 
-        for (String providerName : cfgProvider.keys()) {
+        for (String providerName : marks.keys()) {
 
-            addCfg(
+            addMarks(
                     subMenu,
                     delegate.createChild(providerName),
-                    () -> getFromProvider(cfgProvider, providerName),
+                    () -> getFromProvider(marks, providerName),
                     providerName,
                     energyBackground,
                     mpg,

@@ -1,6 +1,6 @@
 /*-
  * #%L
- * anchor-gui-annotation
+ * anchor-gui-common
  * %%
  * Copyright (C) 2010 - 2020 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann-La Roche
  * %%
@@ -24,13 +24,9 @@
  * #L%
  */
 
-package org.anchoranalysis.gui.videostats.internalframe.annotator.currentstate;
+package org.anchoranalysis.gui.frame.display;
 
-import org.anchoranalysis.anchor.mpp.mark.Mark;
+public interface Redrawable {
 
-public interface IChangeSelectedPoints {
-
-    void addCurrentProposedMarksFromSelectedPoints(Mark mark);
-
-    void addSelectedPoint(Mark mark);
+    void applyRedrawUpdate(OverlayedDisplayStackUpdate update);
 }

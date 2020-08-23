@@ -58,13 +58,13 @@ public class SelectPointsTool extends AnnotationTool {
     }
 
     @Override
-    public void proposed(ProposedMarks proposedCfg) {
+    public void proposed(ProposedMarks proposedMarks) {
 
-        dimensions = proposedCfg.dimensions();
+        dimensions = proposedMarks.dimensions();
 
         // Extract what should be the only mark
-        assert (proposedCfg.getMarksCore().getMarks().size() == 1);
-        Mark m = proposedCfg.getMarksCore().getMarks().get(0);
+        assert (proposedMarks.getMarksCore().getMarks().size() == 1);
+        Mark m = proposedMarks.getMarksCore().getMarks().get(0);
 
         changeSelectedPoints.addSelectedPoint(m);
     }
@@ -84,7 +84,7 @@ public class SelectPointsTool extends AnnotationTool {
             }
 
             if (evaluator.isPresent()) {
-                proposeCfgFromPoints(evaluator.get());
+                proposeMarksFromPoints(evaluator.get());
             } else {
                 errorReporter.showError(
                         SelectPointsTool.class,
@@ -94,10 +94,10 @@ public class SelectPointsTool extends AnnotationTool {
         }
     }
 
-    private void proposeCfgFromPoints(EvaluatorWithContext eval) {
+    private void proposeMarksFromPoints(EvaluatorWithContext eval) {
 
         try {
-            changeSelectedPoints.addCurrentProposedCfgFromSelectedPoints(proposeMark(eval));
+            changeSelectedPoints.addCurrentProposedMarksFromSelectedPoints(proposeMark(eval));
         } catch (PointsFitterException e) {
 
             if (e.getCause() == null) {

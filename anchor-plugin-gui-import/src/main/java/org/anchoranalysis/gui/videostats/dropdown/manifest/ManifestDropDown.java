@@ -49,7 +49,7 @@ import org.anchoranalysis.gui.finder.imgstackcollection.FinderStacksFromRootFile
 import org.anchoranalysis.gui.interactivebrowser.MarkEvaluatorManager;
 import org.anchoranalysis.gui.interactivebrowser.MarkEvaluatorSetForImage;
 import org.anchoranalysis.gui.io.loader.manifest.finder.MarksWithEnergyFinderContext;
-import org.anchoranalysis.gui.io.loader.manifest.finder.FinderCfgFolder;
+import org.anchoranalysis.gui.io.loader.manifest.finder.FinderMarksFolder;
 import org.anchoranalysis.gui.io.loader.manifest.finder.historyfolder.FinderHistoryFolderKernelDecision;
 import org.anchoranalysis.gui.marks.MarkDisplaySettings;
 import org.anchoranalysis.gui.series.TimeSequenceProvider;
@@ -68,6 +68,7 @@ import org.anchoranalysis.gui.videostats.dropdown.contextualmodulecreator.Single
 import org.anchoranalysis.gui.videostats.dropdown.modulecreator.graph.KernelIterDescriptionModuleCreator;
 import org.anchoranalysis.gui.videostats.operation.combine.OverlayCollectionSupplier;
 import org.anchoranalysis.image.io.bean.rasterreader.RasterReader;
+import org.anchoranalysis.image.io.stack.StacksOutputter;
 import org.anchoranalysis.image.stack.NamedStacksSupplier;
 import org.anchoranalysis.image.stack.wrap.WrapStackAsTimeSequence;
 import org.anchoranalysis.io.manifest.deserializer.folder.LoadContainer;
@@ -142,7 +143,7 @@ public class ManifestDropDown {
             FinderEnergyStack finderEnergyStack, RasterReader rasterReader) throws InitException {
         // Finders
         FinderStacksCombine combined = new FinderStacksCombine();
-        combined.add(new FinderStacksFromFolder(rasterReader, "stackCollection"));
+        combined.add(new FinderStacksFromFolder(rasterReader, StacksOutputter.OUTPUT_NAME));
         combined.add(new FinderStacksFromRootFiles(rasterReader, "out"));
         combined.add(
                 new FinderStacksFromEnergyStack(
@@ -237,8 +238,8 @@ public class ManifestDropDown {
         OperationCreateBackgroundSetWithAdder backgroundEnergy =
                 createBackgroundSetWithEnergy(finderEnergyStack, finderStacks, adder, mpg);
 
-        // Add: Cfgs, Rasters and object-masks
-        boolean defaultAdded = addCfgs(backgroundEnergy, finderEnergyStack, mpg);
+        // Add: Markss, Rasters and object-masks
+        boolean defaultAdded = addMarkss(backgroundEnergy, finderEnergyStack, mpg);
         addRaster(backgroundEnergy, mpg, defaultAdded);
         new AddObjects(delegate, manifests, finderEnergyStack, mpg, markDisplaySettings)
                 .apply(backgroundEnergy);
@@ -334,8 +335,7 @@ public class ManifestDropDown {
             FinderHistoryFolderKernelDecision finderKernelIterDescription,
             FinderSerializedObject<KernelProposer<VoxelizedMarksWithEnergy>> finderKernelProposer,
             OperationCreateBackgroundSetWithAdder backgroundEnergy,
-            VideoStatsModuleGlobalParams mpg)
-            throws InitException {
+            VideoStatsModuleGlobalParams mpg) {
         if (finderKernelIterDescription.exists() && finderKernelProposer.exists()) {
             delegate.addModule(
                     backgroundEnergy.operationAdder(),
@@ -362,7 +362,7 @@ public class ManifestDropDown {
     }
 
     // Returns TRUE if it's added a default, FALSE otherwise
-    private boolean addCfgs(
+    private boolean addMarkss(
             OperationCreateBackgroundSetWithAdder operationBwsaWithEnergy,
             FinderEnergyStack finderEnergyStack,
             VideoStatsModuleGlobalParams mpg) {
@@ -370,17 +370,17 @@ public class ManifestDropDown {
         boolean defaultAdded = false;
 
         try {
-            final FinderSerializedObject<MarkCollection> finderFinalCfg =
-                    new FinderSerializedObject<>("cfg", mpg.getLogger().errorReporter());
-            finderFinalCfg.doFind(manifests.getFileManifest().get());
+            final FinderSerializedObject<MarkCollection> finderFinalMarks =
+                    new FinderSerializedObject<>("marks", mpg.getLogger().errorReporter());
+            finderFinalMarks.doFind(manifests.getFileManifest().get());
 
-            if (finderFinalCfg.exists()) {
+            if (finderFinalMarks.exists()) {
 
-                DropDownUtilities.addCfg(
+                DropDownUtilities.addMarks(
                         delegate.getRootMenu(),
                         delegate,
-                        getCfgChangeException(finderFinalCfg),
-                        "Final Cfg",
+                        getMarksChangeException(finderFinalMarks),
+                        "Final Marks",
                         operationBwsaWithEnergy.energyBackground(),
                         mpg,
                         markDisplaySettings,
@@ -395,15 +395,15 @@ public class ManifestDropDown {
             defaultAdded = true;
         }
 
-        addCfgSubMenu(operationBwsaWithEnergy, mpg);
+        addMarksSubMenu(operationBwsaWithEnergy, mpg);
         return defaultAdded;
     }
 
-    private OverlayCollectionSupplier<MarkCollection> getCfgChangeException(
-            FinderSerializedObject<MarkCollection> finderFinalCfg) {
+    private OverlayCollectionSupplier<MarkCollection> getMarksChangeException(
+            FinderSerializedObject<MarkCollection> finderFinalMarks) {
         return () -> {
             try {
-                return finderFinalCfg.get();
+                return finderFinalMarks.get();
             } catch (IOException e) {
                 throw new OperationFailedException(e);
             }
@@ -459,15 +459,15 @@ public class ManifestDropDown {
         return false;
     }
 
-    private void addCfgSubMenu(
+    private void addMarksSubMenu(
             OperationCreateBackgroundSetWithAdder operationBwsaWithEnergy,
             VideoStatsModuleGlobalParams mpg) {
         try {
-            FinderCfgFolder finder = new FinderCfgFolder("cfgCollection", "cfg");
+            FinderMarksFolder finder = new FinderMarksFolder("marksCollection", "marks");
             finder.doFind(manifests.getFileManifest().get());
 
             NamedProvider<MarkCollection> provider = finder.createNamedProvider(false);
-            DropDownUtilities.addCfgSubmenu(
+            DropDownUtilities.addMarksSubmenu(
                     delegate.getRootMenu(),
                     delegate,
                     provider,

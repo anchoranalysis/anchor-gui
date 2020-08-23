@@ -28,7 +28,7 @@ package org.anchoranalysis.gui.videostats.internalframe.evaluator;
 
 import java.awt.Color;
 import lombok.RequiredArgsConstructor;
-import org.anchoranalysis.anchor.mpp.bean.cfg.MarkWithIdentifierFactory;
+import org.anchoranalysis.anchor.mpp.bean.mark.MarkWithIdentifierFactory;
 import org.anchoranalysis.anchor.mpp.bean.regionmap.RegionMapSingleton;
 import org.anchoranalysis.anchor.mpp.bean.regionmap.RegionMembershipWithFlags;
 import org.anchoranalysis.anchor.mpp.mark.GlobalRegionIdentifiers;
@@ -58,25 +58,25 @@ public class MarkSphereOnPointProposerEvaluator implements ProposalOperationCrea
 
     @Override
     public ProposalOperation create(
-            MarkCollection cfg, final Point3d position, ProposerContext context, MarkWithIdentifierFactory markFactory)
+            MarkCollection marks, final Point3d position, ProposerContext context, MarkWithIdentifierFactory markFactory)
             throws OperationFailedException {
 
         return errorNode -> {
-            ProposedMarks proposedCfg = new ProposedMarks(dimensions);
-            proposedCfg.setSuccess(true);
+            ProposedMarks proposedMarks = new ProposedMarks(dimensions);
+            proposedMarks.setSuccess(true);
 
             Sphere markSphere = new Sphere();
             markSphere.setRadius(1);
             markSphere.setPos(position);
 
-            proposedCfg.getMarksCore().add(markSphere);
-            proposedCfg.getMarksToRedraw().add(markSphere);
-            proposedCfg
-                    .getColoredCfg()
+            proposedMarks.getMarksCore().add(markSphere);
+            proposedMarks.getMarksToRedraw().add(markSphere);
+            proposedMarks
+                    .getColoredMarks()
                     .add(new OverlayMark(markSphere, regionMembership), colorMark);
-            proposedCfg.setSuggestedSliceNum((int) position.z());
+            proposedMarks.setSuggestedSliceNum((int) position.z());
 
-            return proposedCfg;
+            return proposedMarks;
         };
     }
 }

@@ -24,10 +24,24 @@
  * #L%
  */
 
-package org.anchoranalysis.gui.videostats.internalframe;
+package org.anchoranalysis.gui.videostats.internalframe.markstorgb;
 
-import org.anchoranalysis.gui.frame.display.OverlayedDisplayStackUpdate;
+import lombok.EqualsAndHashCode;
+import org.anchoranalysis.anchor.overlay.collection.ColoredOverlayCollection;
+import org.anchoranalysis.core.index.Indexable;
 
-public interface IColoredCfgUpdater {
-    void applyUpdate(OverlayedDisplayStackUpdate update);
+@EqualsAndHashCode(callSuper = true)
+public class IndexableColoredOverlays extends Indexable {
+
+    private final ColoredOverlayCollection coloredOverlayCollection;
+
+    public IndexableColoredOverlays(
+            int iter, ColoredOverlayCollection coloredOverlayCollection) {
+        super(iter);
+        this.coloredOverlayCollection = coloredOverlayCollection;
+    }
+
+    public ColoredOverlayCollection getOverlayCollection() {
+        return coloredOverlayCollection;
+    }
 }

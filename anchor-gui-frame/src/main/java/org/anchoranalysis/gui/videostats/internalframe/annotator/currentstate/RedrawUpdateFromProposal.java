@@ -41,12 +41,12 @@ public class RedrawUpdateFromProposal {
                 selectUpdate(er, boxRedraw), overlaysForTrigger(er), suggestedSliceNum(er));
     }
 
-    private static OverlayedDisplayStackUpdate selectUpdate(ProposedMarks cfg, MarkCollection boxRedraw) {
-        ColoredOverlayCollection oc = cfg.getColoredCfg();
+    private static OverlayedDisplayStackUpdate selectUpdate(ProposedMarks marks, MarkCollection boxRedraw) {
+        ColoredOverlayCollection oc = marks.getColoredMarks();
         if (boxRedraw != null) {
             OverlayCollection ocRedraw =
                     OverlayCollectionMarkFactory.createWithoutColor(
-                            boxRedraw, cfg.getRegionMembership());
+                            boxRedraw, marks.getRegionMembership());
             return OverlayedDisplayStackUpdate.updateOverlaysWithSimilar(oc, ocRedraw);
         } else {
             return OverlayedDisplayStackUpdate.updateOverlaysWithSimilar(oc);
@@ -55,16 +55,16 @@ public class RedrawUpdateFromProposal {
 
     // HACK
     // Let's just always send the fist item
-    // We create a cfg with just the first item
+    // We create a marks with just the first item
     private static OverlayCollection overlaysForTrigger(ProposedMarks er) {
         // We the marks back from the overlays
-        // Cfg cfg = OverlayCollectionMarkFactory.cfgFromOverlays(
-        // er.getColoredCfg().getOverlayCollection() );
+        // Marks marks = OverlayCollectionMarkFactory.marksFromOverlays(
+        // er.getColoredMarks().getOverlayCollection() );
 
         OverlayCollection ocFirst = new OverlayCollection();
 
-        if (er.isSuccess() && er.getColoredCfg().getOverlays().size() >= 1) {
-            ocFirst.add(er.getColoredCfg().getOverlays().get(0));
+        if (er.isSuccess() && er.getColoredMarks().getOverlays().size() >= 1) {
+            ocFirst.add(er.getColoredMarks().getOverlays().get(0));
         }
 
         return ocFirst;

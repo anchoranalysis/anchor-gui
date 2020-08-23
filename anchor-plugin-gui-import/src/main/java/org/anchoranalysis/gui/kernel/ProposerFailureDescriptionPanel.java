@@ -57,7 +57,7 @@ import org.anchoranalysis.core.property.IPropertyValueSendable;
 import org.anchoranalysis.gui.frame.display.OverlayedDisplayStackUpdate;
 import org.anchoranalysis.gui.marks.StatePanel;
 import org.anchoranalysis.gui.marks.StatePanelUpdateException;
-import org.anchoranalysis.gui.videostats.internalframe.IColoredCfgUpdater;
+import org.anchoranalysis.gui.videostats.internalframe.ColoredMarksUpdater;
 
 public class ProposerFailureDescriptionPanel extends StatePanel<ProposerFailureDescription> {
 
@@ -68,7 +68,7 @@ public class ProposerFailureDescriptionPanel extends StatePanel<ProposerFailureD
     private JPanel panel;
     private JPanel buttonPanel;
 
-    private IColoredCfgUpdater setCfg;
+    private ColoredMarksUpdater setMarks;
 
     // If set to a string, we always expand a node of this name
     // If empty we expand all nodes
@@ -142,7 +142,7 @@ public class ProposerFailureDescriptionPanel extends StatePanel<ProposerFailureD
 
                     OverlayedDisplayStackUpdate update =
                             OverlayedDisplayStackUpdate.assignOverlays(coc);
-                    setCfg.applyUpdate(update);
+                    setMarks.applyUpdate(update);
                 }
             }
         }
@@ -161,7 +161,7 @@ public class ProposerFailureDescriptionPanel extends StatePanel<ProposerFailureD
         return coc;
     }
 
-    public ProposerFailureDescriptionPanel(IColoredCfgUpdater setCfg) {
+    public ProposerFailureDescriptionPanel(ColoredMarksUpdater setMarks) {
 
         this.panel = new JPanel();
 
@@ -173,7 +173,7 @@ public class ProposerFailureDescriptionPanel extends StatePanel<ProposerFailureD
         this.panel.setBorder(BorderFactory.createEmptyBorder());
         this.panel.add(scrollPane, BorderLayout.CENTER);
 
-        this.setCfg = setCfg;
+        this.setMarks = setMarks;
 
         buttonPanel = new JPanel();
         buttonPanel.setLayout(new FlowLayout());
@@ -181,7 +181,7 @@ public class ProposerFailureDescriptionPanel extends StatePanel<ProposerFailureD
         buttonPanel.add(new JButton(new SetExpandAction()));
         buttonPanel.add(new JButton(new ClearExpandAction()));
 
-        if (this.setCfg != null) {
+        if (this.setMarks != null) {
             buttonPanel.add(new JButton(new ShowAssociatedMark()));
         }
 

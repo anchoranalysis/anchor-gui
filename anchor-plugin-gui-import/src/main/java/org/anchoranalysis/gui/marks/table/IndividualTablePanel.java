@@ -160,7 +160,7 @@ public class IndividualTablePanel {
             tablePanel.getTable().getSelectionModel().clearSelection();
 
             int i = 0;
-            for (Mark mark : tableModel.getCfg()) {
+            for (Mark mark : tableModel.getMarks()) {
 
                 if (idSet.contains(mark.getId())) {
                     tablePanel.getTable().getSelectionModel().addSelectionInterval(i, i);

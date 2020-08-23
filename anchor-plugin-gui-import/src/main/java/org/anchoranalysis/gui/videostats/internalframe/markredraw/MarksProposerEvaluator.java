@@ -28,7 +28,7 @@ package org.anchoranalysis.gui.videostats.internalframe.markredraw;
 
 import java.awt.Color;
 import java.util.Optional;
-import org.anchoranalysis.anchor.mpp.bean.cfg.MarkWithIdentifierFactory;
+import org.anchoranalysis.anchor.mpp.bean.mark.MarkWithIdentifierFactory;
 import org.anchoranalysis.anchor.mpp.bean.proposer.MarkCollectionProposer;
 import org.anchoranalysis.anchor.mpp.mark.ColoredMarks;
 import org.anchoranalysis.anchor.mpp.mark.Mark;
@@ -75,9 +75,9 @@ public class MarksProposerEvaluator implements ProposalOperationCreator {
 
             if (marksProposed.isPresent()) {
 
-                ColoredMarks coloredCfg = generateOutputMarks(marksProposed);
-                proposal.setColoredCfg(coloredCfg);
-                proposal.setMarksToRedraw(marksProposed.get().createMerged(coloredCfg.getMarks()));
+                ColoredMarks coloredMarks = generateOutputMarks(marksProposed);
+                proposal.setColoredMarks(coloredMarks);
+                proposal.setMarksToRedraw(marksProposed.get().createMerged(coloredMarks.getMarks()));
                 proposal.setMarksCore(marksProposed.get());
 
                 proposal.setSuggestedSliceNum((int) marksProposed.get().get(0).centerPoint().z());

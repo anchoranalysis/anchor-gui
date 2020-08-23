@@ -36,7 +36,7 @@ import org.anchoranalysis.gui.frame.details.canvas.ControllerAction;
 import org.anchoranalysis.gui.frame.details.canvas.ControllerMouse;
 import org.anchoranalysis.gui.frame.marks.proposer.MarksProposerMouseClickAdapter;
 import org.anchoranalysis.gui.frame.overlays.ExtractOverlays;
-import org.anchoranalysis.gui.image.frame.ISliderState;
+import org.anchoranalysis.gui.image.frame.SliderState;
 import org.anchoranalysis.gui.videostats.internalframe.annotator.AnnotationPanelParams;
 import org.anchoranalysis.gui.videostats.internalframe.annotator.navigation.PanelMark;
 import org.anchoranalysis.gui.videostats.internalframe.annotator.navigation.PanelTool;
@@ -83,7 +83,7 @@ class HelperAddActions {
             ExtractOverlays extractOverlays,
             ControllerMouse controllerMouse,
             PanelTool panelTool,
-            ISliderState sliderState,
+            SliderState sliderState,
             RandomNumberGenerator rng,
             ErrorReporter errorReporter) {
         MarksProposerMouseClickAdapter clickListener =
@@ -93,8 +93,8 @@ class HelperAddActions {
                         () -> panelTool.getTool().evaluatorWithContextGetter(),
                         rng,
                         errorReporter);
-        clickListener.addCfgProposedListener(
-                proposedCfg -> panelTool.getTool().proposed(proposedCfg));
+        clickListener.addMarksProposedListener(
+                proposedMarks -> panelTool.getTool().proposed(proposedMarks));
 
         controllerMouse.addMouseListener(clickListener, false);
     }

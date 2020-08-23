@@ -37,7 +37,7 @@ import org.anchoranalysis.annotation.mark.RejectionReason;
 import org.anchoranalysis.core.error.friendly.AnchorImpossibleSituationException;
 import org.anchoranalysis.gui.annotation.save.ISaveAnnotation;
 import org.anchoranalysis.gui.videostats.internalframe.annotator.AnnotationWriterGUI;
-import org.anchoranalysis.gui.videostats.internalframe.annotator.currentstate.IQueryAcceptedRejected;
+import org.anchoranalysis.gui.videostats.internalframe.annotator.currentstate.QueryAcceptedRejected;
 
 class SaveAnnotationMPP implements ISaveAnnotation<MarkAnnotation> {
 
@@ -50,32 +50,32 @@ class SaveAnnotationMPP implements ISaveAnnotation<MarkAnnotation> {
 
     @Override
     public void saveFinished(
-            IQueryAcceptedRejected query,
+            QueryAcceptedRejected query,
             AnnotationWriterGUI<MarkAnnotation> annotationWriter,
             JComponent dialogParent) {
 
         saveAnnotation(
                 annotationWriter,
                 annotation ->
-                        annotation.markAccepted(query.getCfgAccepted(), query.getCfgRejected()),
+                        annotation.markAccepted(query.getMarksAccepted(), query.getMarksRejected()),
                 dialogParent);
     }
 
     @Override
     public void savePaused(
-            IQueryAcceptedRejected query,
+            QueryAcceptedRejected query,
             AnnotationWriterGUI<MarkAnnotation> annotationWriter,
             JComponent dialogParent) {
 
         saveAnnotation(
                 annotationWriter,
-                annotation -> annotation.markPaused(query.getCfgAccepted(), query.getCfgRejected()),
+                annotation -> annotation.markPaused(query.getMarksAccepted(), query.getMarksRejected()),
                 dialogParent);
     }
 
     @Override
     public void skipAnnotation(
-            IQueryAcceptedRejected query,
+            QueryAcceptedRejected query,
             AnnotationWriterGUI<MarkAnnotation> annotationWriter,
             JComponent dialogParent) {
 
@@ -86,8 +86,8 @@ class SaveAnnotationMPP implements ISaveAnnotation<MarkAnnotation> {
                                         annotationWriter,
                                         annotation ->
                                                 annotation.markRejected(
-                                                        query.getCfgAccepted(),
-                                                        query.getCfgRejected(),
+                                                        query.getMarksAccepted(),
+                                                        query.getMarksRejected(),
                                                         rejectionReason),
                                         dialogParent));
     }

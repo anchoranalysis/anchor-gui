@@ -77,7 +77,7 @@ public class MergeMarksBridge
     //  4 = ADDED (BIRTH)
     //  5 = REMOVED (DEATH)
     private static void processMarkId(
-            int id, Mark selected, Mark proposal, MarkCollection cfgOut, List<ProposalState> state) {
+            int id, Mark selected, Mark proposal, MarkCollection marksOut, List<ProposalState> state) {
 
         if (selected != null) {
             if (proposal != null) {
@@ -87,32 +87,32 @@ public class MergeMarksBridge
                     // UNCHANGED
                     Mark outMark = selected.duplicate();
                     state.add(ProposalState.UNCHANGED);
-                    cfgOut.add(outMark);
+                    marksOut.add(outMark);
                 } else {
 
                     // MODIFIED, ORIGINAL
                     Mark outMarkModifiedOriginal = selected.duplicate();
                     state.add(ProposalState.MODIFIED_ORIGINAL);
-                    cfgOut.add(outMarkModifiedOriginal);
+                    marksOut.add(outMarkModifiedOriginal);
 
                     // MODIFIED, NEW
                     Mark outMarkModifiedNew = proposal.duplicate();
                     state.add(ProposalState.MODIFIED_NEW);
-                    cfgOut.add(outMarkModifiedNew);
+                    marksOut.add(outMarkModifiedNew);
                 }
 
             } else {
                 // DEATH
                 Mark outMark = selected.duplicate();
                 state.add(ProposalState.REMOVED);
-                cfgOut.add(outMark);
+                marksOut.add(outMark);
             }
         } else {
             // BIRTH
             assert (proposal != null);
             Mark outMark = proposal.duplicate();
             state.add(ProposalState.ADDED);
-            cfgOut.add(outMark);
+            marksOut.add(outMark);
         }
         assert (state.get(state.size() - 1) != null);
     }
@@ -128,10 +128,10 @@ public class MergeMarksBridge
     }
 
     @Override
-    // We combine both cfg into one
+    // We combine both marks into one
     public IndexableOverlays apply(IndexableDualState<MarkCollection> sourceObject) {
 
-        MarkCollection mergedCfg = new MarkCollection();
+        MarkCollection mergedMarks = new MarkCollection();
 
         lastProposalState = new ArrayList<>();
 
@@ -150,21 +150,21 @@ public class MergeMarksBridge
             for (int id : markIds) {
                 Mark selected = selectedHash.get(id);
                 Mark proposal = proposalHash.get(id);
-                processMarkId(id, selected, proposal, mergedCfg, lastProposalState);
+                processMarkId(id, selected, proposal, mergedMarks, lastProposalState);
             }
         }
 
         // If one is null, and the other is not, we mark them all as unchanged
         if (sourceObject.getPrimary() != null && sourceObject.getSecondary() == null) {
-            copyAsUnchanged(sourceObject.getPrimary(), mergedCfg, lastProposalState);
+            copyAsUnchanged(sourceObject.getPrimary(), mergedMarks, lastProposalState);
         }
 
         if (sourceObject.getPrimary() == null && sourceObject.getSecondary() != null) {
-            copyAsUnchanged(sourceObject.getSecondary(), mergedCfg, lastProposalState);
+            copyAsUnchanged(sourceObject.getSecondary(), mergedMarks, lastProposalState);
         }
 
         OverlayCollection oc =
-                OverlayCollectionMarkFactory.createWithoutColor(mergedCfg, regionMembership.get());
+                OverlayCollectionMarkFactory.createWithoutColor(mergedMarks, regionMembership.get());
         return new IndexableOverlays(sourceObject.getIndex(), oc);
     }
 

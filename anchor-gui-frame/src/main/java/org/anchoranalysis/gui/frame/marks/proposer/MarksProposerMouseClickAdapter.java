@@ -44,7 +44,7 @@ import org.anchoranalysis.core.geometry.Point3d;
 import org.anchoranalysis.core.random.RandomNumberGenerator;
 import org.anchoranalysis.gui.frame.overlays.ExtractOverlays;
 import org.anchoranalysis.gui.frame.overlays.ProposedMarks;
-import org.anchoranalysis.gui.image.frame.ISliderState;
+import org.anchoranalysis.gui.image.frame.SliderState;
 import org.anchoranalysis.gui.videostats.internalframe.ProposalOperation;
 import org.anchoranalysis.gui.videostats.internalframe.evaluator.EvaluatorWithContext;
 import org.anchoranalysis.gui.videostats.internalframe.evaluator.EvaluatorWithContextGetter;
@@ -55,7 +55,7 @@ public class MarksProposerMouseClickAdapter extends MouseAdapter {
 
     // START REQUIRED ARGUMENTS
     private final ExtractOverlays extractOverlays;
-    private final ISliderState sliderState;
+    private final SliderState sliderState;
     private final EvaluatorWithContextGetter evaluatorGetter;
     private final RandomNumberGenerator randomNumberGenerator;
     private final ErrorReporter errorReporter;
@@ -90,7 +90,7 @@ public class MarksProposerMouseClickAdapter extends MouseAdapter {
         }
 
         try {
-            addCfg(
+            addMarks(
                     new Point3d(arg0.getX(), arg0.getY(), sliderState.getSliceNum()),
                     evaluatorWithContext.get());
         } catch (ProposalAbnormalFailureException e) {
@@ -98,12 +98,12 @@ public class MarksProposerMouseClickAdapter extends MouseAdapter {
             errorReporter.recordError(
                     MarksProposerMouseClickAdapter.class,
                     String.format(
-                            "Failed to propose cfg due to an abnormal error%n%s%n",
+                            "Failed to propose marks due to an abnormal error%n%s%n",
                             e.friendlyMessageHierarchy()));
         }
     }
 
-    private void addCfg(Point3d position, EvaluatorWithContext evaluatorWithContext)
+    private void addMarks(Point3d position, EvaluatorWithContext evaluatorWithContext)
             throws ProposalAbnormalFailureException {
 
         // We exit early if position is outside our scene size
@@ -111,12 +111,12 @@ public class MarksProposerMouseClickAdapter extends MouseAdapter {
             return;
         }
 
-        // We convert the overlays into a Cfg. There's almost definitely a better way of doing this
-        MarkCollection cfg =
-                OverlayCollectionMarkFactory.cfgFromOverlays(
+        // We convert the overlays into a Marks. There's almost definitely a better way of doing this
+        MarkCollection marks =
+                OverlayCollectionMarkFactory.marksFromOverlays(
                         extractOverlays.getOverlays().getOverlays());
 
-        ProposedMarks er = generateEvaluationResult(cfg, position, evaluatorWithContext);
+        ProposedMarks er = generateEvaluationResult(marks, position, evaluatorWithContext);
 
         for (ProposedMarksListener al : eventListeners.getListeners(ProposedMarksListener.class)) {
             al.proposed(er);
@@ -124,7 +124,7 @@ public class MarksProposerMouseClickAdapter extends MouseAdapter {
     }
 
     private ProposedMarks generateEvaluationResult(
-            MarkCollection cfgExst, Point3d position, EvaluatorWithContext evaluatorWithContext)
+            MarkCollection marksExst, Point3d position, EvaluatorWithContext evaluatorWithContext)
             throws ProposalAbnormalFailureException {
 
         ProposalOperationCreator evaluator = evaluatorWithContext.getEvaluator();
@@ -143,7 +143,7 @@ public class MarksProposerMouseClickAdapter extends MouseAdapter {
 
                 final ProposalOperation proposalOperation =
                         evaluator.create(
-                                cfgExst, position, context, evaluatorWithContext.getMarkFactory());
+                                marksExst, position, context, evaluatorWithContext.getMarkFactory());
                 ProposedMarks er = proposalOperation.propose(pfd.getRoot());
                 er.setPfd(pfd);
                 return er;
@@ -160,7 +160,7 @@ public class MarksProposerMouseClickAdapter extends MouseAdapter {
         }
     }
 
-    public void addCfgProposedListener(ProposedMarksListener a) {
+    public void addMarksProposedListener(ProposedMarksListener a) {
         eventListeners.add(ProposedMarksListener.class, a);
     }
 }

@@ -36,7 +36,7 @@ public interface VideoStatsOperationCombine {
 
     EnergyBackground getEnergyBackground();
 
-    Optional<OverlayCollectionSupplier<MarkCollection>> getCfg();
+    Optional<OverlayCollectionSupplier<MarkCollection>> getMarks();
 
     Optional<OverlayCollectionSupplier<ObjectCollection>> getObjects();
 

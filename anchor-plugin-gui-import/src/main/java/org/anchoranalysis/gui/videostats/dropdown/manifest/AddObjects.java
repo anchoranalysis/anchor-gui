@@ -37,7 +37,7 @@ import org.anchoranalysis.core.index.container.SingleContainer;
 import org.anchoranalysis.core.name.provider.NamedProvider;
 import org.anchoranalysis.core.name.provider.NamedProviderGetException;
 import org.anchoranalysis.gui.finder.FinderEnergyStack;
-import org.anchoranalysis.gui.io.loader.manifest.finder.FinderCfgFolder;
+import org.anchoranalysis.gui.io.loader.manifest.finder.FinderMarksFolder;
 import org.anchoranalysis.gui.io.loader.manifest.finder.FinderObjectCollectionFolder;
 import org.anchoranalysis.gui.marks.MarkDisplaySettings;
 import org.anchoranalysis.gui.videostats.dropdown.BoundVideoStatsModuleDropDown;
@@ -77,7 +77,7 @@ class AddObjects {
             defaultAdded = true;
         }
 
-        fromCfg(operationBwsaWithEnergy);
+        fromMarks(operationBwsaWithEnergy);
 
         return defaultAdded;
     }
@@ -169,14 +169,14 @@ class AddObjects {
         return false;
     }
 
-    private void fromCfg(OperationCreateBackgroundSetWithAdder operationBwsaWithEnergy) {
+    private void fromMarks(OperationCreateBackgroundSetWithAdder operationBwsaWithEnergy) {
 
         try {
-            FinderCfgFolder finder = new FinderCfgFolder("cfgCollection", "cfg");
+            FinderMarksFolder finder = new FinderMarksFolder("marksCollection", "marks");
             finder.doFind(manifests.getFileManifest().get());
 
             NamedProvider<MarkCollection> provider = finder.createNamedProvider(false);
-            DropDownUtilities.addCfgSubmenu(
+            DropDownUtilities.addMarksSubmenu(
                     delegate.getRootMenu(),
                     delegate,
                     provider,

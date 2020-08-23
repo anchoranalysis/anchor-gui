@@ -81,7 +81,7 @@ class CachedRGB {
     }
 
     // When we replace the current overlays with new overlays
-    public void updateCfg(OverlayedDisplayStackUpdate update) throws OperationFailedException {
+    public void updateMarks(OverlayedDisplayStackUpdate update) throws OperationFailedException {
 
         if (update == null) {
             return;
@@ -97,30 +97,30 @@ class CachedRGB {
             List<BoundingBox> boxListReset =
                     currentOverlays.boxList(drawOverlay, backgroundOriginal.dimensions());
 
-            if (update.getColoredCfg() != null) {
-                ColoredOverlayCollection overlaysNew = update.getColoredCfg();
+            if (update.getColoredMarks() != null) {
+                ColoredOverlayCollection overlaysNew = update.getColoredMarks();
                 resetToChannelOrig(boxListReset);
-                drawCfg(overlaysNew);
+                drawMarks(overlaysNew);
                 this.currentOverlays = overlaysNew;
 
             } else {
                 resetToChannelOrig(boxListReset);
-                drawCfg(currentOverlays);
+                drawMarks(currentOverlays);
             }
 
         } else {
             List<BoundingBox> listBBox =
                     update.getRedrawParts().boxList(drawOverlay, backgroundOriginal.dimensions());
 
-            if (update.getColoredCfg() != null) {
-                ColoredOverlayCollection overlaysNew = update.getColoredCfg();
+            if (update.getColoredMarks() != null) {
+                ColoredOverlayCollection overlaysNew = update.getColoredMarks();
                 resetToChannelOrig(listBBox);
-                drawCfgIfIntersects(overlaysNew, listBBox);
+                drawMarksIfIntersects(overlaysNew, listBBox);
                 this.currentOverlays = overlaysNew;
 
             } else {
                 resetToChannelOrig(listBBox);
-                drawCfgIfIntersects(currentOverlays, listBBox);
+                drawMarksIfIntersects(currentOverlays, listBBox);
             }
         }
     }
@@ -175,14 +175,14 @@ class CachedRGB {
         }
     }
 
-    private void drawCfg(ColoredOverlayCollection overlays) throws OperationFailedException {
+    private void drawMarks(ColoredOverlayCollection overlays) throws OperationFailedException {
         assert (overlays.getColorList() != null);
         assert (overlays.getColorList().size() == overlays.size());
         // TODO We only draw overlays which intersect with the bounding box
         drawOverlay.writeOverlays(overlays, rgb, idGetter);
     }
 
-    private void drawCfgIfIntersects(ColoredOverlayCollection oc, List<BoundingBox> boxList)
+    private void drawMarksIfIntersects(ColoredOverlayCollection oc, List<BoundingBox> boxList)
             throws OperationFailedException {
 
         // We only draw overlays which intersect with the bounding box
@@ -200,7 +200,7 @@ class CachedRGB {
         return rgb;
     }
 
-    public ColoredOverlayCollection getColoredCfg() {
+    public ColoredOverlayCollection getColoredMarks() {
         return currentOverlays;
     }
 

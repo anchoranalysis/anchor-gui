@@ -26,14 +26,14 @@
 
 package org.anchoranalysis.gui.plot.definition;
 
-import com.sun.tools.visualvm.charts.SimpleXYChartDescriptor;
+import com.sun.tools.visualvm.charts.SimpleXYChartDescriptor;   // NOSONAR
 import com.sun.tools.visualvm.charts.SimpleXYChartSupport;
 import lombok.RequiredArgsConstructor;
 import org.anchoranalysis.anchor.mpp.feature.energy.marks.MarksWithTotalEnergy;
 import org.anchoranalysis.mpp.sgmn.optscheme.feedback.aggregate.Aggregator;
 
 @RequiredArgsConstructor
-public class CfgSizeGraphDefinition extends GraphDefinition {
+public class NumberMarksGraphDefinition extends GraphDefinition {
 
     // START REQUIRED ARGUMENTS
     private final int windowSize;
@@ -51,12 +51,12 @@ public class CfgSizeGraphDefinition extends GraphDefinition {
     public SimpleXYChartDescriptor descriptor() {
         SimpleXYChartDescriptor descriptor =
                 SimpleXYChartDescriptor.decimal(0, 100, 0, 1d, true, windowSize);
-        descriptor.addLineItems("Configuration Size (best)");
-        descriptor.addLineItems("Configuration Size (current)");
+        descriptor.addLineItems("Number Marks (best)");
+        descriptor.addLineItems("Number Marks (current)");
 
         descriptor.setDetailsItems(
                 new String[] {
-                    "Iteration", "Time", "Configuration Size (best)", "Configuration Size (current)"
+                    "Iteration", "Time", "Number Marks (best)", "Number Marks (current)"
                 });
 
         setTitleAndAxes(descriptor, title(), "time", "number");

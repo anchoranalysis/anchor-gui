@@ -34,7 +34,7 @@ import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.idgetter.IDGetter;
 import org.anchoranalysis.core.index.container.bridge.BoundedIndexContainerBridgeWithoutIndex;
 import org.anchoranalysis.gui.frame.multioverlay.instantstate.InternalFrameOverlayedInstantStateToRGBSelectable;
-import org.anchoranalysis.gui.image.frame.ISliderState;
+import org.anchoranalysis.gui.image.frame.SliderState;
 import org.anchoranalysis.gui.videostats.IModuleCreatorDefaultState;
 import org.anchoranalysis.gui.videostats.dropdown.BackgroundSetProgressingSupplier;
 import org.anchoranalysis.gui.videostats.dropdown.VideoStatsModuleGlobalParams;
@@ -49,7 +49,7 @@ public class InternalFrameMarksHistoryFolder {
         this.delegate = new InternalFrameOverlayedInstantStateToRGBSelectable(title, true, true);
     }
 
-    public ISliderState init(
+    public SliderState init(
             LoadContainer<IndexableMarksWithEnergy> history,
             DefaultModuleState defaultState,
             BackgroundSetProgressingSupplier backgroundSet,
@@ -58,7 +58,7 @@ public class InternalFrameMarksHistoryFolder {
 
         IDGetter<Overlay> idGetter = new IDGetterOverlayID();
 
-        ISliderState sliderState =
+        SliderState sliderState =
                 this.delegate.init(
                         new BoundedIndexContainerBridgeWithoutIndex<>(
                                 history.getContainer(),
@@ -76,7 +76,7 @@ public class InternalFrameMarksHistoryFolder {
         return sliderState;
     }
 
-    public IModuleCreatorDefaultState moduleCreator(ISliderState sliderState) {
+    public IModuleCreatorDefaultState moduleCreator(SliderState sliderState) {
         return delegate.moduleCreator(sliderState);
     }
 }

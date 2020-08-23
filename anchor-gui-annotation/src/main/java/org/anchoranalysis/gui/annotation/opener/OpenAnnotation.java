@@ -32,6 +32,6 @@ import org.anchoranalysis.gui.videostats.module.VideoStatsModuleCreateException;
 
 public interface OpenAnnotation {
 
-    InitAnnotation open(boolean useDefaultCfg, Logger logger)
+    InitAnnotation open(boolean useDefaultMarks, Logger logger)
             throws VideoStatsModuleCreateException;
 }

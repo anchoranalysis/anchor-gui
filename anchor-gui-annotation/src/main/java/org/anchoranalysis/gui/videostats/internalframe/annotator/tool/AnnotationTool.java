@@ -44,7 +44,7 @@ public abstract class AnnotationTool {
     //
     public abstract void leftMouseClickedAtPoint(Point3d point);
 
-    public abstract void proposed(ProposedMarks proposedCfg);
+    public abstract void proposed(ProposedMarks proposedMarks);
 
     public abstract void confirm(boolean accepted);
 

@@ -40,7 +40,7 @@ import org.anchoranalysis.image.extent.Dimensions;
 
 public class ProposedMarks {
 
-    /** The total cfg to be drawn */
+    /** The total marks to be drawn */
     private ColoredOverlayCollection overlays = new ColoredOverlayCollection();
 
     /**
@@ -51,7 +51,7 @@ public class ProposedMarks {
      */
     @Getter @Setter private MarkCollection marksToRedraw = new MarkCollection();
 
-    /** The core part of the cfg */
+    /** The core part of the marks */
     @Getter @Setter private MarkCollection marksCore = new MarkCollection();
 
     private Dimensions dimensions;
@@ -97,16 +97,16 @@ public class ProposedMarks {
         this.success = success;
     }
 
-    public ColoredOverlayCollection getColoredCfg() {
+    public ColoredOverlayCollection getColoredMarks() {
         return overlays;
     }
 
-    public void setColoredCfg(ColoredMarks cfg) {
-        this.overlays = OverlayCollectionMarkFactory.createColor(cfg, regionMembership);
+    public void setColoredMarks(ColoredMarks marks) {
+        this.overlays = OverlayCollectionMarkFactory.createColor(marks, regionMembership);
     }
 
-    public void setColoredCfg(ColoredOverlayCollection cfg) {
-        this.overlays = cfg;
+    public void setColoredMarks(ColoredOverlayCollection marks) {
+        this.overlays = marks;
     }
 
     public boolean hasSugestedSliceNum() {

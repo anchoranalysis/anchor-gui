@@ -30,7 +30,7 @@ import java.util.Optional;
 import lombok.AllArgsConstructor;
 import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.error.OperationFailedException;
-import org.anchoranalysis.gui.image.frame.ISliderState;
+import org.anchoranalysis.gui.image.frame.SliderState;
 import org.anchoranalysis.gui.io.loader.manifest.finder.FinderMarksWithEnergy;
 import org.anchoranalysis.gui.videostats.IModuleCreatorDefaultState;
 import org.anchoranalysis.gui.videostats.internalframe.MergedMarksHistoryInternalFrame;
@@ -64,7 +64,7 @@ class CombinationCreator extends VideoStatsModuleCreatorContext {
                     new MergedMarksHistoryInternalFrame(combinationName);
 
             try {
-                ISliderState sliderState =
+                SliderState sliderState =
                         imageFrame.init(
                                 finderFirst.getHistory(),
                                 finderSecond.getHistory(),

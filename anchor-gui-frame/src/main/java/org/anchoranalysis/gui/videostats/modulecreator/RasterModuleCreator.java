@@ -31,7 +31,7 @@ import org.anchoranalysis.anchor.mpp.mark.MarkCollection;
 import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.gui.frame.singleraster.InternalFrameSingleRaster;
-import org.anchoranalysis.gui.image.frame.ISliderState;
+import org.anchoranalysis.gui.image.frame.SliderState;
 import org.anchoranalysis.gui.videostats.dropdown.AddVideoStatsModule;
 import org.anchoranalysis.gui.videostats.dropdown.VideoStatsModuleGlobalParams;
 import org.anchoranalysis.gui.videostats.dropdown.common.EnergyBackground;
@@ -51,7 +51,7 @@ public class RasterModuleCreator extends VideoStatsModuleCreator {
             new VideoStatsOperationCombine() {
 
                 @Override
-                public Optional<OverlayCollectionSupplier<MarkCollection>> getCfg() {
+                public Optional<OverlayCollectionSupplier<MarkCollection>> getMarks() {
                     return Optional.empty();
                 }
 
@@ -90,7 +90,7 @@ public class RasterModuleCreator extends VideoStatsModuleCreator {
         try {
             InternalFrameSingleRaster imageFrame =
                     new InternalFrameSingleRaster(String.format("%s: %s", fileDscr, frameName));
-            ISliderState sliderState =
+            SliderState sliderState =
                     imageFrame.init(
                             energyBackground.numberFrames(),
                             adder.getSubgroup().getDefaultModuleState().getState(),

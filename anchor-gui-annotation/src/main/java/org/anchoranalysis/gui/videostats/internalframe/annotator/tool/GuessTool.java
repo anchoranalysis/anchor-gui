@@ -48,23 +48,23 @@ public class GuessTool extends AnnotationTool {
     }
 
     @Override
-    public void proposed(ProposedMarks proposedCfg) {
+    public void proposed(ProposedMarks proposedMarks) {
 
         if (!isEnabled()) {
             return;
         }
 
-        if (proposedCfg.isSuccess()) {
-            replaceRemove.replaceCurrentProposedCfg(
-                    proposedCfg.getMarksCore(),
-                    OverlayCollectionMarkFactory.cfgFromOverlays(proposedCfg.getColoredCfg()),
-                    proposedCfg.getSuggestedSliceNum());
+        if (proposedMarks.isSuccess()) {
+            replaceRemove.replaceCurrentProposedMarks(
+                    proposedMarks.getMarksCore(),
+                    OverlayCollectionMarkFactory.marksFromOverlays(proposedMarks.getColoredMarks()),
+                    proposedMarks.getSuggestedSliceNum());
         } else {
-            replaceRemove.removeCurrentProposedCfg();
+            replaceRemove.removeCurrentProposedMarks();
             toolErrorReporter.showError(
                     GuessTool.class,
                     "Guess failed. Try again (or select points)!",
-                    proposedCfg.getPfd().describe());
+                    proposedMarks.getPfd().describe());
         }
     }
 

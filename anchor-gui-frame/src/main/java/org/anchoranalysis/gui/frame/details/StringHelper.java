@@ -30,7 +30,7 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import org.anchoranalysis.gui.frame.details.canvas.InternalFrameCanvas;
-import org.anchoranalysis.gui.image.frame.ISliderState;
+import org.anchoranalysis.gui.image.frame.SliderState;
 import org.anchoranalysis.image.extent.Resolution;
 import org.anchoranalysis.image.voxel.datatype.VoxelDataType;
 
@@ -39,11 +39,11 @@ class StringHelper {
     // optional decimal places 0.##
     private static DecimalFormat resFormat = new DecimalFormat("0");
 
-    private ISliderState sliderState;
+    private SliderState sliderState;
     private InternalFrameCanvas internalFrameCanvas;
     private List<GenerateExtraDetail> listExtra = new ArrayList<>();
 
-    public StringHelper(InternalFrameCanvas internalFrameCanvas, ISliderState sliderState) {
+    public StringHelper(InternalFrameCanvas internalFrameCanvas, SliderState sliderState) {
         super();
         this.internalFrameCanvas = internalFrameCanvas;
         this.sliderState = sliderState;

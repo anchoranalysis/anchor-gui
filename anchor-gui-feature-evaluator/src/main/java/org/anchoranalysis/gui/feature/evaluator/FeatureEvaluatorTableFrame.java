@@ -57,7 +57,7 @@ public class FeatureEvaluatorTableFrame {
         delegate =
                 new StatePanelFrame<>(
                         "Feature Evaluator",
-                        defaultFrameState.getLinkState().getCfgWithStack(),
+                        defaultFrameState.getLinkState().getOverlaysWithStack(),
                         new FeatureEvaluatorTablePanel(
                                 featureListSrc, defaultKeepLastValid, logger));
         delegate.controllerSize().configureSize(200, 200, 650, 800);

@@ -58,7 +58,7 @@ import org.anchoranalysis.gui.frame.details.ControllerPopupMenu;
 import org.anchoranalysis.gui.frame.details.canvas.controller.imageview.ControllerImageView;
 import org.anchoranalysis.gui.frame.display.BoundOverlayedDisplayStack;
 import org.anchoranalysis.gui.image.frame.ControllerSize;
-import org.anchoranalysis.gui.image.frame.ISliderState;
+import org.anchoranalysis.gui.image.frame.SliderState;
 import org.anchoranalysis.gui.retrieveelements.ExportPopupParams;
 import org.anchoranalysis.gui.retrieveelements.IRetrieveElements;
 import org.anchoranalysis.gui.retrieveelements.InternalFrameIJPopupClickListener;
@@ -184,7 +184,7 @@ public class InternalFrameCanvas {
                         controllerOrder, controllerFrame, controllerMouse, controllerKeyboard);
     }
 
-    public ISliderState init(
+    public SliderState init(
             BoundedRangeIncompleteDynamic indexBounds,
             IndexGettableSettable indexCntr,
             DisplayUpdateRememberStack stackProvider,

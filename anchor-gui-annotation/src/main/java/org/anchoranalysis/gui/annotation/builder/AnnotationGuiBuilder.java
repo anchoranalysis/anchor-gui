@@ -60,7 +60,7 @@ public abstract class AnnotationGuiBuilder<T extends AnnotationInitParams> {
             ProgressReporterMultiple prm,
             AnnotationGuiContext context,
             Logger logger,
-            boolean useDefaultCfg)
+            boolean useDefaultMarks)
             throws CreateException;
 
     /**

@@ -35,7 +35,7 @@ import org.anchoranalysis.core.color.ColorList;
 import org.anchoranalysis.core.error.AnchorNeverOccursException;
 import org.anchoranalysis.core.functional.function.CheckedFunction;
 import org.anchoranalysis.core.idgetter.IDGetter;
-import org.anchoranalysis.gui.videostats.internalframe.cfgtorgb.IndexableColoredOverlays;
+import org.anchoranalysis.gui.videostats.internalframe.markstorgb.IndexableColoredOverlays;
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor

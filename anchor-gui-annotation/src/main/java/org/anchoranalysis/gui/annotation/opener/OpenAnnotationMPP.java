@@ -35,7 +35,7 @@ import org.anchoranalysis.annotation.mark.RejectionReason;
 import org.anchoranalysis.core.log.Logger;
 import org.anchoranalysis.gui.annotation.AnnotatorModuleCreator;
 import org.anchoranalysis.gui.annotation.InitAnnotation;
-import org.anchoranalysis.gui.videostats.internalframe.annotator.currentstate.DualCfg;
+import org.anchoranalysis.gui.videostats.internalframe.annotator.currentstate.PartitionedMarks;
 import org.anchoranalysis.gui.videostats.module.VideoStatsModuleCreateException;
 import org.anchoranalysis.io.deserializer.DeserializationFailedException;
 import org.anchoranalysis.io.error.AnchorIOException;
@@ -44,60 +44,60 @@ public class OpenAnnotationMPP implements OpenAnnotation {
 
     private MarkAnnotationReader annotationReader;
     private Path annotationPath;
-    private Optional<Path> defaultCfgPath;
+    private Optional<Path> defaultMarksPath;
 
     public OpenAnnotationMPP(
             Path annotationPath,
-            Optional<Path> defaultCfgPath,
+            Optional<Path> defaultMarksPath,
             MarkAnnotationReader annotationReader) {
         super();
         this.annotationPath = annotationPath;
-        this.defaultCfgPath = defaultCfgPath;
+        this.defaultMarksPath = defaultMarksPath;
         this.annotationReader = annotationReader;
     }
 
     @Override
-    public InitAnnotation open(boolean useDefaultCfg, Logger logger)
+    public InitAnnotation open(boolean useDefaultMarks, Logger logger)
             throws VideoStatsModuleCreateException {
 
         // We try to read an existing annotation
         Optional<MarkAnnotation> annotationExst = readAnnotation(annotationPath);
 
         if (annotationExst.isPresent()) {
-            return readCfgFromAnnotation(annotationExst.get());
+            return readMarksFromAnnotation(annotationExst.get());
 
-        } else if (defaultCfgPath.isPresent() && useDefaultCfg) {
-            return readDefaultCfg(defaultCfgPath.get(), logger);
+        } else if (defaultMarksPath.isPresent() && useDefaultMarks) {
+            return readDefaultMarks(defaultMarksPath.get(), logger);
 
         } else {
-            logger.messageLogger().logFormatted("No cfg to open for annotation");
+            logger.messageLogger().logFormatted("No marks to open for annotation");
             return new InitAnnotation(Optional.empty());
         }
     }
 
     public boolean isUseDefaultPromptNeeded() {
         return !annotationReader.annotationExistsCorrespondTo(annotationPath)
-                && defaultCfgPath.isPresent();
+                && defaultMarksPath.isPresent();
     }
 
-    private static InitAnnotation readCfgFromAnnotation(MarkAnnotation annotationExst) {
+    private static InitAnnotation readMarksFromAnnotation(MarkAnnotation annotationExst) {
 
-        DualCfg initCfg = new DualCfg(annotationExst.getMarks(), annotationExst.getCfgReject());
+        PartitionedMarks initMarks = new PartitionedMarks(annotationExst.getMarks(), annotationExst.getMarksReject());
 
         if (annotationExst.isAccepted()) {
-            return new InitAnnotation(Optional.of(annotationExst), initCfg);
+            return new InitAnnotation(Optional.of(annotationExst), initMarks);
         } else {
             String initMsg = errorMessage(annotationExst.getRejectionReason());
-            return new InitAnnotation(Optional.of(annotationExst), initCfg, initMsg);
+            return new InitAnnotation(Optional.of(annotationExst), initMarks, initMsg);
         }
     }
 
-    private InitAnnotation readDefaultCfg(Path defaultCfgPath, Logger logger) {
+    private InitAnnotation readDefaultMarks(Path defaultMarksPath, Logger logger) {
         try {
-            MarkCollection defaultCfg = annotationReader.readDefaultCfg(defaultCfgPath);
-            return new InitAnnotation(Optional.empty(), new DualCfg(defaultCfg, new MarkCollection()));
+            MarkCollection defaultMarks = annotationReader.readDefaultMarks(defaultMarksPath);
+            return new InitAnnotation(Optional.empty(), new PartitionedMarks(defaultMarks, new MarkCollection()));
         } catch (DeserializationFailedException e) {
-            logger.messageLogger().logFormatted("Cannot open defaultCfg at %s", defaultCfgPath);
+            logger.messageLogger().logFormatted("Cannot open defaultMarks at %s", defaultMarksPath);
             logger.errorReporter().recordError(AnnotatorModuleCreator.class, e);
             return new InitAnnotation(Optional.empty());
         }

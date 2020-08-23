@@ -28,7 +28,7 @@ package org.anchoranalysis.plugin.gui.bean.createrastergenerator.energybreakdown
 
 import java.util.Optional;
 import org.anchoranalysis.anchor.overlay.writer.DrawOverlay;
-import org.anchoranalysis.gui.frame.display.IRedrawable;
+import org.anchoranalysis.gui.frame.display.Redrawable;
 import org.anchoranalysis.gui.frame.display.OverlayedDisplayStackUpdate;
 import org.anchoranalysis.image.stack.DisplayStack;
 import org.anchoranalysis.io.generator.IterableObjectGenerator;
@@ -37,7 +37,7 @@ import org.anchoranalysis.io.manifest.ManifestDescription;
 import org.anchoranalysis.io.output.error.OutputWriteFailedException;
 
 public abstract class CacheableOverlaysToRGBGenerator extends ObjectGenerator<DisplayStack>
-        implements IRedrawable, IterableObjectGenerator<OverlayedDisplayStackUpdate, DisplayStack> {
+        implements Redrawable, IterableObjectGenerator<OverlayedDisplayStackUpdate, DisplayStack> {
 
     // THIS MUST BE CALLED before we do any drawing.
     public abstract void updateDrawer(DrawOverlay drawOverlay);

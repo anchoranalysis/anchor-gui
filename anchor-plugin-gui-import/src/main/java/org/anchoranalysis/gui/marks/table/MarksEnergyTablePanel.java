@@ -150,15 +150,15 @@ public class MarksEnergyTablePanel extends StatePanel<IndexableMarksWithEnergy> 
     }
 
     private void triggerEvent() {
-        MarkCollection cfg = state.getMarks() != null ? state.getMarks().getMarks() : null;
-        if (cfg != null) {
-            MarkCollection cfgSubset =
-                    MarkCollectionUtilities.subsetMarks(cfg, selectionIndices.getCurrentSelection());
+        MarkCollection marks = state.getMarks() != null ? state.getMarks().getMarks() : null;
+        if (marks != null) {
+            MarkCollection marksSubset =
+                    MarkCollectionUtilities.subsetMarks(marks, selectionIndices.getCurrentSelection());
             RegionMembershipWithFlags regionMembership =
                     RegionMapSingleton.instance()
                             .membershipWithFlagsForIndex(GlobalRegionIdentifiers.SUBMARK_INSIDE);
             OverlayCollection overlaySubset =
-                    OverlayCollectionMarkFactory.createWithoutColor(cfgSubset, regionMembership);
+                    OverlayCollectionMarkFactory.createWithoutColor(marksSubset, regionMembership);
             triggerObjectChangeEvent(overlaySubset);
         }
     }

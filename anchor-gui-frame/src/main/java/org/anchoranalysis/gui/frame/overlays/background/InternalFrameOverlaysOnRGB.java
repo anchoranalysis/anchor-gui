@@ -39,15 +39,15 @@ import org.anchoranalysis.gui.frame.details.GenerateExtraDetail;
 import org.anchoranalysis.gui.frame.details.canvas.ControllerAction;
 import org.anchoranalysis.gui.frame.details.canvas.InternalFrameCanvas;
 import org.anchoranalysis.gui.frame.details.canvas.controller.imageview.ControllerImageView;
-import org.anchoranalysis.gui.frame.display.IRedrawable;
+import org.anchoranalysis.gui.frame.display.Redrawable;
 import org.anchoranalysis.gui.frame.overlays.ExtractOverlays;
 import org.anchoranalysis.gui.frame.threaded.overlay.InternalFrameThreadedOverlayProvider;
-import org.anchoranalysis.gui.image.frame.ISliderState;
+import org.anchoranalysis.gui.image.frame.SliderState;
 import org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.ControllerPopupMenuWithBackground;
 import org.anchoranalysis.gui.retrieveelements.IRetrieveElements;
 import org.anchoranalysis.gui.videostats.IModuleCreatorDefaultState;
 import org.anchoranalysis.gui.videostats.dropdown.VideoStatsModuleGlobalParams;
-import org.anchoranalysis.gui.videostats.internalframe.cfgtorgb.markdisplay.MarkDisplaySettingsWrapper;
+import org.anchoranalysis.gui.videostats.internalframe.markstorgb.markdisplay.MarkDisplaySettingsWrapper;
 import org.anchoranalysis.gui.videostats.module.DefaultModuleState;
 import org.anchoranalysis.image.extent.Dimensions;
 import org.apache.commons.logging.Log;
@@ -71,7 +71,7 @@ class InternalFrameOverlaysOnRGB {
     }
 
     // Must be called before usage
-    public ISliderState init(
+    public SliderState init(
             OverlayedDisplayStack overlayedDisplayStack,
             IDGetter<Overlay> idGetter,
             boolean includeFrameAdjusting,
@@ -95,7 +95,7 @@ class InternalFrameOverlaysOnRGB {
         extractOverlays = new OverlayerExtracter();
 
         // We assume all channels have the same number of slices
-        ISliderState sliderState =
+        SliderState sliderState =
                 delegate.init(cntr, includeFrameAdjusting, initialState, elementRetriever, mpg);
 
         // This must be done after init() on delegate, otherwise controllerPopupMenu() is null
@@ -135,7 +135,7 @@ class InternalFrameOverlaysOnRGB {
         delegate.flush();
     }
 
-    public IRedrawable getRedrawable() {
+    public Redrawable getRedrawable() {
         return delegate.getRedrawable();
     }
 
@@ -159,7 +159,7 @@ class InternalFrameOverlaysOnRGB {
         return delegate.controllerAction();
     }
 
-    public IModuleCreatorDefaultState moduleCreator(ISliderState sliderState) {
+    public IModuleCreatorDefaultState moduleCreator(SliderState sliderState) {
         return delegate.moduleCreator(sliderState);
     }
 

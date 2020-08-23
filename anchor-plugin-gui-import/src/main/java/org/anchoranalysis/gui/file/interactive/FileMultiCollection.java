@@ -80,8 +80,8 @@ public class FileMultiCollection extends InteractiveFile {
         LazyEvaluationStore<TimeSequence> stacks = new LazyEvaluationStore<>("stacks");
         inputObject.stack().addToStore(stacks);
 
-        LazyEvaluationStore<MarkCollection> cfgs = new LazyEvaluationStore<>("cfg");
-        inputObject.cfg().addToStore(cfgs);
+        LazyEvaluationStore<MarkCollection> markss = new LazyEvaluationStore<>("marks");
+        inputObject.marks().addToStore(markss);
 
         LazyEvaluationStore<KeyValueParams> keyValueParams =
                 new LazyEvaluationStore<>("keyValueParams");
@@ -94,7 +94,7 @@ public class FileMultiCollection extends InteractiveFile {
         MultiCollectionDropDown dropDown =
                 new MultiCollectionDropDown(
                         progressReporter -> createTimeSequenceProvider(stacks),
-                        cfgs,
+                        markss,
                         objects,
                         keyValueParams,
                         identifier(),

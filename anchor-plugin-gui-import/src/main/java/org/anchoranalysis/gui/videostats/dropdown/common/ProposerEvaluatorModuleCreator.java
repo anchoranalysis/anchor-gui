@@ -35,7 +35,7 @@ import org.anchoranalysis.core.progress.ProgressReporter;
 import org.anchoranalysis.gui.backgroundset.BackgroundSet;
 import org.anchoranalysis.gui.backgroundset.BackgroundSetFactory;
 import org.anchoranalysis.gui.container.background.BackgroundStackContainerException;
-import org.anchoranalysis.gui.image.frame.ISliderState;
+import org.anchoranalysis.gui.image.frame.SliderState;
 import org.anchoranalysis.gui.interactivebrowser.MarkEvaluatorSetForImage;
 import org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.BackgroundUpdater;
 import org.anchoranalysis.gui.videostats.dropdown.AddVideoStatsModule;
@@ -74,7 +74,7 @@ class ProposerEvaluatorModuleCreator extends VideoStatsModuleCreator {
                     .configure(0.8, 0.6, 0, 50, mpg.getGraphicsCurrentScreen());
 
             // Here we optionally set an adder to send back energy-stacks
-            ISliderState sliderState =
+            SliderState sliderState =
                     imageFrame.init(
                             markEvaluatorSet,
                             adder.getSubgroup().getDefaultModuleState().getState(),

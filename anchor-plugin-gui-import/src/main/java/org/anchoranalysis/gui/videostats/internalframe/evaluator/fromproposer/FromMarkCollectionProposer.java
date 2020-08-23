@@ -1,6 +1,6 @@
 /*-
  * #%L
- * anchor-gui-common
+ * anchor-plugin-gui-import
  * %%
  * Copyright (C) 2010 - 2020 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann-La Roche
  * %%
@@ -24,9 +24,28 @@
  * #L%
  */
 
-package org.anchoranalysis.gui.frame.display;
+package org.anchoranalysis.gui.videostats.internalframe.evaluator.fromproposer;
 
-public interface IRedrawable {
+import org.anchoranalysis.anchor.mpp.bean.init.MPPInitParams;
+import org.anchoranalysis.anchor.mpp.bean.proposer.MarkCollectionProposer;
+import org.anchoranalysis.core.name.provider.NamedProvider;
+import org.anchoranalysis.gui.videostats.internalframe.evaluator.ProposalOperationCreator;
+import org.anchoranalysis.gui.videostats.internalframe.markredraw.MarksProposerEvaluator;
 
-    void applyRedrawUpdate(OverlayedDisplayStackUpdate update);
+public class FromMarkCollectionProposer extends ProposalOperationCreatorFromProposer<MarkCollectionProposer> {
+
+    @Override
+    public ProposalOperationCreator creatorFromProposer(MarkCollectionProposer proposer) {
+        return new MarksProposerEvaluator(proposer);
+    }
+
+    @Override
+    public NamedProvider<MarkCollectionProposer> allProposers(MPPInitParams so) {
+        return so.getMarksProposerSet();
+    }
+
+    @Override
+    public String getEvaluatorName() {
+        return "Marks Proposer";
+    }
 }

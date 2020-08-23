@@ -45,7 +45,7 @@ public class DefaultLinkState {
 
     @Getter @Setter private OverlayCollection overlayCollection;
 
-    @Getter @Setter private OverlaysWithEnergyStack cfgWithStack;
+    @Getter @Setter private OverlaysWithEnergyStack overlaysWithStack;
 
     @Getter @Setter
     private CheckedFunction<Integer, DisplayStack, BackgroundStackContainerException> background;
@@ -56,7 +56,7 @@ public class DefaultLinkState {
         dms.sliceNum = sliceNum;
         dms.objectIDs = ArrayUtils.clone(objectIDs);
         dms.overlayCollection = overlayCollection;
-        dms.cfgWithStack = cfgWithStack;
+        dms.overlaysWithStack = overlaysWithStack;
         dms.background = background;
         return dms;
     }

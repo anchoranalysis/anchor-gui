@@ -24,18 +24,18 @@
  * #L%
  */
 
-package org.anchoranalysis.gui.videostats.internalframe.cfgtorgb;
+package org.anchoranalysis.gui.frame.threaded.stack;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
-import org.anchoranalysis.gui.videostats.dropdown.common.EnergyBackground;
-import org.anchoranalysis.gui.videostats.operation.combine.OverlayCollectionSupplier;
+import org.anchoranalysis.core.index.IndexGettableSettable;
+import org.anchoranalysis.gui.displayupdate.DisplayUpdateRememberStack;
 
-@AllArgsConstructor
-public class MultiInput<T> {
+public interface ThreadedProducer {
 
-    @Getter @Setter private String name;
-    @Getter private EnergyBackground energyBackground;
-    @Getter private OverlayCollectionSupplier<T> associatedObjects;
+    // How it provides stacks to other applications (the output)
+    DisplayUpdateRememberStack getStackProvider();
+
+    // How it is updated with indexes from other classes (the input control mechanism)
+    IndexGettableSettable getIndexGettableSettable();
+
+    void dispose();
 }

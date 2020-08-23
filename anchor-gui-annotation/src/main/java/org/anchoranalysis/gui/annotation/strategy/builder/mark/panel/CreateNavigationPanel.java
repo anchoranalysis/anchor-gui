@@ -39,7 +39,7 @@ import org.anchoranalysis.gui.videostats.internalframe.annotator.ISaveActionList
 import org.anchoranalysis.gui.videostats.internalframe.annotator.SaveActionListenerFactory;
 import org.anchoranalysis.gui.videostats.internalframe.annotator.SaveMonitor;
 import org.anchoranalysis.gui.videostats.internalframe.annotator.currentstate.CurrentStateDisplayer;
-import org.anchoranalysis.gui.videostats.internalframe.annotator.currentstate.IQueryAcceptedRejected;
+import org.anchoranalysis.gui.videostats.internalframe.annotator.currentstate.QueryAcceptedRejected;
 import org.anchoranalysis.gui.videostats.internalframe.annotator.currentstate.ShowCurrentState;
 import org.anchoranalysis.gui.videostats.internalframe.annotator.navigation.PanelNavigation;
 
@@ -80,7 +80,7 @@ public class CreateNavigationPanel {
 
     private static ISaveActionListenerFactory createSaveActions(
             Path annotationPath,
-            IQueryAcceptedRejected queryAcceptReject,
+            QueryAcceptedRejected queryAcceptReject,
             AnnotationRefresher annotationRefresher,
             Optional<SaveMonitor> saveMonitor) {
         return new SaveActionListenerFactory<>(
@@ -94,8 +94,8 @@ public class CreateNavigationPanel {
             InitAnnotation annotation,
             CurrentStateDisplayer currentStateDisplayer,
             PanelNavigation panelNavigation) {
-        if (annotation.getInitCfg() != null) {
-            currentStateDisplayer.init(annotation.getInitCfg());
+        if (annotation.getInitMarks() != null) {
+            currentStateDisplayer.init(annotation.getInitMarks());
         }
 
         if (!annotation.getInitMsg().isEmpty()) {

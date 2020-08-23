@@ -57,7 +57,7 @@ public class MultiCollectionDropDown {
     private BoundVideoStatsModuleDropDown delegate;
 
     private TimeSequenceProviderSupplier rasterProvider;
-    private NamedProvider<MarkCollection> cfgCollection;
+    private NamedProvider<MarkCollection> marksCollection;
     private NamedProvider<ObjectCollection> objCollection;
     private NamedProviderStore<KeyValueParams> paramsCollection;
     private boolean addProposerEvaluator;
@@ -65,13 +65,13 @@ public class MultiCollectionDropDown {
     // A dropdown menu representing a particular manifest
     public MultiCollectionDropDown(
             TimeSequenceProviderSupplier rasterProvider,
-            NamedProvider<MarkCollection> cfgCollection,
+            NamedProvider<MarkCollection> marksCollection,
             NamedProvider<ObjectCollection> objCollection,
             NamedProviderStore<KeyValueParams> paramsCollection,
             String name,
             boolean addProposerEvaluator) {
         this.rasterProvider = rasterProvider;
-        this.cfgCollection = cfgCollection;
+        this.marksCollection = marksCollection;
         this.paramsCollection = paramsCollection;
         this.delegate = new BoundVideoStatsModuleDropDown(name, "/toolbarIcon/rectangle.png");
         this.addProposerEvaluator = addProposerEvaluator;
@@ -102,11 +102,11 @@ public class MultiCollectionDropDown {
                 true // Adds as default operation
                 );
 
-        if (cfgCollection != null) {
-            DropDownUtilities.addCfgSubmenu(
+        if (marksCollection != null) {
+            DropDownUtilities.addMarksSubmenu(
                     delegate.getRootMenu(),
                     delegate,
-                    cfgCollection,
+                    marksCollection,
                     operationBwsa.energyBackground(),
                     params.getModuleParams(),
                     params.getMarkDisplaySettings(),

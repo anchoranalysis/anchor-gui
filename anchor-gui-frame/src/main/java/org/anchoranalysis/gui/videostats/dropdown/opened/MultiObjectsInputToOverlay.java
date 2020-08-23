@@ -32,7 +32,7 @@ import org.anchoranalysis.anchor.overlay.collection.OverlayCollectionObjectFacto
 import org.anchoranalysis.core.bridge.BridgeElementWithIndex;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.idgetter.IDGetterIter;
-import org.anchoranalysis.gui.videostats.internalframe.cfgtorgb.MultiInput;
+import org.anchoranalysis.gui.videostats.internalframe.markstorgb.MultiInput;
 import org.anchoranalysis.image.object.ObjectCollection;
 
 class MultiObjectsInputToOverlay

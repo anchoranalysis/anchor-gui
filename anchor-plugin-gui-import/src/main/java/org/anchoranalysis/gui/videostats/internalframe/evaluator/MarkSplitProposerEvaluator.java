@@ -28,7 +28,7 @@ package org.anchoranalysis.gui.videostats.internalframe.evaluator;
 
 import java.awt.Color;
 import java.util.Optional;
-import org.anchoranalysis.anchor.mpp.bean.cfg.MarkWithIdentifierFactory;
+import org.anchoranalysis.anchor.mpp.bean.mark.MarkWithIdentifierFactory;
 import org.anchoranalysis.anchor.mpp.bean.proposer.MarkSplitProposer;
 import org.anchoranalysis.anchor.mpp.mark.ColoredMarks;
 import org.anchoranalysis.anchor.mpp.mark.GlobalRegionIdentifiers;
@@ -53,7 +53,7 @@ public class MarkSplitProposerEvaluator implements ProposalOperationCreator {
     private Mark exstMark;
 
     @SuppressWarnings("unused")
-    private MarkCollection exstCfg;
+    private MarkCollection exstMarks;
 
     public MarkSplitProposerEvaluator(MarkSplitProposer markSplitProposer) {
         super();
@@ -64,14 +64,14 @@ public class MarkSplitProposerEvaluator implements ProposalOperationCreator {
 
     @Override
     public ProposalOperation create(
-            final MarkCollection cfg, Point3d position, final ProposerContext context, final MarkWithIdentifierFactory markFactory)
+            final MarkCollection marks, Point3d position, final ProposerContext context, final MarkWithIdentifierFactory markFactory)
             throws OperationFailedException {
 
-        this.exstCfg = cfg;
+        this.exstMarks = marks;
 
         // We need to get the mark already at this position
         final MarkCollection marksAtPost =
-                cfg.marksAt(
+                marks.marksAt(
                         position, context.getRegionMap(), GlobalRegionIdentifiers.SUBMARK_INSIDE);
 
         return new ProposalOperation() {
@@ -100,8 +100,8 @@ public class MarkSplitProposerEvaluator implements ProposalOperationCreator {
                 if (pair.isPresent()) {
                     ProposedMarks er = new ProposedMarks(context.dimensions());
                     er.setSuccess(true);
-                    er.setColoredCfg(cfgForLast());
-                    er.setMarksToRedraw(cfg);
+                    er.setColoredMarks(marksForLast());
+                    er.setMarksToRedraw(marks);
 
                     MarkCollection core = new MarkCollection();
                     core.add(pair.get().getSource().getMark());
@@ -110,20 +110,20 @@ public class MarkSplitProposerEvaluator implements ProposalOperationCreator {
                     return er;
                 } else {
                     ProposedMarks er = new ProposedMarks();
-                    er.setMarksToRedraw(cfg);
+                    er.setMarksToRedraw(marks);
                     return er;
                 }
             }
         };
     }
 
-    private ColoredMarks cfgForLast() {
-        ColoredMarks cfgOut = new ColoredMarks();
+    private ColoredMarks marksForLast() {
+        ColoredMarks marksOut = new ColoredMarks();
         if (pair.isPresent()) {
             // We change the IDs
-            cfgOut.addChangeID(pair.get().getSource().getMark(), new RGBColor(Color.BLUE));
-            cfgOut.addChangeID(pair.get().getDestination().getMark(), new RGBColor(Color.RED));
+            marksOut.addChangeID(pair.get().getSource().getMark(), new RGBColor(Color.BLUE));
+            marksOut.addChangeID(pair.get().getDestination().getMark(), new RGBColor(Color.RED));
         }
-        return cfgOut;
+        return marksOut;
     }
 }

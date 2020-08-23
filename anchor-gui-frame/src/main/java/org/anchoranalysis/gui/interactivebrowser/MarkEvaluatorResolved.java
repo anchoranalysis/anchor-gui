@@ -27,8 +27,8 @@
 package org.anchoranalysis.gui.interactivebrowser;
 
 import lombok.Getter;
-import org.anchoranalysis.anchor.mpp.bean.cfg.MarkWithIdentifierFactory;
 import org.anchoranalysis.anchor.mpp.bean.init.MPPInitParams;
+import org.anchoranalysis.anchor.mpp.bean.mark.MarkWithIdentifierFactory;
 import org.anchoranalysis.anchor.mpp.feature.energy.scheme.EnergyScheme;
 import org.anchoranalysis.core.cache.CachedSupplier;
 import org.anchoranalysis.core.error.CreateException;

@@ -54,7 +54,7 @@ public class LinePlotNumberMarks
     public static class Item implements IndexGetter {
         private int iter;
 
-        @Getter private double cfgSize;
+        @Getter private double marksSize;
 
         @Override
         public int getIndex() {
@@ -71,8 +71,8 @@ public class LinePlotNumberMarks
         LinePlot<LinePlotNumberMarks.Item> delegate =
                 new LinePlot<>(
                         getTitle(),
-                        new String[] {"Cfg Size"},
-                        (Item item, int yIndex) -> item.getCfgSize());
+                        new String[] {"Marks Size"},
+                        (Item item, int yIndex) -> item.getMarksSize());
         delegate.getLabels().setXY("Iteration", "Number of Marks");
         delegate.setGraphColorScheme(graphColorScheme);
         return delegate.create(items, domainLimits, rangeLimits);

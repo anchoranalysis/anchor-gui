@@ -39,14 +39,14 @@ import org.anchoranalysis.gui.frame.details.GenerateExtraDetail;
 import org.anchoranalysis.gui.frame.details.canvas.ControllerAction;
 import org.anchoranalysis.gui.frame.details.canvas.InternalFrameCanvas;
 import org.anchoranalysis.gui.frame.details.canvas.controller.imageview.ControllerImageView;
-import org.anchoranalysis.gui.frame.display.IRedrawable;
+import org.anchoranalysis.gui.frame.display.Redrawable;
 import org.anchoranalysis.gui.frame.display.overlay.OverlayRetriever;
 import org.anchoranalysis.gui.frame.threaded.stack.InternalFrameThreadedProvider;
-import org.anchoranalysis.gui.image.frame.ISliderState;
+import org.anchoranalysis.gui.image.frame.SliderState;
 import org.anchoranalysis.gui.retrieveelements.IRetrieveElements;
 import org.anchoranalysis.gui.videostats.IModuleCreatorDefaultState;
 import org.anchoranalysis.gui.videostats.dropdown.VideoStatsModuleGlobalParams;
-import org.anchoranalysis.gui.videostats.internalframe.cfgtorgb.markdisplay.MarkDisplaySettingsWrapper;
+import org.anchoranalysis.gui.videostats.internalframe.markstorgb.markdisplay.MarkDisplaySettingsWrapper;
 import org.anchoranalysis.gui.videostats.module.DefaultModuleState;
 import org.anchoranalysis.gui.videostats.module.VideoStatsModule;
 import org.anchoranalysis.image.extent.Dimensions;
@@ -82,7 +82,7 @@ public class InternalFrameThreadedOverlayProvider {
                 mpg.getLogger().errorReporter());
     }
 
-    public ISliderState init(
+    public SliderState init(
             BoundedRangeIncompleteDynamic indexBounds,
             boolean includeFrameAdjusting,
             DefaultModuleState initialState,
@@ -102,7 +102,7 @@ public class InternalFrameThreadedOverlayProvider {
         return delegate.defaultIndex(initialState);
     }
 
-    public IModuleCreatorDefaultState moduleCreator(ISliderState sliderState) {
+    public IModuleCreatorDefaultState moduleCreator(SliderState sliderState) {
         return defaultFrameState -> {
             VideoStatsModule module =
                     delegate.moduleCreator(sliderState).createVideoStatsModule(defaultFrameState);
@@ -151,7 +151,7 @@ public class InternalFrameThreadedOverlayProvider {
         return delegate.getIndexGettableSettable();
     }
 
-    public IRedrawable getRedrawable() {
+    public Redrawable getRedrawable() {
         return threadedImageStackProvider;
     }
 

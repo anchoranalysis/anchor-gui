@@ -26,7 +26,7 @@
 
 package org.anchoranalysis.gui.videostats.dropdown;
 
-import org.anchoranalysis.gui.image.frame.ISliderState;
+import org.anchoranalysis.gui.image.frame.SliderState;
 import org.anchoranalysis.gui.videostats.IModuleCreatorDefaultState;
 import org.anchoranalysis.gui.videostats.IModuleCreatorDefaultStateSliderState;
 import org.anchoranalysis.gui.videostats.module.VideoStatsModule;
@@ -45,7 +45,7 @@ public class ModuleAddUtilities {
     public static void add(
             AddVideoStatsModule adder,
             IModuleCreatorDefaultStateSliderState creator,
-            ISliderState sliderState)
+            SliderState sliderState)
             throws VideoStatsModuleCreateException {
         VideoStatsModule module =
                 creator.createVideoStatsModule(

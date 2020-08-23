@@ -37,7 +37,7 @@ import org.anchoranalysis.gui.reassign.SimpleToggleAction;
 
 public class DescriptionTopPanel {
 
-    private JTextPane cfgDescriptionTop;
+    private JTextPane marksDescriptionTop;
 
     private JPanel panelTop;
 
@@ -47,23 +47,23 @@ public class DescriptionTopPanel {
 
         toggleActionFreeze = new SimpleToggleAction("Freeze", false);
 
-        cfgDescriptionTop = new JTextPane();
-        cfgDescriptionTop.setEditable(false);
+        marksDescriptionTop = new JTextPane();
+        marksDescriptionTop.setEditable(false);
 
         panelTop = new JPanel();
         panelTop.setBorder(BorderFactory.createEmptyBorder(2, 0, 2, 0));
         panelTop.setLayout(new BorderLayout());
         panelTop.add(new JToggleButton(toggleActionFreeze), BorderLayout.WEST);
-        panelTop.add(cfgDescriptionTop, BorderLayout.CENTER);
+        panelTop.add(marksDescriptionTop, BorderLayout.CENTER);
     }
 
     public void updateDescriptionTop(OverlayCollection overlays) {
 
         if (overlays != null) {
-            cfgDescriptionTop.setText(
+            marksDescriptionTop.setText(
                     "selected ids: " + new IndicesSelection(overlays.integerSet()).toString());
         } else {
-            cfgDescriptionTop.setText("no selection");
+            marksDescriptionTop.setText("no selection");
         }
     }
 

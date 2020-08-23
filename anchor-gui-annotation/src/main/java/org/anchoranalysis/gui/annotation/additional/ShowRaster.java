@@ -36,7 +36,7 @@ import org.anchoranalysis.gui.annotation.AnnotatorModuleCreator;
 import org.anchoranalysis.gui.backgroundset.BackgroundSet;
 import org.anchoranalysis.gui.container.background.BackgroundStackContainerException;
 import org.anchoranalysis.gui.frame.singleraster.InternalFrameSingleRaster;
-import org.anchoranalysis.gui.image.frame.ISliderState;
+import org.anchoranalysis.gui.image.frame.SliderState;
 import org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.definition.ChangeableBackgroundDefinitionSimple;
 import org.anchoranalysis.gui.videostats.dropdown.AddVideoStatsModule;
 import org.anchoranalysis.gui.videostats.dropdown.BackgroundSetProgressingSupplier;
@@ -87,7 +87,7 @@ public class ShowRaster {
                                             .stackCntr("Associated Raster"));
 
             InternalFrameSingleRaster imageFrame = new InternalFrameSingleRaster(rasterName);
-            ISliderState sliderState = imageFrame.init(1, defaultModuleState, mpg);
+            SliderState sliderState = imageFrame.init(1, defaultModuleState, mpg);
 
             imageFrame
                     .controllerBackgroundMenu()

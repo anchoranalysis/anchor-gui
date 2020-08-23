@@ -26,7 +26,7 @@
 
 package org.anchoranalysis.gui.videostats;
 
-import org.anchoranalysis.gui.image.frame.ISliderState;
+import org.anchoranalysis.gui.image.frame.SliderState;
 import org.anchoranalysis.gui.videostats.module.DefaultModuleState;
 import org.anchoranalysis.gui.videostats.module.VideoStatsModule;
 import org.anchoranalysis.gui.videostats.module.VideoStatsModuleCreateException;
@@ -35,6 +35,6 @@ import org.anchoranalysis.gui.videostats.module.VideoStatsModuleCreateException;
 public interface IModuleCreatorDefaultStateSliderState {
 
     VideoStatsModule createVideoStatsModule(
-            DefaultModuleState defaultFrameState, ISliderState sliderState)
+            DefaultModuleState defaultFrameState, SliderState sliderState)
             throws VideoStatsModuleCreateException;
 }

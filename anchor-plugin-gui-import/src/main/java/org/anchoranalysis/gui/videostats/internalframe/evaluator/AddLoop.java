@@ -26,7 +26,7 @@
 
 package org.anchoranalysis.gui.videostats.internalframe.evaluator;
 
-import org.anchoranalysis.anchor.mpp.bean.cfg.MarkWithIdentifierFactory;
+import org.anchoranalysis.anchor.mpp.bean.mark.MarkWithIdentifierFactory;
 import org.anchoranalysis.anchor.mpp.mark.MarkCollection;
 import org.anchoranalysis.anchor.mpp.proposer.ProposalAbnormalFailureException;
 import org.anchoranalysis.anchor.mpp.proposer.ProposerContext;
@@ -49,10 +49,10 @@ class AddLoop implements ProposalOperationCreator {
 
     @Override
     public ProposalOperation create(
-            MarkCollection cfg, Point3d position, ProposerContext context, MarkWithIdentifierFactory markFactory)
+            MarkCollection marks, Point3d position, ProposerContext context, MarkWithIdentifierFactory markFactory)
             throws OperationFailedException {
 
-        final ProposalOperation po = delegate.create(cfg, position, context, markFactory);
+        final ProposalOperation po = delegate.create(marks, position, context, markFactory);
 
         return new ProposalOperation() {
 

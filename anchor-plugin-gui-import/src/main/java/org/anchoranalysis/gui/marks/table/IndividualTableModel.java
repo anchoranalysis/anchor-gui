@@ -40,7 +40,7 @@ public class IndividualTableModel extends AbstractTableModel implements IUpdateT
     private static final long serialVersionUID = 7882539188914833799L;
 
     // START BEAN PROPERTIES
-    private MarkCollection cfg;
+    private MarkCollection marks;
 
     private EnergySavedInd energySavedInd;
     // END BEAN PROPERTIES
@@ -56,10 +56,10 @@ public class IndividualTableModel extends AbstractTableModel implements IUpdateT
     public void updateTableData(IndexableMarksWithEnergy state) {
 
         if (state.getMarks() != null) {
-            this.cfg = state.getMarks().getMarks();
+            this.marks = state.getMarks().getMarks();
             this.energySavedInd = state.getMarks().getIndividual();
         } else {
-            this.cfg = new MarkCollection();
+            this.marks = new MarkCollection();
         }
         fireTableDataChanged();
     }
@@ -103,31 +103,31 @@ public class IndividualTableModel extends AbstractTableModel implements IUpdateT
 
     @Override
     public int getRowCount() {
-        return this.cfg.size();
+        return this.marks.size();
     }
 
     public Mark getMark(int index) {
-        return cfg.get(index);
+        return marks.get(index);
     }
 
-    public MarkCollection getCfg() {
-        return cfg;
+    public MarkCollection getMarks() {
+        return marks;
     }
 
     @Override
     public Object getValueAt(int row, int column) {
 
-        if (row >= cfg.size()) {
+        if (row >= marks.size()) {
             return "error";
         }
 
         switch (column) {
             case 0:
                 // ICON
-                return colorIndex.get(cfg.get(row).getId());
+                return colorIndex.get(marks.get(row).getId());
             case 1:
                 // ID
-                return cfg.get(row).getId();
+                return marks.get(row).getId();
             case 2:
                 // Energy
                 return String.format("%16.3f", energySavedInd.get(row).getTotal());

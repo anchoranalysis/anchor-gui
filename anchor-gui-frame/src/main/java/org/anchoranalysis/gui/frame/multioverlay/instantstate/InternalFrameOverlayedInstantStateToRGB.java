@@ -40,18 +40,18 @@ import org.anchoranalysis.gui.frame.details.GenerateExtraDetail;
 import org.anchoranalysis.gui.frame.details.canvas.ControllerAction;
 import org.anchoranalysis.gui.frame.details.canvas.InternalFrameCanvas;
 import org.anchoranalysis.gui.frame.details.canvas.controller.imageview.ControllerImageView;
-import org.anchoranalysis.gui.frame.display.IRedrawable;
+import org.anchoranalysis.gui.frame.display.Redrawable;
 import org.anchoranalysis.gui.frame.display.OverlayedDisplayStackUpdate;
 import org.anchoranalysis.gui.frame.display.overlay.OverlayRetriever;
 import org.anchoranalysis.gui.frame.threaded.overlay.InternalFrameThreadedOverlayProvider;
-import org.anchoranalysis.gui.image.frame.ISliderState;
+import org.anchoranalysis.gui.image.frame.SliderState;
 import org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.ControllerPopupMenuWithBackground;
 import org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.IBackgroundSetter;
 import org.anchoranalysis.gui.retrieveelements.IRetrieveElements;
 import org.anchoranalysis.gui.videostats.IModuleCreatorDefaultState;
 import org.anchoranalysis.gui.videostats.dropdown.VideoStatsModuleGlobalParams;
-import org.anchoranalysis.gui.videostats.internalframe.cfgtorgb.IndexableColoredOverlays;
-import org.anchoranalysis.gui.videostats.internalframe.cfgtorgb.markdisplay.MarkDisplaySettingsWrapper;
+import org.anchoranalysis.gui.videostats.internalframe.markstorgb.IndexableColoredOverlays;
+import org.anchoranalysis.gui.videostats.internalframe.markstorgb.markdisplay.MarkDisplaySettingsWrapper;
 import org.anchoranalysis.gui.videostats.link.LinkModules;
 import org.anchoranalysis.gui.videostats.module.DefaultModuleState;
 import org.anchoranalysis.gui.videostats.module.VideoStatsModule;
@@ -69,7 +69,7 @@ class InternalFrameOverlayedInstantStateToRGB {
     }
 
     // Must be called before usage
-    public ISliderState init(
+    public SliderState init(
             BoundedIndexContainer<IndexableColoredOverlays> overlaysCntr,
             IDGetter<Overlay> idGetter,
             boolean includeFrameAdjusting,
@@ -100,7 +100,7 @@ class InternalFrameOverlayedInstantStateToRGB {
         return delegate.getFrameCanvas();
     }
 
-    public IModuleCreatorDefaultState moduleCreator(ISliderState sliderState) {
+    public IModuleCreatorDefaultState moduleCreator(SliderState sliderState) {
         return defaultFrameState -> {
             VideoStatsModule module =
                     delegate.moduleCreator(sliderState).createVideoStatsModule(defaultFrameState);
@@ -119,7 +119,7 @@ class InternalFrameOverlayedInstantStateToRGB {
                     CheckedFunction<Integer, DisplayStack, BackgroundStackContainerException>> {
 
         private IndexToRedrawUpdate indexToRedrawUpdate;
-        private IRedrawable redrawable;
+        private Redrawable redrawable;
 
         @Override
         public void setPropertyValue(
@@ -158,7 +158,7 @@ class InternalFrameOverlayedInstantStateToRGB {
         return delegate.addAdditionalDetails(arg0);
     }
 
-    public ControllerPopupMenuWithBackground controllerBackgroundMenu(ISliderState sliderState) {
+    public ControllerPopupMenuWithBackground controllerBackgroundMenu(SliderState sliderState) {
         return new ControllerPopupMenuWithBackground(
                 delegate.controllerPopupMenu(), createBackgroundSetter(sliderState));
     }
@@ -171,11 +171,11 @@ class InternalFrameOverlayedInstantStateToRGB {
         return delegate.controllerAction();
     }
 
-    public IRedrawable getRedrawable() {
+    public Redrawable getRedrawable() {
         return delegate.getRedrawable();
     }
 
-    private IBackgroundSetter createBackgroundSetter(ISliderState sliderState) {
+    private IBackgroundSetter createBackgroundSetter(SliderState sliderState) {
         return imageStackCntr -> {
             indexToRedrawUpdate.setImageStackCntr(imageStackCntr);
 
