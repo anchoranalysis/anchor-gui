@@ -72,7 +72,6 @@ public class FeatureEvaluatorTablePanel extends StatePanel<OverlaysWithEnergySta
      * (CENTER): a component (first component in half-filled splitPane) MIDDLE-BOTTOM (CENTER): a
      * component (second component in half-filled splitPane)
      *
-     * @param overlayDescriptionPanel
      * @return
      */
     private static JPanel createBigPanel(

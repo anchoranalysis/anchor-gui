@@ -194,7 +194,7 @@ public class OpenedFileGUIMultipleDropDown {
     }
 
     /**
-     * @param <InputType> input-type
+     * @param <T> input-type
      * @param listCombined
      * @param outMenu
      * @param rootOperation
