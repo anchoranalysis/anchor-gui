@@ -40,7 +40,7 @@ public class NumberMarksAsText extends CreateStringRasterGenerator {
     // END BEAN PROPERTIES
 
     @Override
-    public String descriptionBean() {
+    public String describeBean() {
         return getBeanName();
     }
 

@@ -59,7 +59,7 @@ public abstract class PlotGeneratorBase<T, S> extends GeneratorFactory<S> {
     public abstract boolean hasNecessaryParams(ExportTaskParams params);
 
     @Override
-    public String descriptionBean() {
+    public String describeBean() {
         return String.format(
                 "graph=%s, width=%d, height=%d", graphDefinition.getTitle(), width, height);
     }

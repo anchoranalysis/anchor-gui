@@ -34,7 +34,7 @@ import lombok.Setter;
 import org.anchoranalysis.anchor.mpp.feature.bean.energy.scheme.EnergySchemeCreator;
 import org.anchoranalysis.anchor.mpp.feature.bean.mark.MarkEvaluator;
 import org.anchoranalysis.bean.NamedBean;
-import org.anchoranalysis.bean.Provider;
+import org.anchoranalysis.bean.provider.Provider;
 import org.anchoranalysis.bean.shared.params.keyvalue.KeyValueParamsInitParams;
 import org.anchoranalysis.bean.shared.params.keyvalue.KeyValueParamsProvider;
 import org.anchoranalysis.core.error.CreateException;

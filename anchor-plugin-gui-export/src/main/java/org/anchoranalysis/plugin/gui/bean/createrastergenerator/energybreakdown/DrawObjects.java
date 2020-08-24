@@ -107,9 +107,9 @@ public class DrawObjects extends GeneratorFactory<IndexableMarksWithEnergy> {
     }
 
     @Override
-    public String descriptionBean() {
+    public String describeBean() {
         return String.format(
-                "%s(mip=%d, drawObject=%s)", getBeanName(), mip ? 1 : 0, drawObject.descriptionBean());
+                "%s(mip=%d, drawObject=%s)", getBeanName(), mip ? 1 : 0, drawObject.describeBean());
     }
 
     private static MarkCollection extractOrEmpty(MarksWithEnergyBreakdown marks) {

@@ -67,7 +67,7 @@ public class FeatureTreeRenderData implements RenderDataProvider {
     @Override
     public String getTooltipText(Object o) {
         Node f = (Node) o;
-        return f.getFeature().descriptionBean();
+        return f.getFeature().describeBean();
     }
 
     @Override

@@ -74,7 +74,7 @@ public class Combined<T> extends GeneratorFactory<T> {
     }
 
     @Override
-    public String descriptionBean() {
+    public String describeBean() {
         return getBeanName();
     }
 }
