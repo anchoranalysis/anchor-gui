@@ -26,6 +26,7 @@
 
 package org.anchoranalysis.gui.frame.threaded.overlay;
 
+import lombok.RequiredArgsConstructor;
 import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.error.reporter.ErrorReporter;
 import org.anchoranalysis.core.functional.function.CheckedFunction;
@@ -38,18 +39,17 @@ import org.anchoranalysis.core.property.change.PropertyValueChangeListener;
 import org.anchoranalysis.gui.container.background.BackgroundStackContainerException;
 import org.anchoranalysis.gui.displayupdate.DisplayUpdateRememberStack;
 import org.anchoranalysis.gui.displayupdate.OverlayedDisplayStack;
-import org.anchoranalysis.gui.frame.display.Redrawable;
 import org.anchoranalysis.gui.frame.display.OverlayedDisplayStackUpdate;
+import org.anchoranalysis.gui.frame.display.Redrawable;
 import org.anchoranalysis.gui.frame.display.overlay.OverlayRetriever;
-import org.anchoranalysis.gui.frame.threaded.stack.ThreadedProducer;
 import org.anchoranalysis.gui.frame.threaded.stack.ThreadedDisplayUpdateConsumer;
+import org.anchoranalysis.gui.frame.threaded.stack.ThreadedProducer;
 import org.anchoranalysis.gui.image.DisplayUpdateCreator;
 import org.anchoranalysis.gui.marks.MarkDisplaySettings;
 import org.anchoranalysis.gui.videostats.internalframe.markstorgb.markdisplay.MarkDisplaySettingsWrapper;
 import org.anchoranalysis.gui.videostats.threading.InteractiveThreadPool;
 import org.anchoranalysis.overlay.Overlay;
 import org.anchoranalysis.overlay.writer.DrawOverlay;
-import lombok.RequiredArgsConstructor;
 
 class ThreadedOverlayUpdateProducer implements Redrawable, ThreadedProducer, IGetClearUpdate {
 

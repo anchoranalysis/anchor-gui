@@ -111,7 +111,8 @@ public class MarksProposerMouseClickAdapter extends MouseAdapter {
             return;
         }
 
-        // We convert the overlays into a Marks. There's almost definitely a better way of doing this
+        // We convert the overlays into a Marks. There's almost definitely a better way of doing
+        // this
         MarkCollection marks =
                 OverlayCollectionMarkFactory.marksFromOverlays(
                         extractOverlays.getOverlays().getOverlays());
@@ -143,7 +144,10 @@ public class MarksProposerMouseClickAdapter extends MouseAdapter {
 
                 final ProposalOperation proposalOperation =
                         evaluator.create(
-                                marksExst, position, context, evaluatorWithContext.getMarkFactory());
+                                marksExst,
+                                position,
+                                context,
+                                evaluatorWithContext.getMarkFactory());
                 ProposedMarks er = proposalOperation.propose(pfd.getRoot());
                 er.setPfd(pfd);
                 return er;

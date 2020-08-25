@@ -35,15 +35,13 @@ import org.anchoranalysis.mpp.mark.voxelized.memo.VoxelizedMarkMemo;
 public abstract class UnaryFactory implements FeatureInputFactory {
 
     @Override
-    public FeatureInput create(
-            VoxelizedMarkMemo pmm1, VoxelizedMarkMemo pmm2, EnergyStack raster)
+    public FeatureInput create(VoxelizedMarkMemo pmm1, VoxelizedMarkMemo pmm2, EnergyStack raster)
             throws CreateException {
         throw new CreateException("unsupported");
     }
 
     @Override
-    public FeatureInput create(MemoCollection pmmhList, EnergyStack raster)
-            throws CreateException {
+    public FeatureInput create(MemoCollection pmmhList, EnergyStack raster) throws CreateException {
         throw new CreateException("unsupported");
     }
 

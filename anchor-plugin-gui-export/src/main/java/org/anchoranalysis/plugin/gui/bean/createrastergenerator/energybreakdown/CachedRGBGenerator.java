@@ -27,6 +27,7 @@
 package org.anchoranalysis.plugin.gui.bean.createrastergenerator.energybreakdown;
 
 import java.nio.file.Path;
+import lombok.RequiredArgsConstructor;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.error.reporter.ErrorReporter;
@@ -38,7 +39,6 @@ import org.anchoranalysis.image.stack.DisplayStack;
 import org.anchoranalysis.io.output.bean.OutputWriteSettings;
 import org.anchoranalysis.io.output.error.OutputWriteFailedException;
 import org.anchoranalysis.overlay.writer.DrawOverlay;
-import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 class CachedRGBGenerator extends CacheableOverlaysToRGBGenerator {
@@ -47,7 +47,7 @@ class CachedRGBGenerator extends CacheableOverlaysToRGBGenerator {
     private final CachedRGB cachedRGB;
     private final ErrorReporter errorReporter;
     // END BEAN PROPERTIES
-    
+
     private OverlayedDisplayStackUpdate element;
 
     // THIS MUST BE CALLED before we do any drawing.

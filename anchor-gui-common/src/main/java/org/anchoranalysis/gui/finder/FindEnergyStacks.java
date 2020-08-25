@@ -45,8 +45,7 @@ class FindEnergyStacks {
      * We first retrieve a namedimgcollection which we use to construct our real EnergyStack for
      * purposes of good caching
      */
-    public static EnergyStack find(NamedStacksSupplier stacks)
-            throws OperationFailedException {
+    public static EnergyStack find(NamedStacksSupplier stacks) throws OperationFailedException {
         // NB Note assumption about named-stack ordering
         NamedProvider<Stack> provider = stacks.get(ProgressReporterNull.get());
 

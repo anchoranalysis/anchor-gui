@@ -64,8 +64,7 @@ public class InternalFrameMultiRaster {
                                 new BoundedIndexContainerFromList<>(list),
                                 InternalFrameMultiRaster::convertToDisplayStack);
 
-        SliderState sliderState =
-                delegate.init(bridge, initialState, false, elementRetriever, mpg);
+        SliderState sliderState = delegate.init(bridge, initialState, false, elementRetriever, mpg);
 
         delegate.addAdditionalDetails(index -> String.format("id=%s", list.get(index).getName()));
 

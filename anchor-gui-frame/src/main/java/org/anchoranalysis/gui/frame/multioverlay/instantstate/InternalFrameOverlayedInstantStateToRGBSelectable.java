@@ -128,12 +128,13 @@ public class InternalFrameOverlayedInstantStateToRGBSelectable {
                         createElementRetriever(),
                         mpg);
 
-        GenerateExtraDetail marksSizeDetail = index -> {
-            OverlayRetriever or = delegate.getOverlayRetriever();
-            return String.format(
-                    "marksSize=%s",
-                    or.getOverlays() != null ? or.getOverlays().size() : -1);
-        };
+        GenerateExtraDetail marksSizeDetail =
+                index -> {
+                    OverlayRetriever or = delegate.getOverlayRetriever();
+                    return String.format(
+                            "marksSize=%s",
+                            or.getOverlays() != null ? or.getOverlays().size() : -1);
+                };
 
         delegate.addAdditionalDetails(marksSizeDetail);
 
@@ -141,9 +142,7 @@ public class InternalFrameOverlayedInstantStateToRGBSelectable {
         new PropertyValueReceivableFromIndicesSelection(selectionIndices.getCurrentSelection())
                 .addPropertyValueChangeListener(
                         new RedrawFromMarksGetter(
-                                currentlySelectedMarksGetter,
-                                delegate.getRedrawable()
-                                ));
+                                currentlySelectedMarksGetter, delegate.getRedrawable()));
 
         markClickAdapter =
                 new ClickAdapter(selectionIndices, sliderState, delegate.getOverlayRetriever());

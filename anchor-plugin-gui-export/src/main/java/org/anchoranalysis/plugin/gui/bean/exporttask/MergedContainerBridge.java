@@ -57,7 +57,7 @@ class MergedContainerBridge
 
     // START REQUIRED ARGUMENTS
     private final Supplier<RegionMembershipWithFlags> regionMembership;
-    
+
     private final EnergySchemeWithSharedFeatures energyScheme;
     // END REQUIRED ARGUMENTS
 
@@ -100,13 +100,9 @@ class MergedContainerBridge
         }
         return retBridge;
     }
-    
+
     private IndexableMarksWithEnergy createIndexableMarks(MarkCollection marks, int index) {
         return new IndexableMarksWithEnergy(
-                index,
-                new MarksWithEnergyBreakdown(
-                        new MarksWithTotalEnergy(marks, energyScheme))
-                        
-                );
+                index, new MarksWithEnergyBreakdown(new MarksWithTotalEnergy(marks, energyScheme)));
     }
 }

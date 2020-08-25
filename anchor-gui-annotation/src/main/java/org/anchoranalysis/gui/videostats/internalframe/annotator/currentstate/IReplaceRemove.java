@@ -35,7 +35,8 @@ public interface IReplaceRemove {
 
     void removeCurrentProposedMarks();
 
-    void replaceCurrentProposedMarks(MarkCollection marksCore, ColoredMarks marksDisplayed, int sliceZ);
+    void replaceCurrentProposedMarks(
+            MarkCollection marksCore, ColoredMarks marksDisplayed, int sliceZ);
 
     void removeAcceptedMarksAndSelectedPoints(MarkCollection marks, List<Point3i> points);
 }

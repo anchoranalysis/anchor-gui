@@ -35,11 +35,11 @@ public class ExportTaskMergedMarks
         extends ExportTaskRasterGeneratorFromBoundedIndexContainer<IndexableMarksWithEnergy> {
 
     public void init() {
-        RegionMembershipWithFlags regionMembership = RegionMapSingleton.instance()
-                .membershipWithFlagsForIndex(
-                        GlobalRegionIdentifiers.SUBMARK_INSIDE); 
+        RegionMembershipWithFlags regionMembership =
+                RegionMapSingleton.instance()
+                        .membershipWithFlagsForIndex(GlobalRegionIdentifiers.SUBMARK_INSIDE);
         super.setBridge(
                 // TODO the null doesn't seem correct
-                new MergedContainerBridge( () -> regionMembership, null));
+                new MergedContainerBridge(() -> regionMembership, null));
     }
 }

@@ -35,8 +35,7 @@ import org.anchoranalysis.io.manifest.deserializer.folder.LoadContainer;
 import org.anchoranalysis.io.manifest.folder.FolderWrite;
 import org.anchoranalysis.mpp.segment.kernel.proposer.KernelDescision;
 
-public class FinderHistoryFolderKernelDecision
-        extends FinderHistoryFolder<KernelDescision> {
+public class FinderHistoryFolderKernelDecision extends FinderHistoryFolder<KernelDescision> {
 
     public FinderHistoryFolderKernelDecision(String manifestFunction) {
         super(manifestFunction);

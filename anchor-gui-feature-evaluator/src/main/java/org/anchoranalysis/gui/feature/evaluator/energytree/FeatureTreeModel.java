@@ -45,8 +45,7 @@ import org.anchoranalysis.gui.feature.evaluator.singlepair.UpdatableSinglePair;
 import org.anchoranalysis.mpp.pair.IdentifiablePair;
 import org.anchoranalysis.overlay.Overlay;
 
-public class FeatureTreeModel extends DefaultTreeModel
-        implements UpdatableSinglePair {
+public class FeatureTreeModel extends DefaultTreeModel implements UpdatableSinglePair {
 
     private static final long serialVersionUID = -5795973516009041187L;
 

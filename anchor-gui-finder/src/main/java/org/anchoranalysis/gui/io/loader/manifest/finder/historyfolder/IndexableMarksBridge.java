@@ -32,10 +32,12 @@ import org.anchoranalysis.core.bridge.BridgeElementWithIndex;
 import org.anchoranalysis.core.error.AnchorNeverOccursException;
 
 class IndexableMarksBridge
-        implements BridgeElementWithIndex<MarksWithEnergyBreakdown, IndexableMarksWithEnergy, AnchorNeverOccursException> {
+        implements BridgeElementWithIndex<
+                MarksWithEnergyBreakdown, IndexableMarksWithEnergy, AnchorNeverOccursException> {
 
     @Override
-    public IndexableMarksWithEnergy bridgeElement(int index, MarksWithEnergyBreakdown sourceObject) {
+    public IndexableMarksWithEnergy bridgeElement(
+            int index, MarksWithEnergyBreakdown sourceObject) {
         return new IndexableMarksWithEnergy(index, sourceObject);
     }
 }

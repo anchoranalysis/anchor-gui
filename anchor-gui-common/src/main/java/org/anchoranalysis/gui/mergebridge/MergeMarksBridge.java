@@ -31,6 +31,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Supplier;
+import lombok.RequiredArgsConstructor;
 import org.anchoranalysis.core.error.AnchorNeverOccursException;
 import org.anchoranalysis.core.functional.function.CheckedFunction;
 import org.anchoranalysis.mpp.bean.regionmap.RegionMembershipWithFlags;
@@ -39,7 +40,6 @@ import org.anchoranalysis.mpp.mark.MarkCollection;
 import org.anchoranalysis.mpp.overlay.OverlayCollectionMarkFactory;
 import org.anchoranalysis.overlay.IndexableOverlays;
 import org.anchoranalysis.overlay.collection.OverlayCollection;
-import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 public class MergeMarksBridge
@@ -49,8 +49,8 @@ public class MergeMarksBridge
     // START REQUIRED ARGUMENTS
     private final Supplier<RegionMembershipWithFlags> regionMembership;
     // END REQUIRED ARGUMENTS
-    
-    private List<ProposalState> lastProposalState;    
+
+    private List<ProposalState> lastProposalState;
 
     // From the memory of the last set of proposals, get a particlar indexed items
     public ProposalState getLastProposalStateForIndex(int index) {
@@ -77,7 +77,11 @@ public class MergeMarksBridge
     //  4 = ADDED (BIRTH)
     //  5 = REMOVED (DEATH)
     private static void processMarkId(
-            int id, Mark selected, Mark proposal, MarkCollection marksOut, List<ProposalState> state) {
+            int id,
+            Mark selected,
+            Mark proposal,
+            MarkCollection marksOut,
+            List<ProposalState> state) {
 
         if (selected != null) {
             if (proposal != null) {
@@ -117,7 +121,8 @@ public class MergeMarksBridge
         assert (state.get(state.size() - 1) != null);
     }
 
-    private void copyAsUnchanged(MarkCollection src, MarkCollection dest, List<ProposalState> state) {
+    private void copyAsUnchanged(
+            MarkCollection src, MarkCollection dest, List<ProposalState> state) {
 
         for (Mark markOld : src) {
 
@@ -164,7 +169,8 @@ public class MergeMarksBridge
         }
 
         OverlayCollection oc =
-                OverlayCollectionMarkFactory.createWithoutColor(mergedMarks, regionMembership.get());
+                OverlayCollectionMarkFactory.createWithoutColor(
+                        mergedMarks, regionMembership.get());
         return new IndexableOverlays(sourceObject.getIndex(), oc);
     }
 

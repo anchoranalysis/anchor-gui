@@ -108,7 +108,7 @@ public class OpenFile extends AbstractAction {
 
             ArrayList<File> listFiles = new ArrayList<>();
             for (File f : files) {
-                System.out.printf("Selected file is %s%n", f.getPath());    // NOSONAR
+                System.out.printf("Selected file is %s%n", f.getPath()); // NOSONAR
                 listFiles.add(f);
             }
 
@@ -128,7 +128,7 @@ public class OpenFile extends AbstractAction {
                             parentComponent,
                             fileCreatorLoader.getImporterSettings());
                 } catch (OperationFailedException e1) {
-                    System.out.printf("Cannot guess filetype: %s%n", e1.toString());    // NOSONAR
+                    System.out.printf("Cannot guess filetype: %s%n", e1.toString()); // NOSONAR
                 }
             }
         }

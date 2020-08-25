@@ -27,10 +27,10 @@
 package org.anchoranalysis.gui.videostats.dropdown;
 
 import javax.swing.JFrame;
+import lombok.AllArgsConstructor;
 import org.anchoranalysis.gui.videostats.AssociatedEnergyStackGetter;
 import org.anchoranalysis.gui.videostats.module.VideoStatsModule;
 import org.anchoranalysis.gui.videostats.module.VideoStatsModuleSubgroup;
-import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
 public class AdderAppendEnergyStack implements AddVideoStatsModule {

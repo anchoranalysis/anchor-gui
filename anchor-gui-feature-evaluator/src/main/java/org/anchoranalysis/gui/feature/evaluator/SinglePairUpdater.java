@@ -77,7 +77,8 @@ class SinglePairUpdater {
     private void updateOverlays(OverlayCollection overlays, EnergyStack energyStack)
             throws CreateException {
 
-        // Marks marks = OverlayCollectionMarkFactory.marksFromOverlays( cws.getOverlayCollection() );
+        // Marks marks = OverlayCollectionMarkFactory.marksFromOverlays( cws.getOverlayCollection()
+        // );
         overlayDescriptionPanel.updateDescriptionTop(overlays);
 
         assert (energyStack != null);

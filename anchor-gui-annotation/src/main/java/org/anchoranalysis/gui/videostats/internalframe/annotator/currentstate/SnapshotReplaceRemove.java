@@ -50,7 +50,8 @@ class SnapshotReplaceRemove implements IReplaceRemove {
     }
 
     @Override
-    public void replaceCurrentProposedMarks(MarkCollection marksCore, ColoredMarks marksDisplayed, int sliceZ) {
+    public void replaceCurrentProposedMarks(
+            MarkCollection marksCore, ColoredMarks marksDisplayed, int sliceZ) {
         recorder.recordSnapshot();
         delegate.removeCurrentProposedMarks();
     }

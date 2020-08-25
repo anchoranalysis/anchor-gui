@@ -36,8 +36,7 @@ import org.anchoranalysis.mpp.mark.voxelized.memo.VoxelizedMarkMemo;
 public class MemoUnaryFactory extends UnaryFactory {
 
     @Override
-    public FeatureInput create(VoxelizedMarkMemo pmm, EnergyStack raster)
-            throws CreateException {
+    public FeatureInput create(VoxelizedMarkMemo pmm, EnergyStack raster) throws CreateException {
         return new FeatureInputSingleMemo(pmm, Optional.of(raster));
     }
 }

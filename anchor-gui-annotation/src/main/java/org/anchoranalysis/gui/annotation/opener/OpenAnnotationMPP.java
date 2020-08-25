@@ -82,7 +82,8 @@ public class OpenAnnotationMPP implements OpenAnnotation {
 
     private static InitAnnotation readMarksFromAnnotation(MarkAnnotation annotationExst) {
 
-        PartitionedMarks initMarks = new PartitionedMarks(annotationExst.getMarks(), annotationExst.getMarksReject());
+        PartitionedMarks initMarks =
+                new PartitionedMarks(annotationExst.getMarks(), annotationExst.getMarksReject());
 
         if (annotationExst.isAccepted()) {
             return new InitAnnotation(Optional.of(annotationExst), initMarks);
@@ -95,7 +96,8 @@ public class OpenAnnotationMPP implements OpenAnnotation {
     private InitAnnotation readDefaultMarks(Path defaultMarksPath, Logger logger) {
         try {
             MarkCollection defaultMarks = annotationReader.readDefaultMarks(defaultMarksPath);
-            return new InitAnnotation(Optional.empty(), new PartitionedMarks(defaultMarks, new MarkCollection()));
+            return new InitAnnotation(
+                    Optional.empty(), new PartitionedMarks(defaultMarks, new MarkCollection()));
         } catch (DeserializationFailedException e) {
             logger.messageLogger().logFormatted("Cannot open defaultMarks at %s", defaultMarksPath);
             logger.errorReporter().recordError(AnnotatorModuleCreator.class, e);

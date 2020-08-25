@@ -38,11 +38,11 @@ public class ExecutionTimeGraphDefinition extends GraphDefinition {
     // START REQUIRED ARGUMENTS
     private final int windowSize;
     // END REQUIRED ARGUMENTS
-    
+
     private double msPerIter = -1;
     private long lastTimeStamp = -1;
     private int divider;
-    
+
     @Override
     public String title() {
         return "Execution Time";
@@ -82,7 +82,8 @@ public class ExecutionTimeGraphDefinition extends GraphDefinition {
     }
 
     @Override
-    public void updateCurrent(int iter, long timeStamp, MarksWithTotalEnergy current, Aggregator aggregator) {
+    public void updateCurrent(
+            int iter, long timeStamp, MarksWithTotalEnergy current, Aggregator aggregator) {
 
         if (lastTimeStamp != -1 && aggregator.hasLastDivider()) {
             long timeDiff = timeStamp - lastTimeStamp;
@@ -95,11 +96,10 @@ public class ExecutionTimeGraphDefinition extends GraphDefinition {
 
     @Override
     public void updateBest(int iter, long timeStamp, MarksWithTotalEnergy best) {
-        //NOTHING TO DO
+        // NOTHING TO DO
     }
-    
+
     private static long resolve(double energy) {
         return (long) (100 * energy);
     }
-
 }

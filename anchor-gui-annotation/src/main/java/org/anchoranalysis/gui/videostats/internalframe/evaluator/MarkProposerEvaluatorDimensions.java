@@ -26,6 +26,7 @@
 
 package org.anchoranalysis.gui.videostats.internalframe.evaluator;
 
+import lombok.RequiredArgsConstructor;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.geometry.Point3d;
 import org.anchoranalysis.gui.frame.overlays.ProposedMarks;
@@ -38,7 +39,6 @@ import org.anchoranalysis.mpp.mark.MarkCollection;
 import org.anchoranalysis.mpp.mark.voxelized.memo.PxlMarkMemoFactory;
 import org.anchoranalysis.mpp.mark.voxelized.memo.VoxelizedMarkMemo;
 import org.anchoranalysis.mpp.proposer.ProposerContext;
-import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 public class MarkProposerEvaluatorDimensions implements ProposalOperationCreator {
@@ -47,12 +47,15 @@ public class MarkProposerEvaluatorDimensions implements ProposalOperationCreator
     private final MarkProposer markProposer;
     private final boolean detailedVisualization;
     // END REQUIRED ARGUMENTS
-    
+
     private Dimensions dimensions;
 
     @Override
     public ProposalOperation create(
-            MarkCollection marks, final Point3d position, final ProposerContext context, final MarkWithIdentifierFactory markFactory)
+            MarkCollection marks,
+            final Point3d position,
+            final ProposerContext context,
+            final MarkWithIdentifierFactory markFactory)
             throws OperationFailedException {
 
         // We actually do the proposal
@@ -61,11 +64,10 @@ public class MarkProposerEvaluatorDimensions implements ProposalOperationCreator
                         position,
                         markFactory.getTemplateMark().create(),
                         context.getRandomNumberGenerator());
-        
+
         // Do proposal
         return errorNode -> {
-            VoxelizedMarkMemo pmm =
-                    PxlMarkMemoFactory.create(mark, null, context.getRegionMap());
+            VoxelizedMarkMemo pmm = PxlMarkMemoFactory.create(mark, null, context.getRegionMap());
 
             ProposedMarks er = new ProposedMarks(dimensions);
 
@@ -79,10 +81,7 @@ public class MarkProposerEvaluatorDimensions implements ProposalOperationCreator
             if (succ) {
                 er.setColoredMarks(
                         MarkProposerEvaluatorUtilities.generateMarksFromMark(
-                                pmm.getMark(),
-                                position,
-                                markProposer,
-                                detailedVisualization));
+                                pmm.getMark(), position, markProposer, detailedVisualization));
                 er.setSuggestedSliceNum((int) mark.centerPoint().z());
                 er.setMarksCore(new MarkCollection(pmm.getMark()));
             }

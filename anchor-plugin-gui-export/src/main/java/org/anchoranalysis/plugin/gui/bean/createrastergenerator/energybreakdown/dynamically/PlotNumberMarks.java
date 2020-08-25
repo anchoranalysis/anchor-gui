@@ -29,8 +29,7 @@ package org.anchoranalysis.plugin.gui.bean.createrastergenerator.energybreakdown
 import org.anchoranalysis.gui.plot.creator.BridgedPlotNumberMarksCreator;
 import org.anchoranalysis.gui.plot.definition.line.LinePlotNumberMarks;
 
-public class PlotNumberMarks
-        extends PlotFromIndexableMarksBase<LinePlotNumberMarks.Item> {
+public class PlotNumberMarks extends PlotFromIndexableMarksBase<LinePlotNumberMarks.Item> {
 
     public PlotNumberMarks() {
         super(new BridgedPlotNumberMarksCreator().createCSVStatisticBridge());

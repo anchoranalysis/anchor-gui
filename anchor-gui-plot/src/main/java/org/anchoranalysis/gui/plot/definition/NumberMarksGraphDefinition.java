@@ -26,7 +26,7 @@
 
 package org.anchoranalysis.gui.plot.definition;
 
-import com.sun.tools.visualvm.charts.SimpleXYChartDescriptor;   // NOSONAR
+import com.sun.tools.visualvm.charts.SimpleXYChartDescriptor; // NOSONAR
 import com.sun.tools.visualvm.charts.SimpleXYChartSupport;
 import lombok.RequiredArgsConstructor;
 import org.anchoranalysis.anchor.mpp.feature.energy.marks.MarksWithTotalEnergy;
@@ -38,7 +38,7 @@ public class NumberMarksGraphDefinition extends GraphDefinition {
     // START REQUIRED ARGUMENTS
     private final int windowSize;
     // END REQUIRED ARGUMENTS
-    
+
     private double sizeCurrent;
     private int sizeBest;
 

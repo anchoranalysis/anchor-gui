@@ -92,7 +92,10 @@ public class FinderMarksWithEnergy implements Finder, ContainerGetter<IndexableM
                     finderCSVStats,
                     context.getContext());
         } catch (MenuAddException e) {
-            context.getMpg().getLogger().errorReporter().recordError(FinderMarksWithEnergy.class, e);
+            context.getMpg()
+                    .getLogger()
+                    .errorReporter()
+                    .recordError(FinderMarksWithEnergy.class, e);
             return false;
         }
         return true;

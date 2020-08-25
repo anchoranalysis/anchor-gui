@@ -68,8 +68,7 @@ public class EnergyTableCreator extends VideoStatsModuleCreatorContext {
             LoadContainer<IndexableMarksWithEnergy> cntr = operation.get();
 
             StatePanelFrameHistoryMarks frame =
-                    new StatePanelFrameHistoryMarks(
-                            namePrefix, !cntr.isExpensiveLoad());
+                    new StatePanelFrameHistoryMarks(namePrefix, !cntr.isExpensiveLoad());
             frame.init(
                     defaultStateManager.getLinkStateManager().getState().getFrameIndex(),
                     cntr,

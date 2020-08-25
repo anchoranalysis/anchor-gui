@@ -51,8 +51,7 @@ public class TreeTableWithModel implements ITreeTableModel {
             SharedFeatureMulti sharedFeatures) {
         super();
         this.featureTree =
-                new FeatureTreeModel(
-                        featureList, sharedFeatures, properties.getLogErrorReporter());
+                new FeatureTreeModel(featureList, sharedFeatures, properties.getLogErrorReporter());
         this.delegate = new TreeTable(featureTree, properties);
     }
 

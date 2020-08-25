@@ -38,7 +38,7 @@ public class TemperatureGraphDefinition extends GraphDefinition {
     // START REQUIRED ARGUMENTS
     private final int windowSize;
     // END REQUIRED ARGUMENTS
-    
+
     private double temperature;
 
     private long resolve(double energy) {

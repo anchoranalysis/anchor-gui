@@ -43,15 +43,13 @@ public class UnsupportedFactory implements FeatureInputFactory {
     }
 
     @Override
-    public FeatureInput create(
-            VoxelizedMarkMemo pmm1, VoxelizedMarkMemo pmm2, EnergyStack raster)
+    public FeatureInput create(VoxelizedMarkMemo pmm1, VoxelizedMarkMemo pmm2, EnergyStack raster)
             throws CreateException {
         throw new CreateException(UNSUPPORTED_MESSAGE);
     }
 
     @Override
-    public FeatureInput create(MemoCollection pmmhList, EnergyStack raster)
-            throws CreateException {
+    public FeatureInput create(MemoCollection pmmhList, EnergyStack raster) throws CreateException {
         throw new CreateException(UNSUPPORTED_MESSAGE);
     }
 

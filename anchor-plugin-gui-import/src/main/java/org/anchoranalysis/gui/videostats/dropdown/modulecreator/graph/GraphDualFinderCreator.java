@@ -27,6 +27,7 @@
 package org.anchoranalysis.gui.videostats.dropdown.modulecreator.graph;
 
 import java.util.ArrayList;
+import lombok.AllArgsConstructor;
 import org.anchoranalysis.anchor.mpp.feature.energy.IndexableMarksWithEnergy;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.gui.io.loader.manifest.finder.FinderCSVStats;
@@ -40,7 +41,6 @@ import org.anchoranalysis.gui.videostats.dropdown.contextualmodulecreator.Contex
 import org.anchoranalysis.gui.videostats.modulecreator.VideoStatsModuleCreator;
 import org.anchoranalysis.plot.bean.Plot;
 import org.anchoranalysis.plot.bean.colorscheme.GraphColorScheme;
-import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
 public class GraphDualFinderCreator<T> extends ContextualModuleCreator {

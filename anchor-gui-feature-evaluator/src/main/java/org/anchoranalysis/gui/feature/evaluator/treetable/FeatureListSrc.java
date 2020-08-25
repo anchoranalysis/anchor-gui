@@ -44,6 +44,5 @@ public abstract class FeatureListSrc {
 
     public abstract SharedFeatureMulti sharedFeatures();
 
-    public abstract EnergyStack maybeAugmentParams(EnergyStack in)
-            throws OperationFailedException;
+    public abstract EnergyStack maybeAugmentParams(EnergyStack in) throws OperationFailedException;
 }

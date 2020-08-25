@@ -26,6 +26,7 @@
 
 package org.anchoranalysis.gui.interactivebrowser.browser;
 
+import lombok.AllArgsConstructor;
 import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.gui.bean.filecreator.FileCreatorParams;
 import org.anchoranalysis.gui.bean.filecreator.MarkCreatorParams;
@@ -39,7 +40,6 @@ import org.anchoranalysis.gui.marks.MarkDisplaySettings;
 import org.anchoranalysis.gui.toolbar.VideoStatsToolbar;
 import org.anchoranalysis.gui.videostats.dropdown.VideoStatsModuleGlobalParams;
 import org.anchoranalysis.image.io.bean.rasterreader.RasterReader;
-import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
 class AdderWithEnergy {

@@ -99,7 +99,9 @@ public class FeatureListSrcBuilder {
     }
 
     private EnergyScheme createEnergyScheme(
-            EnergySchemeCreator energySchemeCreator, SharedFeaturesInitParams soFeature, Logger logger)
+            EnergySchemeCreator energySchemeCreator,
+            SharedFeaturesInitParams soFeature,
+            Logger logger)
             throws CreateException {
 
         try {
@@ -126,7 +128,8 @@ public class FeatureListSrcBuilder {
                 // fl.init( new FeatureInitParams(soFeature.getSharedFeatureSet(),
                 // soFeature.getCachedCalculationList()) );
 
-                // Determines which features belong in the Unary part of the EnergyScheme, and which in
+                // Determines which features belong in the Unary part of the EnergyScheme, and which
+                // in
                 // the Pairwise part
                 FeatureList<FeatureInputSingleMemo> outUnary = FeatureListFactory.empty();
                 FeatureList<FeatureInputPairMemo> outPairwise = FeatureListFactory.empty();

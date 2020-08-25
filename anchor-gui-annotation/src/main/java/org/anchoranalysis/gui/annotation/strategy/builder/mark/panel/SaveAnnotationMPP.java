@@ -69,7 +69,8 @@ class SaveAnnotationMPP implements ISaveAnnotation<MarkAnnotation> {
 
         saveAnnotation(
                 annotationWriter,
-                annotation -> annotation.markPaused(query.getMarksAccepted(), query.getMarksRejected()),
+                annotation ->
+                        annotation.markPaused(query.getMarksAccepted(), query.getMarksRejected()),
                 dialogParent);
     }
 

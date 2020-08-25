@@ -30,8 +30,8 @@ import lombok.AllArgsConstructor;
 import org.anchoranalysis.core.functional.function.CheckedFunction;
 import org.anchoranalysis.core.index.SetOperationFailedException;
 import org.anchoranalysis.gui.container.background.BackgroundStackContainerException;
-import org.anchoranalysis.gui.frame.display.Redrawable;
 import org.anchoranalysis.gui.frame.display.OverlayedDisplayStackUpdate;
+import org.anchoranalysis.gui.frame.display.Redrawable;
 import org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.IBackgroundSetter;
 import org.anchoranalysis.image.stack.DisplayStack;
 

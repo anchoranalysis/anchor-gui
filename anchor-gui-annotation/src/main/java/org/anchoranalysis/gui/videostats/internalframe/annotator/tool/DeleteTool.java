@@ -31,9 +31,9 @@ import java.util.Optional;
 import org.anchoranalysis.core.geometry.Point3d;
 import org.anchoranalysis.core.geometry.Point3i;
 import org.anchoranalysis.gui.frame.overlays.ProposedMarks;
-import org.anchoranalysis.gui.videostats.internalframe.annotator.currentstate.QueryAcceptedRejected;
 import org.anchoranalysis.gui.videostats.internalframe.annotator.currentstate.IQuerySelectedPoints;
 import org.anchoranalysis.gui.videostats.internalframe.annotator.currentstate.IReplaceRemove;
+import org.anchoranalysis.gui.videostats.internalframe.annotator.currentstate.QueryAcceptedRejected;
 import org.anchoranalysis.gui.videostats.internalframe.annotator.navigation.ISwitchToGuessOrSelectPoints;
 import org.anchoranalysis.gui.videostats.internalframe.evaluator.EvaluatorWithContext;
 import org.anchoranalysis.mpp.bean.regionmap.RegionMap;
@@ -71,7 +71,8 @@ public class DeleteTool extends AnnotationTool {
         marks.addAll(queryAcceptReject.getMarksAccepted());
         marks.addAll(queryAcceptReject.getMarksRejected());
 
-        MarkCollection marksToRemove = FindPoints.findMarksContainingPoint(marks, point, regionMap, regionID);
+        MarkCollection marksToRemove =
+                FindPoints.findMarksContainingPoint(marks, point, regionMap, regionID);
 
         List<Point3i> selectedPointsToRemove =
                 FindPoints.findSelectedPointsNear(point, selectedPoints);

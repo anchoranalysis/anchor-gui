@@ -41,7 +41,8 @@ import org.anchoranalysis.image.stack.Stack;
 import org.anchoranalysis.io.manifest.file.FileWrite;
 import org.anchoranalysis.io.manifest.finder.FinderSingleFile;
 
-public abstract class FinderRasterChannel extends FinderSingleFile implements FinderRasterSingleChannel {
+public abstract class FinderRasterChannel extends FinderSingleFile
+        implements FinderRasterSingleChannel {
 
     private Optional<Channel> result = Optional.empty();
 

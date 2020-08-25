@@ -45,7 +45,8 @@ public class ExportTaskParams {
     @Getter @Setter private FinderStacks finderStacks;
     @Getter @Setter private BoundOutputManagerRouteErrors outputManager;
 
-    private List<ContainerGetter<IndexableMarksWithEnergy>> listFinderMarksHistory = new ArrayList<>();
+    private List<ContainerGetter<IndexableMarksWithEnergy>> listFinderMarksHistory =
+            new ArrayList<>();
 
     public ContainerGetter<IndexableMarksWithEnergy> getFinderMarksHistory() {
         return listFinderMarksHistory.get(0);
@@ -63,7 +64,8 @@ public class ExportTaskParams {
         return listFinderMarksHistory.size();
     }
 
-    public void addFinderMarksHistory(ContainerGetter<IndexableMarksWithEnergy> finderMarksHistory) {
+    public void addFinderMarksHistory(
+            ContainerGetter<IndexableMarksWithEnergy> finderMarksHistory) {
         if (finderMarksHistory != null) {
             this.listFinderMarksHistory.add(finderMarksHistory);
         }

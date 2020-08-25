@@ -35,6 +35,10 @@ import org.anchoranalysis.mpp.proposer.ProposerContext;
 
 public interface ProposalOperationCreator {
 
-    ProposalOperation create(MarkCollection marks, Point3d position, ProposerContext context, MarkWithIdentifierFactory markFactory)
+    ProposalOperation create(
+            MarkCollection marks,
+            Point3d position,
+            ProposerContext context,
+            MarkWithIdentifierFactory markFactory)
             throws OperationFailedException;
 }

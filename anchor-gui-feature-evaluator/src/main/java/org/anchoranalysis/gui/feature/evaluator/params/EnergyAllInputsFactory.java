@@ -35,8 +35,7 @@ import org.anchoranalysis.feature.input.FeatureInput;
 public class EnergyAllInputsFactory extends AllFactory {
 
     @Override
-    public FeatureInput create(MemoCollection pmmhList, EnergyStack raster)
-            throws CreateException {
+    public FeatureInput create(MemoCollection pmmhList, EnergyStack raster) throws CreateException {
         return new FeatureInputAllMemo(pmmhList, raster);
     }
 }

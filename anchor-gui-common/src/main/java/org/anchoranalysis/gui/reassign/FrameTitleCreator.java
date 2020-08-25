@@ -29,7 +29,7 @@ package org.anchoranalysis.gui.reassign;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
-@NoArgsConstructor(access=AccessLevel.PRIVATE)
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class FrameTitleCreator {
 
     public static String title(String frameName) {

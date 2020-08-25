@@ -46,8 +46,7 @@ public class OperationEnergyStackFromMarkEvaluatorSet
     private String markEvaluatorIdentifier;
 
     @Override
-    public EnergyStack get(ProgressReporter progressReporter)
-            throws GetOperationFailedException {
+    public EnergyStack get(ProgressReporter progressReporter) throws GetOperationFailedException {
 
         if (markEvaluatorIdentifier == null || markEvaluatorIdentifier.isEmpty()) {
             return null;

@@ -198,7 +198,8 @@ public class CombineRGBBoundedIndexContainer implements BoundedIndexContainer<Di
         return max;
     }
 
-    private void addChannelToStack(Stack stackNew, BoundedIndexContainer<DisplayStack> cntr, int index)
+    private void addChannelToStack(
+            Stack stackNew, BoundedIndexContainer<DisplayStack> cntr, int index)
             throws OperationFailedException {
 
         try {

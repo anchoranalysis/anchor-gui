@@ -31,7 +31,8 @@ import org.anchoranalysis.mpp.segment.optscheme.feedback.aggregate.Aggregator;
 
 public interface EnergyUpdater {
 
-    public void updateCurrent(int iter, long timeStamp, MarksWithTotalEnergy current, Aggregator aggregator);
+    public void updateCurrent(
+            int iter, long timeStamp, MarksWithTotalEnergy current, Aggregator aggregator);
 
     public void updateBest(int iter, long timeStamp, MarksWithTotalEnergy best);
 }

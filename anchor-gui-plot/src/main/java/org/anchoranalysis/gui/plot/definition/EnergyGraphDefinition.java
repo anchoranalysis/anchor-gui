@@ -38,7 +38,7 @@ public class EnergyGraphDefinition extends GraphDefinition {
     // START REQUIRED ARGUMENTS
     private final int windowSize;
     // END REQUIRED ARGUMENTS
-    
+
     private double energyCurrent;
     private double energyBest;
 
@@ -83,7 +83,8 @@ public class EnergyGraphDefinition extends GraphDefinition {
     }
 
     @Override
-    public void updateCurrent(int iter, long timeStamp, MarksWithTotalEnergy current, Aggregator aggregator) {
+    public void updateCurrent(
+            int iter, long timeStamp, MarksWithTotalEnergy current, Aggregator aggregator) {
         this.energyCurrent = aggregator.getEnergy();
     }
 
@@ -91,7 +92,7 @@ public class EnergyGraphDefinition extends GraphDefinition {
     public void updateBest(int iter, long timeStamp, MarksWithTotalEnergy best) {
         this.energyBest = best.getEnergyTotal();
     }
-    
+
     private static long resolve(double energy) {
         return (long) (100 * energy);
     }

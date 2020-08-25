@@ -27,8 +27,8 @@
 package org.anchoranalysis.plugin.gui.bean.createrastergenerator.energybreakdown;
 
 import java.util.Optional;
-import org.anchoranalysis.gui.frame.display.Redrawable;
 import org.anchoranalysis.gui.frame.display.OverlayedDisplayStackUpdate;
+import org.anchoranalysis.gui.frame.display.Redrawable;
 import org.anchoranalysis.image.stack.DisplayStack;
 import org.anchoranalysis.io.generator.IterableObjectGenerator;
 import org.anchoranalysis.io.generator.ObjectGenerator;

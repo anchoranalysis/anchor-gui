@@ -73,7 +73,8 @@ public class GraphPanel extends JPanel implements EnergyUpdater {
     }
 
     @Override
-    public void updateCurrent(int iter, long timeStamp, MarksWithTotalEnergy current, Aggregator aggregator) {
+    public void updateCurrent(
+            int iter, long timeStamp, MarksWithTotalEnergy current, Aggregator aggregator) {
 
         graphDefinition.updateCurrent(iter, timeStamp, current, aggregator);
         updateGraph(iter, timeStamp);

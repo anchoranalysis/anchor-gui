@@ -62,20 +62,20 @@ public class RasterAsChannels extends OpenFileType {
 
         NamedChannels inputManager = createNamedChannels(new Files(fileList));
 
-        return Arrays.asList(creator(inputManager,files));
+        return Arrays.asList(creator(inputManager, files));
     }
-    
+
     private NamedSingleStackCreator creator(NamedChannels inputManager, List<File> files) {
         NamedSingleStackCreator creator = new NamedSingleStackCreator();
         creator.setCustomName(String.format("raster-set: %s", createName(files)));
         creator.setInput(inputManager);
         return creator;
     }
-    
+
     private static NamedChannels createNamedChannels(InputManager<FileInput> fileInputManager) {
-        
+
         RasterReader reader = RegisterBeanFactories.getDefaultInstances().get(RasterReader.class);
-        
+
         NamedChannels inputManager = new NamedChannels();
         inputManager.setRasterReader(reader);
         inputManager.setFileInput(fileInputManager);

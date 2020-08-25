@@ -26,15 +26,14 @@
 
 package org.anchoranalysis.gui.videostats.internalframe.annotator.currentstate;
 
+import lombok.NoArgsConstructor;
 import org.anchoranalysis.mpp.mark.Mark;
 import org.anchoranalysis.mpp.mark.MarkCollection;
-import lombok.NoArgsConstructor;
 
 /**
  * A marks-collection partitioned into accepted and rejected collections
- * 
- * @author Owen Feehan
  *
+ * @author Owen Feehan
  */
 @NoArgsConstructor
 public class PartitionedMarks implements QueryAcceptedRejected {

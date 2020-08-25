@@ -55,8 +55,7 @@ public class BridgedPlotEnergyCreator
     }
 
     @Override
-    public CheckedFunction<IndexableMarksWithEnergy, Item, CreateException>
-            createMarksBridge() {
+    public CheckedFunction<IndexableMarksWithEnergy, Item, CreateException> createMarksBridge() {
         return sourceObject -> {
             if (sourceObject.getMarks() != null) {
                 return new Item(sourceObject.getIndex(), sourceObject.getMarks().getEnergyTotal());

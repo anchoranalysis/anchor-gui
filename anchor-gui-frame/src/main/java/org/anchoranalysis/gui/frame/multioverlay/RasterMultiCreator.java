@@ -44,8 +44,7 @@ public class RasterMultiCreator<T> extends VideoStatsModuleCreator {
     private final List<MultiInput<T>> list;
     private final String frameName;
     private final VideoStatsModuleGlobalParams moduleParamsGlobal;
-    private final BridgeElementWithIndex<
-                    MultiInput<T>, IndexableOverlays, OperationFailedException>
+    private final BridgeElementWithIndex<MultiInput<T>, IndexableOverlays, OperationFailedException>
             bridge;
 
     public RasterMultiCreator(

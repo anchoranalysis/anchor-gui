@@ -35,8 +35,7 @@ public class IndexableColoredOverlays extends Indexable {
 
     private final ColoredOverlayCollection coloredOverlayCollection;
 
-    public IndexableColoredOverlays(
-            int iter, ColoredOverlayCollection coloredOverlayCollection) {
+    public IndexableColoredOverlays(int iter, ColoredOverlayCollection coloredOverlayCollection) {
         super(iter);
         this.coloredOverlayCollection = coloredOverlayCollection;
     }

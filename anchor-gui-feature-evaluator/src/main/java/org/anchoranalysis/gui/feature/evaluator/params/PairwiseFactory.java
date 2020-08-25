@@ -41,8 +41,7 @@ public abstract class PairwiseFactory implements FeatureInputFactory {
     }
 
     @Override
-    public FeatureInput create(MemoCollection pmmhList, EnergyStack raster)
-            throws CreateException {
+    public FeatureInput create(MemoCollection pmmhList, EnergyStack raster) throws CreateException {
         throw new CreateException("unsupported");
     }
 

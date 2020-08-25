@@ -35,7 +35,8 @@ import org.anchoranalysis.io.manifest.deserializer.folder.DeserializeFromFolderB
 import org.anchoranalysis.io.manifest.deserializer.folder.DeserializedObjectFromFolderBundle;
 import org.anchoranalysis.io.manifest.folder.FolderWrite;
 
-class DeserializeMarksFromBundle extends DeserializeFromFolderBundle<IndexableMarksWithEnergy, MarksWithEnergyBreakdown> {
+class DeserializeMarksFromBundle
+        extends DeserializeFromFolderBundle<IndexableMarksWithEnergy, MarksWithEnergyBreakdown> {
 
     public DeserializeMarksFromBundle(
             BundleDeserializers<MarksWithEnergyBreakdown> deserializer, FolderWrite marksFolder) {
@@ -45,7 +46,6 @@ class DeserializeMarksFromBundle extends DeserializeFromFolderBundle<IndexableMa
     @Override
     protected GetterFromIndex<IndexableMarksWithEnergy> createCntr(
             DeserializedObjectFromFolderBundle<MarksWithEnergyBreakdown> deserializeFromBundle) {
-        return new TypedGetFromIndexBridge<>(
-                deserializeFromBundle, new IndexableMarksBridge());
+        return new TypedGetFromIndexBridge<>(deserializeFromBundle, new IndexableMarksBridge());
     }
 }

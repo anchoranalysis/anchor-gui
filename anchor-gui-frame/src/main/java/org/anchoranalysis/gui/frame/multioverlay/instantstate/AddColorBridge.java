@@ -26,6 +26,7 @@
 
 package org.anchoranalysis.gui.frame.multioverlay.instantstate;
 
+import lombok.AllArgsConstructor;
 import org.anchoranalysis.core.color.ColorIndex;
 import org.anchoranalysis.core.color.ColorList;
 import org.anchoranalysis.core.error.AnchorNeverOccursException;
@@ -36,7 +37,6 @@ import org.anchoranalysis.overlay.IndexableOverlays;
 import org.anchoranalysis.overlay.Overlay;
 import org.anchoranalysis.overlay.collection.ColoredOverlayCollection;
 import org.anchoranalysis.overlay.collection.OverlayCollection;
-import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
 class AddColorBridge

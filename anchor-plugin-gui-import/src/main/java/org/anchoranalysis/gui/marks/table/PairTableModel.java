@@ -27,13 +27,13 @@
 package org.anchoranalysis.gui.marks.table;
 
 import javax.swing.table.AbstractTableModel;
-import org.anchoranalysis.anchor.mpp.feature.energy.IndexableMarksWithEnergy;
+import lombok.RequiredArgsConstructor;
 import org.anchoranalysis.anchor.mpp.feature.energy.EnergyPair;
+import org.anchoranalysis.anchor.mpp.feature.energy.IndexableMarksWithEnergy;
 import org.anchoranalysis.anchor.mpp.feature.energy.saved.EnergySavedPairs;
 import org.anchoranalysis.core.color.ColorIndex;
 import org.anchoranalysis.core.color.RGBColor;
 import org.anchoranalysis.core.error.friendly.AnchorImpossibleSituationException;
-import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 public class PairTableModel extends AbstractTableModel implements IUpdateTableData {
@@ -43,7 +43,7 @@ public class PairTableModel extends AbstractTableModel implements IUpdateTableDa
     // START REQUIRED ARGUMENTS
     private final ColorIndex colorIndex;
     // END REQUIRED ARGUMENTS
-    
+
     private EnergySavedPairs energySavedPairs;
     private EnergyPair[] pairArr;
 

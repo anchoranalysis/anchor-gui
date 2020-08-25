@@ -28,6 +28,7 @@ package org.anchoranalysis.gui.videostats.dropdown.modulecreator.graph;
 
 import java.io.IOException;
 import java.util.Optional;
+import lombok.AllArgsConstructor;
 import org.anchoranalysis.anchor.mpp.feature.energy.marks.VoxelizedMarksWithEnergy;
 import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.error.OperationFailedException;
@@ -44,13 +45,13 @@ import org.anchoranalysis.gui.videostats.modulecreator.VideoStatsModuleCreatorCo
 import org.anchoranalysis.io.manifest.finder.FinderSerializedObject;
 import org.anchoranalysis.mpp.segment.bean.kernel.proposer.KernelProposer;
 import org.anchoranalysis.mpp.segment.kernel.proposer.KernelDescision;
-import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
 public class KernelIterDescriptionModuleCreator extends VideoStatsModuleCreatorContext {
 
     private final FinderHistoryFolder<KernelDescision> finderKernelDecisionHistory;
-    private final FinderSerializedObject<KernelProposer<VoxelizedMarksWithEnergy>> finderKernelProposer;
+    private final FinderSerializedObject<KernelProposer<VoxelizedMarksWithEnergy>>
+            finderKernelProposer;
 
     @Override
     public boolean precondition() {

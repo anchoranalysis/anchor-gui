@@ -42,8 +42,7 @@ import org.anchoranalysis.plot.bean.Plot;
 import org.anchoranalysis.plot.bean.colorscheme.GraphColorScheme;
 import org.anchoranalysis.plot.index.LinePlot;
 
-public class LinePlotIterationVsEnergy
-        extends Plot<LinePlotIterationVsEnergy.Item> {
+public class LinePlotIterationVsEnergy extends Plot<LinePlotIterationVsEnergy.Item> {
 
     // START BEAN PROPERITES
     @BeanField @Getter @Setter private GraphColorScheme graphColorScheme = new GraphColorScheme();

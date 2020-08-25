@@ -56,8 +56,8 @@ import org.anchoranalysis.gui.frame.canvas.zoom.DefaultZoomSuggestor;
 import org.anchoranalysis.gui.frame.canvas.zoom.ZoomScale;
 import org.anchoranalysis.gui.frame.display.DisplayUpdate;
 import org.anchoranalysis.image.extent.BoundingBox;
-import org.anchoranalysis.image.extent.Extent;
 import org.anchoranalysis.image.extent.Dimensions;
+import org.anchoranalysis.image.extent.Extent;
 import org.anchoranalysis.image.extent.Resolution;
 import org.anchoranalysis.image.voxel.datatype.VoxelDataType;
 
@@ -313,8 +313,7 @@ public class ImageCanvas {
                 && extentNew.calculateVolume() == canvasExtentOld.calculateVolume()
                 && zoomScaleNew.equals(zoomScaleOld)) {
             scrollValNew =
-                    displayStackViewport.cornerToMaintainMousePoint(
-                            mousePoint, zoomScaleOld);
+                    displayStackViewport.cornerToMaintainMousePoint(mousePoint, zoomScaleOld);
         } else {
             scrollValNew =
                     displayStackViewport.cornerAfterChangeInZoom(

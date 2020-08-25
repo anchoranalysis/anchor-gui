@@ -72,7 +72,8 @@ public class DropDownUtilities {
 
         EnergyBackground energyBackground =
                 EnergyBackground.createFromBackground(
-                        backgroundSet, () -> operationgetEnergyStack.get(ProgressReporterNull.get()));
+                        backgroundSet,
+                        () -> operationgetEnergyStack.get(ProgressReporterNull.get()));
 
         AddVideoStatsModuleSupplier adderOp =
                 AddVideoStatsModuleSupplier.cache(

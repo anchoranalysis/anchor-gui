@@ -26,6 +26,7 @@
 
 package org.anchoranalysis.plugin.gui.bean.createrastergenerator.csvstatistic;
 
+import lombok.AllArgsConstructor;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.functional.function.CheckedFunction;
@@ -37,7 +38,6 @@ import org.anchoranalysis.io.generator.IterableObjectGeneratorBridge;
 import org.anchoranalysis.plot.PlotInstance;
 import org.anchoranalysis.plugin.gui.bean.createrastergenerator.PlotGeneratorBase;
 import org.anchoranalysis.plugin.gui.bean.exporttask.MappedFrom;
-import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
 public class PlotFromCSVStatistic<T> extends PlotGeneratorBase<T, CSVStatistic> {

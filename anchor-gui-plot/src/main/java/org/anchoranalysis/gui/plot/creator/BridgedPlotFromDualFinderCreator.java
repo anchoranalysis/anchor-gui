@@ -36,8 +36,7 @@ import org.anchoranalysis.gui.io.loader.manifest.finder.FinderCSVStats;
 import org.anchoranalysis.gui.io.loader.manifest.finder.csvstatistic.CSVStatistic;
 import org.anchoranalysis.gui.io.loader.manifest.finder.historyfolder.FinderHistoryFolder;
 
-public abstract class BridgedPlotFromDualFinderCreator<T>
-        implements GraphFromDualFinderCreator<T> {
+public abstract class BridgedPlotFromDualFinderCreator<T> implements GraphFromDualFinderCreator<T> {
 
     @Override
     public BoundedIndexContainer<T> createContainer(FinderCSVStats finderCSVStats)
@@ -53,7 +52,8 @@ public abstract class BridgedPlotFromDualFinderCreator<T>
 
     @Override
     public BoundedIndexContainer<T> createContainer(
-            FinderHistoryFolder<IndexableMarksWithEnergy> finderMarksHistory) throws CreateException {
+            FinderHistoryFolder<IndexableMarksWithEnergy> finderMarksHistory)
+            throws CreateException {
 
         try {
             return new BoundedIndexContainerBridgeWithoutIndex<>(

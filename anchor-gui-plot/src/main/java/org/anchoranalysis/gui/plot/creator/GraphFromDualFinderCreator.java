@@ -52,8 +52,7 @@ public interface GraphFromDualFinderCreator<T> {
             final FinderHistoryFolder<IndexableMarksWithEnergy> finderMarksHistory)
             throws CreateException;
 
-    Plot<T> createGraphDefinition(GraphColorScheme graphColorScheme)
-            throws CreateException;
+    Plot<T> createGraphDefinition(GraphColorScheme graphColorScheme) throws CreateException;
 
     // useCSV is a flag indicating which of the two to use
     public default VideoStatsModuleCreator createGraphModule(

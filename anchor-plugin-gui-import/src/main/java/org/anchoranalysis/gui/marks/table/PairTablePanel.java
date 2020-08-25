@@ -141,7 +141,6 @@ public class PairTablePanel {
 
     public ISelectIndicesSendable getSelectMarksSendable() {
         return ids -> {
-
             selectionIndices.setCurrentSelection(ids);
 
             Set<Integer> idSet = IDUtilities.setFromIntArr(ids);
@@ -176,12 +175,8 @@ public class PairTablePanel {
     public void removeMouseListener(MouseListener l) {
         tablePanel.removeMouseListener(l);
     }
-    
-    
+
     private TableColumn columnAt(int index) {
-        return this.tablePanel
-            .getTable()
-            .getColumnModel()
-            .getColumn(index);
+        return this.tablePanel.getTable().getColumnModel().getColumn(index);
     }
 }

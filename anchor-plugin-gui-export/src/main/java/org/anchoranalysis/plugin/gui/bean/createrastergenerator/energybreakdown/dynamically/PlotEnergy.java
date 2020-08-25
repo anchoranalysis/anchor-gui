@@ -29,8 +29,7 @@ package org.anchoranalysis.plugin.gui.bean.createrastergenerator.energybreakdown
 import org.anchoranalysis.gui.plot.creator.BridgedPlotEnergyCreator;
 import org.anchoranalysis.gui.plot.definition.line.LinePlotIterationVsEnergy;
 
-public class PlotEnergy
-        extends PlotFromIndexableMarksBase<LinePlotIterationVsEnergy.Item> {
+public class PlotEnergy extends PlotFromIndexableMarksBase<LinePlotIterationVsEnergy.Item> {
 
     public PlotEnergy() {
         super(new BridgedPlotEnergyCreator().createCSVStatisticBridge());

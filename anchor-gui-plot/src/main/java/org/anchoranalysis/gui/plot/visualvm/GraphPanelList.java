@@ -42,7 +42,8 @@ public class GraphPanelList implements EnergyUpdater, Iterable<GraphPanel> {
     }
 
     @Override
-    public void updateCurrent(int iter, long timeStamp, MarksWithTotalEnergy current, Aggregator aggregator) {
+    public void updateCurrent(
+            int iter, long timeStamp, MarksWithTotalEnergy current, Aggregator aggregator) {
         for (GraphPanel gp : delegate) {
             gp.updateCurrent(iter, timeStamp, current, aggregator);
         }

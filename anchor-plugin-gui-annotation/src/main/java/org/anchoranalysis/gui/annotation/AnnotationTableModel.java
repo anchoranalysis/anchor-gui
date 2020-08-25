@@ -62,8 +62,7 @@ public class AnnotationTableModel implements InteractiveFileListTableModel {
                 @Override
                 public String getValueAt(int rowIndex, int columnIndex) {
 
-                    FileAnnotationNamedChannels fileAnnotation =
-                            annotationProject.get(rowIndex);
+                    FileAnnotationNamedChannels fileAnnotation = annotationProject.get(rowIndex);
 
                     switch (columnIndex) {
                         case 0:

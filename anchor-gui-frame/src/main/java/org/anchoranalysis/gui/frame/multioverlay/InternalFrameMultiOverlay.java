@@ -74,7 +74,8 @@ class InternalFrameMultiOverlay<T> {
 
         // We assume all EnergyBackgrounds have the same stack-names, so it doesn't
         //  matter which is picked
-        String arbitraryStackName = list.get(0).getEnergyBackground().arbitraryBackgroundStackName();
+        String arbitraryStackName =
+                list.get(0).getEnergyBackground().arbitraryBackgroundStackName();
         DefaultModuleState defaultStateNew =
                 assignInitialBackground(defaultState, arbitraryStackName, imageStackCntrFromName);
 

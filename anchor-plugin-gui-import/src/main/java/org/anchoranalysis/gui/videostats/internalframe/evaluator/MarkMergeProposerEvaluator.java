@@ -54,7 +54,10 @@ public class MarkMergeProposerEvaluator implements ProposalOperationCreator {
 
     @Override
     public ProposalOperation create(
-            final MarkCollection marks, Point3d position, final ProposerContext context, final MarkWithIdentifierFactory markFactory)
+            final MarkCollection marks,
+            Point3d position,
+            final ProposerContext context,
+            final MarkWithIdentifierFactory markFactory)
             throws OperationFailedException {
 
         if (marks.size() != 2) {
@@ -114,7 +117,8 @@ public class MarkMergeProposerEvaluator implements ProposalOperationCreator {
         return marksOut;
     }
 
-    private static void addToOut(Optional<List<Point3f>> points, Color color, ColoredMarks marksOut) {
+    private static void addToOut(
+            Optional<List<Point3f>> points, Color color, ColoredMarks marksOut) {
         if (points.isPresent()) {
             marksOut.addChangeID(
                     PointListFactory.createMarkFromPoints3f(points.get()),

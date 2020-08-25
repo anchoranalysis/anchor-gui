@@ -26,6 +26,7 @@
 
 package org.anchoranalysis.gui.videostats.dropdown.opened;
 
+import lombok.RequiredArgsConstructor;
 import org.anchoranalysis.core.bridge.BridgeElementWithIndex;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.gui.marks.MarkDisplaySettings;
@@ -34,7 +35,6 @@ import org.anchoranalysis.mpp.mark.MarkCollection;
 import org.anchoranalysis.mpp.overlay.OverlayCollectionMarkFactory;
 import org.anchoranalysis.overlay.IndexableOverlays;
 import org.anchoranalysis.overlay.collection.OverlayCollection;
-import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 class MultiInputMarksToOverlay
@@ -42,7 +42,7 @@ class MultiInputMarksToOverlay
                 MultiInput<MarkCollection>, IndexableOverlays, OperationFailedException> {
 
     private final MarkDisplaySettings markDisplaySettings;
-    
+
     @Override
     public IndexableOverlays bridgeElement(int index, MultiInput<MarkCollection> sourceObject)
             throws OperationFailedException {

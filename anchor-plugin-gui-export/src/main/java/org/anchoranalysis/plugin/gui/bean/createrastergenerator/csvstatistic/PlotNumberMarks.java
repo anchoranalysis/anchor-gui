@@ -29,8 +29,7 @@ package org.anchoranalysis.plugin.gui.bean.createrastergenerator.csvstatistic;
 import org.anchoranalysis.gui.plot.creator.BridgedPlotNumberMarksCreator;
 import org.anchoranalysis.gui.plot.definition.line.LinePlotNumberMarks;
 
-public class PlotNumberMarks
-        extends PlotFromCSVStatistic<LinePlotNumberMarks.Item> {
+public class PlotNumberMarks extends PlotFromCSVStatistic<LinePlotNumberMarks.Item> {
 
     public PlotNumberMarks() {
         super(new BridgedPlotNumberMarksCreator().createCSVStatisticBridge());

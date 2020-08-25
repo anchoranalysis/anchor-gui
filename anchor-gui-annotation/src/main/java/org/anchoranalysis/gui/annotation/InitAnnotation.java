@@ -44,7 +44,8 @@ public class InitAnnotation {
         this(annotation, initMarks, "");
     }
 
-    public InitAnnotation(Optional<AnnotationWithMarks> annotation, PartitionedMarks marks, String initMsg) {
+    public InitAnnotation(
+            Optional<AnnotationWithMarks> annotation, PartitionedMarks marks, String initMsg) {
         super();
         this.annotation = annotation;
         this.initMarks = marks;

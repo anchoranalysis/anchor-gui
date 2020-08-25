@@ -48,9 +48,9 @@ public class FileAnnotationNamedChannels extends InteractiveFile {
     private AnnotationRefresher annotationRefresher;
     private VideoStatsModuleGlobalParams mpg;
     private MarkEvaluatorManager markEvaluatorManager;
-    
+
     private CachedSupplier<AnnotationSummary, ? extends Throwable> op;
-    
+
     public FileAnnotationNamedChannels(
             AnnotationGuiBuilder<?> annotation,
             AnnotationRefresher annotationRefresher,

@@ -42,13 +42,13 @@ import org.anchoranalysis.feature.energy.EnergyStack;
 import org.anchoranalysis.gui.file.opened.IOpenedFileGUI;
 import org.anchoranalysis.gui.finder.FinderEnergyStack;
 import org.anchoranalysis.gui.finder.imgstackcollection.FinderStacksCombine;
-import org.anchoranalysis.gui.finder.imgstackcollection.FinderStacksFromFolder;
 import org.anchoranalysis.gui.finder.imgstackcollection.FinderStacksFromEnergyStack;
+import org.anchoranalysis.gui.finder.imgstackcollection.FinderStacksFromFolder;
 import org.anchoranalysis.gui.finder.imgstackcollection.FinderStacksFromRootFiles;
 import org.anchoranalysis.gui.interactivebrowser.MarkEvaluatorManager;
 import org.anchoranalysis.gui.interactivebrowser.MarkEvaluatorSetForImage;
-import org.anchoranalysis.gui.io.loader.manifest.finder.MarksWithEnergyFinderContext;
 import org.anchoranalysis.gui.io.loader.manifest.finder.FinderMarksFolder;
+import org.anchoranalysis.gui.io.loader.manifest.finder.MarksWithEnergyFinderContext;
 import org.anchoranalysis.gui.io.loader.manifest.finder.historyfolder.FinderHistoryFolderKernelDecision;
 import org.anchoranalysis.gui.marks.MarkDisplaySettings;
 import org.anchoranalysis.gui.series.TimeSequenceProvider;
@@ -59,9 +59,9 @@ import org.anchoranalysis.gui.videostats.dropdown.OperationCreateBackgroundSetWi
 import org.anchoranalysis.gui.videostats.dropdown.VideoStatsModuleGlobalParams;
 import org.anchoranalysis.gui.videostats.dropdown.common.DropDownUtilities;
 import org.anchoranalysis.gui.videostats.dropdown.common.DropDownUtilitiesRaster;
-import org.anchoranalysis.gui.videostats.dropdown.common.GuessEnergyFromStacks;
 import org.anchoranalysis.gui.videostats.dropdown.common.EnergyBackground;
 import org.anchoranalysis.gui.videostats.dropdown.common.EnergyStackSupplier;
+import org.anchoranalysis.gui.videostats.dropdown.common.GuessEnergyFromStacks;
 import org.anchoranalysis.gui.videostats.dropdown.contextualmodulecreator.EnergyTableCreator;
 import org.anchoranalysis.gui.videostats.dropdown.contextualmodulecreator.SingleContextualModuleCreator;
 import org.anchoranalysis.gui.videostats.dropdown.modulecreator.graph.KernelIterDescriptionModuleCreator;
@@ -176,8 +176,8 @@ public class ManifestDropDown {
         return finderEnergyStack;
     }
 
-    private FinderSerializedObject<KernelProposer<VoxelizedMarksWithEnergy>> createFinderKernelProposer(
-            VideoStatsModuleGlobalParams mpg) {
+    private FinderSerializedObject<KernelProposer<VoxelizedMarksWithEnergy>>
+            createFinderKernelProposer(VideoStatsModuleGlobalParams mpg) {
         FinderSerializedObject<KernelProposer<VoxelizedMarksWithEnergy>> finderKernelProposer =
                 new FinderSerializedObject<>("kernelProposer", mpg.getLogger().errorReporter());
         finderKernelProposer.doFind(
@@ -421,23 +421,26 @@ public class ManifestDropDown {
 
             if (finderFinalMarks.exists()) {
 
-                CachedSupplier<LoadContainer<IndexableMarksWithEnergy>, OperationFailedException> op =
-                        CachedSupplier.cache(
-                                () -> {
-                                    IndexableMarksWithEnergy instantState;
-                                    try {
-                                        instantState =
-                                                new IndexableMarksWithEnergy(
-                                                        0, finderFinalMarks.get());
-                                    } catch (IOException e) {
-                                        throw new OperationFailedException(e);
-                                    }
+                CachedSupplier<LoadContainer<IndexableMarksWithEnergy>, OperationFailedException>
+                        op =
+                                CachedSupplier.cache(
+                                        () -> {
+                                            IndexableMarksWithEnergy instantState;
+                                            try {
+                                                instantState =
+                                                        new IndexableMarksWithEnergy(
+                                                                0, finderFinalMarks.get());
+                                            } catch (IOException e) {
+                                                throw new OperationFailedException(e);
+                                            }
 
-                                    LoadContainer<IndexableMarksWithEnergy> lc = new LoadContainer<>();
-                                    lc.setExpensiveLoad(false);
-                                    lc.setContainer(new SingleContainer<>(instantState, 0, false));
-                                    return lc;
-                                });
+                                            LoadContainer<IndexableMarksWithEnergy> lc =
+                                                    new LoadContainer<>();
+                                            lc.setExpensiveLoad(false);
+                                            lc.setContainer(
+                                                    new SingleContainer<>(instantState, 0, false));
+                                            return lc;
+                                        });
 
                 if (finderEnergyStack.exists()) {
                     // Energy Table

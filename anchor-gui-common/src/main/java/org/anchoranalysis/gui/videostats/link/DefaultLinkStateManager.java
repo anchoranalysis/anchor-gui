@@ -27,6 +27,7 @@
 package org.anchoranalysis.gui.videostats.link;
 
 import java.util.HashMap;
+import lombok.Getter;
 import org.anchoranalysis.core.functional.function.CheckedFunction;
 import org.anchoranalysis.core.index.IntArray;
 import org.anchoranalysis.core.property.IPropertyValueSendable;
@@ -34,7 +35,6 @@ import org.anchoranalysis.gui.container.background.BackgroundStackContainerExcep
 import org.anchoranalysis.gui.image.OverlaysWithEnergyStack;
 import org.anchoranalysis.image.stack.DisplayStack;
 import org.anchoranalysis.overlay.collection.OverlayCollection;
-import lombok.Getter;
 
 public class DefaultLinkStateManager {
 
@@ -49,8 +49,7 @@ public class DefaultLinkStateManager {
                 LinkFramesUniqueID.SLICE_NUM, (value, adjusting) -> state.setSliceNum(value));
 
         this.<Integer>putMap(
-                LinkFramesUniqueID.FRAME_INDEX,
-                (value, adjusting) -> state.setFrameIndex(value));
+                LinkFramesUniqueID.FRAME_INDEX, (value, adjusting) -> state.setFrameIndex(value));
 
         this.<IntArray>putMap(
                 LinkFramesUniqueID.MARK_INDICES,

@@ -49,7 +49,10 @@ class AddLoop implements ProposalOperationCreator {
 
     @Override
     public ProposalOperation create(
-            MarkCollection marks, Point3d position, ProposerContext context, MarkWithIdentifierFactory markFactory)
+            MarkCollection marks,
+            Point3d position,
+            ProposerContext context,
+            MarkWithIdentifierFactory markFactory)
             throws OperationFailedException {
 
         final ProposalOperation po = delegate.create(marks, position, context, markFactory);

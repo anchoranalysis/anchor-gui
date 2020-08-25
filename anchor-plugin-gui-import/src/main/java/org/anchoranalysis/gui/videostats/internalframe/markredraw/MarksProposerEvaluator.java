@@ -28,6 +28,7 @@ package org.anchoranalysis.gui.videostats.internalframe.markredraw;
 
 import java.awt.Color;
 import java.util.Optional;
+import lombok.AllArgsConstructor;
 import org.anchoranalysis.core.color.ColorList;
 import org.anchoranalysis.core.color.RGBColor;
 import org.anchoranalysis.core.geometry.Point3d;
@@ -40,7 +41,6 @@ import org.anchoranalysis.mpp.mark.ColoredMarks;
 import org.anchoranalysis.mpp.mark.Mark;
 import org.anchoranalysis.mpp.mark.MarkCollection;
 import org.anchoranalysis.mpp.proposer.ProposerContext;
-import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
 public class MarksProposerEvaluator implements ProposalOperationCreator {
@@ -65,19 +65,24 @@ public class MarksProposerEvaluator implements ProposalOperationCreator {
 
     @Override
     public ProposalOperation create(
-            MarkCollection marks, Point3d position, ProposerContext context, final MarkWithIdentifierFactory markFactory) {
+            MarkCollection marks,
+            Point3d position,
+            ProposerContext context,
+            final MarkWithIdentifierFactory markFactory) {
         return errorNode -> {
             ProposedMarks proposal = new ProposedMarks();
 
             // TODO replace proposer
-            Optional<MarkCollection> marksProposed = proposer.propose(markFactory, context.replaceError(errorNode));
+            Optional<MarkCollection> marksProposed =
+                    proposer.propose(markFactory, context.replaceError(errorNode));
             proposal.setSuccess(marksProposed.isPresent());
 
             if (marksProposed.isPresent()) {
 
                 ColoredMarks coloredMarks = generateOutputMarks(marksProposed);
                 proposal.setColoredMarks(coloredMarks);
-                proposal.setMarksToRedraw(marksProposed.get().createMerged(coloredMarks.getMarks()));
+                proposal.setMarksToRedraw(
+                        marksProposed.get().createMerged(coloredMarks.getMarks()));
                 proposal.setMarksCore(marksProposed.get());
 
                 proposal.setSuggestedSliceNum((int) marksProposed.get().get(0).centerPoint().z());

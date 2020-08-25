@@ -32,7 +32,8 @@ import org.anchoranalysis.gui.videostats.internalframe.markredraw.MarksProposerE
 import org.anchoranalysis.mpp.bean.init.MPPInitParams;
 import org.anchoranalysis.mpp.bean.proposer.MarkCollectionProposer;
 
-public class FromMarkCollectionProposer extends ProposalOperationCreatorFromProposer<MarkCollectionProposer> {
+public class FromMarkCollectionProposer
+        extends ProposalOperationCreatorFromProposer<MarkCollectionProposer> {
 
     @Override
     public ProposalOperationCreator creatorFromProposer(MarkCollectionProposer proposer) {

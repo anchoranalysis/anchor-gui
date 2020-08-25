@@ -39,8 +39,8 @@ public class BridgedPlotNumberMarksCreator
         extends BridgedPlotFromDualFinderCreator<LinePlotNumberMarks.Item> {
 
     @Override
-    public Plot<LinePlotNumberMarks.Item> createGraphDefinition(
-            GraphColorScheme graphColorScheme) throws CreateException {
+    public Plot<LinePlotNumberMarks.Item> createGraphDefinition(GraphColorScheme graphColorScheme)
+            throws CreateException {
         LinePlotNumberMarks graphDefinition = new LinePlotNumberMarks();
         graphDefinition.setGraphColorScheme(graphColorScheme);
         return graphDefinition;
@@ -48,20 +48,17 @@ public class BridgedPlotNumberMarksCreator
 
     @Override
     public CheckedFunction<CSVStatistic, Item, CreateException> createCSVStatisticBridge() {
-        return statistic ->
-                new LinePlotNumberMarks.Item(statistic.getIter(), statistic.getSize());
+        return statistic -> new LinePlotNumberMarks.Item(statistic.getIter(), statistic.getSize());
     }
 
     @Override
-    public CheckedFunction<IndexableMarksWithEnergy, Item, CreateException>
-            createMarksBridge() {
+    public CheckedFunction<IndexableMarksWithEnergy, Item, CreateException> createMarksBridge() {
         return sourceObject -> {
             if (sourceObject.getMarks() != null) {
                 return new LinePlotNumberMarks.Item(
                         sourceObject.getIndex(), sourceObject.getMarks().getMarks().size());
             } else {
-                return new LinePlotNumberMarks.Item(
-                        sourceObject.getIndex(), Double.NaN);
+                return new LinePlotNumberMarks.Item(sourceObject.getIndex(), Double.NaN);
             }
         };
     }

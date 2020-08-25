@@ -90,9 +90,7 @@ class ChooseLabel extends PanelWithLabel {
     }
 
     private void addButton(
-            JPanel panel,
-            AnnotationLabel label,
-            Optional<ImageLabelAnnotation> existingLabel) {
+            JPanel panel, AnnotationLabel label, Optional<ImageLabelAnnotation> existingLabel) {
         JButton button = new JButton(createAction.apply(label));
 
         // We always color the existing label to be black, otherwise we use the color associated

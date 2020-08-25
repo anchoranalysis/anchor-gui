@@ -32,8 +32,8 @@ import org.anchoranalysis.core.error.CreateException;
 
 class RegionMapFinder {
 
-    public static void addFromEnergyScheme(EnergySchemeSet energySchemeSet, EnergyScheme energyScheme)
-            throws CreateException {
+    public static void addFromEnergyScheme(
+            EnergySchemeSet energySchemeSet, EnergyScheme energyScheme) throws CreateException {
         energySchemeSet.add("elem_ind", energyScheme);
         energySchemeSet.add("elem_pair", energyScheme);
     }

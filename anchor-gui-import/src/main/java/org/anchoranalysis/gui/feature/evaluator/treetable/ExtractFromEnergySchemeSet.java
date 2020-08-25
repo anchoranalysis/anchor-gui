@@ -26,6 +26,7 @@
 
 package org.anchoranalysis.gui.feature.evaluator.treetable;
 
+import lombok.AllArgsConstructor;
 import org.anchoranalysis.anchor.mpp.feature.energy.scheme.EnergyScheme;
 import org.anchoranalysis.anchor.mpp.feature.energy.scheme.EnergySchemeSet;
 import org.anchoranalysis.anchor.mpp.feature.input.memo.FeatureInputAllMemo;
@@ -36,7 +37,6 @@ import org.anchoranalysis.feature.energy.EnergyStack;
 import org.anchoranalysis.feature.shared.SharedFeatureMulti;
 import org.anchoranalysis.gui.feature.FeatureListUtilities;
 import org.anchoranalysis.gui.feature.FeatureListWithRegionMap;
-import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
 public class ExtractFromEnergySchemeSet extends FeatureListSrc {
@@ -72,8 +72,7 @@ public class ExtractFromEnergySchemeSet extends FeatureListSrc {
     }
 
     @Override
-    public EnergyStack maybeAugmentParams(EnergyStack in)
-            throws OperationFailedException {
+    public EnergyStack maybeAugmentParams(EnergyStack in) throws OperationFailedException {
 
         if (augmenter != null) {
             return augmenter.augmentParams(in);

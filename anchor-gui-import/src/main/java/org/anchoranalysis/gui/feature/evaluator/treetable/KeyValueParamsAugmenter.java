@@ -26,8 +26,8 @@
 
 package org.anchoranalysis.gui.feature.evaluator.treetable;
 
-import org.anchoranalysis.anchor.mpp.feature.energy.scheme.KeyValueParamsForImageCreator;
 import org.anchoranalysis.anchor.mpp.feature.energy.scheme.EnergyScheme;
+import org.anchoranalysis.anchor.mpp.feature.energy.scheme.KeyValueParamsForImageCreator;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.log.Logger;

@@ -33,14 +33,14 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
-@RequiredArgsConstructor @AllArgsConstructor
+@RequiredArgsConstructor
+@AllArgsConstructor
 public class EnergyGraphItem {
 
     // START REQUIRED ITEMS
     @Getter private final String objectID;
     @Getter private final double energy;
     // END REQUIRED ITEMS
-    
-    @Getter @Setter private Paint paint = Color.BLUE;
 
+    @Getter @Setter private Paint paint = Color.BLUE;
 }

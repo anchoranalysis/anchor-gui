@@ -153,7 +153,8 @@ public class MarksEnergyTablePanel extends StatePanel<IndexableMarksWithEnergy> 
         MarkCollection marks = state.getMarks() != null ? state.getMarks().getMarks() : null;
         if (marks != null) {
             MarkCollection marksSubset =
-                    MarkCollectionUtilities.subsetMarks(marks, selectionIndices.getCurrentSelection());
+                    MarkCollectionUtilities.subsetMarks(
+                            marks, selectionIndices.getCurrentSelection());
             RegionMembershipWithFlags regionMembership =
                     RegionMapSingleton.instance()
                             .membershipWithFlagsForIndex(GlobalRegionIdentifiers.SUBMARK_INSIDE);
@@ -196,9 +197,7 @@ public class MarksEnergyTablePanel extends StatePanel<IndexableMarksWithEnergy> 
                 eventListenerListOverlayCollectionWithStack) {
             l.propertyValueChanged(
                     new PropertyValueChangeEvent<>(
-                            this,
-                            new OverlaysWithEnergyStack(state, associatedRaster),
-                            false));
+                            this, new OverlaysWithEnergyStack(state, associatedRaster), false));
         }
     }
 

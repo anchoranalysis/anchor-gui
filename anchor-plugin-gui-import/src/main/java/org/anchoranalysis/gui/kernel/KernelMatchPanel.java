@@ -76,7 +76,8 @@ public class KernelMatchPanel {
             comboKernelType.addItem(new NameIntValue("any", -1));
 
             for (int i = 0; i < kernelProposer.getNumberKernels(); i++) {
-                WeightedKernel<VoxelizedMarksWithEnergy> kf = kernelProposer.getAllKernelFactories().get(i);
+                WeightedKernel<VoxelizedMarksWithEnergy> kf =
+                        kernelProposer.getAllKernelFactories().get(i);
                 comboKernelType.addItem(new NameIntValue(kf.getName(), i));
             }
 

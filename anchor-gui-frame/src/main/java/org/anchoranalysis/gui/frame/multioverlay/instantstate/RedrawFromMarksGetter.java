@@ -26,15 +26,15 @@
 
 package org.anchoranalysis.gui.frame.multioverlay.instantstate;
 
+import lombok.RequiredArgsConstructor;
 import org.anchoranalysis.core.index.IntArray;
 import org.anchoranalysis.core.property.change.PropertyValueChangeEvent;
 import org.anchoranalysis.core.property.change.PropertyValueChangeListener;
-import org.anchoranalysis.gui.frame.display.Redrawable;
 import org.anchoranalysis.gui.frame.display.OverlayedDisplayStackUpdate;
+import org.anchoranalysis.gui.frame.display.Redrawable;
 import org.anchoranalysis.gui.frame.display.overlay.GetOverlayCollection;
 import org.anchoranalysis.overlay.collection.ColoredOverlayCollection;
 import org.anchoranalysis.overlay.collection.OverlayCollection;
-import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 class RedrawFromMarksGetter implements PropertyValueChangeListener<IntArray> {
@@ -44,7 +44,7 @@ class RedrawFromMarksGetter implements PropertyValueChangeListener<IntArray> {
     private final GetOverlayCollection marksGetter;
     private final Redrawable redrawable;
     /// END REQUIRED ARGUMENTS
-    
+
     private ColoredOverlayCollection old;
 
     @Override

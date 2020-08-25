@@ -64,7 +64,10 @@ public class MarkSplitProposerEvaluator implements ProposalOperationCreator {
 
     @Override
     public ProposalOperation create(
-            final MarkCollection marks, Point3d position, final ProposerContext context, final MarkWithIdentifierFactory markFactory)
+            final MarkCollection marks,
+            Point3d position,
+            final ProposerContext context,
+            final MarkWithIdentifierFactory markFactory)
             throws OperationFailedException {
 
         this.exstMarks = marks;

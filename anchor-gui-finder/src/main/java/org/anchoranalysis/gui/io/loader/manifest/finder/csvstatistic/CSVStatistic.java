@@ -26,9 +26,9 @@
 
 package org.anchoranalysis.gui.io.loader.manifest.finder.csvstatistic;
 
-import org.anchoranalysis.core.index.IndexGetter;
 import lombok.Getter;
 import lombok.Setter;
+import org.anchoranalysis.core.index.IndexGetter;
 
 public class CSVStatistic implements IndexGetter, Comparable<IndexGetter> {
 

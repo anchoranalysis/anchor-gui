@@ -92,8 +92,7 @@ class PrecalculatedOverlayList {
         this.overlayCollection = overlayCollection;
     }
 
-    public void rebuild(Dimensions dimEntireImage, DrawOverlay drawOverlay)
-            throws CreateException {
+    public void rebuild(Dimensions dimEntireImage, DrawOverlay drawOverlay) throws CreateException {
         generatedObjects =
                 DrawOverlay.precalculate(
                         overlayCollection,

@@ -32,8 +32,9 @@ import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import org.anchoranalysis.anchor.mpp.feature.energy.IndexableMarksWithEnergy;
+import lombok.AllArgsConstructor;
 import org.anchoranalysis.anchor.mpp.feature.energy.EnergyPair;
+import org.anchoranalysis.anchor.mpp.feature.energy.IndexableMarksWithEnergy;
 import org.anchoranalysis.core.color.ColorIndex;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.OperationFailedException;
@@ -45,7 +46,6 @@ import org.anchoranalysis.gui.plot.panel.ClickableGraphInstance;
 import org.anchoranalysis.mpp.mark.Mark;
 import org.anchoranalysis.plot.AxisLimits;
 import org.anchoranalysis.plot.bean.Plot;
-import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
 public class GeneratePlotEnergy
@@ -56,7 +56,8 @@ public class GeneratePlotEnergy
     private final ColorIndex colorIndex;
 
     @Override
-    public ClickableGraphInstance apply(IndexableMarksWithEnergy state) throws OperationFailedException {
+    public ClickableGraphInstance apply(IndexableMarksWithEnergy state)
+            throws OperationFailedException {
 
         if (state.getMarks() != null) {
             List<EnergyGraphItem> list;
@@ -75,11 +76,11 @@ public class GeneratePlotEnergy
             return null;
         }
     }
-    
+
     private static String objectIdentifier(EnergyPair pair) {
         return Integer.toString(pair.getPair().getSource().getId())
-        + "--"
-        + Integer.toString(pair.getPair().getDestination().getId());
+                + "--"
+                + Integer.toString(pair.getPair().getDestination().getId());
     }
 
     public static List<EnergyGraphItem> createGraphItems(
@@ -92,13 +93,18 @@ public class GeneratePlotEnergy
         for (EnergyTotal energy : state.getMarks().getIndividual()) {
             Mark mark = state.getMarks().getMarks().get(i++);
 
-            list.add( new EnergyGraphItem(Integer.toString(mark.getId()), energy.getTotal(), colorIndex.get(mark.getId()).toAWTColor()) );
+            list.add(
+                    new EnergyGraphItem(
+                            Integer.toString(mark.getId()),
+                            energy.getTotal(),
+                            colorIndex.get(mark.getId()).toAWTColor()));
         }
 
         // Each double energy item
         for (EnergyPair pair : state.getMarks().getPair().createPairsUnique()) {
 
-            EnergyGraphItem item = new EnergyGraphItem( objectIdentifier(pair), pair.getEnergyTotal().getTotal() );
+            EnergyGraphItem item =
+                    new EnergyGraphItem(objectIdentifier(pair), pair.getEnergyTotal().getTotal());
 
             Color colorSource = colorIndex.get(pair.getPair().getSource().getId()).toAWTColor();
             Color colorDestination =

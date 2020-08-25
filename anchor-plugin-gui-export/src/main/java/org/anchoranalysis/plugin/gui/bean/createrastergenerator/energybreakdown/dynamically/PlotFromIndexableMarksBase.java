@@ -26,6 +26,7 @@
 
 package org.anchoranalysis.plugin.gui.bean.createrastergenerator.energybreakdown.dynamically;
 
+import lombok.RequiredArgsConstructor;
 import org.anchoranalysis.anchor.mpp.feature.energy.IndexableMarksWithEnergy;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.OperationFailedException;
@@ -38,7 +39,6 @@ import org.anchoranalysis.io.generator.IterableObjectGeneratorBridge;
 import org.anchoranalysis.plugin.gui.bean.createrastergenerator.PlotGeneratorBase;
 import org.anchoranalysis.plugin.gui.bean.createrastergenerator.csvstatistic.PlotFromCSVStatistic;
 import org.anchoranalysis.plugin.gui.bean.exporttask.MappedFrom;
-import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 public abstract class PlotFromIndexableMarksBase<T>
@@ -47,7 +47,7 @@ public abstract class PlotFromIndexableMarksBase<T>
     // START REQUIRED ARGUMENTS
     private final CheckedFunction<CSVStatistic, T, CreateException> elementBridge;
     // END REQUIRED ARGUMENTS
-    
+
     // Delayed instantiation of delegate so parameters are already filled
     private PlotFromCSVStatistic<T> delegate;
 

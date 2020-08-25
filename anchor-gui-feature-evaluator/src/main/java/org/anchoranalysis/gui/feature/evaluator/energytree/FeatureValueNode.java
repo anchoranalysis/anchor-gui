@@ -52,8 +52,7 @@ class FeatureValueNode extends FeatureListNode {
             Feature<FeatureInput> parentFeature,
             TreeNode parentNode,
             ParamsSource params,
-            ErrorReporter errorReporter)
-            {
+            ErrorReporter errorReporter) {
         super(errorReporter);
 
         this.parentNode = parentNode;
@@ -76,8 +75,7 @@ class FeatureValueNode extends FeatureListNode {
     private static ParamsSource createChildParam(
             Feature<FeatureInput> parentFeature,
             ParamsSource parentParams,
-            FeatureList<FeatureInput> childFeatures)
-    {
+            FeatureList<FeatureInput> childFeatures) {
         return parentParams;
     }
 

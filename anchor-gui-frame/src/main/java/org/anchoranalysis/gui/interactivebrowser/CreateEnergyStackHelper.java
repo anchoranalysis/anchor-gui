@@ -41,7 +41,7 @@ import org.anchoranalysis.mpp.bean.init.MPPInitParams;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 class CreateEnergyStackHelper {
-    
+
     // We first retrieve a NamedImgCollection which we use to construct our real EnergyStack for
     // purposes of good caching
     public static EnergyStack create(
@@ -53,7 +53,7 @@ class CreateEnergyStackHelper {
 
             // We expects the keys to be the indexes
             Stack stack = deriveEnergyStack(soMPP.getImage().stacks());
-            
+
             if (stack.getNumberChannels() > 0) {
                 return new EnergyStack(new EnergyStackWithoutParams(stack), params);
             } else {

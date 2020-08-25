@@ -26,13 +26,13 @@
 
 package org.anchoranalysis.gui.marks;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import org.anchoranalysis.core.index.IndicesSelection;
 import org.anchoranalysis.mpp.mark.Mark;
 import org.anchoranalysis.mpp.mark.MarkCollection;
-import lombok.AccessLevel;
-import lombok.NoArgsConstructor;
 
-@NoArgsConstructor(access=AccessLevel.PRIVATE)
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class MarkCollectionUtilities {
 
     public static MarkCollection subsetMarks(MarkCollection marks, IndicesSelection indices) {

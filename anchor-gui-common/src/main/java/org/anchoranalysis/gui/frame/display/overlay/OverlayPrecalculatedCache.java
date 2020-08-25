@@ -162,12 +162,15 @@ public class OverlayPrecalculatedCache implements OverlayRetriever {
 
                 Overlay overlay = overlaysToAdd.get(i);
 
-                ObjectWithProperties object = overlay.createObject(drawOverlay, dimEntireImage, bvOut);
-                PrecalculationOverlay precalculation = DrawOverlay.createPrecalc(drawOverlay, object, dimEntireImage);
+                ObjectWithProperties object =
+                        overlay.createObject(drawOverlay, dimEntireImage, bvOut);
+                PrecalculationOverlay precalculation =
+                        DrawOverlay.createPrecalc(drawOverlay, object, dimEntireImage);
 
                 BoundingBox box = overlay.box(drawOverlay, dimEntireImage);
 
-                overlayList.add(overlay, overlaysToAdd.getColor(i), precalculation, box, Optional.empty());
+                overlayList.add(
+                        overlay, overlaysToAdd.getColor(i), precalculation, box, Optional.empty());
 
                 if (rTree != null) {
                     // We add it under the ID of what we've just added

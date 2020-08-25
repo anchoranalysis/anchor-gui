@@ -68,7 +68,8 @@ public class TreeTableWithModelMultiplex implements ITreeTableModel {
         SharedFeatureMulti sharedFeatures = featureListExtracter.sharedFeatures();
 
         // We use 4 models for NONE, IND, PAIR, ALL
-        addModelToList(new FeatureListWithRegionMap<FeatureInputEnergy>(), properties, sharedFeatures);
+        addModelToList(
+                new FeatureListWithRegionMap<FeatureInputEnergy>(), properties, sharedFeatures);
         addModelToList(featureListInd, properties, sharedFeatures);
         addModelToList(featureListPair, properties, sharedFeatures);
         addModelToList(featureListAll, properties, sharedFeatures);

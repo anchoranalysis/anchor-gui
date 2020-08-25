@@ -131,23 +131,26 @@ class AddObjects {
 
             if (finderFinalMarks.exists()) {
 
-                CachedSupplier<LoadContainer<IndexableMarksWithEnergy>, OperationFailedException> op =
-                        CachedSupplier.cache(
-                                () -> {
-                                    IndexableMarksWithEnergy instantState;
-                                    try {
-                                        instantState =
-                                                new IndexableMarksWithEnergy(
-                                                        0, finderFinalMarks.get());
-                                    } catch (IOException e) {
-                                        throw new OperationFailedException(e);
-                                    }
+                CachedSupplier<LoadContainer<IndexableMarksWithEnergy>, OperationFailedException>
+                        op =
+                                CachedSupplier.cache(
+                                        () -> {
+                                            IndexableMarksWithEnergy instantState;
+                                            try {
+                                                instantState =
+                                                        new IndexableMarksWithEnergy(
+                                                                0, finderFinalMarks.get());
+                                            } catch (IOException e) {
+                                                throw new OperationFailedException(e);
+                                            }
 
-                                    LoadContainer<IndexableMarksWithEnergy> lc = new LoadContainer<>();
-                                    lc.setExpensiveLoad(false);
-                                    lc.setContainer(new SingleContainer<>(instantState, 0, false));
-                                    return lc;
-                                });
+                                            LoadContainer<IndexableMarksWithEnergy> lc =
+                                                    new LoadContainer<>();
+                                            lc.setExpensiveLoad(false);
+                                            lc.setContainer(
+                                                    new SingleContainer<>(instantState, 0, false));
+                                            return lc;
+                                        });
 
                 if (finderEnergyStack.exists()) {
                     // Energy Table

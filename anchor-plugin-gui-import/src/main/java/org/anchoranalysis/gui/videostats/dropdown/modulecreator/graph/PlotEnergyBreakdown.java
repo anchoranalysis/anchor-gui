@@ -27,6 +27,7 @@
 package org.anchoranalysis.gui.videostats.dropdown.modulecreator.graph;
 
 import java.util.Optional;
+import lombok.AllArgsConstructor;
 import org.anchoranalysis.anchor.mpp.feature.energy.IndexableMarksWithEnergy;
 import org.anchoranalysis.core.color.ColorIndex;
 import org.anchoranalysis.core.error.InitException;
@@ -44,7 +45,6 @@ import org.anchoranalysis.gui.videostats.module.DefaultModuleStateManager;
 import org.anchoranalysis.gui.videostats.module.VideoStatsModuleCreateException;
 import org.anchoranalysis.gui.videostats.modulecreator.VideoStatsModuleCreatorContext;
 import org.anchoranalysis.plot.bean.Plot;
-import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
 public class PlotEnergyBreakdown extends VideoStatsModuleCreatorContext {
@@ -66,8 +66,7 @@ public class PlotEnergyBreakdown extends VideoStatsModuleCreatorContext {
             throws VideoStatsModuleCreateException {
 
         ErrorReporter errorReporter = mpg.getLogger().errorReporter();
-        GeneratePlotEnergy generator =
-                new GeneratePlotEnergy(definition, colorIndex);
+        GeneratePlotEnergy generator = new GeneratePlotEnergy(definition, colorIndex);
 
         String graphFrameTitle = FrameTitleCreator.prefix(namePrefix, definition.getTitle());
 

@@ -39,8 +39,7 @@ import org.anchoranalysis.plot.PlotInstance;
 import org.anchoranalysis.plugin.gui.bean.createrastergenerator.PlotGeneratorBase;
 import org.anchoranalysis.plugin.gui.bean.exporttask.MappedFrom;
 
-public class PlotEnergy
-        extends PlotGeneratorBase<EnergyGraphItem, IndexableMarksWithEnergy> {
+public class PlotEnergy extends PlotGeneratorBase<EnergyGraphItem, IndexableMarksWithEnergy> {
 
     @Override
     public IterableObjectGenerator<MappedFrom<IndexableMarksWithEnergy>, Stack> createGenerator(
@@ -59,13 +58,13 @@ public class PlotEnergy
         // Presents a generator for a GraphInstance as a generator for ClickableGraphInstance
         IterableObjectGeneratorBridge<Stack, ClickableGraphInstance, PlotInstance>
                 clickableGenerator =
-                        new IterableObjectGeneratorBridge<>(generator, ClickableGraphInstance::getGraphInstance);
+                        new IterableObjectGeneratorBridge<>(
+                                generator, ClickableGraphInstance::getGraphInstance);
 
         // Presents a generator for a ClickableGraphInstance as a generator for Stack
         return new IterableObjectGeneratorBridge<>(
                 clickableGenerator,
-                new GeneratePlotEnergy(
-                        getGraphDefinition(), params.getColorIndexMarks()));
+                new GeneratePlotEnergy(getGraphDefinition(), params.getColorIndexMarks()));
     }
 
     @Override

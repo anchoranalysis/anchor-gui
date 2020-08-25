@@ -27,7 +27,6 @@
 package org.anchoranalysis.gui.marks.table;
 
 import org.anchoranalysis.anchor.mpp.feature.energy.IndexableMarksWithEnergy;
-import org.anchoranalysis.gui.marks.table.TitleValueTableModel;
 
 public class SummaryTableModel extends TitleValueTableModel implements IUpdateTableData {
 
@@ -105,8 +104,7 @@ public class SummaryTableModel extends TitleValueTableModel implements IUpdateTa
                     @Override
                     public String value(IndexableMarksWithEnergy state) {
                         if (state.getMarks() != null) {
-                            return String.format(
-                                    "%f", state.getMarks().getPair().getEnergyTotal());
+                            return String.format("%f", state.getMarks().getPair().getEnergyTotal());
                         } else {
                             return "";
                         }
@@ -123,8 +121,7 @@ public class SummaryTableModel extends TitleValueTableModel implements IUpdateTa
                     @Override
                     public String value(IndexableMarksWithEnergy state) {
                         if (state.getMarks() != null) {
-                            return String.format(
-                                    "%f", state.getMarks().getAll().getEnergyTotal());
+                            return String.format("%f", state.getMarks().getAll().getEnergyTotal());
                         } else {
                             return "";
                         }

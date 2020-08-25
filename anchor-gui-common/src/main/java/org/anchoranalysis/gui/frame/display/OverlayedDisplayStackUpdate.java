@@ -43,14 +43,17 @@ public class OverlayedDisplayStackUpdate {
     private ColoredOverlayCollection coloredMarks; // If null, we don't change the current marks
     private DisplayStack backgroundStack; // If null, we don't change the existing background
     private OverlayCollection
-            changedMarks; // If non-null, additional marks that should be updated, as they might have
+            changedMarks; // If non-null, additional marks that should be updated, as they might
+    // have
     // changed in some way
     private boolean redrawSpecific =
-            false; // If true, then the coloredMarks passed can be considered similar to the existing
+            false; // If true, then the coloredMarks passed can be considered similar to the
+    // existing
     // marks. If false, not
 
     // Assigns a new configuration completely, throwing out what's already there
-    public static OverlayedDisplayStackUpdate assignOverlays(ColoredOverlayCollection coloredMarks) {
+    public static OverlayedDisplayStackUpdate assignOverlays(
+            ColoredOverlayCollection coloredMarks) {
         assert (coloredMarks != null);
         return new OverlayedDisplayStackUpdate(coloredMarks, null, null, false);
     }
@@ -223,7 +226,8 @@ public class OverlayedDisplayStackUpdate {
 
                             // List<IndexExstNew> indices = findIndices( getColoredMarks(),
                             // getRedrawParts() );
-                            // boundOverlay.updateColorSpecificIndices( getColoredMarks(), indices );
+                            // boundOverlay.updateColorSpecificIndices( getColoredMarks(), indices
+                            // );
 
                             boxToRefresh.addAll(boundOverlay.boxList(getRedrawParts()));
                         }
@@ -301,7 +305,8 @@ public class OverlayedDisplayStackUpdate {
     }
 
     // Returns the indices of all the elements of marksToFind found in marksToSearch
-    //	private static List<IndexExstNew> findIndices( ColoredMarks marksToSearch, Marks marksToFind ) {
+    //	private static List<IndexExstNew> findIndices( ColoredMarks marksToSearch, Marks marksToFind
+    // ) {
     //
     //		List<IndexExstNew> listOut = new ArrayList<IndexExstNew>();
     //

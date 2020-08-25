@@ -116,7 +116,8 @@ public class CurrentStateDisplayer {
     private class ReplaceRemove implements IReplaceRemove {
 
         @Override
-        public void replaceCurrentProposedMarks(MarkCollection marksCore, ColoredMarks marksDisplayed, int sliceZ) {
+        public void replaceCurrentProposedMarks(
+                MarkCollection marksCore, ColoredMarks marksDisplayed, int sliceZ) {
             currentState.replaceCurrentProposedMarks(marksCore, marksDisplayed);
             marksShower.showAtSlice(currentState, sliceZ);
             alreadyConfirmedOnce = false;
@@ -130,7 +131,8 @@ public class CurrentStateDisplayer {
         }
 
         @Override
-        public void removeAcceptedMarksAndSelectedPoints(MarkCollection marks, List<Point3i> points) {
+        public void removeAcceptedMarksAndSelectedPoints(
+                MarkCollection marks, List<Point3i> points) {
             currentState.removeAcceptedMarksAndSelectedPoints(marks, points);
             marksShower.show(currentState);
             alreadyConfirmedOnce = false;

@@ -41,8 +41,7 @@ import org.anchoranalysis.plot.bean.Plot;
 import org.anchoranalysis.plot.bean.colorscheme.GraphColorScheme;
 import org.anchoranalysis.plot.index.LinePlot;
 
-public class LinePlotNumberMarks
-        extends Plot<LinePlotNumberMarks.Item> {
+public class LinePlotNumberMarks extends Plot<LinePlotNumberMarks.Item> {
 
     // START BEAN PROPERITES
     @BeanField @Getter @Setter private GraphColorScheme graphColorScheme = new GraphColorScheme();

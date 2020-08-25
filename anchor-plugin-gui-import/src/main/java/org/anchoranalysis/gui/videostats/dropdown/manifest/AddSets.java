@@ -28,9 +28,9 @@ package org.anchoranalysis.gui.videostats.dropdown.manifest;
 
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.gui.finder.FinderEnergyStack;
-import org.anchoranalysis.gui.io.loader.manifest.finder.MarksWithEnergyFinderContext;
-import org.anchoranalysis.gui.io.loader.manifest.finder.FinderMarksWithEnergy;
 import org.anchoranalysis.gui.io.loader.manifest.finder.FinderContext;
+import org.anchoranalysis.gui.io.loader.manifest.finder.FinderMarksWithEnergy;
+import org.anchoranalysis.gui.io.loader.manifest.finder.MarksWithEnergyFinderContext;
 import org.anchoranalysis.gui.videostats.dropdown.BoundVideoStatsModuleDropDown;
 import org.anchoranalysis.gui.videostats.dropdown.CombinedMenu;
 import org.anchoranalysis.gui.videostats.dropdown.MenuAddException;
@@ -54,7 +54,10 @@ class AddSets {
         this.operationBwsa = operationBwsa;
         this.finderContext =
                 new FinderContext(
-                        operationBwsa.energyBackground(), dropDown, dropDown.getRootMenu(), context);
+                        operationBwsa.energyBackground(),
+                        dropDown,
+                        dropDown.getRootMenu(),
+                        context);
     }
 
     public void apply(CoupledManifests manifests, FinderEnergyStack finderEnergyStack)
@@ -127,7 +130,7 @@ class AddSets {
                 };
 
         for (FinderMarksWithEnergy finder : allFinderMarks) {
-            if (finder.doFind(manifests.getFileManifest().get())) { 
+            if (finder.doFind(manifests.getFileManifest().get())) {
                 // NOTHING TO DO
             }
         }

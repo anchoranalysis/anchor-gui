@@ -39,19 +39,19 @@ import org.anchoranalysis.gui.bean.exporttask.ExportTaskBean;
 import org.anchoranalysis.gui.bean.exporttask.ExportTaskParams;
 import org.anchoranalysis.gui.container.ContainerGetter;
 import org.anchoranalysis.gui.finder.imgstackcollection.FinderStacks;
-import org.anchoranalysis.gui.io.loader.manifest.finder.MarksWithEnergyFinderContext;
 import org.anchoranalysis.gui.io.loader.manifest.finder.FinderCSVStats;
+import org.anchoranalysis.gui.io.loader.manifest.finder.MarksWithEnergyFinderContext;
 import org.anchoranalysis.gui.io.loader.manifest.finder.csvstatistic.CSVStatistic;
 import org.anchoranalysis.gui.io.loader.manifest.finder.historyfolder.FinderHistoryFolder;
-import org.anchoranalysis.gui.plot.creator.BridgedPlotNumberMarksCreator;
 import org.anchoranalysis.gui.plot.bean.BarPlotEnergyBreakdown;
 import org.anchoranalysis.gui.plot.creator.BridgedPlotEnergyCreator;
+import org.anchoranalysis.gui.plot.creator.BridgedPlotNumberMarksCreator;
 import org.anchoranalysis.gui.videostats.dropdown.common.EnergyBackground;
 import org.anchoranalysis.gui.videostats.dropdown.contextualmodulecreator.EnergyTableCreator;
 import org.anchoranalysis.gui.videostats.dropdown.contextualmodulecreator.SingleContextualModuleCreator;
 import org.anchoranalysis.gui.videostats.dropdown.modulecreator.graph.ColoredOutlineCreator;
-import org.anchoranalysis.gui.videostats.dropdown.modulecreator.graph.PlotCSVStatistic;
 import org.anchoranalysis.gui.videostats.dropdown.modulecreator.graph.GraphDualFinderCreator;
+import org.anchoranalysis.gui.videostats.dropdown.modulecreator.graph.PlotCSVStatistic;
 import org.anchoranalysis.gui.videostats.dropdown.modulecreator.graph.PlotEnergyBreakdown;
 import org.anchoranalysis.gui.videostats.operation.VideoStatsOperationFromExportTask;
 import org.anchoranalysis.gui.videostats.operation.VideoStatsOperationMenu;
@@ -185,7 +185,8 @@ public class MarksHistoryMenu {
 
     private void addGraphs(
             final FinderHistoryFolder<IndexableMarksWithEnergy> finderMarksHistory,
-            final FinderSerializedObject<KernelProposer<VoxelizedMarksWithEnergy>> finderKernelProposer,
+            final FinderSerializedObject<KernelProposer<VoxelizedMarksWithEnergy>>
+                    finderKernelProposer,
             final FinderCSVStats finderCSVStats,
             final VideoStatsModuleGlobalParams mpg)
             throws MenuAddException {
@@ -205,8 +206,7 @@ public class MarksHistoryMenu {
                         adder.addModuleToMenu(
                                 subMenu,
                                 new SingleContextualModuleCreator(
-                                        new PlotCSVStatistic(
-                                                graphDefinition, finderCSVStats)),
+                                        new PlotCSVStatistic(graphDefinition, finderCSVStats)),
                                 false,
                                 mpg);
                     }
@@ -259,7 +259,8 @@ public class MarksHistoryMenu {
 
                             String[] kernelNames;
                             try {
-                                KernelProposer<VoxelizedMarksWithEnergy> kp = finderKernelProposer.get();
+                                KernelProposer<VoxelizedMarksWithEnergy> kp =
+                                        finderKernelProposer.get();
 
                                 // TODO could be called many times, consider better strategy
                                 kp.init();

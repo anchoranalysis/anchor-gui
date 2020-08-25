@@ -196,13 +196,11 @@ public class BackgroundSetFactory {
         }
     }
 
-    private static Stack createEmptyStack(Dimensions dimensions)
-            throws OperationFailedException {
+    private static Stack createEmptyStack(Dimensions dimensions) throws OperationFailedException {
         try {
             Stack stack = new Stack();
             stack.addChannel(
-                    ChannelFactory.instance()
-                            .create(dimensions, UnsignedByteVoxelType.INSTANCE));
+                    ChannelFactory.instance().create(dimensions, UnsignedByteVoxelType.INSTANCE));
             return stack;
         } catch (IncorrectImageSizeException e) {
             throw new OperationFailedException(e);

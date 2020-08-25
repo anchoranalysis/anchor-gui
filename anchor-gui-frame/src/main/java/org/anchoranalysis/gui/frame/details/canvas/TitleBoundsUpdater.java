@@ -28,17 +28,17 @@ package org.anchoranalysis.gui.frame.details.canvas;
 
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import lombok.AllArgsConstructor;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.error.reporter.ErrorReporter;
 import org.anchoranalysis.core.index.IndexGettableSettable;
 import org.anchoranalysis.gui.displayupdate.ProvidesOverlayedDisplayStack;
 import org.anchoranalysis.gui.frame.display.BoundOverlayedDisplayStack;
 import org.anchoranalysis.gui.reassign.FrameTitleCreator;
-import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
 class TitleBoundsUpdater implements ChangeListener {
-    
+
     private ErrorReporter errorReporter;
     private IndexGettableSettable indexCntr;
     private ProvidesOverlayedDisplayStack stackProvider;
@@ -79,6 +79,6 @@ class TitleBoundsUpdater implements ChangeListener {
     }
 
     public void updateTitle() {
-        frame.setTitle( title(indexCntr.getIndex()) );
+        frame.setTitle(title(indexCntr.getIndex()));
     }
 }

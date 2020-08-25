@@ -41,7 +41,8 @@ public class RedrawUpdateFromProposal {
                 selectUpdate(er, boxRedraw), overlaysForTrigger(er), suggestedSliceNum(er));
     }
 
-    private static OverlayedDisplayStackUpdate selectUpdate(ProposedMarks marks, MarkCollection boxRedraw) {
+    private static OverlayedDisplayStackUpdate selectUpdate(
+            ProposedMarks marks, MarkCollection boxRedraw) {
         ColoredOverlayCollection oc = marks.getColoredMarks();
         if (boxRedraw != null) {
             OverlayCollection ocRedraw =

@@ -26,11 +26,11 @@
 
 package org.anchoranalysis.gui.frame.multioverlay;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 import org.anchoranalysis.gui.image.frame.SliderState;
 import org.anchoranalysis.gui.videostats.dropdown.AddVideoStatsModule;
 import org.anchoranalysis.gui.videostats.dropdown.common.EnergyBackground;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
 
 @AllArgsConstructor
 class SliderEnergyState {

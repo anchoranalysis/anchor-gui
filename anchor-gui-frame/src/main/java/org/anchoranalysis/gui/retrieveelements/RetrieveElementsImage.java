@@ -85,7 +85,8 @@ public class RetrieveElementsImage extends RetrieveElements {
     }
 
     private Supplier<Stack> cachedOpFromDisplayStack(DisplayStack stack) {
-        CachedSupplier<Stack,AnchorNeverOccursException> cachedSupplier = CachedSupplier.cache(() -> stack.deriveStack(false));
+        CachedSupplier<Stack, AnchorNeverOccursException> cachedSupplier =
+                CachedSupplier.cache(() -> stack.deriveStack(false));
         return cachedSupplier::get;
     }
 }

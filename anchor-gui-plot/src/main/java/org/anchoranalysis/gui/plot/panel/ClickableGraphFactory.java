@@ -28,15 +28,15 @@ package org.anchoranalysis.gui.plot.panel;
 
 import java.util.Iterator;
 import java.util.Optional;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.plot.AxisLimits;
 import org.anchoranalysis.plot.PlotInstance;
 import org.anchoranalysis.plot.bean.Plot;
 import org.jfree.data.general.Dataset;
-import lombok.AccessLevel;
-import lombok.NoArgsConstructor;
 
-@NoArgsConstructor(access=AccessLevel.PRIVATE)
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class ClickableGraphFactory {
 
     public static <T> ClickableGraphInstance create(

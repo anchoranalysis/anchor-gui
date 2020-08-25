@@ -45,8 +45,8 @@ import org.anchoranalysis.gui.videostats.dropdown.OperationCreateBackgroundSetWi
 import org.anchoranalysis.gui.videostats.dropdown.VideoStatsModuleGlobalParams;
 import org.anchoranalysis.gui.videostats.dropdown.common.DropDownUtilities;
 import org.anchoranalysis.gui.videostats.dropdown.common.DropDownUtilitiesRaster;
-import org.anchoranalysis.gui.videostats.dropdown.common.GuessEnergyFromStacks;
 import org.anchoranalysis.gui.videostats.dropdown.common.EnergyBackground;
+import org.anchoranalysis.gui.videostats.dropdown.common.GuessEnergyFromStacks;
 import org.anchoranalysis.image.object.ObjectCollection;
 import org.anchoranalysis.image.stack.wrap.WrapTimeSequenceAsStack;
 import org.anchoranalysis.io.output.bound.BoundOutputManagerRouteErrors;
@@ -87,8 +87,7 @@ public class MultiCollectionDropDown {
         OperationCreateBackgroundSetWithAdder operationBwsa =
                 new OperationCreateBackgroundSetWithAdder(
                         EnergyBackground.createStackSequence(
-                                rasterProvider,
-                                () -> GuessEnergyFromStacks.guess(rasterProvider)),
+                                rasterProvider, () -> GuessEnergyFromStacks.guess(rasterProvider)),
                         adder,
                         params.getModuleParams().getThreadPool(),
                         params.getModuleParams().getLogger().errorReporter());

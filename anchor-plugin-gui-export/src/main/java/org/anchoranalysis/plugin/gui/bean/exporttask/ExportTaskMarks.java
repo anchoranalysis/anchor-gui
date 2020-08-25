@@ -45,8 +45,8 @@ public class ExportTaskMarks
         setBridge(this::convert);
     }
 
-    private BoundedIndexContainer<DualStateWithoutIndex<IndexableMarksWithEnergy>> createPrimaryOnly(
-            ExportTaskParams sourceObject) throws OperationFailedException {
+    private BoundedIndexContainer<DualStateWithoutIndex<IndexableMarksWithEnergy>>
+            createPrimaryOnly(ExportTaskParams sourceObject) throws OperationFailedException {
         return new BoundedIndexContainerBridgeWithoutIndex<>(
                 sourceObject.getFinderMarksHistory().getContainer(), DualStateWithoutIndex::new);
     }
@@ -61,13 +61,13 @@ public class ExportTaskMarks
         return dualHistory;
     }
 
-    private DualStateContainer<IndexableMarksWithEnergy> mergedHistory(ExportTaskParams sourceObject)
-            throws OperationFailedException {
+    private DualStateContainer<IndexableMarksWithEnergy> mergedHistory(
+            ExportTaskParams sourceObject) throws OperationFailedException {
         return combine(sourceObject.getAllFinderMarksHistory());
     }
 
-    private BoundedIndexContainer<DualStateWithoutIndex<IndexableMarksWithEnergy>> createMergedBridge(
-            ExportTaskParams sourceObject) throws OperationFailedException {
+    private BoundedIndexContainer<DualStateWithoutIndex<IndexableMarksWithEnergy>>
+            createMergedBridge(ExportTaskParams sourceObject) throws OperationFailedException {
 
         // Otherwise we merge
 

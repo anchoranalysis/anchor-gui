@@ -26,11 +26,11 @@
 
 package org.anchoranalysis.gui.image;
 
-import org.anchoranalysis.feature.energy.EnergyStack;
-import org.anchoranalysis.overlay.collection.OverlayCollection;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
+import org.anchoranalysis.feature.energy.EnergyStack;
+import org.anchoranalysis.overlay.collection.OverlayCollection;
 
 @AllArgsConstructor
 public class OverlaysWithEnergyStack {

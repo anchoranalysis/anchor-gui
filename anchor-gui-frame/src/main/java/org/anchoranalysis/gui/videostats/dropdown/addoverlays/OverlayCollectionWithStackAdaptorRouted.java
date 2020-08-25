@@ -45,8 +45,8 @@ import org.anchoranalysis.overlay.collection.OverlayCollection;
 class OverlayCollectionWithStackAdaptorRouted
         implements RoutableReceivable<PropertyValueChangeEvent<OverlaysWithEnergyStack>> {
 
-    private List<RoutableListener<PropertyValueChangeEvent<OverlaysWithEnergyStack>>>
-            listeners = new ArrayList<>();
+    private List<RoutableListener<PropertyValueChangeEvent<OverlaysWithEnergyStack>>> listeners =
+            new ArrayList<>();
 
     public OverlayCollectionWithStackAdaptorRouted(
             RoutableReceivable<PropertyValueChangeEvent<OverlayCollection>> source,
@@ -101,8 +101,7 @@ class OverlayCollectionWithStackAdaptorRouted
                     PropertyValueChangeEvent<OverlaysWithEnergyStack> evtNew =
                             new PropertyValueChangeEvent<>(
                                     evt.getSource(),
-                                    new OverlaysWithEnergyStack(
-                                            evt.getEvent().getValue(), get()),
+                                    new OverlaysWithEnergyStack(evt.getEvent().getValue(), get()),
                                     evt.getEvent().getAdjusting());
 
                     RoutableEvent<PropertyValueChangeEvent<OverlaysWithEnergyStack>>

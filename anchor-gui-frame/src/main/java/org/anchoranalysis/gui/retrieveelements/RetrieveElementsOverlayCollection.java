@@ -55,7 +55,8 @@ public class RetrieveElementsOverlayCollection extends RetrieveElements {
         if (currentSelectedObjects != null) {
 
             // Selected Marks as Configuration
-            MarkCollection marks = OverlayCollectionMarkFactory.marksFromOverlays(currentSelectedObjects);
+            MarkCollection marks =
+                    OverlayCollectionMarkFactory.marksFromOverlays(currentSelectedObjects);
             ObjectCollection objects =
                     OverlayCollectionObjectFactory.objectsFromOverlays(currentSelectedObjects);
 

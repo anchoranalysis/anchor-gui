@@ -35,8 +35,7 @@ import org.anchoranalysis.mpp.mark.voxelized.memo.VoxelizedMarkMemo;
 public class MemoPairwiseFactory extends PairwiseFactory {
 
     @Override
-    public FeatureInput create(
-            VoxelizedMarkMemo pmm1, VoxelizedMarkMemo pmm2, EnergyStack raster)
+    public FeatureInput create(VoxelizedMarkMemo pmm1, VoxelizedMarkMemo pmm2, EnergyStack raster)
             throws CreateException {
         return new FeatureInputPairMemo(pmm1, pmm2, raster);
     }

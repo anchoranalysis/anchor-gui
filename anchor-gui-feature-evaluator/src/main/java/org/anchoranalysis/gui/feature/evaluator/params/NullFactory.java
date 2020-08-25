@@ -36,21 +36,18 @@ import org.anchoranalysis.mpp.mark.voxelized.memo.VoxelizedMarkMemo;
 public class NullFactory implements FeatureInputFactory {
 
     @Override
-    public FeatureInput create(VoxelizedMarkMemo pmm, EnergyStack raster)
+    public FeatureInput create(VoxelizedMarkMemo pmm, EnergyStack raster) throws CreateException {
+        return FeatureInputNull.instance();
+    }
+
+    @Override
+    public FeatureInput create(VoxelizedMarkMemo pmm1, VoxelizedMarkMemo pmm2, EnergyStack raster)
             throws CreateException {
         return FeatureInputNull.instance();
     }
 
     @Override
-    public FeatureInput create(
-            VoxelizedMarkMemo pmm1, VoxelizedMarkMemo pmm2, EnergyStack raster)
-            throws CreateException {
-        return FeatureInputNull.instance();
-    }
-
-    @Override
-    public FeatureInput create(MemoCollection pmmhList, EnergyStack raster)
-            throws CreateException {
+    public FeatureInput create(MemoCollection pmmhList, EnergyStack raster) throws CreateException {
         return FeatureInputNull.instance();
     }
 

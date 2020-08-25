@@ -108,7 +108,10 @@ class FinderEvaluator {
     }
 
     private static IdentifiablePair<Overlay> findPairFromCurrentSelectionMark(
-            MarkCollection marks, EnergyStack raster, SharedFeatureMulti sharedFeatureList, Logger logger)
+            MarkCollection marks,
+            EnergyStack raster,
+            SharedFeatureMulti sharedFeatureList,
+            Logger logger)
             throws CreateException {
 
         RegionMembershipWithFlags regionMembership =
@@ -158,8 +161,7 @@ class FinderEvaluator {
         private EnergyStack raster;
         private Optional<FeatureCalculatorMulti<FeatureInputPairMemo>> session;
 
-        public EdgeTester(
-                EnergyStack raster, SharedFeatureMulti sharedFeatureList, Logger logger)
+        public EdgeTester(EnergyStack raster, SharedFeatureMulti sharedFeatureList, Logger logger)
                 throws CreateException {
 
             this.raster = raster;

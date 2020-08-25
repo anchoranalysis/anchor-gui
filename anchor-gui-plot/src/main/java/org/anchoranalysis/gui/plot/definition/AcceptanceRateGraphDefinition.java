@@ -111,7 +111,8 @@ public class AcceptanceRateGraphDefinition extends GraphDefinition {
     }
 
     @Override
-    public void updateCurrent(int iter, long timeStamp, MarksWithTotalEnergy current, Aggregator aggregator) {
+    public void updateCurrent(
+            int iter, long timeStamp, MarksWithTotalEnergy current, Aggregator aggregator) {
         this.aggregator = aggregator;
     }
 
@@ -119,7 +120,7 @@ public class AcceptanceRateGraphDefinition extends GraphDefinition {
     public void updateBest(int iter, long timeStamp, MarksWithTotalEnergy best) {
         // NOTHING TO DO
     }
-    
+
     private static long resolve(double energy) {
         return (long) (1000 * energy);
     }

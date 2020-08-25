@@ -58,7 +58,10 @@ public class MarkSphereOnPointProposerEvaluator implements ProposalOperationCrea
 
     @Override
     public ProposalOperation create(
-            MarkCollection marks, final Point3d position, ProposerContext context, MarkWithIdentifierFactory markFactory)
+            MarkCollection marks,
+            final Point3d position,
+            ProposerContext context,
+            MarkWithIdentifierFactory markFactory)
             throws OperationFailedException {
 
         return errorNode -> {

@@ -28,25 +28,25 @@ package org.anchoranalysis.gui.marks;
 
 import java.util.Optional;
 import javax.swing.JPanel;
+import lombok.RequiredArgsConstructor;
 import org.anchoranalysis.anchor.mpp.feature.energy.IndexableMarksWithEnergy;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.functional.function.CheckedFunction;
 import org.anchoranalysis.core.index.IntArray;
 import org.anchoranalysis.core.property.IPropertyValueReceivable;
 import org.anchoranalysis.core.property.IPropertyValueSendable;
-import org.anchoranalysis.gui.marks.StatePanel;
 import org.anchoranalysis.gui.plot.panel.ClickableGraphInstance;
 import org.anchoranalysis.gui.plot.panel.GraphPanel;
 import org.anchoranalysis.overlay.collection.OverlayCollection;
-import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 public class MarksGraphPanel extends StatePanel<IndexableMarksWithEnergy> {
 
     // START REQUIRED ARGUMENTS
-    private final CheckedFunction<IndexableMarksWithEnergy, ClickableGraphInstance, OperationFailedException>
+    private final CheckedFunction<
+                    IndexableMarksWithEnergy, ClickableGraphInstance, OperationFailedException>
             graphGenerator;
-    // END REQUIRED ARGUMENTS    
+    // END REQUIRED ARGUMENTS
 
     private GraphPanel graphPanel;
 

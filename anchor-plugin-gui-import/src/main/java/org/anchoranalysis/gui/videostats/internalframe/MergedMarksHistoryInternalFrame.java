@@ -72,7 +72,8 @@ public class MergedMarksHistoryInternalFrame {
         dualHistory.init();
 
         MergeMarksBridge mergeMarksBridge =
-                new MergeMarksBridge(() -> defaultState.getMarkDisplaySettings().regionMembership());
+                new MergeMarksBridge(
+                        () -> defaultState.getMarkDisplaySettings().regionMembership());
 
         // We map each DualMarksInstantState
         BoundedIndexContainer<IndexableOverlays> marksCntnr =

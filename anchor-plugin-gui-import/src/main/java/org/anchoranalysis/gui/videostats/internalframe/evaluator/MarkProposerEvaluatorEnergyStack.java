@@ -26,6 +26,7 @@
 
 package org.anchoranalysis.gui.videostats.internalframe.evaluator;
 
+import lombok.AllArgsConstructor;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.geometry.Point3d;
 import org.anchoranalysis.gui.frame.overlays.ProposedMarks;
@@ -36,7 +37,6 @@ import org.anchoranalysis.mpp.mark.Mark;
 import org.anchoranalysis.mpp.mark.MarkCollection;
 import org.anchoranalysis.mpp.mark.voxelized.memo.VoxelizedMarkMemo;
 import org.anchoranalysis.mpp.proposer.ProposerContext;
-import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
 public class MarkProposerEvaluatorEnergyStack implements ProposalOperationCreator {
@@ -46,7 +46,10 @@ public class MarkProposerEvaluatorEnergyStack implements ProposalOperationCreato
 
     @Override
     public ProposalOperation create(
-            MarkCollection marks, final Point3d position, final ProposerContext context, final MarkWithIdentifierFactory markFactory)
+            MarkCollection marks,
+            final Point3d position,
+            final ProposerContext context,
+            final MarkWithIdentifierFactory markFactory)
             throws OperationFailedException {
 
         final Mark mark =
@@ -57,29 +60,25 @@ public class MarkProposerEvaluatorEnergyStack implements ProposalOperationCreato
 
         // Do proposal
         return errorNode -> {
+            VoxelizedMarkMemo pmm = context.create(mark);
 
-                VoxelizedMarkMemo pmm = context.create(mark);
+            ProposedMarks proposal = new ProposedMarks(context.dimensions());
 
-                ProposedMarks proposal = new ProposedMarks(context.dimensions());
+            // assumes only called once
+            boolean success = markProposer.propose(pmm, context);
 
-                // assumes only called once
-                boolean success = markProposer.propose(pmm, context);
+            proposal.setSuccess(success);
 
-                proposal.setSuccess(success);
+            if (success) {
+                proposal.setColoredMarks(
+                        MarkProposerEvaluatorUtilities.generateMarksFromMark(
+                                pmm.getMark(), position, markProposer, detailedVisualization));
 
-                if (success) {
-                    proposal.setColoredMarks(
-                            MarkProposerEvaluatorUtilities.generateMarksFromMark(
-                                    pmm.getMark(),
-                                    position,
-                                    markProposer,
-                                    detailedVisualization));
+                proposal.setSuggestedSliceNum((int) mark.centerPoint().z());
+                proposal.setMarksCore(new MarkCollection(pmm.getMark()));
+            }
 
-                    proposal.setSuggestedSliceNum((int) mark.centerPoint().z());
-                    proposal.setMarksCore(new MarkCollection(pmm.getMark()));
-                }
-
-                return proposal;
+            return proposal;
         };
     }
 }
