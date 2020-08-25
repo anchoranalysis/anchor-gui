@@ -54,9 +54,9 @@ import org.anchoranalysis.gui.kernel.match.MatchKernel;
 import org.anchoranalysis.gui.marks.StatePanel;
 import org.anchoranalysis.gui.marks.StatePanelUpdateException;
 import org.anchoranalysis.gui.reassign.SimpleToggleAction;
-import org.anchoranalysis.mpp.sgmn.bean.kernel.proposer.KernelProposer;
-import org.anchoranalysis.mpp.sgmn.kernel.proposer.KernelDescision;
-import org.anchoranalysis.mpp.sgmn.kernel.proposer.WeightedKernel;
+import org.anchoranalysis.mpp.segment.bean.kernel.proposer.KernelProposer;
+import org.anchoranalysis.mpp.segment.kernel.proposer.KernelDescision;
+import org.anchoranalysis.mpp.segment.kernel.proposer.WeightedKernel;
 import org.anchoranalysis.overlay.collection.OverlayCollection;
 
 public class KernelIterDescriptionNavigatorPanel extends StatePanel<KernelDescision> {

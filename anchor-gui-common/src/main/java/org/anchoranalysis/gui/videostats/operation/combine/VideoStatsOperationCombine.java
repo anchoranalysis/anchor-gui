@@ -27,9 +27,9 @@
 package org.anchoranalysis.gui.videostats.operation.combine;
 
 import java.util.Optional;
-import org.anchoranalysis.anchor.mpp.mark.MarkCollection;
 import org.anchoranalysis.gui.videostats.dropdown.common.EnergyBackground;
 import org.anchoranalysis.image.object.ObjectCollection;
+import org.anchoranalysis.mpp.mark.MarkCollection;
 
 //
 public interface VideoStatsOperationCombine {

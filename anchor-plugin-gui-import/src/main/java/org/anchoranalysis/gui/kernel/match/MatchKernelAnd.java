@@ -27,8 +27,8 @@
 package org.anchoranalysis.gui.kernel.match;
 
 import java.util.ArrayList;
+import org.anchoranalysis.mpp.segment.kernel.proposer.KernelDescision;
 import lombok.NoArgsConstructor;
-import org.anchoranalysis.mpp.sgmn.kernel.proposer.KernelDescision;
 
 @NoArgsConstructor
 public class MatchKernelAnd extends MatchKernel {

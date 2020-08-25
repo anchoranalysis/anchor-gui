@@ -28,14 +28,14 @@ package org.anchoranalysis.gui.feature.evaluator.energytree.overlayparams;
 
 import java.util.HashMap;
 import java.util.Map;
-import org.anchoranalysis.anchor.mpp.bean.regionmap.RegionMap;
-import org.anchoranalysis.anchor.mpp.mark.Mark;
-import org.anchoranalysis.anchor.mpp.mark.voxelized.memo.PxlMarkMemoFactory;
-import org.anchoranalysis.anchor.mpp.mark.voxelized.memo.VoxelizedMarkMemo;
 import org.anchoranalysis.feature.energy.EnergyStack;
 import org.anchoranalysis.feature.input.FeatureInput;
 import org.anchoranalysis.feature.session.CreateFeatureInput;
 import org.anchoranalysis.gui.feature.evaluator.energytree.createparams.CreatePairFromMark;
+import org.anchoranalysis.mpp.bean.regionmap.RegionMap;
+import org.anchoranalysis.mpp.mark.Mark;
+import org.anchoranalysis.mpp.mark.voxelized.memo.PxlMarkMemoFactory;
+import org.anchoranalysis.mpp.mark.voxelized.memo.VoxelizedMarkMemo;
 
 class CreateParamsPair {
 

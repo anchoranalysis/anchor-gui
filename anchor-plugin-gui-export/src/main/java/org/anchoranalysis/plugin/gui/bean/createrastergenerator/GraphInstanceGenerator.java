@@ -31,8 +31,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.Optional;
-import org.anchoranalysis.anchor.plot.PlotInstance;
-import org.anchoranalysis.anchor.plot.io.GraphOutputter;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.image.stack.Stack;
 import org.anchoranalysis.image.stack.bufferedimage.CreateStackFromBufferedImage;
@@ -41,6 +39,8 @@ import org.anchoranalysis.io.generator.ObjectGenerator;
 import org.anchoranalysis.io.manifest.ManifestDescription;
 import org.anchoranalysis.io.output.bean.OutputWriteSettings;
 import org.anchoranalysis.io.output.error.OutputWriteFailedException;
+import org.anchoranalysis.plot.PlotInstance;
+import org.anchoranalysis.plot.io.GraphOutputter;
 import org.jfree.chart.ChartUtils;
 
 class GraphInstanceGenerator extends ObjectGenerator<Stack>

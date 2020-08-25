@@ -34,17 +34,17 @@ import java.util.List;
 import java.util.Optional;
 import org.anchoranalysis.anchor.mpp.feature.energy.IndexableMarksWithEnergy;
 import org.anchoranalysis.anchor.mpp.feature.energy.EnergyPair;
-import org.anchoranalysis.anchor.mpp.mark.Mark;
-import org.anchoranalysis.anchor.mpp.plot.EnergyGraphItem;
-import org.anchoranalysis.anchor.plot.AxisLimits;
-import org.anchoranalysis.anchor.plot.bean.Plot;
 import org.anchoranalysis.core.color.ColorIndex;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.functional.function.CheckedFunction;
 import org.anchoranalysis.feature.energy.EnergyTotal;
+import org.anchoranalysis.gui.plot.EnergyGraphItem;
 import org.anchoranalysis.gui.plot.panel.ClickableGraphFactory;
 import org.anchoranalysis.gui.plot.panel.ClickableGraphInstance;
+import org.anchoranalysis.mpp.mark.Mark;
+import org.anchoranalysis.plot.AxisLimits;
+import org.anchoranalysis.plot.bean.Plot;
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor

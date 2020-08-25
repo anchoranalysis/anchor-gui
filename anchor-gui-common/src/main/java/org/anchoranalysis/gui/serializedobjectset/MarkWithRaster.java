@@ -26,10 +26,10 @@
 
 package org.anchoranalysis.gui.serializedobjectset;
 
-import org.anchoranalysis.anchor.mpp.mark.Mark;
 import org.anchoranalysis.core.index.IndexGetter;
 import org.anchoranalysis.feature.energy.EnergyStack;
 import org.anchoranalysis.gui.backgroundset.BackgroundSet;
+import org.anchoranalysis.mpp.mark.Mark;
 
 public class MarkWithRaster implements IndexGetter, Comparable<IndexGetter> {
 

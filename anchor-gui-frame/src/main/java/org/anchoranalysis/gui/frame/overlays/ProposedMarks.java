@@ -28,14 +28,14 @@ package org.anchoranalysis.gui.frame.overlays;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.anchoranalysis.anchor.mpp.bean.regionmap.RegionMapSingleton;
-import org.anchoranalysis.anchor.mpp.bean.regionmap.RegionMembershipWithFlags;
-import org.anchoranalysis.anchor.mpp.mark.ColoredMarks;
-import org.anchoranalysis.anchor.mpp.mark.GlobalRegionIdentifiers;
-import org.anchoranalysis.anchor.mpp.mark.MarkCollection;
-import org.anchoranalysis.anchor.mpp.overlay.OverlayCollectionMarkFactory;
-import org.anchoranalysis.anchor.mpp.proposer.error.ProposerFailureDescription;
 import org.anchoranalysis.image.extent.Dimensions;
+import org.anchoranalysis.mpp.bean.regionmap.RegionMapSingleton;
+import org.anchoranalysis.mpp.bean.regionmap.RegionMembershipWithFlags;
+import org.anchoranalysis.mpp.mark.ColoredMarks;
+import org.anchoranalysis.mpp.mark.GlobalRegionIdentifiers;
+import org.anchoranalysis.mpp.mark.MarkCollection;
+import org.anchoranalysis.mpp.overlay.OverlayCollectionMarkFactory;
+import org.anchoranalysis.mpp.proposer.error.ProposerFailureDescription;
 import org.anchoranalysis.overlay.collection.ColoredOverlayCollection;
 
 public class ProposedMarks {

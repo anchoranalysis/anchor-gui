@@ -27,7 +27,6 @@
 package org.anchoranalysis.gui.videostats.dropdown.common;
 
 import lombok.AllArgsConstructor;
-import org.anchoranalysis.anchor.mpp.bean.init.MPPInitParams;
 import org.anchoranalysis.core.cache.CachedSupplier;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.InitException;
@@ -50,6 +49,7 @@ import org.anchoranalysis.image.bean.nonbean.init.CreateCombinedStack;
 import org.anchoranalysis.image.bean.nonbean.init.ImageInitParams;
 import org.anchoranalysis.image.stack.wrap.WrapStackAsTimeSequence;
 import org.anchoranalysis.io.output.bean.OutputWriteSettings;
+import org.anchoranalysis.mpp.bean.init.MPPInitParams;
 
 @AllArgsConstructor
 class ProposerEvaluatorModuleCreator extends VideoStatsModuleCreator {

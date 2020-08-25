@@ -29,13 +29,13 @@ package org.anchoranalysis.gui.videostats.link;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.Action;
-import org.anchoranalysis.anchor.mpp.mark.MarkCollection;
 import org.anchoranalysis.core.index.IntArray;
 import org.anchoranalysis.gui.IconFactory;
 import org.anchoranalysis.gui.videostats.ModuleEventRouter;
 import org.anchoranalysis.gui.videostats.SubgroupRetriever;
 import org.anchoranalysis.gui.videostats.module.VideoStatsModule;
 import org.anchoranalysis.mpp.io.marks.MarksWithDisplayStack;
+import org.anchoranalysis.mpp.mark.MarkCollection;
 
 public class LinkedPropertiesAmongModules {
 

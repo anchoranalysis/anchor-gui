@@ -26,9 +26,9 @@
 
 package org.anchoranalysis.gui.videostats.internalframe.annotator.currentstate;
 
+import org.anchoranalysis.mpp.mark.Mark;
+import org.anchoranalysis.mpp.mark.MarkCollection;
 import lombok.NoArgsConstructor;
-import org.anchoranalysis.anchor.mpp.mark.Mark;
-import org.anchoranalysis.anchor.mpp.mark.MarkCollection;
 
 /**
  * A marks-collection partitioned into accepted and rejected collections

@@ -26,7 +26,7 @@
 
 package org.anchoranalysis.gui.kernel.match;
 
-import org.anchoranalysis.mpp.sgmn.kernel.proposer.KernelDescision;
+import org.anchoranalysis.mpp.segment.kernel.proposer.KernelDescision;
 
 public abstract class MatchKernel {
 

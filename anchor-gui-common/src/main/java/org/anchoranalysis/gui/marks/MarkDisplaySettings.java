@@ -28,9 +28,6 @@ package org.anchoranalysis.gui.marks;
 
 import java.util.ArrayList;
 import java.util.List;
-import org.anchoranalysis.anchor.mpp.bean.regionmap.RegionMapSingleton;
-import org.anchoranalysis.anchor.mpp.bean.regionmap.RegionMembershipWithFlags;
-import org.anchoranalysis.anchor.mpp.mark.GlobalRegionIdentifiers;
 import org.anchoranalysis.io.bean.object.writer.BoundingBoxOutline;
 import org.anchoranalysis.io.bean.object.writer.Combine;
 import org.anchoranalysis.io.bean.object.writer.Filled;
@@ -39,7 +36,10 @@ import org.anchoranalysis.io.bean.object.writer.Midpoint;
 import org.anchoranalysis.io.bean.object.writer.Nothing;
 import org.anchoranalysis.io.bean.object.writer.Orientation;
 import org.anchoranalysis.io.bean.object.writer.Outline;
+import org.anchoranalysis.mpp.bean.regionmap.RegionMapSingleton;
+import org.anchoranalysis.mpp.bean.regionmap.RegionMembershipWithFlags;
 import org.anchoranalysis.mpp.io.marks.generator.SimpleOverlayWriter;
+import org.anchoranalysis.mpp.mark.GlobalRegionIdentifiers;
 import org.anchoranalysis.overlay.bean.DrawObject;
 import org.anchoranalysis.overlay.writer.DrawOverlay;
 

@@ -41,8 +41,8 @@ import org.anchoranalysis.gui.kernel.match.MatchKernelAny;
 import org.anchoranalysis.gui.kernel.match.MatchKernelAnyChangedMarksFoundIn;
 import org.anchoranalysis.gui.kernel.match.MatchKernelExecutionTimeGreaterThanEquals;
 import org.anchoranalysis.gui.kernel.match.MatchKernelProp;
-import org.anchoranalysis.mpp.sgmn.bean.kernel.proposer.KernelProposer;
-import org.anchoranalysis.mpp.sgmn.kernel.proposer.WeightedKernel;
+import org.anchoranalysis.mpp.segment.bean.kernel.proposer.KernelProposer;
+import org.anchoranalysis.mpp.segment.kernel.proposer.WeightedKernel;
 
 public class KernelMatchPanel {
 

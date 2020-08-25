@@ -28,20 +28,20 @@ package org.anchoranalysis.gui.videostats.internalframe.evaluator;
 
 import java.awt.Color;
 import lombok.RequiredArgsConstructor;
-import org.anchoranalysis.anchor.mpp.bean.mark.MarkWithIdentifierFactory;
-import org.anchoranalysis.anchor.mpp.bean.regionmap.RegionMapSingleton;
-import org.anchoranalysis.anchor.mpp.bean.regionmap.RegionMembershipWithFlags;
-import org.anchoranalysis.anchor.mpp.mark.GlobalRegionIdentifiers;
-import org.anchoranalysis.anchor.mpp.mark.MarkCollection;
-import org.anchoranalysis.anchor.mpp.mark.conic.Sphere;
-import org.anchoranalysis.anchor.mpp.overlay.OverlayMark;
-import org.anchoranalysis.anchor.mpp.proposer.ProposerContext;
 import org.anchoranalysis.core.color.RGBColor;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.geometry.Point3d;
 import org.anchoranalysis.gui.frame.overlays.ProposedMarks;
 import org.anchoranalysis.gui.videostats.internalframe.ProposalOperation;
 import org.anchoranalysis.image.extent.Dimensions;
+import org.anchoranalysis.mpp.bean.mark.MarkWithIdentifierFactory;
+import org.anchoranalysis.mpp.bean.regionmap.RegionMapSingleton;
+import org.anchoranalysis.mpp.bean.regionmap.RegionMembershipWithFlags;
+import org.anchoranalysis.mpp.mark.GlobalRegionIdentifiers;
+import org.anchoranalysis.mpp.mark.MarkCollection;
+import org.anchoranalysis.mpp.mark.conic.Sphere;
+import org.anchoranalysis.mpp.overlay.OverlayMark;
+import org.anchoranalysis.mpp.proposer.ProposerContext;
 
 @RequiredArgsConstructor
 public class MarkSphereOnPointProposerEvaluator implements ProposalOperationCreator {

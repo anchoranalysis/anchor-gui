@@ -42,8 +42,8 @@ import org.anchoranalysis.gui.videostats.module.DefaultModuleStateManager;
 import org.anchoranalysis.gui.videostats.module.VideoStatsModuleCreateException;
 import org.anchoranalysis.gui.videostats.modulecreator.VideoStatsModuleCreatorContext;
 import org.anchoranalysis.io.manifest.finder.FinderSerializedObject;
-import org.anchoranalysis.mpp.sgmn.bean.kernel.proposer.KernelProposer;
-import org.anchoranalysis.mpp.sgmn.kernel.proposer.KernelDescision;
+import org.anchoranalysis.mpp.segment.bean.kernel.proposer.KernelProposer;
+import org.anchoranalysis.mpp.segment.kernel.proposer.KernelDescision;
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor

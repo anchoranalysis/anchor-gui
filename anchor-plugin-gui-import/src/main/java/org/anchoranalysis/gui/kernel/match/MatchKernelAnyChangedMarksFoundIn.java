@@ -27,7 +27,7 @@
 package org.anchoranalysis.gui.kernel.match;
 
 import org.anchoranalysis.core.index.IndicesSelection;
-import org.anchoranalysis.mpp.sgmn.kernel.proposer.KernelDescision;
+import org.anchoranalysis.mpp.segment.kernel.proposer.KernelDescision;
 
 public class MatchKernelAnyChangedMarksFoundIn extends MatchKernel {
 

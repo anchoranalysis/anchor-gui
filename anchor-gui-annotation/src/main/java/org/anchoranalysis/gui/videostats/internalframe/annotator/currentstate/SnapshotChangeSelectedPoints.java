@@ -26,8 +26,8 @@
 
 package org.anchoranalysis.gui.videostats.internalframe.annotator.currentstate;
 
-import org.anchoranalysis.anchor.mpp.mark.Mark;
 import org.anchoranalysis.gui.videostats.internalframe.annotator.undoredo.IRecordSnapshot;
+import org.anchoranalysis.mpp.mark.Mark;
 
 class SnapshotChangeSelectedPoints implements IChangeSelectedPoints {
 

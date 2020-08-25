@@ -28,18 +28,18 @@ package org.anchoranalysis.gui.videostats.internalframe.markredraw;
 
 import java.awt.Color;
 import java.util.Optional;
-import org.anchoranalysis.anchor.mpp.bean.mark.MarkWithIdentifierFactory;
-import org.anchoranalysis.anchor.mpp.bean.proposer.MarkCollectionProposer;
-import org.anchoranalysis.anchor.mpp.mark.ColoredMarks;
-import org.anchoranalysis.anchor.mpp.mark.Mark;
-import org.anchoranalysis.anchor.mpp.mark.MarkCollection;
-import org.anchoranalysis.anchor.mpp.proposer.ProposerContext;
 import org.anchoranalysis.core.color.ColorList;
 import org.anchoranalysis.core.color.RGBColor;
 import org.anchoranalysis.core.geometry.Point3d;
 import org.anchoranalysis.gui.frame.overlays.ProposedMarks;
 import org.anchoranalysis.gui.videostats.internalframe.ProposalOperation;
 import org.anchoranalysis.gui.videostats.internalframe.evaluator.ProposalOperationCreator;
+import org.anchoranalysis.mpp.bean.mark.MarkWithIdentifierFactory;
+import org.anchoranalysis.mpp.bean.proposer.MarkCollectionProposer;
+import org.anchoranalysis.mpp.mark.ColoredMarks;
+import org.anchoranalysis.mpp.mark.Mark;
+import org.anchoranalysis.mpp.mark.MarkCollection;
+import org.anchoranalysis.mpp.proposer.ProposerContext;
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor

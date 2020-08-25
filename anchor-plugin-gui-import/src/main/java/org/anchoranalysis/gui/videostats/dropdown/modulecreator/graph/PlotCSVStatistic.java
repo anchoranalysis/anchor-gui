@@ -28,7 +28,6 @@ package org.anchoranalysis.gui.videostats.dropdown.modulecreator.graph;
 
 import java.util.Iterator;
 import java.util.Optional;
-import org.anchoranalysis.anchor.plot.bean.Plot;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.index.GetOperationFailedException;
@@ -45,6 +44,7 @@ import org.anchoranalysis.gui.videostats.dropdown.VideoStatsModuleGlobalParams;
 import org.anchoranalysis.gui.videostats.module.DefaultModuleStateManager;
 import org.anchoranalysis.gui.videostats.module.VideoStatsModuleCreateException;
 import org.anchoranalysis.gui.videostats.modulecreator.VideoStatsModuleCreatorContext;
+import org.anchoranalysis.plot.bean.Plot;
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor

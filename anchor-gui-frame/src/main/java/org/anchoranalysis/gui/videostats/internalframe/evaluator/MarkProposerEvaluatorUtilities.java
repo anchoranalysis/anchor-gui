@@ -30,15 +30,15 @@ import java.awt.Color;
 import java.util.Optional;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
-import org.anchoranalysis.anchor.mpp.bean.proposer.MarkProposer;
-import org.anchoranalysis.anchor.mpp.mark.ColoredMarks;
-import org.anchoranalysis.anchor.mpp.mark.Mark;
-import org.anchoranalysis.anchor.mpp.mark.MarkWithPosition;
-import org.anchoranalysis.anchor.mpp.mark.conic.MarkConicFactory;
-import org.anchoranalysis.anchor.mpp.proposer.visualization.CreateProposalVisualization;
 import org.anchoranalysis.core.color.RGBColor;
 import org.anchoranalysis.core.geometry.Point3d;
 import org.anchoranalysis.core.random.RandomNumberGenerator;
+import org.anchoranalysis.mpp.bean.proposer.MarkProposer;
+import org.anchoranalysis.mpp.mark.ColoredMarks;
+import org.anchoranalysis.mpp.mark.Mark;
+import org.anchoranalysis.mpp.mark.MarkWithPosition;
+import org.anchoranalysis.mpp.mark.conic.MarkConicFactory;
+import org.anchoranalysis.mpp.proposer.visualization.CreateProposalVisualization;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class MarkProposerEvaluatorUtilities {

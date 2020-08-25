@@ -34,12 +34,7 @@ import java.util.ArrayList;
 import java.util.Optional;
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
-import org.anchoranalysis.anchor.mpp.bean.regionmap.RegionMapSingleton;
-import org.anchoranalysis.anchor.mpp.bean.regionmap.RegionMembershipWithFlags;
 import org.anchoranalysis.anchor.mpp.feature.energy.IndexableMarksWithEnergy;
-import org.anchoranalysis.anchor.mpp.mark.GlobalRegionIdentifiers;
-import org.anchoranalysis.anchor.mpp.mark.MarkCollection;
-import org.anchoranalysis.anchor.mpp.overlay.OverlayCollectionMarkFactory;
 import org.anchoranalysis.core.color.ColorIndex;
 import org.anchoranalysis.core.index.IntArray;
 import org.anchoranalysis.core.property.IPropertyValueReceivable;
@@ -54,6 +49,11 @@ import org.anchoranalysis.gui.marks.MarkCollectionUtilities;
 import org.anchoranalysis.gui.marks.StatePanel;
 import org.anchoranalysis.gui.marks.StatePanelUpdateException;
 import org.anchoranalysis.gui.propertyvalue.PropertyValueChangeListenerList;
+import org.anchoranalysis.mpp.bean.regionmap.RegionMapSingleton;
+import org.anchoranalysis.mpp.bean.regionmap.RegionMembershipWithFlags;
+import org.anchoranalysis.mpp.mark.GlobalRegionIdentifiers;
+import org.anchoranalysis.mpp.mark.MarkCollection;
+import org.anchoranalysis.mpp.overlay.OverlayCollectionMarkFactory;
 import org.anchoranalysis.overlay.collection.OverlayCollection;
 
 public class MarksEnergyTablePanel extends StatePanel<IndexableMarksWithEnergy> {

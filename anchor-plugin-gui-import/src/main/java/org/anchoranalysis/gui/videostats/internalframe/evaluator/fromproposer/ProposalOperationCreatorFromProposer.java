@@ -27,11 +27,11 @@
 package org.anchoranalysis.gui.videostats.internalframe.evaluator.fromproposer;
 
 import java.util.Set;
-import org.anchoranalysis.anchor.mpp.bean.init.MPPInitParams;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.name.provider.NamedProvider;
 import org.anchoranalysis.core.name.provider.NamedProviderGetException;
 import org.anchoranalysis.gui.videostats.internalframe.evaluator.ProposalOperationCreator;
+import org.anchoranalysis.mpp.bean.init.MPPInitParams;
 
 public abstract class ProposalOperationCreatorFromProposer<T> {
     private NamedProvider<T> set;

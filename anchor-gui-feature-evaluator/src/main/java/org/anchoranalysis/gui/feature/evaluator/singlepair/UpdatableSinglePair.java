@@ -26,8 +26,8 @@
 
 package org.anchoranalysis.gui.feature.evaluator.singlepair;
 
-import org.anchoranalysis.anchor.mpp.pair.IdentifiablePair;
 import org.anchoranalysis.feature.energy.EnergyStack;
+import org.anchoranalysis.mpp.pair.IdentifiablePair;
 import org.anchoranalysis.overlay.Overlay;
 
 public interface UpdatableSinglePair {

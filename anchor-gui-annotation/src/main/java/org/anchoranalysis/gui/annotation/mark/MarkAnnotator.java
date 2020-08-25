@@ -27,10 +27,6 @@
 package org.anchoranalysis.gui.annotation.mark;
 
 import java.util.Optional;
-import org.anchoranalysis.anchor.mpp.bean.init.MPPInitParams;
-import org.anchoranalysis.anchor.mpp.bean.points.fitter.PointsFitter;
-import org.anchoranalysis.anchor.mpp.bean.proposer.MarkProposer;
-import org.anchoranalysis.anchor.mpp.bean.regionmap.RegionMap;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.log.Logger;
@@ -43,6 +39,10 @@ import org.anchoranalysis.gui.videostats.internalframe.annotator.tool.ToolErrorR
 import org.anchoranalysis.gui.videostats.internalframe.evaluator.EvaluatorWithContext;
 import org.anchoranalysis.image.extent.Dimensions;
 import org.anchoranalysis.image.stack.Stack;
+import org.anchoranalysis.mpp.bean.init.MPPInitParams;
+import org.anchoranalysis.mpp.bean.points.fitter.PointsFitter;
+import org.anchoranalysis.mpp.bean.proposer.MarkProposer;
+import org.anchoranalysis.mpp.bean.regionmap.RegionMap;
 import org.anchoranalysis.plugin.annotation.bean.strategy.MarkProposerStrategy;
 
 public class MarkAnnotator {

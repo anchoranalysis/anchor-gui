@@ -1,6 +1,6 @@
 /*-
  * #%L
- * anchor-plugin-gui-live
+ * anchor-mpp-plot
  * %%
  * Copyright (C) 2010 - 2020 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann-La Roche
  * %%
@@ -24,29 +24,23 @@
  * #L%
  */
 
-package org.anchoranalysis.gui.videostats;
+package org.anchoranalysis.gui.plot;
 
-import java.awt.event.ActionEvent;
-import javax.swing.AbstractAction;
-import javax.swing.ImageIcon;
-import org.anchoranalysis.mpp.segment.bean.optscheme.termination.TriggerTerminationCondition;
+import java.awt.Color;
+import java.awt.Paint;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 
-public class TerminateAction extends AbstractAction {
+@RequiredArgsConstructor @AllArgsConstructor
+public class EnergyGraphItem {
 
-    private static final long serialVersionUID = -6983742220291326020L;
+    // START REQUIRED ITEMS
+    @Getter private final String objectID;
+    @Getter private final double energy;
+    // END REQUIRED ITEMS
+    
+    @Getter @Setter private Paint paint = Color.BLUE;
 
-    private TriggerTerminationCondition terminationCondition;
-
-    public TerminateAction(TriggerTerminationCondition terminationCondition, ImageIcon icon) {
-        super("", icon);
-        this.terminationCondition = terminationCondition;
-        // putValue( Action.SELECTED_KEY, true);
-
-        putValue(SHORT_DESCRIPTION, "Terminate Early");
-    }
-
-    @Override
-    public void actionPerformed(ActionEvent arg0) {
-        this.terminationCondition.trigger();
-    }
 }

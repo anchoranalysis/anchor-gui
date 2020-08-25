@@ -1,6 +1,6 @@
 /*-
  * #%L
- * anchor-gui-plot
+ * anchor-mpp-plot
  * %%
  * Copyright (C) 2010 - 2020 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann-La Roche
  * %%
@@ -24,72 +24,76 @@
  * #L%
  */
 
-package org.anchoranalysis.gui.plot.definition.line;
+package org.anchoranalysis.gui.plot.bean;
 
 import java.util.Iterator;
 import java.util.Optional;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import org.anchoranalysis.bean.annotation.BeanField;
 import org.anchoranalysis.core.error.CreateException;
-import org.anchoranalysis.core.index.IndexGetter;
+import org.anchoranalysis.core.error.InitException;
+import org.anchoranalysis.gui.plot.EnergyGraphItem;
 import org.anchoranalysis.plot.AxisLimits;
 import org.anchoranalysis.plot.PlotInstance;
 import org.anchoranalysis.plot.bean.Plot;
 import org.anchoranalysis.plot.bean.colorscheme.GraphColorScheme;
-import org.anchoranalysis.plot.index.LinePlot;
+import org.anchoranalysis.plot.index.BarChart;
 
-public class LinePlotNumberMarks
-        extends Plot<LinePlotNumberMarks.Item> {
+public class BarPlotEnergyBreakdown extends Plot<EnergyGraphItem> {
 
-    // START BEAN PROPERITES
-    @BeanField @Getter @Setter private GraphColorScheme graphColorScheme = new GraphColorScheme();
-    // END BEAN PROPERTIES
+    private BarChart<EnergyGraphItem> delegate;
 
-    // Item
-    @NoArgsConstructor
-    @AllArgsConstructor
-    public static class Item implements IndexGetter {
-        private int iter;
+    public BarPlotEnergyBreakdown() throws InitException {
 
-        @Getter private double marksSize;
-
-        @Override
-        public int getIndex() {
-            return iter;
-        }
+        delegate =
+                new BarChart<>(
+                        getTitle(),
+                        new String[] {"Energy Total"},
+                        (EnergyGraphItem item, int seriesNum) -> item.getObjectID(),
+                        (EnergyGraphItem item, int seriesNum) -> item.getEnergy(),
+                        (EnergyGraphItem item, int seriesNum) -> item.getPaint(),
+                        false);
+        delegate.getLabels().setX("Mark");
+        delegate.getLabels().setY("Energy Coefficient");
     }
 
     @Override
     public PlotInstance create(
-            Iterator<LinePlotNumberMarks.Item> items,
+            Iterator<EnergyGraphItem> itr,
             Optional<AxisLimits> domainLimits,
             Optional<AxisLimits> rangeLimits)
             throws CreateException {
-        LinePlot<LinePlotNumberMarks.Item> delegate =
-                new LinePlot<>(
-                        getTitle(),
-                        new String[] {"Marks Size"},
-                        (Item item, int yIndex) -> item.getMarksSize());
-        delegate.getLabels().setXY("Iteration", "Number of Marks");
-        delegate.setGraphColorScheme(graphColorScheme);
-        return delegate.create(items, domainLimits, rangeLimits);
+        return delegate.createWithRangeLimits(itr, rangeLimits);
     }
 
     @Override
     public String getTitle() {
-        return "Configuration Size";
+        return "Energy Breakdown";
     }
 
     @Override
-    public boolean isItemAccepted(Item item) {
+    public boolean isItemAccepted(EnergyGraphItem item) {
         return true;
     }
+
+    // START BEAN PROPERTIES
+    public boolean isShowDomainAxis() {
+        return delegate.isShowDomainAxis();
+    }
+
+    public void setShowDomainAxis(boolean showDomainAxis) {
+        delegate.setShowDomainAxis(showDomainAxis);
+    }
+    // END BEAN PROPERTIES
 
     @Override
     public String getShortTitle() {
         return getTitle();
+    }
+
+    public GraphColorScheme getGraphColorScheme() {
+        return delegate.getGraphColorScheme();
+    }
+
+    public void setGraphColorScheme(GraphColorScheme graphColorScheme) {
+        delegate.setGraphColorScheme(graphColorScheme);
     }
 }

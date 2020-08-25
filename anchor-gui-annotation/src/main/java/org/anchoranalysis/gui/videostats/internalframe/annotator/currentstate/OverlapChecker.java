@@ -26,16 +26,16 @@
 
 package org.anchoranalysis.gui.videostats.internalframe.annotator.currentstate;
 
-import org.anchoranalysis.anchor.mpp.bean.regionmap.RegionMap;
-import org.anchoranalysis.anchor.mpp.mark.Mark;
-import org.anchoranalysis.anchor.mpp.mark.MarkCollection;
-import org.anchoranalysis.anchor.mpp.mark.voxelized.memo.VoxelizedMarkMemo;
-import org.anchoranalysis.anchor.mpp.overlap.OverlapUtilities;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.feature.calculate.FeatureCalculationException;
 import org.anchoranalysis.feature.energy.EnergyStackWithoutParams;
 import org.anchoranalysis.gui.videostats.internalframe.annotator.tool.ToolErrorReporter;
 import org.anchoranalysis.image.extent.Dimensions;
+import org.anchoranalysis.mpp.bean.regionmap.RegionMap;
+import org.anchoranalysis.mpp.mark.Mark;
+import org.anchoranalysis.mpp.mark.MarkCollection;
+import org.anchoranalysis.mpp.mark.voxelized.memo.VoxelizedMarkMemo;
+import org.anchoranalysis.mpp.overlap.OverlapUtilities;
 
 // Always uses the first region
 class OverlapChecker {

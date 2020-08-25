@@ -26,7 +26,7 @@
 
 package org.anchoranalysis.gui.videostats.internalframe.annotator.currentstate;
 
-import org.anchoranalysis.anchor.mpp.mark.MarkCollection;
+import org.anchoranalysis.mpp.mark.MarkCollection;
 
 public interface QueryAcceptedRejected {
 

@@ -28,8 +28,6 @@ package org.anchoranalysis.gui.feature.evaluator.params;
 
 import java.util.Optional;
 import lombok.AllArgsConstructor;
-import org.anchoranalysis.anchor.mpp.bean.regionmap.RegionMembershipWithFlags;
-import org.anchoranalysis.anchor.mpp.mark.voxelized.memo.VoxelizedMarkMemo;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.feature.energy.EnergyStack;
 import org.anchoranalysis.feature.input.FeatureInput;
@@ -37,6 +35,8 @@ import org.anchoranalysis.image.binary.values.BinaryValuesByte;
 import org.anchoranalysis.image.feature.object.input.FeatureInputObjectCollection;
 import org.anchoranalysis.image.object.ObjectCollectionFactory;
 import org.anchoranalysis.image.object.ObjectMask;
+import org.anchoranalysis.mpp.bean.regionmap.RegionMembershipWithFlags;
+import org.anchoranalysis.mpp.mark.voxelized.memo.VoxelizedMarkMemo;
 
 @AllArgsConstructor
 public class ObjectCollectionUnaryFactory extends UnaryFactory {

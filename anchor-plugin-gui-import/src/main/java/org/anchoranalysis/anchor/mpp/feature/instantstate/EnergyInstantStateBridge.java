@@ -26,12 +26,12 @@
 
 package org.anchoranalysis.anchor.mpp.feature.instantstate;
 
-import org.anchoranalysis.anchor.mpp.bean.regionmap.RegionMembershipWithFlags;
 import org.anchoranalysis.anchor.mpp.feature.energy.IndexableMarksWithEnergy;
-import org.anchoranalysis.anchor.mpp.mark.MarkCollection;
-import org.anchoranalysis.anchor.mpp.overlay.OverlayCollectionMarkFactory;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.functional.function.CheckedFunction;
+import org.anchoranalysis.mpp.bean.regionmap.RegionMembershipWithFlags;
+import org.anchoranalysis.mpp.mark.MarkCollection;
+import org.anchoranalysis.mpp.overlay.OverlayCollectionMarkFactory;
 import org.anchoranalysis.overlay.IndexableOverlays;
 import org.anchoranalysis.overlay.collection.OverlayCollection;
 import lombok.AllArgsConstructor;

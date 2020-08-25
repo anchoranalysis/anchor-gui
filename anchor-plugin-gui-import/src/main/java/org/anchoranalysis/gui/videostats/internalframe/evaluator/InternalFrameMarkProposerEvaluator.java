@@ -31,9 +31,6 @@ import java.awt.GridLayout;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JPanel;
-import org.anchoranalysis.anchor.mpp.bean.init.MPPInitParams;
-import org.anchoranalysis.anchor.mpp.mark.MarkCollection;
-import org.anchoranalysis.anchor.mpp.overlay.OverlayCollectionMarkFactory;
 import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.error.reporter.ErrorReporter;
 import org.anchoranalysis.core.name.provider.NamedProvider;
@@ -60,7 +57,10 @@ import org.anchoranalysis.gui.videostats.internalframe.evaluator.fromproposer.Fr
 import org.anchoranalysis.gui.videostats.internalframe.evaluator.fromproposer.ProposalOperationCreatorFromProposer;
 import org.anchoranalysis.gui.videostats.module.DefaultModuleState;
 import org.anchoranalysis.io.output.bean.OutputWriteSettings;
+import org.anchoranalysis.mpp.bean.init.MPPInitParams;
 import org.anchoranalysis.mpp.io.marks.MarksWithDisplayStack;
+import org.anchoranalysis.mpp.mark.MarkCollection;
+import org.anchoranalysis.mpp.overlay.OverlayCollectionMarkFactory;
 
 public class InternalFrameMarkProposerEvaluator {
 

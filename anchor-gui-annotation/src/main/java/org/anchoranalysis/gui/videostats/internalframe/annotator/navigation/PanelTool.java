@@ -35,7 +35,6 @@ import javax.swing.JMenu;
 import javax.swing.JPanel;
 import javax.swing.JToggleButton;
 import javax.swing.event.EventListenerList;
-import org.anchoranalysis.anchor.mpp.bean.points.fitter.PointsFitter;
 import org.anchoranalysis.gui.videostats.internalframe.annotator.currentstate.CurrentStateDisplayer;
 import org.anchoranalysis.gui.videostats.internalframe.annotator.tool.AnnotationTool;
 import org.anchoranalysis.gui.videostats.internalframe.annotator.tool.DeleteTool;
@@ -43,6 +42,7 @@ import org.anchoranalysis.gui.videostats.internalframe.annotator.tool.GuessTool;
 import org.anchoranalysis.gui.videostats.internalframe.annotator.tool.SelectPointsTool;
 import org.anchoranalysis.gui.videostats.internalframe.annotator.tool.ToolErrorReporter;
 import org.anchoranalysis.gui.videostats.internalframe.evaluator.EvaluatorWithContext;
+import org.anchoranalysis.mpp.bean.points.fitter.PointsFitter;
 
 // A panel for selecting tools
 public class PanelTool extends PanelWithLabel

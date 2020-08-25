@@ -34,7 +34,7 @@ import org.anchoranalysis.gui.finder.imgstackcollection.FinderStacks;
 import org.anchoranalysis.gui.videostats.dropdown.VideoStatsModuleGlobalParams;
 import org.anchoranalysis.io.manifest.finder.FinderSerializedObject;
 import org.anchoranalysis.io.output.bound.BoundOutputManagerRouteErrors;
-import org.anchoranalysis.mpp.sgmn.bean.kernel.proposer.KernelProposer;
+import org.anchoranalysis.mpp.segment.bean.kernel.proposer.KernelProposer;
 
 @Value
 @AllArgsConstructor

@@ -29,7 +29,6 @@ package org.anchoranalysis.gui.videostats.internalframe;
 import java.util.ArrayList;
 import java.util.List;
 import org.anchoranalysis.anchor.mpp.feature.energy.IndexableMarksWithEnergy;
-import org.anchoranalysis.anchor.mpp.mark.MarkCollection;
 import org.anchoranalysis.core.color.ColorIndex;
 import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.idgetter.IDGetterIter;
@@ -46,6 +45,7 @@ import org.anchoranalysis.gui.videostats.IModuleCreatorDefaultState;
 import org.anchoranalysis.gui.videostats.dropdown.VideoStatsModuleGlobalParams;
 import org.anchoranalysis.gui.videostats.module.DefaultModuleState;
 import org.anchoranalysis.io.manifest.deserializer.folder.LoadContainer;
+import org.anchoranalysis.mpp.mark.MarkCollection;
 import org.anchoranalysis.overlay.IndexableOverlays;
 import org.anchoranalysis.overlay.id.IDGetterOverlayID;
 

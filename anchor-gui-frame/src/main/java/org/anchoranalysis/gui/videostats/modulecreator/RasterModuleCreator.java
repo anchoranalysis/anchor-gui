@@ -27,7 +27,6 @@
 package org.anchoranalysis.gui.videostats.modulecreator;
 
 import java.util.Optional;
-import org.anchoranalysis.anchor.mpp.mark.MarkCollection;
 import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.gui.frame.singleraster.InternalFrameSingleRaster;
@@ -39,6 +38,7 @@ import org.anchoranalysis.gui.videostats.module.VideoStatsModuleCreateException;
 import org.anchoranalysis.gui.videostats.operation.combine.OverlayCollectionSupplier;
 import org.anchoranalysis.gui.videostats.operation.combine.VideoStatsOperationCombine;
 import org.anchoranalysis.image.object.ObjectCollection;
+import org.anchoranalysis.mpp.mark.MarkCollection;
 
 public class RasterModuleCreator extends VideoStatsModuleCreator {
 

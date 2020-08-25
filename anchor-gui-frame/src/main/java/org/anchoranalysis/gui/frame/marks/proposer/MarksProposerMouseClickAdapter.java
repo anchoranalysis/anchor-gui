@@ -32,12 +32,6 @@ import java.awt.event.MouseEvent;
 import java.util.Optional;
 import javax.swing.event.EventListenerList;
 import lombok.RequiredArgsConstructor;
-import org.anchoranalysis.anchor.mpp.mark.MarkCollection;
-import org.anchoranalysis.anchor.mpp.overlay.OverlayCollectionMarkFactory;
-import org.anchoranalysis.anchor.mpp.proposer.ProposalAbnormalFailureException;
-import org.anchoranalysis.anchor.mpp.proposer.ProposerContext;
-import org.anchoranalysis.anchor.mpp.proposer.error.ErrorNodeNull;
-import org.anchoranalysis.anchor.mpp.proposer.error.ProposerFailureDescription;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.error.reporter.ErrorReporter;
 import org.anchoranalysis.core.geometry.Point3d;
@@ -49,6 +43,12 @@ import org.anchoranalysis.gui.videostats.internalframe.ProposalOperation;
 import org.anchoranalysis.gui.videostats.internalframe.evaluator.EvaluatorWithContext;
 import org.anchoranalysis.gui.videostats.internalframe.evaluator.EvaluatorWithContextGetter;
 import org.anchoranalysis.gui.videostats.internalframe.evaluator.ProposalOperationCreator;
+import org.anchoranalysis.mpp.mark.MarkCollection;
+import org.anchoranalysis.mpp.overlay.OverlayCollectionMarkFactory;
+import org.anchoranalysis.mpp.proposer.ProposalAbnormalFailureException;
+import org.anchoranalysis.mpp.proposer.ProposerContext;
+import org.anchoranalysis.mpp.proposer.error.ErrorNodeNull;
+import org.anchoranalysis.mpp.proposer.error.ProposerFailureDescription;
 
 @RequiredArgsConstructor
 public class MarksProposerMouseClickAdapter extends MouseAdapter {

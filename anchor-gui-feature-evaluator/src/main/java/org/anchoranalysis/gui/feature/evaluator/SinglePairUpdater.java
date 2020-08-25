@@ -26,12 +26,12 @@
 
 package org.anchoranalysis.gui.feature.evaluator;
 
-import org.anchoranalysis.anchor.mpp.pair.IdentifiablePair;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.feature.energy.EnergyStack;
 import org.anchoranalysis.gui.feature.evaluator.singlepair.UpdatableSinglePair;
 import org.anchoranalysis.gui.feature.evaluator.singlepair.UpdatableSinglePairList;
 import org.anchoranalysis.gui.image.OverlaysWithEnergyStack;
+import org.anchoranalysis.mpp.pair.IdentifiablePair;
 import org.anchoranalysis.overlay.Overlay;
 import org.anchoranalysis.overlay.collection.OverlayCollection;
 

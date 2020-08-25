@@ -27,8 +27,6 @@
 package org.anchoranalysis.gui.interactivebrowser.input;
 
 import lombok.AllArgsConstructor;
-import org.anchoranalysis.anchor.mpp.bean.regionmap.RegionMap;
-import org.anchoranalysis.anchor.mpp.bean.regionmap.RegionMapSingleton;
 import org.anchoranalysis.anchor.mpp.feature.addcriteria.BoundingBoxIntersection;
 import org.anchoranalysis.anchor.mpp.feature.bean.energy.scheme.EnergySchemeCreator;
 import org.anchoranalysis.anchor.mpp.feature.energy.scheme.EnergyScheme;
@@ -50,6 +48,8 @@ import org.anchoranalysis.gui.feature.evaluator.params.ParamsFactoryForFeature;
 import org.anchoranalysis.gui.feature.evaluator.treetable.ExtractFromEnergySchemeSet;
 import org.anchoranalysis.gui.feature.evaluator.treetable.FeatureListSrc;
 import org.anchoranalysis.gui.feature.evaluator.treetable.KeyValueParamsAugmenter;
+import org.anchoranalysis.mpp.bean.regionmap.RegionMap;
+import org.anchoranalysis.mpp.bean.regionmap.RegionMapSingleton;
 
 @AllArgsConstructor
 public class FeatureListSrcBuilder {

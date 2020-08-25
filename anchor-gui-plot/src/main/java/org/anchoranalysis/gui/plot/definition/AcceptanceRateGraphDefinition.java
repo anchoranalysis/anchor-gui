@@ -30,9 +30,9 @@ import com.sun.tools.visualvm.charts.SimpleXYChartDescriptor;
 import com.sun.tools.visualvm.charts.SimpleXYChartSupport;
 import lombok.RequiredArgsConstructor;
 import org.anchoranalysis.anchor.mpp.feature.energy.marks.MarksWithTotalEnergy;
-import org.anchoranalysis.mpp.sgmn.kernel.proposer.WeightedKernel;
-import org.anchoranalysis.mpp.sgmn.kernel.proposer.WeightedKernelList;
-import org.anchoranalysis.mpp.sgmn.optscheme.feedback.aggregate.Aggregator;
+import org.anchoranalysis.mpp.segment.kernel.proposer.WeightedKernel;
+import org.anchoranalysis.mpp.segment.kernel.proposer.WeightedKernelList;
+import org.anchoranalysis.mpp.segment.optscheme.feedback.aggregate.Aggregator;
 
 @RequiredArgsConstructor
 public class AcceptanceRateGraphDefinition extends GraphDefinition {

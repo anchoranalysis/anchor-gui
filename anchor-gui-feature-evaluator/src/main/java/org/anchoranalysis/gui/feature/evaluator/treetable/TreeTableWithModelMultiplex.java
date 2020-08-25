@@ -36,11 +36,11 @@ import javax.swing.JPanel;
 import org.anchoranalysis.anchor.mpp.feature.input.memo.FeatureInputAllMemo;
 import org.anchoranalysis.anchor.mpp.feature.input.memo.FeatureInputPairMemo;
 import org.anchoranalysis.anchor.mpp.feature.input.memo.FeatureInputSingleMemo;
-import org.anchoranalysis.anchor.mpp.pair.IdentifiablePair;
 import org.anchoranalysis.feature.energy.EnergyStack;
 import org.anchoranalysis.feature.input.FeatureInputEnergy;
 import org.anchoranalysis.feature.shared.SharedFeatureMulti;
 import org.anchoranalysis.gui.feature.FeatureListWithRegionMap;
+import org.anchoranalysis.mpp.pair.IdentifiablePair;
 import org.anchoranalysis.overlay.Overlay;
 import org.netbeans.swing.outline.Outline;
 

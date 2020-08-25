@@ -27,13 +27,13 @@
 package org.anchoranalysis.gui.plot.creator;
 
 import org.anchoranalysis.anchor.mpp.feature.energy.IndexableMarksWithEnergy;
-import org.anchoranalysis.anchor.plot.bean.Plot;
-import org.anchoranalysis.anchor.plot.bean.colorscheme.GraphColorScheme;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.functional.function.CheckedFunction;
 import org.anchoranalysis.gui.io.loader.manifest.finder.csvstatistic.CSVStatistic;
 import org.anchoranalysis.gui.plot.definition.line.LinePlotNumberMarks;
 import org.anchoranalysis.gui.plot.definition.line.LinePlotNumberMarks.Item;
+import org.anchoranalysis.plot.bean.Plot;
+import org.anchoranalysis.plot.bean.colorscheme.GraphColorScheme;
 
 public class BridgedPlotNumberMarksCreator
         extends BridgedPlotFromDualFinderCreator<LinePlotNumberMarks.Item> {

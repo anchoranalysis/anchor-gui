@@ -28,8 +28,6 @@ package org.anchoranalysis.gui.plot.creator;
 
 import java.util.Iterator;
 import org.anchoranalysis.anchor.mpp.feature.energy.IndexableMarksWithEnergy;
-import org.anchoranalysis.anchor.plot.bean.Plot;
-import org.anchoranalysis.anchor.plot.bean.colorscheme.GraphColorScheme;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.index.container.BoundedIndexContainer;
 import org.anchoranalysis.gui.io.loader.manifest.finder.FinderCSVStats;
@@ -42,6 +40,8 @@ import org.anchoranalysis.gui.videostats.dropdown.AddVideoStatsModule;
 import org.anchoranalysis.gui.videostats.dropdown.ModuleAddUtilities;
 import org.anchoranalysis.gui.videostats.module.VideoStatsModuleCreateException;
 import org.anchoranalysis.gui.videostats.modulecreator.VideoStatsModuleCreator;
+import org.anchoranalysis.plot.bean.Plot;
+import org.anchoranalysis.plot.bean.colorscheme.GraphColorScheme;
 
 public interface GraphFromDualFinderCreator<T> {
 

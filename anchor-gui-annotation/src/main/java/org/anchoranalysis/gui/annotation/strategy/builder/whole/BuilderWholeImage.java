@@ -31,9 +31,9 @@ import static org.anchoranalysis.gui.videostats.internalframe.annotator.FrameAct
 import java.util.Optional;
 import javax.swing.Action;
 import javax.swing.JInternalFrame;
+import org.anchoranalysis.annotation.image.ImageLabelAnnotation;
 import org.anchoranalysis.annotation.io.input.AnnotationWithStrategy;
 import org.anchoranalysis.annotation.io.wholeimage.WholeImageLabelAnnotationWriter;
-import org.anchoranalysis.annotation.wholeimage.WholeImageLabelAnnotation;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.log.Logger;
@@ -135,7 +135,7 @@ public class BuilderWholeImage
 
     private Action saveAnnotationClose(
             AnnotationLabel label,
-            AnnotationWriterGUI<WholeImageLabelAnnotation> writer,
+            AnnotationWriterGUI<ImageLabelAnnotation> writer,
             JInternalFrame parentComponent) {
         return actionCloseFrame(
                 parentComponent,
@@ -145,11 +145,11 @@ public class BuilderWholeImage
                                 createAnnotation(label), annotationPath(), parentComponent));
     }
 
-    private static WholeImageLabelAnnotation createAnnotation(AnnotationLabel label) {
-        return new WholeImageLabelAnnotation(label.getUniqueLabel());
+    private static ImageLabelAnnotation createAnnotation(AnnotationLabel label) {
+        return new ImageLabelAnnotation(label.getUniqueLabel());
     }
 
-    private static AnnotationWriterGUI<WholeImageLabelAnnotation> createWriter(
+    private static AnnotationWriterGUI<ImageLabelAnnotation> createWriter(
             AnnotationRefresher annotationRefresher, Optional<SaveMonitor> saveMonitor) {
         return new AnnotationWriterGUI<>(
                 new WholeImageLabelAnnotationWriter(), annotationRefresher, saveMonitor);

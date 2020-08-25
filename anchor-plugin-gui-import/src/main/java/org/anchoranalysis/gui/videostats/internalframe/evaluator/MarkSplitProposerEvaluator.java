@@ -28,22 +28,22 @@ package org.anchoranalysis.gui.videostats.internalframe.evaluator;
 
 import java.awt.Color;
 import java.util.Optional;
-import org.anchoranalysis.anchor.mpp.bean.mark.MarkWithIdentifierFactory;
-import org.anchoranalysis.anchor.mpp.bean.proposer.MarkSplitProposer;
-import org.anchoranalysis.anchor.mpp.mark.ColoredMarks;
-import org.anchoranalysis.anchor.mpp.mark.GlobalRegionIdentifiers;
-import org.anchoranalysis.anchor.mpp.mark.Mark;
-import org.anchoranalysis.anchor.mpp.mark.MarkCollection;
-import org.anchoranalysis.anchor.mpp.mark.voxelized.memo.VoxelizedMarkMemo;
-import org.anchoranalysis.anchor.mpp.pair.PairPxlMarkMemo;
-import org.anchoranalysis.anchor.mpp.proposer.ProposalAbnormalFailureException;
-import org.anchoranalysis.anchor.mpp.proposer.ProposerContext;
-import org.anchoranalysis.anchor.mpp.proposer.error.ErrorNode;
 import org.anchoranalysis.core.color.RGBColor;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.geometry.Point3d;
 import org.anchoranalysis.gui.frame.overlays.ProposedMarks;
 import org.anchoranalysis.gui.videostats.internalframe.ProposalOperation;
+import org.anchoranalysis.mpp.bean.mark.MarkWithIdentifierFactory;
+import org.anchoranalysis.mpp.bean.proposer.MarkSplitProposer;
+import org.anchoranalysis.mpp.mark.ColoredMarks;
+import org.anchoranalysis.mpp.mark.GlobalRegionIdentifiers;
+import org.anchoranalysis.mpp.mark.Mark;
+import org.anchoranalysis.mpp.mark.MarkCollection;
+import org.anchoranalysis.mpp.mark.voxelized.memo.VoxelizedMarkMemo;
+import org.anchoranalysis.mpp.pair.PairPxlMarkMemo;
+import org.anchoranalysis.mpp.proposer.ProposalAbnormalFailureException;
+import org.anchoranalysis.mpp.proposer.ProposerContext;
+import org.anchoranalysis.mpp.proposer.error.ErrorNode;
 
 public class MarkSplitProposerEvaluator implements ProposalOperationCreator {
 

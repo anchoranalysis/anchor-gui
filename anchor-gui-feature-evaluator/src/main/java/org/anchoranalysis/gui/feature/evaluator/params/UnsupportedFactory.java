@@ -27,10 +27,10 @@
 package org.anchoranalysis.gui.feature.evaluator.params;
 
 import org.anchoranalysis.anchor.mpp.feature.mark.MemoCollection;
-import org.anchoranalysis.anchor.mpp.mark.voxelized.memo.VoxelizedMarkMemo;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.feature.energy.EnergyStack;
 import org.anchoranalysis.feature.input.FeatureInput;
+import org.anchoranalysis.mpp.mark.voxelized.memo.VoxelizedMarkMemo;
 
 public class UnsupportedFactory implements FeatureInputFactory {
 

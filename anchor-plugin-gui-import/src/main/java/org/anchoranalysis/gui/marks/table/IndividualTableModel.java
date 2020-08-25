@@ -29,11 +29,11 @@ package org.anchoranalysis.gui.marks.table;
 import javax.swing.table.AbstractTableModel;
 import org.anchoranalysis.anchor.mpp.feature.energy.IndexableMarksWithEnergy;
 import org.anchoranalysis.anchor.mpp.feature.energy.saved.EnergySavedInd;
-import org.anchoranalysis.anchor.mpp.mark.Mark;
-import org.anchoranalysis.anchor.mpp.mark.MarkCollection;
 import org.anchoranalysis.core.color.ColorIndex;
 import org.anchoranalysis.core.color.RGBColor;
 import org.anchoranalysis.core.error.friendly.AnchorImpossibleSituationException;
+import org.anchoranalysis.mpp.mark.Mark;
+import org.anchoranalysis.mpp.mark.MarkCollection;
 
 public class IndividualTableModel extends AbstractTableModel implements IUpdateTableData {
 

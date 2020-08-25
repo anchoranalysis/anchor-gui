@@ -33,10 +33,10 @@ import javax.swing.JTable;
 import javax.swing.SwingConstants;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
-import org.anchoranalysis.anchor.mpp.mark.Mark;
 import org.anchoranalysis.core.color.ColorIndex;
 import org.anchoranalysis.core.index.IndicesSelection;
 import org.anchoranalysis.gui.videostats.ISelectIndicesSendable;
+import org.anchoranalysis.mpp.mark.Mark;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 

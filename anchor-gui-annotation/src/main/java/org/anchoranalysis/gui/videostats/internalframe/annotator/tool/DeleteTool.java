@@ -28,10 +28,6 @@ package org.anchoranalysis.gui.videostats.internalframe.annotator.tool;
 
 import java.util.List;
 import java.util.Optional;
-import org.anchoranalysis.anchor.mpp.bean.regionmap.RegionMap;
-import org.anchoranalysis.anchor.mpp.bean.regionmap.RegionMapSingleton;
-import org.anchoranalysis.anchor.mpp.mark.GlobalRegionIdentifiers;
-import org.anchoranalysis.anchor.mpp.mark.MarkCollection;
 import org.anchoranalysis.core.geometry.Point3d;
 import org.anchoranalysis.core.geometry.Point3i;
 import org.anchoranalysis.gui.frame.overlays.ProposedMarks;
@@ -40,6 +36,10 @@ import org.anchoranalysis.gui.videostats.internalframe.annotator.currentstate.IQ
 import org.anchoranalysis.gui.videostats.internalframe.annotator.currentstate.IReplaceRemove;
 import org.anchoranalysis.gui.videostats.internalframe.annotator.navigation.ISwitchToGuessOrSelectPoints;
 import org.anchoranalysis.gui.videostats.internalframe.evaluator.EvaluatorWithContext;
+import org.anchoranalysis.mpp.bean.regionmap.RegionMap;
+import org.anchoranalysis.mpp.bean.regionmap.RegionMapSingleton;
+import org.anchoranalysis.mpp.mark.GlobalRegionIdentifiers;
+import org.anchoranalysis.mpp.mark.MarkCollection;
 
 // Membership is always based upon SUBMARK_CORE
 public class DeleteTool extends AnnotationTool {

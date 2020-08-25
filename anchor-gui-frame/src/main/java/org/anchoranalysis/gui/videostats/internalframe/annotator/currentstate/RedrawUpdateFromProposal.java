@@ -26,11 +26,11 @@
 
 package org.anchoranalysis.gui.videostats.internalframe.annotator.currentstate;
 
-import org.anchoranalysis.anchor.mpp.mark.MarkCollection;
-import org.anchoranalysis.anchor.mpp.overlay.OverlayCollectionMarkFactory;
 import org.anchoranalysis.gui.frame.display.OverlayedDisplayStackUpdate;
 import org.anchoranalysis.gui.frame.overlays.ProposedMarks;
 import org.anchoranalysis.gui.frame.overlays.RedrawUpdate;
+import org.anchoranalysis.mpp.mark.MarkCollection;
+import org.anchoranalysis.mpp.overlay.OverlayCollectionMarkFactory;
 import org.anchoranalysis.overlay.collection.ColoredOverlayCollection;
 import org.anchoranalysis.overlay.collection.OverlayCollection;
 

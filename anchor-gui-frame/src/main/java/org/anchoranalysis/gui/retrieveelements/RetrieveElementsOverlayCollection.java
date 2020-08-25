@@ -28,14 +28,14 @@ package org.anchoranalysis.gui.retrieveelements;
 
 import java.util.Collection;
 import java.util.Optional;
-import org.anchoranalysis.anchor.mpp.mark.Mark;
-import org.anchoranalysis.anchor.mpp.mark.MarkCollection;
-import org.anchoranalysis.anchor.mpp.overlay.OverlayCollectionMarkFactory;
 import org.anchoranalysis.image.io.objects.ObjectCollectionWriter;
 import org.anchoranalysis.image.object.ObjectCollection;
 import org.anchoranalysis.io.generator.collection.SubfolderGenerator;
 import org.anchoranalysis.io.generator.sequence.CollectionGenerator;
 import org.anchoranalysis.io.generator.serialized.ObjectOutputStreamGenerator;
+import org.anchoranalysis.mpp.mark.Mark;
+import org.anchoranalysis.mpp.mark.MarkCollection;
+import org.anchoranalysis.mpp.overlay.OverlayCollectionMarkFactory;
 import org.anchoranalysis.overlay.collection.OverlayCollection;
 import org.anchoranalysis.overlay.collection.OverlayCollectionObjectFactory;
 

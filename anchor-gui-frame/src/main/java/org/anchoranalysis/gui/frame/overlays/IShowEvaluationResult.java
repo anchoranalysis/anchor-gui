@@ -26,7 +26,7 @@
 
 package org.anchoranalysis.gui.frame.overlays;
 
-import org.anchoranalysis.anchor.mpp.mark.MarkCollection;
+import org.anchoranalysis.mpp.mark.MarkCollection;
 
 @FunctionalInterface
 public interface IShowEvaluationResult {

@@ -30,7 +30,6 @@ import java.io.IOException;
 import lombok.AllArgsConstructor;
 import org.anchoranalysis.anchor.mpp.feature.energy.IndexableMarksWithEnergy;
 import org.anchoranalysis.anchor.mpp.feature.energy.marks.MarksWithEnergyBreakdown;
-import org.anchoranalysis.anchor.mpp.mark.MarkCollection;
 import org.anchoranalysis.core.cache.CachedSupplier;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.index.container.SingleContainer;
@@ -51,7 +50,8 @@ import org.anchoranalysis.gui.videostats.operation.combine.OverlayCollectionSupp
 import org.anchoranalysis.image.object.ObjectCollection;
 import org.anchoranalysis.io.manifest.deserializer.folder.LoadContainer;
 import org.anchoranalysis.io.manifest.finder.FinderSerializedObject;
-import org.anchoranalysis.mpp.sgmn.define.OutputterDirectories;
+import org.anchoranalysis.mpp.mark.MarkCollection;
+import org.anchoranalysis.mpp.segment.define.OutputterDirectories;
 import org.anchoranalysis.plugin.io.manifest.CoupledManifests;
 
 @AllArgsConstructor

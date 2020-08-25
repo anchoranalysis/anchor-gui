@@ -26,9 +26,9 @@
 
 package org.anchoranalysis.gui.marks;
 
-import org.anchoranalysis.anchor.mpp.mark.Mark;
-import org.anchoranalysis.anchor.mpp.mark.MarkCollection;
 import org.anchoranalysis.core.index.IndicesSelection;
+import org.anchoranalysis.mpp.mark.Mark;
+import org.anchoranalysis.mpp.mark.MarkCollection;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 

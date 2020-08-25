@@ -33,14 +33,14 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.anchoranalysis.anchor.plot.AxisLimits;
-import org.anchoranalysis.anchor.plot.PlotInstance;
-import org.anchoranalysis.anchor.plot.bean.Plot;
-import org.anchoranalysis.anchor.plot.bean.colorscheme.GraphColorScheme;
-import org.anchoranalysis.anchor.plot.index.LinePlot;
 import org.anchoranalysis.bean.annotation.BeanField;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.index.IndexGetter;
+import org.anchoranalysis.plot.AxisLimits;
+import org.anchoranalysis.plot.PlotInstance;
+import org.anchoranalysis.plot.bean.Plot;
+import org.anchoranalysis.plot.bean.colorscheme.GraphColorScheme;
+import org.anchoranalysis.plot.index.LinePlot;
 
 public class LinePlotIterationVsEnergy
         extends Plot<LinePlotIterationVsEnergy.Item> {

@@ -27,10 +27,10 @@
 package org.anchoranalysis.gui.videostats.internalframe.annotator.currentstate;
 
 import java.util.List;
-import org.anchoranalysis.anchor.mpp.mark.ColoredMarks;
-import org.anchoranalysis.anchor.mpp.mark.MarkCollection;
 import org.anchoranalysis.core.geometry.Point3i;
 import org.anchoranalysis.gui.videostats.internalframe.annotator.undoredo.IRecordSnapshot;
+import org.anchoranalysis.mpp.mark.ColoredMarks;
+import org.anchoranalysis.mpp.mark.MarkCollection;
 
 class SnapshotReplaceRemove implements IReplaceRemove {
 

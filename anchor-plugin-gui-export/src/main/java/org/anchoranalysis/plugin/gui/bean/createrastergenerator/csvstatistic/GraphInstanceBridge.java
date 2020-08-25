@@ -28,15 +28,15 @@ package org.anchoranalysis.plugin.gui.bean.createrastergenerator.csvstatistic;
 
 import java.util.Iterator;
 import java.util.Optional;
-import org.anchoranalysis.anchor.plot.AxisLimits;
-import org.anchoranalysis.anchor.plot.PlotInstance;
-import org.anchoranalysis.anchor.plot.bean.Plot;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.functional.function.CheckedFunction;
 import org.anchoranalysis.core.index.container.BoundedIndexContainer;
 import org.anchoranalysis.core.index.container.bridge.BoundedIndexContainerBridgeWithoutIndex;
 import org.anchoranalysis.gui.io.loader.manifest.finder.csvstatistic.CSVStatistic;
 import org.anchoranalysis.gui.plot.BoundedIndexContainerIterator;
+import org.anchoranalysis.plot.AxisLimits;
+import org.anchoranalysis.plot.PlotInstance;
+import org.anchoranalysis.plot.bean.Plot;
 import org.anchoranalysis.plugin.gui.bean.exporttask.MappedFrom;
 
 class GraphInstanceBridge<T>

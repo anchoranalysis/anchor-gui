@@ -28,13 +28,13 @@ package org.anchoranalysis.plugin.gui.bean.createrastergenerator;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.anchoranalysis.anchor.plot.PlotInstance;
-import org.anchoranalysis.anchor.plot.bean.Plot;
 import org.anchoranalysis.bean.annotation.BeanField;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.gui.bean.exporttask.ExportTaskParams;
 import org.anchoranalysis.image.stack.Stack;
 import org.anchoranalysis.io.generator.IterableObjectGenerator;
+import org.anchoranalysis.plot.PlotInstance;
+import org.anchoranalysis.plot.bean.Plot;
 import org.anchoranalysis.plugin.gui.bean.exporttask.MappedFrom;
 
 public abstract class PlotGeneratorBase<T, S> extends GeneratorFactory<S> {

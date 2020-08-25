@@ -32,7 +32,6 @@ import java.util.Optional;
 import javax.swing.JComboBox;
 import javax.swing.JPanel;
 import javax.swing.event.EventListenerList;
-import org.anchoranalysis.anchor.mpp.bean.init.MPPInitParams;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.error.friendly.AnchorImpossibleSituationException;
@@ -40,6 +39,7 @@ import org.anchoranalysis.core.error.reporter.ErrorReporter;
 import org.anchoranalysis.gui.interactivebrowser.MarkEvaluatorResolved;
 import org.anchoranalysis.gui.interactivebrowser.MarkEvaluatorSetForImage;
 import org.anchoranalysis.gui.videostats.internalframe.evaluator.fromproposer.ProposalOperationCreatorFromProposer;
+import org.anchoranalysis.mpp.bean.init.MPPInitParams;
 import lombok.Getter;
 
 public class EvaluatorChooser {

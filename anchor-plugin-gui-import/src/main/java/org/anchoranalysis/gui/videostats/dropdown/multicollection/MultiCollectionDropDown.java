@@ -27,7 +27,6 @@
 package org.anchoranalysis.gui.videostats.dropdown.multicollection;
 
 import java.util.Optional;
-import org.anchoranalysis.anchor.mpp.mark.MarkCollection;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.error.OperationFailedException;
@@ -51,6 +50,7 @@ import org.anchoranalysis.gui.videostats.dropdown.common.EnergyBackground;
 import org.anchoranalysis.image.object.ObjectCollection;
 import org.anchoranalysis.image.stack.wrap.WrapTimeSequenceAsStack;
 import org.anchoranalysis.io.output.bound.BoundOutputManagerRouteErrors;
+import org.anchoranalysis.mpp.mark.MarkCollection;
 
 public class MultiCollectionDropDown {
 

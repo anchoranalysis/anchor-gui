@@ -28,7 +28,6 @@ package org.anchoranalysis.gui.annotation.opener;
 
 import java.nio.file.Path;
 import java.util.Optional;
-import org.anchoranalysis.anchor.mpp.mark.MarkCollection;
 import org.anchoranalysis.annotation.io.mark.MarkAnnotationReader;
 import org.anchoranalysis.annotation.mark.MarkAnnotation;
 import org.anchoranalysis.annotation.mark.RejectionReason;
@@ -39,6 +38,7 @@ import org.anchoranalysis.gui.videostats.internalframe.annotator.currentstate.Pa
 import org.anchoranalysis.gui.videostats.module.VideoStatsModuleCreateException;
 import org.anchoranalysis.io.deserializer.DeserializationFailedException;
 import org.anchoranalysis.io.error.AnchorIOException;
+import org.anchoranalysis.mpp.mark.MarkCollection;
 
 public class OpenAnnotationMPP implements OpenAnnotation {
 

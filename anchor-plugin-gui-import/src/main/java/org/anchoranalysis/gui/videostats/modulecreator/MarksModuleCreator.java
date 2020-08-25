@@ -27,14 +27,14 @@
 package org.anchoranalysis.gui.videostats.modulecreator;
 
 import java.util.Optional;
-import org.anchoranalysis.anchor.mpp.mark.MarkCollection;
-import org.anchoranalysis.anchor.mpp.overlay.OverlayCollectionMarkFactory;
 import org.anchoranalysis.gui.marks.MarkDisplaySettings;
 import org.anchoranalysis.gui.videostats.dropdown.VideoStatsModuleGlobalParams;
 import org.anchoranalysis.gui.videostats.dropdown.common.EnergyBackground;
 import org.anchoranalysis.gui.videostats.internalframe.InternalFrameStaticOverlaySelectable;
 import org.anchoranalysis.gui.videostats.operation.combine.OverlayCollectionSupplier;
 import org.anchoranalysis.image.object.ObjectCollection;
+import org.anchoranalysis.mpp.mark.MarkCollection;
+import org.anchoranalysis.mpp.overlay.OverlayCollectionMarkFactory;
 import org.anchoranalysis.overlay.collection.OverlayCollection;
 
 public class MarksModuleCreator extends OverlayedCollectionModuleCreator<MarkCollection> {

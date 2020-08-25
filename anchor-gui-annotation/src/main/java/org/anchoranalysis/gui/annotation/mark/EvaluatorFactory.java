@@ -29,8 +29,6 @@ package org.anchoranalysis.gui.annotation.mark;
 import java.util.Optional;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
-import org.anchoranalysis.anchor.mpp.bean.proposer.MarkProposer;
-import org.anchoranalysis.anchor.mpp.bean.regionmap.RegionMap;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.gui.interactivebrowser.MarkEvaluatorResolved;
 import org.anchoranalysis.gui.videostats.internalframe.annotator.InternalFrameAnnotator;
@@ -39,6 +37,8 @@ import org.anchoranalysis.gui.videostats.internalframe.evaluator.EvaluatorWithCo
 import org.anchoranalysis.gui.videostats.internalframe.evaluator.MarkProposerEvaluatorDimensions;
 import org.anchoranalysis.gui.videostats.internalframe.evaluator.MarkSphereOnPointProposerEvaluator;
 import org.anchoranalysis.image.extent.Dimensions;
+import org.anchoranalysis.mpp.bean.proposer.MarkProposer;
+import org.anchoranalysis.mpp.bean.regionmap.RegionMap;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 class EvaluatorFactory {

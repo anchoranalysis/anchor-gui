@@ -26,10 +26,10 @@
 
 package org.anchoranalysis.plugin.gui.bean.exporttask;
 
-import org.anchoranalysis.anchor.mpp.bean.regionmap.RegionMapSingleton;
-import org.anchoranalysis.anchor.mpp.bean.regionmap.RegionMembershipWithFlags;
 import org.anchoranalysis.anchor.mpp.feature.energy.IndexableMarksWithEnergy;
-import org.anchoranalysis.anchor.mpp.mark.GlobalRegionIdentifiers;
+import org.anchoranalysis.mpp.bean.regionmap.RegionMapSingleton;
+import org.anchoranalysis.mpp.bean.regionmap.RegionMembershipWithFlags;
+import org.anchoranalysis.mpp.mark.GlobalRegionIdentifiers;
 
 public class ExportTaskMergedMarks
         extends ExportTaskRasterGeneratorFromBoundedIndexContainer<IndexableMarksWithEnergy> {

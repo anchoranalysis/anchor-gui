@@ -27,13 +27,13 @@
 package org.anchoranalysis.gui.feature.evaluator.params;
 
 import lombok.AllArgsConstructor;
-import org.anchoranalysis.anchor.mpp.mark.voxelized.memo.VoxelizedMarkMemo;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.feature.energy.EnergyStack;
 import org.anchoranalysis.feature.input.FeatureInput;
 import org.anchoranalysis.image.binary.values.BinaryValuesByte;
 import org.anchoranalysis.image.feature.object.input.FeatureInputSingleObject;
 import org.anchoranalysis.image.object.ObjectMask;
+import org.anchoranalysis.mpp.mark.voxelized.memo.VoxelizedMarkMemo;
 
 @AllArgsConstructor
 public class ObjectUnaryFactory extends UnaryFactory {

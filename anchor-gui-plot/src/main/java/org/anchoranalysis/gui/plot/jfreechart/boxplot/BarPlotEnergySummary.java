@@ -30,13 +30,13 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
-import org.anchoranalysis.anchor.plot.AxisLimits;
-import org.anchoranalysis.anchor.plot.PlotInstance;
-import org.anchoranalysis.anchor.plot.bean.Plot;
-import org.anchoranalysis.anchor.plot.index.BoxPlot;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.gui.feature.CalculatedFeatureValues;
 import org.anchoranalysis.gui.feature.FeatureListWithRegionMap;
+import org.anchoranalysis.plot.AxisLimits;
+import org.anchoranalysis.plot.PlotInstance;
+import org.anchoranalysis.plot.bean.Plot;
+import org.anchoranalysis.plot.index.BoxPlot;
 import org.jfree.data.statistics.BoxAndWhiskerItem;
 
 public class BarPlotEnergySummary extends Plot<Integer> {

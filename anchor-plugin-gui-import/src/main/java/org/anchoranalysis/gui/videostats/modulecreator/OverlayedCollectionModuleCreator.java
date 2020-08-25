@@ -2,7 +2,6 @@ package org.anchoranalysis.gui.videostats.modulecreator;
 
 import java.util.Optional;
 import lombok.AllArgsConstructor;
-import org.anchoranalysis.anchor.mpp.mark.MarkCollection;
 import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.gui.image.frame.SliderState;
@@ -15,6 +14,7 @@ import org.anchoranalysis.gui.videostats.module.VideoStatsModuleCreateException;
 import org.anchoranalysis.gui.videostats.operation.combine.OverlayCollectionSupplier;
 import org.anchoranalysis.gui.videostats.operation.combine.VideoStatsOperationCombine;
 import org.anchoranalysis.image.object.ObjectCollection;
+import org.anchoranalysis.mpp.mark.MarkCollection;
 import org.anchoranalysis.overlay.collection.OverlayCollection;
 
 /**

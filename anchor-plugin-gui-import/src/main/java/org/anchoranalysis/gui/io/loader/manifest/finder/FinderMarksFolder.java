@@ -29,7 +29,6 @@ package org.anchoranalysis.gui.io.loader.manifest.finder;
 import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
-import org.anchoranalysis.anchor.mpp.mark.MarkCollection;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.name.provider.NameValueSet;
 import org.anchoranalysis.core.name.provider.NamedProvider;
@@ -45,6 +44,7 @@ import org.anchoranalysis.io.manifest.folder.FolderWrite;
 import org.anchoranalysis.io.manifest.match.FolderWriteAnd;
 import org.anchoranalysis.io.manifest.match.FolderWritePath;
 import org.anchoranalysis.io.manifest.match.helper.folderwrite.FolderWriteFileFunctionType;
+import org.anchoranalysis.mpp.mark.MarkCollection;
 
 @RequiredArgsConstructor
 public class FinderMarksFolder extends FinderSingleFolder {

@@ -27,13 +27,13 @@
 package org.anchoranalysis.gui.feature.evaluator.energytree.createparams;
 
 import lombok.RequiredArgsConstructor;
-import org.anchoranalysis.anchor.mpp.mark.voxelized.memo.VoxelizedMarkMemo;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.feature.bean.Feature;
 import org.anchoranalysis.feature.energy.EnergyStack;
 import org.anchoranalysis.feature.input.FeatureInput;
 import org.anchoranalysis.feature.session.CreateFeatureInput;
 import org.anchoranalysis.gui.feature.evaluator.params.ParamsFactoryForFeature;
+import org.anchoranalysis.mpp.mark.voxelized.memo.VoxelizedMarkMemo;
 
 @RequiredArgsConstructor
 public class CreatePairFromMark implements CreateFeatureInput<FeatureInput> {

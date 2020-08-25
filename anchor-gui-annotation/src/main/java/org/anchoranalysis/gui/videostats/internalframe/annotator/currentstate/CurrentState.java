@@ -30,15 +30,15 @@ import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.event.EventListenerList;
-import org.anchoranalysis.anchor.mpp.mark.ColoredMarks;
-import org.anchoranalysis.anchor.mpp.mark.Mark;
-import org.anchoranalysis.anchor.mpp.mark.MarkCollection;
 import org.anchoranalysis.core.color.RGBColor;
 import org.anchoranalysis.core.geometry.Point3d;
 import org.anchoranalysis.core.geometry.Point3f;
 import org.anchoranalysis.core.geometry.Point3i;
 import org.anchoranalysis.gui.videostats.internalframe.annotator.SaveMonitor;
 import org.anchoranalysis.gui.videostats.internalframe.annotator.navigation.ConfirmResetStateChangedListener;
+import org.anchoranalysis.mpp.mark.ColoredMarks;
+import org.anchoranalysis.mpp.mark.Mark;
+import org.anchoranalysis.mpp.mark.MarkCollection;
 
 class CurrentState implements IQuerySelectedPoints {
 

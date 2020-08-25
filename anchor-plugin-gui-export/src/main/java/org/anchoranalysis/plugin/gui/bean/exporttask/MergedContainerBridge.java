@@ -28,13 +28,10 @@ package org.anchoranalysis.plugin.gui.bean.exporttask;
 
 import java.util.function.Supplier;
 import lombok.RequiredArgsConstructor;
-import org.anchoranalysis.anchor.mpp.bean.regionmap.RegionMembershipWithFlags;
 import org.anchoranalysis.anchor.mpp.feature.energy.IndexableMarksWithEnergy;
 import org.anchoranalysis.anchor.mpp.feature.energy.marks.MarksWithEnergyBreakdown;
 import org.anchoranalysis.anchor.mpp.feature.energy.marks.MarksWithTotalEnergy;
 import org.anchoranalysis.anchor.mpp.feature.energy.scheme.EnergySchemeWithSharedFeatures;
-import org.anchoranalysis.anchor.mpp.mark.MarkCollection;
-import org.anchoranalysis.anchor.mpp.overlay.OverlayCollectionMarkFactory;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.error.friendly.AnchorImpossibleSituationException;
 import org.anchoranalysis.core.functional.function.CheckedFunction;
@@ -46,6 +43,9 @@ import org.anchoranalysis.gui.mergebridge.DualStateContainer;
 import org.anchoranalysis.gui.mergebridge.MergeMarksBridge;
 import org.anchoranalysis.gui.mergebridge.MergedColorIndex;
 import org.anchoranalysis.gui.mergebridge.TransformToMarks;
+import org.anchoranalysis.mpp.bean.regionmap.RegionMembershipWithFlags;
+import org.anchoranalysis.mpp.mark.MarkCollection;
+import org.anchoranalysis.mpp.overlay.OverlayCollectionMarkFactory;
 import org.anchoranalysis.overlay.IndexableOverlays;
 
 @RequiredArgsConstructor

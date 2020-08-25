@@ -28,7 +28,6 @@ package org.anchoranalysis.gui.videostats.dropdown.common;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
-import org.anchoranalysis.anchor.mpp.mark.MarkCollection;
 import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.name.provider.NamedProvider;
@@ -54,6 +53,7 @@ import org.anchoranalysis.io.manifest.ManifestFolderDescription;
 import org.anchoranalysis.io.manifest.sequencetype.SetSequenceType;
 import org.anchoranalysis.io.output.bean.OutputWriteSettings;
 import org.anchoranalysis.io.output.bound.BoundOutputManagerRouteErrors;
+import org.anchoranalysis.mpp.mark.MarkCollection;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class DropDownUtilities {

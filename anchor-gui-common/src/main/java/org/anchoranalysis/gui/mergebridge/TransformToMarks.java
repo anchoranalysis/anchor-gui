@@ -27,8 +27,8 @@
 package org.anchoranalysis.gui.mergebridge;
 
 import org.anchoranalysis.anchor.mpp.feature.energy.IndexableMarksWithEnergy;
-import org.anchoranalysis.anchor.mpp.mark.MarkCollection;
 import org.anchoranalysis.gui.mergebridge.DualStateContainer.TransformInstanteState;
+import org.anchoranalysis.mpp.mark.MarkCollection;
 
 public class TransformToMarks implements TransformInstanteState<MarkCollection> {
 

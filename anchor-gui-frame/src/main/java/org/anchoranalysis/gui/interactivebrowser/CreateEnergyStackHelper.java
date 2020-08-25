@@ -28,7 +28,6 @@ package org.anchoranalysis.gui.interactivebrowser;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
-import org.anchoranalysis.anchor.mpp.bean.init.MPPInitParams;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.functional.function.CheckedSupplier;
 import org.anchoranalysis.core.name.provider.NamedProvider;
@@ -38,6 +37,7 @@ import org.anchoranalysis.feature.energy.EnergyStack;
 import org.anchoranalysis.feature.energy.EnergyStackWithoutParams;
 import org.anchoranalysis.image.experiment.identifiers.StackIdentifiers;
 import org.anchoranalysis.image.stack.Stack;
+import org.anchoranalysis.mpp.bean.init.MPPInitParams;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 class CreateEnergyStackHelper {
