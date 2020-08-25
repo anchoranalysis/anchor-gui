@@ -26,18 +26,28 @@
 
 package org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.definition;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
+import org.anchoranalysis.bean.shared.StringMap;
+import org.anchoranalysis.core.error.reporter.ErrorReporter;
+import org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.IGetNames;
 import org.anchoranalysis.gui.videostats.dropdown.BackgroundSetProgressingSupplier;
 
-@AllArgsConstructor
-public abstract class ChangeableBackgroundDefinitionWithDefault
-        implements ChangeableBackgroundDefinition {
+public class ChangeableBackgroundMapped extends ChangeableBackgroundWithDefault {
 
-    @Getter private BackgroundSetProgressingSupplier backgroundSet;
+    private final StringMap labelMap;
+
+    public ChangeableBackgroundMapped(
+            BackgroundSetProgressingSupplier backgroundSet, StringMap labelMap) {
+        super(backgroundSet);
+        this.labelMap = labelMap;
+    }
 
     @Override
-    public void update(BackgroundSetProgressingSupplier backgroundSet) {
-        this.backgroundSet = backgroundSet;
+    public IGetNames names(ErrorReporter errorReporter) {
+        return new NamesFromMap(labelMap, getBackgroundSet(), errorReporter);
+    }
+
+    @Override
+    public ImageStackContainerFromName stackCntrFromName(ErrorReporter errorReporter) {
+        return new StackFromBackgroundSetViaMap(labelMap, getBackgroundSet(), errorReporter);
     }
 }

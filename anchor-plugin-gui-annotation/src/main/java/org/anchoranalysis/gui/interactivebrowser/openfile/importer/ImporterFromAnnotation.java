@@ -28,8 +28,8 @@ package org.anchoranalysis.gui.interactivebrowser.openfile.importer;
 
 import java.io.File;
 import java.util.Optional;
-import org.anchoranalysis.annotation.io.bean.input.AnnotationInputManager;
-import org.anchoranalysis.annotation.io.bean.strategy.AnnotatorStrategy;
+import org.anchoranalysis.annotation.io.bean.AnnotationInputManager;
+import org.anchoranalysis.annotation.io.bean.AnnotatorStrategy;
 import org.anchoranalysis.gui.bean.filecreator.AnnotationCreator;
 import org.anchoranalysis.gui.bean.filecreator.FileCreator;
 import org.anchoranalysis.image.io.input.ProvidesStackInput;

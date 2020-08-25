@@ -40,7 +40,7 @@ import org.anchoranalysis.image.extent.Dimensions;
 import org.anchoranalysis.image.stack.DisplayStack;
 import org.anchoranalysis.image.stack.Stack;
 
-public class AnnotationBackground {
+public class AnnotationBackgroundInstance {
 
     @Getter private BackgroundSetProgressingSupplier backgroundSetOp;
 
@@ -50,7 +50,7 @@ public class AnnotationBackground {
 
     @Getter private Dimensions dimensionsViewer;
 
-    public AnnotationBackground(
+    public AnnotationBackgroundInstance(
             ProgressReporterMultiple prm,
             NamedProvider<Stack> backgroundStacks,
             String stackNameVisualOriginal)

@@ -156,7 +156,7 @@ public class AnnotatorModuleCreator<T extends AnnotationInitParams>
     }
 
     private void addBackgroundMenu(
-            InternalFrameAnnotator imageFrame, AnnotationBackground background) {
+            InternalFrameAnnotator imageFrame, AnnotationBackgroundInstance background) {
 
         ControllerPopupMenuWithBackground controller = imageFrame.controllerBackgroundMenu();
         controller.addDefinition(mpg, annotation.backgroundDefinition(background));

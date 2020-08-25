@@ -29,14 +29,14 @@ package org.anchoranalysis.gui.annotation.builder;
 import java.io.File;
 import java.nio.file.Path;
 import java.util.Optional;
-import org.anchoranalysis.annotation.io.bean.strategy.AnnotatorStrategy;
+import org.anchoranalysis.annotation.io.bean.AnnotatorStrategy;
 import org.anchoranalysis.annotation.io.input.AnnotationWithStrategy;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.name.provider.NamedProvider;
 import org.anchoranalysis.core.progress.ProgressReporterMultiple;
-import org.anchoranalysis.gui.annotation.AnnotationBackground;
+import org.anchoranalysis.gui.annotation.AnnotationBackgroundInstance;
 import org.anchoranalysis.gui.container.background.BackgroundStackContainerException;
-import org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.definition.ChangeableBackgroundDefinition;
+import org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.definition.ChangeableBackground;
 import org.anchoranalysis.gui.videostats.internalframe.annotator.AnnotationInitParams;
 import org.anchoranalysis.image.stack.NamedStacksSupplier;
 import org.anchoranalysis.image.stack.Stack;
@@ -53,9 +53,9 @@ public abstract class AnnotationGuiBuilderWithDelegate<
     }
 
     @Override
-    public ChangeableBackgroundDefinition backgroundDefinition(
-            AnnotationBackground annotationBackground) {
-        return BackgroundDefinitionCreator.create(
+    public ChangeableBackground backgroundDefinition(
+            AnnotationBackgroundInstance annotationBackground) {
+        return BackgroundInstanceCreator.create(
                 annotationBackground, delegate.getStrategy().getBackground());
     }
 
@@ -97,11 +97,11 @@ public abstract class AnnotationGuiBuilderWithDelegate<
         return delegate.getAnnotationPath();
     }
 
-    protected AnnotationBackground createBackground(
+    protected AnnotationBackgroundInstance createBackground(
             ProgressReporterMultiple prm, NamedProvider<Stack> backgroundStacks)
             throws CreateException {
         try {
-            return new AnnotationBackground(
+            return new AnnotationBackgroundInstance(
                     prm,
                     backgroundStacks,
                     getStrategy().getBackground().getStackNameVisualOriginal());

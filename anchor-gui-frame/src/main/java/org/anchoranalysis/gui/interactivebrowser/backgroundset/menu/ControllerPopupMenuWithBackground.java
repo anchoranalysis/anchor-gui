@@ -30,7 +30,7 @@ import javax.swing.JMenu;
 import lombok.AllArgsConstructor;
 import org.anchoranalysis.core.error.reporter.ErrorReporter;
 import org.anchoranalysis.gui.frame.details.ControllerPopupMenu;
-import org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.definition.ChangeableBackgroundDefinition;
+import org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.definition.ChangeableBackground;
 import org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.definition.ChangeableBackgroundDefinitionSimple;
 import org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.definition.ImageStackContainerFromName;
 import org.anchoranalysis.gui.videostats.dropdown.BackgroundSetProgressingSupplier;
@@ -59,7 +59,7 @@ public class ControllerPopupMenuWithBackground {
     }
 
     public BackgroundUpdater addDefinition(
-            VideoStatsModuleGlobalParams mpg, ChangeableBackgroundDefinition backgroundDefinition) {
+            VideoStatsModuleGlobalParams mpg, ChangeableBackground backgroundDefinition) {
         BackgroundSetMenuWithMap menu =
                 new BackgroundSetMenuWithMap(
                         backgroundDefinition, backgroundSetter, errorReporter(mpg));

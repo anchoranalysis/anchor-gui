@@ -26,39 +26,15 @@
 
 package org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.definition;
 
-import java.util.List;
-import lombok.RequiredArgsConstructor;
 import org.anchoranalysis.core.error.reporter.ErrorReporter;
-import org.anchoranalysis.core.functional.FunctionalList;
 import org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.IGetNames;
 import org.anchoranalysis.gui.videostats.dropdown.BackgroundSetProgressingSupplier;
 
-@RequiredArgsConstructor
-public class ChangeableBackgroundDefinitionIgnoreContains
-        implements ChangeableBackgroundDefinition {
+public interface ChangeableBackground {
 
-    // START REQUIRED ARGUMENTS
-    private final ChangeableBackgroundDefinition background;
-    private final String contains;
-    // END REQUIRED ARGUMENTS
+    void update(BackgroundSetProgressingSupplier backgroundSet);
 
-    @Override
-    public void update(BackgroundSetProgressingSupplier backgroundSet) {
-        background.update(backgroundSet);
-    }
+    IGetNames names(ErrorReporter errorReporter);
 
-    @Override
-    public ImageStackContainerFromName stackCntrFromName(ErrorReporter errorReporter) {
-        return background.stackCntrFromName(errorReporter);
-    }
-
-    @Override
-    public IGetNames names(ErrorReporter errorReporter) {
-        IGetNames namesGet = background.names(errorReporter);
-        return () -> filterList(namesGet.names());
-    }
-
-    private List<String> filterList(List<String> list) {
-        return FunctionalList.filterToList(list, item -> !item.contains(contains));
-    }
+    ImageStackContainerFromName stackCntrFromName(ErrorReporter errorReporter);
 }

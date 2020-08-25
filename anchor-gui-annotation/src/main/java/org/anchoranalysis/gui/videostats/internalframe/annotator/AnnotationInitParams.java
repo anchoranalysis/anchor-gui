@@ -26,7 +26,7 @@
 
 package org.anchoranalysis.gui.videostats.internalframe.annotator;
 
-import org.anchoranalysis.gui.annotation.AnnotationBackground;
+import org.anchoranalysis.gui.annotation.AnnotationBackgroundInstance;
 import org.anchoranalysis.gui.videostats.dropdown.BackgroundSetProgressingSupplier;
 
 public interface AnnotationInitParams {
@@ -35,5 +35,5 @@ public interface AnnotationInitParams {
         return getBackground().getBackgroundSetOp();
     }
 
-    AnnotationBackground getBackground();
+    AnnotationBackgroundInstance getBackground();
 }

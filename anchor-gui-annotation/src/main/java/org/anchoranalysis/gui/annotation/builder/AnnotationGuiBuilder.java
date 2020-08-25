@@ -34,10 +34,10 @@ import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.log.Logger;
 import org.anchoranalysis.core.progress.ProgressReporterMultiple;
-import org.anchoranalysis.gui.annotation.AnnotationBackground;
+import org.anchoranalysis.gui.annotation.AnnotationBackgroundInstance;
 import org.anchoranalysis.gui.annotation.export.ExportAnnotation;
 import org.anchoranalysis.gui.annotation.state.AnnotationSummary;
-import org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.definition.ChangeableBackgroundDefinition;
+import org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.definition.ChangeableBackground;
 import org.anchoranalysis.gui.videostats.internalframe.annotator.AnnotationFrameControllers;
 import org.anchoranalysis.gui.videostats.internalframe.annotator.AnnotationInitParams;
 import org.anchoranalysis.gui.videostats.internalframe.annotator.AnnotationPanelParams;
@@ -85,8 +85,8 @@ public abstract class AnnotationGuiBuilder<T extends AnnotationInitParams> {
         return queryAnnotationStatus;
     }
 
-    public abstract ChangeableBackgroundDefinition backgroundDefinition(
-            AnnotationBackground annotationBackground);
+    public abstract ChangeableBackground backgroundDefinition(
+            AnnotationBackgroundInstance annotationBackground);
 
     /** A path that is used to allow the user to delete an annotation */
     public abstract Path deletePath();

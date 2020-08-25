@@ -29,7 +29,7 @@ package org.anchoranalysis.gui.bean.filecreator;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.anchoranalysis.annotation.io.bean.input.AnnotationInputManager;
+import org.anchoranalysis.annotation.io.bean.AnnotationInputManager;
 import org.anchoranalysis.bean.annotation.BeanField;
 import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.progress.ProgressReporter;
