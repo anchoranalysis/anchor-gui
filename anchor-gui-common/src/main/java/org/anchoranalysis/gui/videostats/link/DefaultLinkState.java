@@ -28,11 +28,11 @@ package org.anchoranalysis.gui.videostats.link;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.anchoranalysis.anchor.overlay.collection.OverlayCollection;
 import org.anchoranalysis.core.functional.function.CheckedFunction;
 import org.anchoranalysis.gui.container.background.BackgroundStackContainerException;
 import org.anchoranalysis.gui.image.OverlaysWithEnergyStack;
 import org.anchoranalysis.image.stack.DisplayStack;
+import org.anchoranalysis.overlay.collection.OverlayCollection;
 import org.apache.commons.lang.ArrayUtils;
 
 public class DefaultLinkState {

@@ -29,12 +29,12 @@ package org.anchoranalysis.gui.feature.evaluator.treetable;
 import java.awt.event.MouseListener;
 import javax.swing.JComponent;
 import org.anchoranalysis.anchor.mpp.pair.IdentifiablePair;
-import org.anchoranalysis.anchor.overlay.Overlay;
 import org.anchoranalysis.feature.energy.EnergyStack;
 import org.anchoranalysis.feature.input.FeatureInput;
 import org.anchoranalysis.feature.shared.SharedFeatureMulti;
 import org.anchoranalysis.gui.feature.FeatureListWithRegionMap;
 import org.anchoranalysis.gui.feature.evaluator.energytree.FeatureTreeModel;
+import org.anchoranalysis.overlay.Overlay;
 import org.netbeans.swing.outline.Outline;
 
 // Has a number of different tables for cliques sizes (0, 1, 2) all of which remain memory, but only

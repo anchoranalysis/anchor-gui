@@ -35,10 +35,10 @@ import org.anchoranalysis.anchor.mpp.bean.regionmap.RegionMembershipWithFlags;
 import org.anchoranalysis.anchor.mpp.mark.Mark;
 import org.anchoranalysis.anchor.mpp.mark.MarkCollection;
 import org.anchoranalysis.anchor.mpp.overlay.OverlayCollectionMarkFactory;
-import org.anchoranalysis.anchor.overlay.IndexableOverlays;
-import org.anchoranalysis.anchor.overlay.collection.OverlayCollection;
 import org.anchoranalysis.core.error.AnchorNeverOccursException;
 import org.anchoranalysis.core.functional.function.CheckedFunction;
+import org.anchoranalysis.overlay.IndexableOverlays;
+import org.anchoranalysis.overlay.collection.OverlayCollection;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor

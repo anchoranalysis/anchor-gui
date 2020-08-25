@@ -26,8 +26,8 @@
 
 package org.anchoranalysis.gui.frame.overlays;
 
-import org.anchoranalysis.anchor.overlay.collection.OverlayCollection;
 import org.anchoranalysis.gui.frame.display.OverlayedDisplayStackUpdate;
+import org.anchoranalysis.overlay.collection.OverlayCollection;
 
 public class RedrawUpdate {
 

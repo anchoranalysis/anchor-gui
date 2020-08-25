@@ -26,8 +26,8 @@
 
 package org.anchoranalysis.gui.frame.display.overlay;
 
-import org.anchoranalysis.anchor.overlay.collection.OverlayCollection;
 import org.anchoranalysis.core.geometry.Point3i;
+import org.anchoranalysis.overlay.collection.OverlayCollection;
 
 public interface OverlayRetriever extends GetOverlayCollection {
 

@@ -29,7 +29,6 @@ package org.anchoranalysis.gui.videostats.dropdown.addoverlays;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
-import org.anchoranalysis.anchor.overlay.collection.OverlayCollection;
 import org.anchoranalysis.core.error.reporter.ErrorReporter;
 import org.anchoranalysis.core.event.RoutableEvent;
 import org.anchoranalysis.core.event.RoutableListener;
@@ -40,6 +39,7 @@ import org.anchoranalysis.gui.image.OverlaysWithEnergyStack;
 import org.anchoranalysis.gui.videostats.AssociatedEnergyStackGetter;
 import org.anchoranalysis.gui.videostats.threading.InteractiveThreadPool;
 import org.anchoranalysis.gui.videostats.threading.InteractiveWorker;
+import org.anchoranalysis.overlay.collection.OverlayCollection;
 
 // Triggers a OverlayCollectionWithStack event, every time a OverlayCollection event occurs
 class OverlayCollectionWithStackAdaptorRouted

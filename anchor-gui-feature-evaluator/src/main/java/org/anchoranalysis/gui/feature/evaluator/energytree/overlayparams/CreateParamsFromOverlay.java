@@ -29,8 +29,6 @@ package org.anchoranalysis.gui.feature.evaluator.energytree.overlayparams;
 import org.anchoranalysis.anchor.mpp.mark.Mark;
 import org.anchoranalysis.anchor.mpp.overlay.OverlayMark;
 import org.anchoranalysis.anchor.mpp.pair.IdentifiablePair;
-import org.anchoranalysis.anchor.overlay.Overlay;
-import org.anchoranalysis.anchor.overlay.object.OverlayObjectMask;
 import org.anchoranalysis.core.error.friendly.AnchorFriendlyRuntimeException;
 import org.anchoranalysis.core.error.friendly.AnchorImpossibleSituationException;
 import org.anchoranalysis.feature.energy.EnergyStack;
@@ -40,6 +38,8 @@ import org.anchoranalysis.gui.feature.FeatureListWithRegionMap;
 import org.anchoranalysis.gui.feature.evaluator.energytree.createparams.CreateIndFromObj;
 import org.anchoranalysis.gui.feature.evaluator.energytree.createparams.CreatePairFromObj;
 import org.anchoranalysis.image.object.ObjectMask;
+import org.anchoranalysis.overlay.Overlay;
+import org.anchoranalysis.overlay.object.OverlayObjectMask;
 
 public class CreateParamsFromOverlay {
 

@@ -40,7 +40,6 @@ import org.anchoranalysis.anchor.mpp.feature.energy.IndexableMarksWithEnergy;
 import org.anchoranalysis.anchor.mpp.mark.GlobalRegionIdentifiers;
 import org.anchoranalysis.anchor.mpp.mark.MarkCollection;
 import org.anchoranalysis.anchor.mpp.overlay.OverlayCollectionMarkFactory;
-import org.anchoranalysis.anchor.overlay.collection.OverlayCollection;
 import org.anchoranalysis.core.color.ColorIndex;
 import org.anchoranalysis.core.index.IntArray;
 import org.anchoranalysis.core.property.IPropertyValueReceivable;
@@ -55,6 +54,7 @@ import org.anchoranalysis.gui.marks.MarkCollectionUtilities;
 import org.anchoranalysis.gui.marks.StatePanel;
 import org.anchoranalysis.gui.marks.StatePanelUpdateException;
 import org.anchoranalysis.gui.propertyvalue.PropertyValueChangeListenerList;
+import org.anchoranalysis.overlay.collection.OverlayCollection;
 
 public class MarksEnergyTablePanel extends StatePanel<IndexableMarksWithEnergy> {
 

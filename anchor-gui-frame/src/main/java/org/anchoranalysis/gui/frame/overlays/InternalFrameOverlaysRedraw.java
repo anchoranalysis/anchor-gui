@@ -27,7 +27,6 @@
 package org.anchoranalysis.gui.frame.overlays;
 
 import java.util.Optional;
-import org.anchoranalysis.anchor.overlay.collection.OverlayCollection;
 import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.property.change.PropertyValueChangeEvent;
 import org.anchoranalysis.core.property.change.PropertyValueChangeListener;
@@ -44,6 +43,7 @@ import org.anchoranalysis.gui.videostats.link.LinkModules;
 import org.anchoranalysis.gui.videostats.module.DefaultModuleState;
 import org.anchoranalysis.gui.videostats.module.VideoStatsModule;
 import org.anchoranalysis.image.stack.DisplayStack;
+import org.anchoranalysis.overlay.collection.OverlayCollection;
 
 // A frame that supports quickly drawing marks on top of existing images based upon a mouse-click
 //  at a particular point

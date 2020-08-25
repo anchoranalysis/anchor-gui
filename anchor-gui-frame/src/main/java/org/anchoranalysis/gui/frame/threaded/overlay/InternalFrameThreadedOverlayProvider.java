@@ -26,7 +26,6 @@
 
 package org.anchoranalysis.gui.frame.threaded.overlay;
 
-import org.anchoranalysis.anchor.overlay.Overlay;
 import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.functional.function.CheckedFunction;
 import org.anchoranalysis.core.idgetter.IDGetter;
@@ -50,6 +49,7 @@ import org.anchoranalysis.gui.videostats.internalframe.markstorgb.markdisplay.Ma
 import org.anchoranalysis.gui.videostats.module.DefaultModuleState;
 import org.anchoranalysis.gui.videostats.module.VideoStatsModule;
 import org.anchoranalysis.image.extent.Dimensions;
+import org.anchoranalysis.overlay.Overlay;
 
 public class InternalFrameThreadedOverlayProvider {
 

@@ -27,8 +27,6 @@
 package org.anchoranalysis.gui.image;
 
 import lombok.RequiredArgsConstructor;
-import org.anchoranalysis.anchor.overlay.Overlay;
-import org.anchoranalysis.anchor.overlay.writer.DrawOverlay;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.functional.function.CheckedFunction;
@@ -40,6 +38,8 @@ import org.anchoranalysis.gui.frame.display.DisplayUpdate;
 import org.anchoranalysis.gui.frame.display.OverlayedDisplayStackUpdate;
 import org.anchoranalysis.gui.frame.display.overlay.OverlayRetriever;
 import org.anchoranalysis.image.stack.DisplayStack;
+import org.anchoranalysis.overlay.Overlay;
+import org.anchoranalysis.overlay.writer.DrawOverlay;
 
 @RequiredArgsConstructor
 public class DisplayUpdateCreator

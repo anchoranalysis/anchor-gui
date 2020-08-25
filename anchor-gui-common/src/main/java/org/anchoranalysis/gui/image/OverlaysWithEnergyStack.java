@@ -26,8 +26,8 @@
 
 package org.anchoranalysis.gui.image;
 
-import org.anchoranalysis.anchor.overlay.collection.OverlayCollection;
 import org.anchoranalysis.feature.energy.EnergyStack;
+import org.anchoranalysis.overlay.collection.OverlayCollection;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;

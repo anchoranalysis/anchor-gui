@@ -31,9 +31,9 @@ import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 import javax.swing.JTextPane;
 import javax.swing.JToggleButton;
-import org.anchoranalysis.anchor.overlay.collection.OverlayCollection;
 import org.anchoranalysis.core.index.IndicesSelection;
 import org.anchoranalysis.gui.reassign.SimpleToggleAction;
+import org.anchoranalysis.overlay.collection.OverlayCollection;
 
 public class DescriptionTopPanel {
 

@@ -29,9 +29,6 @@ package org.anchoranalysis.gui.frame.multioverlay;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
-import org.anchoranalysis.anchor.overlay.Overlay;
-import org.anchoranalysis.anchor.overlay.IndexableOverlays;
-import org.anchoranalysis.anchor.overlay.id.IDGetterOverlayID;
 import org.anchoranalysis.core.bridge.BridgeElementWithIndex;
 import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.error.OperationFailedException;
@@ -54,6 +51,9 @@ import org.anchoranalysis.gui.videostats.dropdown.common.EnergyBackground;
 import org.anchoranalysis.gui.videostats.internalframe.markstorgb.MultiInput;
 import org.anchoranalysis.gui.videostats.module.DefaultModuleState;
 import org.anchoranalysis.gui.videostats.module.DefaultModuleStateManager;
+import org.anchoranalysis.overlay.IndexableOverlays;
+import org.anchoranalysis.overlay.Overlay;
+import org.anchoranalysis.overlay.id.IDGetterOverlayID;
 
 class InternalFrameMultiOverlay<T> {
     private InternalFrameOverlayedInstantStateToRGBSelectable delegate;

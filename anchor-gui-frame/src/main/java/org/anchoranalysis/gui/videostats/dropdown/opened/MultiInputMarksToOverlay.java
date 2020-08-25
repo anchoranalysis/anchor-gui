@@ -28,12 +28,12 @@ package org.anchoranalysis.gui.videostats.dropdown.opened;
 
 import org.anchoranalysis.anchor.mpp.mark.MarkCollection;
 import org.anchoranalysis.anchor.mpp.overlay.OverlayCollectionMarkFactory;
-import org.anchoranalysis.anchor.overlay.IndexableOverlays;
-import org.anchoranalysis.anchor.overlay.collection.OverlayCollection;
 import org.anchoranalysis.core.bridge.BridgeElementWithIndex;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.gui.marks.MarkDisplaySettings;
 import org.anchoranalysis.gui.videostats.internalframe.markstorgb.MultiInput;
+import org.anchoranalysis.overlay.IndexableOverlays;
+import org.anchoranalysis.overlay.collection.OverlayCollection;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor

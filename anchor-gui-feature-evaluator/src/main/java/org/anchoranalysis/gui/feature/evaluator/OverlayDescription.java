@@ -29,14 +29,14 @@ package org.anchoranalysis.gui.feature.evaluator;
 import java.util.ArrayList;
 import java.util.Collections;
 import org.anchoranalysis.anchor.mpp.pair.IdentifiablePair;
-import org.anchoranalysis.anchor.overlay.Overlay;
-import org.anchoranalysis.anchor.overlay.OverlayProperties;
 import org.anchoranalysis.core.name.value.ComparatorOrderByName;
 import org.anchoranalysis.core.name.value.NameValue;
 import org.anchoranalysis.feature.energy.EnergyStack;
 import org.anchoranalysis.gui.feature.evaluator.singlepair.UpdatableSinglePair;
 import org.anchoranalysis.gui.marks.table.TitleValueTableModel;
 import org.anchoranalysis.image.extent.Resolution;
+import org.anchoranalysis.overlay.Overlay;
+import org.anchoranalysis.overlay.OverlayProperties;
 
 class OverlayDescription extends TitleValueTableModel implements UpdatableSinglePair {
 

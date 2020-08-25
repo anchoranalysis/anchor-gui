@@ -27,8 +27,8 @@
 package org.anchoranalysis.gui.videostats.internalframe.markstorgb;
 
 import lombok.EqualsAndHashCode;
-import org.anchoranalysis.anchor.overlay.collection.ColoredOverlayCollection;
 import org.anchoranalysis.core.index.Indexable;
+import org.anchoranalysis.overlay.collection.ColoredOverlayCollection;
 
 @EqualsAndHashCode(callSuper = true)
 public class IndexableColoredOverlays extends Indexable {

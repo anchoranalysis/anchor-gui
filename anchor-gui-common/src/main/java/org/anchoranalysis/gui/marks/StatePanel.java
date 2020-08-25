@@ -28,10 +28,10 @@ package org.anchoranalysis.gui.marks;
 
 import java.util.Optional;
 import javax.swing.JPanel;
-import org.anchoranalysis.anchor.overlay.collection.OverlayCollection;
 import org.anchoranalysis.core.index.IntArray;
 import org.anchoranalysis.core.property.IPropertyValueReceivable;
 import org.anchoranalysis.core.property.IPropertyValueSendable;
+import org.anchoranalysis.overlay.collection.OverlayCollection;
 
 public abstract class StatePanel<T> {
 

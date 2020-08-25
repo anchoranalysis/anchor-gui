@@ -35,7 +35,6 @@ import org.anchoranalysis.anchor.mpp.feature.energy.marks.MarksWithTotalEnergy;
 import org.anchoranalysis.anchor.mpp.feature.energy.scheme.EnergySchemeWithSharedFeatures;
 import org.anchoranalysis.anchor.mpp.mark.MarkCollection;
 import org.anchoranalysis.anchor.mpp.overlay.OverlayCollectionMarkFactory;
-import org.anchoranalysis.anchor.overlay.IndexableOverlays;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.error.friendly.AnchorImpossibleSituationException;
 import org.anchoranalysis.core.functional.function.CheckedFunction;
@@ -47,6 +46,7 @@ import org.anchoranalysis.gui.mergebridge.DualStateContainer;
 import org.anchoranalysis.gui.mergebridge.MergeMarksBridge;
 import org.anchoranalysis.gui.mergebridge.MergedColorIndex;
 import org.anchoranalysis.gui.mergebridge.TransformToMarks;
+import org.anchoranalysis.overlay.IndexableOverlays;
 
 @RequiredArgsConstructor
 class MergedContainerBridge

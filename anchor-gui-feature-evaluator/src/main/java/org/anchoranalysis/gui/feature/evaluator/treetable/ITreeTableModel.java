@@ -29,9 +29,9 @@ package org.anchoranalysis.gui.feature.evaluator.treetable;
 import java.awt.event.MouseListener;
 import javax.swing.JComponent;
 import org.anchoranalysis.anchor.mpp.pair.IdentifiablePair;
-import org.anchoranalysis.anchor.overlay.Overlay;
 import org.anchoranalysis.feature.energy.EnergyStack;
 import org.anchoranalysis.gui.feature.evaluator.singlepair.UpdatableSinglePair;
+import org.anchoranalysis.overlay.Overlay;
 import org.netbeans.swing.outline.Outline;
 
 public interface ITreeTableModel extends UpdatableSinglePair {

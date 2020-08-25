@@ -42,7 +42,6 @@ import javax.swing.JTextArea;
 import javax.swing.JToggleButton;
 import javax.swing.event.EventListenerList;
 import org.anchoranalysis.anchor.mpp.feature.energy.marks.VoxelizedMarksWithEnergy;
-import org.anchoranalysis.anchor.overlay.collection.OverlayCollection;
 import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.index.IndicesSelection;
 import org.anchoranalysis.core.index.IntArray;
@@ -58,6 +57,7 @@ import org.anchoranalysis.gui.reassign.SimpleToggleAction;
 import org.anchoranalysis.mpp.sgmn.bean.kernel.proposer.KernelProposer;
 import org.anchoranalysis.mpp.sgmn.kernel.proposer.KernelDescision;
 import org.anchoranalysis.mpp.sgmn.kernel.proposer.WeightedKernel;
+import org.anchoranalysis.overlay.collection.OverlayCollection;
 
 public class KernelIterDescriptionNavigatorPanel extends StatePanel<KernelDescision> {
 

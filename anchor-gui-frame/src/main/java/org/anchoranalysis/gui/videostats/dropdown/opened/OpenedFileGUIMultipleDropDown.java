@@ -31,7 +31,6 @@ import java.util.List;
 import java.util.Optional;
 import javax.swing.JPopupMenu;
 import lombok.Getter;
-import org.anchoranalysis.anchor.overlay.IndexableOverlays;
 import org.anchoranalysis.core.bridge.BridgeElementWithIndex;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.gui.file.opened.IOpenedFileGUI;
@@ -51,6 +50,7 @@ import org.anchoranalysis.gui.videostats.operation.VideoStatsOperationOrMenu;
 import org.anchoranalysis.gui.videostats.operation.VideoStatsOperationSequence;
 import org.anchoranalysis.gui.videostats.operation.combine.OverlayCollectionSupplier;
 import org.anchoranalysis.gui.videostats.operation.combine.VideoStatsOperationCombine;
+import org.anchoranalysis.overlay.IndexableOverlays;
 
 public class OpenedFileGUIMultipleDropDown {
 

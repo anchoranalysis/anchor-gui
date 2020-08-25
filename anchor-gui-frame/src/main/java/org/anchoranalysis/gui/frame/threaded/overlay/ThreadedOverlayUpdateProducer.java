@@ -26,8 +26,6 @@
 
 package org.anchoranalysis.gui.frame.threaded.overlay;
 
-import org.anchoranalysis.anchor.overlay.Overlay;
-import org.anchoranalysis.anchor.overlay.writer.DrawOverlay;
 import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.error.reporter.ErrorReporter;
 import org.anchoranalysis.core.functional.function.CheckedFunction;
@@ -49,6 +47,8 @@ import org.anchoranalysis.gui.image.DisplayUpdateCreator;
 import org.anchoranalysis.gui.marks.MarkDisplaySettings;
 import org.anchoranalysis.gui.videostats.internalframe.markstorgb.markdisplay.MarkDisplaySettingsWrapper;
 import org.anchoranalysis.gui.videostats.threading.InteractiveThreadPool;
+import org.anchoranalysis.overlay.Overlay;
+import org.anchoranalysis.overlay.writer.DrawOverlay;
 import lombok.RequiredArgsConstructor;
 
 class ThreadedOverlayUpdateProducer implements Redrawable, ThreadedProducer, IGetClearUpdate {

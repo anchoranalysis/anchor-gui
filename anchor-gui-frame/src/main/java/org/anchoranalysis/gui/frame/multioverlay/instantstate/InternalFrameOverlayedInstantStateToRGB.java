@@ -27,7 +27,6 @@
 package org.anchoranalysis.gui.frame.multioverlay.instantstate;
 
 import lombok.AllArgsConstructor;
-import org.anchoranalysis.anchor.overlay.Overlay;
 import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.functional.function.CheckedFunction;
 import org.anchoranalysis.core.idgetter.IDGetter;
@@ -57,6 +56,7 @@ import org.anchoranalysis.gui.videostats.module.DefaultModuleState;
 import org.anchoranalysis.gui.videostats.module.VideoStatsModule;
 import org.anchoranalysis.image.extent.Dimensions;
 import org.anchoranalysis.image.stack.DisplayStack;
+import org.anchoranalysis.overlay.Overlay;
 
 class InternalFrameOverlayedInstantStateToRGB {
 

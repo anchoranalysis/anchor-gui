@@ -28,7 +28,6 @@ package org.anchoranalysis.gui.videostats.link;
 
 import java.util.Optional;
 import java.util.function.Function;
-import org.anchoranalysis.anchor.overlay.collection.OverlayCollection;
 import org.anchoranalysis.core.event.RoutableReceivable;
 import org.anchoranalysis.core.functional.function.CheckedFunction;
 import org.anchoranalysis.core.index.IntArray;
@@ -41,6 +40,7 @@ import org.anchoranalysis.gui.image.OverlaysWithEnergyStack;
 import org.anchoranalysis.gui.videostats.module.VideoStatsModule;
 import org.anchoranalysis.gui.videostats.module.VideoStatsModule.ReceivableSendablePair;
 import org.anchoranalysis.image.stack.DisplayStack;
+import org.anchoranalysis.overlay.collection.OverlayCollection;
 
 public class LinkModules {
 

@@ -13,6 +13,8 @@ import org.anchoranalysis.io.manifest.sequencetype.SequenceType;
 public class AddFromSequenceHelper {
 
     /**
+     * Adds from a sequence
+     * 
      * @param <T>
      * @param sequenceType
      * @param getter

@@ -26,7 +26,6 @@
 
 package org.anchoranalysis.gui.videostats.internalframe.markstorgb.markdisplay;
 
-import org.anchoranalysis.anchor.overlay.writer.DrawOverlay;
 import org.anchoranalysis.core.property.change.PropertyValueChangeEvent;
 import org.anchoranalysis.core.property.change.PropertyValueChangeListener;
 import org.anchoranalysis.gui.marks.MarkDisplaySettings;
@@ -35,6 +34,7 @@ import org.anchoranalysis.gui.videostats.action.changemarkdisplay.IChangeMarkDis
 import org.anchoranalysis.image.object.properties.ObjectWithProperties;
 import org.anchoranalysis.image.stack.rgb.RGBStack;
 import org.anchoranalysis.io.bean.object.writer.IfElse;
+import org.anchoranalysis.overlay.writer.DrawOverlay;
 
 public class MarkDisplaySettingsWrapper implements IChangeMarkDisplaySendable {
 

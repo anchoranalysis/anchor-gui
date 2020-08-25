@@ -29,7 +29,6 @@ package org.anchoranalysis.gui.feature.evaluator.energytree;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreeNode;
 import org.anchoranalysis.anchor.mpp.pair.IdentifiablePair;
-import org.anchoranalysis.anchor.overlay.Overlay;
 import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.log.Logger;
@@ -44,6 +43,7 @@ import org.anchoranalysis.feature.shared.SharedFeatureMulti;
 import org.anchoranalysis.gui.feature.FeatureListWithRegionMap;
 import org.anchoranalysis.gui.feature.evaluator.energytree.overlayparams.CreateParamsFromOverlay;
 import org.anchoranalysis.gui.feature.evaluator.singlepair.UpdatableSinglePair;
+import org.anchoranalysis.overlay.Overlay;
 
 public class FeatureTreeModel extends DefaultTreeModel
         implements UpdatableSinglePair {
