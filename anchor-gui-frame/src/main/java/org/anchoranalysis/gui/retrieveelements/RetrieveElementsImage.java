@@ -32,7 +32,7 @@ import lombok.AllArgsConstructor;
 import org.anchoranalysis.core.cache.CachedSupplier;
 import org.anchoranalysis.core.error.AnchorNeverOccursException;
 import org.anchoranalysis.core.error.OperationFailedException;
-import org.anchoranalysis.image.io.generator.raster.MIPGenerator;
+import org.anchoranalysis.image.io.generator.raster.ProjectMeanGenerator;
 import org.anchoranalysis.image.stack.DisplayStack;
 import org.anchoranalysis.image.stack.Stack;
 
@@ -62,7 +62,7 @@ public class RetrieveElementsImage extends RetrieveElements {
         }
 
         if (stack.dimensions().z() > 1) {
-            MIPGenerator generatorMIP = new MIPGenerator(true, "selectedStackMIP");
+            ProjectMeanGenerator generatorMIP = new ProjectMeanGenerator(true, "selectedStackMIP");
 
             OperationGenerator<Stack, Stack> generator = new OperationGenerator<>(generatorMIP);
             popUp.addExportItem(
