@@ -28,8 +28,6 @@ package org.anchoranalysis.gui.videostats.dropdown;
 
 import java.io.IOException;
 import javax.swing.JFrame;
-import org.anchoranalysis.anchor.mpp.feature.energy.IndexableMarksWithEnergy;
-import org.anchoranalysis.anchor.mpp.feature.energy.marks.VoxelizedMarksWithEnergy;
 import org.anchoranalysis.bean.error.BeanDuplicateException;
 import org.anchoranalysis.core.color.ColorIndex;
 import org.anchoranalysis.core.error.InitException;
@@ -57,6 +55,8 @@ import org.anchoranalysis.gui.videostats.operation.VideoStatsOperationFromExport
 import org.anchoranalysis.gui.videostats.operation.VideoStatsOperationMenu;
 import org.anchoranalysis.io.manifest.finder.FinderSerializedObject;
 import org.anchoranalysis.io.output.bound.BoundOutputManagerRouteErrors;
+import org.anchoranalysis.mpp.feature.energy.IndexableMarksWithEnergy;
+import org.anchoranalysis.mpp.feature.energy.marks.VoxelizedMarksWithEnergy;
 import org.anchoranalysis.mpp.segment.bean.kernel.proposer.KernelProposer;
 import org.anchoranalysis.plot.bean.Plot;
 import org.anchoranalysis.plugin.gui.bean.exporttask.ExportTaskList;

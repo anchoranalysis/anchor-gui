@@ -26,10 +26,10 @@
 
 package org.anchoranalysis.gui.io.loader.manifest.finder.historyfolder;
 
-import org.anchoranalysis.anchor.mpp.feature.energy.IndexableMarksWithEnergy;
-import org.anchoranalysis.anchor.mpp.feature.energy.marks.MarksWithEnergyBreakdown;
 import org.anchoranalysis.core.bridge.BridgeElementWithIndex;
 import org.anchoranalysis.core.error.AnchorNeverOccursException;
+import org.anchoranalysis.mpp.feature.energy.IndexableMarksWithEnergy;
+import org.anchoranalysis.mpp.feature.energy.marks.MarksWithEnergyBreakdown;
 
 class IndexableMarksBridge
         implements BridgeElementWithIndex<

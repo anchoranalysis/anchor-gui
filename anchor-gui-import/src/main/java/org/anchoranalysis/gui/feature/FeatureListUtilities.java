@@ -29,14 +29,14 @@ package org.anchoranalysis.gui.feature;
 import java.util.function.Function;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
-import org.anchoranalysis.anchor.mpp.feature.energy.scheme.EnergyScheme;
-import org.anchoranalysis.anchor.mpp.feature.energy.scheme.EnergySchemeSet;
 import org.anchoranalysis.core.name.value.SimpleNameValue;
 import org.anchoranalysis.feature.bean.Feature;
 import org.anchoranalysis.feature.bean.list.FeatureList;
 import org.anchoranalysis.feature.bean.operator.Sum;
 import org.anchoranalysis.feature.input.FeatureInput;
 import org.anchoranalysis.mpp.bean.regionmap.RegionMap;
+import org.anchoranalysis.mpp.feature.energy.scheme.EnergyScheme;
+import org.anchoranalysis.mpp.feature.energy.scheme.EnergySchemeSet;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class FeatureListUtilities {

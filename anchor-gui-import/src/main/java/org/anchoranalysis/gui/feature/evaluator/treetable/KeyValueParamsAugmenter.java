@@ -26,14 +26,14 @@
 
 package org.anchoranalysis.gui.feature.evaluator.treetable;
 
-import org.anchoranalysis.anchor.mpp.feature.energy.scheme.EnergyScheme;
-import org.anchoranalysis.anchor.mpp.feature.energy.scheme.KeyValueParamsForImageCreator;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.log.Logger;
 import org.anchoranalysis.core.params.KeyValueParams;
 import org.anchoranalysis.feature.energy.EnergyStack;
 import org.anchoranalysis.feature.shared.SharedFeatureMulti;
+import org.anchoranalysis.mpp.feature.energy.scheme.EnergyScheme;
+import org.anchoranalysis.mpp.feature.energy.scheme.KeyValueParamsForImageCreator;
 
 public class KeyValueParamsAugmenter {
 

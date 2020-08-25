@@ -32,7 +32,6 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import lombok.RequiredArgsConstructor;
-import org.anchoranalysis.anchor.mpp.feature.bean.mark.MarkEvaluator;
 import org.anchoranalysis.bean.define.Define;
 import org.anchoranalysis.core.cache.CachedSupplier;
 import org.anchoranalysis.core.error.CreateException;
@@ -43,6 +42,7 @@ import org.anchoranalysis.core.progress.ProgressReporterNull;
 import org.anchoranalysis.image.stack.NamedStacksSupplier;
 import org.anchoranalysis.io.output.bound.BoundIOContext;
 import org.anchoranalysis.mpp.bean.init.MPPInitParams;
+import org.anchoranalysis.mpp.feature.bean.mark.MarkEvaluator;
 import org.anchoranalysis.mpp.io.input.MPPInitParamsFactory;
 
 @RequiredArgsConstructor

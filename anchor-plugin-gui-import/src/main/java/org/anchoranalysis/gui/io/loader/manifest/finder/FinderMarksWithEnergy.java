@@ -28,7 +28,6 @@ package org.anchoranalysis.gui.io.loader.manifest.finder;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import org.anchoranalysis.anchor.mpp.feature.energy.IndexableMarksWithEnergy;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.index.container.BoundedIndexContainer;
 import org.anchoranalysis.gui.container.ContainerGetter;
@@ -39,6 +38,7 @@ import org.anchoranalysis.gui.videostats.dropdown.MenuAddException;
 import org.anchoranalysis.io.manifest.ManifestRecorder;
 import org.anchoranalysis.io.manifest.deserializer.folder.LoadContainer;
 import org.anchoranalysis.io.manifest.finder.Finder;
+import org.anchoranalysis.mpp.feature.energy.IndexableMarksWithEnergy;
 
 @RequiredArgsConstructor
 public class FinderMarksWithEnergy implements Finder, ContainerGetter<IndexableMarksWithEnergy> {

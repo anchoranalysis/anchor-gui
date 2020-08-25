@@ -27,9 +27,6 @@
 package org.anchoranalysis.gui.videostats.dropdown.manifest;
 
 import java.io.IOException;
-import org.anchoranalysis.anchor.mpp.feature.energy.IndexableMarksWithEnergy;
-import org.anchoranalysis.anchor.mpp.feature.energy.marks.MarksWithEnergyBreakdown;
-import org.anchoranalysis.anchor.mpp.feature.energy.marks.VoxelizedMarksWithEnergy;
 import org.anchoranalysis.core.cache.CachedSupplier;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.InitException;
@@ -73,6 +70,9 @@ import org.anchoranalysis.image.stack.wrap.WrapStackAsTimeSequence;
 import org.anchoranalysis.io.manifest.deserializer.folder.LoadContainer;
 import org.anchoranalysis.io.manifest.finder.FinderSerializedObject;
 import org.anchoranalysis.io.output.bound.BoundOutputManagerRouteErrors;
+import org.anchoranalysis.mpp.feature.energy.IndexableMarksWithEnergy;
+import org.anchoranalysis.mpp.feature.energy.marks.MarksWithEnergyBreakdown;
+import org.anchoranalysis.mpp.feature.energy.marks.VoxelizedMarksWithEnergy;
 import org.anchoranalysis.mpp.mark.MarkCollection;
 import org.anchoranalysis.mpp.segment.bean.kernel.proposer.KernelProposer;
 import org.anchoranalysis.plugin.io.manifest.CoupledManifests;

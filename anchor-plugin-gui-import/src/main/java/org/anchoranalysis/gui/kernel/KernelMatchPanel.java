@@ -31,7 +31,6 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import org.anchoranalysis.anchor.mpp.feature.energy.marks.VoxelizedMarksWithEnergy;
 import org.anchoranalysis.core.index.IndicesSelection;
 import org.anchoranalysis.gui.kernel.match.MatchKernel;
 import org.anchoranalysis.gui.kernel.match.MatchKernelAccptd;
@@ -41,6 +40,7 @@ import org.anchoranalysis.gui.kernel.match.MatchKernelAny;
 import org.anchoranalysis.gui.kernel.match.MatchKernelAnyChangedMarksFoundIn;
 import org.anchoranalysis.gui.kernel.match.MatchKernelExecutionTimeGreaterThanEquals;
 import org.anchoranalysis.gui.kernel.match.MatchKernelProp;
+import org.anchoranalysis.mpp.feature.energy.marks.VoxelizedMarksWithEnergy;
 import org.anchoranalysis.mpp.segment.bean.kernel.proposer.KernelProposer;
 import org.anchoranalysis.mpp.segment.kernel.proposer.WeightedKernel;
 

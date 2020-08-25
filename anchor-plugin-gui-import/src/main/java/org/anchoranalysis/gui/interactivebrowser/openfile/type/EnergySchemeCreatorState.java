@@ -26,11 +26,11 @@
 
 package org.anchoranalysis.gui.interactivebrowser.openfile.type;
 
+import org.anchoranalysis.mpp.feature.bean.energy.scheme.EnergySchemeCreator;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.anchoranalysis.anchor.mpp.feature.bean.energy.scheme.EnergySchemeCreator;
 
 /**
  * Note item can be null

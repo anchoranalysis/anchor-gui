@@ -28,7 +28,6 @@ package org.anchoranalysis.gui.videostats.dropdown.contextualmodulecreator;
 
 import java.util.Optional;
 import lombok.AllArgsConstructor;
-import org.anchoranalysis.anchor.mpp.feature.energy.IndexableMarksWithEnergy;
 import org.anchoranalysis.core.color.ColorIndex;
 import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.error.OperationFailedException;
@@ -43,6 +42,7 @@ import org.anchoranalysis.gui.videostats.module.DefaultModuleStateManager;
 import org.anchoranalysis.gui.videostats.module.VideoStatsModuleCreateException;
 import org.anchoranalysis.gui.videostats.modulecreator.VideoStatsModuleCreatorContext;
 import org.anchoranalysis.io.manifest.deserializer.folder.LoadContainer;
+import org.anchoranalysis.mpp.feature.energy.IndexableMarksWithEnergy;
 
 @AllArgsConstructor
 public class EnergyTableCreator extends VideoStatsModuleCreatorContext {

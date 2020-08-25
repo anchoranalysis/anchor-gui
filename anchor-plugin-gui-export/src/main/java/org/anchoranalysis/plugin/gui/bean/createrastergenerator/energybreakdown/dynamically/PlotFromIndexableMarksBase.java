@@ -27,7 +27,6 @@
 package org.anchoranalysis.plugin.gui.bean.createrastergenerator.energybreakdown.dynamically;
 
 import lombok.RequiredArgsConstructor;
-import org.anchoranalysis.anchor.mpp.feature.energy.IndexableMarksWithEnergy;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.functional.function.CheckedFunction;
@@ -36,6 +35,7 @@ import org.anchoranalysis.gui.io.loader.manifest.finder.csvstatistic.CSVStatisti
 import org.anchoranalysis.image.stack.Stack;
 import org.anchoranalysis.io.generator.IterableObjectGenerator;
 import org.anchoranalysis.io.generator.IterableObjectGeneratorBridge;
+import org.anchoranalysis.mpp.feature.energy.IndexableMarksWithEnergy;
 import org.anchoranalysis.plugin.gui.bean.createrastergenerator.PlotGeneratorBase;
 import org.anchoranalysis.plugin.gui.bean.createrastergenerator.csvstatistic.PlotFromCSVStatistic;
 import org.anchoranalysis.plugin.gui.bean.exporttask.MappedFrom;

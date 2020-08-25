@@ -26,7 +26,6 @@
 
 package org.anchoranalysis.plugin.gui.bean.createrastergenerator.energybreakdown;
 
-import org.anchoranalysis.anchor.mpp.feature.energy.IndexableMarksWithEnergy;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.gui.bean.exporttask.ExportTaskParams;
 import org.anchoranalysis.gui.plot.EnergyGraphItem;
@@ -35,6 +34,7 @@ import org.anchoranalysis.gui.plot.panel.ClickableGraphInstance;
 import org.anchoranalysis.image.stack.Stack;
 import org.anchoranalysis.io.generator.IterableObjectGenerator;
 import org.anchoranalysis.io.generator.IterableObjectGeneratorBridge;
+import org.anchoranalysis.mpp.feature.energy.IndexableMarksWithEnergy;
 import org.anchoranalysis.plot.PlotInstance;
 import org.anchoranalysis.plugin.gui.bean.createrastergenerator.PlotGeneratorBase;
 import org.anchoranalysis.plugin.gui.bean.exporttask.MappedFrom;

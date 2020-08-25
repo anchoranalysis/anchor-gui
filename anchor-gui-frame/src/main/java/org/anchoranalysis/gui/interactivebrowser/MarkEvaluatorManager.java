@@ -29,11 +29,11 @@ package org.anchoranalysis.gui.interactivebrowser;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
-import org.anchoranalysis.anchor.mpp.feature.bean.mark.MarkEvaluator;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.image.stack.NamedStacksSupplier;
 import org.anchoranalysis.io.output.bound.BoundIOContext;
+import org.anchoranalysis.mpp.feature.bean.mark.MarkEvaluator;
 
 // Manages the various MarkEvaluators that are available in the application
 public class MarkEvaluatorManager {

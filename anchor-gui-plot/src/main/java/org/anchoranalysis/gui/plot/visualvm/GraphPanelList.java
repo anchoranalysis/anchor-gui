@@ -28,9 +28,9 @@ package org.anchoranalysis.gui.plot.visualvm;
 
 import java.util.ArrayList;
 import java.util.Iterator;
-import org.anchoranalysis.anchor.mpp.feature.energy.marks.MarksWithTotalEnergy;
 import org.anchoranalysis.gui.plot.definition.GraphDefinition;
 import org.anchoranalysis.gui.videostats.EnergyUpdater;
+import org.anchoranalysis.mpp.feature.energy.marks.MarksWithTotalEnergy;
 import org.anchoranalysis.mpp.segment.optscheme.feedback.aggregate.Aggregator;
 
 public class GraphPanelList implements EnergyUpdater, Iterable<GraphPanel> {

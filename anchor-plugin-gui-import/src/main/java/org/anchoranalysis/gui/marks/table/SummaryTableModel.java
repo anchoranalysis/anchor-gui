@@ -26,7 +26,7 @@
 
 package org.anchoranalysis.gui.marks.table;
 
-import org.anchoranalysis.anchor.mpp.feature.energy.IndexableMarksWithEnergy;
+import org.anchoranalysis.mpp.feature.energy.IndexableMarksWithEnergy;
 
 public class SummaryTableModel extends TitleValueTableModel implements IUpdateTableData {
 

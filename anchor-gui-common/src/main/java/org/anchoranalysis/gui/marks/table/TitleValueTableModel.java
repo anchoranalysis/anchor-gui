@@ -29,7 +29,7 @@ package org.anchoranalysis.gui.marks.table;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.table.AbstractTableModel;
-import org.anchoranalysis.anchor.mpp.feature.energy.IndexableMarksWithEnergy;
+import org.anchoranalysis.mpp.feature.energy.IndexableMarksWithEnergy;
 
 public class TitleValueTableModel extends AbstractTableModel {
 

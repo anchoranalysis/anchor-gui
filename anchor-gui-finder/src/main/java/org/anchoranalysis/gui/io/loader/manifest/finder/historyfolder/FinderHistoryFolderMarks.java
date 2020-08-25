@@ -26,8 +26,6 @@
 
 package org.anchoranalysis.gui.io.loader.manifest.finder.historyfolder;
 
-import org.anchoranalysis.anchor.mpp.feature.energy.IndexableMarksWithEnergy;
-import org.anchoranalysis.anchor.mpp.feature.energy.marks.MarksWithEnergyBreakdown;
 import org.anchoranalysis.io.bean.deserializer.Deserializer;
 import org.anchoranalysis.io.bean.deserializer.ObjectInputStreamDeserializer;
 import org.anchoranalysis.io.deserializer.DeserializationFailedException;
@@ -35,6 +33,8 @@ import org.anchoranalysis.io.manifest.deserializer.folder.BundleDeserializers;
 import org.anchoranalysis.io.manifest.deserializer.folder.HistoryCreator;
 import org.anchoranalysis.io.manifest.deserializer.folder.LoadContainer;
 import org.anchoranalysis.io.manifest.folder.FolderWrite;
+import org.anchoranalysis.mpp.feature.energy.IndexableMarksWithEnergy;
+import org.anchoranalysis.mpp.feature.energy.marks.MarksWithEnergyBreakdown;
 
 public class FinderHistoryFolderMarks extends FinderHistoryFolder<IndexableMarksWithEnergy> {
 

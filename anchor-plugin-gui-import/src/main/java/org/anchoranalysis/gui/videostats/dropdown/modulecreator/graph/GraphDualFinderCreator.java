@@ -28,7 +28,6 @@ package org.anchoranalysis.gui.videostats.dropdown.modulecreator.graph;
 
 import java.util.ArrayList;
 import lombok.AllArgsConstructor;
-import org.anchoranalysis.anchor.mpp.feature.energy.IndexableMarksWithEnergy;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.gui.io.loader.manifest.finder.FinderCSVStats;
 import org.anchoranalysis.gui.io.loader.manifest.finder.historyfolder.FinderHistoryFolder;
@@ -39,6 +38,7 @@ import org.anchoranalysis.gui.videostats.dropdown.VideoStatsModuleCreatorAndAdde
 import org.anchoranalysis.gui.videostats.dropdown.VideoStatsModuleGlobalParams;
 import org.anchoranalysis.gui.videostats.dropdown.contextualmodulecreator.ContextualModuleCreator;
 import org.anchoranalysis.gui.videostats.modulecreator.VideoStatsModuleCreator;
+import org.anchoranalysis.mpp.feature.energy.IndexableMarksWithEnergy;
 import org.anchoranalysis.plot.bean.Plot;
 import org.anchoranalysis.plot.bean.colorscheme.GraphColorScheme;
 

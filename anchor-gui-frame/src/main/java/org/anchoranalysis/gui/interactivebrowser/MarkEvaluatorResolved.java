@@ -27,7 +27,6 @@
 package org.anchoranalysis.gui.interactivebrowser;
 
 import lombok.Getter;
-import org.anchoranalysis.anchor.mpp.feature.energy.scheme.EnergyScheme;
 import org.anchoranalysis.core.cache.CachedSupplier;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.OperationFailedException;
@@ -35,6 +34,7 @@ import org.anchoranalysis.core.params.KeyValueParams;
 import org.anchoranalysis.feature.energy.EnergyStack;
 import org.anchoranalysis.mpp.bean.init.MPPInitParams;
 import org.anchoranalysis.mpp.bean.mark.MarkWithIdentifierFactory;
+import org.anchoranalysis.mpp.feature.energy.scheme.EnergyScheme;
 
 // A MarkEvaluator after it has been resolved for usage by converting
 //  it into a ProposerSharedObjectsImageSpecific and other necessary components

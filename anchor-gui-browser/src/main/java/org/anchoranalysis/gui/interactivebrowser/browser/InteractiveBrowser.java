@@ -27,7 +27,6 @@
 package org.anchoranalysis.gui.interactivebrowser.browser;
 
 import java.util.List;
-import org.anchoranalysis.anchor.mpp.feature.bean.mark.MarkEvaluator;
 import org.anchoranalysis.bean.NamedBean;
 import org.anchoranalysis.core.color.ColorIndex;
 import org.anchoranalysis.core.error.CreateException;
@@ -55,6 +54,7 @@ import org.anchoranalysis.io.bean.color.generator.ShuffleColorSetGenerator;
 import org.anchoranalysis.io.color.HashedColorSet;
 import org.anchoranalysis.io.generator.sequence.SequenceMemory;
 import org.anchoranalysis.io.output.bound.BoundIOContext;
+import org.anchoranalysis.mpp.feature.bean.mark.MarkEvaluator;
 import org.anchoranalysis.plugin.gui.bean.exporttask.ExportTaskList;
 
 public class InteractiveBrowser {

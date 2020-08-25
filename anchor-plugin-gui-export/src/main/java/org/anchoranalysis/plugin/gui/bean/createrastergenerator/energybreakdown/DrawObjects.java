@@ -28,8 +28,6 @@ package org.anchoranalysis.plugin.gui.bean.createrastergenerator.energybreakdown
 
 import lombok.Getter;
 import lombok.Setter;
-import org.anchoranalysis.anchor.mpp.feature.energy.IndexableMarksWithEnergy;
-import org.anchoranalysis.anchor.mpp.feature.energy.marks.MarksWithEnergyBreakdown;
 import org.anchoranalysis.bean.annotation.BeanField;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.OperationFailedException;
@@ -46,6 +44,8 @@ import org.anchoranalysis.io.generator.IterableObjectGenerator;
 import org.anchoranalysis.io.generator.IterableObjectGeneratorBridge;
 import org.anchoranalysis.mpp.bean.regionmap.RegionMapSingleton;
 import org.anchoranalysis.mpp.bean.regionmap.RegionMembershipWithFlags;
+import org.anchoranalysis.mpp.feature.energy.IndexableMarksWithEnergy;
+import org.anchoranalysis.mpp.feature.energy.marks.MarksWithEnergyBreakdown;
 import org.anchoranalysis.mpp.io.marks.generator.SimpleOverlayWriter;
 import org.anchoranalysis.mpp.mark.ColoredMarks;
 import org.anchoranalysis.mpp.mark.GlobalRegionIdentifiers;

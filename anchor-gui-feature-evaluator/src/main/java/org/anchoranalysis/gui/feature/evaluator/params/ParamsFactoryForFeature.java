@@ -28,11 +28,6 @@ package org.anchoranalysis.gui.feature.evaluator.params;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
-import org.anchoranalysis.anchor.mpp.feature.bean.mark.FeatureInputMark;
-import org.anchoranalysis.anchor.mpp.feature.bean.mark.collection.FeatureInputMarkCollection;
-import org.anchoranalysis.anchor.mpp.feature.input.memo.FeatureInputAllMemo;
-import org.anchoranalysis.anchor.mpp.feature.input.memo.FeatureInputPairMemo;
-import org.anchoranalysis.anchor.mpp.feature.input.memo.FeatureInputSingleMemo;
 import org.anchoranalysis.feature.bean.Feature;
 import org.anchoranalysis.feature.input.FeatureInput;
 import org.anchoranalysis.feature.input.FeatureInputEnergy;
@@ -43,6 +38,11 @@ import org.anchoranalysis.image.feature.object.input.FeatureInputObjectCollectio
 import org.anchoranalysis.image.feature.object.input.FeatureInputPairObjects;
 import org.anchoranalysis.image.feature.object.input.FeatureInputSingleObject;
 import org.anchoranalysis.mpp.bean.regionmap.RegionMapSingleton;
+import org.anchoranalysis.mpp.feature.bean.mark.FeatureInputMark;
+import org.anchoranalysis.mpp.feature.bean.mark.collection.FeatureInputMarkCollection;
+import org.anchoranalysis.mpp.feature.input.memo.FeatureInputAllMemo;
+import org.anchoranalysis.mpp.feature.input.memo.FeatureInputPairMemo;
+import org.anchoranalysis.mpp.feature.input.memo.FeatureInputSingleMemo;
 import org.anchoranalysis.mpp.mark.GlobalRegionIdentifiers;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)

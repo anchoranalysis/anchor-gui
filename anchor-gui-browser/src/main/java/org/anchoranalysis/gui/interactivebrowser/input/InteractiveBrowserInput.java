@@ -31,8 +31,6 @@ import java.util.List;
 import java.util.Optional;
 import lombok.Getter;
 import lombok.Setter;
-import org.anchoranalysis.anchor.mpp.feature.bean.energy.scheme.EnergySchemeCreator;
-import org.anchoranalysis.anchor.mpp.feature.bean.mark.MarkEvaluator;
 import org.anchoranalysis.bean.NamedBean;
 import org.anchoranalysis.bean.provider.Provider;
 import org.anchoranalysis.bean.shared.params.keyvalue.KeyValueParamsInitParams;
@@ -51,6 +49,8 @@ import org.anchoranalysis.gui.interactivebrowser.openfile.importer.ImporterSetti
 import org.anchoranalysis.image.io.bean.rasterreader.RasterReader;
 import org.anchoranalysis.io.bean.filepath.provider.FilePathProvider;
 import org.anchoranalysis.io.input.InputFromManager;
+import org.anchoranalysis.mpp.feature.bean.energy.scheme.EnergySchemeCreator;
+import org.anchoranalysis.mpp.feature.bean.mark.MarkEvaluator;
 
 public class InteractiveBrowserInput implements InputFromManager {
 

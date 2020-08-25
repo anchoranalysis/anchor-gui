@@ -29,11 +29,11 @@ package org.anchoranalysis.gui.io.loader.manifest.finder;
 import javax.swing.JFrame;
 import lombok.AllArgsConstructor;
 import lombok.Value;
-import org.anchoranalysis.anchor.mpp.feature.energy.marks.VoxelizedMarksWithEnergy;
 import org.anchoranalysis.gui.finder.imgstackcollection.FinderStacks;
 import org.anchoranalysis.gui.videostats.dropdown.VideoStatsModuleGlobalParams;
 import org.anchoranalysis.io.manifest.finder.FinderSerializedObject;
 import org.anchoranalysis.io.output.bound.BoundOutputManagerRouteErrors;
+import org.anchoranalysis.mpp.feature.energy.marks.VoxelizedMarksWithEnergy;
 import org.anchoranalysis.mpp.segment.bean.kernel.proposer.KernelProposer;
 
 @Value

@@ -29,9 +29,9 @@ package org.anchoranalysis.gui.interactivebrowser.openfile.importer;
 import java.io.File;
 import java.util.Optional;
 import javax.swing.JOptionPane;
-import org.anchoranalysis.anchor.mpp.feature.bean.energy.scheme.EnergySchemeCreator;
 import org.anchoranalysis.gui.bean.filecreator.FileCreator;
 import org.anchoranalysis.gui.interactivebrowser.openfile.type.EnergySchemeCreatorState;
+import org.anchoranalysis.mpp.feature.bean.energy.scheme.EnergySchemeCreator;
 
 public class ImporterEnergySchemeCreator extends ImporterFromBean {
 

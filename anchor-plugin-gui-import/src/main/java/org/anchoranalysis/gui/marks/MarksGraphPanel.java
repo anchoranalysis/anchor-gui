@@ -29,7 +29,6 @@ package org.anchoranalysis.gui.marks;
 import java.util.Optional;
 import javax.swing.JPanel;
 import lombok.RequiredArgsConstructor;
-import org.anchoranalysis.anchor.mpp.feature.energy.IndexableMarksWithEnergy;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.functional.function.CheckedFunction;
 import org.anchoranalysis.core.index.IntArray;
@@ -37,6 +36,7 @@ import org.anchoranalysis.core.property.IPropertyValueReceivable;
 import org.anchoranalysis.core.property.IPropertyValueSendable;
 import org.anchoranalysis.gui.plot.panel.ClickableGraphInstance;
 import org.anchoranalysis.gui.plot.panel.GraphPanel;
+import org.anchoranalysis.mpp.feature.energy.IndexableMarksWithEnergy;
 import org.anchoranalysis.overlay.collection.OverlayCollection;
 
 @RequiredArgsConstructor

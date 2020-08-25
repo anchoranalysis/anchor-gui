@@ -26,9 +26,9 @@
 
 package org.anchoranalysis.gui.interactivebrowser.input;
 
-import org.anchoranalysis.anchor.mpp.feature.energy.scheme.EnergyScheme;
-import org.anchoranalysis.anchor.mpp.feature.energy.scheme.EnergySchemeSet;
 import org.anchoranalysis.core.error.CreateException;
+import org.anchoranalysis.mpp.feature.energy.scheme.EnergyScheme;
+import org.anchoranalysis.mpp.feature.energy.scheme.EnergySchemeSet;
 
 class RegionMapFinder {
 

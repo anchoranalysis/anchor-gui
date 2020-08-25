@@ -27,12 +27,6 @@
 package org.anchoranalysis.gui.interactivebrowser.input;
 
 import lombok.AllArgsConstructor;
-import org.anchoranalysis.anchor.mpp.feature.addcriteria.BoundingBoxIntersection;
-import org.anchoranalysis.anchor.mpp.feature.bean.energy.scheme.EnergySchemeCreator;
-import org.anchoranalysis.anchor.mpp.feature.energy.scheme.EnergyScheme;
-import org.anchoranalysis.anchor.mpp.feature.energy.scheme.EnergySchemeSet;
-import org.anchoranalysis.anchor.mpp.feature.input.memo.FeatureInputPairMemo;
-import org.anchoranalysis.anchor.mpp.feature.input.memo.FeatureInputSingleMemo;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.log.Logger;
@@ -50,6 +44,12 @@ import org.anchoranalysis.gui.feature.evaluator.treetable.FeatureListSrc;
 import org.anchoranalysis.gui.feature.evaluator.treetable.KeyValueParamsAugmenter;
 import org.anchoranalysis.mpp.bean.regionmap.RegionMap;
 import org.anchoranalysis.mpp.bean.regionmap.RegionMapSingleton;
+import org.anchoranalysis.mpp.feature.addcriteria.BoundingBoxIntersection;
+import org.anchoranalysis.mpp.feature.bean.energy.scheme.EnergySchemeCreator;
+import org.anchoranalysis.mpp.feature.energy.scheme.EnergyScheme;
+import org.anchoranalysis.mpp.feature.energy.scheme.EnergySchemeSet;
+import org.anchoranalysis.mpp.feature.input.memo.FeatureInputPairMemo;
+import org.anchoranalysis.mpp.feature.input.memo.FeatureInputSingleMemo;
 
 @AllArgsConstructor
 public class FeatureListSrcBuilder {

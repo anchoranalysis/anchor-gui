@@ -29,7 +29,6 @@ package org.anchoranalysis.gui.videostats.dropdown.modulecreator.graph;
 import java.io.IOException;
 import java.util.Optional;
 import lombok.AllArgsConstructor;
-import org.anchoranalysis.anchor.mpp.feature.energy.marks.VoxelizedMarksWithEnergy;
 import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.error.reporter.ErrorReporter;
@@ -43,6 +42,7 @@ import org.anchoranalysis.gui.videostats.module.DefaultModuleStateManager;
 import org.anchoranalysis.gui.videostats.module.VideoStatsModuleCreateException;
 import org.anchoranalysis.gui.videostats.modulecreator.VideoStatsModuleCreatorContext;
 import org.anchoranalysis.io.manifest.finder.FinderSerializedObject;
+import org.anchoranalysis.mpp.feature.energy.marks.VoxelizedMarksWithEnergy;
 import org.anchoranalysis.mpp.segment.bean.kernel.proposer.KernelProposer;
 import org.anchoranalysis.mpp.segment.kernel.proposer.KernelDescision;
 

@@ -26,7 +26,6 @@
 
 package org.anchoranalysis.gui.videostats.internalframe;
 
-import org.anchoranalysis.anchor.mpp.feature.energy.IndexableMarksWithEnergy;
 import org.anchoranalysis.anchor.mpp.feature.instantstate.EnergyInstantStateBridge;
 import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.idgetter.IDGetter;
@@ -38,6 +37,7 @@ import org.anchoranalysis.gui.videostats.dropdown.BackgroundSetProgressingSuppli
 import org.anchoranalysis.gui.videostats.dropdown.VideoStatsModuleGlobalParams;
 import org.anchoranalysis.gui.videostats.module.DefaultModuleState;
 import org.anchoranalysis.io.manifest.deserializer.folder.LoadContainer;
+import org.anchoranalysis.mpp.feature.energy.IndexableMarksWithEnergy;
 import org.anchoranalysis.overlay.Overlay;
 import org.anchoranalysis.overlay.id.IDGetterOverlayID;
 

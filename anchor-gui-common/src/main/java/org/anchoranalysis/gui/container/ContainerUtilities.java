@@ -28,9 +28,9 @@ package org.anchoranalysis.gui.container;
 
 import java.util.ArrayList;
 import java.util.List;
-import org.anchoranalysis.anchor.mpp.feature.energy.IndexableMarksWithEnergy;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.index.container.BoundedIndexContainer;
+import org.anchoranalysis.mpp.feature.energy.IndexableMarksWithEnergy;
 
 public class ContainerUtilities {
 

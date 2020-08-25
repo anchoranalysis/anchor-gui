@@ -26,7 +26,7 @@
 
 package org.anchoranalysis.plugin.gui.bean.createrastergenerator.energybreakdown;
 
-import org.anchoranalysis.anchor.mpp.feature.energy.IndexableMarksWithEnergy;
+import org.anchoranalysis.mpp.feature.energy.IndexableMarksWithEnergy;
 import org.anchoranalysis.plugin.gui.bean.createrastergenerator.Combined;
 
 public class CombinedMarks extends Combined<IndexableMarksWithEnergy> {}

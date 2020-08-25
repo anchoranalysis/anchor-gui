@@ -28,12 +28,12 @@ package org.anchoranalysis.gui.marks.table;
 
 import javax.swing.table.AbstractTableModel;
 import lombok.RequiredArgsConstructor;
-import org.anchoranalysis.anchor.mpp.feature.energy.EnergyPair;
-import org.anchoranalysis.anchor.mpp.feature.energy.IndexableMarksWithEnergy;
-import org.anchoranalysis.anchor.mpp.feature.energy.saved.EnergySavedPairs;
 import org.anchoranalysis.core.color.ColorIndex;
 import org.anchoranalysis.core.color.RGBColor;
 import org.anchoranalysis.core.error.friendly.AnchorImpossibleSituationException;
+import org.anchoranalysis.mpp.feature.energy.EnergyPair;
+import org.anchoranalysis.mpp.feature.energy.IndexableMarksWithEnergy;
+import org.anchoranalysis.mpp.feature.energy.saved.EnergySavedPairs;
 
 @RequiredArgsConstructor
 public class PairTableModel extends AbstractTableModel implements IUpdateTableData {

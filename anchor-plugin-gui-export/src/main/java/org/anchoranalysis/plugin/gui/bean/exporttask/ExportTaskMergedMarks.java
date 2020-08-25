@@ -26,9 +26,9 @@
 
 package org.anchoranalysis.plugin.gui.bean.exporttask;
 
-import org.anchoranalysis.anchor.mpp.feature.energy.IndexableMarksWithEnergy;
 import org.anchoranalysis.mpp.bean.regionmap.RegionMapSingleton;
 import org.anchoranalysis.mpp.bean.regionmap.RegionMembershipWithFlags;
+import org.anchoranalysis.mpp.feature.energy.IndexableMarksWithEnergy;
 import org.anchoranalysis.mpp.mark.GlobalRegionIdentifiers;
 
 public class ExportTaskMergedMarks

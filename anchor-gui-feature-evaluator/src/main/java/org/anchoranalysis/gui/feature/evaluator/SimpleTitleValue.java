@@ -27,8 +27,8 @@
 package org.anchoranalysis.gui.feature.evaluator;
 
 import lombok.AllArgsConstructor;
-import org.anchoranalysis.anchor.mpp.feature.energy.IndexableMarksWithEnergy;
 import org.anchoranalysis.gui.marks.table.TitleValueTableModel.TitleValueRow;
+import org.anchoranalysis.mpp.feature.energy.IndexableMarksWithEnergy;
 
 @AllArgsConstructor
 class SimpleTitleValue implements TitleValueRow {

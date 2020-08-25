@@ -26,13 +26,13 @@
 
 package org.anchoranalysis.gui.feature.evaluator.treetable;
 
-import org.anchoranalysis.anchor.mpp.feature.input.memo.FeatureInputAllMemo;
-import org.anchoranalysis.anchor.mpp.feature.input.memo.FeatureInputPairMemo;
-import org.anchoranalysis.anchor.mpp.feature.input.memo.FeatureInputSingleMemo;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.feature.energy.EnergyStack;
 import org.anchoranalysis.feature.shared.SharedFeatureMulti;
 import org.anchoranalysis.gui.feature.FeatureListWithRegionMap;
+import org.anchoranalysis.mpp.feature.input.memo.FeatureInputAllMemo;
+import org.anchoranalysis.mpp.feature.input.memo.FeatureInputPairMemo;
+import org.anchoranalysis.mpp.feature.input.memo.FeatureInputSingleMemo;
 
 public abstract class FeatureListSrc {
 

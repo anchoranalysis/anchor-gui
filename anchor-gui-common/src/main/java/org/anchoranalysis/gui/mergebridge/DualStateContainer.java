@@ -28,13 +28,13 @@ package org.anchoranalysis.gui.mergebridge;
 
 import java.util.List;
 import lombok.RequiredArgsConstructor;
-import org.anchoranalysis.anchor.mpp.feature.energy.IndexableMarksWithEnergy;
 import org.anchoranalysis.core.cache.LRUCache;
 import org.anchoranalysis.core.functional.FunctionalList;
 import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.index.container.BoundChangeListener;
 import org.anchoranalysis.core.index.container.BoundedIndexContainer;
 import org.anchoranalysis.io.manifest.sequencetype.IncrementalSequenceType;
+import org.anchoranalysis.mpp.feature.energy.IndexableMarksWithEnergy;
 
 // Contains both the selected and proposal histories
 @RequiredArgsConstructor

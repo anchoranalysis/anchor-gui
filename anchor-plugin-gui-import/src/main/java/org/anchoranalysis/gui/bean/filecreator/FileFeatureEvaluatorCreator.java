@@ -30,7 +30,6 @@ import java.util.ArrayList;
 import java.util.List;
 import lombok.Getter;
 import lombok.Setter;
-import org.anchoranalysis.anchor.mpp.feature.bean.energy.scheme.EnergySchemeCreator;
 import org.anchoranalysis.bean.NamedBean;
 import org.anchoranalysis.bean.annotation.BeanField;
 import org.anchoranalysis.bean.annotation.NonEmpty;
@@ -51,6 +50,7 @@ import org.anchoranalysis.gui.videostats.dropdown.VideoStatsModuleGlobalParams;
 import org.anchoranalysis.gui.videostats.module.VideoStatsModule;
 import org.anchoranalysis.gui.videostats.module.VideoStatsModuleCreateException;
 import org.anchoranalysis.gui.videostats.modulecreator.FeatureEvaluatorCreator;
+import org.anchoranalysis.mpp.feature.bean.energy.scheme.EnergySchemeCreator;
 
 public class FileFeatureEvaluatorCreator extends FileCreator {
 

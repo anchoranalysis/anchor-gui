@@ -26,7 +26,7 @@
 
 package org.anchoranalysis.gui.marks.table;
 
-import org.anchoranalysis.anchor.mpp.feature.energy.IndexableMarksWithEnergy;
+import org.anchoranalysis.mpp.feature.energy.IndexableMarksWithEnergy;
 
 public interface IUpdateTableData {
     void updateTableData(IndexableMarksWithEnergy state);

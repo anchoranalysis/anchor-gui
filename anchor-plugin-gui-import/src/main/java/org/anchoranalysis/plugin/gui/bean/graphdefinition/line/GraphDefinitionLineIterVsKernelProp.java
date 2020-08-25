@@ -26,9 +26,9 @@
 
 package org.anchoranalysis.plugin.gui.bean.graphdefinition.line;
 
-import org.anchoranalysis.anchor.mpp.feature.energy.marks.VoxelizedMarksWithEnergy;
 import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.gui.io.loader.manifest.finder.csvstatistic.CSVStatistic;
+import org.anchoranalysis.mpp.feature.energy.marks.VoxelizedMarksWithEnergy;
 import org.anchoranalysis.mpp.segment.bean.kernel.proposer.KernelProposer;
 import org.anchoranalysis.plot.bean.colorscheme.GraphColorScheme;
 import org.anchoranalysis.plot.index.LinePlot.YValGetter;

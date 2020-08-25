@@ -28,9 +28,9 @@ package org.anchoranalysis.plugin.gui.bean.createrastergenerator.energybreakdown
 
 import lombok.Getter;
 import lombok.Setter;
-import org.anchoranalysis.anchor.mpp.feature.energy.marks.MarksWithEnergyBreakdown;
 import org.anchoranalysis.bean.annotation.AllowEmpty;
 import org.anchoranalysis.bean.annotation.BeanField;
+import org.anchoranalysis.mpp.feature.energy.marks.MarksWithEnergyBreakdown;
 import org.anchoranalysis.plugin.gui.bean.createrastergenerator.CreateStringRasterGenerator;
 
 public class NumberMarksAsText extends CreateStringRasterGenerator {

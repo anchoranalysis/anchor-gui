@@ -26,11 +26,11 @@
 
 package org.anchoranalysis.gui.feature.evaluator.params;
 
-import org.anchoranalysis.anchor.mpp.feature.input.memo.FeatureInputAllMemo;
-import org.anchoranalysis.anchor.mpp.feature.mark.MemoCollection;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.feature.energy.EnergyStack;
 import org.anchoranalysis.feature.input.FeatureInput;
+import org.anchoranalysis.mpp.feature.input.memo.FeatureInputAllMemo;
+import org.anchoranalysis.mpp.feature.mark.MemoCollection;
 
 public class EnergyAllInputsFactory extends AllFactory {
 

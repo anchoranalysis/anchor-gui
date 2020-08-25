@@ -30,8 +30,6 @@ import java.util.ArrayList;
 import java.util.List;
 import lombok.Getter;
 import lombok.Setter;
-import org.anchoranalysis.anchor.mpp.feature.bean.energy.scheme.EnergySchemeCreator;
-import org.anchoranalysis.anchor.mpp.feature.bean.mark.MarkEvaluator;
 import org.anchoranalysis.bean.NamedBean;
 import org.anchoranalysis.bean.annotation.BeanField;
 import org.anchoranalysis.bean.annotation.DefaultInstance;
@@ -47,6 +45,8 @@ import org.anchoranalysis.io.bean.filepath.provider.FilePathProvider;
 import org.anchoranalysis.io.bean.input.InputManager;
 import org.anchoranalysis.io.bean.input.InputManagerParams;
 import org.anchoranalysis.io.error.AnchorIOException;
+import org.anchoranalysis.mpp.feature.bean.energy.scheme.EnergySchemeCreator;
+import org.anchoranalysis.mpp.feature.bean.mark.MarkEvaluator;
 
 public class InteractiveBrowserInputManager extends InputManager<InteractiveBrowserInput> {
 

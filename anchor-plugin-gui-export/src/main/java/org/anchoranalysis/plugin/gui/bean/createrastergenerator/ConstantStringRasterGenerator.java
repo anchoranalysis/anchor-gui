@@ -28,8 +28,8 @@ package org.anchoranalysis.plugin.gui.bean.createrastergenerator;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.anchoranalysis.anchor.mpp.feature.energy.marks.MarksWithEnergyBreakdown;
 import org.anchoranalysis.bean.annotation.BeanField;
+import org.anchoranalysis.mpp.feature.energy.marks.MarksWithEnergyBreakdown;
 
 public class ConstantStringRasterGenerator extends CreateStringRasterGenerator {
 

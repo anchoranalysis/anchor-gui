@@ -27,16 +27,16 @@
 package org.anchoranalysis.gui.feature.evaluator.treetable;
 
 import lombok.AllArgsConstructor;
-import org.anchoranalysis.anchor.mpp.feature.energy.scheme.EnergyScheme;
-import org.anchoranalysis.anchor.mpp.feature.energy.scheme.EnergySchemeSet;
-import org.anchoranalysis.anchor.mpp.feature.input.memo.FeatureInputAllMemo;
-import org.anchoranalysis.anchor.mpp.feature.input.memo.FeatureInputPairMemo;
-import org.anchoranalysis.anchor.mpp.feature.input.memo.FeatureInputSingleMemo;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.feature.energy.EnergyStack;
 import org.anchoranalysis.feature.shared.SharedFeatureMulti;
 import org.anchoranalysis.gui.feature.FeatureListUtilities;
 import org.anchoranalysis.gui.feature.FeatureListWithRegionMap;
+import org.anchoranalysis.mpp.feature.energy.scheme.EnergyScheme;
+import org.anchoranalysis.mpp.feature.energy.scheme.EnergySchemeSet;
+import org.anchoranalysis.mpp.feature.input.memo.FeatureInputAllMemo;
+import org.anchoranalysis.mpp.feature.input.memo.FeatureInputPairMemo;
+import org.anchoranalysis.mpp.feature.input.memo.FeatureInputSingleMemo;
 
 @AllArgsConstructor
 public class ExtractFromEnergySchemeSet extends FeatureListSrc {

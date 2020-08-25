@@ -26,12 +26,12 @@
 
 package org.anchoranalysis.gui.marks;
 
-import org.anchoranalysis.anchor.mpp.feature.energy.IndexableMarksWithEnergy;
 import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.error.reporter.ErrorReporter;
 import org.anchoranalysis.gui.image.frame.ControllerSize;
 import org.anchoranalysis.gui.videostats.IModuleCreatorDefaultState;
 import org.anchoranalysis.io.manifest.deserializer.folder.LoadContainer;
+import org.anchoranalysis.mpp.feature.energy.IndexableMarksWithEnergy;
 
 public class StatePanelFrameHistoryMarks {
 
