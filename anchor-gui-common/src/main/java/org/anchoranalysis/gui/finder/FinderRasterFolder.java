@@ -31,7 +31,7 @@ import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.anchoranalysis.core.index.container.BoundedIndexContainer;
 import org.anchoranalysis.image.io.bean.rasterreader.RasterReader;
-import org.anchoranalysis.image.stack.NamedStacksSet;
+import org.anchoranalysis.image.stack.NamedStacks;
 import org.anchoranalysis.image.stack.Stack;
 import org.anchoranalysis.io.manifest.ManifestRecorder;
 import org.anchoranalysis.io.manifest.deserializer.folder.BoundsFromSequenceType;
@@ -78,24 +78,24 @@ public class FinderRasterFolder extends FinderSingleFolder {
     }
 
     // If namesAsIndexes is true, we use the indexes as names instead of the existing names
-    public NamedStacksSet createStackCollection(boolean namesAsIndexes) {
+    public NamedStacks createStackCollection(boolean namesAsIndexes) {
 
         if (getFoundFolder() == null) {
-            return new NamedStacksSet();
+            return new NamedStacks();
         }
 
-        NamedStacksSet nisc = new NamedStacksSet();
+        NamedStacks stacks = new NamedStacks();
 
-        SequencedFolderRasterReader sfrr =
+        SequencedFolderRasterReader reader =
                 new SequencedFolderRasterReader(getFoundFolder(), rasterReader);
 
         AddFromSequenceHelper.addFromSequence(
                 getFoundFolder().getAssociatedSequence(),
-                sfrr,
-                nisc::addImageStack,
+                reader,
+                stacks::add,
                 namesAsIndexes);
 
-        return nisc;
+        return stacks;
     }
 
     private BoundedIndexContainer<Stack> createContainer(FolderWrite folder) {

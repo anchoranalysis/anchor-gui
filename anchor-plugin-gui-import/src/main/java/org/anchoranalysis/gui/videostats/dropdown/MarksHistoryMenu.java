@@ -66,6 +66,7 @@ import org.anchoranalysis.plugin.gui.bean.graphdefinition.line.GraphDefinitionLi
 import org.anchoranalysis.plugin.gui.bean.graphdefinition.line.GraphDefinitionLineIterVsTemperature;
 import org.anchoranalysis.plugin.gui.bean.graphdefinition.line.GraphDefinitionLineIterVsTime;
 import org.anchoranalysis.plugin.gui.bean.graphdefinition.line.GraphDefinitionLineIterVsTimePerIter;
+import com.google.common.base.Preconditions;
 
 // TODO needs heavy refactoring for readability
 public class MarksHistoryMenu {
@@ -95,8 +96,8 @@ public class MarksHistoryMenu {
             MarksWithEnergyFinderContext context)
             throws MenuAddException {
 
-        assert (finderMarksHistory.exists());
-        assert (context.getFinderStacks().exists());
+        Preconditions.checkArgument(finderMarksHistory.exists());
+        Preconditions.checkArgument(context.getFinderStacks().exists());
 
         // Colored Outline
         creatorColoredOutline =
@@ -197,19 +198,6 @@ public class MarksHistoryMenu {
         //  the finderKernelProposer.get()
         graphSubMenu.addMenuListener(
                 new ExecuteWhenMenuFirstSelected(mpg.getLogger().errorReporter()) {
-
-                    private void addCSVStatistic(
-                            VideoStatsOperationMenu subMenu,
-                            Plot<CSVStatistic> graphDefinition,
-                            boolean useShortNames)
-                            throws MenuAddException {
-                        adder.addModuleToMenu(
-                                subMenu,
-                                new SingleContextualModuleCreator(
-                                        new PlotCSVStatistic(graphDefinition, finderCSVStats)),
-                                false,
-                                mpg);
-                    }
 
                     @Override
                     public void execute() throws OperationFailedException {
@@ -315,6 +303,19 @@ public class MarksHistoryMenu {
                                 throw new OperationFailedException(e);
                             }
                         }
+                    }
+                    
+                    private void addCSVStatistic(
+                            VideoStatsOperationMenu subMenu,
+                            Plot<CSVStatistic> graphDefinition,
+                            boolean useShortNames)
+                            throws MenuAddException {
+                        adder.addModuleToMenu(
+                                subMenu,
+                                new SingleContextualModuleCreator(
+                                        new PlotCSVStatistic(graphDefinition, finderCSVStats)),
+                                useShortNames,
+                                mpg);
                     }
                 });
 

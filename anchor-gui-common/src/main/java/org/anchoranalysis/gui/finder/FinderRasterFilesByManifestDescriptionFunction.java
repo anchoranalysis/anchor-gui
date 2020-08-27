@@ -35,7 +35,7 @@ import org.anchoranalysis.core.progress.ProgressReporterNull;
 import org.anchoranalysis.image.io.RasterIOException;
 import org.anchoranalysis.image.io.bean.rasterreader.RasterReader;
 import org.anchoranalysis.image.io.rasterreader.OpenedRaster;
-import org.anchoranalysis.image.stack.NamedStacksSet;
+import org.anchoranalysis.image.stack.NamedStacks;
 import org.anchoranalysis.image.stack.Stack;
 import org.anchoranalysis.io.manifest.ManifestRecorder;
 import org.anchoranalysis.io.manifest.file.FileWrite;
@@ -79,14 +79,14 @@ public class FinderRasterFilesByManifestDescriptionFunction implements Finder {
         return list != null && !list.isEmpty();
     }
 
-    public NamedStacksSet createStackCollection() {
+    public NamedStacks createStackCollection() {
 
-        NamedStacksSet out = new NamedStacksSet();
+        NamedStacks out = new NamedStacks();
         for (FileWrite fileWrite : list) {
             String name = fileWrite.getIndex();
 
             // Assume single series, single channel
-            out.addImageStack(
+            out.add(
                     name,
                     StoreSupplier.cache(
                             () ->

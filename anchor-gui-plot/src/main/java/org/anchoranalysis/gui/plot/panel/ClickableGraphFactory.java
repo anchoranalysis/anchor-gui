@@ -34,7 +34,6 @@ import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.plot.AxisLimits;
 import org.anchoranalysis.plot.PlotInstance;
 import org.anchoranalysis.plot.bean.Plot;
-import org.jfree.data.general.Dataset;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class ClickableGraphFactory {
@@ -49,15 +48,15 @@ public class ClickableGraphFactory {
         return createWithXAxisIndex(instance, domainLimits);
     }
 
-    private static <T, S extends Dataset> ClickableGraphInstance createWithXAxisIndex(
-            PlotInstance graphInstance, Optional<AxisLimits> domainLimits) throws CreateException {
+    private static ClickableGraphInstance createWithXAxisIndex(
+            PlotInstance graphInstance, Optional<AxisLimits> domainLimits) {
 
-        ClickableGraphInstance gl = new ClickableGraphInstance(graphInstance);
+        ClickableGraphInstance clickable = new ClickableGraphInstance(graphInstance);
 
         if (domainLimits.isPresent()) {
-            gl.addXAxisIndexListener(minAxis(domainLimits.get()), maxAxis(domainLimits.get()));
+            clickable.addXAxisIndexListener(minAxis(domainLimits.get()), maxAxis(domainLimits.get()));
         }
-        return gl;
+        return clickable;
     }
 
     private static int minAxis(AxisLimits domainLimits) {

@@ -35,7 +35,7 @@ import org.anchoranalysis.core.progress.ProgressReporter;
 import org.anchoranalysis.core.progress.ProgressReporterNull;
 import org.anchoranalysis.feature.energy.EnergyStack;
 import org.anchoranalysis.gui.finder.FinderEnergyStack;
-import org.anchoranalysis.image.stack.NamedStacksSet;
+import org.anchoranalysis.image.stack.NamedStacks;
 import org.anchoranalysis.image.stack.NamedStacksSupplier;
 import org.anchoranalysis.image.stack.Stack;
 import org.anchoranalysis.io.manifest.ManifestRecorder;
@@ -71,13 +71,13 @@ public class FinderStacksFromEnergyStack implements FinderStacks {
 
     private NamedProvider<Stack> buildStacks(ProgressReporter progressReporter)
             throws OperationFailedException {
-        NamedStacksSet stackCollection = new NamedStacksSet();
+        NamedStacks stackCollection = new NamedStacks();
 
         // finder energy stack
         if (delegate != null && delegate.exists()) {
 
             // Should we mention when we only have the first 3?
-            stackCollection.addImageStack("energyStack", StoreSupplier.cache(this::extractStack));
+            stackCollection.add("energyStack", StoreSupplier.cache(this::extractStack));
 
             stackCollection.addFromWithPrefix(delegate.getNamedStacks(), "energyChannel-");
         }

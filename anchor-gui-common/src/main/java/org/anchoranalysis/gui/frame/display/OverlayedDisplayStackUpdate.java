@@ -37,55 +37,64 @@ import org.anchoranalysis.image.stack.DisplayStack;
 import org.anchoranalysis.overlay.Overlay;
 import org.anchoranalysis.overlay.collection.ColoredOverlayCollection;
 import org.anchoranalysis.overlay.collection.OverlayCollection;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 
+@AllArgsConstructor(access=AccessLevel.PRIVATE)
 public class OverlayedDisplayStackUpdate {
 
-    private ColoredOverlayCollection coloredMarks; // If null, we don't change the current marks
-    private DisplayStack backgroundStack; // If null, we don't change the existing background
-    private OverlayCollection
-            changedMarks; // If non-null, additional marks that should be updated, as they might
-    // have
-    // changed in some way
-    private boolean redrawSpecific =
-            false; // If true, then the coloredMarks passed can be considered similar to the
-    // existing
-    // marks. If false, not
-
-    // Assigns a new configuration completely, throwing out what's already there
+    /**
+     *  If null, we don't change the current marks
+     */
+    @Getter private ColoredOverlayCollection coloredMarks;
+    
+    /**
+     *  If null, we don't change the existing background
+     */
+    @Getter private DisplayStack backgroundStack;
+    
+    /**
+     * If non-null, additional marks that should be updated, as they might have changed in some way
+     */
+    private OverlayCollection changedMarks;
+    
+    /**
+     *  Do we redraw specific bounding boxes, or look for everything?
+     *  
+     *  <p>If true, then the coloredMarks passed can be considered similar to the existing marks. If false, not assigns a new configuration completely, throwing out what's already there
+     */
+    @Getter private boolean redrawSpecific = false; 
+ 
     public static OverlayedDisplayStackUpdate assignOverlays(
             ColoredOverlayCollection coloredMarks) {
-        assert (coloredMarks != null);
         return new OverlayedDisplayStackUpdate(coloredMarks, null, null, false);
     }
-
-    // Replaces the existing coloredMarks with something similar, but we don't know what's changed
-    // exactly
-    //  coloredMarks is the entire new Marks
+    
+    /**
+     * Replaces the existing coloredMarks with something similar, but we don't know what's changed exactly
+     * 
+     * @param marksToAssign the marks to assign
+     * @param changedMarks
+     * @return
+     */
     public static OverlayedDisplayStackUpdate updateOverlaysWithSimilar(
-            ColoredOverlayCollection coloredMarks, OverlayCollection changedMarks) {
-        assert (coloredMarks != null);
-        return new OverlayedDisplayStackUpdate(coloredMarks, null, changedMarks, true);
-        // return new ColoredMarksRedrawUpdate(coloredMarks, null, null,false);
+            ColoredOverlayCollection marksToAssign, OverlayCollection changedMarks) {
+        return new OverlayedDisplayStackUpdate(marksToAssign, null, changedMarks, true);
 
     }
 
     public static OverlayedDisplayStackUpdate updateOverlaysWithSimilar(
             ColoredOverlayCollection coloredMarks) {
-        assert (coloredMarks != null);
         return new OverlayedDisplayStackUpdate(coloredMarks, null, null, true);
-        // return new ColoredMarksRedrawUpdate(coloredMarks, null, null,false);
-
     }
 
     public static OverlayedDisplayStackUpdate assignBackground(DisplayStack backgroundStack) {
-        assert (backgroundStack != null);
         return new OverlayedDisplayStackUpdate(null, backgroundStack, null, false);
     }
 
     public static OverlayedDisplayStackUpdate assignOverlaysAndBackground(
             ColoredOverlayCollection coloredMarks, DisplayStack backgroundStack) {
-        assert (coloredMarks != null);
-        assert (backgroundStack != null);
         return new OverlayedDisplayStackUpdate(coloredMarks, backgroundStack, null, false);
     }
 
@@ -94,32 +103,11 @@ public class OverlayedDisplayStackUpdate {
     }
 
     public static OverlayedDisplayStackUpdate updateChanged(OverlayCollection changedMarks) {
-        assert (changedMarks != null);
         return new OverlayedDisplayStackUpdate(null, null, changedMarks, false);
-    }
-
-    private OverlayedDisplayStackUpdate(
-            ColoredOverlayCollection coloredMarks,
-            DisplayStack backgroundStack,
-            OverlayCollection redrawParts,
-            boolean similar) {
-        super();
-        this.coloredMarks = coloredMarks;
-        this.backgroundStack = backgroundStack;
-        this.changedMarks = redrawParts;
-        this.redrawSpecific = similar;
     }
 
     public OverlayCollection getRedrawParts() {
         return changedMarks;
-    }
-
-    public ColoredOverlayCollection getColoredMarks() {
-        return coloredMarks;
-    }
-
-    public DisplayStack getBackgroundStack() {
-        return backgroundStack;
     }
 
     public void mergeWithNewerUpdate(OverlayedDisplayStackUpdate newer) {
@@ -134,7 +122,6 @@ public class OverlayedDisplayStackUpdate {
 
         if (newer.getColoredMarks() != null) {
             this.coloredMarks = newer.getColoredMarks();
-            assert (newer.getColoredMarks() != null);
         }
 
         // Any time the background stack changes, we need to redraw everyything anyway
@@ -172,19 +159,11 @@ public class OverlayedDisplayStackUpdate {
 
                 // Otherwise if we've received a new ColoredMarks, then it's time to take action
                 // We assume than we receive a new ColoredMarks redraw parts is also not
-                // simultaenously set
+                // simultaneously set
                 if (getColoredMarks() != null) {
 
                     ColoredOverlayCollection cachedOverlayCollection =
                             boundOverlay.getPrecalculatedCache().getOverlays();
-
-                    //				if (getRedrawParts()!=null) {
-                    //					System.out.println("Assuming existing redraw parts knows best");
-                    //					boundOverlay.updateColoredMarks( getColoredMarks() );
-                    //					return DisplayUpdate.redrawParts(
-                    // boundOverlay.boxListForMarks(getRedrawParts()) );
-                    //				}
-                    // assert( update.getRedrawParts()==null );
 
                     // Find out the difference between the old marks, and the new marks, and this
                     // becomes our redraw part
@@ -201,7 +180,7 @@ public class OverlayedDisplayStackUpdate {
 
                         ColoredOverlayCollection added = new ColoredOverlayCollection();
                         ColoredOverlayCollection removed = new ColoredOverlayCollection();
-                        List<Integer> removedIndices = new ArrayList<Integer>();
+                        List<Integer> removedIndices = new ArrayList<>();
 
                         // Find specifily the marks that were added and removed
                         createDiff(
@@ -211,10 +190,7 @@ public class OverlayedDisplayStackUpdate {
                                 removed,
                                 removedIndices);
 
-                        // System.out.printf( "Diff: added=%d, removed=%s\n", added.size(),
-                        // removed.size() );
-
-                        List<BoundingBox> boxToRefresh = new ArrayList<BoundingBox>();
+                        List<BoundingBox> boxToRefresh = new ArrayList<>();
                         boxToRefresh.addAll(boundOverlay.boxList(removed));
 
                         boundOverlay.removeOverlays(removedIndices);
@@ -223,12 +199,6 @@ public class OverlayedDisplayStackUpdate {
                         boxToRefresh.addAll(boundOverlay.boxList(added));
 
                         if (getRedrawParts() != null) {
-
-                            // List<IndexExstNew> indices = findIndices( getColoredMarks(),
-                            // getRedrawParts() );
-                            // boundOverlay.updateColorSpecificIndices( getColoredMarks(), indices
-                            // );
-
                             boxToRefresh.addAll(boundOverlay.boxList(getRedrawParts()));
                         }
 
@@ -282,50 +252,24 @@ public class OverlayedDisplayStackUpdate {
 
         for (int i = 0; i < marksPrevious.size(); i++) {
 
-            Overlay ol = marksPrevious.get(i);
+            Overlay overlay = marksPrevious.get(i);
 
-            if (!setNew.contains(ol)) {
+            if (!setNew.contains(overlay)) {
                 // If it's not in the new, for sure we've removed it
                 RGBColor col = marksPrevious.getColor(i);
-                outRemovedMarks.add(ol, col);
+                outRemovedMarks.add(overlay, col);
                 outRemovedIndices.add(i);
             }
         }
 
         for (int i = 0; i < marksNew.size(); i++) {
 
-            Overlay ol = marksNew.get(i);
+            Overlay overlay = marksNew.get(i);
 
-            if (!setPrevious.contains(ol)) {
+            if (!setPrevious.contains(overlay)) {
                 // If it's in the New, but not the previous, for sure we've added it
-                RGBColor col = marksNew.getColor(i);
-                outAdded.add(ol, col);
+                outAdded.add(overlay, marksNew.getColor(i));
             }
         }
-    }
-
-    // Returns the indices of all the elements of marksToFind found in marksToSearch
-    //	private static List<IndexExstNew> findIndices( ColoredMarks marksToSearch, Marks marksToFind
-    // ) {
-    //
-    //		List<IndexExstNew> listOut = new ArrayList<IndexExstNew>();
-    //
-    //		Map<Mark,Integer> setToFind = marksToFind.createHashMapToId();
-    //
-    //		for (int i=0; i<marksToSearch.size(); i++ ) {
-    //			Mark m = marksToSearch.getMarks().get(i);
-    //
-    //			Integer id = setToFind.get(m);
-    //			if (id!=null) {
-    //				listOut.add( new IndexExstNew(i, id) );
-    //			}
-    //		}
-    //
-    //		return listOut;
-    //	}
-
-    // Do we redraw specific bounding boxes, or look for everything
-    public boolean isRedrawSpecific() {
-        return redrawSpecific;
     }
 }

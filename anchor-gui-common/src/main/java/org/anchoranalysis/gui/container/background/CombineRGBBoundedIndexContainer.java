@@ -52,7 +52,7 @@ public class CombineRGBBoundedIndexContainer implements BoundedIndexContainer<Di
     private Dimensions dimensions;
 
     // We assume we will never have an index above this number
-    private static int MAX_NEVER_REACHED = 1000000;
+    private static final int MAX_NEVER_REACHED = 1000000;
 
     private void setDimensionsIfNeeded(BoundedIndexContainer<DisplayStack> cntr)
             throws GetOperationFailedException {

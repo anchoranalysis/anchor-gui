@@ -41,16 +41,14 @@ import org.anchoranalysis.gui.videostats.internalframe.annotator.AnnotationInitP
 import org.anchoranalysis.image.stack.NamedStacksSupplier;
 import org.anchoranalysis.image.stack.Stack;
 import org.anchoranalysis.io.error.AnchorIOException;
+import lombok.RequiredArgsConstructor;
 
+@RequiredArgsConstructor
 public abstract class AnnotationGuiBuilderWithDelegate<
                 T extends AnnotationInitParams, S extends AnnotatorStrategy>
         extends AnnotationGuiBuilder<T> {
 
-    private AnnotationWithStrategy<S> delegate;
-
-    public AnnotationGuiBuilderWithDelegate(AnnotationWithStrategy<S> delegate) {
-        this.delegate = delegate;
-    }
+    private final AnnotationWithStrategy<S> delegate;
 
     @Override
     public ChangeableBackground backgroundDefinition(
@@ -62,7 +60,7 @@ public abstract class AnnotationGuiBuilderWithDelegate<
     /** A path that is used to allow the user to delete an annotation */
     @Override
     public Path deletePath() {
-        return delegate.getAnnotationPath();
+        return delegate.getPath();
     }
 
     // Cached-operation
@@ -94,7 +92,7 @@ public abstract class AnnotationGuiBuilderWithDelegate<
     }
 
     protected Path annotationPath() {
-        return delegate.getAnnotationPath();
+        return delegate.getPath();
     }
 
     protected AnnotationBackgroundInstance createBackground(

@@ -31,7 +31,7 @@ import java.util.List;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.name.provider.NamedProvider;
 import org.anchoranalysis.core.progress.ProgressReporterNull;
-import org.anchoranalysis.image.stack.NamedStacksSet;
+import org.anchoranalysis.image.stack.NamedStacks;
 import org.anchoranalysis.image.stack.NamedStacksSupplier;
 import org.anchoranalysis.image.stack.Stack;
 import org.anchoranalysis.io.manifest.ManifestRecorder;
@@ -44,7 +44,7 @@ public class FinderStacksCombine implements FinderStacks {
     private NamedStacksSupplier operation =
             NamedStacksSupplier.cache(
                     pr -> {
-                        NamedStacksSet out = new NamedStacksSet();
+                        NamedStacks out = new NamedStacks();
 
                         for (FinderStacks finder : list) {
                             out.addFrom(finder.getStacks());

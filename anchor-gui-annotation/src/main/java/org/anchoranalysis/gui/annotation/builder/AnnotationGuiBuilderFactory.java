@@ -34,7 +34,10 @@ import org.anchoranalysis.gui.annotation.strategy.builder.whole.BuilderWholeImag
 import org.anchoranalysis.io.error.AnchorIOException;
 import org.anchoranalysis.plugin.annotation.bean.strategy.MarkProposerStrategy;
 import org.anchoranalysis.plugin.annotation.bean.strategy.WholeImageLabelStrategy;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 
+@NoArgsConstructor(access=AccessLevel.PRIVATE)
 public class AnnotationGuiBuilderFactory {
 
     @SuppressWarnings("unchecked")

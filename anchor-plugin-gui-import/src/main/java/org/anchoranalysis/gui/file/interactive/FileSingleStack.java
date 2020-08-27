@@ -99,10 +99,10 @@ public class FileSingleStack extends InteractiveFile {
     private TimeSequenceProvider createTimeSeries(ProgressReporter progressReporter, int seriesNum)
             throws CreateException {
         try {
-            LazyEvaluationStore<TimeSequence> stackCollection =
+            LazyEvaluationStore<TimeSequence> stacks =
                     new LazyEvaluationStore<>("createTimeSeries");
-            inputObject.addToStoreInferNames(stackCollection, seriesNum, progressReporter);
-            return new TimeSequenceProvider(stackCollection, inputObject.numberFrames());
+            inputObject.addToStoreInferNames(stacks, seriesNum, progressReporter);
+            return new TimeSequenceProvider(stacks, inputObject.numberFrames());
         } catch (OperationFailedException e) {
             throw new CreateException(e);
         }

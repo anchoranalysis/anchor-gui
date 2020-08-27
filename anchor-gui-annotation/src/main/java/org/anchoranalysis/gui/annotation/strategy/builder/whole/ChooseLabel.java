@@ -39,9 +39,9 @@ import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 import org.anchoranalysis.annotation.image.ImageLabelAnnotation;
-import org.anchoranalysis.gui.annotation.bean.label.AnnotationLabel;
-import org.anchoranalysis.gui.annotation.bean.label.GroupedAnnotationLabels;
 import org.anchoranalysis.gui.videostats.internalframe.annotator.navigation.PanelWithLabel;
+import org.anchoranalysis.plugin.annotation.bean.label.AnnotationLabel;
+import org.anchoranalysis.plugin.annotation.bean.label.GroupedAnnotationLabels;
 
 class ChooseLabel extends PanelWithLabel {
 

@@ -30,7 +30,7 @@ import java.awt.Color;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
-import org.anchoranalysis.gui.annotation.bean.label.AnnotationLabel;
+import org.anchoranalysis.plugin.annotation.bean.label.AnnotationLabel;
 
 public class LabelColorMap {
 

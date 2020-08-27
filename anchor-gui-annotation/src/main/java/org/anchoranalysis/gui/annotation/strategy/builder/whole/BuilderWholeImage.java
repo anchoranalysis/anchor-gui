@@ -41,7 +41,6 @@ import org.anchoranalysis.core.progress.ProgressReporterMultiple;
 import org.anchoranalysis.core.progress.ProgressReporterNull;
 import org.anchoranalysis.gui.annotation.AnnotationBackgroundInstance;
 import org.anchoranalysis.gui.annotation.AnnotationRefresher;
-import org.anchoranalysis.gui.annotation.bean.label.AnnotationLabel;
 import org.anchoranalysis.gui.annotation.builder.AdditionalFramesContext;
 import org.anchoranalysis.gui.annotation.builder.AnnotationGuiBuilderWithDelegate;
 import org.anchoranalysis.gui.annotation.builder.AnnotationGuiContext;
@@ -53,6 +52,7 @@ import org.anchoranalysis.gui.videostats.internalframe.annotator.AnnotationWrite
 import org.anchoranalysis.gui.videostats.internalframe.annotator.SaveMonitor;
 import org.anchoranalysis.gui.videostats.internalframe.annotator.navigation.PanelNavigation;
 import org.anchoranalysis.gui.videostats.internalframe.annotator.navigation.PanelWithLabel;
+import org.anchoranalysis.plugin.annotation.bean.label.AnnotationLabel;
 import org.anchoranalysis.plugin.annotation.bean.strategy.ReadAnnotationFromFile;
 import org.anchoranalysis.plugin.annotation.bean.strategy.WholeImageLabelStrategy;
 
