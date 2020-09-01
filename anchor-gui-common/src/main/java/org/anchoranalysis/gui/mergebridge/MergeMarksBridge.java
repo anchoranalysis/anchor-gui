@@ -168,10 +168,10 @@ public class MergeMarksBridge
             copyAsUnchanged(sourceObject.getSecondary(), mergedMarks, lastProposalState);
         }
 
-        OverlayCollection oc =
+        OverlayCollection overlays =
                 OverlayCollectionMarkFactory.createWithoutColor(
                         mergedMarks, regionMembership.get());
-        return new IndexableOverlays(sourceObject.getIndex(), oc);
+        return new IndexableOverlays(sourceObject.getIndex(), overlays);
     }
 
     public int size() {
