@@ -27,32 +27,41 @@
 package org.anchoranalysis.gui.videostats.dropdown.common;
 
 import lombok.AllArgsConstructor;
+import org.anchoranalysis.core.cache.CachedSupplier;
+import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.InitException;
-import org.anchoranalysis.core.progress.CacheCallWithProgressReporter;
-import org.anchoranalysis.gui.image.frame.ISliderState;
+import org.anchoranalysis.core.progress.ProgressReporter;
+import org.anchoranalysis.gui.backgroundset.BackgroundSet;
+import org.anchoranalysis.gui.backgroundset.BackgroundSetFactory;
+import org.anchoranalysis.gui.container.background.BackgroundStackContainerException;
+import org.anchoranalysis.gui.image.frame.SliderState;
 import org.anchoranalysis.gui.interactivebrowser.MarkEvaluatorSetForImage;
-import org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.IBackgroundUpdater;
-import org.anchoranalysis.gui.videostats.dropdown.CreateBackgroundSetFromExisting;
-import org.anchoranalysis.gui.videostats.dropdown.IAddVideoStatsModule;
-import org.anchoranalysis.gui.videostats.dropdown.IUpdatableMarkEvaluator;
+import org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.BackgroundUpdater;
+import org.anchoranalysis.gui.videostats.dropdown.AddVideoStatsModule;
+import org.anchoranalysis.gui.videostats.dropdown.BackgroundSetProgressingSupplier;
 import org.anchoranalysis.gui.videostats.dropdown.ModuleAddUtilities;
+import org.anchoranalysis.gui.videostats.dropdown.UpdatableMarkEvaluator;
 import org.anchoranalysis.gui.videostats.dropdown.VideoStatsModuleGlobalParams;
 import org.anchoranalysis.gui.videostats.internalframe.evaluator.InternalFrameMarkProposerEvaluator;
 import org.anchoranalysis.gui.videostats.module.VideoStatsModuleCreateException;
 import org.anchoranalysis.gui.videostats.modulecreator.VideoStatsModuleCreator;
+import org.anchoranalysis.image.bean.nonbean.init.CreateCombinedStack;
+import org.anchoranalysis.image.bean.nonbean.init.ImageInitParams;
+import org.anchoranalysis.image.stack.wrap.WrapStackAsTimeSequence;
 import org.anchoranalysis.io.output.bean.OutputWriteSettings;
+import org.anchoranalysis.mpp.bean.init.MPPInitParams;
 
 @AllArgsConstructor
 class ProposerEvaluatorModuleCreator extends VideoStatsModuleCreator {
 
     private MarkEvaluatorSetForImage markEvaluatorSet;
-    private NRGBackground nrgBackground;
+    private EnergyBackground energyBackground;
     private OutputWriteSettings outputWriteSettings;
-    private IUpdatableMarkEvaluator markEvaluatorUpdater;
+    private UpdatableMarkEvaluator markEvaluatorUpdater;
     private VideoStatsModuleGlobalParams mpg;
 
     @Override
-    public void createAndAddVideoStatsModule(IAddVideoStatsModule adder)
+    public void createAndAddVideoStatsModule(AddVideoStatsModule adder)
             throws VideoStatsModuleCreateException {
 
         try {
@@ -64,34 +73,34 @@ class ProposerEvaluatorModuleCreator extends VideoStatsModuleCreator {
                     .controllerImageView()
                     .configure(0.8, 0.6, 0, 50, mpg.getGraphicsCurrentScreen());
 
-            // Here we optionally set an adder to send back nrg_stacks
-            ISliderState sliderState =
+            // Here we optionally set an adder to send back energy-stacks
+            SliderState sliderState =
                     imageFrame.init(
                             markEvaluatorSet,
                             adder.getSubgroup().getDefaultModuleState().getState(),
-                            nrgBackground.getBackgroundSet(),
                             outputWriteSettings,
                             mpg);
 
-            IBackgroundUpdater backgroundUpdater =
+            BackgroundUpdater backgroundUpdater =
                     imageFrame
                             .controllerBackgroundMenu()
-                            .add(mpg, nrgBackground.getBackgroundSet());
+                            .add(mpg, energyBackground.getBackgroundSet());
 
             imageFrame.addMarkEvaluatorChangedListener(
                     e -> {
                         if (e.getMarkEvaluator() != null) {
                             backgroundUpdater.update(
-                                    CacheCallWithProgressReporter.of(
-                                            new CreateBackgroundSetFromExisting(
-                                                    nrgBackground.getBackgroundSet(),
-                                                    e.getMarkEvaluator()
-                                                            .getProposerSharedObjectsOperation())));
+                                    BackgroundSetProgressingSupplier.cache(
+                                            progressReporter ->
+                                                    createBackgroundSetFromExisting(
+                                                            progressReporter,
+                                                            e.getMarkEvaluator()
+                                                                    .getProposerSharedObjectsOperation())));
                             markEvaluatorUpdater.setMarkEvaluatorIdentifier(
                                     e.getMarkEvaluatorName());
                         } else {
 
-                            backgroundUpdater.update(nrgBackground.getBackgroundSet());
+                            backgroundUpdater.update(energyBackground.getBackgroundSet());
                             markEvaluatorUpdater.setMarkEvaluatorIdentifier(null);
                         }
                     });
@@ -100,6 +109,26 @@ class ProposerEvaluatorModuleCreator extends VideoStatsModuleCreator {
 
         } catch (VideoStatsModuleCreateException | InitException e) {
             mpg.getLogger().errorReporter().recordError(ProposerEvaluatorModuleCreator.class, e);
+        }
+    }
+
+    private BackgroundSet createBackgroundSetFromExisting(
+            ProgressReporter progressReporter, CachedSupplier<MPPInitParams, CreateException> pso)
+            throws BackgroundStackContainerException {
+
+        try {
+            BackgroundSet bsExisting = energyBackground.getBackgroundSet().get(progressReporter);
+
+            MPPInitParams so = pso.get();
+            ImageInitParams soImage = so.getImage();
+
+            return BackgroundSetFactory.createBackgroundSetFromExisting(
+                    bsExisting,
+                    new WrapStackAsTimeSequence(CreateCombinedStack.apply(soImage)),
+                    progressReporter);
+
+        } catch (CreateException e) {
+            throw new BackgroundStackContainerException(e);
         }
     }
 }

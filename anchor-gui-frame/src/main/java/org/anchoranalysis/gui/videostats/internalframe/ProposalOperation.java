@@ -26,11 +26,11 @@
 
 package org.anchoranalysis.gui.videostats.internalframe;
 
-import org.anchoranalysis.anchor.mpp.proposer.ProposalAbnormalFailureException;
-import org.anchoranalysis.anchor.mpp.proposer.error.ErrorNode;
-import org.anchoranalysis.gui.frame.overlays.ProposedCfg;
+import org.anchoranalysis.gui.frame.overlays.ProposedMarks;
+import org.anchoranalysis.mpp.proposer.ProposalAbnormalFailureException;
+import org.anchoranalysis.mpp.proposer.error.ErrorNode;
 
 public interface ProposalOperation {
 
-    ProposedCfg propose(ErrorNode errorNode) throws ProposalAbnormalFailureException;
+    ProposedMarks propose(ErrorNode errorNode) throws ProposalAbnormalFailureException;
 }

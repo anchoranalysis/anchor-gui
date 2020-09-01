@@ -118,7 +118,7 @@ public class FinderCSVStats extends FinderSingleFile {
         try {
             CSVStatisticLoader loader =
                     createStatisticLoader(fileWrite.getManifestDescription().getFunction());
-            return loader.createContainerFromCSV(fileWrite.calcPath());
+            return loader.createContainerFromCSV(fileWrite.calculatePath());
 
         } catch (CSVReaderException e) {
             throw new OperationFailedException(e);

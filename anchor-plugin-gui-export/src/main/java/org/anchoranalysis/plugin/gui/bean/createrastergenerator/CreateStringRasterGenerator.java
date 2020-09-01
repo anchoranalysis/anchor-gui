@@ -28,8 +28,6 @@ package org.anchoranalysis.plugin.gui.bean.createrastergenerator;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.anchoranalysis.anchor.mpp.feature.instantstate.CfgNRGInstantState;
-import org.anchoranalysis.anchor.mpp.feature.nrg.cfg.CfgNRG;
 import org.anchoranalysis.bean.annotation.BeanField;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.gui.bean.exporttask.ExportTaskParams;
@@ -37,25 +35,27 @@ import org.anchoranalysis.image.io.generator.raster.StringRasterGenerator;
 import org.anchoranalysis.image.stack.Stack;
 import org.anchoranalysis.io.generator.IterableObjectGenerator;
 import org.anchoranalysis.io.generator.IterableObjectGeneratorBridge;
+import org.anchoranalysis.mpp.feature.energy.IndexableMarksWithEnergy;
+import org.anchoranalysis.mpp.feature.energy.marks.MarksWithEnergyBreakdown;
 import org.anchoranalysis.plugin.gui.bean.exporttask.MappedFrom;
 
 public abstract class CreateStringRasterGenerator
-        extends CreateRasterGenerator<CfgNRGInstantState> {
+        extends GeneratorFactory<IndexableMarksWithEnergy> {
 
     // START BEAN PROPERTIES
     @BeanField @Getter @Setter private StringRasterGenerator stringGenerator;
     // END BEAN PROPERTIES
 
     @Override
-    public IterableObjectGenerator<MappedFrom<CfgNRGInstantState>, Stack> createGenerator(
+    public IterableObjectGenerator<MappedFrom<IndexableMarksWithEnergy>, Stack> createGenerator(
             ExportTaskParams params) throws CreateException {
 
         return new IterableObjectGeneratorBridge<>(
                 stringGenerator.createGenerator(),
-                sourceObject -> extractStringFrom(sourceObject.getObj().getCfgNRG()));
+                sourceObject -> extractStringFrom(sourceObject.getObject().getMarks()));
     }
 
-    protected abstract String extractStringFrom(CfgNRG cfgNRG);
+    protected abstract String extractStringFrom(MarksWithEnergyBreakdown marks);
 
     @Override
     public boolean hasNecessaryParams(ExportTaskParams params) {

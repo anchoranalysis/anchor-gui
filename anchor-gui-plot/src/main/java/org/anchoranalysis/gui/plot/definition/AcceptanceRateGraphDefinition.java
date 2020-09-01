@@ -28,28 +28,21 @@ package org.anchoranalysis.gui.plot.definition;
 
 import com.sun.tools.visualvm.charts.SimpleXYChartDescriptor;
 import com.sun.tools.visualvm.charts.SimpleXYChartSupport;
-import org.anchoranalysis.anchor.mpp.feature.nrg.cfg.CfgWithNRGTotal;
-import org.anchoranalysis.mpp.sgmn.kernel.proposer.WeightedKernel;
-import org.anchoranalysis.mpp.sgmn.kernel.proposer.WeightedKernelList;
-import org.anchoranalysis.mpp.sgmn.optscheme.feedback.aggregate.Aggregator;
+import lombok.RequiredArgsConstructor;
+import org.anchoranalysis.mpp.feature.energy.marks.MarksWithTotalEnergy;
+import org.anchoranalysis.mpp.segment.kernel.proposer.WeightedKernel;
+import org.anchoranalysis.mpp.segment.kernel.proposer.WeightedKernelList;
+import org.anchoranalysis.mpp.segment.optscheme.feedback.aggregate.Aggregator;
 
+@RequiredArgsConstructor
 public class AcceptanceRateGraphDefinition extends GraphDefinition {
 
-    private WeightedKernelList<?> kernelFactoryList;
+    // START REQUIRED ARGUMENTS
+    private final int windowSize;
+    private final WeightedKernelList<?> kernelFactoryList;
+    // END REQUIRED ARGUMENTS
 
-    private Aggregator agg;
-
-    private int windowSize;
-
-    public AcceptanceRateGraphDefinition(int windowSize, WeightedKernelList<?> kernelFactoryList) {
-        super();
-        this.kernelFactoryList = kernelFactoryList;
-        this.windowSize = windowSize;
-    }
-
-    private long resolve(double nrg) {
-        return (long) (1000 * nrg);
-    }
+    private Aggregator aggregator;
 
     @Override
     public String title() {
@@ -85,22 +78,22 @@ public class AcceptanceRateGraphDefinition extends GraphDefinition {
     }
 
     @Override
-    public long[] valueArr(int iter, long timeStamp) {
+    public long[] valueArray(int iter, long timeStamp) {
 
         int numKernel = kernelFactoryList.size();
 
         int i = 0;
         long[] values = new long[1 + numKernel];
-        values[i++] = resolve(this.agg.getAccptAll());
+        values[i++] = resolve(this.aggregator.getAcceptAll());
         for (int j = 0; j < numKernel; j++) {
-            values[i++] = resolve(agg.getKernelAccpt().get(j));
+            values[i++] = resolve(aggregator.getKernelAccepted().get(j));
         }
 
         return values;
     }
 
     @Override
-    public String[] detailsArr(
+    public String[] detailsArray(
             int iter, long timeStamp, long timeZoneOffset, SimpleXYChartSupport support) {
 
         int numKernel = kernelFactoryList.size();
@@ -110,18 +103,25 @@ public class AcceptanceRateGraphDefinition extends GraphDefinition {
         String[] details = new String[3 + numKernel];
         details[i++] = iter + "";
         details[i++] = support.formatTime(timeStamp - timeZoneOffset);
-        details[i++] = String.format("%e", agg.getAccptAll());
+        details[i++] = String.format("%e", aggregator.getAcceptAll());
         for (int j = 0; j < numKernel; j++) {
-            details[i++] = String.format("%.3f", agg.getKernelAccpt().get(j));
+            details[i++] = String.format("%.3f", aggregator.getKernelAccepted().get(j));
         }
         return details;
     }
 
     @Override
-    public void updateCrnt(int iter, long timeStamp, CfgWithNRGTotal crnt, Aggregator agg) {
-        this.agg = agg;
+    public void updateCurrent(
+            int iter, long timeStamp, MarksWithTotalEnergy current, Aggregator aggregator) {
+        this.aggregator = aggregator;
     }
 
     @Override
-    public void updateBest(int iter, long timeStamp, CfgWithNRGTotal best) {}
+    public void updateBest(int iter, long timeStamp, MarksWithTotalEnergy best) {
+        // NOTHING TO DO
+    }
+
+    private static long resolve(double energy) {
+        return (long) (1000 * energy);
+    }
 }

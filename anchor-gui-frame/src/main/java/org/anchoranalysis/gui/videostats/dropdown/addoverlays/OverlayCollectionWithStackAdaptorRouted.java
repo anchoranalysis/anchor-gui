@@ -29,28 +29,28 @@ package org.anchoranalysis.gui.videostats.dropdown.addoverlays;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
-import org.anchoranalysis.anchor.overlay.collection.OverlayCollection;
 import org.anchoranalysis.core.error.reporter.ErrorReporter;
-import org.anchoranalysis.core.event.IRoutableReceivable;
 import org.anchoranalysis.core.event.RoutableEvent;
 import org.anchoranalysis.core.event.RoutableListener;
+import org.anchoranalysis.core.event.RoutableReceivable;
 import org.anchoranalysis.core.property.change.PropertyValueChangeEvent;
-import org.anchoranalysis.feature.nrg.NRGStackWithParams;
-import org.anchoranalysis.gui.image.OverlayCollectionWithNrgStack;
-import org.anchoranalysis.gui.videostats.INRGStackGetter;
+import org.anchoranalysis.feature.energy.EnergyStack;
+import org.anchoranalysis.gui.image.OverlaysWithEnergyStack;
+import org.anchoranalysis.gui.videostats.AssociatedEnergyStackGetter;
 import org.anchoranalysis.gui.videostats.threading.InteractiveThreadPool;
 import org.anchoranalysis.gui.videostats.threading.InteractiveWorker;
+import org.anchoranalysis.overlay.collection.OverlayCollection;
 
 // Triggers a OverlayCollectionWithStack event, every time a OverlayCollection event occurs
 class OverlayCollectionWithStackAdaptorRouted
-        implements IRoutableReceivable<PropertyValueChangeEvent<OverlayCollectionWithNrgStack>> {
+        implements RoutableReceivable<PropertyValueChangeEvent<OverlaysWithEnergyStack>> {
 
-    private List<RoutableListener<PropertyValueChangeEvent<OverlayCollectionWithNrgStack>>>
-            listeners = new ArrayList<>();
+    private List<RoutableListener<PropertyValueChangeEvent<OverlaysWithEnergyStack>>> listeners =
+            new ArrayList<>();
 
     public OverlayCollectionWithStackAdaptorRouted(
-            IRoutableReceivable<PropertyValueChangeEvent<OverlayCollection>> source,
-            final INRGStackGetter associatedRasterGetter,
+            RoutableReceivable<PropertyValueChangeEvent<OverlayCollection>> source,
+            final AssociatedEnergyStackGetter associatedRasterGetter,
             final InteractiveThreadPool threadPool,
             final ErrorReporter errorReporter) {
 
@@ -68,25 +68,25 @@ class OverlayCollectionWithStackAdaptorRouted
                 });
     }
 
-    private class TriggerEvents extends InteractiveWorker<NRGStackWithParams, Void> {
+    private class TriggerEvents extends InteractiveWorker<EnergyStack, Void> {
 
-        private INRGStackGetter nrgStackGetter;
+        private AssociatedEnergyStackGetter energyStackGetter;
         private ErrorReporter errorReporter;
         private RoutableEvent<PropertyValueChangeEvent<OverlayCollection>> evt;
 
         public TriggerEvents(
                 RoutableEvent<PropertyValueChangeEvent<OverlayCollection>> evt,
-                INRGStackGetter nrgStackGetter,
+                AssociatedEnergyStackGetter energyStackGetter,
                 ErrorReporter errorReporter) {
             super();
-            this.nrgStackGetter = nrgStackGetter;
+            this.energyStackGetter = energyStackGetter;
             this.errorReporter = errorReporter;
             this.evt = evt;
         }
 
         @Override
-        protected NRGStackWithParams doInBackground() throws Exception {
-            return nrgStackGetter.getAssociatedNrgStack();
+        protected EnergyStack doInBackground() throws Exception {
+            return energyStackGetter.getAssociatedEnergyStack();
         }
 
         @Override
@@ -94,18 +94,17 @@ class OverlayCollectionWithStackAdaptorRouted
 
             try {
 
-                for (RoutableListener<PropertyValueChangeEvent<OverlayCollectionWithNrgStack>> l :
+                for (RoutableListener<PropertyValueChangeEvent<OverlaysWithEnergyStack>> l :
                         listeners) {
 
-                    // get() gets the NrgStack
-                    PropertyValueChangeEvent<OverlayCollectionWithNrgStack> evtNew =
+                    // get() gets the EnergyStack
+                    PropertyValueChangeEvent<OverlaysWithEnergyStack> evtNew =
                             new PropertyValueChangeEvent<>(
                                     evt.getSource(),
-                                    new OverlayCollectionWithNrgStack(
-                                            evt.getEvent().getValue(), get()),
+                                    new OverlaysWithEnergyStack(evt.getEvent().getValue(), get()),
                                     evt.getEvent().getAdjusting());
 
-                    RoutableEvent<PropertyValueChangeEvent<OverlayCollectionWithNrgStack>>
+                    RoutableEvent<PropertyValueChangeEvent<OverlaysWithEnergyStack>>
                             routableEventNew = new RoutableEvent<>(evt.getRoutableSource(), evtNew);
 
                     l.eventOccurred(routableEventNew);
@@ -120,13 +119,13 @@ class OverlayCollectionWithStackAdaptorRouted
 
     @Override
     public void addRoutableListener(
-            RoutableListener<PropertyValueChangeEvent<OverlayCollectionWithNrgStack>> l) {
+            RoutableListener<PropertyValueChangeEvent<OverlaysWithEnergyStack>> l) {
         listeners.add(l);
     }
 
     @Override
     public void removeRoutableListener(
-            RoutableListener<PropertyValueChangeEvent<OverlayCollectionWithNrgStack>> l) {
+            RoutableListener<PropertyValueChangeEvent<OverlaysWithEnergyStack>> l) {
         listeners.remove(l);
     }
 }

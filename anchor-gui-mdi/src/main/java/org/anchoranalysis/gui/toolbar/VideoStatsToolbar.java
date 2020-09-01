@@ -34,7 +34,7 @@ import javax.swing.JButton;
 import javax.swing.JToggleButton;
 import javax.swing.JToolBar;
 import org.anchoranalysis.gui.IconFactory;
-import org.anchoranalysis.gui.mark.MarkDisplaySettings;
+import org.anchoranalysis.gui.marks.MarkDisplaySettings;
 import org.anchoranalysis.gui.mdi.MDIDesktopPane;
 import org.anchoranalysis.gui.mdi.PartitionedFrameList;
 import org.anchoranalysis.gui.mdi.action.CascadeAction;

@@ -30,11 +30,11 @@ import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.util.Optional;
 import javax.swing.event.EventListenerList;
-import org.anchoranalysis.anchor.plot.GraphInstance;
 import org.anchoranalysis.core.property.IPropertyValueReceivable;
 import org.anchoranalysis.core.property.IPropertyValueSendable;
 import org.anchoranalysis.core.property.change.PropertyValueChangeEvent;
 import org.anchoranalysis.core.property.change.PropertyValueChangeListener;
+import org.anchoranalysis.plot.PlotInstance;
 import org.jfree.chart.ChartMouseEvent;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
@@ -42,14 +42,14 @@ import org.jfree.chart.plot.XYPlot;
 
 public class ClickableGraphInstance {
 
-    private GraphInstance graphInstance;
+    private PlotInstance graphInstance;
 
     private GraphPanelMouseClickListener panelMouseClickListener;
 
     private Optional<IPropertyValueReceivable<Integer>> selectFrameReceivable = Optional.empty();
     private Optional<IPropertyValueSendable<Integer>> selectFrameSendable = Optional.empty();
 
-    ClickableGraphInstance(GraphInstance graphInstance) {
+    ClickableGraphInstance(PlotInstance graphInstance) {
         this.graphInstance = graphInstance;
     }
 
@@ -150,7 +150,7 @@ public class ClickableGraphInstance {
         return graphInstance.getChart();
     }
 
-    public GraphInstance getGraphInstance() {
+    public PlotInstance getGraphInstance() {
         return graphInstance;
     }
 }

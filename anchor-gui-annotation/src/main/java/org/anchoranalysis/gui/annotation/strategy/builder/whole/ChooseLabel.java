@@ -38,19 +38,19 @@ import javax.swing.Action;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
-import org.anchoranalysis.annotation.wholeimage.WholeImageLabelAnnotation;
-import org.anchoranalysis.gui.annotation.bean.label.AnnotationLabel;
-import org.anchoranalysis.gui.annotation.bean.label.GroupedAnnotationLabels;
+import org.anchoranalysis.annotation.image.ImageLabelAnnotation;
 import org.anchoranalysis.gui.videostats.internalframe.annotator.navigation.PanelWithLabel;
+import org.anchoranalysis.plugin.annotation.bean.label.AnnotationLabel;
+import org.anchoranalysis.plugin.annotation.bean.label.GroupedAnnotationLabels;
 
 class ChooseLabel extends PanelWithLabel {
 
     private GroupedAnnotationLabels groupedLabels;
     private Function<AnnotationLabel, Action> createAction;
-    private Supplier<Optional<WholeImageLabelAnnotation>> readCurrentAnnotation;
+    private Supplier<Optional<ImageLabelAnnotation>> readCurrentAnnotation;
 
     public ChooseLabel(
-            Supplier<Optional<WholeImageLabelAnnotation>> readCurrentAnnotation,
+            Supplier<Optional<ImageLabelAnnotation>> readCurrentAnnotation,
             GroupedAnnotationLabels labelsIn,
             Function<AnnotationLabel, Action> createAction) {
         assert (labelsIn != null);
@@ -66,7 +66,7 @@ class ChooseLabel extends PanelWithLabel {
         panel.setLayout(new GridBagLayout());
 
         // This will return NULL if no label exists
-        Optional<WholeImageLabelAnnotation> existingLabel = readCurrentAnnotation.get();
+        Optional<ImageLabelAnnotation> existingLabel = readCurrentAnnotation.get();
 
         int row = 0;
         for (String group : groupedLabels.keySet()) {
@@ -78,7 +78,7 @@ class ChooseLabel extends PanelWithLabel {
     }
 
     private JPanel createGroupPanel(
-            Collection<AnnotationLabel> labels, Optional<WholeImageLabelAnnotation> existingLabel) {
+            Collection<AnnotationLabel> labels, Optional<ImageLabelAnnotation> existingLabel) {
         JPanel groupPanel = new JPanel();
         groupPanel.setLayout(new FlowLayout());
 
@@ -90,9 +90,7 @@ class ChooseLabel extends PanelWithLabel {
     }
 
     private void addButton(
-            JPanel panel,
-            AnnotationLabel label,
-            Optional<WholeImageLabelAnnotation> existingLabel) {
+            JPanel panel, AnnotationLabel label, Optional<ImageLabelAnnotation> existingLabel) {
         JButton button = new JButton(createAction.apply(label));
 
         // We always color the existing label to be black, otherwise we use the color associated

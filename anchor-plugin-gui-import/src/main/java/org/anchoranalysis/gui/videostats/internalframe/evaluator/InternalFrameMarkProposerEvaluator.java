@@ -31,39 +31,36 @@ import java.awt.GridLayout;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JPanel;
-import org.anchoranalysis.anchor.mpp.bean.init.MPPInitParams;
-import org.anchoranalysis.anchor.mpp.cfg.Cfg;
-import org.anchoranalysis.anchor.mpp.overlay.OverlayCollectionMarkFactory;
 import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.error.reporter.ErrorReporter;
 import org.anchoranalysis.core.name.provider.NamedProvider;
-import org.anchoranalysis.core.progress.CallableWithProgressReporter;
-import org.anchoranalysis.gui.backgroundset.BackgroundSet;
-import org.anchoranalysis.gui.cfgnrg.StatePanelUpdateException;
-import org.anchoranalysis.gui.container.background.BackgroundStackContainerException;
-import org.anchoranalysis.gui.frame.cfgproposer.CfgProposerMouseClickAdapter;
 import org.anchoranalysis.gui.frame.details.canvas.controller.imageview.ControllerImageView;
+import org.anchoranalysis.gui.frame.marks.proposer.MarksProposerMouseClickAdapter;
 import org.anchoranalysis.gui.frame.overlays.IShowEvaluationResult;
 import org.anchoranalysis.gui.frame.overlays.IShowOverlays;
 import org.anchoranalysis.gui.frame.overlays.InternalFrameOverlaysRedraw;
-import org.anchoranalysis.gui.frame.overlays.ProposedCfg;
-import org.anchoranalysis.gui.image.frame.ISliderState;
+import org.anchoranalysis.gui.frame.overlays.ProposedMarks;
+import org.anchoranalysis.gui.image.frame.SliderState;
 import org.anchoranalysis.gui.interactivebrowser.MarkEvaluatorSetForImage;
 import org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.ControllerPopupMenuWithBackground;
 import org.anchoranalysis.gui.kernel.ProposerFailureDescriptionPanel;
+import org.anchoranalysis.gui.marks.StatePanelUpdateException;
 import org.anchoranalysis.gui.videostats.IModuleCreatorDefaultStateSliderState;
 import org.anchoranalysis.gui.videostats.dropdown.VideoStatsModuleGlobalParams;
 import org.anchoranalysis.gui.videostats.internalframe.OutputPanel;
 import org.anchoranalysis.gui.videostats.internalframe.ProposeLoopPanel;
 import org.anchoranalysis.gui.videostats.internalframe.annotator.currentstate.RedrawUpdateFromProposal;
-import org.anchoranalysis.gui.videostats.internalframe.evaluator.fromproposer.FromCfgProposer;
+import org.anchoranalysis.gui.videostats.internalframe.evaluator.fromproposer.FromMarkCollectionProposer;
 import org.anchoranalysis.gui.videostats.internalframe.evaluator.fromproposer.FromMarkMergeProposer;
 import org.anchoranalysis.gui.videostats.internalframe.evaluator.fromproposer.FromMarkProposer;
 import org.anchoranalysis.gui.videostats.internalframe.evaluator.fromproposer.FromMarkSplitProposer;
 import org.anchoranalysis.gui.videostats.internalframe.evaluator.fromproposer.ProposalOperationCreatorFromProposer;
 import org.anchoranalysis.gui.videostats.module.DefaultModuleState;
 import org.anchoranalysis.io.output.bean.OutputWriteSettings;
-import org.anchoranalysis.mpp.io.cfg.CfgWithDisplayStack;
+import org.anchoranalysis.mpp.bean.init.MPPInitParams;
+import org.anchoranalysis.mpp.io.marks.MarksWithDisplayStack;
+import org.anchoranalysis.mpp.mark.MarkCollection;
+import org.anchoranalysis.mpp.overlay.OverlayCollectionMarkFactory;
 
 public class InternalFrameMarkProposerEvaluator {
 
@@ -75,8 +72,6 @@ public class InternalFrameMarkProposerEvaluator {
     private OutputPanel outputPanel;
     private ErrorReporter errorReporter;
 
-    // A panel which incorporates both our failure dialog and options
-    private JPanel bottomPanel;
     private ProposerFailureDescriptionPanel failurePanel;
 
     public InternalFrameMarkProposerEvaluator(ErrorReporter errorReporter) {
@@ -96,11 +91,9 @@ public class InternalFrameMarkProposerEvaluator {
         evaluatorChooser.addMarkEvaluatorChangedListener(listener);
     }
 
-    public ISliderState init(
+    public SliderState init(
             MarkEvaluatorSetForImage markEvaluatorSet,
             DefaultModuleState defaultState,
-            CallableWithProgressReporter<BackgroundSet, BackgroundStackContainerException>
-                    operationBackgroundSet,
             OutputWriteSettings outputWriteSettings,
             VideoStatsModuleGlobalParams mpg)
             throws InitException {
@@ -110,14 +103,14 @@ public class InternalFrameMarkProposerEvaluator {
         outputPanel.init(
                 mpg.getDefaultColorIndexForMarks(), mpg.getExportPopupParams().getOutputManager());
 
-        ISliderState sliderState = delegate.init(defaultState, mpg);
+        SliderState sliderState = delegate.init(defaultState, mpg);
 
         setupHistoryNavigator(sliderState);
 
         delegate.controllerAction().order().setAsBottomComponent(createBottomPanel());
 
-        CfgProposerMouseClickAdapter clickListener =
-                new CfgProposerMouseClickAdapter(
+        MarksProposerMouseClickAdapter clickListener =
+                new MarksProposerMouseClickAdapter(
                         delegate.extractOverlays(),
                         sliderState,
                         evaluatorChooser.evaluatorWithContext(),
@@ -127,22 +120,23 @@ public class InternalFrameMarkProposerEvaluator {
 
         final AddToHistoryNavigator showEvaluationResult = new AddToHistoryNavigator();
 
-        clickListener.addCfgProposedListener(
-                proposedCfg -> showEvaluationResult.showEvaluationResult(proposedCfg, null));
+        clickListener.addMarksProposedListener(
+                proposedMarks -> showEvaluationResult.showEvaluationResult(proposedMarks, null));
         return sliderState;
     }
 
-    private void setupHistoryNavigator(ISliderState sliderState) {
-        IShowOverlays cfgShower = delegate.showOverlays(sliderState);
+    private void setupHistoryNavigator(SliderState sliderState) {
+        IShowOverlays marksShower = delegate.showOverlays(sliderState);
         this.historyNavigator =
-                new HistoryNavigator(new ShowEvaluationResultFromHistoryNavigator(cfgShower));
+                new HistoryNavigator(new ShowEvaluationResultFromHistoryNavigator(marksShower));
     }
 
+    /** A panel which incorporates both our failure dialog and options */
     private JPanel createBottomPanel() {
-        this.bottomPanel = new JPanel();
-        this.bottomPanel.setLayout(new BorderLayout());
-        this.bottomPanel.add(failurePanel.getPanel(), BorderLayout.CENTER);
-        this.bottomPanel.add(createBotttomMultipleLines(), BorderLayout.SOUTH);
+        JPanel bottomPanel = new JPanel();
+        bottomPanel.setLayout(new BorderLayout());
+        bottomPanel.add(failurePanel.getPanel(), BorderLayout.CENTER);
+        bottomPanel.add(createBotttomMultipleLines(), BorderLayout.SOUTH);
         return bottomPanel;
     }
 
@@ -159,7 +153,7 @@ public class InternalFrameMarkProposerEvaluator {
     private class AddToHistoryNavigator implements IShowEvaluationResult {
 
         @Override
-        public void showEvaluationResult(ProposedCfg er, Cfg bboxRedraw) {
+        public void showEvaluationResult(ProposedMarks er, MarkCollection boxRedraw) {
             historyNavigator.add(er);
         }
     }
@@ -174,15 +168,15 @@ public class InternalFrameMarkProposerEvaluator {
         }
 
         @Override
-        public void showEvaluationResult(ProposedCfg er, Cfg bboxRedraw) {
+        public void showEvaluationResult(ProposedMarks er, MarkCollection boxRedraw) {
 
             try {
                 // We the marks back from the overlays
-                Cfg cfg =
-                        OverlayCollectionMarkFactory.cfgFromOverlays(
-                                er.getColoredCfg().getOverlays());
+                MarkCollection marks =
+                        OverlayCollectionMarkFactory.marksFromOverlays(
+                                er.getColoredMarks().getOverlays());
 
-                outputPanel.output(new CfgWithDisplayStack(cfg, delegate.getBackground()));
+                outputPanel.output(new MarksWithDisplayStack(marks, delegate.getBackground()));
 
                 showResult.showOverlays(RedrawUpdateFromProposal.apply(er, null));
 
@@ -225,7 +219,7 @@ public class InternalFrameMarkProposerEvaluator {
         listEvaluators.add(new FromMarkProposer());
         listEvaluators.add(new FromMarkSplitProposer());
         listEvaluators.add(new FromMarkMergeProposer());
-        listEvaluators.add(new FromCfgProposer());
+        listEvaluators.add(new FromMarkCollectionProposer());
 
         List<ProposalOperationCreatorFromProposer<?>> listWithLoop = new ArrayList<>();
         for (ProposalOperationCreatorFromProposer<?> item : listEvaluators) {

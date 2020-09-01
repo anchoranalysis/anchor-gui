@@ -30,14 +30,14 @@ import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.error.friendly.AnchorImpossibleSituationException;
 import org.anchoranalysis.core.error.reporter.ErrorReporter;
-import org.anchoranalysis.core.functional.function.FunctionWithException;
+import org.anchoranalysis.core.functional.function.CheckedFunction;
 import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.index.container.BoundedIndexContainer;
 import org.anchoranalysis.core.index.container.SingleContainer;
 import org.anchoranalysis.core.index.container.bridge.BoundedIndexContainerBridgeWithoutIndex;
 import org.anchoranalysis.gui.container.background.BackgroundStackContainer;
 import org.anchoranalysis.gui.container.background.BackgroundStackContainerException;
-import org.anchoranalysis.gui.finder.FinderRasterSingleChnl;
+import org.anchoranalysis.gui.finder.FinderRasterSingleChannel;
 import org.anchoranalysis.image.channel.Channel;
 import org.anchoranalysis.image.extent.IncorrectImageSizeException;
 import org.anchoranalysis.image.io.bean.rasterreader.RasterReader;
@@ -46,7 +46,7 @@ import org.anchoranalysis.image.stack.Stack;
 import org.anchoranalysis.io.manifest.ManifestRecorder;
 import org.anchoranalysis.io.manifest.finder.Finder;
 
-public class FinderProbMap implements BackgroundStackContainer, FinderRasterSingleChnl, Finder {
+public class FinderProbMap implements BackgroundStackContainer, FinderRasterSingleChannel, Finder {
 
     private final FinderProbMapSingleRaster singleRaster;
 
@@ -65,7 +65,7 @@ public class FinderProbMap implements BackgroundStackContainer, FinderRasterSing
     @Override
     public boolean doFind(ManifestRecorder manifestRecorder) {
 
-        // We find both in case we do a singleChnl() call later on
+        // We find both in case we do a singleChannel() call later on
         boolean series = rasterSeries.doFind(manifestRecorder);
 
         if (series) {
@@ -99,7 +99,7 @@ public class FinderProbMap implements BackgroundStackContainer, FinderRasterSing
     }
 
     // Returns a single channel the probMap, o series allowed
-    public Channel singleChnl() throws OperationFailedException {
+    public Channel singleChannel() throws OperationFailedException {
         if (singleRaster.exists()) {
             return singleRaster.get();
         }
@@ -124,10 +124,10 @@ public class FinderProbMap implements BackgroundStackContainer, FinderRasterSing
 
         try {
             if (isSingle()) {
-                Channel chnl = singleRaster.get();
+                Channel channel = singleRaster.get();
 
                 Stack stack = new Stack();
-                stack.addChannel(chnl);
+                stack.addChannel(channel);
                 stack.addBlankChannel();
                 stack.addBlankChannel();
 
@@ -144,7 +144,7 @@ public class FinderProbMap implements BackgroundStackContainer, FinderRasterSing
     }
 
     private static class BackgroundStackBridge
-            implements FunctionWithException<Stack, DisplayStack, CreateException> {
+            implements CheckedFunction<Stack, DisplayStack, CreateException> {
 
         @Override
         public DisplayStack apply(Stack sourceObject) throws CreateException {
@@ -157,12 +157,12 @@ public class FinderProbMap implements BackgroundStackContainer, FinderRasterSing
     }
 
     @Override
-    public Channel getFirstChnl() throws OperationFailedException {
-        return singleChnl();
+    public Channel getFirstChannel() throws OperationFailedException {
+        return singleChannel();
     }
 
     @Override
-    public int getNumChnl() {
+    public int getNumberChannels() {
         return 1;
     }
 

@@ -27,50 +27,51 @@
 package org.anchoranalysis.gui.videostats.dropdown.multicollection;
 
 import java.util.Optional;
-import org.anchoranalysis.anchor.mpp.cfg.Cfg;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.InitException;
+import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.name.provider.NamedProvider;
 import org.anchoranalysis.core.name.store.NamedProviderStore;
 import org.anchoranalysis.core.params.KeyValueParams;
-import org.anchoranalysis.core.progress.CallableWithProgressReporter;
+import org.anchoranalysis.core.progress.ProgressReporter;
 import org.anchoranalysis.gui.bean.filecreator.MarkCreatorParams;
 import org.anchoranalysis.gui.file.opened.IOpenedFileGUI;
 import org.anchoranalysis.gui.interactivebrowser.MarkEvaluatorManager;
 import org.anchoranalysis.gui.interactivebrowser.MarkEvaluatorSetForImage;
-import org.anchoranalysis.gui.series.TimeSequenceProvider;
+import org.anchoranalysis.gui.series.TimeSequenceProviderSupplier;
+import org.anchoranalysis.gui.videostats.dropdown.AddVideoStatsModule;
 import org.anchoranalysis.gui.videostats.dropdown.BoundVideoStatsModuleDropDown;
-import org.anchoranalysis.gui.videostats.dropdown.IAddVideoStatsModule;
 import org.anchoranalysis.gui.videostats.dropdown.OperationCreateBackgroundSetWithAdder;
 import org.anchoranalysis.gui.videostats.dropdown.VideoStatsModuleGlobalParams;
 import org.anchoranalysis.gui.videostats.dropdown.common.DropDownUtilities;
 import org.anchoranalysis.gui.videostats.dropdown.common.DropDownUtilitiesRaster;
-import org.anchoranalysis.gui.videostats.dropdown.common.GuessNRGStackFromStacks;
-import org.anchoranalysis.gui.videostats.dropdown.common.NRGBackground;
+import org.anchoranalysis.gui.videostats.dropdown.common.EnergyBackground;
+import org.anchoranalysis.gui.videostats.dropdown.common.GuessEnergyFromStacks;
 import org.anchoranalysis.image.object.ObjectCollection;
 import org.anchoranalysis.image.stack.wrap.WrapTimeSequenceAsStack;
 import org.anchoranalysis.io.output.bound.BoundOutputManagerRouteErrors;
+import org.anchoranalysis.mpp.mark.MarkCollection;
 
 public class MultiCollectionDropDown {
 
     private BoundVideoStatsModuleDropDown delegate;
 
-    private CallableWithProgressReporter<TimeSequenceProvider, CreateException> rasterProvider;
-    private NamedProvider<Cfg> cfgCollection;
+    private TimeSequenceProviderSupplier rasterProvider;
+    private NamedProvider<MarkCollection> marksCollection;
     private NamedProvider<ObjectCollection> objCollection;
     private NamedProviderStore<KeyValueParams> paramsCollection;
     private boolean addProposerEvaluator;
 
     // A dropdown menu representing a particular manifest
     public MultiCollectionDropDown(
-            CallableWithProgressReporter<TimeSequenceProvider, CreateException> rasterProvider,
-            NamedProvider<Cfg> cfgCollection,
+            TimeSequenceProviderSupplier rasterProvider,
+            NamedProvider<MarkCollection> marksCollection,
             NamedProvider<ObjectCollection> objCollection,
             NamedProviderStore<KeyValueParams> paramsCollection,
             String name,
             boolean addProposerEvaluator) {
         this.rasterProvider = rasterProvider;
-        this.cfgCollection = cfgCollection;
+        this.marksCollection = marksCollection;
         this.paramsCollection = paramsCollection;
         this.delegate = new BoundVideoStatsModuleDropDown(name, "/toolbarIcon/rectangle.png");
         this.addProposerEvaluator = addProposerEvaluator;
@@ -78,15 +79,15 @@ public class MultiCollectionDropDown {
     }
 
     public void init(
-            final IAddVideoStatsModule adder,
+            final AddVideoStatsModule adder,
             BoundOutputManagerRouteErrors outputManager,
             MarkCreatorParams params)
             throws InitException {
 
         OperationCreateBackgroundSetWithAdder operationBwsa =
                 new OperationCreateBackgroundSetWithAdder(
-                        NRGBackground.createStackSequence(
-                                rasterProvider, new GuessNRGStackFromStacks(rasterProvider)),
+                        EnergyBackground.createStackSequence(
+                                rasterProvider, () -> GuessEnergyFromStacks.guess(rasterProvider)),
                         adder,
                         params.getModuleParams().getThreadPool(),
                         params.getModuleParams().getLogger().errorReporter());
@@ -94,18 +95,18 @@ public class MultiCollectionDropDown {
         DropDownUtilitiesRaster.addRaster(
                 delegate.getRootMenu(),
                 delegate,
-                operationBwsa.nrgBackground(),
+                operationBwsa.energyBackground(),
                 "Raster",
                 params.getModuleParams(),
                 true // Adds as default operation
                 );
 
-        if (cfgCollection != null) {
-            DropDownUtilities.addCfgSubmenu(
+        if (marksCollection != null) {
+            DropDownUtilities.addMarksSubmenu(
                     delegate.getRootMenu(),
                     delegate,
-                    cfgCollection,
-                    operationBwsa.nrgBackground(),
+                    marksCollection,
+                    operationBwsa.energyBackground(),
                     params.getModuleParams(),
                     params.getMarkDisplaySettings(),
                     false);
@@ -116,7 +117,7 @@ public class MultiCollectionDropDown {
                     delegate.getRootMenu(),
                     delegate,
                     objCollection,
-                    operationBwsa.nrgBackground(),
+                    operationBwsa.energyBackground(),
                     params.getModuleParams(),
                     false);
         }
@@ -144,14 +145,7 @@ public class MultiCollectionDropDown {
         try {
             MarkEvaluatorSetForImage markEvaluatorSet =
                     markEvaluatorManager.createSetForStackCollection(
-                            progressReporter ->
-                                    new WrapTimeSequenceAsStack(
-                                            rasterProvider.call(progressReporter).sequence()),
-                            () ->
-                                    Optional.of(
-                                            ParamsUtils.apply(
-                                                    paramsCollection,
-                                                    mpg.getLogger().errorReporter())));
+                            this::extractFromRasterProvider, () -> extractParams(mpg));
 
             // If we have a markEvaluator, then we add some extra menus
             if (markEvaluatorSet.hasItems()) {
@@ -161,7 +155,7 @@ public class MultiCollectionDropDown {
                 DropDownUtilities.addAllProposerEvaluator(
                         delegate,
                         operationBwsa.operationAdder(),
-                        operationBwsa.nrgBackground().getBackground().getBackgroundSet(),
+                        operationBwsa.energyBackground().getBackground().getBackgroundSet(),
                         markEvaluatorSet,
                         outputManagerSub.getOutputWriteSettings(),
                         true,
@@ -179,5 +173,18 @@ public class MultiCollectionDropDown {
 
     public String getName() {
         return delegate.getName();
+    }
+
+    private WrapTimeSequenceAsStack extractFromRasterProvider(ProgressReporter progressReporter)
+            throws OperationFailedException {
+        try {
+            return new WrapTimeSequenceAsStack(rasterProvider.get(progressReporter).getSequence());
+        } catch (CreateException e) {
+            throw new OperationFailedException(e);
+        }
+    }
+
+    private Optional<KeyValueParams> extractParams(VideoStatsModuleGlobalParams mpg) {
+        return Optional.of(ParamsUtils.apply(paramsCollection, mpg.getLogger().errorReporter()));
     }
 }

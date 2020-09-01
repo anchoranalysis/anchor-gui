@@ -31,9 +31,9 @@ import org.anchoranalysis.gui.videostats.module.VideoStatsModuleClosedListener;
 
 class EndThreadedImageStackProvider implements VideoStatsModuleClosedListener {
 
-    private IThreadedProducer producer;
+    private ThreadedProducer producer;
 
-    public EndThreadedImageStackProvider(IThreadedProducer producer) {
+    public EndThreadedImageStackProvider(ThreadedProducer producer) {
         super();
         this.producer = producer;
     }

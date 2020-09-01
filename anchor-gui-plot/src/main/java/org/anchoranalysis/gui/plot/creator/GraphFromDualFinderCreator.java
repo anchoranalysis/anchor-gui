@@ -27,9 +27,6 @@
 package org.anchoranalysis.gui.plot.creator;
 
 import java.util.Iterator;
-import org.anchoranalysis.anchor.mpp.feature.instantstate.CfgNRGInstantState;
-import org.anchoranalysis.anchor.plot.bean.GraphDefinition;
-import org.anchoranalysis.anchor.plot.bean.colorscheme.GraphColorScheme;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.index.container.BoundedIndexContainer;
 import org.anchoranalysis.gui.io.loader.manifest.finder.FinderCSVStats;
@@ -37,35 +34,37 @@ import org.anchoranalysis.gui.io.loader.manifest.finder.historyfolder.FinderHist
 import org.anchoranalysis.gui.plot.BoundedIndexContainerIterator;
 import org.anchoranalysis.gui.plot.panel.ClickableGraphFactory;
 import org.anchoranalysis.gui.plot.visualvm.InternalFrameGraphAsModule;
-import org.anchoranalysis.gui.reassign.FrameTitleGenerator;
-import org.anchoranalysis.gui.videostats.dropdown.IAddVideoStatsModule;
+import org.anchoranalysis.gui.reassign.FrameTitleCreator;
+import org.anchoranalysis.gui.videostats.dropdown.AddVideoStatsModule;
 import org.anchoranalysis.gui.videostats.dropdown.ModuleAddUtilities;
 import org.anchoranalysis.gui.videostats.module.VideoStatsModuleCreateException;
 import org.anchoranalysis.gui.videostats.modulecreator.VideoStatsModuleCreator;
+import org.anchoranalysis.mpp.feature.energy.IndexableMarksWithEnergy;
+import org.anchoranalysis.plot.bean.Plot;
+import org.anchoranalysis.plot.bean.colorscheme.GraphColorScheme;
 
 public interface GraphFromDualFinderCreator<T> {
 
     BoundedIndexContainer<T> createContainer(final FinderCSVStats finderCSVStats)
             throws CreateException;
 
-    BoundedIndexContainer<T> createCntr(
-            final FinderHistoryFolder<CfgNRGInstantState> finderCfgNRGHistory)
+    BoundedIndexContainer<T> createContainer(
+            final FinderHistoryFolder<IndexableMarksWithEnergy> finderMarksHistory)
             throws CreateException;
 
-    GraphDefinition<T> createGraphDefinition(GraphColorScheme graphColorScheme)
-            throws CreateException;
+    Plot<T> createGraphDefinition(GraphColorScheme graphColorScheme) throws CreateException;
 
     // useCSV is a flag indicating which of the two to use
     public default VideoStatsModuleCreator createGraphModule(
             final String windowTitlePrefix,
-            final GraphDefinition<T> definition,
-            final FinderHistoryFolder<CfgNRGInstantState> finderCfgNRGHistory,
+            final Plot<T> definition,
+            final FinderHistoryFolder<IndexableMarksWithEnergy> finderMarksHistory,
             final FinderCSVStats finderCSVStats,
             final boolean useCSV) {
         return new VideoStatsModuleCreator() {
 
             @Override
-            public void createAndAddVideoStatsModule(IAddVideoStatsModule adder)
+            public void createAndAddVideoStatsModule(AddVideoStatsModule adder)
                     throws VideoStatsModuleCreateException {
 
                 try {
@@ -73,8 +72,8 @@ public interface GraphFromDualFinderCreator<T> {
                     BoundedIndexContainer<T> cntr;
                     if (useCSV && finderCSVStats.exists()) {
                         cntr = createContainer(finderCSVStats);
-                    } else if (finderCfgNRGHistory.exists()) {
-                        cntr = createCntr(finderCfgNRGHistory);
+                    } else if (finderMarksHistory.exists()) {
+                        cntr = createContainer(finderMarksHistory);
                     } else {
                         return;
                     }
@@ -82,8 +81,7 @@ public interface GraphFromDualFinderCreator<T> {
                     Iterator<T> itr = new BoundedIndexContainerIterator<>(cntr, 1000);
 
                     String graphFrameTitle =
-                            new FrameTitleGenerator()
-                                    .genFramePrefix(windowTitlePrefix, definition.getTitle());
+                            FrameTitleCreator.prefix(windowTitlePrefix, definition.getTitle());
 
                     InternalFrameGraphAsModule frame =
                             new InternalFrameGraphAsModule(

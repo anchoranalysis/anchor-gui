@@ -28,6 +28,8 @@ package org.anchoranalysis.gui.annotation.strategy.builder.mark.panel;
 
 import java.nio.file.Path;
 import java.util.Optional;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import org.anchoranalysis.gui.annotation.AnnotationRefresher;
 import org.anchoranalysis.gui.annotation.InitAnnotation;
 import org.anchoranalysis.gui.annotation.strategy.builder.mark.InitParamsProposeMarks;
@@ -37,10 +39,11 @@ import org.anchoranalysis.gui.videostats.internalframe.annotator.ISaveActionList
 import org.anchoranalysis.gui.videostats.internalframe.annotator.SaveActionListenerFactory;
 import org.anchoranalysis.gui.videostats.internalframe.annotator.SaveMonitor;
 import org.anchoranalysis.gui.videostats.internalframe.annotator.currentstate.CurrentStateDisplayer;
-import org.anchoranalysis.gui.videostats.internalframe.annotator.currentstate.IQueryAcceptedRejected;
+import org.anchoranalysis.gui.videostats.internalframe.annotator.currentstate.QueryAcceptedRejected;
 import org.anchoranalysis.gui.videostats.internalframe.annotator.currentstate.ShowCurrentState;
 import org.anchoranalysis.gui.videostats.internalframe.annotator.navigation.PanelNavigation;
 
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class CreateNavigationPanel {
 
     public static PanelNavigation apply(
@@ -52,7 +55,7 @@ public class CreateNavigationPanel {
                 new CurrentStateDisplayer(
                         new ShowCurrentState(controllers.showOverlays(), params.getErrorReporter()),
                         params.getSaveMonitor(),
-                        paramsInit.getDimensionsViewer(),
+                        paramsInit.dimensionsViewer(),
                         paramsInit
                                 .getMarkAnnotator()
                                 .getRegionMap(), // How we calculate the overlap
@@ -77,7 +80,7 @@ public class CreateNavigationPanel {
 
     private static ISaveActionListenerFactory createSaveActions(
             Path annotationPath,
-            IQueryAcceptedRejected queryAcceptReject,
+            QueryAcceptedRejected queryAcceptReject,
             AnnotationRefresher annotationRefresher,
             Optional<SaveMonitor> saveMonitor) {
         return new SaveActionListenerFactory<>(
@@ -91,8 +94,8 @@ public class CreateNavigationPanel {
             InitAnnotation annotation,
             CurrentStateDisplayer currentStateDisplayer,
             PanelNavigation panelNavigation) {
-        if (annotation.getInitCfg() != null) {
-            currentStateDisplayer.init(annotation.getInitCfg());
+        if (annotation.getInitMarks() != null) {
+            currentStateDisplayer.init(annotation.getInitMarks());
         }
 
         if (!annotation.getInitMsg().isEmpty()) {

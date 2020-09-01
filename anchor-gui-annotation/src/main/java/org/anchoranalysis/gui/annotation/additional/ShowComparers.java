@@ -30,10 +30,10 @@ import java.nio.file.Path;
 import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
-import org.anchoranalysis.annotation.AnnotationWithCfg;
+import org.anchoranalysis.annotation.AnnotationWithMarks;
 import org.anchoranalysis.annotation.io.bean.comparer.MultipleComparer;
 import org.anchoranalysis.core.error.OperationFailedException;
-import org.anchoranalysis.core.functional.function.FunctionWithException;
+import org.anchoranalysis.core.functional.function.CheckedFunction;
 import org.anchoranalysis.core.log.Logger;
 import org.anchoranalysis.core.name.value.NameValue;
 import org.anchoranalysis.gui.annotation.AnnotatorModuleCreator;
@@ -51,19 +51,18 @@ public class ShowComparers {
     private final ColorSetGenerator colorSetGenerator;
     private final Path matchPath;
     private final String name;
-    private final FunctionWithException<Integer, DisplayStack, ? extends Throwable>
-            defaultBackground;
+    private final CheckedFunction<Integer, DisplayStack, ? extends Throwable> defaultBackground;
     private final Path modelDirectory;
     private final Logger logger;
 
-    public void apply(Optional<AnnotationWithCfg> annotationExst) {
+    public void apply(Optional<AnnotationWithMarks> annotationExst) {
         // Any comparisons to be done
         if (multipleComparer != null && annotationExst.isPresent()) {
             showMultipleComparers(annotationExst.get());
         }
     }
 
-    private void showMultipleComparers(AnnotationWithCfg annotationExst) {
+    private void showMultipleComparers(AnnotationWithMarks annotationExst) {
 
         List<NameValue<Stack>> rasters;
         try {

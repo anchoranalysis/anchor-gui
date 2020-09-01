@@ -27,23 +27,23 @@
 package org.anchoranalysis.gui.videostats;
 
 import java.util.HashMap;
-import org.anchoranalysis.core.event.IRoutableEventSourceObject;
+import org.anchoranalysis.core.event.RoutableEventSourceObject;
 import org.anchoranalysis.gui.videostats.module.VideoStatsModuleSubgroup;
 
 public class SubgroupRetriever {
 
-    private HashMap<IRoutableEventSourceObject, VideoStatsModuleSubgroup> mapSubgroup =
+    private HashMap<RoutableEventSourceObject, VideoStatsModuleSubgroup> mapSubgroup =
             new HashMap<>();
 
-    public void add(IRoutableEventSourceObject module, VideoStatsModuleSubgroup subgroup) {
+    public void add(RoutableEventSourceObject module, VideoStatsModuleSubgroup subgroup) {
         mapSubgroup.put(module, subgroup);
     }
 
-    public VideoStatsModuleSubgroup get(IRoutableEventSourceObject module) {
+    public VideoStatsModuleSubgroup get(RoutableEventSourceObject module) {
         return mapSubgroup.get(module);
     }
 
-    public void remove(IRoutableEventSourceObject module) {
+    public void remove(RoutableEventSourceObject module) {
         mapSubgroup.remove(module);
     }
 }

@@ -28,7 +28,7 @@ package org.anchoranalysis.gui.videostats.action.changemarkdisplay;
 
 import java.util.List;
 import javax.swing.ImageIcon;
-import org.anchoranalysis.gui.mark.MarkDisplaySettings;
+import org.anchoranalysis.gui.marks.MarkDisplaySettings;
 
 public class ShowThickBorderAction extends ChangeMarkDisplayToggleAction {
 

@@ -34,12 +34,12 @@ import java.awt.Dimension;
 import java.util.TimeZone;
 import javax.swing.JInternalFrame;
 import javax.swing.JPanel;
-import org.anchoranalysis.anchor.mpp.feature.nrg.cfg.CfgWithNRGTotal;
 import org.anchoranalysis.gui.plot.definition.GraphDefinition;
-import org.anchoranalysis.gui.videostats.ICfgNRGUpdater;
-import org.anchoranalysis.mpp.sgmn.optscheme.feedback.aggregate.Aggregator;
+import org.anchoranalysis.gui.videostats.EnergyUpdater;
+import org.anchoranalysis.mpp.feature.energy.marks.MarksWithTotalEnergy;
+import org.anchoranalysis.mpp.segment.optscheme.feedback.aggregate.Aggregator;
 
-public class GraphPanel extends JPanel implements ICfgNRGUpdater {
+public class GraphPanel extends JPanel implements EnergyUpdater {
 
     private static final long serialVersionUID = -2103164378667275813L;
 
@@ -65,22 +65,23 @@ public class GraphPanel extends JPanel implements ICfgNRGUpdater {
     }
 
     public void updateGraph(int iter, long timeStamp) {
-        support.addValues(timeStamp - timeZoneOffset, graphDefinition.valueArr(iter, timeStamp));
+        support.addValues(timeStamp - timeZoneOffset, graphDefinition.valueArray(iter, timeStamp));
 
         String[] details =
-                graphDefinition.detailsArr(iter, timeStamp, this.timeZoneOffset, support);
+                graphDefinition.detailsArray(iter, timeStamp, this.timeZoneOffset, support);
         support.updateDetails(details);
     }
 
     @Override
-    public void updateCrnt(int iter, long timeStamp, CfgWithNRGTotal crnt, Aggregator agg) {
+    public void updateCurrent(
+            int iter, long timeStamp, MarksWithTotalEnergy current, Aggregator aggregator) {
 
-        graphDefinition.updateCrnt(iter, timeStamp, crnt, agg);
+        graphDefinition.updateCurrent(iter, timeStamp, current, aggregator);
         updateGraph(iter, timeStamp);
     }
 
     @Override
-    public void updateBest(int iter, long timeStamp, CfgWithNRGTotal best) {
+    public void updateBest(int iter, long timeStamp, MarksWithTotalEnergy best) {
         graphDefinition.updateBest(iter, timeStamp, best);
     }
 

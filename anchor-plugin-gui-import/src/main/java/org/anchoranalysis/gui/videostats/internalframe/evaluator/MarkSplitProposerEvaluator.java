@@ -28,22 +28,22 @@ package org.anchoranalysis.gui.videostats.internalframe.evaluator;
 
 import java.awt.Color;
 import java.util.Optional;
-import org.anchoranalysis.anchor.mpp.bean.cfg.CfgGen;
-import org.anchoranalysis.anchor.mpp.bean.proposer.MarkSplitProposer;
-import org.anchoranalysis.anchor.mpp.cfg.Cfg;
-import org.anchoranalysis.anchor.mpp.cfg.ColoredCfg;
-import org.anchoranalysis.anchor.mpp.mark.GlobalRegionIdentifiers;
-import org.anchoranalysis.anchor.mpp.mark.Mark;
-import org.anchoranalysis.anchor.mpp.mark.voxelized.memo.VoxelizedMarkMemo;
-import org.anchoranalysis.anchor.mpp.pair.PairPxlMarkMemo;
-import org.anchoranalysis.anchor.mpp.proposer.ProposalAbnormalFailureException;
-import org.anchoranalysis.anchor.mpp.proposer.ProposerContext;
-import org.anchoranalysis.anchor.mpp.proposer.error.ErrorNode;
 import org.anchoranalysis.core.color.RGBColor;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.geometry.Point3d;
-import org.anchoranalysis.gui.frame.overlays.ProposedCfg;
+import org.anchoranalysis.gui.frame.overlays.ProposedMarks;
 import org.anchoranalysis.gui.videostats.internalframe.ProposalOperation;
+import org.anchoranalysis.mpp.bean.mark.MarkWithIdentifierFactory;
+import org.anchoranalysis.mpp.bean.proposer.MarkSplitProposer;
+import org.anchoranalysis.mpp.mark.ColoredMarks;
+import org.anchoranalysis.mpp.mark.GlobalRegionIdentifiers;
+import org.anchoranalysis.mpp.mark.Mark;
+import org.anchoranalysis.mpp.mark.MarkCollection;
+import org.anchoranalysis.mpp.mark.voxelized.memo.VoxelizedMarkMemo;
+import org.anchoranalysis.mpp.pair.PairPxlMarkMemo;
+import org.anchoranalysis.mpp.proposer.ProposalAbnormalFailureException;
+import org.anchoranalysis.mpp.proposer.ProposerContext;
+import org.anchoranalysis.mpp.proposer.error.ErrorNode;
 
 public class MarkSplitProposerEvaluator implements ProposalOperationCreator {
 
@@ -53,7 +53,7 @@ public class MarkSplitProposerEvaluator implements ProposalOperationCreator {
     private Mark exstMark;
 
     @SuppressWarnings("unused")
-    private Cfg exstCfg;
+    private MarkCollection exstMarks;
 
     public MarkSplitProposerEvaluator(MarkSplitProposer markSplitProposer) {
         super();
@@ -64,67 +64,69 @@ public class MarkSplitProposerEvaluator implements ProposalOperationCreator {
 
     @Override
     public ProposalOperation create(
-            final Cfg cfg, Point3d position, final ProposerContext context, final CfgGen cfgGen)
+            final MarkCollection marks,
+            Point3d position,
+            final ProposerContext context,
+            final MarkWithIdentifierFactory markFactory)
             throws OperationFailedException {
 
-        this.exstCfg = cfg;
+        this.exstMarks = marks;
 
         // We need to get the mark already at this position
-        final Cfg marksAtPost =
-                cfg.marksAt(
+        final MarkCollection marksAtPost =
+                marks.marksAt(
                         position, context.getRegionMap(), GlobalRegionIdentifiers.SUBMARK_INSIDE);
 
         return new ProposalOperation() {
 
             @Override
-            public ProposedCfg propose(ErrorNode errorNode)
+            public ProposedMarks propose(ErrorNode errorNode)
                     throws ProposalAbnormalFailureException {
 
                 if (marksAtPost.size() == 0) {
                     errorNode.add("no existing mark found");
-                    return new ProposedCfg();
+                    return new ProposedMarks();
                 }
 
                 if (marksAtPost.size() > 1) {
                     errorNode.add("more than one existing mark found");
-                    return new ProposedCfg();
+                    return new ProposedMarks();
                 }
 
                 exstMark = marksAtPost.get(0);
 
                 {
                     VoxelizedMarkMemo pmmExstMark = context.create(exstMark);
-                    pair = markSplitProposer.propose(pmmExstMark, context, cfgGen);
+                    pair = markSplitProposer.propose(pmmExstMark, context, markFactory);
                 }
 
                 if (pair.isPresent()) {
-                    ProposedCfg er = new ProposedCfg();
-                    er.setDimensions(context.getDimensions());
+                    ProposedMarks er = new ProposedMarks(context.dimensions());
                     er.setSuccess(true);
-                    er.setColoredCfg(cfgForLast());
-                    er.setCfgToRedraw(cfg);
+                    er.setColoredMarks(marksForLast());
+                    er.setMarksToRedraw(marks);
 
-                    Cfg core = new Cfg();
+                    MarkCollection core = new MarkCollection();
                     core.add(pair.get().getSource().getMark());
                     core.add(pair.get().getDestination().getMark());
-                    er.setCfgCore(core);
+                    er.setMarksCore(core);
                     return er;
                 } else {
-                    ProposedCfg er = new ProposedCfg();
-                    er.setCfgToRedraw(cfg);
+                    ProposedMarks er = new ProposedMarks();
+                    er.setMarksToRedraw(marks);
                     return er;
                 }
             }
         };
     }
 
-    private ColoredCfg cfgForLast() {
-        ColoredCfg cfgOut = new ColoredCfg();
+    private ColoredMarks marksForLast() {
+        ColoredMarks marksOut = new ColoredMarks();
         if (pair.isPresent()) {
             // We change the IDs
-            cfgOut.addChangeID(pair.get().getSource().getMark(), new RGBColor(Color.BLUE));
-            cfgOut.addChangeID(pair.get().getDestination().getMark(), new RGBColor(Color.RED));
+            marksOut.addChangeID(pair.get().getSource().getMark(), new RGBColor(Color.BLUE));
+            marksOut.addChangeID(pair.get().getDestination().getMark(), new RGBColor(Color.RED));
         }
-        return cfgOut;
+        return marksOut;
     }
 }

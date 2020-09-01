@@ -49,7 +49,7 @@ public class CSVStatisticLoaderEventAggregate extends CSVStatisticLoader {
                         CSVStatistic stat = new CSVStatistic();
                         stat.setIter(Integer.parseInt(line[i++]));
                         stat.setSize(Integer.parseInt(line[i++]));
-                        stat.setNrg(Double.parseDouble(line[i++]));
+                        stat.setEnergy(Double.parseDouble(line[i++]));
                         cntr.add(stat);
                     });
         }

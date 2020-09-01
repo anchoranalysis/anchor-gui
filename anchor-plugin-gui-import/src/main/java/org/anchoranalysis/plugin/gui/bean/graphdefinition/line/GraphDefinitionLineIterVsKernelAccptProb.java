@@ -26,17 +26,17 @@
 
 package org.anchoranalysis.plugin.gui.bean.graphdefinition.line;
 
-import org.anchoranalysis.anchor.mpp.feature.nrg.cfg.CfgNRGPixelized;
-import org.anchoranalysis.anchor.plot.bean.colorscheme.GraphColorScheme;
-import org.anchoranalysis.anchor.plot.index.LinePlot.YValGetter;
 import org.anchoranalysis.gui.io.loader.manifest.finder.csvstatistic.CSVStatistic;
-import org.anchoranalysis.mpp.sgmn.bean.kernel.proposer.KernelProposer;
+import org.anchoranalysis.mpp.feature.energy.marks.VoxelizedMarksWithEnergy;
+import org.anchoranalysis.mpp.segment.bean.kernel.proposer.KernelProposer;
+import org.anchoranalysis.plot.bean.colorscheme.GraphColorScheme;
+import org.anchoranalysis.plot.index.LinePlot.YValGetter;
 
 public class GraphDefinitionLineIterVsKernelAccptProb
         extends GraphDefinitionLineIterVsCSVStatistic {
 
     public GraphDefinitionLineIterVsKernelAccptProb(
-            KernelProposer<CfgNRGPixelized> kernelProposer,
+            KernelProposer<VoxelizedMarksWithEnergy> kernelProposer,
             int index,
             GraphColorScheme graphColorScheme) {
         this(

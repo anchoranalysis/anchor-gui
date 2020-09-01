@@ -28,12 +28,10 @@ package org.anchoranalysis.gui.backgroundset;
 
 import java.util.Set;
 import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
-import org.anchoranalysis.core.cache.CacheCall;
+import org.anchoranalysis.core.cache.CachedSupplier;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.OperationFailedException;
-import org.anchoranalysis.core.functional.CallableWithException;
 import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.index.container.BoundedIndexContainer;
 import org.anchoranalysis.core.index.container.bridge.BoundedIndexContainerBridgeWithoutIndex;
@@ -47,12 +45,12 @@ import org.anchoranalysis.gui.container.background.SingleBackgroundStackCntr;
 import org.anchoranalysis.gui.serializedobjectset.MarkWithRaster;
 import org.anchoranalysis.image.channel.factory.ChannelFactory;
 import org.anchoranalysis.image.experiment.identifiers.StackIdentifiers;
-import org.anchoranalysis.image.extent.ImageDimensions;
+import org.anchoranalysis.image.extent.Dimensions;
 import org.anchoranalysis.image.extent.IncorrectImageSizeException;
 import org.anchoranalysis.image.stack.DisplayStack;
 import org.anchoranalysis.image.stack.Stack;
 import org.anchoranalysis.image.stack.TimeSequence;
-import org.anchoranalysis.image.voxel.datatype.VoxelDataTypeUnsignedByte;
+import org.anchoranalysis.image.voxel.datatype.UnsignedByteVoxelType;
 import org.anchoranalysis.io.manifest.deserializer.folder.LoadContainer;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
@@ -112,7 +110,8 @@ public class BackgroundSetFactory {
         // We assume every LoadContainer contains the same rasters in the BackgroundSet
         ///  and use the first one to get the names
 
-        BackgroundSet first = lc.getCntr().get(lc.getCntr().getMinimumIndex()).getBackgroundSet();
+        BackgroundSet first =
+                lc.getContainer().get(lc.getContainer().getMinimumIndex()).getBackgroundSet();
 
         for (String name : first.names()) {
             backgroundSet.addItem(name, new SingleBackgroundStackCntr(rasterBridge(lc, name)));
@@ -126,36 +125,28 @@ public class BackgroundSetFactory {
 
         assert (cntr != null);
         return new BoundedIndexContainerBridgeWithoutIndex<>(
-                cntr.getCntr(),
+                cntr.getContainer(),
                 sourceObject -> {
                     assert (sourceObject != null);
                     return sourceObject.getBackgroundSet().singleStack(name);
                 });
     }
 
-    @AllArgsConstructor
-    private static class AddBackgroundSetItem
-            implements CallableWithException<
-                    BackgroundStackContainer, BackgroundStackContainerException> {
+    private static BackgroundStackContainer addBackgroundSetItem(
+            NamedProvider<TimeSequence> imageStackCollection, String id)
+            throws BackgroundStackContainerException {
 
-        private NamedProvider<TimeSequence> imageStackCollection;
-        private String id;
+        try {
+            TimeSequence seq = imageStackCollection.getException(id);
 
-        @Override
-        public BackgroundStackContainer call() throws BackgroundStackContainerException {
-
-            try {
-                TimeSequence seq = imageStackCollection.getException(id);
-
-                if (seq.size() > 1) {
-                    return createBackgroundTimeSeries(seq);
-                } else {
-                    return createBackgroundNotTimeSeries(seq.get(0));
-                }
-
-            } catch (NamedProviderGetException | OperationFailedException e) {
-                throw new BackgroundStackContainerException(e);
+            if (seq.size() > 1) {
+                return createBackgroundTimeSeries(seq);
+            } else {
+                return createBackgroundNotTimeSeries(seq.get(0));
             }
+
+        } catch (NamedProviderGetException | OperationFailedException e) {
+            throw new BackgroundStackContainerException(e);
         }
     }
 
@@ -180,15 +171,13 @@ public class BackgroundSetFactory {
         addEmpty(backgroundSet, imageStackCollection);
     }
 
-    public static void addEmpty(
-            BackgroundSet backgroundSet, NamedProvider<TimeSequence> imageStackCollection) {
+    public static void addEmpty(BackgroundSet backgroundSet, NamedProvider<TimeSequence> stacks) {
 
         backgroundSet.addItem(
                 "blank (all black)",
                 () -> {
                     try {
-                        ImageDimensions sd = guessDimensions(imageStackCollection);
-                        Stack stack = createEmptyStack(sd);
+                        Stack stack = createEmptyStack(guessDimensions(stacks));
                         return BackgroundStackContainerFactory.singleSavedStack(stack);
                     } catch (OperationFailedException e) {
                         throw new BackgroundStackContainerException("blank", e);
@@ -196,25 +185,22 @@ public class BackgroundSetFactory {
                 });
     }
 
-    private static ImageDimensions guessDimensions(NamedProvider<TimeSequence> imageStackCollection)
+    private static Dimensions guessDimensions(NamedProvider<TimeSequence> imageStackCollection)
             throws OperationFailedException {
         try {
             return imageStackCollection
                     .getException(imageStackCollection.keys().iterator().next())
-                    .getDimensions();
+                    .dimensions();
         } catch (NamedProviderGetException e) {
             throw new OperationFailedException(e.summarize());
         }
     }
 
-    private static Stack createEmptyStack(ImageDimensions dimensions)
-            throws OperationFailedException {
+    private static Stack createEmptyStack(Dimensions dimensions) throws OperationFailedException {
         try {
             Stack stack = new Stack();
             stack.addChannel(
-                    ChannelFactory.instance()
-                            .createEmptyInitialised(
-                                    dimensions, VoxelDataTypeUnsignedByte.INSTANCE));
+                    ChannelFactory.instance().create(dimensions, UnsignedByteVoxelType.INSTANCE));
             return stack;
         } catch (IncorrectImageSizeException e) {
             throw new OperationFailedException(e);
@@ -228,11 +214,11 @@ public class BackgroundSetFactory {
             ProgressReporter progressReporter)
             throws OperationFailedException {
 
-        boolean hasNrgStack = keys.contains(StackIdentifiers.NRG_STACK);
+        boolean hasEnergyStack = keys.contains(StackIdentifiers.ENERGY_STACK);
 
         ProgressReporterIncrement pri = new ProgressReporterIncrement(progressReporter);
         pri.setMin(0);
-        pri.setMax(keys.size() + (hasNrgStack ? 1 : 0));
+        pri.setMax(keys.size() + (hasEnergyStack ? 1 : 0));
 
         pri.open();
 
@@ -241,22 +227,22 @@ public class BackgroundSetFactory {
             // The way we handle this means we cannot add the (only first three) brackets on the
             // name, as the image has not yet been evaluated
             for (String id : keys) {
-                CallableWithException<BackgroundStackContainer, BackgroundStackContainerException>
-                        operation = CacheCall.of(new AddBackgroundSetItem(namedStacks, id));
+                BackgroundSetSupplier<BackgroundStackContainer> operation =
+                        CachedSupplier.cache(() -> addBackgroundSetItem(namedStacks, id))::get;
                 backgroundSet.addItem(id, operation);
                 pri.update();
             }
 
-            // TODO fix, this will always evaluate the NRG stack
-            // We add each part of the NRG Stack separately
+            // TODO fix, this will always evaluate the energy stack
+            // We add each part of the energy stack separately
 
-            if (hasNrgStack) {
-                addStackAsSeparateChnl(
+            if (hasEnergyStack) {
+                addStackAsSeparateChannel(
                         backgroundSet,
                         namedStacks
-                                .getException(StackIdentifiers.NRG_STACK)
+                                .getException(StackIdentifiers.ENERGY_STACK)
                                 .get(0), // Only take first
-                        "nrgStack-chnl");
+                        "energyStack-channel");
                 pri.update();
             }
 
@@ -267,20 +253,15 @@ public class BackgroundSetFactory {
         }
     }
 
-    private static void addStackAsSeparateChnl(
+    private static void addStackAsSeparateChannel(
             BackgroundSet backgroundSet, Stack stack, String prefix)
             throws OperationFailedException {
 
-        try {
-            for (int c = 0; c < stack.getNumberChannels(); c++) {
-                // We create a stack just with this channel
-                Stack stackSingle = new Stack();
-                stackSingle.addChannel(stack.getChannel(c));
-
-                backgroundSet.addItem(String.format("%s%d", prefix, c), stackSingle);
-            }
-        } catch (IncorrectImageSizeException e) {
-            throw new OperationFailedException(e);
+        for (int index = 0; index < stack.getNumberChannels(); index++) {
+            // We create a stack just with this channel
+            String name = String.format("%s%d", prefix, index);
+            Stack stackSingle = new Stack(stack.getChannel(index));
+            backgroundSet.addItem(name, stackSingle);
         }
     }
 }

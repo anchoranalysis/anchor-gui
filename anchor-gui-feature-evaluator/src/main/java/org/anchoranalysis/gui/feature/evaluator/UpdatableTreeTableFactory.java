@@ -27,8 +27,8 @@
 package org.anchoranalysis.gui.feature.evaluator;
 
 import org.anchoranalysis.core.log.Logger;
-import org.anchoranalysis.gui.feature.evaluator.nrgtree.FeatureCalcDescriptionTreeRenderData;
-import org.anchoranalysis.gui.feature.evaluator.nrgtree.FeatureCalcDescriptionTreeRowModel;
+import org.anchoranalysis.gui.feature.evaluator.energytree.FeatureTreeRenderData;
+import org.anchoranalysis.gui.feature.evaluator.energytree.FeatureTreeRowModel;
 import org.anchoranalysis.gui.feature.evaluator.treetable.FeatureListSrc;
 import org.anchoranalysis.gui.feature.evaluator.treetable.ITreeTableModel;
 import org.anchoranalysis.gui.feature.evaluator.treetable.TreeTableProperties;
@@ -53,13 +53,13 @@ class UpdatableTreeTableFactory {
     }
 
     private static ITreeTableModel createTreeTable(FeatureListSrc featureListSrc, Logger logger) {
-        FeatureCalcDescriptionTreeRowModel rowModel = new FeatureCalcDescriptionTreeRowModel();
+        FeatureTreeRowModel rowModel = new FeatureTreeRowModel();
 
         TreeTableProperties properties =
                 new TreeTableProperties(
                         rowModel,
-                        new FeatureCalcDescriptionTreeRenderData(logger.errorReporter()),
-                        "NRG Term",
+                        new FeatureTreeRenderData(logger.errorReporter()),
+                        "Energy Term",
                         logger);
 
         ITreeTableModel treeTable = new TreeTableWithModelMultiplex(properties, featureListSrc);

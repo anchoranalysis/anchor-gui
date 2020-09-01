@@ -27,11 +27,6 @@
 package org.anchoranalysis.gui.frame.display;
 
 import java.util.List;
-import org.anchoranalysis.anchor.overlay.Overlay;
-import org.anchoranalysis.anchor.overlay.collection.ColoredOverlayCollection;
-import org.anchoranalysis.anchor.overlay.collection.OverlayCollection;
-import org.anchoranalysis.anchor.overlay.writer.DrawOverlay;
-import org.anchoranalysis.anchor.overlay.writer.ObjectDrawAttributesFactory;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.geometry.Point3i;
@@ -40,36 +35,41 @@ import org.anchoranalysis.core.idgetter.IDGetterIter;
 import org.anchoranalysis.core.index.SetOperationFailedException;
 import org.anchoranalysis.gui.frame.display.overlay.OverlayPrecalculatedCache;
 import org.anchoranalysis.image.extent.BoundingBox;
+import org.anchoranalysis.image.extent.Dimensions;
 import org.anchoranalysis.image.extent.Extent;
-import org.anchoranalysis.image.extent.ImageDimensions;
 import org.anchoranalysis.image.stack.rgb.RGBStack;
+import org.anchoranalysis.overlay.Overlay;
+import org.anchoranalysis.overlay.collection.ColoredOverlayCollection;
+import org.anchoranalysis.overlay.collection.OverlayCollection;
+import org.anchoranalysis.overlay.writer.DrawOverlay;
+import org.anchoranalysis.overlay.writer.ObjectDrawAttributesFactory;
 
 public class BoundColoredOverlayCollection {
 
-    private DrawOverlay maskWriter;
+    private DrawOverlay drawOverlay;
 
     private IDGetter<Overlay> idGetter;
 
-    private ImageDimensions dimEntireImage;
+    private Dimensions dimEntireImage;
 
     // The current overlay, with additional cached objects
     private OverlayPrecalculatedCache cache;
 
     public BoundColoredOverlayCollection(
-            DrawOverlay maskWriter, IDGetter<Overlay> idGetter, ImageDimensions dim)
+            DrawOverlay drawOverlay, IDGetter<Overlay> idGetter, Dimensions dim)
             throws CreateException {
         super();
-        this.maskWriter = maskWriter;
+        this.drawOverlay = drawOverlay;
         this.idGetter = idGetter;
         this.dimEntireImage = dim;
         this.cache =
                 new OverlayPrecalculatedCache(
-                        new ColoredOverlayCollection(), dimEntireImage, maskWriter);
+                        new ColoredOverlayCollection(), dimEntireImage, drawOverlay);
     }
 
-    public void updateMaskWriter(DrawOverlay maskWriter) throws SetOperationFailedException {
-        this.maskWriter = maskWriter;
-        this.cache.setMaskWriter(maskWriter);
+    public void updateDrawer(DrawOverlay drawOverlay) throws SetOperationFailedException {
+        this.drawOverlay = drawOverlay;
+        this.cache.setDrawer(drawOverlay);
     }
 
     public void addOverlays(ColoredOverlayCollection oc) throws OperationFailedException {
@@ -86,17 +86,16 @@ public class BoundColoredOverlayCollection {
         this.cache.setOverlayCollection(oc);
     }
 
-    public void drawRGB(RGBStack stack, BoundingBox bbox, double zoomFactor)
+    public void drawRGB(RGBStack stack, BoundingBox box, double zoomFactor)
             throws OperationFailedException {
 
         // Create a containing bounding box with the zoom
-        BoundingBox container =
-                createZoomedContainer(bbox, zoomFactor, stack.getDimensions().getExtent());
+        BoundingBox container = createZoomedContainer(box, zoomFactor, stack.extent());
 
         OverlayPrecalculatedCache marksWithinView =
-                cache.subsetWithinView(bbox, container, zoomFactor);
+                cache.subsetWithinView(box, container, zoomFactor);
 
-        maskWriter.writePrecalculatedOverlays(
+        drawOverlay.writePrecalculatedOverlays(
                 marksWithinView.getGeneratedObjectsZoomed(),
                 dimEntireImage,
                 stack,
@@ -106,21 +105,21 @@ public class BoundColoredOverlayCollection {
     }
 
     private static BoundingBox createZoomedContainer(
-            BoundingBox bbox, double zoomFactor, Extent stackExtent) {
-        Point3i cornerMin = new Point3i(bbox.cornerMin());
+            BoundingBox box, double zoomFactor, Extent stackExtent) {
+        Point3i cornerMin = new Point3i(box.cornerMin());
         cornerMin.scaleXY(zoomFactor);
         return new BoundingBox(cornerMin, stackExtent);
     }
 
     // Note the overlay do not actually have to be contained in the OverlayCollection for this to
     // work
-    //  it will work with any overlay.... simply using the settings from the bound maskWriter
-    public List<BoundingBox> bboxList(ColoredOverlayCollection oc) {
-        return oc.bboxList(maskWriter, dimEntireImage);
+    //  it will work with any overlay.... simply using the settings from the bound drawOverlay
+    public List<BoundingBox> boxList(ColoredOverlayCollection oc) {
+        return oc.boxList(drawOverlay, dimEntireImage);
     }
 
-    public List<BoundingBox> bboxList(OverlayCollection oc) {
-        return oc.bboxList(maskWriter, dimEntireImage);
+    public List<BoundingBox> boxList(OverlayCollection oc) {
+        return oc.boxList(drawOverlay, dimEntireImage);
     }
 
     public synchronized OverlayPrecalculatedCache getPrecalculatedCache() {

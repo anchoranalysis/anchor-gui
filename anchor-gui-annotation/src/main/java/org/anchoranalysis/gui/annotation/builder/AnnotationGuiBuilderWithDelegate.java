@@ -29,45 +29,43 @@ package org.anchoranalysis.gui.annotation.builder;
 import java.io.File;
 import java.nio.file.Path;
 import java.util.Optional;
-import org.anchoranalysis.annotation.io.bean.strategy.AnnotatorStrategy;
+import org.anchoranalysis.annotation.io.bean.AnnotatorStrategy;
 import org.anchoranalysis.annotation.io.input.AnnotationWithStrategy;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.name.provider.NamedProvider;
-import org.anchoranalysis.core.progress.CallableWithProgressReporter;
 import org.anchoranalysis.core.progress.ProgressReporterMultiple;
-import org.anchoranalysis.gui.annotation.AnnotationBackground;
+import org.anchoranalysis.gui.annotation.AnnotationBackgroundInstance;
 import org.anchoranalysis.gui.container.background.BackgroundStackContainerException;
-import org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.definition.ChangeableBackgroundDefinition;
+import org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.definition.ChangeableBackground;
 import org.anchoranalysis.gui.videostats.internalframe.annotator.AnnotationInitParams;
+import org.anchoranalysis.image.stack.NamedStacksSupplier;
 import org.anchoranalysis.image.stack.Stack;
 import org.anchoranalysis.io.error.AnchorIOException;
+import lombok.RequiredArgsConstructor;
 
+@RequiredArgsConstructor
 public abstract class AnnotationGuiBuilderWithDelegate<
                 T extends AnnotationInitParams, S extends AnnotatorStrategy>
         extends AnnotationGuiBuilder<T> {
 
-    private AnnotationWithStrategy<S> delegate;
-
-    public AnnotationGuiBuilderWithDelegate(AnnotationWithStrategy<S> delegate) {
-        this.delegate = delegate;
-    }
+    private final AnnotationWithStrategy<S> delegate;
 
     @Override
-    public ChangeableBackgroundDefinition backgroundDefinition(
-            AnnotationBackground annotationBackground) {
-        return BackgroundDefinitionCreator.create(
+    public ChangeableBackground backgroundDefinition(
+            AnnotationBackgroundInstance annotationBackground) {
+        return BackgroundInstanceCreator.create(
                 annotationBackground, delegate.getStrategy().getBackground());
     }
 
     /** A path that is used to allow the user to delete an annotation */
     @Override
     public Path deletePath() {
-        return delegate.getAnnotationPath();
+        return delegate.getPath();
     }
 
     // Cached-operation
     @Override
-    public CallableWithProgressReporter<NamedProvider<Stack>, CreateException> stacks() {
+    public NamedStacksSupplier stacks() {
         return delegate.stacks();
     }
 
@@ -94,14 +92,14 @@ public abstract class AnnotationGuiBuilderWithDelegate<
     }
 
     protected Path annotationPath() {
-        return delegate.getAnnotationPath();
+        return delegate.getPath();
     }
 
-    protected AnnotationBackground createBackground(
+    protected AnnotationBackgroundInstance createBackground(
             ProgressReporterMultiple prm, NamedProvider<Stack> backgroundStacks)
             throws CreateException {
         try {
-            return new AnnotationBackground(
+            return new AnnotationBackgroundInstance(
                     prm,
                     backgroundStacks,
                     getStrategy().getBackground().getStackNameVisualOriginal());

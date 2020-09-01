@@ -63,25 +63,23 @@ class MouseMotionListenerDragView extends MouseInputAdapter {
     }
 
     @Override
-    public void mousePressed(MouseEvent e) {
-        super.mousePressed(e);
-        if (!e.isPopupTrigger() && (e.isControlDown() || e.isShiftDown())) {
+    public void mousePressed(MouseEvent event) {
+        super.mousePressed(event);
+        if (!event.isPopupTrigger() && (event.isControlDown() || event.isShiftDown())) {
 
             // System.out.println("capturing");
 
             origPoint = new Point2i();
-            origPoint.setX(e.getX());
-            origPoint.setY(e.getY());
+            origPoint.setX(event.getX());
+            origPoint.setY(event.getY());
         }
     }
 
-    private void doShift(MouseEvent e, boolean enforceTolerance) {
-        int shiftX = origPoint.getX() - e.getX();
-        int shiftY = origPoint.getY() - e.getY();
+    private void doShift(MouseEvent event, boolean enforceTolerance) {
+        int shiftX = origPoint.x() - event.getX();
+        int shiftY = origPoint.y() - event.getY();
 
         // We construct a new mouse point with the shift
-
-        // Point2i mousePoint = new Point2i( e.getX() - shiftX, e.getY() - shiftY );
 
         // We ignore unless they are enough to nudge us forward a bit
         // This prevents loads of small shifts being ignored as we drag
@@ -93,13 +91,11 @@ class MouseMotionListenerDragView extends MouseInputAdapter {
             }
         }
 
-        // System.out.printf("Do shift %d and %d\n", shiftX, shiftY );
-
         updateThread.setShift(new Point2i(shiftX, shiftY));
         new Thread(updateThread).start();
 
-        origPoint.setX(e.getX());
-        origPoint.setY(e.getY());
+        origPoint.setX(event.getX());
+        origPoint.setY(event.getY());
     }
 
     @Override

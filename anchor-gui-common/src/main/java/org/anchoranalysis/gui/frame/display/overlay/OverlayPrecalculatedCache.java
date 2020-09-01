@@ -29,11 +29,6 @@ package org.anchoranalysis.gui.frame.display.overlay;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
-import org.anchoranalysis.anchor.overlay.Overlay;
-import org.anchoranalysis.anchor.overlay.collection.ColoredOverlayCollection;
-import org.anchoranalysis.anchor.overlay.collection.OverlayCollection;
-import org.anchoranalysis.anchor.overlay.writer.DrawOverlay;
-import org.anchoranalysis.anchor.overlay.writer.PrecalcOverlay;
 import org.anchoranalysis.core.color.RGBColor;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.OperationFailedException;
@@ -42,10 +37,15 @@ import org.anchoranalysis.core.index.SetOperationFailedException;
 import org.anchoranalysis.image.binary.values.BinaryValues;
 import org.anchoranalysis.image.binary.values.BinaryValuesByte;
 import org.anchoranalysis.image.extent.BoundingBox;
-import org.anchoranalysis.image.extent.ImageDimensions;
+import org.anchoranalysis.image.extent.Dimensions;
 import org.anchoranalysis.image.index.BoundingBoxRTree;
 import org.anchoranalysis.image.object.properties.ObjectWithProperties;
 import org.anchoranalysis.image.scale.ScaleFactor;
+import org.anchoranalysis.overlay.Overlay;
+import org.anchoranalysis.overlay.collection.ColoredOverlayCollection;
+import org.anchoranalysis.overlay.collection.OverlayCollection;
+import org.anchoranalysis.overlay.writer.DrawOverlay;
+import org.anchoranalysis.overlay.writer.PrecalculationOverlay;
 
 public class OverlayPrecalculatedCache implements OverlayRetriever {
 
@@ -63,25 +63,25 @@ public class OverlayPrecalculatedCache implements OverlayRetriever {
      */
     private double zoomFactor = -1;
 
-    private DrawOverlay overlayWriter;
+    private DrawOverlay drawOverlay;
 
-    private ImageDimensions dimEntireImage;
+    private Dimensions dimEntireImage;
 
-    private ImageDimensions dimScaled;
+    private Dimensions dimScaled;
 
-    /** The binary values we use for making object masks */
+    /** The binary values we use for making object-masks */
     private static final BinaryValuesByte bvOut = BinaryValues.getDefault().createByte();
 
     public OverlayPrecalculatedCache(
             ColoredOverlayCollection overlayCollection,
-            ImageDimensions dimEntireImage,
-            DrawOverlay maskWriter)
+            Dimensions dimEntireImage,
+            DrawOverlay drawOverlay)
             throws CreateException {
         super();
-        this.overlayWriter = maskWriter;
+        this.drawOverlay = drawOverlay;
         this.dimEntireImage = dimEntireImage;
         this.overlayList =
-                new PrecalculatedOverlayList(overlayCollection, dimEntireImage, maskWriter);
+                new PrecalculatedOverlayList(overlayCollection, dimEntireImage, drawOverlay);
         rebuildCache();
     }
 
@@ -95,9 +95,8 @@ public class OverlayPrecalculatedCache implements OverlayRetriever {
         }
     }
 
-    public synchronized void setMaskWriter(DrawOverlay maskWriter)
-            throws SetOperationFailedException {
-        this.overlayWriter = maskWriter;
+    public synchronized void setDrawer(DrawOverlay drawOverlay) throws SetOperationFailedException {
+        this.drawOverlay = drawOverlay;
         try {
             rebuildCache();
         } catch (CreateException e) {
@@ -107,7 +106,7 @@ public class OverlayPrecalculatedCache implements OverlayRetriever {
 
     /** Creates a subset which only contains marks contained within a particular bounding-box */
     public synchronized OverlayPrecalculatedCache subsetWithinView(
-            BoundingBox bboxView, BoundingBox bboxViewZoomed, double zoomFactorNew)
+            BoundingBox boxView, BoundingBox boxViewZoomed, double zoomFactorNew)
             throws OperationFailedException {
 
         overlayList.assertSizesMatchSimple();
@@ -128,21 +127,21 @@ public class OverlayPrecalculatedCache implements OverlayRetriever {
         }
 
         // Figure out which indices intersect with our bounding-box
-        List<Integer> intersectingIndices = rTree.intersectsWith(bboxView);
+        List<Integer> intersectingIndices = rTree.intersectsWith(boxView);
 
         // The lists for the subset we are creating
-        PrecalculatedOverlayList precalcOverlayList = new PrecalculatedOverlayList();
+        PrecalculatedOverlayList precalculationOverlayList = new PrecalculatedOverlayList();
 
         // Loop through each index, and add to the output lists
         for (int i : intersectingIndices) {
 
-            BoundingBox bbox = overlayList.getBBox(i);
+            BoundingBox box = overlayList.getBBox(i);
 
-            if (bbox.intersection().existsWith(bboxView)) {
+            if (box.intersection().existsWith(boxView)) {
 
                 overlayList.assertZoomedExists();
 
-                addedScaledIndexTo(i, bbox, bboxViewZoomed, zoomFactorNew, precalcOverlayList);
+                addedScaledIndexTo(i, box, boxViewZoomed, zoomFactorNew, precalculationOverlayList);
             }
         }
 
@@ -152,7 +151,7 @@ public class OverlayPrecalculatedCache implements OverlayRetriever {
         overlayList.assertSizesMatchSimple();
 
         // We create our subset
-        return new OverlayPrecalculatedCache(precalcOverlayList, zoomFactor, dimEntireImage);
+        return new OverlayPrecalculatedCache(precalculationOverlayList, zoomFactor, dimEntireImage);
     }
 
     public synchronized void addOverlays(ColoredOverlayCollection overlaysToAdd)
@@ -161,19 +160,21 @@ public class OverlayPrecalculatedCache implements OverlayRetriever {
         try {
             for (int i = 0; i < overlaysToAdd.size(); i++) {
 
-                Overlay ol = overlaysToAdd.get(i);
+                Overlay overlay = overlaysToAdd.get(i);
 
-                ObjectWithProperties om = ol.createObject(overlayWriter, dimEntireImage, bvOut);
-                PrecalcOverlay precalc =
-                        DrawOverlay.createPrecalc(overlayWriter, om, dimEntireImage);
+                ObjectWithProperties object =
+                        overlay.createObject(drawOverlay, dimEntireImage, bvOut);
+                PrecalculationOverlay precalculation =
+                        DrawOverlay.createPrecalc(drawOverlay, object, dimEntireImage);
 
-                BoundingBox bbox = ol.bbox(overlayWriter, dimEntireImage);
+                BoundingBox box = overlay.box(drawOverlay, dimEntireImage);
 
-                overlayList.add(ol, overlaysToAdd.getColor(i), precalc, bbox, Optional.empty());
+                overlayList.add(
+                        overlay, overlaysToAdd.getColor(i), precalculation, box, Optional.empty());
 
                 if (rTree != null) {
                     // We add it under the ID of what we've just added
-                    rTree.add(overlayList.size() - 1, bbox);
+                    rTree.add(overlayList.size() - 1, box);
                 }
 
                 overlayList.assertSizesMatchSimple();
@@ -216,7 +217,7 @@ public class OverlayPrecalculatedCache implements OverlayRetriever {
             Overlay ol = overlayList.getOverlay(id);
 
             // Check if it's actually inside
-            if (ol.isPointInside(overlayWriter, point)) {
+            if (ol.isPointInside(drawOverlay, point)) {
                 out.add(ol);
             }
         }
@@ -232,16 +233,16 @@ public class OverlayPrecalculatedCache implements OverlayRetriever {
         return getOverlays().size();
     }
 
-    public List<PrecalcOverlay> getGeneratedObjects() {
+    public List<PrecalculationOverlay> getGeneratedObjects() {
         return overlayList.getListGeneratedObjects();
     }
 
-    public List<PrecalcOverlay> getGeneratedObjectsZoomed() {
+    public List<PrecalculationOverlay> getGeneratedObjectsZoomed() {
         return overlayList.getListGeneratedObjectsZoomed();
     }
 
     private OverlayPrecalculatedCache(
-            PrecalculatedOverlayList overlayList, double zoomFactor, ImageDimensions dim) {
+            PrecalculatedOverlayList overlayList, double zoomFactor, Dimensions dim) {
         this.overlayList = overlayList;
         overlayList.assertListsSizeMatch();
         this.zoomFactor = zoomFactor;
@@ -249,36 +250,38 @@ public class OverlayPrecalculatedCache implements OverlayRetriever {
     }
 
     private void rebuildCache() throws CreateException {
-        overlayList.rebuild(dimEntireImage, overlayWriter);
+        overlayList.rebuild(dimEntireImage, drawOverlay);
         zoomFactor = -1;
         rTree = null;
     }
 
     /**
-     * Gets a scaled mask if it can from the cache. Otherwise creates a new one
+     * Gets a scaled overlay if it can from the cache for a particular object. Otherwise creates a
+     * new one
      *
      * @param zoomFactorNew
-     * @param om
-     * @param ol
-     * @param i
+     * @param object used as reference to find a corresponding overlay in cache, or else used to
+     *     derive one.
+     * @param overlay
+     * @param index
      * @param dimScaled
      * @return NULL if rejected
      * @throws OperationFailedException
      */
-    private Optional<PrecalcOverlay> getOrCreateScaledMask(
+    private Optional<PrecalculationOverlay> getOrCreateScaledOverlayForObject(
             double zoomFactorNew,
-            ObjectWithProperties om,
-            Overlay ol,
-            int i,
-            ImageDimensions dimScaled)
+            ObjectWithProperties object,
+            Overlay overlay,
+            int index,
+            Dimensions dimScaled)
             throws OperationFailedException {
         overlayList.assertZoomedExists();
         if (zoomFactorNew == 1) {
             // We can steal from the main object
-            return Optional.ofNullable(overlayList.getPrecalc(i));
+            return Optional.ofNullable(overlayList.getPrecalculation(index));
         } else if (zoomFactorNew == zoomFactor) {
             // Great, we can steal the object from the cache, if it's non null
-            PrecalcOverlay omScaledCache = overlayList.getPrecalcZoomed(i);
+            PrecalculationOverlay omScaledCache = overlayList.getPrecalculationZoomed(index);
 
             if (omScaledCache != null) {
                 return Optional.of(omScaledCache);
@@ -289,22 +292,29 @@ public class OverlayPrecalculatedCache implements OverlayRetriever {
         try {
 
             ObjectWithProperties omScaledProps =
-                    ol.createScaledMask(
-                            overlayWriter, zoomFactorNew, om, ol, dimEntireImage, dimScaled, bvOut);
+                    overlay.createScaleObject(
+                            drawOverlay,
+                            zoomFactorNew,
+                            object,
+                            overlay,
+                            dimEntireImage,
+                            dimScaled,
+                            bvOut);
 
-            // If the mask we make from the overlay has no pixels, then we reject it by returning
+            // If the object-mask we make from the overlay has no pixels, then we reject it by
+            // returning
             // NULL
-            if (!omScaledProps.getMask().hasPixelsGreaterThan(0)) {
+            if (!omScaledProps.withoutProperties().voxelsOn().anyExists()) {
                 return Optional.empty();
             }
 
             overlayList.assertZoomedExists();
             // We precalculate this
-            PrecalcOverlay precalc =
-                    DrawOverlay.createPrecalc(overlayWriter, omScaledProps, dimEntireImage);
+            PrecalculationOverlay precalculation =
+                    DrawOverlay.createPrecalc(drawOverlay, omScaledProps, dimEntireImage);
             overlayList.assertZoomedExists();
-            overlayList.setPrecalcZoomed(i, precalc);
-            return Optional.of(precalc);
+            overlayList.setPrecalculationZoomed(index, precalculation);
+            return Optional.of(precalculation);
         } catch (CreateException e) {
             throw new OperationFailedException(e);
         }
@@ -312,37 +322,38 @@ public class OverlayPrecalculatedCache implements OverlayRetriever {
 
     private void addedScaledIndexTo(
             int i,
-            BoundingBox bbox,
-            BoundingBox bboxViewZoomed,
+            BoundingBox box,
+            BoundingBox boxViewZoomed,
             double zoomFactorNew,
             PrecalculatedOverlayList addTo)
             throws OperationFailedException {
 
         // Our main object
-        PrecalcOverlay originalSize = overlayList.getPrecalcOverlay(i);
+        PrecalculationOverlay originalSize = overlayList.getPrecalculation(i);
 
         RGBColor col = overlayList.getColor(i);
         Overlay ol = overlayList.getOverlay(i);
 
         // We scale our object, retrieving from the cache if we can
-        Optional<PrecalcOverlay> scaled =
-                getOrCreateScaledMask(zoomFactorNew, originalSize.getFirst(), ol, i, dimScaled);
+        Optional<PrecalculationOverlay> scaled =
+                getOrCreateScaledOverlayForObject(
+                        zoomFactorNew, originalSize.getFirst(), ol, i, dimScaled);
 
         // We check that our zoomed-version also has an intersection, as sometimes it doesn't
         if (scaled.isPresent()
                 && scaled.get()
                         .getFirst()
-                        .getMask()
-                        .getBoundingBox()
+                        .withoutProperties()
+                        .boundingBox()
                         .intersection()
-                        .existsWith(bboxViewZoomed)) {
+                        .existsWith(boxViewZoomed)) {
 
             // Previously, we duplicated color here, now we don't
-            addTo.add(ol, col, originalSize, bbox, scaled);
+            addTo.add(ol, col, originalSize, box, scaled);
         }
     }
 
-    private ImageDimensions createDimensionsScaled(double zoomFactorNew) {
+    private Dimensions createDimensionsScaled(double zoomFactorNew) {
         // We create a scaled version of our dimensions
         return dimEntireImage.scaleXYBy(new ScaleFactor(zoomFactorNew));
     }

@@ -29,8 +29,8 @@ package org.anchoranalysis.gui.interactivebrowser.browser;
 import javax.swing.JButton;
 import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.gui.feature.evaluator.treetable.FeatureListSrc;
+import org.anchoranalysis.gui.videostats.dropdown.AddVideoStatsModule;
 import org.anchoranalysis.gui.videostats.dropdown.BoundVideoStatsModuleDropDown;
-import org.anchoranalysis.gui.videostats.dropdown.IAddVideoStatsModule;
 import org.anchoranalysis.gui.videostats.dropdown.MenuAddException;
 import org.anchoranalysis.gui.videostats.dropdown.VideoStatsModuleGlobalParams;
 import org.anchoranalysis.gui.videostats.modulecreator.FeatureEvaluatorCreator;
@@ -38,9 +38,9 @@ import org.anchoranalysis.gui.videostats.modulecreator.FeatureEvaluatorCreator;
 class GlobalDropDown {
 
     private BoundVideoStatsModuleDropDown delegate;
-    private IAddVideoStatsModule adder;
+    private AddVideoStatsModule adder;
 
-    public GlobalDropDown(IAddVideoStatsModule adder) {
+    public GlobalDropDown(AddVideoStatsModule adder) {
 
         delegate = new BoundVideoStatsModuleDropDown("Global", "/toolbarIcon/big_circle.png");
         this.adder = adder;

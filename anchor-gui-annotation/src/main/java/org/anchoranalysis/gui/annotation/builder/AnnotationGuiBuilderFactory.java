@@ -26,7 +26,7 @@
 
 package org.anchoranalysis.gui.annotation.builder;
 
-import org.anchoranalysis.annotation.io.bean.strategy.AnnotatorStrategy;
+import org.anchoranalysis.annotation.io.bean.AnnotatorStrategy;
 import org.anchoranalysis.annotation.io.input.AnnotationWithStrategy;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.gui.annotation.strategy.builder.mark.BuilderProposeMarks;
@@ -34,7 +34,10 @@ import org.anchoranalysis.gui.annotation.strategy.builder.whole.BuilderWholeImag
 import org.anchoranalysis.io.error.AnchorIOException;
 import org.anchoranalysis.plugin.annotation.bean.strategy.MarkProposerStrategy;
 import org.anchoranalysis.plugin.annotation.bean.strategy.WholeImageLabelStrategy;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 
+@NoArgsConstructor(access=AccessLevel.PRIVATE)
 public class AnnotationGuiBuilderFactory {
 
     @SuppressWarnings("unchecked")

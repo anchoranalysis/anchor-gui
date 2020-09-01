@@ -52,9 +52,9 @@ public class OpenFile extends AbstractAction {
     private static final long serialVersionUID = 1L;
 
     private Component parentComponent;
-    private Logger logger;
-    private FileCreatorLoader fileCreatorLoader;
-    private OpenFileTypeFactory factory;
+    private transient Logger logger;
+    private transient FileCreatorLoader fileCreatorLoader;
+    private transient OpenFileTypeFactory factory;
 
     private JFileChooser fileChooser;
 
@@ -108,7 +108,7 @@ public class OpenFile extends AbstractAction {
 
             ArrayList<File> listFiles = new ArrayList<>();
             for (File f : files) {
-                System.out.printf("Selected file is %s%n", f.getPath());
+                System.out.printf("Selected file is %s%n", f.getPath()); // NOSONAR
                 listFiles.add(f);
             }
 
@@ -128,7 +128,7 @@ public class OpenFile extends AbstractAction {
                             parentComponent,
                             fileCreatorLoader.getImporterSettings());
                 } catch (OperationFailedException e1) {
-                    System.out.printf("Cannot guess filetype: %s\n", e1.toString());
+                    System.out.printf("Cannot guess filetype: %s%n", e1.toString()); // NOSONAR
                 }
             }
         }
@@ -166,8 +166,6 @@ public class OpenFile extends AbstractAction {
             Component parentComponent,
             ImporterSettings importerSettings) {
 
-        assert (files.size() > 0);
-
         try {
             if (fileType == null) {
                 fileType = guessFileTypeFromFiles(files);
@@ -180,10 +178,7 @@ public class OpenFile extends AbstractAction {
             fileCreatorLoader.addFileListSummaryModule(
                     fileType.creatorForFile(files, importerSettings), parentComponent);
 
-        } catch (CreateException e) {
-            logger.errorReporter().recordError(OpenFile.class, e);
-            showError("An error occurred opening the bean. See log.");
-        } catch (OperationFailedException e) {
+        } catch (CreateException | OperationFailedException e) {
             logger.errorReporter().recordError(OpenFile.class, e);
             showError("An error occurred opening the bean. See log.");
         }

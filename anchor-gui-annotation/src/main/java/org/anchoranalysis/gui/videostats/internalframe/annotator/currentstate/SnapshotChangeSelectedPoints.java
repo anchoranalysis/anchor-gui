@@ -26,8 +26,8 @@
 
 package org.anchoranalysis.gui.videostats.internalframe.annotator.currentstate;
 
-import org.anchoranalysis.anchor.mpp.mark.Mark;
 import org.anchoranalysis.gui.videostats.internalframe.annotator.undoredo.IRecordSnapshot;
+import org.anchoranalysis.mpp.mark.Mark;
 
 class SnapshotChangeSelectedPoints implements IChangeSelectedPoints {
 
@@ -41,9 +41,9 @@ class SnapshotChangeSelectedPoints implements IChangeSelectedPoints {
     }
 
     @Override
-    public void addCurrentProposedCfgFromSelectedPoints(Mark mark) {
+    public void addCurrentProposedMarksFromSelectedPoints(Mark mark) {
         recorder.recordSnapshot();
-        delegate.addCurrentProposedCfgFromSelectedPoints(mark);
+        delegate.addCurrentProposedMarksFromSelectedPoints(mark);
     }
 
     @Override

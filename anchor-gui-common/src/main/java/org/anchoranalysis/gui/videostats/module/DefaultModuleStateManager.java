@@ -26,9 +26,9 @@
 
 package org.anchoranalysis.gui.videostats.module;
 
-import org.anchoranalysis.core.functional.function.FunctionWithException;
+import org.anchoranalysis.core.functional.function.CheckedFunction;
 import org.anchoranalysis.gui.container.background.BackgroundStackContainerException;
-import org.anchoranalysis.gui.mark.MarkDisplaySettings;
+import org.anchoranalysis.gui.marks.MarkDisplaySettings;
 import org.anchoranalysis.gui.videostats.link.DefaultLinkState;
 import org.anchoranalysis.gui.videostats.link.DefaultLinkStateManager;
 import org.anchoranalysis.image.stack.DisplayStack;
@@ -59,8 +59,7 @@ public class DefaultModuleStateManager {
 
     /** Provides a copy of the default module state with a changed background */
     public DefaultModuleState copyChangeBackground(
-            FunctionWithException<Integer, DisplayStack, BackgroundStackContainerException>
-                    background) {
+            CheckedFunction<Integer, DisplayStack, BackgroundStackContainerException> background) {
         return new DefaultModuleState(
                 linkStateManager.copyChangeBackground(background), markDisplaySettings);
     }

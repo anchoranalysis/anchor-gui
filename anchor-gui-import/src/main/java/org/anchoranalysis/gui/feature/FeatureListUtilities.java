@@ -27,33 +27,36 @@
 package org.anchoranalysis.gui.feature;
 
 import java.util.function.Function;
-import org.anchoranalysis.anchor.mpp.bean.regionmap.RegionMap;
-import org.anchoranalysis.anchor.mpp.feature.nrg.scheme.NRGScheme;
-import org.anchoranalysis.anchor.mpp.feature.nrg.scheme.NamedNRGSchemeSet;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import org.anchoranalysis.core.name.value.SimpleNameValue;
 import org.anchoranalysis.feature.bean.Feature;
 import org.anchoranalysis.feature.bean.list.FeatureList;
 import org.anchoranalysis.feature.bean.operator.Sum;
 import org.anchoranalysis.feature.input.FeatureInput;
+import org.anchoranalysis.mpp.bean.regionmap.RegionMap;
+import org.anchoranalysis.mpp.feature.energy.scheme.EnergyScheme;
+import org.anchoranalysis.mpp.feature.energy.scheme.EnergySchemeSet;
 
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class FeatureListUtilities {
 
     // Creates a feature list for showing Individual Elems
 
     public static <T extends FeatureInput> FeatureListWithRegionMap<T> createFeatureList(
-            NamedNRGSchemeSet elemSet,
-            Function<NRGScheme, FeatureList<T>> funcExtractList,
+            EnergySchemeSet elemSet,
+            Function<EnergyScheme, FeatureList<T>> funcExtractList,
             boolean includeLastExecution) {
 
         FeatureListWithRegionMap<T> featureList = new FeatureListWithRegionMap<>();
 
-        for (SimpleNameValue<NRGScheme> nnec : elemSet) {
+        for (SimpleNameValue<EnergyScheme> nnec : elemSet) {
 
-            NRGScheme nrgScheme = nnec.getValue();
+            EnergyScheme energyScheme = nnec.getValue();
 
-            RegionMap regionMap = nrgScheme.getRegionMap();
+            RegionMap regionMap = energyScheme.getRegionMap();
 
-            FeatureList<T> extractedList = funcExtractList.apply(nrgScheme);
+            FeatureList<T> extractedList = funcExtractList.apply(energyScheme);
 
             // This is a bit hacky, but we convert beginning with lastExecution to be a separate
             // collection

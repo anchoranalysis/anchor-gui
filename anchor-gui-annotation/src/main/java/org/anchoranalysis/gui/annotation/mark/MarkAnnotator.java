@@ -27,10 +27,6 @@
 package org.anchoranalysis.gui.annotation.mark;
 
 import java.util.Optional;
-import org.anchoranalysis.anchor.mpp.bean.init.MPPInitParams;
-import org.anchoranalysis.anchor.mpp.bean.points.fitter.PointsFitter;
-import org.anchoranalysis.anchor.mpp.bean.proposer.MarkProposer;
-import org.anchoranalysis.anchor.mpp.bean.regionmap.RegionMap;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.log.Logger;
@@ -41,8 +37,12 @@ import org.anchoranalysis.gui.interactivebrowser.MarkEvaluatorResolved;
 import org.anchoranalysis.gui.interactivebrowser.MarkEvaluatorSetForImage;
 import org.anchoranalysis.gui.videostats.internalframe.annotator.tool.ToolErrorReporter;
 import org.anchoranalysis.gui.videostats.internalframe.evaluator.EvaluatorWithContext;
-import org.anchoranalysis.image.extent.ImageDimensions;
+import org.anchoranalysis.image.extent.Dimensions;
 import org.anchoranalysis.image.stack.Stack;
+import org.anchoranalysis.mpp.bean.init.MPPInitParams;
+import org.anchoranalysis.mpp.bean.points.fitter.PointsFitter;
+import org.anchoranalysis.mpp.bean.proposer.MarkProposer;
+import org.anchoranalysis.mpp.bean.regionmap.RegionMap;
 import org.anchoranalysis.plugin.annotation.bean.strategy.MarkProposerStrategy;
 
 public class MarkAnnotator {
@@ -69,11 +69,11 @@ public class MarkAnnotator {
         // Nullable
         markProposerGuess = setupGuess(soMPP, annotationStrategy, logger);
 
-        this.backgroundStacks = soMPP.getImage().getStackCollection();
+        this.backgroundStacks = soMPP.getImage().stacks();
     }
 
     public RegionMap getRegionMap() {
-        return markEvaluatorResolved.getNrgScheme().getRegionMap();
+        return markEvaluatorResolved.getEnergyScheme().getRegionMap();
     }
 
     public NamedProviderStore<Stack> getBackgroundStacks() {
@@ -86,7 +86,7 @@ public class MarkAnnotator {
     }
 
     public Optional<EvaluatorWithContext> createSelectPointsEvaluator(
-            ImageDimensions dimViewer, ToolErrorReporter errorReporter) {
+            Dimensions dimViewer, ToolErrorReporter errorReporter) {
         return EvaluatorFactory.createSelectPointsEvaluator(
                 dimViewer, markEvaluatorResolved, getRegionMap(), errorReporter);
     }
@@ -98,7 +98,7 @@ public class MarkAnnotator {
     private static MPPInitParams setupEvaluatorAndPointsFitter(
             MarkEvaluatorResolved markEvaluator, MarkProposerStrategy annotationStrategy)
             throws CreateException {
-        return markEvaluator.getProposerSharedObjectsOperation().call();
+        return markEvaluator.getProposerSharedObjectsOperation().get();
     }
 
     private static PointsFitter extractPointsFitter(

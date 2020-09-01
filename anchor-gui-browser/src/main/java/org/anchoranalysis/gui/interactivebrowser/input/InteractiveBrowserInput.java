@@ -31,18 +31,15 @@ import java.util.List;
 import java.util.Optional;
 import lombok.Getter;
 import lombok.Setter;
-import org.anchoranalysis.anchor.mpp.feature.bean.mark.MarkEvaluator;
-import org.anchoranalysis.anchor.mpp.feature.bean.nrgscheme.NRGSchemeCreator;
 import org.anchoranalysis.bean.NamedBean;
-import org.anchoranalysis.bean.Provider;
+import org.anchoranalysis.bean.provider.Provider;
 import org.anchoranalysis.bean.shared.params.keyvalue.KeyValueParamsInitParams;
 import org.anchoranalysis.bean.shared.params.keyvalue.KeyValueParamsProvider;
-import org.anchoranalysis.core.cache.CacheCall;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.OperationFailedException;
-import org.anchoranalysis.core.functional.CallableWithException;
 import org.anchoranalysis.core.log.CommonContext;
 import org.anchoranalysis.core.name.store.SharedObjects;
+import org.anchoranalysis.core.name.store.StoreSupplier;
 import org.anchoranalysis.feature.bean.list.FeatureListProvider;
 import org.anchoranalysis.feature.input.FeatureInput;
 import org.anchoranalysis.feature.shared.SharedFeaturesInitParams;
@@ -52,6 +49,8 @@ import org.anchoranalysis.gui.interactivebrowser.openfile.importer.ImporterSetti
 import org.anchoranalysis.image.io.bean.rasterreader.RasterReader;
 import org.anchoranalysis.io.bean.filepath.provider.FilePathProvider;
 import org.anchoranalysis.io.input.InputFromManager;
+import org.anchoranalysis.mpp.feature.bean.energy.scheme.EnergySchemeCreator;
+import org.anchoranalysis.mpp.feature.bean.mark.MarkEvaluator;
 
 public class InteractiveBrowserInput implements InputFromManager {
 
@@ -59,7 +58,7 @@ public class InteractiveBrowserInput implements InputFromManager {
 
     @Getter @Setter private List<FileCreator> listFileCreators;
 
-    @Setter private NRGSchemeCreator nrgSchemeCreator;
+    @Setter private EnergySchemeCreator energySchemeCreator;
 
     @Setter private List<NamedBean<FeatureListProvider<FeatureInput>>> namedItemSharedFeatureList;
 
@@ -85,27 +84,28 @@ public class InteractiveBrowserInput implements InputFromManager {
             addFilePaths(soParams);
 
             // so.g
-        } catch (OperationFailedException e2) {
-            throw new CreateException(e2);
+        } catch (OperationFailedException e) {
+            throw new CreateException(e);
         }
 
-        return new FeatureListSrcBuilder(context.getLogger()).build(soFeature, nrgSchemeCreator);
+        return new FeatureListSrcBuilder(context.getLogger()).build(soFeature, energySchemeCreator);
     }
 
     private void addKeyValueParams(KeyValueParamsInitParams soParams)
             throws OperationFailedException {
 
-        for (NamedBean<KeyValueParamsProvider> ni : this.namedItemKeyValueParamsProviderList) {
+        for (NamedBean<KeyValueParamsProvider> provider :
+                this.namedItemKeyValueParamsProviderList) {
             soParams.getNamedKeyValueParamsCollection()
-                    .add(ni.getName(), cachedOperationFromProvider(ni.getValue()));
+                    .add(provider.getName(), cachedCreationFromProvider(provider.getValue()));
         }
     }
 
     private void addFilePaths(KeyValueParamsInitParams soParams) throws OperationFailedException {
 
-        for (NamedBean<FilePathProvider> ni : this.namedItemFilePathProviderList) {
+        for (NamedBean<FilePathProvider> provider : this.namedItemFilePathProviderList) {
             soParams.getNamedFilePathCollection()
-                    .add(ni.getName(), cachedOperationFromProvider(ni.getValue()));
+                    .add(provider.getName(), cachedCreationFromProvider(provider.getValue()));
         }
     }
 
@@ -119,10 +119,8 @@ public class InteractiveBrowserInput implements InputFromManager {
         return Optional.empty();
     }
 
-    private static <T>
-            CallableWithException<T, OperationFailedException> cachedOperationFromProvider(
-                    Provider<T> provider) {
-        return CacheCall.of(
+    private static <T> StoreSupplier<T> cachedCreationFromProvider(Provider<T> provider) {
+        return StoreSupplier.cache(
                 () -> {
                     try {
                         return provider.create();

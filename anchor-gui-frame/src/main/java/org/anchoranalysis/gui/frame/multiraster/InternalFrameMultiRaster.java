@@ -33,7 +33,7 @@ import org.anchoranalysis.core.index.container.BoundedIndexContainerFromList;
 import org.anchoranalysis.core.index.container.bridge.BoundedIndexContainerBridgeWithoutIndex;
 import org.anchoranalysis.gui.container.background.BackgroundStackContainerException;
 import org.anchoranalysis.gui.frame.threaded.indexable.InternalFrameThreadedIndexableRaster;
-import org.anchoranalysis.gui.image.frame.ISliderState;
+import org.anchoranalysis.gui.image.frame.SliderState;
 import org.anchoranalysis.gui.retrieveelements.IRetrieveElements;
 import org.anchoranalysis.gui.videostats.IModuleCreatorDefaultState;
 import org.anchoranalysis.gui.videostats.dropdown.VideoStatsModuleGlobalParams;
@@ -48,7 +48,7 @@ public class InternalFrameMultiRaster {
         delegate = new InternalFrameThreadedIndexableRaster(frameName);
     }
 
-    public ISliderState init(
+    public SliderState init(
             List<NamedRasterSet> list,
             DefaultModuleState initialState,
             IRetrieveElements elementRetriever,
@@ -64,8 +64,7 @@ public class InternalFrameMultiRaster {
                                 new BoundedIndexContainerFromList<>(list),
                                 InternalFrameMultiRaster::convertToDisplayStack);
 
-        ISliderState sliderState =
-                delegate.init(bridge, initialState, false, elementRetriever, mpg);
+        SliderState sliderState = delegate.init(bridge, initialState, false, elementRetriever, mpg);
 
         delegate.addAdditionalDetails(index -> String.format("id=%s", list.get(index).getName()));
 
@@ -92,7 +91,7 @@ public class InternalFrameMultiRaster {
         return delegate.getElementRetriever();
     }
 
-    public IModuleCreatorDefaultState moduleCreator(ISliderState sliderState) {
+    public IModuleCreatorDefaultState moduleCreator(SliderState sliderState) {
         return delegate.moduleCreator(sliderState);
     }
 }

@@ -36,9 +36,9 @@ import org.anchoranalysis.core.progress.ProgressReporterMultiple;
 import org.anchoranalysis.gui.annotation.builder.AdditionalFramesContext;
 import org.anchoranalysis.gui.annotation.builder.AnnotationGuiBuilder;
 import org.anchoranalysis.gui.annotation.builder.AnnotationGuiContext;
-import org.anchoranalysis.gui.image.frame.ISliderState;
+import org.anchoranalysis.gui.image.frame.SliderState;
 import org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.ControllerPopupMenuWithBackground;
-import org.anchoranalysis.gui.videostats.dropdown.IAddVideoStatsModule;
+import org.anchoranalysis.gui.videostats.dropdown.AddVideoStatsModule;
 import org.anchoranalysis.gui.videostats.dropdown.ModuleAddUtilities;
 import org.anchoranalysis.gui.videostats.dropdown.VideoStatsModuleGlobalParams;
 import org.anchoranalysis.gui.videostats.internalframe.annotator.AnnotationInitParams;
@@ -58,7 +58,7 @@ public class AnnotatorModuleCreator<T extends AnnotationInitParams>
     private AnnotationGuiContext context;
     private String name;
 
-    private boolean useDefaultCfg = false;
+    private boolean useDefaultMarks = false;
 
     // Transient
     private T paramsInit;
@@ -90,7 +90,7 @@ public class AnnotatorModuleCreator<T extends AnnotationInitParams>
                             "Load default annotation?",
                             JOptionPane.YES_NO_OPTION);
 
-            useDefaultCfg = (dialogResult == JOptionPane.YES_OPTION);
+            useDefaultMarks = (dialogResult == JOptionPane.YES_OPTION);
         }
     }
 
@@ -103,7 +103,7 @@ public class AnnotatorModuleCreator<T extends AnnotationInitParams>
 
             try {
                 paramsInit =
-                        annotation.createInitParams(prm, context, mpg.getLogger(), useDefaultCfg);
+                        annotation.createInitParams(prm, context, mpg.getLogger(), useDefaultMarks);
             } catch (CreateException e) {
                 throw new VideoStatsModuleCreateException(e);
             }
@@ -112,7 +112,7 @@ public class AnnotatorModuleCreator<T extends AnnotationInitParams>
     }
 
     @Override
-    public void createAndAddVideoStatsModule(IAddVideoStatsModule adder)
+    public void createAndAddVideoStatsModule(AddVideoStatsModule adder)
             throws VideoStatsModuleCreateException {
 
         try {
@@ -130,7 +130,7 @@ public class AnnotatorModuleCreator<T extends AnnotationInitParams>
         }
     }
 
-    private void configureAddImageFrame(IAddVideoStatsModule adder)
+    private void configureAddImageFrame(AddVideoStatsModule adder)
             throws InitException, VideoStatsModuleCreateException {
 
         InternalFrameAnnotator imageFrame =
@@ -141,8 +141,8 @@ public class AnnotatorModuleCreator<T extends AnnotationInitParams>
                 .configureLinkManager(
                         adder.getSubgroup().getDefaultModuleState().getLinkStateManager());
 
-        // Here we optionally set an adder to send back nrg_stacks
-        ISliderState sliderState =
+        // Here we optionally set an adder to send back energy-stacks
+        SliderState sliderState =
                 imageFrame.init(
                         annotation,
                         paramsInit,
@@ -156,7 +156,7 @@ public class AnnotatorModuleCreator<T extends AnnotationInitParams>
     }
 
     private void addBackgroundMenu(
-            InternalFrameAnnotator imageFrame, AnnotationBackground background) {
+            InternalFrameAnnotator imageFrame, AnnotationBackgroundInstance background) {
 
         ControllerPopupMenuWithBackground controller = imageFrame.controllerBackgroundMenu();
         controller.addDefinition(mpg, annotation.backgroundDefinition(background));

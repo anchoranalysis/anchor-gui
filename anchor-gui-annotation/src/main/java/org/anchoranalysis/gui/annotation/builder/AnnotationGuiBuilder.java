@@ -29,26 +29,24 @@ package org.anchoranalysis.gui.annotation.builder;
 import java.io.File;
 import java.nio.file.Path;
 import java.util.Optional;
-import org.anchoranalysis.core.cache.CacheCall;
+import org.anchoranalysis.core.cache.CachedSupplier;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.log.Logger;
-import org.anchoranalysis.core.name.provider.NamedProvider;
-import org.anchoranalysis.core.progress.CallableWithProgressReporter;
 import org.anchoranalysis.core.progress.ProgressReporterMultiple;
-import org.anchoranalysis.gui.annotation.AnnotationBackground;
+import org.anchoranalysis.gui.annotation.AnnotationBackgroundInstance;
 import org.anchoranalysis.gui.annotation.export.ExportAnnotation;
 import org.anchoranalysis.gui.annotation.state.AnnotationSummary;
-import org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.definition.ChangeableBackgroundDefinition;
+import org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.definition.ChangeableBackground;
 import org.anchoranalysis.gui.videostats.internalframe.annotator.AnnotationFrameControllers;
 import org.anchoranalysis.gui.videostats.internalframe.annotator.AnnotationInitParams;
 import org.anchoranalysis.gui.videostats.internalframe.annotator.AnnotationPanelParams;
 import org.anchoranalysis.gui.videostats.internalframe.annotator.navigation.PanelNavigation;
-import org.anchoranalysis.image.stack.Stack;
+import org.anchoranalysis.image.stack.NamedStacksSupplier;
 
 public abstract class AnnotationGuiBuilder<T extends AnnotationInitParams> {
 
-    private CacheCall<AnnotationSummary, CreateException> queryAnnotationStatus;
+    private CachedSupplier<AnnotationSummary, CreateException> queryAnnotationStatus;
 
     public AnnotationGuiBuilder() {
         super();
@@ -62,7 +60,7 @@ public abstract class AnnotationGuiBuilder<T extends AnnotationInitParams> {
             ProgressReporterMultiple prm,
             AnnotationGuiContext context,
             Logger logger,
-            boolean useDefaultCfg)
+            boolean useDefaultMarks)
             throws CreateException;
 
     /**
@@ -83,18 +81,18 @@ public abstract class AnnotationGuiBuilder<T extends AnnotationInitParams> {
      *
      * <p>The cache should be reset of the annotation is changed by the user
      */
-    public CacheCall<AnnotationSummary, CreateException> queryAnnotationSummary() {
+    public CachedSupplier<AnnotationSummary, CreateException> queryAnnotationSummary() {
         return queryAnnotationStatus;
     }
 
-    public abstract ChangeableBackgroundDefinition backgroundDefinition(
-            AnnotationBackground annotationBackground);
+    public abstract ChangeableBackground backgroundDefinition(
+            AnnotationBackgroundInstance annotationBackground);
 
     /** A path that is used to allow the user to delete an annotation */
     public abstract Path deletePath();
 
     // Cached-operation
-    public abstract CallableWithProgressReporter<NamedProvider<Stack>, CreateException> stacks();
+    public abstract NamedStacksSupplier stacks();
 
     public abstract String descriptiveName();
 
@@ -107,7 +105,7 @@ public abstract class AnnotationGuiBuilder<T extends AnnotationInitParams> {
     protected abstract AnnotationSummary createSummary() throws CreateException;
 
     /** Creates a cached version of the createSummary() method */
-    private CacheCall<AnnotationSummary, CreateException> createCachedSummary() {
-        return CacheCall.of(this::createSummary);
+    private CachedSupplier<AnnotationSummary, CreateException> createCachedSummary() {
+        return CachedSupplier.cache(this::createSummary);
     }
 }

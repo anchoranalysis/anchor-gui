@@ -26,7 +26,7 @@
 
 package org.anchoranalysis.gui.kernel.match;
 
-import org.anchoranalysis.mpp.sgmn.kernel.proposer.KernelIterDescription;
+import org.anchoranalysis.mpp.segment.kernel.proposer.KernelDescision;
 
 public class MatchKernelAccptd extends MatchKernel {
 
@@ -38,7 +38,7 @@ public class MatchKernelAccptd extends MatchKernel {
     }
 
     @Override
-    public boolean matches(KernelIterDescription kid) {
+    public boolean matches(KernelDescision kid) {
         return kid.isProposed() && kid.isAccepted() == accepted;
     }
 }

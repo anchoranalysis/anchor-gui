@@ -29,17 +29,21 @@ package org.anchoranalysis.gui.file.interactive;
 import java.io.File;
 import java.nio.file.Path;
 import java.util.Optional;
+import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.name.store.EagerEvaluationStore;
-import org.anchoranalysis.core.progress.CacheCallWithProgressReporter;
+import org.anchoranalysis.core.name.store.LazyEvaluationStore;
+import org.anchoranalysis.core.progress.ProgressReporter;
 import org.anchoranalysis.gui.bean.filecreator.MarkCreatorParams;
 import org.anchoranalysis.gui.file.opened.OpenedFile;
 import org.anchoranalysis.gui.file.opened.OpenedFileGUI;
-import org.anchoranalysis.gui.series.OperationCreateTimeSequence;
-import org.anchoranalysis.gui.videostats.dropdown.IAddVideoStatsModule;
+import org.anchoranalysis.gui.series.TimeSequenceProvider;
+import org.anchoranalysis.gui.series.TimeSequenceProviderSupplier;
+import org.anchoranalysis.gui.videostats.dropdown.AddVideoStatsModule;
 import org.anchoranalysis.gui.videostats.dropdown.multicollection.MultiCollectionDropDown;
 import org.anchoranalysis.image.io.input.ProvidesStackInput;
+import org.anchoranalysis.image.stack.TimeSequence;
 import org.anchoranalysis.io.output.bound.BoundOutputManagerRouteErrors;
 
 public class FileSingleStack extends InteractiveFile {
@@ -70,13 +74,13 @@ public class FileSingleStack extends InteractiveFile {
 
     @Override
     public OpenedFile open(
-            IAddVideoStatsModule globalSubgroupAdder, BoundOutputManagerRouteErrors outputManager)
+            AddVideoStatsModule globalSubgroupAdder, BoundOutputManagerRouteErrors outputManager)
             throws OperationFailedException {
 
         MultiCollectionDropDown dropDown =
                 new MultiCollectionDropDown(
-                        CacheCallWithProgressReporter.of(
-                                new OperationCreateTimeSequence(inputObject, 0)),
+                        TimeSequenceProviderSupplier.cache(
+                                progressReporter -> createTimeSeries(progressReporter, 0)),
                         null,
                         null,
                         new EagerEvaluationStore<>(),
@@ -90,5 +94,17 @@ public class FileSingleStack extends InteractiveFile {
         }
 
         return new OpenedFileGUI(this, dropDown.openedFileGUI());
+    }
+
+    private TimeSequenceProvider createTimeSeries(ProgressReporter progressReporter, int seriesNum)
+            throws CreateException {
+        try {
+            LazyEvaluationStore<TimeSequence> stacks =
+                    new LazyEvaluationStore<>("createTimeSeries");
+            inputObject.addToStoreInferNames(stacks, seriesNum, progressReporter);
+            return new TimeSequenceProvider(stacks, inputObject.numberFrames());
+        } catch (OperationFailedException e) {
+            throw new CreateException(e);
+        }
     }
 }

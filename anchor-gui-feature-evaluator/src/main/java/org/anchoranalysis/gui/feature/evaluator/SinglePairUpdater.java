@@ -26,14 +26,14 @@
 
 package org.anchoranalysis.gui.feature.evaluator;
 
-import org.anchoranalysis.anchor.mpp.pair.IdentifiablePair;
-import org.anchoranalysis.anchor.overlay.Overlay;
-import org.anchoranalysis.anchor.overlay.collection.OverlayCollection;
 import org.anchoranalysis.core.error.CreateException;
-import org.anchoranalysis.feature.nrg.NRGStackWithParams;
-import org.anchoranalysis.gui.feature.evaluator.singlepair.IUpdatableSinglePair;
+import org.anchoranalysis.feature.energy.EnergyStack;
+import org.anchoranalysis.gui.feature.evaluator.singlepair.UpdatableSinglePair;
 import org.anchoranalysis.gui.feature.evaluator.singlepair.UpdatableSinglePairList;
-import org.anchoranalysis.gui.image.OverlayCollectionWithNrgStack;
+import org.anchoranalysis.gui.image.OverlaysWithEnergyStack;
+import org.anchoranalysis.mpp.pair.IdentifiablePair;
+import org.anchoranalysis.overlay.Overlay;
+import org.anchoranalysis.overlay.collection.OverlayCollection;
 
 class SinglePairUpdater {
 
@@ -46,7 +46,7 @@ class SinglePairUpdater {
     public SinglePairUpdater(
             OverlayDescriptionPanel overlayDescriptionPanel,
             FinderEvaluator finder,
-            IUpdatableSinglePair secondInitialItem) {
+            UpdatableSinglePair secondInitialItem) {
         super();
         this.overlayDescriptionPanel = overlayDescriptionPanel;
         this.finder = finder;
@@ -54,19 +54,19 @@ class SinglePairUpdater {
         updatableMarkPairList.add(secondInitialItem);
     }
 
-    public void updateModel(OverlayCollectionWithNrgStack cws) throws CreateException {
+    public void updateModel(OverlaysWithEnergyStack cws) throws CreateException {
 
         if (overlayDescriptionPanel.isFrozen()) {
             return;
         }
 
-        if (cws != null && cws.getOverlayCollection() != null && cws.getStack() != null) {
+        if (cws != null && cws.getOverlays() != null && cws.getStack() != null) {
 
             assert (cws.getStack() != null);
 
-            NRGStackWithParams nrgStack = cws.getStack();
+            EnergyStack energyStack = cws.getStack();
 
-            updateOverlays(cws.getOverlayCollection(), nrgStack);
+            updateOverlays(cws.getOverlays(), energyStack);
 
         } else {
             overlayDescriptionPanel.updateDescriptionTop(null);
@@ -74,36 +74,37 @@ class SinglePairUpdater {
         }
     }
 
-    private void updateOverlays(OverlayCollection overlays, NRGStackWithParams nrgStack)
+    private void updateOverlays(OverlayCollection overlays, EnergyStack energyStack)
             throws CreateException {
 
-        // Cfg cfg = OverlayCollectionMarkFactory.cfgFromOverlays( cws.getOverlayCollection() );
+        // Marks marks = OverlayCollectionMarkFactory.marksFromOverlays( cws.getOverlayCollection()
+        // );
         overlayDescriptionPanel.updateDescriptionTop(overlays);
 
-        assert (nrgStack != null);
+        assert (energyStack != null);
 
-        IdentifiablePair<Overlay> pair = finder.findPairFromCurrentSelection(overlays, nrgStack);
+        IdentifiablePair<Overlay> pair = finder.findPairFromCurrentSelection(overlays, energyStack);
 
         if (pair != null) {
 
             // if we have a valid pair, we update with the pair
-            updatePair(pair, nrgStack);
+            updatePair(pair, energyStack);
         } else {
             Overlay ol = FinderEvaluator.findOverlayFromCurrentSelection(overlays);
             if (ol != null) {
-                updateSingle(ol, nrgStack);
+                updateSingle(ol, energyStack);
             } else {
                 overlayDescriptionPanel.updateDescriptionTop(null);
-                updateSingle(null, nrgStack);
+                updateSingle(null, energyStack);
             }
         }
     }
 
-    private void updateSingle(Overlay overlay, NRGStackWithParams raster) {
+    private void updateSingle(Overlay overlay, EnergyStack raster) {
         updatableMarkPairList.updateSingle(overlay, raster);
     }
 
-    private void updatePair(IdentifiablePair<Overlay> pair, NRGStackWithParams raster) {
+    private void updatePair(IdentifiablePair<Overlay> pair, EnergyStack raster) {
         updatableMarkPairList.updatePair(pair, raster);
     }
 }

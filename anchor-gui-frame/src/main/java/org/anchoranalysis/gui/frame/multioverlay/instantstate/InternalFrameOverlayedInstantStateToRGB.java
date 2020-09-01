@@ -27,36 +27,36 @@
 package org.anchoranalysis.gui.frame.multioverlay.instantstate;
 
 import lombok.AllArgsConstructor;
-import org.anchoranalysis.anchor.overlay.Overlay;
 import org.anchoranalysis.core.error.InitException;
-import org.anchoranalysis.core.functional.function.FunctionWithException;
+import org.anchoranalysis.core.functional.function.CheckedFunction;
 import org.anchoranalysis.core.idgetter.IDGetter;
-import org.anchoranalysis.core.index.IIndexGettableSettable;
+import org.anchoranalysis.core.index.IndexGettableSettable;
 import org.anchoranalysis.core.index.SetOperationFailedException;
 import org.anchoranalysis.core.index.container.BoundedIndexContainer;
 import org.anchoranalysis.core.property.IPropertyValueSendable;
 import org.anchoranalysis.gui.container.background.BackgroundStackContainerException;
-import org.anchoranalysis.gui.frame.details.IGenerateExtraDetail;
+import org.anchoranalysis.gui.frame.details.GenerateExtraDetail;
 import org.anchoranalysis.gui.frame.details.canvas.ControllerAction;
 import org.anchoranalysis.gui.frame.details.canvas.InternalFrameCanvas;
 import org.anchoranalysis.gui.frame.details.canvas.controller.imageview.ControllerImageView;
-import org.anchoranalysis.gui.frame.display.IRedrawable;
 import org.anchoranalysis.gui.frame.display.OverlayedDisplayStackUpdate;
+import org.anchoranalysis.gui.frame.display.Redrawable;
 import org.anchoranalysis.gui.frame.display.overlay.OverlayRetriever;
 import org.anchoranalysis.gui.frame.threaded.overlay.InternalFrameThreadedOverlayProvider;
-import org.anchoranalysis.gui.image.frame.ISliderState;
+import org.anchoranalysis.gui.image.frame.SliderState;
 import org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.ControllerPopupMenuWithBackground;
 import org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.IBackgroundSetter;
 import org.anchoranalysis.gui.retrieveelements.IRetrieveElements;
 import org.anchoranalysis.gui.videostats.IModuleCreatorDefaultState;
 import org.anchoranalysis.gui.videostats.dropdown.VideoStatsModuleGlobalParams;
-import org.anchoranalysis.gui.videostats.internalframe.cfgtorgb.ColoredOverlayedInstantState;
-import org.anchoranalysis.gui.videostats.internalframe.cfgtorgb.markdisplay.MarkDisplaySettingsWrapper;
+import org.anchoranalysis.gui.videostats.internalframe.markstorgb.IndexableColoredOverlays;
+import org.anchoranalysis.gui.videostats.internalframe.markstorgb.markdisplay.MarkDisplaySettingsWrapper;
 import org.anchoranalysis.gui.videostats.link.LinkModules;
 import org.anchoranalysis.gui.videostats.module.DefaultModuleState;
 import org.anchoranalysis.gui.videostats.module.VideoStatsModule;
-import org.anchoranalysis.image.extent.ImageDimensions;
+import org.anchoranalysis.image.extent.Dimensions;
 import org.anchoranalysis.image.stack.DisplayStack;
+import org.anchoranalysis.overlay.Overlay;
 
 class InternalFrameOverlayedInstantStateToRGB {
 
@@ -69,8 +69,8 @@ class InternalFrameOverlayedInstantStateToRGB {
     }
 
     // Must be called before usage
-    public ISliderState init(
-            BoundedIndexContainer<ColoredOverlayedInstantState> overlaysCntr,
+    public SliderState init(
+            BoundedIndexContainer<IndexableColoredOverlays> overlaysCntr,
             IDGetter<Overlay> idGetter,
             boolean includeFrameAdjusting,
             DefaultModuleState initialState,
@@ -100,7 +100,7 @@ class InternalFrameOverlayedInstantStateToRGB {
         return delegate.getFrameCanvas();
     }
 
-    public IModuleCreatorDefaultState moduleCreator(ISliderState sliderState) {
+    public IModuleCreatorDefaultState moduleCreator(SliderState sliderState) {
         return defaultFrameState -> {
             VideoStatsModule module =
                     delegate.moduleCreator(sliderState).createVideoStatsModule(defaultFrameState);
@@ -116,16 +116,14 @@ class InternalFrameOverlayedInstantStateToRGB {
     @AllArgsConstructor
     private static class BackgroundSendable
             implements IPropertyValueSendable<
-                    FunctionWithException<
-                            Integer, DisplayStack, BackgroundStackContainerException>> {
+                    CheckedFunction<Integer, DisplayStack, BackgroundStackContainerException>> {
 
         private IndexToRedrawUpdate indexToRedrawUpdate;
-        private IRedrawable redrawable;
+        private Redrawable redrawable;
 
         @Override
         public void setPropertyValue(
-                FunctionWithException<Integer, DisplayStack, BackgroundStackContainerException>
-                        value,
+                CheckedFunction<Integer, DisplayStack, BackgroundStackContainerException> value,
                 boolean adjusting) {
             indexToRedrawUpdate.setImageStackCntr(value);
             redrawable.applyRedrawUpdate(OverlayedDisplayStackUpdate.redrawAll());
@@ -148,19 +146,19 @@ class InternalFrameOverlayedInstantStateToRGB {
         delegate.flush();
     }
 
-    public ImageDimensions getDimensions() {
-        return delegate.getDimensions();
+    public Dimensions dimensions() {
+        return delegate.dimensions();
     }
 
-    public IIndexGettableSettable getIndexGettableSettable() {
+    public IndexGettableSettable getIndexGettableSettable() {
         return delegate.getIndexGettableSettable();
     }
 
-    public boolean addAdditionalDetails(IGenerateExtraDetail arg0) {
+    public boolean addAdditionalDetails(GenerateExtraDetail arg0) {
         return delegate.addAdditionalDetails(arg0);
     }
 
-    public ControllerPopupMenuWithBackground controllerBackgroundMenu(ISliderState sliderState) {
+    public ControllerPopupMenuWithBackground controllerBackgroundMenu(SliderState sliderState) {
         return new ControllerPopupMenuWithBackground(
                 delegate.controllerPopupMenu(), createBackgroundSetter(sliderState));
     }
@@ -173,11 +171,11 @@ class InternalFrameOverlayedInstantStateToRGB {
         return delegate.controllerAction();
     }
 
-    public IRedrawable getRedrawable() {
+    public Redrawable getRedrawable() {
         return delegate.getRedrawable();
     }
 
-    private IBackgroundSetter createBackgroundSetter(ISliderState sliderState) {
+    private IBackgroundSetter createBackgroundSetter(SliderState sliderState) {
         return imageStackCntr -> {
             indexToRedrawUpdate.setImageStackCntr(imageStackCntr);
 

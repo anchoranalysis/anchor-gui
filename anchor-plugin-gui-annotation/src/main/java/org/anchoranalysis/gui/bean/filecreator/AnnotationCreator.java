@@ -29,13 +29,13 @@ package org.anchoranalysis.gui.bean.filecreator;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.anchoranalysis.annotation.io.bean.input.AnnotationInputManager;
+import org.anchoranalysis.annotation.io.bean.AnnotationInputManager;
 import org.anchoranalysis.bean.annotation.BeanField;
 import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.progress.ProgressReporter;
 import org.anchoranalysis.gui.annotation.AnnotationListInternalFrame;
 import org.anchoranalysis.gui.interactivebrowser.IOpenFile;
-import org.anchoranalysis.gui.videostats.dropdown.IAddVideoStatsModule;
+import org.anchoranalysis.gui.videostats.dropdown.AddVideoStatsModule;
 import org.anchoranalysis.gui.videostats.dropdown.VideoStatsModuleGlobalParams;
 import org.anchoranalysis.gui.videostats.module.DefaultModuleState;
 import org.anchoranalysis.gui.videostats.module.VideoStatsModule;
@@ -61,7 +61,7 @@ public class AnnotationCreator extends FileCreator {
             String name,
             FileCreatorParams params,
             VideoStatsModuleGlobalParams mpg,
-            IAddVideoStatsModule adder,
+            AddVideoStatsModule adder,
             IOpenFile fileOpenManager,
             ProgressReporter progressReporter)
             throws VideoStatsModuleCreateException {

@@ -29,7 +29,6 @@ package org.anchoranalysis.gui.file.interactive;
 import java.io.File;
 import java.nio.file.Path;
 import java.util.Optional;
-import org.anchoranalysis.anchor.mpp.cfg.Cfg;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.error.OperationFailedException;
@@ -39,12 +38,13 @@ import org.anchoranalysis.gui.bean.filecreator.MarkCreatorParams;
 import org.anchoranalysis.gui.file.opened.OpenedFile;
 import org.anchoranalysis.gui.file.opened.OpenedFileGUI;
 import org.anchoranalysis.gui.series.TimeSequenceProvider;
-import org.anchoranalysis.gui.videostats.dropdown.IAddVideoStatsModule;
+import org.anchoranalysis.gui.videostats.dropdown.AddVideoStatsModule;
 import org.anchoranalysis.gui.videostats.dropdown.multicollection.MultiCollectionDropDown;
 import org.anchoranalysis.image.object.ObjectCollection;
 import org.anchoranalysis.image.stack.TimeSequence;
 import org.anchoranalysis.io.output.bound.BoundOutputManagerRouteErrors;
 import org.anchoranalysis.mpp.io.input.MultiInput;
+import org.anchoranalysis.mpp.mark.MarkCollection;
 
 public class FileMultiCollection extends InteractiveFile {
 
@@ -74,14 +74,14 @@ public class FileMultiCollection extends InteractiveFile {
 
     @Override
     public OpenedFile open(
-            IAddVideoStatsModule globalSubgroupAdder, BoundOutputManagerRouteErrors outputManager)
+            AddVideoStatsModule globalSubgroupAdder, BoundOutputManagerRouteErrors outputManager)
             throws OperationFailedException {
 
         LazyEvaluationStore<TimeSequence> stacks = new LazyEvaluationStore<>("stacks");
         inputObject.stack().addToStore(stacks);
 
-        LazyEvaluationStore<Cfg> cfgs = new LazyEvaluationStore<>("cfg");
-        inputObject.cfg().addToStore(cfgs);
+        LazyEvaluationStore<MarkCollection> markss = new LazyEvaluationStore<>("marks");
+        inputObject.marks().addToStore(markss);
 
         LazyEvaluationStore<KeyValueParams> keyValueParams =
                 new LazyEvaluationStore<>("keyValueParams");
@@ -94,7 +94,7 @@ public class FileMultiCollection extends InteractiveFile {
         MultiCollectionDropDown dropDown =
                 new MultiCollectionDropDown(
                         progressReporter -> createTimeSequenceProvider(stacks),
-                        cfgs,
+                        markss,
                         objects,
                         keyValueParams,
                         identifier(),

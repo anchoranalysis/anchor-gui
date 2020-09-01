@@ -41,23 +41,23 @@ import javax.swing.JTree;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreeModel;
 import javax.swing.tree.TreePath;
-import org.anchoranalysis.anchor.mpp.bean.regionmap.RegionMembershipWithFlags;
-import org.anchoranalysis.anchor.mpp.mark.GlobalRegionIdentifiers;
-import org.anchoranalysis.anchor.mpp.mark.Mark;
-import org.anchoranalysis.anchor.mpp.mark.conic.RegionMapSingleton;
-import org.anchoranalysis.anchor.mpp.overlay.OverlayMark;
-import org.anchoranalysis.anchor.mpp.proposer.error.ErrorNodeImpl;
-import org.anchoranalysis.anchor.mpp.proposer.error.ProposerFailureDescription;
-import org.anchoranalysis.anchor.overlay.collection.ColoredOverlayCollection;
-import org.anchoranalysis.anchor.overlay.collection.OverlayCollection;
 import org.anchoranalysis.core.color.RGBColor;
 import org.anchoranalysis.core.index.IntArray;
 import org.anchoranalysis.core.property.IPropertyValueReceivable;
 import org.anchoranalysis.core.property.IPropertyValueSendable;
-import org.anchoranalysis.gui.cfgnrg.StatePanel;
-import org.anchoranalysis.gui.cfgnrg.StatePanelUpdateException;
 import org.anchoranalysis.gui.frame.display.OverlayedDisplayStackUpdate;
-import org.anchoranalysis.gui.videostats.internalframe.IColoredCfgUpdater;
+import org.anchoranalysis.gui.marks.StatePanel;
+import org.anchoranalysis.gui.marks.StatePanelUpdateException;
+import org.anchoranalysis.gui.videostats.internalframe.ColoredMarksUpdater;
+import org.anchoranalysis.mpp.bean.regionmap.RegionMapSingleton;
+import org.anchoranalysis.mpp.bean.regionmap.RegionMembershipWithFlags;
+import org.anchoranalysis.mpp.mark.GlobalRegionIdentifiers;
+import org.anchoranalysis.mpp.mark.Mark;
+import org.anchoranalysis.mpp.overlay.OverlayMark;
+import org.anchoranalysis.mpp.proposer.error.ErrorNodeImpl;
+import org.anchoranalysis.mpp.proposer.error.ProposerFailureDescription;
+import org.anchoranalysis.overlay.collection.ColoredOverlayCollection;
+import org.anchoranalysis.overlay.collection.OverlayCollection;
 
 public class ProposerFailureDescriptionPanel extends StatePanel<ProposerFailureDescription> {
 
@@ -68,7 +68,7 @@ public class ProposerFailureDescriptionPanel extends StatePanel<ProposerFailureD
     private JPanel panel;
     private JPanel buttonPanel;
 
-    private IColoredCfgUpdater setCfg;
+    private ColoredMarksUpdater setMarks;
 
     // If set to a string, we always expand a node of this name
     // If empty we expand all nodes
@@ -142,7 +142,7 @@ public class ProposerFailureDescriptionPanel extends StatePanel<ProposerFailureD
 
                     OverlayedDisplayStackUpdate update =
                             OverlayedDisplayStackUpdate.assignOverlays(coc);
-                    setCfg.applyUpdate(update);
+                    setMarks.applyUpdate(update);
                 }
             }
         }
@@ -161,7 +161,7 @@ public class ProposerFailureDescriptionPanel extends StatePanel<ProposerFailureD
         return coc;
     }
 
-    public ProposerFailureDescriptionPanel(IColoredCfgUpdater setCfg) {
+    public ProposerFailureDescriptionPanel(ColoredMarksUpdater setMarks) {
 
         this.panel = new JPanel();
 
@@ -173,7 +173,7 @@ public class ProposerFailureDescriptionPanel extends StatePanel<ProposerFailureD
         this.panel.setBorder(BorderFactory.createEmptyBorder());
         this.panel.add(scrollPane, BorderLayout.CENTER);
 
-        this.setCfg = setCfg;
+        this.setMarks = setMarks;
 
         buttonPanel = new JPanel();
         buttonPanel.setLayout(new FlowLayout());
@@ -181,7 +181,7 @@ public class ProposerFailureDescriptionPanel extends StatePanel<ProposerFailureD
         buttonPanel.add(new JButton(new SetExpandAction()));
         buttonPanel.add(new JButton(new ClearExpandAction()));
 
-        if (this.setCfg != null) {
+        if (this.setMarks != null) {
             buttonPanel.add(new JButton(new ShowAssociatedMark()));
         }
 

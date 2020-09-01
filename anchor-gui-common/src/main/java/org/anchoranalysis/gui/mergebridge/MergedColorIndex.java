@@ -33,7 +33,7 @@ import org.anchoranalysis.core.color.RGBColor;
 public class MergedColorIndex implements ColorIndex {
 
     private ColorList colorList = new ColorList();
-    private MergeCfgBridge mergeCfgBridge;
+    private MergeMarksBridge mergeMarksBridge;
 
     private static RGBColor colorForProposalState(ProposalState proposalState) {
         switch (proposalState) {
@@ -53,7 +53,7 @@ public class MergedColorIndex implements ColorIndex {
         }
     }
 
-    public MergedColorIndex(MergeCfgBridge mergeCfgBridge) {
+    public MergedColorIndex(MergeMarksBridge mergeMarksBridge) {
         super();
         colorList.add(new RGBColor(0, 0, 0)); // 0
         colorList.add(new RGBColor(0, 0, 255)); // 1
@@ -62,15 +62,12 @@ public class MergedColorIndex implements ColorIndex {
         colorList.add(new RGBColor(34, 139, 34)); // 4
         colorList.add(new RGBColor(165, 42, 42)); // 5
 
-        // colorList.add( new Color(221,160,221) );	// 2
-        // colorList.add( new Color(148,0,211) );		// 3
-        this.mergeCfgBridge = mergeCfgBridge;
+        this.mergeMarksBridge = mergeMarksBridge;
     }
 
     @Override
-    public RGBColor get(int i) {
-        return colorForProposalState(this.mergeCfgBridge.getLastProposalStateForIndex(i));
-        // colorList.get(i);
+    public RGBColor get(int index) {
+        return colorForProposalState(this.mergeMarksBridge.getLastProposalStateForIndex(index));
     }
 
     @Override
@@ -79,7 +76,7 @@ public class MergedColorIndex implements ColorIndex {
     }
 
     @Override
-    public boolean has(int i) {
-        return i < mergeCfgBridge.size();
+    public boolean has(int index) {
+        return index < mergeMarksBridge.size();
     }
 }

@@ -27,8 +27,7 @@
 package org.anchoranalysis.gui.videostats.dropdown.contextualmodulecreator;
 
 import org.anchoranalysis.core.error.CreateException;
-import org.anchoranalysis.core.progress.CallableWithProgressReporter;
-import org.anchoranalysis.gui.videostats.dropdown.IAddVideoStatsModule;
+import org.anchoranalysis.gui.videostats.dropdown.AddVideoStatsModuleSupplier;
 import org.anchoranalysis.gui.videostats.dropdown.NamedModule;
 import org.anchoranalysis.gui.videostats.dropdown.VideoStatsModuleGlobalParams;
 
@@ -36,8 +35,6 @@ import org.anchoranalysis.gui.videostats.dropdown.VideoStatsModuleGlobalParams;
 public abstract class ContextualModuleCreator {
 
     public abstract NamedModule[] create(
-            String namePrefix,
-            CallableWithProgressReporter<IAddVideoStatsModule, ? extends Throwable> adder,
-            VideoStatsModuleGlobalParams mpg)
+            String namePrefix, AddVideoStatsModuleSupplier adder, VideoStatsModuleGlobalParams mpg)
             throws CreateException;
 }

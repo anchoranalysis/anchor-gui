@@ -49,40 +49,14 @@ class MouseWheelListenerZoom implements MouseWheelListener {
     }
 
     @Override
-    public void mouseWheelMoved(MouseWheelEvent e) {
+    public void mouseWheelMoved(MouseWheelEvent event) {
 
-        int notches = e.getWheelRotation();
+        int notches = event.getWheelRotation();
 
-        if (!e.isPopupTrigger() && (e.isControlDown() || e.isShiftDown())) {
+        if (!event.isPopupTrigger() && (event.isControlDown() || event.isShiftDown())) {
 
-            // Point2i point = cnvrtCrnrPoint( e.getX(), e.getY() );
-            Point2i point = new Point2i(e.getX(), e.getY());
+            Point2i point = new Point2i(event.getX(), event.getY());
             changeZoom(notches, point);
         }
-
-        //			String newline = "\n";
-        //			String message;
-        //		       if (notches < 0) {
-        //		           message = "Mouse wheel moved UP "
-        //		                        + -notches + " notch(es)" + newline;
-        //		       } else {
-        //		           message = "Mouse wheel moved DOWN "
-        //		                        + notches + " notch(es)" + newline;
-        //		       }
-        //
-        //
-        //		       if (e.getScrollType() == MouseWheelEvent.WHEEL_UNIT_SCROLL) {
-        //		           message += "    Scroll type: WHEEL_UNIT_SCROLL" + newline;
-        //		           message += "    Scroll amount: " + e.getScrollAmount()
-        //		                   + " unit increments per notch" + newline;
-        //		           message += "    Units to scroll: " + e.getUnitsToScroll()
-        //		                   + " unit increments" + newline;
-        //
-        //		       } else { //scroll type == MouseWheelEvent.WHEEL_BLOCK_SCROLL
-        //		           message += "    Scroll type: WHEEL_BLOCK_SCROLL" + newline;
-        //
-        //		       }
-        //		       System.out.print(message);
-
     }
 }

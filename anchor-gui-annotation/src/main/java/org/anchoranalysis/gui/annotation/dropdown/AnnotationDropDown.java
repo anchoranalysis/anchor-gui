@@ -27,19 +27,18 @@
 package org.anchoranalysis.gui.annotation.dropdown;
 
 import javax.swing.JFrame;
-import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.gui.annotation.AnnotatorModuleCreator;
 import org.anchoranalysis.gui.annotation.builder.AnnotationGuiBuilder;
 import org.anchoranalysis.gui.annotation.builder.AnnotationGuiContext;
 import org.anchoranalysis.gui.annotation.export.ExportAnnotation;
 import org.anchoranalysis.gui.file.opened.IOpenedFileGUI;
+import org.anchoranalysis.gui.videostats.dropdown.AddVideoStatsModule;
 import org.anchoranalysis.gui.videostats.dropdown.BoundVideoStatsModuleDropDown;
-import org.anchoranalysis.gui.videostats.dropdown.IAddVideoStatsModule;
 import org.anchoranalysis.gui.videostats.dropdown.OperationCreateBackgroundSetWithAdder;
 import org.anchoranalysis.gui.videostats.dropdown.VideoStatsModuleCreatorAndAdder;
 import org.anchoranalysis.gui.videostats.dropdown.VideoStatsModuleGlobalParams;
 import org.anchoranalysis.gui.videostats.dropdown.common.DropDownUtilitiesRaster;
-import org.anchoranalysis.gui.videostats.dropdown.common.NRGBackground;
+import org.anchoranalysis.gui.videostats.dropdown.common.EnergyBackground;
 import org.anchoranalysis.gui.videostats.modulecreator.VideoStatsModuleCreator;
 import org.anchoranalysis.gui.videostats.operation.VideoStatsOperationFromCreatorAndAdder;
 import org.anchoranalysis.io.output.bean.OutputWriteSettings;
@@ -62,10 +61,9 @@ public class AnnotationDropDown {
     }
 
     public void init(
-            IAddVideoStatsModule adder,
+            AddVideoStatsModule adder,
             BoundOutputManagerRouteErrors outputManager,
-            VideoStatsModuleGlobalParams mpg)
-            throws InitException {
+            VideoStatsModuleGlobalParams mpg) {
 
         addAnnotation(adder, outputManager.getOutputWriteSettings(), mpg);
 
@@ -79,7 +77,7 @@ public class AnnotationDropDown {
     }
 
     private void addAnnotation(
-            IAddVideoStatsModule adder, OutputWriteSettings ows, VideoStatsModuleGlobalParams mpg) {
+            AddVideoStatsModule adder, OutputWriteSettings ows, VideoStatsModuleGlobalParams mpg) {
         String desc = String.format("Annotator: %s", name);
 
         VideoStatsModuleCreator moduleCreator =
@@ -113,10 +111,10 @@ public class AnnotationDropDown {
         }
     }
 
-    private void addChannelViewer(IAddVideoStatsModule adder, VideoStatsModuleGlobalParams mpg) {
+    private void addChannelViewer(AddVideoStatsModule adder, VideoStatsModuleGlobalParams mpg) {
         OperationCreateBackgroundSetWithAdder operationBwsa =
                 new OperationCreateBackgroundSetWithAdder(
-                        NRGBackground.createStack(annotation.stacks(), null),
+                        EnergyBackground.createStack(annotation.stacks(), null),
                         adder,
                         mpg.getThreadPool(),
                         mpg.getLogger().errorReporter());
@@ -124,7 +122,7 @@ public class AnnotationDropDown {
         DropDownUtilitiesRaster.addRaster(
                 delegate.getRootMenu(),
                 delegate,
-                operationBwsa.nrgBackground(),
+                operationBwsa.energyBackground(),
                 "Channel Viewer",
                 mpg,
                 false);

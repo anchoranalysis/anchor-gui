@@ -84,18 +84,18 @@ public class FinderRasterFolder extends FinderSingleFolder {
             return new NamedStacks();
         }
 
-        NamedStacks nisc = new NamedStacks();
+        NamedStacks stacks = new NamedStacks();
 
-        SequencedFolderRasterReader sfrr =
+        SequencedFolderRasterReader reader =
                 new SequencedFolderRasterReader(getFoundFolder(), rasterReader);
 
-        AddFromSequenceHelper.addFromSequenceWithProgressReporter(
+        AddFromSequenceHelper.addFromSequence(
                 getFoundFolder().getAssociatedSequence(),
-                sfrr,
-                nisc::addImageStack,
+                reader,
+                stacks::add,
                 namesAsIndexes);
 
-        return nisc;
+        return stacks;
     }
 
     private BoundedIndexContainer<Stack> createContainer(FolderWrite folder) {

@@ -30,7 +30,6 @@ import java.util.ArrayList;
 import java.util.List;
 import lombok.Getter;
 import lombok.Setter;
-import org.anchoranalysis.anchor.mpp.feature.bean.nrgscheme.NRGSchemeCreator;
 import org.anchoranalysis.bean.NamedBean;
 import org.anchoranalysis.bean.annotation.BeanField;
 import org.anchoranalysis.bean.annotation.NonEmpty;
@@ -46,11 +45,12 @@ import org.anchoranalysis.feature.shared.SharedFeaturesInitParams;
 import org.anchoranalysis.gui.feature.evaluator.treetable.FeatureListSrc;
 import org.anchoranalysis.gui.interactivebrowser.IOpenFile;
 import org.anchoranalysis.gui.interactivebrowser.input.FeatureListSrcBuilder;
-import org.anchoranalysis.gui.videostats.dropdown.IAddVideoStatsModule;
+import org.anchoranalysis.gui.videostats.dropdown.AddVideoStatsModule;
 import org.anchoranalysis.gui.videostats.dropdown.VideoStatsModuleGlobalParams;
 import org.anchoranalysis.gui.videostats.module.VideoStatsModule;
 import org.anchoranalysis.gui.videostats.module.VideoStatsModuleCreateException;
 import org.anchoranalysis.gui.videostats.modulecreator.FeatureEvaluatorCreator;
+import org.anchoranalysis.mpp.feature.bean.energy.scheme.EnergySchemeCreator;
 
 public class FileFeatureEvaluatorCreator extends FileCreator {
 
@@ -58,7 +58,7 @@ public class FileFeatureEvaluatorCreator extends FileCreator {
     @BeanField @NonEmpty @Getter @Setter
     private List<NamedBean<FeatureListProvider<FeatureInput>>> listFeatures = new ArrayList<>();
 
-    @BeanField @OptionalBean @Getter @Setter private NRGSchemeCreator nrgSchemeCreator;
+    @BeanField @OptionalBean @Getter @Setter private EnergySchemeCreator energySchemeCreator;
     // END BEAN PROPERTIES
 
     @Override
@@ -71,7 +71,7 @@ public class FileFeatureEvaluatorCreator extends FileCreator {
             String name,
             FileCreatorParams params,
             VideoStatsModuleGlobalParams mpg,
-            IAddVideoStatsModule adder,
+            AddVideoStatsModule adder,
             IOpenFile fileOpenManager,
             ProgressReporter progressReporter)
             throws VideoStatsModuleCreateException {
@@ -88,7 +88,7 @@ public class FileFeatureEvaluatorCreator extends FileCreator {
 
     private FeatureListSrc createSrc(CommonContext context) throws CreateException {
         return new FeatureListSrcBuilder(context.getLogger())
-                .build(createInitParams(context), nrgSchemeCreator);
+                .build(createInitParams(context), energySchemeCreator);
     }
 
     private SharedFeaturesInitParams createInitParams(CommonContext context)

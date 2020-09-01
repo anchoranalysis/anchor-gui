@@ -28,9 +28,12 @@ package org.anchoranalysis.gui.interactivebrowser.openfile.importer;
 
 import java.io.File;
 import java.util.function.BiConsumer;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import org.anchoranalysis.gui.bean.filecreator.FileCreator;
 import org.apache.commons.io.FilenameUtils;
 
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 class CreatorFactory {
 
     public static <S extends FileCreator, T> FileCreator create(

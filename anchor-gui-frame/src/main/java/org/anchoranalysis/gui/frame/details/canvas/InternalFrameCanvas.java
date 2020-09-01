@@ -28,7 +28,6 @@ package org.anchoranalysis.gui.frame.details.canvas;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
-import java.awt.event.ComponentEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.util.Optional;
@@ -46,7 +45,8 @@ import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.error.reporter.ErrorReporter;
-import org.anchoranalysis.core.index.IIndexGettableSettable;
+import org.anchoranalysis.core.geometry.Point2i;
+import org.anchoranalysis.core.index.IndexGettableSettable;
 import org.anchoranalysis.core.index.container.BoundedRangeIncompleteDynamic;
 import org.anchoranalysis.gui.displayupdate.DisplayUpdateRememberStack;
 import org.anchoranalysis.gui.displayupdate.ProvidesDisplayUpdate;
@@ -58,15 +58,15 @@ import org.anchoranalysis.gui.frame.details.ControllerPopupMenu;
 import org.anchoranalysis.gui.frame.details.canvas.controller.imageview.ControllerImageView;
 import org.anchoranalysis.gui.frame.display.BoundOverlayedDisplayStack;
 import org.anchoranalysis.gui.image.frame.ControllerSize;
-import org.anchoranalysis.gui.image.frame.ISliderState;
+import org.anchoranalysis.gui.image.frame.SliderState;
 import org.anchoranalysis.gui.retrieveelements.ExportPopupParams;
 import org.anchoranalysis.gui.retrieveelements.IRetrieveElements;
 import org.anchoranalysis.gui.retrieveelements.InternalFrameIJPopupClickListener;
 import org.anchoranalysis.gui.retrieveelements.RetrieveElements;
 import org.anchoranalysis.gui.retrieveelements.RetrieveElementsImage;
 import org.anchoranalysis.gui.videostats.dropdown.VideoStatsModuleGlobalParams;
-import org.anchoranalysis.image.extent.ImageDimensions;
-import org.anchoranalysis.image.extent.ImageResolution;
+import org.anchoranalysis.image.extent.Dimensions;
+import org.anchoranalysis.image.extent.Resolution;
 import org.anchoranalysis.image.stack.DisplayStack;
 import org.anchoranalysis.image.voxel.datatype.VoxelDataType;
 
@@ -184,9 +184,9 @@ public class InternalFrameCanvas {
                         controllerOrder, controllerFrame, controllerMouse, controllerKeyboard);
     }
 
-    public ISliderState init(
+    public SliderState init(
             BoundedRangeIncompleteDynamic indexBounds,
-            IIndexGettableSettable indexCntr,
+            IndexGettableSettable indexCntr,
             DisplayUpdateRememberStack stackProvider,
             InitialSliderState initialState,
             IRetrieveElements elementRetriever,
@@ -202,7 +202,7 @@ public class InternalFrameCanvas {
         } catch (OperationFailedException e1) {
             throw new InitException(e1);
         }
-        ChnlSliceRange sliceBounds = new ChnlSliceRange(initialStack.getDimensions());
+        ChannelSliceRange sliceBounds = new ChannelSliceRange(initialStack.dimensions());
 
         // Responsible for all the stack conversion
 
@@ -268,8 +268,8 @@ public class InternalFrameCanvas {
         titleBoundsUpdater.updateTitle();
     }
 
-    public ImageDimensions getDimensions() {
-        return canvas.getDimensions();
+    public Dimensions dimensions() {
+        return canvas.dimensions();
     }
 
     public void addMouseMotionListener(MouseMotionListener arg0, boolean absCoord) {
@@ -280,16 +280,16 @@ public class InternalFrameCanvas {
         return canvas.getZoomScale();
     }
 
-    public ImageResolution getRes() {
+    public Resolution getRes() {
         return canvas.getRes();
     }
 
-    public boolean canvasContainsAbs(int x, int y) {
-        return canvas.canvasContainsAbs(x, y);
+    public boolean canvasContainsAbsolute(Point2i point) {
+        return canvas.canvasContainsAbsolute(point);
     }
 
-    public String intensityStrAtAbs(int x, int y) {
-        return canvas.intensityStrAtAbs(x, y);
+    public String intensityStrAtAbsolute(Point2i point) {
+        return canvas.intensityStrAtAbsolute(point);
     }
 
     // empty() means it cannot be determined
@@ -308,10 +308,6 @@ public class InternalFrameCanvas {
 
     public boolean equals(Object obj) {
         return canvas.equals(obj);
-    }
-
-    public void resizeEventFromFrame(ComponentEvent e) {
-        canvas.resizeEventFromFrame(e);
     }
 
     public void zoomIn() {
@@ -433,7 +429,7 @@ public class InternalFrameCanvas {
     }
 
     private void addTitleBoundsUpdater(
-            DisplayUpdateRememberStack stackProvider, IIndexGettableSettable indexCntr) {
+            DisplayUpdateRememberStack stackProvider, IndexGettableSettable indexCntr) {
         this.titleBoundsUpdater =
                 new TitleBoundsUpdater(
                         errorReporter,

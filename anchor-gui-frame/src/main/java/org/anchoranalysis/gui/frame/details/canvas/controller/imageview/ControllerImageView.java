@@ -32,8 +32,8 @@ import java.awt.GraphicsConfiguration;
 import org.anchoranalysis.gui.frame.canvas.zoom.DefaultZoomSuggestor;
 import org.anchoranalysis.gui.frame.details.canvas.ControllerZoom;
 import org.anchoranalysis.gui.image.frame.ControllerSize;
+import org.anchoranalysis.image.extent.Dimensions;
 import org.anchoranalysis.image.extent.Extent;
-import org.anchoranalysis.image.extent.ImageDimensions;
 
 public class ControllerImageView {
 
@@ -67,7 +67,7 @@ public class ControllerImageView {
             int zoomWidthSubtract,
             int zoomHeightSubtract,
             GraphicsConfiguration graphicsConfiguration,
-            ImageDimensions imageSize) {
+            Dimensions imageSize) {
         Extent imageSizeZoom =
                 SizeOfZoomedImage.apply(
                         widthFractionScreen,
@@ -111,7 +111,7 @@ public class ControllerImageView {
     }
 
     private void configure(Extent frame, Extent zoom) {
-        configure(frame.getX(), frame.getY(), zoom.getX(), zoom.getY());
+        configure(frame.x(), frame.y(), zoom.x(), zoom.y());
     }
 
     /**

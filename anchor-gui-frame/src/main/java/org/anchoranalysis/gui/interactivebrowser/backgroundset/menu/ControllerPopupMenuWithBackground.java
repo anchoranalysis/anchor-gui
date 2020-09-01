@@ -29,13 +29,11 @@ package org.anchoranalysis.gui.interactivebrowser.backgroundset.menu;
 import javax.swing.JMenu;
 import lombok.AllArgsConstructor;
 import org.anchoranalysis.core.error.reporter.ErrorReporter;
-import org.anchoranalysis.core.progress.CallableWithProgressReporter;
-import org.anchoranalysis.gui.backgroundset.BackgroundSet;
-import org.anchoranalysis.gui.container.background.BackgroundStackContainerException;
 import org.anchoranalysis.gui.frame.details.ControllerPopupMenu;
-import org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.definition.ChangeableBackgroundDefinition;
+import org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.definition.ChangeableBackground;
 import org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.definition.ChangeableBackgroundDefinitionSimple;
 import org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.definition.ImageStackContainerFromName;
+import org.anchoranalysis.gui.videostats.dropdown.BackgroundSetProgressingSupplier;
 import org.anchoranalysis.gui.videostats.dropdown.VideoStatsModuleGlobalParams;
 
 @AllArgsConstructor
@@ -55,15 +53,13 @@ public class ControllerPopupMenuWithBackground {
         addAdditionalMenu(menu.getMenu());
     }
 
-    public IBackgroundUpdater add(
-            VideoStatsModuleGlobalParams mpg,
-            CallableWithProgressReporter<BackgroundSet, BackgroundStackContainerException>
-                    backgroundSet) {
+    public BackgroundUpdater add(
+            VideoStatsModuleGlobalParams mpg, BackgroundSetProgressingSupplier backgroundSet) {
         return addDefinition(mpg, new ChangeableBackgroundDefinitionSimple(backgroundSet));
     }
 
-    public IBackgroundUpdater addDefinition(
-            VideoStatsModuleGlobalParams mpg, ChangeableBackgroundDefinition backgroundDefinition) {
+    public BackgroundUpdater addDefinition(
+            VideoStatsModuleGlobalParams mpg, ChangeableBackground backgroundDefinition) {
         BackgroundSetMenuWithMap menu =
                 new BackgroundSetMenuWithMap(
                         backgroundDefinition, backgroundSetter, errorReporter(mpg));

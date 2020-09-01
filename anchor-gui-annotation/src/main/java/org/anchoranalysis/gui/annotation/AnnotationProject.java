@@ -30,7 +30,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import javax.swing.event.EventListenerList;
-import org.anchoranalysis.annotation.io.bean.strategy.AnnotatorStrategy;
+import org.anchoranalysis.annotation.io.bean.AnnotatorStrategy;
 import org.anchoranalysis.annotation.io.input.AnnotationWithStrategy;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.progress.ProgressReporter;
@@ -41,7 +41,7 @@ import org.anchoranalysis.gui.videostats.dropdown.VideoStatsModuleGlobalParams;
 // A set of annotations
 public class AnnotationProject {
 
-    private List<FileAnnotationNamedChnlCollection> list = new ArrayList<>();
+    private List<FileAnnotationNamedChannels> list = new ArrayList<>();
     private EventListenerList eventListenerList = new EventListenerList();
 
     private class RefreshAndTriggerEvent implements AnnotationRefresher {
@@ -55,8 +55,6 @@ public class AnnotationProject {
 
         @Override
         public void refreshAnnotation() {
-
-            // list.get(index).refresh();
 
             for (AnnotationChangedListener l :
                     eventListenerList.getListeners(AnnotationChangedListener.class)) {
@@ -87,7 +85,7 @@ public class AnnotationProject {
                 AnnotationWithStrategy<?> obj = listTemp.get(i);
 
                 list.add(
-                        new FileAnnotationNamedChnlCollection(
+                        new FileAnnotationNamedChannels(
                                 AnnotationGuiBuilderFactory.create(obj),
                                 new RefreshAndTriggerEvent(i),
                                 markEvaluatorManager,
@@ -101,7 +99,7 @@ public class AnnotationProject {
         }
     }
 
-    public FileAnnotationNamedChnlCollection get(int arg0) {
+    public FileAnnotationNamedChannels get(int arg0) {
         return list.get(arg0);
     }
 
@@ -111,7 +109,7 @@ public class AnnotationProject {
 
     public int numAnnotated() {
         int cnt = 0;
-        for (FileAnnotationNamedChnlCollection item : list) {
+        for (FileAnnotationNamedChannels item : list) {
             if (item.summary().isExistsFinished()) {
                 cnt++;
             }

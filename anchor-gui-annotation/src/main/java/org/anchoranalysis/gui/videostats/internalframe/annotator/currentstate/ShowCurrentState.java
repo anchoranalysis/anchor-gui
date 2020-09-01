@@ -27,7 +27,7 @@
 package org.anchoranalysis.gui.videostats.internalframe.annotator.currentstate;
 
 import org.anchoranalysis.gui.frame.overlays.IShowOverlays;
-import org.anchoranalysis.gui.frame.overlays.ProposedCfg;
+import org.anchoranalysis.gui.frame.overlays.ProposedMarks;
 
 public class ShowCurrentState {
 
@@ -43,19 +43,19 @@ public class ShowCurrentState {
     public void showAtSlice(CurrentState currentState, int z) {
         showResult.showOverlays(
                 RedrawUpdateFromProposal.apply(
-                        cfg(currentState, true, z), currentState.getRefreshListAndReset()));
+                        marks(currentState, true, z), currentState.getRefreshListAndReset()));
         showError.clearErrors();
     }
 
     public void show(CurrentState currentState) {
         showResult.showOverlays(
                 RedrawUpdateFromProposal.apply(
-                        cfg(currentState, false), currentState.getRefreshListAndReset()));
+                        marks(currentState, false), currentState.getRefreshListAndReset()));
         showError.clearErrors();
     }
 
     public void showRedrawAll(CurrentState currentState) {
-        showResult.showOverlays(RedrawUpdateFromProposal.apply(cfg(currentState, false), null));
+        showResult.showOverlays(RedrawUpdateFromProposal.apply(marks(currentState, false), null));
         showError.clearErrors();
     }
 
@@ -63,16 +63,16 @@ public class ShowCurrentState {
         showError.showError(message);
     }
 
-    private ProposedCfg cfg(CurrentState currentState, boolean success, int suggestedSliceNum) {
-        ProposedCfg plainCfg = cfg(currentState, success);
-        plainCfg.setSuggestedSliceNum(suggestedSliceNum);
-        return plainCfg;
+    private ProposedMarks marks(CurrentState currentState, boolean success, int suggestedSliceNum) {
+        ProposedMarks plainMarks = marks(currentState, success);
+        plainMarks.setSuggestedSliceNum(suggestedSliceNum);
+        return plainMarks;
     }
 
-    private ProposedCfg cfg(CurrentState currentState, boolean success) {
-        ProposedCfg plainCfg = new ProposedCfg();
-        plainCfg.setSuccess(success);
-        plainCfg.setColoredCfg(currentState.generateFullCfg());
-        return plainCfg;
+    private ProposedMarks marks(CurrentState currentState, boolean success) {
+        ProposedMarks plainMarks = new ProposedMarks();
+        plainMarks.setSuccess(success);
+        plainMarks.setColoredMarks(currentState.generateFullMarks());
+        return plainMarks;
     }
 }

@@ -33,8 +33,6 @@ public class ShowError implements IShowError {
 
     private PanelNavigation panelNavigation;
 
-    public ShowError() {}
-
     @Override
     public void showError(String message) {
         if (panelNavigation != null) {

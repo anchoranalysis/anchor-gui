@@ -31,39 +31,30 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
+import lombok.AllArgsConstructor;
 import org.anchoranalysis.bean.shared.StringMap;
 import org.anchoranalysis.core.error.reporter.ErrorReporter;
-import org.anchoranalysis.core.progress.CallableWithProgressReporter;
 import org.anchoranalysis.core.progress.ProgressReporterNull;
-import org.anchoranalysis.gui.backgroundset.BackgroundSet;
 import org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.IGetNames;
+import org.anchoranalysis.gui.videostats.dropdown.BackgroundSetProgressingSupplier;
 
+@AllArgsConstructor
 class NamesFromMap implements IGetNames {
 
-    private CallableWithProgressReporter<BackgroundSet, ? extends Throwable> backgroundSet;
-    private ErrorReporter errorReporter;
     private StringMap map;
-
-    public NamesFromMap(
-            StringMap map,
-            CallableWithProgressReporter<BackgroundSet, ? extends Throwable> backgroundSet,
-            ErrorReporter errorReporter) {
-        super();
-        this.backgroundSet = backgroundSet;
-        this.errorReporter = errorReporter;
-        this.map = map;
-    }
+    private BackgroundSetProgressingSupplier backgroundSet;
+    private ErrorReporter errorReporter;
 
     @Override
     public List<String> names() {
         try {
-            Set<String> backgroundNames = backgroundSet.call(ProgressReporterNull.get()).names();
+            Set<String> backgroundNames = backgroundSet.get(ProgressReporterNull.get()).names();
 
             Map<String, String> mapping = map.create();
 
             return new ArrayList<>(createdSortedSet(mapping, backgroundNames));
 
-        } catch (Throwable e) {
+        } catch (Exception e) {
             errorReporter.recordError(NamesFromMap.class, e);
             return new ArrayList<>();
         }

@@ -32,16 +32,13 @@ import java.util.Optional;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import org.anchoranalysis.core.error.CreateException;
-import org.anchoranalysis.core.functional.CallableWithException;
 import org.anchoranalysis.core.functional.OptionalUtilities;
 import org.anchoranalysis.core.log.Logger;
-import org.anchoranalysis.core.name.provider.NamedProvider;
 import org.anchoranalysis.core.params.KeyValueParams;
-import org.anchoranalysis.core.progress.CallableWithProgressReporter;
 import org.anchoranalysis.gui.annotation.mark.MarkAnnotator;
 import org.anchoranalysis.gui.interactivebrowser.MarkEvaluatorManager;
 import org.anchoranalysis.gui.interactivebrowser.MarkEvaluatorSetForImage;
-import org.anchoranalysis.image.stack.Stack;
+import org.anchoranalysis.image.stack.NamedStacksSupplier;
 import org.anchoranalysis.io.bean.filepath.generator.FilePathGenerator;
 import org.anchoranalysis.io.error.AnchorIOException;
 import org.anchoranalysis.plugin.annotation.bean.strategy.MarkProposerStrategy;
@@ -54,7 +51,7 @@ class CreateMarkEvaluator {
             MarkEvaluatorManager markEvaluatorManager,
             Path pathForBinding,
             MarkProposerStrategy strategy,
-            CallableWithProgressReporter<NamedProvider<Stack>, CreateException> stacks,
+            NamedStacksSupplier stacks,
             Logger logger)
             throws CreateException {
 
@@ -68,28 +65,26 @@ class CreateMarkEvaluator {
             MarkEvaluatorManager markEvaluatorManager,
             Path pathForBinding,
             MarkProposerStrategy strategy,
-            CallableWithProgressReporter<NamedProvider<Stack>, CreateException> stacks)
+            NamedStacksSupplier stacks)
             throws CreateException {
         return markEvaluatorManager.createSetForStackCollection(
-                stacks, opLoadKeyValueParams(pathForBinding, strategy));
-    }
-
-    private static CallableWithException<Optional<KeyValueParams>, IOException>
-            opLoadKeyValueParams(Path pathForBinding, MarkProposerStrategy strategy) {
-        return () -> paramsFromGenerator(pathForBinding, strategy.paramsFilePathGenerator());
+                stacks,
+                () -> paramsFromGenerator(pathForBinding, strategy.paramsFilePathGenerator()));
     }
 
     private static Optional<KeyValueParams> paramsFromGenerator(
-            Path pathForBinding, Optional<FilePathGenerator> generator) throws IOException {
+            Path pathForBinding, Optional<FilePathGenerator> filePathGenerator) throws IOException {
         return OptionalUtilities.map(
-                generator,
-                gen -> {
-                    try {
-                        return KeyValueParams.readFromFile(
-                                PathFromGenerator.derivePath(gen, pathForBinding));
-                    } catch (AnchorIOException e) {
-                        throw new IOException(e);
-                    }
-                });
+                filePathGenerator, generator -> readParams(generator, pathForBinding));
+    }
+
+    private static KeyValueParams readParams(
+            FilePathGenerator filePathGenerator, Path pathForBinding) throws IOException {
+        try {
+            return KeyValueParams.readFromFile(
+                    PathFromGenerator.derivePath(filePathGenerator, pathForBinding));
+        } catch (AnchorIOException e) {
+            throw new IOException(e);
+        }
     }
 }

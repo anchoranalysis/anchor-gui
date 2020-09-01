@@ -28,20 +28,20 @@ package org.anchoranalysis.gui.feature.evaluator.treetable;
 
 import java.awt.event.MouseListener;
 import javax.swing.JComponent;
-import org.anchoranalysis.anchor.mpp.pair.IdentifiablePair;
-import org.anchoranalysis.anchor.overlay.Overlay;
-import org.anchoranalysis.feature.nrg.NRGStackWithParams;
-import org.anchoranalysis.gui.feature.evaluator.singlepair.IUpdatableSinglePair;
+import org.anchoranalysis.feature.energy.EnergyStack;
+import org.anchoranalysis.gui.feature.evaluator.singlepair.UpdatableSinglePair;
+import org.anchoranalysis.mpp.pair.IdentifiablePair;
+import org.anchoranalysis.overlay.Overlay;
 import org.netbeans.swing.outline.Outline;
 
-public interface ITreeTableModel extends IUpdatableSinglePair {
+public interface ITreeTableModel extends UpdatableSinglePair {
 
     void resizeColumns();
 
     @Override
-    void updateSingle(Overlay overlay, NRGStackWithParams raster);
+    void updateSingle(Overlay overlay, EnergyStack raster);
 
-    void updatePair(IdentifiablePair<Overlay> pair, NRGStackWithParams raster);
+    void updatePair(IdentifiablePair<Overlay> pair, EnergyStack raster);
 
     // We should do this to all our tables
     void addMouseListenerToOutline(MouseListener ml);

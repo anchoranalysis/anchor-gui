@@ -31,7 +31,7 @@ import org.anchoranalysis.core.index.container.IntegerSequenceContaner;
 import org.anchoranalysis.core.index.container.bridge.BoundedIndexContainerBridgeWithoutIndex;
 import org.anchoranalysis.gui.container.background.BackgroundStackContainerException;
 import org.anchoranalysis.gui.frame.threaded.indexable.InternalFrameThreadedIndexableRaster;
-import org.anchoranalysis.gui.image.frame.ISliderState;
+import org.anchoranalysis.gui.image.frame.SliderState;
 import org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.ControllerPopupMenuWithBackground;
 import org.anchoranalysis.gui.videostats.IModuleCreatorDefaultState;
 import org.anchoranalysis.gui.videostats.dropdown.VideoStatsModuleGlobalParams;
@@ -48,7 +48,7 @@ public class InternalFrameSingleRaster {
         delegate = new InternalFrameThreadedIndexableRaster(frameName);
     }
 
-    public ISliderState init(
+    public SliderState init(
             int numFrames, DefaultModuleState initialState, VideoStatsModuleGlobalParams mpg)
             throws InitException {
 
@@ -60,7 +60,7 @@ public class InternalFrameSingleRaster {
                                 new IntegerSequenceContaner(numFrames),
                                 initialState.getLinkState().getBackground());
 
-        ISliderState sliderState =
+        SliderState sliderState =
                 delegate.init(bridge, initialState, true, delegate.getElementRetriever(), mpg);
 
         // Let's switch off the index-bar if we only have a single frame
@@ -79,7 +79,7 @@ public class InternalFrameSingleRaster {
         return controller;
     }
 
-    public IModuleCreatorDefaultState moduleCreator(ISliderState sliderState) {
+    public IModuleCreatorDefaultState moduleCreator(SliderState sliderState) {
         return delegate.moduleCreator(sliderState);
     }
 }

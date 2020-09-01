@@ -26,20 +26,14 @@
 
 package org.anchoranalysis.gui.interactivebrowser;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
 import java.util.Set;
-import org.anchoranalysis.anchor.mpp.feature.bean.mark.MarkEvaluator;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.OperationFailedException;
-import org.anchoranalysis.core.functional.CallableWithException;
-import org.anchoranalysis.core.name.provider.NamedProvider;
-import org.anchoranalysis.core.params.KeyValueParams;
-import org.anchoranalysis.core.progress.CallableWithProgressReporter;
-import org.anchoranalysis.image.stack.Stack;
+import org.anchoranalysis.image.stack.NamedStacksSupplier;
 import org.anchoranalysis.io.output.bound.BoundIOContext;
+import org.anchoranalysis.mpp.feature.bean.mark.MarkEvaluator;
 
 // Manages the various MarkEvaluators that are available in the application
 public class MarkEvaluatorManager {
@@ -58,17 +52,15 @@ public class MarkEvaluatorManager {
     }
 
     public MarkEvaluatorSetForImage createSetForStackCollection(
-            CallableWithProgressReporter<NamedProvider<Stack>, ? extends Throwable> namedStacks,
-            CallableWithException<Optional<KeyValueParams>, IOException> keyParams)
+            NamedStacksSupplier namedStacks, KeyValueParamsSupplier keyParams)
             throws CreateException {
 
         try {
             MarkEvaluatorSetForImage out =
                     new MarkEvaluatorSetForImage(namedStacks, keyParams, context);
 
-            for (String key : map.keySet()) {
-                MarkEvaluator me = map.get(key);
-                out.add(key, me.duplicateBean());
+            for (Map.Entry<String, MarkEvaluator> entry : map.entrySet()) {
+                out.add(entry.getKey(), entry.getValue().duplicateBean());
             }
             return out;
 

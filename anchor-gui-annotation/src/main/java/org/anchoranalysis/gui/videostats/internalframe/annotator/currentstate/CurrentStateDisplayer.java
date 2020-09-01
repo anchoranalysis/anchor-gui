@@ -27,21 +27,21 @@
 package org.anchoranalysis.gui.videostats.internalframe.annotator.currentstate;
 
 import java.util.List;
-import org.anchoranalysis.anchor.mpp.bean.regionmap.RegionMap;
-import org.anchoranalysis.anchor.mpp.cfg.Cfg;
-import org.anchoranalysis.anchor.mpp.cfg.ColoredCfg;
-import org.anchoranalysis.anchor.mpp.mark.Mark;
 import org.anchoranalysis.core.geometry.Point3i;
 import org.anchoranalysis.gui.videostats.internalframe.annotator.SaveMonitor;
 import org.anchoranalysis.gui.videostats.internalframe.annotator.navigation.ConfirmResetStateChangedListener;
 import org.anchoranalysis.gui.videostats.internalframe.annotator.tool.ToolErrorReporter;
 import org.anchoranalysis.gui.videostats.internalframe.annotator.undoredo.IUndoRedo;
 import org.anchoranalysis.gui.videostats.internalframe.annotator.undoredo.UndoRedoRecorder;
-import org.anchoranalysis.image.extent.ImageDimensions;
+import org.anchoranalysis.image.extent.Dimensions;
+import org.anchoranalysis.mpp.bean.regionmap.RegionMap;
+import org.anchoranalysis.mpp.mark.ColoredMarks;
+import org.anchoranalysis.mpp.mark.Mark;
+import org.anchoranalysis.mpp.mark.MarkCollection;
 
 public class CurrentStateDisplayer {
 
-    private ShowCurrentState cfgShower;
+    private ShowCurrentState marksShower;
     private CurrentState currentState;
     private OverlapChecker overlapChecker;
 
@@ -49,9 +49,9 @@ public class CurrentStateDisplayer {
 
     private UndoRedoRecorder<CurrentState> undoRedo =
             new UndoRedoRecorder<>(
-                    () -> cfgShower.showRedrawAll(currentState),
-                    () -> currentState.copyForUndo(),
-                    (stateToAssign) -> {
+                    () -> marksShower.showRedrawAll(currentState),
+                    currentState::copyForUndo,
+                    stateToAssign -> {
                         currentState = stateToAssign;
                         currentState.markAsChanged();
                     });
@@ -64,28 +64,28 @@ public class CurrentStateDisplayer {
     private IConfirmReset confirmReset;
 
     public CurrentStateDisplayer(
-            ShowCurrentState cfgShower,
+            ShowCurrentState marksShower,
             SaveMonitor saveMonitor,
-            ImageDimensions dimensions,
+            Dimensions dimensions,
             RegionMap regionMap,
             ToolErrorReporter errorReporter) {
-        this.cfgShower = cfgShower;
+        this.marksShower = marksShower;
         this.currentState = new CurrentState(saveMonitor);
         this.overlapChecker = new OverlapChecker(dimensions, regionMap, errorReporter);
         this.confirmReset = new WrapConfirmReset(currentState.confirmReset());
     }
 
-    public void init(DualCfg cfg) {
-        currentState.initAcceptedCfg(cfg);
-        cfgShower.show(currentState);
+    public void init(PartitionedMarks marks) {
+        currentState.initAcceptedMarks(marks);
+        marksShower.show(currentState);
     }
 
-    public IQueryAcceptedRejected queryAcceptReject() {
+    public QueryAcceptedRejected queryAcceptReject() {
         return currentState.queryAcceptReject();
     }
 
     public void dispose() {
-        cfgShower = null;
+        marksShower = null;
         if (currentState != null) {
             currentState.dispose();
             currentState = null;
@@ -116,45 +116,45 @@ public class CurrentStateDisplayer {
     private class ReplaceRemove implements IReplaceRemove {
 
         @Override
-        public void replaceCurrentProposedCfg(Cfg cfgCore, ColoredCfg cfgDisplayed, int sliceZ) {
-            currentState.replaceCurrentProposedCfg(cfgCore, cfgDisplayed);
-            cfgShower.showAtSlice(currentState, sliceZ);
+        public void replaceCurrentProposedMarks(
+                MarkCollection marksCore, ColoredMarks marksDisplayed, int sliceZ) {
+            currentState.replaceCurrentProposedMarks(marksCore, marksDisplayed);
+            marksShower.showAtSlice(currentState, sliceZ);
             alreadyConfirmedOnce = false;
         }
 
         @Override
-        public void removeCurrentProposedCfg() {
-            currentState.removeCurrentProposedCfg();
-            cfgShower.show(currentState);
+        public void removeCurrentProposedMarks() {
+            currentState.removeCurrentProposedMarks();
+            marksShower.show(currentState);
             alreadyConfirmedOnce = false;
         }
 
         @Override
-        public void removeAcceptedMarksAndSelectedPoints(Cfg cfg, List<Point3i> points) {
-            currentState.removeAcceptedMarksAndSelectedPoints(cfg, points);
-            cfgShower.show(currentState);
+        public void removeAcceptedMarksAndSelectedPoints(
+                MarkCollection marks, List<Point3i> points) {
+            currentState.removeAcceptedMarksAndSelectedPoints(marks, points);
+            marksShower.show(currentState);
             alreadyConfirmedOnce = false;
         }
     }
-    ;
 
     private class ChangeSelectedPoints implements IChangeSelectedPoints {
 
         @Override
-        public void addCurrentProposedCfgFromSelectedPoints(Mark mark) {
-            currentState.addCurrentProposedCfgFromSelectedPoints(mark);
-            cfgShower.showAtSlice(currentState, (int) mark.centerPoint().getZ());
+        public void addCurrentProposedMarksFromSelectedPoints(Mark mark) {
+            currentState.addCurrentProposedMarksFromSelectedPoints(mark);
+            marksShower.showAtSlice(currentState, (int) mark.centerPoint().z());
             alreadyConfirmedOnce = false;
         }
 
         @Override
         public void addSelectedPoint(Mark mark) {
             currentState.addSelectedPoint(mark);
-            cfgShower.show(currentState);
+            marksShower.show(currentState);
             alreadyConfirmedOnce = false;
         }
     }
-    ;
 
     private class WrapConfirmReset implements IConfirmReset {
 
@@ -180,7 +180,7 @@ public class CurrentStateDisplayer {
             if (!alreadyConfirmedOnce && hasLargeOverlap()) {
 
                 // We prompt the user to make they want to continue because of the large overlap
-                cfgShower.showError("Large overlap. Plase confirm a second-time.");
+                marksShower.showError("Large overlap. Plase confirm a second-time.");
                 alreadyConfirmedOnce = true;
                 return false;
             }
@@ -189,16 +189,15 @@ public class CurrentStateDisplayer {
 
             undoRedo.recordSnapshot();
             delegate.confirm(accepted);
-            cfgShower.show(currentState);
+            marksShower.show(currentState);
             return true;
         }
 
         private boolean hasLargeOverlap() {
             return overlapChecker.hasLargeOverlap(
-                    currentState.getProposedCfg(),
-                    currentState.queryAcceptReject().getCfgAccepted());
+                    currentState.getProposedMarks(),
+                    currentState.queryAcceptReject().getMarksAccepted());
         }
-        ;
 
         @Override
         public boolean canReset() {
@@ -209,7 +208,7 @@ public class CurrentStateDisplayer {
         public void reset() {
             undoRedo.recordSnapshot();
             delegate.reset();
-            cfgShower.show(currentState);
+            marksShower.show(currentState);
             alreadyConfirmedOnce = false;
         }
 
@@ -218,5 +217,4 @@ public class CurrentStateDisplayer {
             delegate.addConfirmResetStateChangedListener(e);
         }
     }
-    ;
 }

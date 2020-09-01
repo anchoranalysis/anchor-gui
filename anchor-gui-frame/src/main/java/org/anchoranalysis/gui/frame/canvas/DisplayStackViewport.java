@@ -37,8 +37,8 @@ import org.anchoranalysis.core.index.SetOperationFailedException;
 import org.anchoranalysis.gui.frame.canvas.zoom.ZoomScale;
 import org.anchoranalysis.gui.frame.display.BoundOverlayedDisplayStack;
 import org.anchoranalysis.image.extent.BoundingBox;
+import org.anchoranalysis.image.extent.Dimensions;
 import org.anchoranalysis.image.extent.Extent;
-import org.anchoranalysis.image.extent.ImageDimensions;
 import org.anchoranalysis.image.stack.DisplayStack;
 import org.anchoranalysis.image.stack.region.RegionExtracter;
 import org.anchoranalysis.image.voxel.datatype.VoxelDataType;
@@ -46,7 +46,7 @@ import org.anchoranalysis.image.voxel.datatype.VoxelDataType;
 // Shows a certain amount of a stack at any given time
 class DisplayStackViewport {
 
-    private BoundingBox bboxViewport = null;
+    private BoundingBox boxViewport = null;
     private ZoomScale zoomScale;
 
     private BoundOverlayedDisplayStack displayStackEntireImage;
@@ -64,12 +64,12 @@ class DisplayStackViewport {
         regionExtracter = displayStack.createRegionExtracter();
     }
 
-    public ImageDimensions getDimensionsEntire() {
-        return displayStackEntireImage.getDimensions();
+    public Dimensions dimensionsEntire() {
+        return displayStackEntireImage.dimensions();
     }
 
-    public BoundingBox getBBox() {
-        return bboxViewport;
+    public BoundingBox boundingBox() {
+        return boxViewport;
     }
 
     public BufferedImage createBufferedImageFromView() throws CreateException {
@@ -77,43 +77,40 @@ class DisplayStackViewport {
     }
 
     public BoundingBox createBoxForShiftedView(Point2i shift, Extent canvasExtent) {
-        ReadableTuple3i cornerMin = this.bboxViewport.cornerMin();
+        ReadableTuple3i cornerMin = this.boxViewport.cornerMin();
 
-        int xNew = cornerMin.getX() + shift.getX();
-        int yNew = cornerMin.getY() + shift.getY();
+        int xNew = cornerMin.x() + shift.x();
+        int yNew = cornerMin.y() + shift.y();
 
         Point2i point = new Point2i(xNew, yNew);
         point =
                 DisplayStackViewportUtilities.clipToImage(
-                        point, bboxViewport.extent(), getDimensionsEntire());
-        point =
-                DisplayStackViewportUtilities.clipToImage(
-                        point, canvasExtent, getDimensionsEntire());
-        assert (point.getX() >= 0);
-        assert (point.getY() >= 0);
+                        point, boxViewport.extent(), dimensionsEntire());
+        point = DisplayStackViewportUtilities.clipToImage(point, canvasExtent, dimensionsEntire());
+        assert (point.x() >= 0);
+        assert (point.y() >= 0);
         // We need to clip
 
-        Point3i point3 =
-                new Point3i(point.getX(), point.getY(), this.bboxViewport.cornerMin().getZ());
+        Point3i point3 = new Point3i(point.x(), point.y(), this.boxViewport.cornerMin().z());
 
-        assert (point3.getX() >= 0);
-        assert (point3.getY() >= 0);
+        assert (point3.x() >= 0);
+        assert (point3.y() >= 0);
 
-        return new BoundingBox(point3, bboxViewport.extent());
+        return new BoundingBox(point3, boxViewport.extent());
     }
 
     // Either updates the view and creates a new BufferedImage, or returns null if nothing changes
-    public BufferedImage updateView(BoundingBox bbox, ZoomScale zoomScale)
+    public BufferedImage updateView(BoundingBox box, ZoomScale zoomScale)
             throws OperationFailedException {
         assert (regionExtracter != null);
 
-        this.bboxViewport = bbox;
+        this.boxViewport = box;
         this.zoomScale = zoomScale;
-        assert (displayStackEntireImage.getDimensions().contains(bbox));
+        assert (displayStackEntireImage.dimensions().contains(box));
 
         try {
             return regionExtracter
-                    .extractRegionFrom(bbox, zoomScale.getScale())
+                    .extractRegionFrom(box, zoomScale.getScale())
                     .createBufferedImage();
         } catch (CreateException e) {
             throw new OperationFailedException(e);
@@ -121,13 +118,13 @@ class DisplayStackViewport {
     }
 
     // Using global coord
-    public BufferedImage createPartOfCurrentView(BoundingBox bboxUpdate)
+    public BufferedImage createPartOfCurrentView(BoundingBox boxUpdate)
             throws OperationFailedException {
         assert (regionExtracter != null);
-        assert (bboxViewport.contains().box(bboxUpdate));
+        assert (boxViewport.contains().box(boxUpdate));
 
         try {
-            DisplayStack ds = regionExtracter.extractRegionFrom(bboxUpdate, zoomScale.getScale());
+            DisplayStack ds = regionExtracter.extractRegionFrom(boxUpdate, zoomScale.getScale());
             return ds.createBufferedImage();
 
         } catch (CreateException e) {
@@ -135,44 +132,44 @@ class DisplayStackViewport {
         }
     }
 
-    public Point2i calcNewCrnrPosAfterChangeInViewSize(
+    public Point2i cornerAfterChangeInViewSize(
             Extent extentOld, Extent extentNew, Point2i scrollValImage) {
         Extent diff = extentOld.subtract(extentNew.asTuple()).divide(2);
 
         addCond(scrollValImage, diff, extentOld);
 
         return DisplayStackViewportUtilities.clipToImage(
-                scrollValImage, extentNew, getDimensionsEntire());
+                scrollValImage, extentNew, dimensionsEntire());
     }
 
     private static void addCond(Point2i scrollVal, Extent toAdd, Extent cond) {
-        if (cond.getX() > 0 && toAdd.getX() != 0) {
-            scrollVal.setX(scrollVal.getX() + toAdd.getX());
+        if (cond.x() > 0 && toAdd.x() != 0) {
+            scrollVal.setX(scrollVal.x() + toAdd.x());
         }
 
-        if (cond.getY() > 0 && toAdd.getY() != 0) {
-            scrollVal.setY(scrollVal.getY() + toAdd.getY());
+        if (cond.y() > 0 && toAdd.y() != 0) {
+            scrollVal.setY(scrollVal.y() + toAdd.y());
         }
     }
 
     // If the image point x,y is contained within the canvas
-    public boolean canvasContainsAbs(int x, int y, int z) {
-        return displayStackEntireImage.getDimensions().contains(new Point3i(x, y, z));
+    public boolean canvasContainsAbs(Point3i point) {
+        return displayStackEntireImage.dimensions().contains(point);
     }
 
     // Returns a string describing the intensity values at a particular absolute point in the
     // display stack
-    public String intensityStrAtAbs(int x, int y, int z) {
+    public String intensityStrAtAbs(Point3i point) {
 
         StringBuilder sb = new StringBuilder();
 
-        int numChnl = displayStackEntireImage.getNumChnl();
-        for (int c = 0; c < numChnl; c++) {
+        int numberChannels = displayStackEntireImage.getNumberChannels();
+        for (int c = 0; c < numberChannels; c++) {
 
-            int intensVal = displayStackEntireImage.getUnconvertedVoxelAt(c, x, y, z);
-            sb.append(String.format("%6d", intensVal));
+            int intensity = displayStackEntireImage.getUnconvertedVoxelAt(c, point);
+            sb.append(String.format("%6d", intensity));
 
-            if (c != (numChnl - 1)) {
+            if (c != (numberChannels - 1)) {
                 sb.append(",");
             }
         }
@@ -189,7 +186,7 @@ class DisplayStackViewport {
         return displayStackEntireImage;
     }
 
-    public ImageDimensions dim() {
-        return displayStackEntireImage.getDimensions();
+    public Dimensions dim() {
+        return displayStackEntireImage.dimensions();
     }
 }

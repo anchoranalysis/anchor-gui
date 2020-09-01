@@ -27,39 +27,40 @@
 package org.anchoranalysis.gui.annotation;
 
 import java.util.Optional;
-import org.anchoranalysis.annotation.AnnotationWithCfg;
-import org.anchoranalysis.gui.videostats.internalframe.annotator.currentstate.DualCfg;
+import org.anchoranalysis.annotation.AnnotationWithMarks;
+import org.anchoranalysis.gui.videostats.internalframe.annotator.currentstate.PartitionedMarks;
 
 public class InitAnnotation {
 
-    private Optional<AnnotationWithCfg> annotation;
-    private DualCfg initCfg;
+    private Optional<AnnotationWithMarks> annotation;
+    private PartitionedMarks initMarks;
     private String initMsg; // A message that loads at the start;
 
-    public InitAnnotation(Optional<AnnotationWithCfg> annotation) {
+    public InitAnnotation(Optional<AnnotationWithMarks> annotation) {
         this(annotation, null, "");
     }
 
-    public InitAnnotation(Optional<AnnotationWithCfg> annotation, DualCfg initCfg) {
-        this(annotation, initCfg, "");
+    public InitAnnotation(Optional<AnnotationWithMarks> annotation, PartitionedMarks initMarks) {
+        this(annotation, initMarks, "");
     }
 
-    public InitAnnotation(Optional<AnnotationWithCfg> annotation, DualCfg cfg, String initMsg) {
+    public InitAnnotation(
+            Optional<AnnotationWithMarks> annotation, PartitionedMarks marks, String initMsg) {
         super();
         this.annotation = annotation;
-        this.initCfg = cfg;
+        this.initMarks = marks;
         this.initMsg = initMsg;
     }
 
-    public DualCfg getInitCfg() {
-        return initCfg;
+    public PartitionedMarks getInitMarks() {
+        return initMarks;
     }
 
     public String getInitMsg() {
         return initMsg;
     }
 
-    public Optional<AnnotationWithCfg> getAnnotation() {
+    public Optional<AnnotationWithMarks> getAnnotation() {
         return annotation;
     }
 }

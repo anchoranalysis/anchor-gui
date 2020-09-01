@@ -28,11 +28,10 @@ package org.anchoranalysis.gui.finder.imgstackcollection;
 
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.name.provider.NamedProvider;
-import org.anchoranalysis.core.progress.CacheCallWithProgressReporter;
-import org.anchoranalysis.core.progress.CallableWithProgressReporter;
 import org.anchoranalysis.core.progress.ProgressReporterNull;
 import org.anchoranalysis.gui.finder.FinderRasterFolder;
 import org.anchoranalysis.image.io.bean.rasterreader.RasterReader;
+import org.anchoranalysis.image.stack.NamedStacksSupplier;
 import org.anchoranalysis.image.stack.Stack;
 import org.anchoranalysis.io.manifest.ManifestRecorder;
 
@@ -41,9 +40,8 @@ public class FinderStacksFromFolder implements FinderStacks {
 
     private FinderRasterFolder delegate;
 
-    private CallableWithProgressReporter<NamedProvider<Stack>, OperationFailedException>
-            operationStacks =
-                    CacheCallWithProgressReporter.of(pr -> delegate.createStackCollection(false));
+    private NamedStacksSupplier operationStacks =
+            NamedStacksSupplier.cache(pr -> delegate.createStackCollection(false));
 
     public FinderStacksFromFolder(RasterReader rasterReader, String folderName) {
         delegate = new FinderRasterFolder(folderName, "stackFromCollection", rasterReader);
@@ -51,12 +49,11 @@ public class FinderStacksFromFolder implements FinderStacks {
 
     @Override
     public NamedProvider<Stack> getStacks() throws OperationFailedException {
-        return operationStacks.call(ProgressReporterNull.get());
+        return operationStacks.get(ProgressReporterNull.get());
     }
 
     @Override
-    public CallableWithProgressReporter<NamedProvider<Stack>, OperationFailedException>
-            getStacksAsOperation() {
+    public NamedStacksSupplier getStacksAsOperation() {
         return operationStacks;
     }
 

@@ -68,17 +68,17 @@ class ExtentScrollBars {
     }
 
     public void setVisibleAmount(Extent e) {
-        scrollHor.setVisibleAmount(e.getX());
-        scrollVer.setVisibleAmount(e.getY());
+        scrollHor.setVisibleAmount(e.x());
+        scrollVer.setVisibleAmount(e.y());
     }
 
     public void setMinMax(Extent e, boolean alwaysAllowChangeInVisbility) {
         localChangeListener.disableEvents();
         scrollHor.setMinimum(0);
-        scrollHor.setMaximum(e.getX() - 1);
+        scrollHor.setMaximum(e.x() - 1);
 
         scrollVer.setMinimum(0);
-        scrollVer.setMaximum(e.getY() - 1);
+        scrollVer.setMaximum(e.y() - 1);
 
         if (scrollHor.isVisible() == false || alwaysAllowChangeInVisbility) {
             scrollHor.setVisible(
@@ -93,9 +93,6 @@ class ExtentScrollBars {
                                     < (scrollVer.getMaximum() - scrollVer.getMinimum())));
         }
         localChangeListener.enableEvents();
-        // System.out.printf("Testing if visible hor=%s ver=%s (vis=%d,%d) (extent=%d,%d)\n",
-        // scrollHor.isVisible()?"true":"false", scrollVer.isVisible()?"true":"false",
-        // scrollHor.getVisibleAmount(), scrollVer.getVisibleAmount(), e.getX(), e.getY() );
     }
 
     // Considers the width of the vertical scrollbar, and the height of the horizontal scrollbar and
@@ -110,8 +107,8 @@ class ExtentScrollBars {
 
     public void setValue(Point2i val) {
         localChangeListener.disableEvents();
-        scrollHor.setValue(val.getX());
-        scrollVer.setValue(val.getY());
+        scrollHor.setValue(val.x());
+        scrollVer.setValue(val.y());
         localChangeListener.enableEvents();
     }
 

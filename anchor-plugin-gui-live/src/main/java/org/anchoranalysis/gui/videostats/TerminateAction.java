@@ -29,7 +29,7 @@ package org.anchoranalysis.gui.videostats;
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
 import javax.swing.ImageIcon;
-import org.anchoranalysis.mpp.sgmn.bean.optscheme.termination.TriggerTerminationCondition;
+import org.anchoranalysis.mpp.segment.bean.optscheme.termination.TriggerTerminationCondition;
 
 public class TerminateAction extends AbstractAction {
 

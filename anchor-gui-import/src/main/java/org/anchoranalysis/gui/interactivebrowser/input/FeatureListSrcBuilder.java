@@ -27,14 +27,6 @@
 package org.anchoranalysis.gui.interactivebrowser.input;
 
 import lombok.AllArgsConstructor;
-import org.anchoranalysis.anchor.mpp.bean.regionmap.RegionMap;
-import org.anchoranalysis.anchor.mpp.feature.addcriteria.BBoxIntersection;
-import org.anchoranalysis.anchor.mpp.feature.bean.nrgscheme.NRGSchemeCreator;
-import org.anchoranalysis.anchor.mpp.feature.input.memo.FeatureInputPairMemo;
-import org.anchoranalysis.anchor.mpp.feature.input.memo.FeatureInputSingleMemo;
-import org.anchoranalysis.anchor.mpp.feature.nrg.scheme.NRGScheme;
-import org.anchoranalysis.anchor.mpp.feature.nrg.scheme.NamedNRGSchemeSet;
-import org.anchoranalysis.anchor.mpp.mark.conic.RegionMapSingleton;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.log.Logger;
@@ -47,9 +39,17 @@ import org.anchoranalysis.feature.input.FeatureInput;
 import org.anchoranalysis.feature.shared.SharedFeaturesInitParams;
 import org.anchoranalysis.gui.feature.evaluator.params.FeatureInputFactory;
 import org.anchoranalysis.gui.feature.evaluator.params.ParamsFactoryForFeature;
-import org.anchoranalysis.gui.feature.evaluator.treetable.ExtractFromNamedNRGSchemeSet;
+import org.anchoranalysis.gui.feature.evaluator.treetable.ExtractFromEnergySchemeSet;
 import org.anchoranalysis.gui.feature.evaluator.treetable.FeatureListSrc;
 import org.anchoranalysis.gui.feature.evaluator.treetable.KeyValueParamsAugmenter;
+import org.anchoranalysis.mpp.bean.regionmap.RegionMap;
+import org.anchoranalysis.mpp.bean.regionmap.RegionMapSingleton;
+import org.anchoranalysis.mpp.feature.addcriteria.BoundingBoxIntersection;
+import org.anchoranalysis.mpp.feature.bean.energy.scheme.EnergySchemeCreator;
+import org.anchoranalysis.mpp.feature.energy.scheme.EnergyScheme;
+import org.anchoranalysis.mpp.feature.energy.scheme.EnergySchemeSet;
+import org.anchoranalysis.mpp.feature.input.memo.FeatureInputPairMemo;
+import org.anchoranalysis.mpp.feature.input.memo.FeatureInputSingleMemo;
 
 @AllArgsConstructor
 public class FeatureListSrcBuilder {
@@ -57,61 +57,63 @@ public class FeatureListSrcBuilder {
     private Logger logger;
 
     public FeatureListSrc build(
-            SharedFeaturesInitParams soFeature, NRGSchemeCreator nrgSchemeCreator)
+            SharedFeaturesInitParams soFeature, EnergySchemeCreator energySchemeCreator)
             throws CreateException {
 
-        NamedNRGSchemeSet nrgElemSet = new NamedNRGSchemeSet(soFeature.getSharedFeatureSet());
+        EnergySchemeSet energySchemeSet = new EnergySchemeSet(soFeature.getSharedFeatureSet());
 
-        if (nrgSchemeCreator != null) {
-            return buildWith(soFeature, nrgElemSet, nrgSchemeCreator);
+        if (energySchemeCreator != null) {
+            return buildWith(soFeature, energySchemeSet, energySchemeCreator);
 
         } else {
-            return buildWithout(soFeature, nrgElemSet);
+            return buildWithout(soFeature, energySchemeSet);
         }
     }
 
-    /** Build WITHOUT an existing nrgScheme */
+    /** Build WITHOUT an existing energyScheme */
     private FeatureListSrc buildWithout(
-            SharedFeaturesInitParams soFeature, NamedNRGSchemeSet nrgElemSet) {
-        addFromStore(nrgElemSet, soFeature.getFeatureListSet(), RegionMapSingleton.instance());
-        return new ExtractFromNamedNRGSchemeSet(nrgElemSet);
+            SharedFeaturesInitParams soFeature, EnergySchemeSet energySchemeSet) {
+        addFromStore(energySchemeSet, soFeature.getFeatureListSet(), RegionMapSingleton.instance());
+        return new ExtractFromEnergySchemeSet(energySchemeSet);
     }
 
-    /** Build WITH an existing nrgScheme */
+    /** Build WITH an existing energyScheme */
     private FeatureListSrc buildWith(
             SharedFeaturesInitParams soFeature,
-            NamedNRGSchemeSet nrgElemSet,
-            NRGSchemeCreator nrgSchemeCreator)
+            EnergySchemeSet energySchemeSet,
+            EnergySchemeCreator energySchemeCreator)
             throws CreateException {
 
-        NRGScheme nrgScheme = createNRGScheme(nrgSchemeCreator, soFeature, logger);
-        RegionMapFinder.addFromNrgScheme(nrgElemSet, nrgScheme);
+        EnergyScheme energyScheme = createEnergyScheme(energySchemeCreator, soFeature, logger);
+        RegionMapFinder.addFromEnergyScheme(energySchemeSet, energyScheme);
 
-        addFromStore(nrgElemSet, soFeature.getFeatureListSet(), nrgScheme.getRegionMap());
+        addFromStore(energySchemeSet, soFeature.getFeatureListSet(), energyScheme.getRegionMap());
 
         // We deliberately do not used the SharedFeatures as we wish to keep the Image Features
         // seperate
         //  and prevent any of the features being initialized prematurely
         KeyValueParamsAugmenter augmenter =
-                new KeyValueParamsAugmenter(nrgScheme, soFeature.getSharedFeatureSet(), logger);
+                new KeyValueParamsAugmenter(energyScheme, soFeature.getSharedFeatureSet(), logger);
 
-        return new ExtractFromNamedNRGSchemeSet(nrgElemSet, augmenter);
+        return new ExtractFromEnergySchemeSet(energySchemeSet, augmenter);
     }
 
-    private NRGScheme createNRGScheme(
-            NRGSchemeCreator nrgSchemeCreator, SharedFeaturesInitParams soFeature, Logger logger)
+    private EnergyScheme createEnergyScheme(
+            EnergySchemeCreator energySchemeCreator,
+            SharedFeaturesInitParams soFeature,
+            Logger logger)
             throws CreateException {
 
         try {
-            nrgSchemeCreator.initRecursive(soFeature, logger);
+            energySchemeCreator.initRecursive(soFeature, logger);
         } catch (InitException e1) {
             throw new CreateException(e1);
         }
-        return nrgSchemeCreator.create();
+        return energySchemeCreator.create();
     }
 
     private void addFromStore(
-            NamedNRGSchemeSet nrgElemSet,
+            EnergySchemeSet energySchemeSet,
             NamedProviderStore<FeatureList<FeatureInput>> store,
             RegionMap regionMap) {
 
@@ -126,20 +128,21 @@ public class FeatureListSrcBuilder {
                 // fl.init( new FeatureInitParams(soFeature.getSharedFeatureSet(),
                 // soFeature.getCachedCalculationList()) );
 
-                // Determines which features belong in the Unary part of the NRGScheme, and which in
+                // Determines which features belong in the Unary part of the EnergyScheme, and which
+                // in
                 // the Pairwise part
                 FeatureList<FeatureInputSingleMemo> outUnary = FeatureListFactory.empty();
                 FeatureList<FeatureInputPairMemo> outPairwise = FeatureListFactory.empty();
                 determineUnaryPairwiseFeatures(fl, outUnary, outPairwise);
 
-                nrgElemSet.add(
+                energySchemeSet.add(
                         key,
-                        new NRGScheme(
+                        new EnergyScheme(
                                 outUnary,
                                 outPairwise,
                                 FeatureListFactory.empty(),
                                 regionMap,
-                                new BBoxIntersection() // Arbitrarily chosen
+                                new BoundingBoxIntersection() // Arbitrarily chosen
                                 ));
 
             } catch (CreateException e) {

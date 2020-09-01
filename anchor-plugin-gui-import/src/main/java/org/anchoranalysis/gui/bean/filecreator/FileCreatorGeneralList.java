@@ -31,12 +31,11 @@ import java.util.Collections;
 import java.util.List;
 import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.error.OperationFailedException;
-import org.anchoranalysis.core.progress.CallableWithProgressReporter;
 import org.anchoranalysis.core.progress.ProgressReporter;
 import org.anchoranalysis.gui.file.interactive.InteractiveFile;
 import org.anchoranalysis.gui.interactivebrowser.IOpenFile;
 import org.anchoranalysis.gui.interactivebrowser.filelist.SimpleInteractiveFileListInternalFrame;
-import org.anchoranalysis.gui.videostats.dropdown.IAddVideoStatsModule;
+import org.anchoranalysis.gui.videostats.dropdown.AddVideoStatsModule;
 import org.anchoranalysis.gui.videostats.dropdown.VideoStatsModuleGlobalParams;
 import org.anchoranalysis.gui.videostats.module.DefaultModuleState;
 import org.anchoranalysis.gui.videostats.module.VideoStatsModule;
@@ -44,38 +43,21 @@ import org.anchoranalysis.gui.videostats.module.VideoStatsModuleCreateException;
 
 public abstract class FileCreatorGeneralList extends FileCreator {
 
-    public abstract void addFilesToList(
-            List<InteractiveFile> listFiles,
-            FileCreatorParams params,
-            ProgressReporter progressReporter)
-            throws OperationFailedException;
-
     public VideoStatsModule createModule(
             String name,
-            final FileCreatorParams params,
+            FileCreatorParams params,
             VideoStatsModuleGlobalParams mpg,
-            IAddVideoStatsModule adder,
+            AddVideoStatsModule adder,
             IOpenFile fileOpenManager,
-            final ProgressReporter progressReporter)
+            ProgressReporter progressReporter)
             throws VideoStatsModuleCreateException {
-
-        // Operation to retrieve files
-        CallableWithProgressReporter<List<InteractiveFile>, OperationFailedException> op =
-                pr -> {
-                    List<InteractiveFile> listFiles = new ArrayList<>();
-                    addFilesToList(listFiles, params, pr);
-
-                    // Let's sort out list before we display them
-                    Collections.sort(listFiles);
-                    return listFiles;
-                };
 
         SimpleInteractiveFileListInternalFrame manifestListSummary =
                 new SimpleInteractiveFileListInternalFrame(name);
         try {
             manifestListSummary.init(
                     adder,
-                    op,
+                    pr -> files(pr, params),
                     fileOpenManager,
                     mpg,
                     params.getMarkCreatorParams().getMarkDisplaySettings(),
@@ -84,5 +66,21 @@ public abstract class FileCreatorGeneralList extends FileCreator {
             throw new VideoStatsModuleCreateException(e);
         }
         return manifestListSummary.createVideoStatsModule(new DefaultModuleState());
+    }
+
+    protected abstract void addFilesToList(
+            List<InteractiveFile> listFiles,
+            FileCreatorParams params,
+            ProgressReporter progressReporter)
+            throws OperationFailedException;
+
+    private List<InteractiveFile> files(ProgressReporter progressReporter, FileCreatorParams params)
+            throws OperationFailedException {
+        List<InteractiveFile> out = new ArrayList<>();
+        addFilesToList(out, params, progressReporter);
+
+        // Let's sort out list before we display them
+        Collections.sort(out);
+        return out;
     }
 }

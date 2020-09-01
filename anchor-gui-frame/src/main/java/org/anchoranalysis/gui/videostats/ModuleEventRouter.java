@@ -29,7 +29,7 @@ package org.anchoranalysis.gui.videostats;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import org.anchoranalysis.core.event.IRoutableEventSourceObject;
+import org.anchoranalysis.core.event.RoutableEventSourceObject;
 import org.anchoranalysis.gui.videostats.module.VideoStatsModule;
 
 // Indicates which modules to route events to
@@ -58,7 +58,7 @@ public class ModuleEventRouter {
     }
 
     public Iterator<VideoStatsModule> destinationModules(
-            IRoutableEventSourceObject sourceModule, RouterStyle routerStyle) {
+            RoutableEventSourceObject sourceModule, RouterStyle routerStyle) {
 
         // For now we build a new list for every module, excluding itself
         // THIS is inefficient, and we should build rather an iterator that skips itself

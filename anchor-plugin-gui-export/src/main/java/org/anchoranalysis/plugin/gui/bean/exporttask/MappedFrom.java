@@ -26,22 +26,16 @@
 
 package org.anchoranalysis.plugin.gui.bean.exporttask;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
+@AllArgsConstructor
 public class MappedFrom<T> {
 
     private int originalIter;
-    private T obj;
-
-    public MappedFrom(int originalIter, T obj) {
-        super();
-        this.originalIter = originalIter;
-        this.obj = obj;
-    }
+    @Getter private T object;
 
     public int getOriginalIter() {
         return originalIter;
-    }
-
-    public T getObj() {
-        return obj;
     }
 }

@@ -30,14 +30,11 @@ import javax.swing.JFrame;
 import org.anchoranalysis.bean.error.BeanDuplicateException;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.error.reporter.ErrorReporter;
-import org.anchoranalysis.core.progress.CallableWithProgressReporter;
-import org.anchoranalysis.gui.backgroundset.BackgroundSet;
 import org.anchoranalysis.gui.bean.exporttask.ExportTaskBean;
 import org.anchoranalysis.gui.bean.exporttask.ExportTaskParams;
-import org.anchoranalysis.gui.container.background.BackgroundStackContainerException;
 import org.anchoranalysis.gui.finder.imgstackcollection.FinderStacks;
-import org.anchoranalysis.gui.io.loader.manifest.finder.CfgNRGFinderContext;
-import org.anchoranalysis.gui.io.loader.manifest.finder.FinderCfgNRGSet;
+import org.anchoranalysis.gui.io.loader.manifest.finder.FinderMarksWithEnergy;
+import org.anchoranalysis.gui.io.loader.manifest.finder.MarksWithEnergyFinderContext;
 import org.anchoranalysis.gui.videostats.dropdown.contextualmodulecreator.ContextualModuleCreator;
 import org.anchoranalysis.gui.videostats.dropdown.contextualmodulecreator.SingleContextualModuleCreator;
 import org.anchoranalysis.gui.videostats.operation.VideoStatsOperationFromExportTask;
@@ -56,11 +53,10 @@ public class CombinedMenu {
     }
 
     public void addCombination(
-            FinderCfgNRGSet finderFirst,
-            FinderCfgNRGSet finderSecond,
-            CallableWithProgressReporter<BackgroundSet, BackgroundStackContainerException>
-                    backgroundSet,
-            CfgNRGFinderContext context)
+            FinderMarksWithEnergy finderFirst,
+            FinderMarksWithEnergy finderSecond,
+            BackgroundSetProgressingSupplier backgroundSet,
+            MarksWithEnergyFinderContext context)
             throws MenuAddException {
 
         if (!finderFirst.exists() || !finderSecond.exists()) {
@@ -94,8 +90,8 @@ public class CombinedMenu {
 
     private void addExportTasks(
             String name,
-            final FinderCfgNRGSet finderFirst,
-            final FinderCfgNRGSet finderSecond,
+            final FinderMarksWithEnergy finderFirst,
+            final FinderMarksWithEnergy finderSecond,
             FinderStacks finderStacks,
             ExportTaskList exportTaskList,
             BoundOutputManagerRouteErrors outputManager,
@@ -104,15 +100,15 @@ public class CombinedMenu {
         VideoStatsOperationMenu exportSubMenu = menu.createSubMenu(name + ": export ", true);
 
         ExportTaskParams exportTaskParams = new ExportTaskParams();
-        exportTaskParams.addFinderCfgNRGHistory(finderFirst);
-        exportTaskParams.addFinderCfgNRGHistory(finderSecond);
+        exportTaskParams.addFinderMarksHistory(finderFirst);
+        exportTaskParams.addFinderMarksHistory(finderSecond);
         exportTaskParams.setFinderStacks(finderStacks);
         exportTaskParams.setOutputManager(outputManager);
 
         // TODO, HACK, as the RGB creator requires this
         try {
             exportTaskParams.setColorIndexMarks(
-                    outputManager.getOutputWriteSettings().genDefaultColorIndex(3));
+                    outputManager.getOutputWriteSettings().defaultColorIndexFor(3));
         } catch (OperationFailedException e) {
             errorReporter.recordError(CombinedMenu.class, e);
         }

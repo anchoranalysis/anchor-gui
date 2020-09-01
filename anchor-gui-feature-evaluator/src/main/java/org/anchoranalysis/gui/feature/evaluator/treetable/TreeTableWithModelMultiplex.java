@@ -33,15 +33,15 @@ import java.util.List;
 import javax.swing.BorderFactory;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
-import org.anchoranalysis.anchor.mpp.feature.input.memo.FeatureInputAllMemo;
-import org.anchoranalysis.anchor.mpp.feature.input.memo.FeatureInputPairMemo;
-import org.anchoranalysis.anchor.mpp.feature.input.memo.FeatureInputSingleMemo;
-import org.anchoranalysis.anchor.mpp.pair.IdentifiablePair;
-import org.anchoranalysis.anchor.overlay.Overlay;
-import org.anchoranalysis.feature.input.FeatureInputNRG;
-import org.anchoranalysis.feature.nrg.NRGStackWithParams;
+import org.anchoranalysis.feature.energy.EnergyStack;
+import org.anchoranalysis.feature.input.FeatureInputEnergy;
 import org.anchoranalysis.feature.shared.SharedFeatureMulti;
 import org.anchoranalysis.gui.feature.FeatureListWithRegionMap;
+import org.anchoranalysis.mpp.feature.input.memo.FeatureInputAllMemo;
+import org.anchoranalysis.mpp.feature.input.memo.FeatureInputPairMemo;
+import org.anchoranalysis.mpp.feature.input.memo.FeatureInputSingleMemo;
+import org.anchoranalysis.mpp.pair.IdentifiablePair;
+import org.anchoranalysis.overlay.Overlay;
 import org.netbeans.swing.outline.Outline;
 
 // Has a number of different tables for cliques sizes (0, 1, 2) all of which remain memory, but only
@@ -68,7 +68,8 @@ public class TreeTableWithModelMultiplex implements ITreeTableModel {
         SharedFeatureMulti sharedFeatures = featureListExtracter.sharedFeatures();
 
         // We use 4 models for NONE, IND, PAIR, ALL
-        addModelToList(new FeatureListWithRegionMap<FeatureInputNRG>(), properties, sharedFeatures);
+        addModelToList(
+                new FeatureListWithRegionMap<FeatureInputEnergy>(), properties, sharedFeatures);
         addModelToList(featureListInd, properties, sharedFeatures);
         addModelToList(featureListPair, properties, sharedFeatures);
         addModelToList(featureListAll, properties, sharedFeatures);
@@ -82,7 +83,7 @@ public class TreeTableWithModelMultiplex implements ITreeTableModel {
         }
     }
 
-    private <T extends FeatureInputNRG> void addModelToList(
+    private <T extends FeatureInputEnergy> void addModelToList(
             FeatureListWithRegionMap<T> features,
             TreeTableProperties properties,
             SharedFeatureMulti sharedFeatures) {
@@ -115,7 +116,7 @@ public class TreeTableWithModelMultiplex implements ITreeTableModel {
     }
 
     @Override
-    public void updateSingle(Overlay overlay, NRGStackWithParams raster) {
+    public void updateSingle(Overlay overlay, EnergyStack raster) {
 
         if (overlay == null) {
             selectMode(0);
@@ -130,7 +131,7 @@ public class TreeTableWithModelMultiplex implements ITreeTableModel {
     }
 
     @Override
-    public void updatePair(IdentifiablePair<Overlay> pair, NRGStackWithParams raster) {
+    public void updatePair(IdentifiablePair<Overlay> pair, EnergyStack raster) {
 
         if (pair == null) {
             selectMode(0);

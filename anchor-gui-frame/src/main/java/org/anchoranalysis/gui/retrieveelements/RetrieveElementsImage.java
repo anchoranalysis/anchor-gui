@@ -27,11 +27,12 @@
 package org.anchoranalysis.gui.retrieveelements;
 
 import java.util.Optional;
+import java.util.function.Supplier;
 import lombok.AllArgsConstructor;
-import org.anchoranalysis.core.cache.CacheCall;
+import org.anchoranalysis.core.cache.CachedSupplier;
 import org.anchoranalysis.core.error.AnchorNeverOccursException;
 import org.anchoranalysis.core.error.OperationFailedException;
-import org.anchoranalysis.image.io.generator.raster.MIPGenerator;
+import org.anchoranalysis.image.io.generator.raster.ProjectMeanGenerator;
 import org.anchoranalysis.image.stack.DisplayStack;
 import org.anchoranalysis.image.stack.Stack;
 
@@ -52,8 +53,7 @@ public class RetrieveElementsImage extends RetrieveElements {
     }
 
     private void addFromStack(AddToExportSubMenu popUp, DisplayStack stack) {
-        CacheCall<Stack, AnchorNeverOccursException> opCreateStack =
-                cachedOpFromDisplayStack(stack);
+        Supplier<Stack> opCreateStack = cachedOpFromDisplayStack(stack);
 
         try {
             popUp.addExportItemStackGenerator("selectedStack", "Stack", opCreateStack);
@@ -61,8 +61,8 @@ public class RetrieveElementsImage extends RetrieveElements {
             assert false;
         }
 
-        if (stack.getDimensions().getZ() > 1) {
-            MIPGenerator generatorMIP = new MIPGenerator(true, "selectedStackMIP");
+        if (stack.dimensions().z() > 1) {
+            ProjectMeanGenerator generatorMIP = new ProjectMeanGenerator(true, "selectedStackMIP");
 
             OperationGenerator<Stack, Stack> generator = new OperationGenerator<>(generatorMIP);
             popUp.addExportItem(
@@ -84,8 +84,9 @@ public class RetrieveElementsImage extends RetrieveElements {
         }
     }
 
-    private CacheCall<Stack, AnchorNeverOccursException> cachedOpFromDisplayStack(
-            DisplayStack stack) {
-        return CacheCall.of(() -> stack.deriveStack(false));
+    private Supplier<Stack> cachedOpFromDisplayStack(DisplayStack stack) {
+        CachedSupplier<Stack, AnchorNeverOccursException> cachedSupplier =
+                CachedSupplier.cache(() -> stack.deriveStack(false));
+        return cachedSupplier::get;
     }
 }

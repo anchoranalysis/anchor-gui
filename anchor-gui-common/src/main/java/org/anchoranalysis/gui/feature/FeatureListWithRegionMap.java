@@ -31,11 +31,11 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
-import org.anchoranalysis.anchor.mpp.bean.regionmap.RegionMap;
 import org.anchoranalysis.feature.bean.Feature;
 import org.anchoranalysis.feature.bean.list.FeatureList;
 import org.anchoranalysis.feature.bean.list.FeatureListFactory;
 import org.anchoranalysis.feature.input.FeatureInput;
+import org.anchoranalysis.mpp.bean.regionmap.RegionMap;
 
 // Associates a RegionMap with each feature
 public class FeatureListWithRegionMap<T extends FeatureInput>

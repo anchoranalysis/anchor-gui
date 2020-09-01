@@ -29,8 +29,8 @@ package org.anchoranalysis.gui.videostats.dropdown;
 import java.awt.Component;
 import java.util.concurrent.ExecutionException;
 import javax.swing.JOptionPane;
+import lombok.AllArgsConstructor;
 import org.anchoranalysis.core.log.Logger;
-import org.anchoranalysis.core.progress.CallableWithProgressReporter;
 import org.anchoranalysis.core.progress.ProgressReporter;
 import org.anchoranalysis.core.progress.ProgressReporterMultiple;
 import org.anchoranalysis.core.progress.ProgressReporterOneOfMany;
@@ -40,17 +40,11 @@ import org.anchoranalysis.gui.videostats.modulecreator.VideoStatsModuleCreator;
 import org.anchoranalysis.gui.videostats.threading.InteractiveThreadPool;
 import org.anchoranalysis.gui.videostats.threading.InteractiveWorker;
 
+@AllArgsConstructor
 public class VideoStatsModuleCreatorAndAdder {
 
-    private CallableWithProgressReporter<IAddVideoStatsModule, ? extends Throwable> adderOperation;
+    private AddVideoStatsModuleSupplier adderOperation;
     private VideoStatsModuleCreator creator;
-
-    public VideoStatsModuleCreatorAndAdder(
-            CallableWithProgressReporter<IAddVideoStatsModule, ? extends Throwable> adderOperation,
-            VideoStatsModuleCreator creator) {
-        this.adderOperation = adderOperation;
-        this.creator = creator;
-    }
 
     public void createVideoStatsModuleForAdder(
             InteractiveThreadPool threadPool, Component parentComponent, Logger logger) {
@@ -59,7 +53,7 @@ public class VideoStatsModuleCreatorAndAdder {
         threadPool.submitWithProgressMonitor(worker, "Create module");
     }
 
-    private class Worker extends InteractiveWorker<IAddVideoStatsModule, Void> {
+    private class Worker extends InteractiveWorker<AddVideoStatsModule, Void> {
 
         private Throwable exceptionRecorded;
         private Logger logger;
@@ -74,7 +68,7 @@ public class VideoStatsModuleCreatorAndAdder {
         }
 
         @Override
-        protected IAddVideoStatsModule doInBackground() {
+        protected AddVideoStatsModule doInBackground() {
 
             exceptionRecorded = null;
 
@@ -84,8 +78,8 @@ public class VideoStatsModuleCreatorAndAdder {
 
                     try (ProgressReporterMultiple prm =
                             new ProgressReporterMultiple(progressReporter, 2)) {
-                        IAddVideoStatsModule adder =
-                                adderOperation.call(new ProgressReporterOneOfMany(prm));
+                        AddVideoStatsModule adder =
+                                adderOperation.get(new ProgressReporterOneOfMany(prm));
                         prm.incrWorker();
 
                         creator.doInBackground(new ProgressReporterOneOfMany(prm));
@@ -93,7 +87,7 @@ public class VideoStatsModuleCreatorAndAdder {
                         return adder;
                     }
                 }
-            } catch (Throwable e) {
+            } catch (Exception e) {
                 exceptionRecorded = e;
                 return null;
             }

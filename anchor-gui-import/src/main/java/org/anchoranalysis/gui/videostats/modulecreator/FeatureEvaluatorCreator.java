@@ -27,10 +27,10 @@
 package org.anchoranalysis.gui.videostats.modulecreator;
 
 import org.anchoranalysis.core.log.Logger;
-import org.anchoranalysis.gui.cfgnrg.StatePanelUpdateException;
 import org.anchoranalysis.gui.feature.evaluator.FeatureEvaluatorTableFrame;
 import org.anchoranalysis.gui.feature.evaluator.treetable.FeatureListSrc;
-import org.anchoranalysis.gui.videostats.dropdown.IAddVideoStatsModule;
+import org.anchoranalysis.gui.marks.StatePanelUpdateException;
+import org.anchoranalysis.gui.videostats.dropdown.AddVideoStatsModule;
 import org.anchoranalysis.gui.videostats.module.VideoStatsModule;
 import org.anchoranalysis.gui.videostats.module.VideoStatsModuleCreateException;
 
@@ -45,7 +45,7 @@ public class FeatureEvaluatorCreator extends VideoStatsModuleCreator {
         this.logger = logger;
     }
 
-    public VideoStatsModule createVideoStatsModule(IAddVideoStatsModule adder)
+    public VideoStatsModule createVideoStatsModule(AddVideoStatsModule adder)
             throws VideoStatsModuleCreateException {
 
         try {
@@ -63,7 +63,7 @@ public class FeatureEvaluatorCreator extends VideoStatsModuleCreator {
     }
 
     @Override
-    public void createAndAddVideoStatsModule(IAddVideoStatsModule adder)
+    public void createAndAddVideoStatsModule(AddVideoStatsModule adder)
             throws VideoStatsModuleCreateException {
 
         VideoStatsModule module = createVideoStatsModule(adder);

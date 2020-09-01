@@ -34,11 +34,11 @@ import org.anchoranalysis.core.index.container.BoundChangeListener;
 import org.anchoranalysis.core.index.container.BoundedIndexContainer;
 import org.anchoranalysis.image.channel.Channel;
 import org.anchoranalysis.image.channel.factory.ChannelFactory;
-import org.anchoranalysis.image.extent.ImageDimensions;
+import org.anchoranalysis.image.extent.Dimensions;
 import org.anchoranalysis.image.extent.IncorrectImageSizeException;
 import org.anchoranalysis.image.stack.DisplayStack;
 import org.anchoranalysis.image.stack.Stack;
-import org.anchoranalysis.image.voxel.datatype.VoxelDataTypeUnsignedByte;
+import org.anchoranalysis.image.voxel.datatype.UnsignedByteVoxelType;
 
 public class CombineRGBBoundedIndexContainer implements BoundedIndexContainer<DisplayStack> {
 
@@ -49,15 +49,15 @@ public class CombineRGBBoundedIndexContainer implements BoundedIndexContainer<Di
     private int min;
     private int max;
 
-    private ImageDimensions dimensions;
+    private Dimensions dimensions;
 
     // We assume we will never have an index above this number
-    private static int MAX_NEVER_REACHED = 1000000;
+    private static final int MAX_NEVER_REACHED = 1000000;
 
     private void setDimensionsIfNeeded(BoundedIndexContainer<DisplayStack> cntr)
             throws GetOperationFailedException {
         if (cntr != null && dimensions == null) {
-            dimensions = cntr.get(cntr.getMinimumIndex()).getDimensions();
+            dimensions = cntr.get(cntr.getMinimumIndex()).dimensions();
         }
     }
 
@@ -198,7 +198,8 @@ public class CombineRGBBoundedIndexContainer implements BoundedIndexContainer<Di
         return max;
     }
 
-    private void addChnlToStack(Stack stackNew, BoundedIndexContainer<DisplayStack> cntr, int index)
+    private void addChannelToStack(
+            Stack stackNew, BoundedIndexContainer<DisplayStack> cntr, int index)
             throws OperationFailedException {
 
         try {
@@ -208,11 +209,10 @@ public class CombineRGBBoundedIndexContainer implements BoundedIndexContainer<Di
             } else {
                 // TODO, why do we create an empty initialised here
                 assert (dimensions != null);
-                Channel chnlNew =
+                Channel channelNew =
                         ChannelFactory.instance()
-                                .createEmptyInitialised(
-                                        dimensions, VoxelDataTypeUnsignedByte.INSTANCE);
-                stackNew.addChannel(chnlNew);
+                                .create(dimensions, UnsignedByteVoxelType.INSTANCE);
+                stackNew.addChannel(channelNew);
             }
         } catch (IncorrectImageSizeException | GetOperationFailedException e) {
             throw new OperationFailedException(e);
@@ -227,9 +227,9 @@ public class CombineRGBBoundedIndexContainer implements BoundedIndexContainer<Di
         Stack stackNew = new Stack();
 
         try {
-            addChnlToStack(stackNew, red, index);
-            addChnlToStack(stackNew, green, index);
-            addChnlToStack(stackNew, blue, index);
+            addChannelToStack(stackNew, red, index);
+            addChannelToStack(stackNew, green, index);
+            addChannelToStack(stackNew, blue, index);
 
             return DisplayStack.create(stackNew);
         } catch (CreateException | OperationFailedException e) {

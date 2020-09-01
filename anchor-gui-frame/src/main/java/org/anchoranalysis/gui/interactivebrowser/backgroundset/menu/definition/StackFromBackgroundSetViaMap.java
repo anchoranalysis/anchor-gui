@@ -29,34 +29,32 @@ package org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.definition;
 import java.util.Map;
 import org.anchoranalysis.bean.shared.StringMap;
 import org.anchoranalysis.core.error.reporter.ErrorReporter;
-import org.anchoranalysis.core.functional.function.FunctionWithException;
-import org.anchoranalysis.core.progress.CallableWithProgressReporter;
+import org.anchoranalysis.core.functional.function.CheckedFunction;
 import org.anchoranalysis.core.progress.ProgressReporterNull;
-import org.anchoranalysis.gui.backgroundset.BackgroundSet;
 import org.anchoranalysis.gui.container.background.BackgroundStackContainerException;
+import org.anchoranalysis.gui.videostats.dropdown.BackgroundSetProgressingSupplier;
 import org.anchoranalysis.image.stack.DisplayStack;
 
 class StackFromBackgroundSetViaMap implements ImageStackContainerFromName {
 
     private Map<String, String> map;
-    private CallableWithProgressReporter<BackgroundSet, ? extends Throwable> backgroundSet;
+    private BackgroundSetProgressingSupplier backgroundSet;
     private ErrorReporter errorReporter;
 
     public StackFromBackgroundSetViaMap(
             StringMap map,
-            CallableWithProgressReporter<BackgroundSet, ? extends Throwable> backgroundSet,
+            BackgroundSetProgressingSupplier backgroundSet,
             ErrorReporter errorReporter) {
-        super();
         this.backgroundSet = backgroundSet;
         this.map = map.create();
         this.errorReporter = errorReporter;
     }
 
     @Override
-    public FunctionWithException<Integer, DisplayStack, BackgroundStackContainerException>
+    public CheckedFunction<Integer, DisplayStack, BackgroundStackContainerException>
             imageStackCntrFromName(String name) throws BackgroundStackContainerException {
         try {
-            return backgroundSet.call(ProgressReporterNull.get()).stackCntr(map.get(name));
+            return backgroundSet.get(ProgressReporterNull.get()).stackCntr(map.get(name));
         } catch (Exception e) {
             errorReporter.recordError(NamesFromBackgroundSet.class, e);
             return null;

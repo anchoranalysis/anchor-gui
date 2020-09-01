@@ -29,8 +29,6 @@ package org.anchoranalysis.gui.frame.multioverlay.instantstate;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.SwingUtilities;
-import org.anchoranalysis.anchor.overlay.collection.ColoredOverlayCollection;
-import org.anchoranalysis.anchor.overlay.collection.OverlayCollection;
 import org.anchoranalysis.core.geometry.Point3i;
 import org.anchoranalysis.core.index.IndicesSelection;
 import org.anchoranalysis.core.property.IPropertyValueReceivable;
@@ -40,6 +38,8 @@ import org.anchoranalysis.gui.frame.display.overlay.OverlayRetriever;
 import org.anchoranalysis.gui.image.ISliceNumGetter;
 import org.anchoranalysis.gui.indices.DualIndicesSelection;
 import org.anchoranalysis.gui.propertyvalue.PropertyValueChangeListenerList;
+import org.anchoranalysis.overlay.collection.ColoredOverlayCollection;
+import org.anchoranalysis.overlay.collection.OverlayCollection;
 
 class ClickAdapter extends MouseAdapter {
 
@@ -62,29 +62,29 @@ class ClickAdapter extends MouseAdapter {
     }
 
     @Override
-    public void mousePressed(MouseEvent e) {
+    public void mousePressed(MouseEvent event) {
 
         // If any control keys are also pressed, or if we happen to be triggering the pop, we ignore
-        if (e.isPopupTrigger()
-                || e.isShiftDown()
-                || e.isMetaDown()
-                || e.isAltDown()
-                || e.isAltGraphDown()) {
+        if (event.isPopupTrigger()
+                || event.isShiftDown()
+                || event.isMetaDown()
+                || event.isAltDown()
+                || event.isAltGraphDown()) {
             return;
         }
 
         // If it's not the left mouse button, we ignore
-        if (!SwingUtilities.isLeftMouseButton(e)) {
+        if (!SwingUtilities.isLeftMouseButton(event)) {
             return;
         }
 
-        Point3i point = new Point3i(e.getX(), e.getY(), sliceNumGetter.getSliceNum());
+        Point3i point = new Point3i(event.getX(), event.getY(), sliceNumGetter.getSliceNum());
 
         // This our current
         OverlayCollection selectedOverlays = overlaysGetter.overlaysAt(point);
 
         int[] ids = idArrayFromOverlayCollection(selectedOverlays);
-        if (e.isControlDown()) {
+        if (event.isControlDown()) {
             // If control is pressed, we add/remove objects from selection
 
             // Then we add all the exisitng ids to the selectionIndices

@@ -34,7 +34,7 @@ import org.anchoranalysis.core.index.container.BoundedIndexContainer;
 import org.anchoranalysis.core.index.container.SingleContainer;
 import org.anchoranalysis.gui.container.background.BackgroundStackContainer;
 import org.anchoranalysis.gui.container.background.BackgroundStackContainerException;
-import org.anchoranalysis.gui.finder.FinderRasterSingleChnl;
+import org.anchoranalysis.gui.finder.FinderRasterSingleChannel;
 import org.anchoranalysis.image.channel.Channel;
 import org.anchoranalysis.image.io.RasterIOException;
 import org.anchoranalysis.image.io.bean.rasterreader.RasterReader;
@@ -45,7 +45,7 @@ import org.anchoranalysis.io.manifest.file.FileWrite;
 import org.anchoranalysis.io.manifest.finder.FinderSingleFile;
 
 public abstract class FinderRasterStack extends FinderSingleFile
-        implements FinderRasterSingleChnl, BackgroundStackContainer {
+        implements FinderRasterSingleChannel, BackgroundStackContainer {
 
     private Optional<Stack> result;
 
@@ -58,7 +58,7 @@ public abstract class FinderRasterStack extends FinderSingleFile
 
     private Stack createStack(FileWrite fileWrite) throws RasterIOException {
         // Assume single series, single channel
-        return RasterReaderUtilities.openStackFromPath(rasterReader, fileWrite.calcPath());
+        return RasterReaderUtilities.openStackFromPath(rasterReader, fileWrite.calculatePath());
     }
 
     public Stack get() throws OperationFailedException {
@@ -74,7 +74,7 @@ public abstract class FinderRasterStack extends FinderSingleFile
     }
 
     @Override
-    public Channel getFirstChnl() throws OperationFailedException {
+    public Channel getFirstChannel() throws OperationFailedException {
         return get().getChannel(0);
     }
 
@@ -92,7 +92,7 @@ public abstract class FinderRasterStack extends FinderSingleFile
     }
 
     @Override
-    public int getNumChnl() throws OperationFailedException {
+    public int getNumberChannels() throws OperationFailedException {
         return get().getNumberChannels();
     }
 }

@@ -28,19 +28,19 @@ package org.anchoranalysis.gui.container;
 
 import java.util.ArrayList;
 import java.util.List;
-import org.anchoranalysis.anchor.mpp.feature.instantstate.CfgNRGInstantState;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.index.container.BoundedIndexContainer;
+import org.anchoranalysis.mpp.feature.energy.IndexableMarksWithEnergy;
 
 public class ContainerUtilities {
 
-    public static List<BoundedIndexContainer<CfgNRGInstantState>> listCntrs(
-            List<ContainerGetter<CfgNRGInstantState>> cntrs) throws OperationFailedException {
+    public static List<BoundedIndexContainer<IndexableMarksWithEnergy>> listCntrs(
+            List<ContainerGetter<IndexableMarksWithEnergy>> cntrs) throws OperationFailedException {
 
-        List<BoundedIndexContainer<CfgNRGInstantState>> out = new ArrayList<>();
+        List<BoundedIndexContainer<IndexableMarksWithEnergy>> out = new ArrayList<>();
 
-        for (ContainerGetter<CfgNRGInstantState> item : cntrs) {
-            out.add(item.getCntr());
+        for (ContainerGetter<IndexableMarksWithEnergy> item : cntrs) {
+            out.add(item.getContainer());
         }
 
         return out;

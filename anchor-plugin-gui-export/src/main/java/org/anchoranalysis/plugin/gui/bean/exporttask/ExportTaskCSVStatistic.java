@@ -27,7 +27,7 @@
 package org.anchoranalysis.plugin.gui.bean.exporttask;
 
 import org.anchoranalysis.core.error.OperationFailedException;
-import org.anchoranalysis.core.functional.function.FunctionWithException;
+import org.anchoranalysis.core.functional.function.CheckedFunction;
 import org.anchoranalysis.core.index.container.BoundedIndexContainer;
 import org.anchoranalysis.gui.bean.exporttask.ExportTaskParams;
 import org.anchoranalysis.gui.io.loader.manifest.finder.csvstatistic.CSVStatistic;
@@ -36,7 +36,7 @@ public class ExportTaskCSVStatistic
         extends ExportTaskRasterGeneratorFromBoundedIndexContainer<CSVStatistic> {
 
     private static class ExportTaskParamsCSVStatisticContainerBridge
-            implements FunctionWithException<
+            implements CheckedFunction<
                     ExportTaskParams,
                     BoundedIndexContainer<CSVStatistic>,
                     OperationFailedException> {

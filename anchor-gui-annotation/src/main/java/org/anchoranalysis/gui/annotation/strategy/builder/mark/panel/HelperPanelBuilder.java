@@ -41,7 +41,7 @@ import org.anchoranalysis.gui.videostats.internalframe.annotator.navigation.Pane
 import org.anchoranalysis.gui.videostats.internalframe.annotator.navigation.PanelTool;
 import org.anchoranalysis.gui.videostats.internalframe.annotator.tool.ToolErrorReporter;
 import org.anchoranalysis.gui.videostats.internalframe.evaluator.EvaluatorWithContext;
-import org.anchoranalysis.image.extent.ImageDimensions;
+import org.anchoranalysis.image.extent.Dimensions;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 class HelperPanelBuilder {
@@ -58,7 +58,7 @@ class HelperPanelBuilder {
         PanelTool panelTool =
                 createPanelTool(
                         currentStateDisplayer,
-                        paramsInit.getDimensionsViewer(),
+                        paramsInit.dimensionsViewer(),
                         paramsInit.getMarkAnnotator(),
                         params.getErrorReporter());
 
@@ -81,7 +81,7 @@ class HelperPanelBuilder {
 
     private static PanelTool createPanelTool(
             CurrentStateDisplayer currentStateDisplayer,
-            ImageDimensions dimViewer,
+            Dimensions dimViewer,
             MarkAnnotator markAnnotator,
             ToolErrorReporter errorReporter) {
         Optional<EvaluatorWithContext> guessEvaluator =

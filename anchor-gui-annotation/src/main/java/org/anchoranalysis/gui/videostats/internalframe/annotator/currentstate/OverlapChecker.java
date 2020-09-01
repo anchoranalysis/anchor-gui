@@ -26,16 +26,16 @@
 
 package org.anchoranalysis.gui.videostats.internalframe.annotator.currentstate;
 
-import org.anchoranalysis.anchor.mpp.bean.regionmap.RegionMap;
-import org.anchoranalysis.anchor.mpp.cfg.Cfg;
-import org.anchoranalysis.anchor.mpp.mark.Mark;
-import org.anchoranalysis.anchor.mpp.mark.voxelized.memo.VoxelizedMarkMemo;
-import org.anchoranalysis.anchor.mpp.overlap.OverlapUtilities;
 import org.anchoranalysis.core.error.OperationFailedException;
-import org.anchoranalysis.feature.calc.FeatureCalculationException;
-import org.anchoranalysis.feature.nrg.NRGStack;
+import org.anchoranalysis.feature.calculate.FeatureCalculationException;
+import org.anchoranalysis.feature.energy.EnergyStackWithoutParams;
 import org.anchoranalysis.gui.videostats.internalframe.annotator.tool.ToolErrorReporter;
-import org.anchoranalysis.image.extent.ImageDimensions;
+import org.anchoranalysis.image.extent.Dimensions;
+import org.anchoranalysis.mpp.bean.regionmap.RegionMap;
+import org.anchoranalysis.mpp.mark.Mark;
+import org.anchoranalysis.mpp.mark.MarkCollection;
+import org.anchoranalysis.mpp.mark.voxelized.memo.VoxelizedMarkMemo;
+import org.anchoranalysis.mpp.overlap.OverlapUtilities;
 
 // Always uses the first region
 class OverlapChecker {
@@ -44,33 +44,33 @@ class OverlapChecker {
     private double largeOverlapThreshold = 0.3;
     // END PARAMETERS
 
-    private NRGStack nrgStack;
+    private EnergyStackWithoutParams energyStack;
     private ToolErrorReporter errorReporter;
     private RegionMap regionMap;
 
     public OverlapChecker(
-            ImageDimensions dimensions, RegionMap regionMap, ToolErrorReporter errorReporter) {
+            Dimensions dimensions, RegionMap regionMap, ToolErrorReporter errorReporter) {
         super();
-        this.nrgStack = new NRGStack(dimensions);
+        this.energyStack = new EnergyStackWithoutParams(dimensions);
         this.errorReporter = errorReporter;
         this.regionMap = regionMap;
     }
 
-    public static double calcOverlapRatio(
+    public static double calculateOverlapRatio(
             VoxelizedMarkMemo obj1, VoxelizedMarkMemo obj2, double overlap, int regionID)
             throws FeatureCalculationException {
-        return overlap / calcMinVolume(obj1, obj2, regionID);
+        return overlap / calculateMinVolume(obj1, obj2, regionID);
     }
 
     // We look for larger overlap to warn the user
-    public boolean hasLargeOverlap(Cfg proposed, Cfg existing) {
+    public boolean hasLargeOverlap(MarkCollection proposed, MarkCollection existing) {
 
         for (Mark prop : proposed) {
 
-            VoxelizedMarkMemo pmProp = new VoxelizedMarkMemo(prop, nrgStack, regionMap);
+            VoxelizedMarkMemo pmProp = new VoxelizedMarkMemo(prop, energyStack, regionMap);
 
             for (Mark exst : existing) {
-                VoxelizedMarkMemo pmExst = new VoxelizedMarkMemo(exst, nrgStack, regionMap);
+                VoxelizedMarkMemo pmExst = new VoxelizedMarkMemo(exst, energyStack, regionMap);
 
                 try {
                     if (boundingBoxIntersectionExists(pmProp, pmExst)
@@ -91,7 +91,7 @@ class OverlapChecker {
             throws OperationFailedException {
         try {
             double overlap = OverlapUtilities.overlapWith(pmProp1, pmProp2, 0);
-            double overlapRatio = calcOverlapRatio(pmProp1, pmProp2, overlap, 0);
+            double overlapRatio = calculateOverlapRatio(pmProp1, pmProp2, overlap, 0);
             return (overlapRatio > largeOverlapThreshold);
         } catch (FeatureCalculationException e) {
             throw new OperationFailedException(e);
@@ -101,14 +101,13 @@ class OverlapChecker {
     private static boolean boundingBoxIntersectionExists(
             VoxelizedMarkMemo pmProp, VoxelizedMarkMemo pmExst) {
         return pmProp.voxelized()
-                .getBoundingBox()
+                .boundingBox()
                 .intersection()
-                .existsWith(pmExst.voxelized().getBoundingBox());
+                .existsWith(pmExst.voxelized().boundingBox());
     }
 
-    private static double calcMinVolume(
-            VoxelizedMarkMemo obj1, VoxelizedMarkMemo obj2, int regionID)
-            throws FeatureCalculationException {
-        return Math.min(obj1.getMark().volume(0), obj2.getMark().volume(0));
+    private static double calculateMinVolume(
+            VoxelizedMarkMemo obj1, VoxelizedMarkMemo obj2, int regionID) {
+        return Math.min(obj1.getMark().volume(regionID), obj2.getMark().volume(regionID));
     }
 }

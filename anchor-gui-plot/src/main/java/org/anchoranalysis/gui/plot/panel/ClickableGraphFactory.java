@@ -28,33 +28,35 @@ package org.anchoranalysis.gui.plot.panel;
 
 import java.util.Iterator;
 import java.util.Optional;
-import org.anchoranalysis.anchor.plot.AxisLimits;
-import org.anchoranalysis.anchor.plot.GraphInstance;
-import org.anchoranalysis.anchor.plot.bean.GraphDefinition;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import org.anchoranalysis.core.error.CreateException;
-import org.jfree.data.general.Dataset;
+import org.anchoranalysis.plot.AxisLimits;
+import org.anchoranalysis.plot.PlotInstance;
+import org.anchoranalysis.plot.bean.Plot;
 
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class ClickableGraphFactory {
 
     public static <T> ClickableGraphInstance create(
-            GraphDefinition<T> definition,
+            Plot<T> definition,
             Iterator<T> items,
             Optional<AxisLimits> domainLimits,
             Optional<AxisLimits> rangeLimits)
             throws CreateException {
-        GraphInstance instance = definition.create(items, domainLimits, rangeLimits);
+        PlotInstance instance = definition.create(items, domainLimits, rangeLimits);
         return createWithXAxisIndex(instance, domainLimits);
     }
 
-    private static <T, S extends Dataset> ClickableGraphInstance createWithXAxisIndex(
-            GraphInstance graphInstance, Optional<AxisLimits> domainLimits) throws CreateException {
+    private static ClickableGraphInstance createWithXAxisIndex(
+            PlotInstance graphInstance, Optional<AxisLimits> domainLimits) {
 
-        ClickableGraphInstance gl = new ClickableGraphInstance(graphInstance);
+        ClickableGraphInstance clickable = new ClickableGraphInstance(graphInstance);
 
         if (domainLimits.isPresent()) {
-            gl.addXAxisIndexListener(minAxis(domainLimits.get()), maxAxis(domainLimits.get()));
+            clickable.addXAxisIndexListener(minAxis(domainLimits.get()), maxAxis(domainLimits.get()));
         }
-        return gl;
+        return clickable;
     }
 
     private static int minAxis(AxisLimits domainLimits) {

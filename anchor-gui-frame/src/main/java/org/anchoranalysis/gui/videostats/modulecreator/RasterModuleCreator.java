@@ -27,31 +27,31 @@
 package org.anchoranalysis.gui.videostats.modulecreator;
 
 import java.util.Optional;
-import org.anchoranalysis.anchor.mpp.cfg.Cfg;
 import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.error.OperationFailedException;
-import org.anchoranalysis.core.functional.CallableWithException;
 import org.anchoranalysis.gui.frame.singleraster.InternalFrameSingleRaster;
-import org.anchoranalysis.gui.image.frame.ISliderState;
-import org.anchoranalysis.gui.videostats.dropdown.IAddVideoStatsModule;
+import org.anchoranalysis.gui.image.frame.SliderState;
+import org.anchoranalysis.gui.videostats.dropdown.AddVideoStatsModule;
 import org.anchoranalysis.gui.videostats.dropdown.VideoStatsModuleGlobalParams;
-import org.anchoranalysis.gui.videostats.dropdown.common.NRGBackground;
+import org.anchoranalysis.gui.videostats.dropdown.common.EnergyBackground;
 import org.anchoranalysis.gui.videostats.module.VideoStatsModuleCreateException;
-import org.anchoranalysis.gui.videostats.operation.combine.IVideoStatsOperationCombine;
+import org.anchoranalysis.gui.videostats.operation.combine.OverlayCollectionSupplier;
+import org.anchoranalysis.gui.videostats.operation.combine.VideoStatsOperationCombine;
 import org.anchoranalysis.image.object.ObjectCollection;
+import org.anchoranalysis.mpp.mark.MarkCollection;
 
 public class RasterModuleCreator extends VideoStatsModuleCreator {
 
-    private final NRGBackground nrgBackground;
+    private final EnergyBackground energyBackground;
     private final String fileDscr;
     private final String frameName;
     private final VideoStatsModuleGlobalParams mpg;
 
-    private IVideoStatsOperationCombine combiner =
-            new IVideoStatsOperationCombine() {
+    private VideoStatsOperationCombine combiner =
+            new VideoStatsOperationCombine() {
 
                 @Override
-                public Optional<CallableWithException<Cfg, OperationFailedException>> getCfg() {
+                public Optional<OverlayCollectionSupplier<MarkCollection>> getMarks() {
                     return Optional.empty();
                 }
 
@@ -61,43 +61,42 @@ public class RasterModuleCreator extends VideoStatsModuleCreator {
                 }
 
                 @Override
-                public Optional<CallableWithException<ObjectCollection, OperationFailedException>>
-                        getObjects() {
+                public Optional<OverlayCollectionSupplier<ObjectCollection>> getObjects() {
                     return Optional.empty();
                 }
 
                 @Override
-                public NRGBackground getNrgBackground() {
-                    return nrgBackground;
+                public EnergyBackground getEnergyBackground() {
+                    return energyBackground;
                 }
             };
 
     public RasterModuleCreator(
-            NRGBackground nrgBackground,
+            EnergyBackground energyBackground,
             String fileDscr,
             String frameName,
             VideoStatsModuleGlobalParams mpg) {
         super();
         this.fileDscr = fileDscr;
-        this.nrgBackground = nrgBackground;
+        this.energyBackground = energyBackground;
         this.frameName = frameName;
         this.mpg = mpg;
     }
 
     @Override
-    public void createAndAddVideoStatsModule(IAddVideoStatsModule adder)
+    public void createAndAddVideoStatsModule(AddVideoStatsModule adder)
             throws VideoStatsModuleCreateException {
 
         try {
             InternalFrameSingleRaster imageFrame =
                     new InternalFrameSingleRaster(String.format("%s: %s", fileDscr, frameName));
-            ISliderState sliderState =
+            SliderState sliderState =
                     imageFrame.init(
-                            nrgBackground.numFrames(),
+                            energyBackground.numberFrames(),
                             adder.getSubgroup().getDefaultModuleState().getState(),
                             mpg);
 
-            imageFrame.controllerBackgroundMenu().add(mpg, nrgBackground.getBackgroundSet());
+            imageFrame.controllerBackgroundMenu().add(mpg, energyBackground.getBackgroundSet());
 
             adder.addVideoStatsModule(
                     imageFrame
@@ -111,7 +110,7 @@ public class RasterModuleCreator extends VideoStatsModuleCreator {
     }
 
     @Override
-    public Optional<IVideoStatsOperationCombine> getCombiner() {
+    public Optional<VideoStatsOperationCombine> getCombiner() {
         return Optional.of(combiner);
     }
 }

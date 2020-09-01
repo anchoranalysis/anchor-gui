@@ -28,19 +28,19 @@ package org.anchoranalysis.gui.videostats.link;
 
 import java.util.Optional;
 import java.util.function.Function;
-import org.anchoranalysis.anchor.overlay.collection.OverlayCollection;
-import org.anchoranalysis.core.event.IRoutableReceivable;
-import org.anchoranalysis.core.functional.function.FunctionWithException;
+import org.anchoranalysis.core.event.RoutableReceivable;
+import org.anchoranalysis.core.functional.function.CheckedFunction;
 import org.anchoranalysis.core.index.IntArray;
 import org.anchoranalysis.core.property.IPropertyValueReceivable;
 import org.anchoranalysis.core.property.IPropertyValueSendable;
 import org.anchoranalysis.core.property.PropertyValueReceivableAdapter;
 import org.anchoranalysis.core.property.change.PropertyValueChangeEvent;
 import org.anchoranalysis.gui.container.background.BackgroundStackContainerException;
-import org.anchoranalysis.gui.image.OverlayCollectionWithNrgStack;
+import org.anchoranalysis.gui.image.OverlaysWithEnergyStack;
 import org.anchoranalysis.gui.videostats.module.VideoStatsModule;
 import org.anchoranalysis.gui.videostats.module.VideoStatsModule.ReceivableSendablePair;
 import org.anchoranalysis.image.stack.DisplayStack;
+import org.anchoranalysis.overlay.collection.OverlayCollection;
 
 public class LinkModules {
 
@@ -52,12 +52,12 @@ public class LinkModules {
     }
 
     private Adder<OverlayCollection> overlays = new Adder<>(LinkFramesUniqueID.OVERLAYS);
-    private Adder<OverlayCollectionWithNrgStack> overlaysWithStack =
+    private Adder<OverlaysWithEnergyStack> overlaysWithStack =
             new Adder<>(LinkFramesUniqueID.OVERLAYS_WITH_STACK);
     private Adder<Integer> frameIndex = new Adder<>(LinkFramesUniqueID.FRAME_INDEX);
     private Adder<IntArray> markIndices = new Adder<>(LinkFramesUniqueID.MARK_INDICES);
     private Adder<Integer> sliceNum = new Adder<>(LinkFramesUniqueID.SLICE_NUM);
-    private Adder<FunctionWithException<Integer, DisplayStack, BackgroundStackContainerException>>
+    private Adder<CheckedFunction<Integer, DisplayStack, BackgroundStackContainerException>>
             background = new Adder<>(LinkFramesUniqueID.BACKGROUND);
 
     public class Adder<T> {
@@ -74,7 +74,7 @@ public class LinkModules {
         }
 
         @SuppressWarnings("unchecked")
-        public IRoutableReceivable<PropertyValueChangeEvent<T>> getReceivable() {
+        public RoutableReceivable<PropertyValueChangeEvent<T>> getReceivable() {
             return module.getReceivableSendablePairMap().get(id).getReceivable();
         }
 
@@ -86,7 +86,7 @@ public class LinkModules {
             internalAdd(Optional.empty(), Optional.of(sender));
         }
 
-        public void add(IRoutableReceivable<PropertyValueChangeEvent<T>> receivable) {
+        public void add(RoutableReceivable<PropertyValueChangeEvent<T>> receivable) {
             internalAddRoutable(Optional.of(receivable), Optional.empty());
         }
 
@@ -120,7 +120,7 @@ public class LinkModules {
         }
 
         private ReceivableSendablePair<T> internalAddRoutable(
-                Optional<IRoutableReceivable<PropertyValueChangeEvent<T>>> receivable,
+                Optional<RoutableReceivable<PropertyValueChangeEvent<T>>> receivable,
                 Optional<IPropertyValueSendable<T>> sender) {
             ReceivableSendablePair<T> rsp = createPairAdd();
             receivable.ifPresent(rsp::setReceivable);
@@ -151,11 +151,11 @@ public class LinkModules {
         return sliceNum;
     }
 
-    public Adder<OverlayCollectionWithNrgStack> getOverlaysWithStack() {
+    public Adder<OverlaysWithEnergyStack> getOverlaysWithStack() {
         return overlaysWithStack;
     }
 
-    public Adder<FunctionWithException<Integer, DisplayStack, BackgroundStackContainerException>>
+    public Adder<CheckedFunction<Integer, DisplayStack, BackgroundStackContainerException>>
             getBackground() {
         return background;
     }

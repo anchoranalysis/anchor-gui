@@ -32,9 +32,7 @@ import lombok.NoArgsConstructor;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.error.friendly.AnchorImpossibleSituationException;
-import org.anchoranalysis.core.functional.CallableWithException;
-import org.anchoranalysis.core.functional.IdentityOperation;
-import org.anchoranalysis.core.functional.function.FunctionWithException;
+import org.anchoranalysis.core.functional.function.CheckedFunction;
 import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.gui.container.background.BackgroundStackContainer;
 import org.anchoranalysis.gui.container.background.BackgroundStackContainerException;
@@ -45,11 +43,7 @@ import org.anchoranalysis.image.stack.Stack;
 @NoArgsConstructor
 public class BackgroundSet {
 
-    private HashMap<
-                    String,
-                    CallableWithException<
-                            BackgroundStackContainer, BackgroundStackContainerException>>
-            map = new HashMap<>();
+    private HashMap<String, BackgroundSetSupplier<BackgroundStackContainer>> map = new HashMap<>();
 
     public void addAll(BackgroundSet src) {
         for (String srcItem : src.map.keySet()) {
@@ -58,7 +52,7 @@ public class BackgroundSet {
     }
 
     public void addItem(String name, BackgroundStackContainer rasterBackground) {
-        addItem(name, new IdentityOperation<>(rasterBackground));
+        addItem(name, () -> rasterBackground);
     }
 
     public void addItem(String name, final Stack stack) throws OperationFailedException {
@@ -66,15 +60,13 @@ public class BackgroundSet {
     }
 
     public void addItem(
-            String name,
-            CallableWithException<BackgroundStackContainer, BackgroundStackContainerException>
-                    rasterBackground) {
+            String name, BackgroundSetSupplier<BackgroundStackContainer> rasterBackground) {
         map.put(name, rasterBackground);
     }
 
     public BackgroundStackContainer getItem(String name) {
         try {
-            return map.get(name).call();
+            return map.get(name).get();
         } catch (BackgroundStackContainerException e) {
             throw new AnchorImpossibleSituationException();
         }
@@ -83,7 +75,7 @@ public class BackgroundSet {
     public DisplayStack singleStack(String name) throws BackgroundStackContainerException {
 
         try {
-            BackgroundStackContainer finderRaster = map.get(name).call();
+            BackgroundStackContainer finderRaster = map.get(name).get();
 
             if (finderRaster == null) {
                 return null;
@@ -97,18 +89,17 @@ public class BackgroundSet {
 
     // Gives us a stack container for a particular name, or NULL if none exists
     // NOTE: There is only a mapping between 0 and a single image
-    public FunctionWithException<Integer, DisplayStack, BackgroundStackContainerException>
-            stackCntr(String name) throws GetOperationFailedException {
+    public CheckedFunction<Integer, DisplayStack, BackgroundStackContainerException> stackCntr(
+            String name) throws GetOperationFailedException {
         try {
 
-            CallableWithException<BackgroundStackContainer, BackgroundStackContainerException> op =
-                    map.get(name);
+            BackgroundSetSupplier<BackgroundStackContainer> op = map.get(name);
 
             if (op == null) {
                 return null;
             }
 
-            BackgroundStackContainer backgroundStackCntr = op.call();
+            BackgroundStackContainer backgroundStackCntr = op.get();
 
             if (backgroundStackCntr == null) {
                 return null;

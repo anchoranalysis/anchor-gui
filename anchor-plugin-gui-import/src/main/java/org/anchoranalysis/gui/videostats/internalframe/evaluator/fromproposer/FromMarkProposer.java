@@ -26,11 +26,11 @@
 
 package org.anchoranalysis.gui.videostats.internalframe.evaluator.fromproposer;
 
-import org.anchoranalysis.anchor.mpp.bean.init.MPPInitParams;
-import org.anchoranalysis.anchor.mpp.bean.proposer.MarkProposer;
 import org.anchoranalysis.core.name.provider.NamedProvider;
-import org.anchoranalysis.gui.videostats.internalframe.evaluator.MarkProposerEvaluatorNRGStack;
+import org.anchoranalysis.gui.videostats.internalframe.evaluator.MarkProposerEvaluatorEnergyStack;
 import org.anchoranalysis.gui.videostats.internalframe.evaluator.ProposalOperationCreator;
+import org.anchoranalysis.mpp.bean.init.MPPInitParams;
+import org.anchoranalysis.mpp.bean.proposer.MarkProposer;
 
 public class FromMarkProposer extends ProposalOperationCreatorFromProposer<MarkProposer> {
 
@@ -40,7 +40,7 @@ public class FromMarkProposer extends ProposalOperationCreatorFromProposer<MarkP
 
     @Override
     public ProposalOperationCreator creatorFromProposer(MarkProposer proposer) {
-        return new MarkProposerEvaluatorNRGStack(proposer, true);
+        return new MarkProposerEvaluatorEnergyStack(proposer, true);
     }
 
     @Override

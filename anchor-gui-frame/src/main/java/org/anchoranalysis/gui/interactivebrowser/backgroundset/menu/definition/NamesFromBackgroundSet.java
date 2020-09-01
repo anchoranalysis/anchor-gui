@@ -30,33 +30,26 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
+import lombok.AllArgsConstructor;
 import org.anchoranalysis.core.error.reporter.ErrorReporter;
-import org.anchoranalysis.core.progress.CallableWithProgressReporter;
 import org.anchoranalysis.core.progress.ProgressReporterNull;
-import org.anchoranalysis.gui.backgroundset.BackgroundSet;
 import org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.IGetNames;
+import org.anchoranalysis.gui.videostats.dropdown.BackgroundSetProgressingSupplier;
 
+@AllArgsConstructor
 class NamesFromBackgroundSet implements IGetNames {
 
-    private CallableWithProgressReporter<BackgroundSet, ? extends Throwable> backgroundSet;
+    private BackgroundSetProgressingSupplier backgroundSet;
     private ErrorReporter errorReporter;
-
-    public NamesFromBackgroundSet(
-            CallableWithProgressReporter<BackgroundSet, ? extends Throwable> backgroundSet,
-            ErrorReporter errorReporter) {
-        super();
-        this.backgroundSet = backgroundSet;
-        this.errorReporter = errorReporter;
-    }
 
     @Override
     public List<String> names() {
         try {
             Set<String> namesSorted =
-                    new TreeSet<>(backgroundSet.call(ProgressReporterNull.get()).names());
+                    new TreeSet<>(backgroundSet.get(ProgressReporterNull.get()).names());
             return new ArrayList<>(namesSorted);
 
-        } catch (Throwable e) {
+        } catch (Exception e) {
             errorReporter.recordError(NamesFromBackgroundSet.class, e);
             return new ArrayList<>();
         }

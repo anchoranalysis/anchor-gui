@@ -29,7 +29,7 @@ package org.anchoranalysis.gui.videostats.modulecreator;
 import java.util.Optional;
 import org.anchoranalysis.core.functional.OptionalUtilities;
 import org.anchoranalysis.gui.videostats.IModuleCreatorDefaultState;
-import org.anchoranalysis.gui.videostats.dropdown.IAddVideoStatsModule;
+import org.anchoranalysis.gui.videostats.dropdown.AddVideoStatsModule;
 import org.anchoranalysis.gui.videostats.dropdown.ModuleAddUtilities;
 import org.anchoranalysis.gui.videostats.dropdown.VideoStatsModuleGlobalParams;
 import org.anchoranalysis.gui.videostats.module.DefaultModuleStateManager;
@@ -55,7 +55,7 @@ public abstract class VideoStatsModuleCreatorContext {
         return new VideoStatsModuleCreator() {
 
             @Override
-            public void createAndAddVideoStatsModule(IAddVideoStatsModule adder)
+            public void createAndAddVideoStatsModule(AddVideoStatsModule adder)
                     throws VideoStatsModuleCreateException {
 
                 DefaultModuleStateManager defaultStateManager =

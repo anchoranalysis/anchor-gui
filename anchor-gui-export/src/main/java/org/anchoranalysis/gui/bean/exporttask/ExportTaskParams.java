@@ -30,12 +30,12 @@ import java.util.ArrayList;
 import java.util.List;
 import lombok.Getter;
 import lombok.Setter;
-import org.anchoranalysis.anchor.mpp.feature.instantstate.CfgNRGInstantState;
 import org.anchoranalysis.core.color.ColorIndex;
 import org.anchoranalysis.gui.container.ContainerGetter;
 import org.anchoranalysis.gui.finder.imgstackcollection.FinderStacks;
 import org.anchoranalysis.gui.io.loader.manifest.finder.FinderCSVStats;
 import org.anchoranalysis.io.output.bound.BoundOutputManagerRouteErrors;
+import org.anchoranalysis.mpp.feature.energy.IndexableMarksWithEnergy;
 
 // Parameters an exportTask can draw itself from
 public class ExportTaskParams {
@@ -45,27 +45,29 @@ public class ExportTaskParams {
     @Getter @Setter private FinderStacks finderStacks;
     @Getter @Setter private BoundOutputManagerRouteErrors outputManager;
 
-    private List<ContainerGetter<CfgNRGInstantState>> listFinderCfgNRGHistory = new ArrayList<>();
+    private List<ContainerGetter<IndexableMarksWithEnergy>> listFinderMarksHistory =
+            new ArrayList<>();
 
-    public ContainerGetter<CfgNRGInstantState> getFinderCfgNRGHistory() {
-        return listFinderCfgNRGHistory.get(0);
+    public ContainerGetter<IndexableMarksWithEnergy> getFinderMarksHistory() {
+        return listFinderMarksHistory.get(0);
     }
 
-    public ContainerGetter<CfgNRGInstantState> getFinderCfgNRGHistory(int index) {
-        return listFinderCfgNRGHistory.get(index);
+    public ContainerGetter<IndexableMarksWithEnergy> getFinderMarksHistory(int index) {
+        return listFinderMarksHistory.get(index);
     }
 
-    public List<ContainerGetter<CfgNRGInstantState>> getAllFinderCfgNRGHistory() {
-        return listFinderCfgNRGHistory;
+    public List<ContainerGetter<IndexableMarksWithEnergy>> getAllFinderMarksHistory() {
+        return listFinderMarksHistory;
     }
 
-    public int numCfgNRGHistory() {
-        return listFinderCfgNRGHistory.size();
+    public int numberMarksHistory() {
+        return listFinderMarksHistory.size();
     }
 
-    public void addFinderCfgNRGHistory(ContainerGetter<CfgNRGInstantState> finderCfgNRGHistory) {
-        if (finderCfgNRGHistory != null) {
-            this.listFinderCfgNRGHistory.add(finderCfgNRGHistory);
+    public void addFinderMarksHistory(
+            ContainerGetter<IndexableMarksWithEnergy> finderMarksHistory) {
+        if (finderMarksHistory != null) {
+            this.listFinderMarksHistory.add(finderMarksHistory);
         }
     }
 }

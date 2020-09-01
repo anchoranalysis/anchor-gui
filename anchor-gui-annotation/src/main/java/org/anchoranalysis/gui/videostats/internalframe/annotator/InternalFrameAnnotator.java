@@ -33,7 +33,7 @@ import org.anchoranalysis.gui.annotation.builder.AnnotationGuiBuilder;
 import org.anchoranalysis.gui.frame.details.canvas.ControllerFrame;
 import org.anchoranalysis.gui.frame.details.canvas.controller.imageview.ControllerImageView;
 import org.anchoranalysis.gui.frame.overlays.InternalFrameOverlaysRedraw;
-import org.anchoranalysis.gui.image.frame.ISliderState;
+import org.anchoranalysis.gui.image.frame.SliderState;
 import org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.ControllerPopupMenuWithBackground;
 import org.anchoranalysis.gui.videostats.IModuleCreatorDefaultStateSliderState;
 import org.anchoranalysis.gui.videostats.dropdown.VideoStatsModuleGlobalParams;
@@ -51,7 +51,7 @@ public class InternalFrameAnnotator {
         delegate.controllerAction().frame().setUseSplitPlane(false);
     }
 
-    public <T extends AnnotationInitParams> ISliderState init(
+    public <T extends AnnotationInitParams> SliderState init(
             AnnotationGuiBuilder<T> annotation,
             T paramsInit,
             DefaultModuleState defaultState,
@@ -69,7 +69,7 @@ public class InternalFrameAnnotator {
                         mpg.getGraphicsCurrentScreen(),
                         paramsInit.getBackground().getDimensionsViewer());
 
-        ISliderState sliderState = delegate.init(defaultState, mpg);
+        SliderState sliderState = delegate.init(defaultState, mpg);
 
         SaveMonitor saveMonitor = new SaveMonitor();
 
@@ -97,7 +97,7 @@ public class InternalFrameAnnotator {
             AnnotationGuiBuilder<T> annotation,
             T paramsInit,
             SaveMonitor saveMonitor,
-            ISliderState sliderState,
+            SliderState sliderState,
             VideoStatsModuleGlobalParams mpg) {
         ShowError showError = new ShowError();
         ToolErrorReporter toolErrorReporter =
@@ -122,7 +122,7 @@ public class InternalFrameAnnotator {
         return panelNavigation;
     }
 
-    private AnnotationFrameControllers createControllers(ISliderState sliderState) {
+    private AnnotationFrameControllers createControllers(SliderState sliderState) {
         return new AnnotationFrameControllers(
                 delegate.extractOverlays(),
                 delegate.showOverlays(sliderState),

@@ -33,7 +33,7 @@ import org.anchoranalysis.image.extent.Extent;
 class Utilities {
 
     public static Extent addXY(Extent e, int addX, int addY) {
-        return new Extent(e.getX() + addX, e.getY() + addY, e.getZ());
+        return new Extent(e.x() + addX, e.y() + addY, e.z());
     }
 
     public static Extent fractionScreenBounds(

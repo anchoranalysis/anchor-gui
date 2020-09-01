@@ -35,7 +35,7 @@ import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.gui.annotation.AnnotationRefresher;
 import org.anchoranalysis.gui.annotation.export.ExportAnnotation;
 import org.anchoranalysis.gui.videostats.operation.VideoStatsOperation;
-import org.anchoranalysis.gui.videostats.operation.combine.IVideoStatsOperationCombine;
+import org.anchoranalysis.gui.videostats.operation.combine.VideoStatsOperationCombine;
 
 class ExportAnnotationOperation implements VideoStatsOperation {
 
@@ -132,7 +132,7 @@ class ExportAnnotationOperation implements VideoStatsOperation {
     }
 
     @Override
-    public Optional<IVideoStatsOperationCombine> getCombiner() {
+    public Optional<VideoStatsOperationCombine> getCombiner() {
         return Optional.empty();
     }
 }

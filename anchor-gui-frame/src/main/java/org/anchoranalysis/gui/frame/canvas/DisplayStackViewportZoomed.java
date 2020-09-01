@@ -30,13 +30,14 @@ import java.awt.image.BufferedImage;
 import java.util.Optional;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.geometry.Point2i;
+import org.anchoranalysis.core.geometry.Point3i;
 import org.anchoranalysis.core.index.SetOperationFailedException;
 import org.anchoranalysis.gui.frame.canvas.zoom.ZoomScale;
 import org.anchoranalysis.gui.frame.display.BoundOverlayedDisplayStack;
 import org.anchoranalysis.image.extent.BoundingBox;
+import org.anchoranalysis.image.extent.Dimensions;
 import org.anchoranalysis.image.extent.Extent;
-import org.anchoranalysis.image.extent.ImageDimensions;
-import org.anchoranalysis.image.extent.ImageResolution;
+import org.anchoranalysis.image.extent.Resolution;
 import org.anchoranalysis.image.scale.ScaleFactor;
 import org.anchoranalysis.image.voxel.datatype.VoxelDataType;
 
@@ -54,15 +55,13 @@ class DisplayStackViewportZoomed {
     // Updates the view to bind to a new location, and returns a BufferedImage if has changed
     //   or null otherwise
     // The bounding box should refer to the Scaled space
-    public BufferedImage updateView(BoundingBox bbox) throws OperationFailedException {
-        BoundingBox bboxScaled = bbox.scale(new ScaleFactor(zoomScale.getScaleInv()));
+    public BufferedImage updateView(BoundingBox box) throws OperationFailedException {
+        BoundingBox boxScaled = box.scale(new ScaleFactor(zoomScale.getScaleInv()));
 
-        // Scaling seemingly can produce a bbox that is slightly too-big
-        bboxScaled =
-                bboxScaled.clipTo(
-                        delegate.getDisplayStackEntireImage().getDimensions().getExtent());
-        assert (delegate.getDisplayStackEntireImage().getDimensions().contains(bboxScaled));
-        return delegate.updateView(bboxScaled, zoomScale);
+        // Scaling seemingly can produce a box that is slightly too-big
+        boxScaled = boxScaled.clipTo(delegate.getDisplayStackEntireImage().dimensions().extent());
+        assert (delegate.getDisplayStackEntireImage().dimensions().contains(boxScaled));
+        return delegate.updateView(boxScaled, zoomScale);
     }
 
     public BoundingBox createBoxForShiftedView(Point2i shift, Extent canvasExtent) {
@@ -74,34 +73,34 @@ class DisplayStackViewportZoomed {
                 delegate.createBoxForShiftedView(shiftImg, canvasExtentImg)
                         .scale(new ScaleFactor(zoomScale.getScale()));
 
-        assert (shiftedBox.cornerMin().getX() >= 0);
-        assert (shiftedBox.cornerMin().getY() >= 0);
+        assert (shiftedBox.cornerMin().x() >= 0);
+        assert (shiftedBox.cornerMin().y() >= 0);
 
         return shiftedBox;
     }
 
     private int cnvrtCanvasXToImage(int val, ZoomScale zs) {
-        return zs.removeScale(val) + delegate.getBBox().cornerMin().getX();
+        return zs.removeScale(val) + delegate.boundingBox().cornerMin().x();
     }
 
     private int cnvrtCanvasYToImage(int val, ZoomScale zs) {
-        return zs.removeScale(val) + delegate.getBBox().cornerMin().getY();
+        return zs.removeScale(val) + delegate.boundingBox().cornerMin().y();
     }
 
     public int cnvrtImageXToCanvas(int val) {
-        return zoomScale.applyScale(val - delegate.getBBox().cornerMin().getX());
+        return zoomScale.applyScale(val - delegate.boundingBox().cornerMin().x());
     }
 
     public int cnvrtImageYToCanvas(int val) {
-        return zoomScale.applyScale(val - delegate.getBBox().cornerMin().getY());
+        return zoomScale.applyScale(val - delegate.boundingBox().cornerMin().y());
     }
 
     public int cnvrtCanvasXToImage(int val) {
-        return zoomScale.removeScale(val) + delegate.getBBox().cornerMin().getX();
+        return zoomScale.removeScale(val) + delegate.boundingBox().cornerMin().x();
     }
 
     public int cnvrtCanvasYToImage(int val) {
-        return zoomScale.removeScale(val) + delegate.getBBox().cornerMin().getY();
+        return zoomScale.removeScale(val) + delegate.boundingBox().cornerMin().y();
     }
 
     public void setDisplayStackEntireImage(BoundOverlayedDisplayStack displayStack)
@@ -109,8 +108,8 @@ class DisplayStackViewportZoomed {
         delegate.setDisplayStackEntireImage(displayStack);
     }
 
-    public ImageDimensions getDimensionsEntire() {
-        return delegate.getDimensionsEntire();
+    public Dimensions dimensionsEntire() {
+        return delegate.dimensionsEntire();
     }
 
     public ZoomScale getZoomScale() {
@@ -121,37 +120,37 @@ class DisplayStackViewportZoomed {
         this.zoomScale = zoomScale;
     }
 
-    public ImageDimensions createDimensionsEntireScaled() {
-        return getDimensionsEntire().scaleXYBy(new ScaleFactor(zoomScale.getScale()));
+    public Dimensions createDimensionsEntireScaled() {
+        return dimensionsEntire().scaleXYBy(new ScaleFactor(zoomScale.getScale()));
     }
 
-    public ImageResolution getRes() {
-        return delegate.getDimensionsEntire().getRes();
+    public Resolution getResolution() {
+        return delegate.dimensionsEntire().resolution();
     }
 
-    public Point2i calcNewCrnrPosToMaintainMousePoint(Point2i mousePoint, ZoomScale zoomScaleOld) {
+    public Point2i cornerToMaintainMousePoint(Point2i mousePoint, ZoomScale zoomScaleOld) {
 
         // Mouse point is already in image-cordinates
         Point2i imgPointOld =
                 new Point2i(
-                        cnvrtCanvasXToImage(mousePoint.getX(), zoomScaleOld),
-                        cnvrtCanvasYToImage(mousePoint.getY(), zoomScaleOld));
+                        cnvrtCanvasXToImage(mousePoint.x(), zoomScaleOld),
+                        cnvrtCanvasYToImage(mousePoint.y(), zoomScaleOld));
 
         // We want the mousePoint at the new scale, to be on the same img point
         Point2i imgPointNewGlobal = zoomScale.applyScale(imgPointOld);
 
         // Corner point
         Point2i crnrPoint = new Point2i();
-        crnrPoint.setX(imgPointNewGlobal.getX() - mousePoint.getX());
-        crnrPoint.setY(imgPointNewGlobal.getY() - mousePoint.getY());
+        crnrPoint.setX(imgPointNewGlobal.x() - mousePoint.x());
+        crnrPoint.setY(imgPointNewGlobal.y() - mousePoint.y());
 
         // But if they are less than 0, then we need to adjust
-        crnrPoint.setX(Math.max(crnrPoint.getX(), 0));
-        crnrPoint.setY(Math.max(crnrPoint.getY(), 0));
+        crnrPoint.setX(Math.max(crnrPoint.x(), 0));
+        crnrPoint.setY(Math.max(crnrPoint.y(), 0));
         return crnrPoint;
     }
 
-    public Point2i calcNewCrnrPosAfterChangeInZoom(
+    public Point2i cornerAfterChangeInZoom(
             Extent canvasExtentOld,
             ZoomScale zoomScaleOld,
             Extent canvasExtentNew,
@@ -161,7 +160,7 @@ class DisplayStackViewportZoomed {
         Extent canvasExtentOldImage = zoomScaleOld.removeScale(canvasExtentOld);
 
         Point2i scaleFree =
-                delegate.calcNewCrnrPosAfterChangeInViewSize(
+                delegate.cornerAfterChangeInViewSize(
                         canvasExtentOldImage, canvasExtentNewImage, scrollValImage);
         return zoomScale.applyScale(scaleFree);
     }
@@ -171,16 +170,16 @@ class DisplayStackViewportZoomed {
     }
 
     public BoundingBox getBBox() {
-        return zoomScale.applyScale(delegate.getBBox());
+        return zoomScale.applyScale(delegate.boundingBox());
     }
 
     // If the image point x,y is contained within the canvas
-    public boolean canvasContainsAbs(int x, int y, int z) {
-        return delegate.canvasContainsAbs(x, y, z);
+    public boolean canvasContainsAbs(Point3i point) {
+        return delegate.canvasContainsAbs(point);
     }
 
-    public String intensityStrAtAbs(int x, int y, int z) {
-        return delegate.intensityStrAtAbs(x, y, z);
+    public String intensityStrAtAbs(Point3i point) {
+        return delegate.intensityStrAtAbs(point);
     }
 
     // empty() means it cannot be determined

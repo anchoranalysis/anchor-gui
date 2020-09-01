@@ -26,84 +26,67 @@
 
 package org.anchoranalysis.gui.videostats.internalframe.evaluator;
 
-import org.anchoranalysis.anchor.mpp.bean.cfg.CfgGen;
-import org.anchoranalysis.anchor.mpp.bean.proposer.MarkProposer;
-import org.anchoranalysis.anchor.mpp.cfg.Cfg;
-import org.anchoranalysis.anchor.mpp.mark.Mark;
-import org.anchoranalysis.anchor.mpp.mark.voxelized.memo.PxlMarkMemoFactory;
-import org.anchoranalysis.anchor.mpp.mark.voxelized.memo.VoxelizedMarkMemo;
-import org.anchoranalysis.anchor.mpp.proposer.ProposalAbnormalFailureException;
-import org.anchoranalysis.anchor.mpp.proposer.ProposerContext;
-import org.anchoranalysis.anchor.mpp.proposer.error.ErrorNode;
+import lombok.RequiredArgsConstructor;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.geometry.Point3d;
-import org.anchoranalysis.gui.frame.overlays.ProposedCfg;
+import org.anchoranalysis.gui.frame.overlays.ProposedMarks;
 import org.anchoranalysis.gui.videostats.internalframe.ProposalOperation;
-import org.anchoranalysis.image.extent.ImageDimensions;
+import org.anchoranalysis.image.extent.Dimensions;
+import org.anchoranalysis.mpp.bean.mark.MarkWithIdentifierFactory;
+import org.anchoranalysis.mpp.bean.proposer.MarkProposer;
+import org.anchoranalysis.mpp.mark.Mark;
+import org.anchoranalysis.mpp.mark.MarkCollection;
+import org.anchoranalysis.mpp.mark.voxelized.memo.PxlMarkMemoFactory;
+import org.anchoranalysis.mpp.mark.voxelized.memo.VoxelizedMarkMemo;
+import org.anchoranalysis.mpp.proposer.ProposerContext;
 
+@RequiredArgsConstructor
 public class MarkProposerEvaluatorDimensions implements ProposalOperationCreator {
 
-    private MarkProposer markProposer;
-    private ImageDimensions dimensions;
-    private boolean detailedVisualization;
+    // START REQUIRED ARGUMENTS
+    private final MarkProposer markProposer;
+    private final boolean detailedVisualization;
+    // END REQUIRED ARGUMENTS
 
-    public MarkProposerEvaluatorDimensions(
-            MarkProposer markProposer, boolean detailedVisualization) {
-        super();
-        this.markProposer = markProposer;
-        assert (markProposer.isInitialized());
-        this.detailedVisualization = detailedVisualization;
-    }
+    private Dimensions dimensions;
 
     @Override
     public ProposalOperation create(
-            Cfg cfg, final Point3d position, final ProposerContext context, final CfgGen cfgGen)
+            MarkCollection marks,
+            final Point3d position,
+            final ProposerContext context,
+            final MarkWithIdentifierFactory markFactory)
             throws OperationFailedException {
 
         // We actually do the proposal
+        final Mark mark =
+                MarkProposerEvaluatorUtilities.createMarkFromPosition(
+                        position,
+                        markFactory.getTemplateMark().create(),
+                        context.getRandomNumberGenerator());
 
         // Do proposal
-        ProposalOperation doProposal =
-                new ProposalOperation() {
+        return errorNode -> {
+            VoxelizedMarkMemo pmm = PxlMarkMemoFactory.create(mark, null, context.getRegionMap());
 
-                    final Mark m =
-                            MarkProposerEvaluatorUtilities.createMarkFromPosition(
-                                    position,
-                                    cfgGen.getTemplateMark().create(),
-                                    context.getDimensions(),
-                                    context.getRandomNumberGenerator());
+            ProposedMarks er = new ProposedMarks(dimensions);
 
-                    @Override
-                    public ProposedCfg propose(ErrorNode errorNode)
-                            throws ProposalAbnormalFailureException {
+            assert (markProposer.isInitialized());
 
-                        VoxelizedMarkMemo pmm =
-                                PxlMarkMemoFactory.create(m, null, context.getRegionMap());
+            // assumes only called once
+            boolean succ = markProposer.propose(pmm, context);
 
-                        ProposedCfg er = new ProposedCfg();
-                        er.setDimensions(dimensions);
+            er.setSuccess(succ);
 
-                        assert (markProposer.isInitialized());
+            if (succ) {
+                er.setColoredMarks(
+                        MarkProposerEvaluatorUtilities.generateMarksFromMark(
+                                pmm.getMark(), position, markProposer, detailedVisualization));
+                er.setSuggestedSliceNum((int) mark.centerPoint().z());
+                er.setMarksCore(new MarkCollection(pmm.getMark()));
+            }
 
-                        // assumes only called once
-                        boolean succ = markProposer.propose(pmm, context);
-
-                        er.setSuccess(succ);
-
-                        if (succ) {
-                            er.setColoredCfg(
-                                    MarkProposerEvaluatorUtilities.generateCfgFromMark(
-                                            pmm.getMark(),
-                                            position,
-                                            markProposer,
-                                            detailedVisualization));
-                            er.setSuggestedSliceNum((int) m.centerPoint().getZ());
-                            er.setCfgCore(new Cfg(pmm.getMark()));
-                        }
-
-                        return er;
-                    }
-                };
-        return doProposal;
+            return er;
+        };
     }
 }

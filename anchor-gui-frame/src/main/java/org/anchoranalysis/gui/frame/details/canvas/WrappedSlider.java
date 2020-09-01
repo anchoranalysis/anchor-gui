@@ -28,30 +28,30 @@ package org.anchoranalysis.gui.frame.details.canvas;
 
 import java.util.Optional;
 import javax.swing.JComponent;
-import org.anchoranalysis.core.index.IIndexGettableSettable;
+import org.anchoranalysis.core.index.IndexGettableSettable;
 import org.anchoranalysis.core.index.container.BoundedRangeIncompleteDynamic;
 import org.anchoranalysis.core.property.IPropertyValueSendable;
 import org.anchoranalysis.core.property.change.PropertyValueChangeListener;
 import org.anchoranalysis.gui.frame.canvas.ImageCanvas;
-import org.anchoranalysis.gui.image.frame.ISliderState;
+import org.anchoranalysis.gui.image.frame.SliderState;
 import org.anchoranalysis.gui.videostats.link.LinkModules.Adder;
 
-class WrappedSlider implements ISliderState {
+class WrappedSlider implements SliderState {
 
     private SliceIndexSlider delegate;
 
     private InitialSliderState initialState;
-    private ChnlSliceRange sliceBounds;
-    private IIndexGettableSettable indexCntr;
+    private ChannelSliceRange sliceBounds;
+    private IndexGettableSettable indexCntr;
 
     private IPropertyValueSendable<Integer> sliceSendable;
     private IPropertyValueSendable<Integer> indexSendable;
 
     public WrappedSlider(
-            ChnlSliceRange sliceBounds,
+            ChannelSliceRange sliceBounds,
             BoundedRangeIncompleteDynamic indexBounds,
             InitialSliderState initialState,
-            IIndexGettableSettable indexCntr) {
+            IndexGettableSettable indexCntr) {
         super();
         this.delegate =
                 new SliceIndexSlider(sliceBounds, indexBounds, initialState.isFrameAdjusting());
@@ -119,7 +119,7 @@ class WrappedSlider implements ISliderState {
         delegate.setIndexToMaximum();
     }
 
-    private void setSliderSlice(int initialSliceNum, ChnlSliceRange sliceBounds) {
+    private void setSliderSlice(int initialSliceNum, ChannelSliceRange sliceBounds) {
         // If it's an invalid negative number, then let's set it to the center, as the user
         //   probably doesn't have any clear slice number preference
         if (initialSliceNum >= sliceBounds.getMinimumIndex()

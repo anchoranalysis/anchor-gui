@@ -28,13 +28,12 @@ package org.anchoranalysis.gui.frame.multioverlay.instantstate;
 
 import lombok.AllArgsConstructor;
 import lombok.Setter;
-import org.anchoranalysis.core.functional.function.FunctionWithException;
+import org.anchoranalysis.core.functional.function.CheckedFunction;
 import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.index.container.BoundedIndexContainer;
 
 @AllArgsConstructor
-class BoundedIndexBridge<T>
-        implements FunctionWithException<Integer, T, GetOperationFailedException> {
+class BoundedIndexBridge<T> implements CheckedFunction<Integer, T, GetOperationFailedException> {
 
     /** The container associated with the bridge */
     @Setter private BoundedIndexContainer<T> container;

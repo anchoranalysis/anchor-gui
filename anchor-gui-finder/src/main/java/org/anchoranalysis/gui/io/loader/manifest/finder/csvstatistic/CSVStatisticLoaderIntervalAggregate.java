@@ -57,7 +57,7 @@ public class CSVStatisticLoaderIntervalAggregate extends CSVStatisticLoader {
 
         CSVStatistic stat = new CSVStatistic();
         stat.setIter(Integer.parseInt(line[i++]));
-        stat.setNrg(Double.parseDouble(line[i++]));
+        stat.setEnergy(Double.parseDouble(line[i++]));
         stat.setSize(Double.parseDouble(line[i++]));
         // stat.setAccptProb( Double.parseDouble(line[i++]) );
         stat.setAccptProbAll(Double.parseDouble(line[i++]));

@@ -29,17 +29,16 @@ package org.anchoranalysis.gui.frame.canvas;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import org.anchoranalysis.core.geometry.Point2i;
+import org.anchoranalysis.image.extent.Dimensions;
 import org.anchoranalysis.image.extent.Extent;
-import org.anchoranalysis.image.extent.ImageDimensions;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 class DisplayStackViewportUtilities {
 
-    public static Point2i clipToImage(
-            Point2i val, Extent canvasExtent, ImageDimensions dimensions) {
+    public static Point2i clipToImage(Point2i val, Extent canvasExtent, Dimensions dimensions) {
         return new Point2i(
-                clipToImage(val.getX(), dimensions.getX(), canvasExtent.getX()),
-                clipToImage(val.getY(), dimensions.getY(), canvasExtent.getY()));
+                clipToImage(val.x(), dimensions.x(), canvasExtent.x()),
+                clipToImage(val.y(), dimensions.y(), canvasExtent.y()));
     }
 
     private static int clipToImage(int val, int entireExtent, int canvasWidth) {

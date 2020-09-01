@@ -27,13 +27,13 @@
 package org.anchoranalysis.gui.interactivebrowser;
 
 import javax.swing.JFrame;
-import org.anchoranalysis.gui.videostats.dropdown.IAddVideoStatsModule;
+import org.anchoranalysis.gui.videostats.dropdown.AddVideoStatsModule;
 import org.anchoranalysis.gui.videostats.frame.VideoStatsFrame;
 import org.anchoranalysis.gui.videostats.module.DefaultModuleState;
 import org.anchoranalysis.gui.videostats.module.VideoStatsModule;
 import org.anchoranalysis.gui.videostats.module.VideoStatsModuleSubgroup;
 
-public class SubgrouppedAdder implements IAddVideoStatsModule {
+public class SubgrouppedAdder implements AddVideoStatsModule {
 
     private VideoStatsModuleSubgroup subgroup;
     private VideoStatsFrame videoStatsFrame;
@@ -49,7 +49,7 @@ public class SubgrouppedAdder implements IAddVideoStatsModule {
 
     // Creates an Adder attached to a new subgroup which inherits from the current
     @Override
-    public IAddVideoStatsModule createChild() {
+    public AddVideoStatsModule createChild() {
         return new SubgrouppedAdder(this.videoStatsFrame, subgroup.getDefaultModuleState().copy());
     }
 

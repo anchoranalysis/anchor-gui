@@ -26,9 +26,9 @@
 
 package org.anchoranalysis.gui.frame.singleraster;
 
-import org.anchoranalysis.core.index.IIndexGettableSettable;
+import org.anchoranalysis.core.index.IndexGettableSettable;
 
-class ZeroIndexGetter implements IIndexGettableSettable {
+class ZeroIndexGetter implements IndexGettableSettable {
 
     @Override
     public int getIndex() {

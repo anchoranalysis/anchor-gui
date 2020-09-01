@@ -32,8 +32,8 @@ import javax.swing.event.ChangeListener;
 import javax.swing.event.EventListenerList;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.error.reporter.ErrorReporter;
-import org.anchoranalysis.core.functional.function.FunctionWithException;
-import org.anchoranalysis.core.index.IIndexGettableSettable;
+import org.anchoranalysis.core.functional.function.CheckedFunction;
+import org.anchoranalysis.core.index.IndexGettableSettable;
 import org.anchoranalysis.gui.container.background.BackgroundStackContainerException;
 import org.anchoranalysis.gui.displayupdate.DisplayUpdateRememberStack;
 import org.anchoranalysis.gui.frame.display.BoundOverlayedDisplayStack;
@@ -42,7 +42,7 @@ import org.anchoranalysis.gui.videostats.threading.InteractiveThreadPool;
 import org.anchoranalysis.gui.videostats.threading.InteractiveWorker;
 
 public class ThreadedDisplayUpdateConsumer
-        implements DisplayUpdateRememberStack, IIndexGettableSettable {
+        implements DisplayUpdateRememberStack, IndexGettableSettable {
 
     private class UpdateSignal {
 
@@ -73,23 +73,25 @@ public class ThreadedDisplayUpdateConsumer
 
     private UpdateImage updateImage;
 
-    private FunctionWithException<Integer, DisplayUpdate, BackgroundStackContainerException>
+    private CheckedFunction<Integer, DisplayUpdate, BackgroundStackContainerException>
             displayUpdateBridge;
 
     private ErrorReporter errorReporter;
 
+    // Return value is irrelevant
     private class UpdateImage extends InteractiveWorker<Integer, Integer> {
 
         @Override
-        protected Integer doInBackground() {
+        protected Integer doInBackground() {    // NOSONAR
 
-            while (true) {
+            while (true) {  // NOSONAR
 
                 synchronized (updateMonitor) {
                     if (!updateMonitor.isInNeedOfUpdate()) {
                         try {
                             updateMonitor.wait();
-                        } catch (InterruptedException e) {
+                        } catch (InterruptedException e) {  // NOSONAR
+                            // END condition for loop
                             return 0;
                         }
                         continue;
@@ -136,7 +138,7 @@ public class ThreadedDisplayUpdateConsumer
     }
 
     public ThreadedDisplayUpdateConsumer(
-            FunctionWithException<Integer, DisplayUpdate, BackgroundStackContainerException>
+            CheckedFunction<Integer, DisplayUpdate, BackgroundStackContainerException>
                     displayUpdateBridge,
             int defaultIndex,
             InteractiveThreadPool threadPool,
@@ -154,7 +156,7 @@ public class ThreadedDisplayUpdateConsumer
     }
 
     public synchronized void setImageStackGenerator(
-            FunctionWithException<Integer, DisplayUpdate, BackgroundStackContainerException>
+            CheckedFunction<Integer, DisplayUpdate, BackgroundStackContainerException>
                     displayUpdateBridge) {
         this.displayUpdateBridge = displayUpdateBridge;
     }

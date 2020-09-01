@@ -26,9 +26,11 @@
 
 package org.anchoranalysis.gui.io.loader.manifest.finder.csvstatistic;
 
-import org.anchoranalysis.core.index.IIndexGetter;
+import lombok.Getter;
+import lombok.Setter;
+import org.anchoranalysis.core.index.IndexGetter;
 
-public class CSVStatistic implements IIndexGetter, Comparable<IIndexGetter> {
+public class CSVStatistic implements IndexGetter, Comparable<IndexGetter> {
 
     private boolean hasAccptProb = false;
     private boolean hasAccptProbAll = false;
@@ -40,9 +42,9 @@ public class CSVStatistic implements IIndexGetter, Comparable<IIndexGetter> {
     private boolean hasIntervalTimePerIter = false;
     private boolean hasTemperature = false;
 
-    private int iter;
-    private double size;
-    private double nrg;
+    @Getter @Setter private int iter;
+    @Getter @Setter private double size;
+    @Getter @Setter private double energy;
     private double accptProb;
     private double accptProbAll;
     private double accptProbRand;
@@ -66,7 +68,7 @@ public class CSVStatistic implements IIndexGetter, Comparable<IIndexGetter> {
         out.hasTemperature = hasTemperature;
         out.iter = iter;
         out.size = size;
-        out.nrg = nrg;
+        out.energy = energy;
         out.accptProb = accptProb;
         out.accptProbAll = accptProbAll;
         out.accptProbRand = accptProbRand;
@@ -91,37 +93,13 @@ public class CSVStatistic implements IIndexGetter, Comparable<IIndexGetter> {
         return hasAccptProbRand;
     }
 
-    public int getIter() {
-        return iter;
-    }
-
-    public void setIter(int iter) {
-        this.iter = iter;
-    }
-
-    public double getSize() {
-        return size;
-    }
-
-    public void setSize(double size) {
-        this.size = size;
-    }
-
-    public double getNrg() {
-        return nrg;
-    }
-
-    public void setNrg(double nrg) {
-        this.nrg = nrg;
-    }
-
     @Override
     public int getIndex() {
         return getIter();
     }
 
     @Override
-    public int compareTo(IIndexGetter arg0) {
+    public int compareTo(IndexGetter arg0) {
         return Integer.valueOf(iter).compareTo(arg0.getIndex());
     }
 

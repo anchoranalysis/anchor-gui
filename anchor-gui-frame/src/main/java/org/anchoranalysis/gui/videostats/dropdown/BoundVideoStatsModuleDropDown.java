@@ -28,9 +28,11 @@ package org.anchoranalysis.gui.videostats.dropdown;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.log.Logger;
-import org.anchoranalysis.core.progress.CallableWithProgressReporter;
 import org.anchoranalysis.gui.IconFactory;
 import org.anchoranalysis.gui.file.opened.IOpenedFileGUI;
 import org.anchoranalysis.gui.reassign.JDropdownButton;
@@ -41,17 +43,12 @@ import org.anchoranalysis.gui.videostats.operation.VideoStatsOperationFromCreato
 import org.anchoranalysis.gui.videostats.operation.VideoStatsOperationMenu;
 import org.anchoranalysis.gui.videostats.threading.InteractiveThreadPool;
 
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class BoundVideoStatsModuleDropDown {
 
     private VideoStatsModuleDropdown delegate;
 
-    private String name;
-
-    public String getName() {
-        return name;
-    }
-
-    private BoundVideoStatsModuleDropDown() {}
+    @Getter private final String name;
 
     public BoundVideoStatsModuleDropDown(String name, String iconPath) {
         this.name = name;
@@ -60,10 +57,7 @@ public class BoundVideoStatsModuleDropDown {
     }
 
     public BoundVideoStatsModuleDropDown createChild(String name) {
-        BoundVideoStatsModuleDropDown child = new BoundVideoStatsModuleDropDown();
-        child.name = this.name + ": " + name;
-        child.delegate = this.delegate;
-        return child;
+        return new BoundVideoStatsModuleDropDown(this.delegate, this.name + ": " + name);
     }
 
     public void addModule(
@@ -87,17 +81,16 @@ public class BoundVideoStatsModuleDropDown {
     }
 
     public void addModule(
-            CallableWithProgressReporter<IAddVideoStatsModule, ? extends Throwable> adder,
+            AddVideoStatsModuleSupplier adder,
             SingleContextualModuleCreator creator,
             String namePrefix,
-            VideoStatsModuleGlobalParams mpg)
-            throws MenuAddException {
+            VideoStatsModuleGlobalParams mpg) {
         addModule(
                 creator.createSingle(namePrefix, adder, mpg), mpg.getThreadPool(), mpg.getLogger());
     }
 
     public VideoStatsModuleCreatorAndAdder addModule(
-            CallableWithProgressReporter<IAddVideoStatsModule, ? extends Throwable> adder,
+            AddVideoStatsModuleSupplier adder,
             ContextualModuleCreator creator,
             VideoStatsModuleGlobalParams mpg)
             throws MenuAddException {
@@ -111,7 +104,7 @@ public class BoundVideoStatsModuleDropDown {
 
     public void addModule(
             String itemName,
-            CallableWithProgressReporter<IAddVideoStatsModule, ? extends Throwable> adder,
+            AddVideoStatsModuleSupplier adder,
             VideoStatsModuleCreator creator,
             InteractiveThreadPool threadPool,
             Logger logger)
@@ -121,8 +114,7 @@ public class BoundVideoStatsModuleDropDown {
         addModule(itemName, creatorAndAdder, threadPool, logger);
     }
 
-    public IAddModuleToMenu createAddModuleToMenu(
-            final CallableWithProgressReporter<IAddVideoStatsModule, ? extends Throwable> adder) {
+    public IAddModuleToMenu createAddModuleToMenu(AddVideoStatsModuleSupplier adder) {
         return new IAddModuleToMenu() {
 
             @Override

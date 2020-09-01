@@ -27,45 +27,21 @@
 package org.anchoranalysis.gui.io.loader.manifest.finder;
 
 import javax.swing.JFrame;
+import lombok.AllArgsConstructor;
+import lombok.Value;
 import org.anchoranalysis.gui.videostats.dropdown.BoundVideoStatsModuleDropDown;
 import org.anchoranalysis.gui.videostats.dropdown.VideoStatsModuleGlobalParams;
-import org.anchoranalysis.gui.videostats.dropdown.common.NRGBackgroundAdder;
+import org.anchoranalysis.gui.videostats.dropdown.common.EnergyBackgroundAdder;
 import org.anchoranalysis.gui.videostats.operation.VideoStatsOperationMenu;
 
+@Value
+@AllArgsConstructor
 public class FinderContext {
 
-    private NRGBackgroundAdder<?> nrgBackground;
+    private EnergyBackgroundAdder energyBackground;
     private BoundVideoStatsModuleDropDown boundVideoStats;
     private VideoStatsOperationMenu parentMenu;
-    private CfgNRGFinderContext context;
-
-    public FinderContext(
-            NRGBackgroundAdder<?> nrgBackground,
-            BoundVideoStatsModuleDropDown boundVideoStats,
-            VideoStatsOperationMenu parentMenu,
-            CfgNRGFinderContext context) {
-        super();
-        this.nrgBackground = nrgBackground;
-        this.boundVideoStats = boundVideoStats;
-        this.parentMenu = parentMenu;
-        this.context = context;
-    }
-
-    public NRGBackgroundAdder<?> getNrgBackground() {
-        return nrgBackground;
-    }
-
-    public BoundVideoStatsModuleDropDown getBoundVideoStats() {
-        return boundVideoStats;
-    }
-
-    public VideoStatsOperationMenu getParentMenu() {
-        return parentMenu;
-    }
-
-    public CfgNRGFinderContext getContext() {
-        return context;
-    }
+    private MarksWithEnergyFinderContext context;
 
     public VideoStatsModuleGlobalParams getMpg() {
         return context.getMpg();

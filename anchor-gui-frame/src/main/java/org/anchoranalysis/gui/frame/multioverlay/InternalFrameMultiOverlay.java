@@ -29,9 +29,6 @@ package org.anchoranalysis.gui.frame.multioverlay;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
-import org.anchoranalysis.anchor.overlay.Overlay;
-import org.anchoranalysis.anchor.overlay.OverlayedInstantState;
-import org.anchoranalysis.anchor.overlay.id.IDGetterOverlayID;
 import org.anchoranalysis.core.bridge.BridgeElementWithIndex;
 import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.error.OperationFailedException;
@@ -43,17 +40,20 @@ import org.anchoranalysis.core.index.container.bridge.BoundedIndexContainerBridg
 import org.anchoranalysis.core.progress.ProgressReporterNull;
 import org.anchoranalysis.gui.container.background.BackgroundStackContainerException;
 import org.anchoranalysis.gui.frame.multioverlay.instantstate.InternalFrameOverlayedInstantStateToRGBSelectable;
-import org.anchoranalysis.gui.image.frame.ISliderState;
+import org.anchoranalysis.gui.image.frame.SliderState;
 import org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.ControllerPopupMenuWithBackground;
 import org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.IGetNames;
 import org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.definition.ImageStackContainerFromName;
 import org.anchoranalysis.gui.retrieveelements.IRetrieveElements;
 import org.anchoranalysis.gui.videostats.IModuleCreatorDefaultState;
 import org.anchoranalysis.gui.videostats.dropdown.VideoStatsModuleGlobalParams;
-import org.anchoranalysis.gui.videostats.dropdown.common.NRGBackground;
-import org.anchoranalysis.gui.videostats.internalframe.cfgtorgb.MultiInput;
+import org.anchoranalysis.gui.videostats.dropdown.common.EnergyBackground;
+import org.anchoranalysis.gui.videostats.internalframe.markstorgb.MultiInput;
 import org.anchoranalysis.gui.videostats.module.DefaultModuleState;
 import org.anchoranalysis.gui.videostats.module.DefaultModuleStateManager;
+import org.anchoranalysis.overlay.IndexableOverlays;
+import org.anchoranalysis.overlay.Overlay;
+import org.anchoranalysis.overlay.id.IDGetterOverlayID;
 
 class InternalFrameMultiOverlay<T> {
     private InternalFrameOverlayedInstantStateToRGBSelectable delegate;
@@ -62,9 +62,9 @@ class InternalFrameMultiOverlay<T> {
         delegate = new InternalFrameOverlayedInstantStateToRGBSelectable(frameName, false, true);
     }
 
-    public SliderNRGState init(
+    public SliderEnergyState init(
             final List<MultiInput<T>> list,
-            BridgeElementWithIndex<MultiInput<T>, OverlayedInstantState, OperationFailedException>
+            BridgeElementWithIndex<MultiInput<T>, IndexableOverlays, OperationFailedException>
                     bridge,
             DefaultModuleStateManager defaultState,
             final VideoStatsModuleGlobalParams mpg)
@@ -72,15 +72,16 @@ class InternalFrameMultiOverlay<T> {
 
         ImageStackContainerFromName imageStackCntrFromName = createImageStackCntr(list);
 
-        // We assume all NRGBackgrounds have the same stack-names, so it doesn't
+        // We assume all EnergyBackgrounds have the same stack-names, so it doesn't
         //  matter which is picked
-        String arbitraryStackName = list.get(0).getNrgBackground().arbitraryBackgroundStackName();
+        String arbitraryStackName =
+                list.get(0).getEnergyBackground().arbitraryBackgroundStackName();
         DefaultModuleState defaultStateNew =
                 assignInitialBackground(defaultState, arbitraryStackName, imageStackCntrFromName);
 
         IDGetter<Overlay> idGetter = new IDGetterOverlayID();
 
-        ISliderState sliderState =
+        SliderState sliderState =
                 delegate.init(
                         bridgeList(list, bridge),
                         mpg.getDefaultColorIndexForMarks(),
@@ -93,9 +94,9 @@ class InternalFrameMultiOverlay<T> {
         addExtraDetail(list);
         addBackgroundMenu(list, sliderState, imageStackCntrFromName, mpg);
 
-        NRGBackground nrgBackground = list.get(sliderState.getIndex()).getNrgBackground();
+        EnergyBackground energyBackground = list.get(sliderState.getIndex()).getEnergyBackground();
 
-        return new SliderNRGState(sliderState, nrgBackground);
+        return new SliderEnergyState(sliderState, energyBackground);
     }
 
     private static <T> ImageStackContainerFromName createImageStackCntr(
@@ -103,16 +104,16 @@ class InternalFrameMultiOverlay<T> {
         return name ->
                 sourceObject -> {
                     return list.get(sourceObject)
-                            .getNrgBackground()
+                            .getEnergyBackground()
                             .getBackgroundSet()
-                            .call(ProgressReporterNull.get())
+                            .get(ProgressReporterNull.get())
                             .singleStack(name);
                 };
     }
 
-    private static <T> BoundedIndexContainer<OverlayedInstantState> bridgeList(
+    private static <T> BoundedIndexContainer<IndexableOverlays> bridgeList(
             List<T> list,
-            BridgeElementWithIndex<T, OverlayedInstantState, OperationFailedException> bridge) {
+            BridgeElementWithIndex<T, IndexableOverlays, OperationFailedException> bridge) {
         BoundedIndexContainerFromList<T> cntr = new BoundedIndexContainerFromList<>(list);
         return new BoundedIndexContainerBridgeWithIndex<>(cntr, bridge);
     }
@@ -135,7 +136,7 @@ class InternalFrameMultiOverlay<T> {
 
     private void addBackgroundMenu(
             List<MultiInput<T>> list,
-            ISliderState sliderState,
+            SliderState sliderState,
             ImageStackContainerFromName imageStackCntrFromName,
             VideoStatsModuleGlobalParams mpg) {
         ControllerPopupMenuWithBackground controller =
@@ -147,14 +148,14 @@ class InternalFrameMultiOverlay<T> {
     }
 
     private IGetNames namesFromCurrentBackground(
-            List<MultiInput<T>> list, ISliderState sliderState, ErrorReporter errorReporter) {
+            List<MultiInput<T>> list, SliderState sliderState, ErrorReporter errorReporter) {
         return () -> {
             try {
                 Set<String> names =
                         list.get(sliderState.getIndex())
-                                .getNrgBackground()
+                                .getEnergyBackground()
                                 .getBackgroundSet()
-                                .call(ProgressReporterNull.get())
+                                .get(ProgressReporterNull.get())
                                 .names();
                 return new ArrayList<>(names);
 
@@ -174,7 +175,7 @@ class InternalFrameMultiOverlay<T> {
         return delegate.getElementRetriever();
     }
 
-    public IModuleCreatorDefaultState moduleCreator(ISliderState sliderState) {
+    public IModuleCreatorDefaultState moduleCreator(SliderState sliderState) {
         return delegate.moduleCreator(sliderState);
     }
 }

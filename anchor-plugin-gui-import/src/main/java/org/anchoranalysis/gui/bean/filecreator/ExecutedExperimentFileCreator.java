@@ -31,7 +31,6 @@ import java.util.Iterator;
 import java.util.List;
 import lombok.Getter;
 import lombok.Setter;
-import org.anchoranalysis.anchor.mpp.feature.nrg.scheme.NRGScheme;
 import org.anchoranalysis.bean.annotation.BeanField;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.progress.ProgressReporter;
@@ -41,6 +40,7 @@ import org.anchoranalysis.io.bean.input.InputManagerParams;
 import org.anchoranalysis.io.deserializer.DeserializationFailedException;
 import org.anchoranalysis.io.manifest.ManifestRecorder;
 import org.anchoranalysis.io.manifest.finder.FinderSerializedObject;
+import org.anchoranalysis.mpp.feature.energy.scheme.EnergyScheme;
 import org.anchoranalysis.plugin.io.bean.input.manifest.CoupledManifestsInputManager;
 import org.anchoranalysis.plugin.io.manifest.CoupledManifests;
 import org.anchoranalysis.plugin.io.manifest.ManifestCouplingDefinition;
@@ -55,7 +55,7 @@ public class ExecutedExperimentFileCreator extends FileCreatorGeneralList {
     private List<String> experimentNames;
 
     @Override
-    public void addFilesToList(
+    protected void addFilesToList(
             List<InteractiveFile> listFiles,
             FileCreatorParams params,
             ProgressReporter progressReporter)
@@ -105,10 +105,10 @@ public class ExecutedExperimentFileCreator extends FileCreatorGeneralList {
             List<InteractiveFile> listFiles) {
         experimentNames.add(manifestExperiment.getRootFolder().getRelativePath().toString());
 
-        FinderSerializedObject<NRGScheme> finderNRGScheme =
+        FinderSerializedObject<EnergyScheme> finderEnergyScheme =
                 new FinderSerializedObject<>(
-                        "nrgScheme", params.getLogErrorReporter().errorReporter());
-        finderNRGScheme.doFind(manifestExperiment);
+                        "energyScheme", params.getLogErrorReporter().errorReporter());
+        finderEnergyScheme.doFind(manifestExperiment);
 
         for (Iterator<CoupledManifests> i =
                         manifestCouplingDefinition.iteratorCoupledManifestsFor(manifestExperiment);

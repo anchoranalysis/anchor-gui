@@ -28,24 +28,22 @@ package org.anchoranalysis.gui.feature.evaluator;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import org.anchoranalysis.anchor.mpp.pair.IdentifiablePair;
-import org.anchoranalysis.anchor.overlay.Overlay;
-import org.anchoranalysis.anchor.overlay.OverlayProperties;
 import org.anchoranalysis.core.name.value.ComparatorOrderByName;
 import org.anchoranalysis.core.name.value.NameValue;
-import org.anchoranalysis.feature.nrg.NRGStackWithParams;
-import org.anchoranalysis.gui.cfgnrgtable.TitleValueTableModel;
-import org.anchoranalysis.gui.feature.evaluator.singlepair.IUpdatableSinglePair;
-import org.anchoranalysis.image.extent.ImageResolution;
+import org.anchoranalysis.feature.energy.EnergyStack;
+import org.anchoranalysis.gui.feature.evaluator.singlepair.UpdatableSinglePair;
+import org.anchoranalysis.gui.marks.table.TitleValueTableModel;
+import org.anchoranalysis.image.extent.Resolution;
+import org.anchoranalysis.mpp.pair.IdentifiablePair;
+import org.anchoranalysis.overlay.Overlay;
+import org.anchoranalysis.overlay.OverlayProperties;
 
-class OverlayDescription extends TitleValueTableModel implements IUpdatableSinglePair {
+class OverlayDescription extends TitleValueTableModel implements UpdatableSinglePair {
 
     private static final long serialVersionUID = -5093139154944903750L;
 
-    public OverlayDescription() {}
-
     @Override
-    public void updateSingle(final Overlay overlay, NRGStackWithParams raster) {
+    public void updateSingle(final Overlay overlay, EnergyStack raster) {
         clear();
 
         // If we have no mark matching the current id
@@ -54,15 +52,14 @@ class OverlayDescription extends TitleValueTableModel implements IUpdatableSingl
             return;
         }
 
-        ImageResolution sr =
-                raster.getDimensions() != null ? raster.getDimensions().getRes() : null;
+        Resolution sr = raster.dimensions() != null ? raster.dimensions().resolution() : null;
         addOverlayDetails(overlay, "", sr);
 
         fireTableDataChanged();
     }
 
     @Override
-    public void updatePair(final IdentifiablePair<Overlay> pair, NRGStackWithParams raster) {
+    public void updatePair(final IdentifiablePair<Overlay> pair, EnergyStack raster) {
 
         clear();
         // If we have no mark matching the current id
@@ -73,13 +70,13 @@ class OverlayDescription extends TitleValueTableModel implements IUpdatableSingl
 
         addEntry(new SimpleTitleValue("Pair", pair.toString()));
 
-        addOverlayDetails(pair.getSource(), "Source: ", raster.getDimensions().getRes());
-        addOverlayDetails(pair.getDestination(), "Dest: ", raster.getDimensions().getRes());
+        addOverlayDetails(pair.getSource(), "Source: ", raster.dimensions().resolution());
+        addOverlayDetails(pair.getDestination(), "Dest: ", raster.dimensions().resolution());
 
         fireTableDataChanged();
     }
 
-    private void addOverlayDetails(Overlay overlay, String titlePrefix, ImageResolution sr) {
+    private void addOverlayDetails(Overlay overlay, String titlePrefix, Resolution sr) {
 
         OverlayProperties op = overlay.generateProperties(sr);
 

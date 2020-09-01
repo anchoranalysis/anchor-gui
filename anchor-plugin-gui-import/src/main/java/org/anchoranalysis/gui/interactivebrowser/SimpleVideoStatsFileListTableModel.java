@@ -31,16 +31,14 @@ import javax.swing.event.TableModelListener;
 import javax.swing.table.AbstractTableModel;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.error.friendly.AnchorImpossibleSituationException;
-import org.anchoranalysis.core.progress.CallableWithProgressReporter;
 import org.anchoranalysis.core.progress.ProgressReporter;
 import org.anchoranalysis.gui.file.interactive.InteractiveFile;
 import org.anchoranalysis.gui.interactivebrowser.filelist.InteractiveFileListTableModel;
 
-public class SimpleVideoStatsFileListTableModel extends InteractiveFileListTableModel {
+public class SimpleVideoStatsFileListTableModel implements InteractiveFileListTableModel {
 
     private List<InteractiveFile> fileInputList;
-    private CallableWithProgressReporter<List<InteractiveFile>, OperationFailedException>
-            opFileInputList;
+    private InteractiveFileSupplier opFileInputList;
 
     private AbstractTableModel tableModel =
             new AbstractTableModel() {
@@ -95,9 +93,7 @@ public class SimpleVideoStatsFileListTableModel extends InteractiveFileListTable
             };
 
     public SimpleVideoStatsFileListTableModel(
-            CallableWithProgressReporter<List<InteractiveFile>, OperationFailedException>
-                    opFileInputList,
-            ProgressReporter progressReporter)
+            InteractiveFileSupplier opFileInputList, ProgressReporter progressReporter)
             throws OperationFailedException {
         this.opFileInputList = opFileInputList;
         refreshEntireTable(progressReporter);
@@ -115,7 +111,7 @@ public class SimpleVideoStatsFileListTableModel extends InteractiveFileListTable
     @Override
     public void refreshEntireTable(ProgressReporter progressReporter)
             throws OperationFailedException {
-        this.fileInputList = opFileInputList.call(progressReporter);
+        this.fileInputList = opFileInputList.get(progressReporter);
     }
 
     @Override

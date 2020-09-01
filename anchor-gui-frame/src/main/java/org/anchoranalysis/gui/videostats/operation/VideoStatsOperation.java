@@ -27,7 +27,7 @@
 package org.anchoranalysis.gui.videostats.operation;
 
 import java.util.Optional;
-import org.anchoranalysis.gui.videostats.operation.combine.IVideoStatsOperationCombine;
+import org.anchoranalysis.gui.videostats.operation.combine.VideoStatsOperationCombine;
 
 public interface VideoStatsOperation {
 
@@ -35,5 +35,5 @@ public interface VideoStatsOperation {
 
     void execute(boolean withMessages);
 
-    Optional<IVideoStatsOperationCombine> getCombiner();
+    Optional<VideoStatsOperationCombine> getCombiner();
 }

@@ -28,11 +28,11 @@ package org.anchoranalysis.gui.videostats.link;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.anchoranalysis.anchor.overlay.collection.OverlayCollection;
-import org.anchoranalysis.core.functional.function.FunctionWithException;
+import org.anchoranalysis.core.functional.function.CheckedFunction;
 import org.anchoranalysis.gui.container.background.BackgroundStackContainerException;
-import org.anchoranalysis.gui.image.OverlayCollectionWithNrgStack;
+import org.anchoranalysis.gui.image.OverlaysWithEnergyStack;
 import org.anchoranalysis.image.stack.DisplayStack;
+import org.anchoranalysis.overlay.collection.OverlayCollection;
 import org.apache.commons.lang.ArrayUtils;
 
 public class DefaultLinkState {
@@ -45,11 +45,10 @@ public class DefaultLinkState {
 
     @Getter @Setter private OverlayCollection overlayCollection;
 
-    @Getter @Setter private OverlayCollectionWithNrgStack cfgWithStack;
+    @Getter @Setter private OverlaysWithEnergyStack overlaysWithStack;
 
     @Getter @Setter
-    private FunctionWithException<Integer, DisplayStack, BackgroundStackContainerException>
-            background;
+    private CheckedFunction<Integer, DisplayStack, BackgroundStackContainerException> background;
 
     DefaultLinkState duplicate() {
         DefaultLinkState dms = new DefaultLinkState();
@@ -57,7 +56,7 @@ public class DefaultLinkState {
         dms.sliceNum = sliceNum;
         dms.objectIDs = ArrayUtils.clone(objectIDs);
         dms.overlayCollection = overlayCollection;
-        dms.cfgWithStack = cfgWithStack;
+        dms.overlaysWithStack = overlaysWithStack;
         dms.background = background;
         return dms;
     }

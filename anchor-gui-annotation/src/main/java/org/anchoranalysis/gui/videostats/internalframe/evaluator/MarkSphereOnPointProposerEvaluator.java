@@ -28,26 +28,26 @@ package org.anchoranalysis.gui.videostats.internalframe.evaluator;
 
 import java.awt.Color;
 import lombok.RequiredArgsConstructor;
-import org.anchoranalysis.anchor.mpp.bean.cfg.CfgGen;
-import org.anchoranalysis.anchor.mpp.bean.regionmap.RegionMembershipWithFlags;
-import org.anchoranalysis.anchor.mpp.cfg.Cfg;
-import org.anchoranalysis.anchor.mpp.mark.GlobalRegionIdentifiers;
-import org.anchoranalysis.anchor.mpp.mark.conic.MarkSphere;
-import org.anchoranalysis.anchor.mpp.mark.conic.RegionMapSingleton;
-import org.anchoranalysis.anchor.mpp.overlay.OverlayMark;
-import org.anchoranalysis.anchor.mpp.proposer.ProposerContext;
 import org.anchoranalysis.core.color.RGBColor;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.geometry.Point3d;
-import org.anchoranalysis.gui.frame.overlays.ProposedCfg;
+import org.anchoranalysis.gui.frame.overlays.ProposedMarks;
 import org.anchoranalysis.gui.videostats.internalframe.ProposalOperation;
-import org.anchoranalysis.image.extent.ImageDimensions;
+import org.anchoranalysis.image.extent.Dimensions;
+import org.anchoranalysis.mpp.bean.mark.MarkWithIdentifierFactory;
+import org.anchoranalysis.mpp.bean.regionmap.RegionMapSingleton;
+import org.anchoranalysis.mpp.bean.regionmap.RegionMembershipWithFlags;
+import org.anchoranalysis.mpp.mark.GlobalRegionIdentifiers;
+import org.anchoranalysis.mpp.mark.MarkCollection;
+import org.anchoranalysis.mpp.mark.conic.Sphere;
+import org.anchoranalysis.mpp.overlay.OverlayMark;
+import org.anchoranalysis.mpp.proposer.ProposerContext;
 
 @RequiredArgsConstructor
 public class MarkSphereOnPointProposerEvaluator implements ProposalOperationCreator {
 
     // START REQUIRED ARGUMENTS
-    private final ImageDimensions dimensions;
+    private final Dimensions dimensions;
     // END REQUIRED ARGUMENTS
 
     private RGBColor colorMark = new RGBColor(Color.YELLOW);
@@ -58,26 +58,28 @@ public class MarkSphereOnPointProposerEvaluator implements ProposalOperationCrea
 
     @Override
     public ProposalOperation create(
-            Cfg cfg, final Point3d position, ProposerContext context, CfgGen cfgGen)
+            MarkCollection marks,
+            final Point3d position,
+            ProposerContext context,
+            MarkWithIdentifierFactory markFactory)
             throws OperationFailedException {
 
         return errorNode -> {
-            ProposedCfg proposedCfg = new ProposedCfg();
-            proposedCfg.setDimensions(dimensions);
-            proposedCfg.setSuccess(true);
+            ProposedMarks proposedMarks = new ProposedMarks(dimensions);
+            proposedMarks.setSuccess(true);
 
-            MarkSphere markSphere = new MarkSphere();
+            Sphere markSphere = new Sphere();
             markSphere.setRadius(1);
             markSphere.setPos(position);
 
-            proposedCfg.getCfgCore().add(markSphere);
-            proposedCfg.getCfgToRedraw().add(markSphere);
-            proposedCfg
-                    .getColoredCfg()
+            proposedMarks.getMarksCore().add(markSphere);
+            proposedMarks.getMarksToRedraw().add(markSphere);
+            proposedMarks
+                    .getColoredMarks()
                     .add(new OverlayMark(markSphere, regionMembership), colorMark);
-            proposedCfg.setSuggestedSliceNum((int) position.getZ());
+            proposedMarks.setSuggestedSliceNum((int) position.z());
 
-            return proposedCfg;
+            return proposedMarks;
         };
     }
 }

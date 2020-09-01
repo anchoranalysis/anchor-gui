@@ -28,12 +28,12 @@ package org.anchoranalysis.gui.videostats.internalframe.annotator.tool;
 
 import java.util.Optional;
 import lombok.AllArgsConstructor;
-import org.anchoranalysis.anchor.mpp.overlay.OverlayCollectionMarkFactory;
 import org.anchoranalysis.core.geometry.Point3d;
-import org.anchoranalysis.gui.frame.overlays.ProposedCfg;
+import org.anchoranalysis.gui.frame.overlays.ProposedMarks;
 import org.anchoranalysis.gui.videostats.internalframe.annotator.currentstate.IAcceptProposal;
 import org.anchoranalysis.gui.videostats.internalframe.annotator.currentstate.IReplaceRemove;
 import org.anchoranalysis.gui.videostats.internalframe.evaluator.EvaluatorWithContext;
+import org.anchoranalysis.mpp.overlay.OverlayCollectionMarkFactory;
 
 @AllArgsConstructor
 public class GuessTool extends AnnotationTool {
@@ -48,23 +48,23 @@ public class GuessTool extends AnnotationTool {
     }
 
     @Override
-    public void proposed(ProposedCfg proposedCfg) {
+    public void proposed(ProposedMarks proposedMarks) {
 
         if (!isEnabled()) {
             return;
         }
 
-        if (proposedCfg.isSuccess()) {
-            replaceRemove.replaceCurrentProposedCfg(
-                    proposedCfg.getCfgCore(),
-                    OverlayCollectionMarkFactory.cfgFromOverlays(proposedCfg.getColoredCfg()),
-                    proposedCfg.getSuggestedSliceNum());
+        if (proposedMarks.isSuccess()) {
+            replaceRemove.replaceCurrentProposedMarks(
+                    proposedMarks.getMarksCore(),
+                    OverlayCollectionMarkFactory.marksFromOverlays(proposedMarks.getColoredMarks()),
+                    proposedMarks.getSuggestedSliceNum());
         } else {
-            replaceRemove.removeCurrentProposedCfg();
+            replaceRemove.removeCurrentProposedMarks();
             toolErrorReporter.showError(
                     GuessTool.class,
                     "Guess failed. Try again (or select points)!",
-                    proposedCfg.getPfd().describe());
+                    proposedMarks.getPfd().describe());
         }
     }
 

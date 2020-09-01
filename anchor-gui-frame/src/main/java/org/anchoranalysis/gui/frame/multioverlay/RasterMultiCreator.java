@@ -27,32 +27,31 @@
 package org.anchoranalysis.gui.frame.multioverlay;
 
 import java.util.List;
-import org.anchoranalysis.anchor.overlay.OverlayedInstantState;
 import org.anchoranalysis.core.bridge.BridgeElementWithIndex;
 import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.error.OperationFailedException;
-import org.anchoranalysis.gui.videostats.dropdown.IAddVideoStatsModule;
+import org.anchoranalysis.gui.videostats.dropdown.AddVideoStatsModule;
 import org.anchoranalysis.gui.videostats.dropdown.ModuleAddUtilities;
 import org.anchoranalysis.gui.videostats.dropdown.VideoStatsModuleGlobalParams;
 import org.anchoranalysis.gui.videostats.dropdown.addoverlays.AdderAddOverlaysWithStack;
-import org.anchoranalysis.gui.videostats.internalframe.cfgtorgb.MultiInput;
+import org.anchoranalysis.gui.videostats.internalframe.markstorgb.MultiInput;
 import org.anchoranalysis.gui.videostats.module.VideoStatsModuleCreateException;
 import org.anchoranalysis.gui.videostats.modulecreator.VideoStatsModuleCreator;
+import org.anchoranalysis.overlay.IndexableOverlays;
 
 public class RasterMultiCreator<T> extends VideoStatsModuleCreator {
 
     private final List<MultiInput<T>> list;
     private final String frameName;
     private final VideoStatsModuleGlobalParams moduleParamsGlobal;
-    private final BridgeElementWithIndex<
-                    MultiInput<T>, OverlayedInstantState, OperationFailedException>
+    private final BridgeElementWithIndex<MultiInput<T>, IndexableOverlays, OperationFailedException>
             bridge;
 
     public RasterMultiCreator(
             List<MultiInput<T>> list,
             String frameName,
             VideoStatsModuleGlobalParams moduleParamsGlobal,
-            BridgeElementWithIndex<MultiInput<T>, OverlayedInstantState, OperationFailedException>
+            BridgeElementWithIndex<MultiInput<T>, IndexableOverlays, OperationFailedException>
                     bridge) {
         super();
         this.list = list;
@@ -63,12 +62,12 @@ public class RasterMultiCreator<T> extends VideoStatsModuleCreator {
     }
 
     @Override
-    public void createAndAddVideoStatsModule(IAddVideoStatsModule adder)
+    public void createAndAddVideoStatsModule(AddVideoStatsModule adder)
             throws VideoStatsModuleCreateException {
 
         try {
             InternalFrameMultiOverlay<T> internalFrame = new InternalFrameMultiOverlay<>(frameName);
-            SliderNRGState state =
+            SliderEnergyState state =
                     internalFrame.init(
                             list,
                             bridge,
@@ -82,7 +81,7 @@ public class RasterMultiCreator<T> extends VideoStatsModuleCreator {
                             moduleParamsGlobal.getThreadPool(),
                             moduleParamsGlobal.getLogger().errorReporter());
 
-            adder = state.addNrgStackToAdder(adder);
+            adder = state.addEnergyStackToAdder(adder);
 
             ModuleAddUtilities.add(adder, internalFrame.moduleCreator(state.getSlider()));
 

@@ -27,17 +27,13 @@
 package org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.definition;
 
 import org.anchoranalysis.core.error.reporter.ErrorReporter;
-import org.anchoranalysis.core.progress.CallableWithProgressReporter;
-import org.anchoranalysis.gui.backgroundset.BackgroundSet;
-import org.anchoranalysis.gui.container.background.BackgroundStackContainerException;
 import org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.IGetNames;
+import org.anchoranalysis.gui.videostats.dropdown.BackgroundSetProgressingSupplier;
 
 public class ChangeableBackgroundDefinitionSimple
-        extends ChangeableBackgroundDefinitionWithDefault {
+        extends ChangeableBackgroundWithDefault {
 
-    public ChangeableBackgroundDefinitionSimple(
-            CallableWithProgressReporter<BackgroundSet, BackgroundStackContainerException>
-                    backgroundSet) {
+    public ChangeableBackgroundDefinitionSimple(BackgroundSetProgressingSupplier backgroundSet) {
         super(backgroundSet);
     }
 

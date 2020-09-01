@@ -28,17 +28,17 @@ package org.anchoranalysis.gui.videostats.internalframe.annotator.tool;
 
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
-import org.anchoranalysis.anchor.mpp.bean.points.fitter.InsufficientPointsException;
-import org.anchoranalysis.anchor.mpp.bean.points.fitter.PointsFitter;
-import org.anchoranalysis.anchor.mpp.bean.points.fitter.PointsFitterException;
-import org.anchoranalysis.anchor.mpp.mark.Mark;
 import org.anchoranalysis.core.geometry.Point3d;
-import org.anchoranalysis.gui.frame.overlays.ProposedCfg;
+import org.anchoranalysis.gui.frame.overlays.ProposedMarks;
 import org.anchoranalysis.gui.videostats.internalframe.annotator.currentstate.IAcceptProposal;
 import org.anchoranalysis.gui.videostats.internalframe.annotator.currentstate.IChangeSelectedPoints;
 import org.anchoranalysis.gui.videostats.internalframe.annotator.currentstate.IQuerySelectedPoints;
 import org.anchoranalysis.gui.videostats.internalframe.evaluator.EvaluatorWithContext;
-import org.anchoranalysis.image.extent.ImageDimensions;
+import org.anchoranalysis.image.extent.Dimensions;
+import org.anchoranalysis.mpp.bean.points.fitter.InsufficientPointsException;
+import org.anchoranalysis.mpp.bean.points.fitter.PointsFitter;
+import org.anchoranalysis.mpp.bean.points.fitter.PointsFitterException;
+import org.anchoranalysis.mpp.mark.Mark;
 
 @RequiredArgsConstructor
 public class SelectPointsTool extends AnnotationTool {
@@ -50,7 +50,7 @@ public class SelectPointsTool extends AnnotationTool {
     private final IQuerySelectedPoints selectedPoints;
     private final ToolErrorReporter errorReporter;
 
-    private ImageDimensions dimensions;
+    private Dimensions dimensions;
 
     @Override
     public void leftMouseClickedAtPoint(Point3d point) {
@@ -58,13 +58,13 @@ public class SelectPointsTool extends AnnotationTool {
     }
 
     @Override
-    public void proposed(ProposedCfg proposedCfg) {
+    public void proposed(ProposedMarks proposedMarks) {
 
-        dimensions = proposedCfg.getDimensions();
+        dimensions = proposedMarks.dimensions();
 
         // Extract what should be the only mark
-        assert (proposedCfg.getCfgCore().getMarks().size() == 1);
-        Mark m = proposedCfg.getCfgCore().getMarks().get(0);
+        assert (proposedMarks.getMarksCore().getMarks().size() == 1);
+        Mark m = proposedMarks.getMarksCore().getMarks().get(0);
 
         changeSelectedPoints.addSelectedPoint(m);
     }
@@ -84,7 +84,7 @@ public class SelectPointsTool extends AnnotationTool {
             }
 
             if (evaluator.isPresent()) {
-                proposeCfgFromPoints(evaluator.get());
+                proposeMarksFromPoints(evaluator.get());
             } else {
                 errorReporter.showError(
                         SelectPointsTool.class,
@@ -94,10 +94,10 @@ public class SelectPointsTool extends AnnotationTool {
         }
     }
 
-    private void proposeCfgFromPoints(EvaluatorWithContext eval) {
+    private void proposeMarksFromPoints(EvaluatorWithContext eval) {
 
         try {
-            changeSelectedPoints.addCurrentProposedCfgFromSelectedPoints(proposeMark(eval));
+            changeSelectedPoints.addCurrentProposedMarksFromSelectedPoints(proposeMark(eval));
         } catch (PointsFitterException e) {
 
             if (e.getCause() == null) {
@@ -117,7 +117,7 @@ public class SelectPointsTool extends AnnotationTool {
 
     private Mark proposeMark(EvaluatorWithContext eval)
             throws PointsFitterException, InsufficientPointsException {
-        Mark mark = eval.getCfgGen().getTemplateMark().create();
+        Mark mark = eval.getMarkFactory().getTemplateMark().create();
         pointsFitter.fit(selectedPoints.selectedPointsAsFloats(), mark, dimensions);
         return mark;
     }

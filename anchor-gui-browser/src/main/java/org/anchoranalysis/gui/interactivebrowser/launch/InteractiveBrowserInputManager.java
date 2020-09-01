@@ -30,8 +30,6 @@ import java.util.ArrayList;
 import java.util.List;
 import lombok.Getter;
 import lombok.Setter;
-import org.anchoranalysis.anchor.mpp.feature.bean.mark.MarkEvaluator;
-import org.anchoranalysis.anchor.mpp.feature.bean.nrgscheme.NRGSchemeCreator;
 import org.anchoranalysis.bean.NamedBean;
 import org.anchoranalysis.bean.annotation.BeanField;
 import org.anchoranalysis.bean.annotation.DefaultInstance;
@@ -47,6 +45,8 @@ import org.anchoranalysis.io.bean.filepath.provider.FilePathProvider;
 import org.anchoranalysis.io.bean.input.InputManager;
 import org.anchoranalysis.io.bean.input.InputManagerParams;
 import org.anchoranalysis.io.error.AnchorIOException;
+import org.anchoranalysis.mpp.feature.bean.energy.scheme.EnergySchemeCreator;
+import org.anchoranalysis.mpp.feature.bean.mark.MarkEvaluator;
 
 public class InteractiveBrowserInputManager extends InputManager<InteractiveBrowserInput> {
 
@@ -55,7 +55,7 @@ public class InteractiveBrowserInputManager extends InputManager<InteractiveBrow
 
     @BeanField @DefaultInstance @Getter @Setter private RasterReader rasterReader;
 
-    @BeanField @OptionalBean @Getter @Setter private NRGSchemeCreator nrgSchemeCreator;
+    @BeanField @OptionalBean @Getter @Setter private EnergySchemeCreator energySchemeCreator;
 
     @BeanField @Getter @Setter
     private List<NamedBean<FeatureListProvider<FeatureInput>>> namedItemSharedFeatureList =
@@ -81,7 +81,7 @@ public class InteractiveBrowserInputManager extends InputManager<InteractiveBrow
         InteractiveBrowserInput ibi = new InteractiveBrowserInput();
         ibi.setListFileCreators(listFileCreators);
         ibi.setRasterReader(rasterReader);
-        ibi.setNrgSchemeCreator(nrgSchemeCreator);
+        ibi.setEnergySchemeCreator(energySchemeCreator);
         ibi.setNamedItemSharedFeatureList(namedItemSharedFeatureList);
         ibi.setNamedItemMarkEvaluatorList(namedItemMarkEvaluatorList);
         ibi.setNamedItemKeyValueParamsProviderList(namedItemKeyValueParamsProviderList);

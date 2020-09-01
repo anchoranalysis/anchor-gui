@@ -30,8 +30,8 @@ import java.util.List;
 import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.gui.frame.multiraster.InternalFrameMultiRaster;
 import org.anchoranalysis.gui.frame.multiraster.NamedRasterSet;
-import org.anchoranalysis.gui.image.frame.ISliderState;
-import org.anchoranalysis.gui.videostats.dropdown.IAddVideoStatsModule;
+import org.anchoranalysis.gui.image.frame.SliderState;
+import org.anchoranalysis.gui.videostats.dropdown.AddVideoStatsModule;
 import org.anchoranalysis.gui.videostats.dropdown.VideoStatsModuleGlobalParams;
 import org.anchoranalysis.gui.videostats.module.VideoStatsModule;
 import org.anchoranalysis.gui.videostats.module.VideoStatsModuleCreateException;
@@ -54,12 +54,12 @@ public class RasterMultiModuleCreator extends VideoStatsModuleCreator {
     }
 
     @Override
-    public void createAndAddVideoStatsModule(IAddVideoStatsModule adder)
+    public void createAndAddVideoStatsModule(AddVideoStatsModule adder)
             throws VideoStatsModuleCreateException {
 
         try {
             InternalFrameMultiRaster internalFrame = new InternalFrameMultiRaster(frameName);
-            ISliderState sliderState =
+            SliderState sliderState =
                     internalFrame.init(
                             listOp,
                             adder.getSubgroup().getDefaultModuleState().getState(),

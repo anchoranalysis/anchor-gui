@@ -29,14 +29,14 @@ package org.anchoranalysis.gui.videostats.dropdown;
 import org.anchoranalysis.gui.backgroundset.BackgroundSet;
 
 public class BackgroundSetWithAdder {
-    private IAddVideoStatsModule adder;
+    private AddVideoStatsModule adder;
     private BackgroundSet backgroundSet;
 
-    public IAddVideoStatsModule getAdder() {
+    public AddVideoStatsModule getAdder() {
         return adder;
     }
 
-    public void setAdder(IAddVideoStatsModule adder) {
+    public void setAdder(AddVideoStatsModule adder) {
         this.adder = adder;
     }
 

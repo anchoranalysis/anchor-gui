@@ -32,7 +32,7 @@ import lombok.Setter;
 import org.anchoranalysis.bean.annotation.BeanField;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.OperationFailedException;
-import org.anchoranalysis.core.functional.function.FunctionWithException;
+import org.anchoranalysis.core.functional.function.CheckedFunction;
 import org.anchoranalysis.core.index.container.BoundedIndexContainer;
 import org.anchoranalysis.gui.bean.exporttask.ExportTaskFailedException;
 import org.anchoranalysis.gui.bean.exporttask.ExportTaskParams;
@@ -49,8 +49,7 @@ public abstract class ExportTaskRasterGeneratorFromBoundedIndexContainer<T>
     }
 
     public void setBridge(
-            FunctionWithException<
-                            ExportTaskParams, BoundedIndexContainer<T>, OperationFailedException>
+            CheckedFunction<ExportTaskParams, BoundedIndexContainer<T>, OperationFailedException>
                     containerBridge) {
         delegate.setContainerBridge(containerBridge);
     }

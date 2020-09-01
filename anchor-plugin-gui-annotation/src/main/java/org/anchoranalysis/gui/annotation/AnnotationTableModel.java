@@ -29,19 +29,20 @@ package org.anchoranalysis.gui.annotation;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableModel;
+import lombok.Getter;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.error.friendly.AnchorImpossibleSituationException;
-import org.anchoranalysis.core.progress.CallableWithProgressReporter;
+import org.anchoranalysis.core.progress.CheckedProgressingSupplier;
 import org.anchoranalysis.core.progress.ProgressReporter;
 import org.anchoranalysis.gui.file.interactive.InteractiveFile;
 import org.anchoranalysis.gui.interactivebrowser.filelist.InteractiveFileListTableModel;
 
-public class AnnotationTableModel extends InteractiveFileListTableModel {
+public class AnnotationTableModel implements InteractiveFileListTableModel {
 
-    private CallableWithProgressReporter<AnnotationProject, OperationFailedException>
+    private CheckedProgressingSupplier<AnnotationProject, OperationFailedException>
             opAnnotationProject;
-    private AnnotationProject annotationProject;
+    @Getter private AnnotationProject annotationProject;
 
     private AbstractTableModel tableModel =
             new AbstractTableModel() {
@@ -61,8 +62,7 @@ public class AnnotationTableModel extends InteractiveFileListTableModel {
                 @Override
                 public String getValueAt(int rowIndex, int columnIndex) {
 
-                    FileAnnotationNamedChnlCollection fileAnnotation =
-                            annotationProject.get(rowIndex);
+                    FileAnnotationNamedChannels fileAnnotation = annotationProject.get(rowIndex);
 
                     switch (columnIndex) {
                         case 0:
@@ -110,7 +110,7 @@ public class AnnotationTableModel extends InteractiveFileListTableModel {
             };
 
     public AnnotationTableModel(
-            CallableWithProgressReporter<AnnotationProject, OperationFailedException>
+            CheckedProgressingSupplier<AnnotationProject, OperationFailedException>
                     opAnnotationProject,
             ProgressReporter progressReporter)
             throws CreateException {
@@ -131,15 +131,9 @@ public class AnnotationTableModel extends InteractiveFileListTableModel {
     @Override
     public void refreshEntireTable(ProgressReporter progressReporter)
             throws OperationFailedException {
-        this.annotationProject = opAnnotationProject.call(progressReporter);
+        this.annotationProject = opAnnotationProject.get(progressReporter);
         this.annotationProject.addAnnotationChangedListener(
-                new AnnotationChangedListener() {
-
-                    @Override
-                    public void annotationChanged(int index) {
-                        tableModel.fireTableRowsUpdated(index, index);
-                    }
-                });
+                index -> tableModel.fireTableRowsUpdated(index, index));
     }
 
     @Override
@@ -147,14 +141,9 @@ public class AnnotationTableModel extends InteractiveFileListTableModel {
         return tableModel;
     }
 
-    public AnnotationProject getAnnotationProject() {
-        return annotationProject;
-    }
-
     @Override
     public void fireTableDataChanged() {
         tableModel.fireTableDataChanged();
-        ;
     }
 
     @Override

@@ -30,7 +30,7 @@ import java.awt.Color;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Optional;
-import org.anchoranalysis.annotation.wholeimage.WholeImageLabelAnnotation;
+import org.anchoranalysis.annotation.image.ImageLabelAnnotation;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.gui.annotation.state.AnnotationSummary;
 import org.anchoranalysis.plugin.annotation.bean.strategy.ReadAnnotationFromFile;
@@ -54,7 +54,7 @@ class CreateAnnotationSummary {
 
     private AnnotationSummary createSummaryForExistingAnnotation(Path path) throws CreateException {
 
-        Optional<WholeImageLabelAnnotation> ann = ReadAnnotationFromFile.readAssumeExists(path);
+        Optional<ImageLabelAnnotation> ann = ReadAnnotationFromFile.readAssumeExists(path);
 
         if (!ann.isPresent()) {
             throw new CreateException("Failed to read a label for the annotation");

@@ -31,15 +31,15 @@ import lombok.AllArgsConstructor;
 import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.index.GetOperationFailedException;
-import org.anchoranalysis.core.progress.CallableWithProgressReporter;
 import org.anchoranalysis.core.progress.ProgressReporterNull;
 import org.anchoranalysis.gui.annotation.AnnotatorModuleCreator;
 import org.anchoranalysis.gui.backgroundset.BackgroundSet;
 import org.anchoranalysis.gui.container.background.BackgroundStackContainerException;
 import org.anchoranalysis.gui.frame.singleraster.InternalFrameSingleRaster;
-import org.anchoranalysis.gui.image.frame.ISliderState;
+import org.anchoranalysis.gui.image.frame.SliderState;
 import org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.definition.ChangeableBackgroundDefinitionSimple;
-import org.anchoranalysis.gui.videostats.dropdown.IAddVideoStatsModule;
+import org.anchoranalysis.gui.videostats.dropdown.AddVideoStatsModule;
+import org.anchoranalysis.gui.videostats.dropdown.BackgroundSetProgressingSupplier;
 import org.anchoranalysis.gui.videostats.dropdown.VideoStatsModuleGlobalParams;
 import org.anchoranalysis.gui.videostats.module.DefaultModuleState;
 import org.anchoranalysis.gui.videostats.module.VideoStatsModuleCreateException;
@@ -52,15 +52,15 @@ import org.anchoranalysis.image.stack.TimeSequence;
 @AllArgsConstructor
 public class ShowRaster {
 
-    private final IAddVideoStatsModule adder;
+    private final AddVideoStatsModule adder;
     private final VideoStatsModuleGlobalParams mpg;
 
     public void openAndShow(String rasterName, final Path rasterPath, RasterReader rasterReader) {
 
         show(
-                pr -> {
+                progressReporter -> {
                     try (OpenedRaster or = rasterReader.openFile(rasterPath)) {
-                        TimeSequence ts = or.open(0, pr);
+                        TimeSequence ts = or.open(0, progressReporter);
 
                         Stack stack = ts.get(0);
 
@@ -76,26 +76,23 @@ public class ShowRaster {
                 rasterName);
     }
 
-    public void show(
-            CallableWithProgressReporter<BackgroundSet, BackgroundStackContainerException>
-                    opCreateBackgroundSet,
-            String rasterName) {
+    public void show(BackgroundSetProgressingSupplier backgroundSetCreator, String rasterName) {
         try {
             DefaultModuleState defaultModuleState =
                     adder.getSubgroup()
                             .getDefaultModuleState()
                             .copyChangeBackground(
-                                    opCreateBackgroundSet
-                                            .call(ProgressReporterNull.get())
+                                    backgroundSetCreator
+                                            .get(ProgressReporterNull.get())
                                             .stackCntr("Associated Raster"));
 
             InternalFrameSingleRaster imageFrame = new InternalFrameSingleRaster(rasterName);
-            ISliderState sliderState = imageFrame.init(1, defaultModuleState, mpg);
+            SliderState sliderState = imageFrame.init(1, defaultModuleState, mpg);
 
             imageFrame
                     .controllerBackgroundMenu()
                     .addDefinition(
-                            mpg, new ChangeableBackgroundDefinitionSimple(opCreateBackgroundSet));
+                            mpg, new ChangeableBackgroundDefinitionSimple(backgroundSetCreator));
 
             adder.addVideoStatsModule(
                     imageFrame

@@ -26,9 +26,9 @@
 
 package org.anchoranalysis.gui.feature;
 
-import org.anchoranalysis.anchor.mpp.bean.regionmap.RegionMap;
 import org.anchoranalysis.feature.bean.Feature;
 import org.anchoranalysis.feature.input.FeatureInput;
+import org.anchoranalysis.mpp.bean.regionmap.RegionMap;
 
 public class FeatureWithRegionMap<T extends FeatureInput> {
 

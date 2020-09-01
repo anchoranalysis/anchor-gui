@@ -26,16 +26,16 @@
 
 package org.anchoranalysis.gui.videostats.internalframe.evaluator;
 
-import org.anchoranalysis.anchor.mpp.bean.cfg.CfgGen;
-import org.anchoranalysis.anchor.mpp.cfg.Cfg;
-import org.anchoranalysis.anchor.mpp.proposer.ProposalAbnormalFailureException;
-import org.anchoranalysis.anchor.mpp.proposer.ProposerContext;
-import org.anchoranalysis.anchor.mpp.proposer.error.ErrorNode;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.geometry.Point3d;
-import org.anchoranalysis.gui.frame.overlays.ProposedCfg;
+import org.anchoranalysis.gui.frame.overlays.ProposedMarks;
 import org.anchoranalysis.gui.videostats.internalframe.ProposalOperation;
 import org.anchoranalysis.gui.videostats.internalframe.ProposeLoopPanel;
+import org.anchoranalysis.mpp.bean.mark.MarkWithIdentifierFactory;
+import org.anchoranalysis.mpp.mark.MarkCollection;
+import org.anchoranalysis.mpp.proposer.ProposalAbnormalFailureException;
+import org.anchoranalysis.mpp.proposer.ProposerContext;
+import org.anchoranalysis.mpp.proposer.error.ErrorNode;
 
 class AddLoop implements ProposalOperationCreator {
     private ProposalOperationCreator delegate;
@@ -49,15 +49,18 @@ class AddLoop implements ProposalOperationCreator {
 
     @Override
     public ProposalOperation create(
-            Cfg cfg, Point3d position, ProposerContext context, CfgGen cfgGen)
+            MarkCollection marks,
+            Point3d position,
+            ProposerContext context,
+            MarkWithIdentifierFactory markFactory)
             throws OperationFailedException {
 
-        final ProposalOperation po = delegate.create(cfg, position, context, cfgGen);
+        final ProposalOperation po = delegate.create(marks, position, context, markFactory);
 
         return new ProposalOperation() {
 
             @Override
-            public ProposedCfg propose(ErrorNode errorNode)
+            public ProposedMarks propose(ErrorNode errorNode)
                     throws ProposalAbnormalFailureException {
                 return loopPanel.propose(po, errorNode);
             }

@@ -68,13 +68,13 @@ public class BuilderProposeMarks
 
     private OpenAnnotationMPP createOpenAnnotation() throws AnchorIOException {
 
-        Optional<Path> cfgPath =
+        Optional<Path> marksPath =
                 OptionalUtilities.mapBoth(
-                        getStrategy().cfgFilePathGenerator(),
+                        getStrategy().marksFilePathGenerator(),
                         pathForBinding(),
                         PathFromGenerator::derivePath);
 
-        return new OpenAnnotationMPP(annotationPath(), cfgPath, annotationReader);
+        return new OpenAnnotationMPP(annotationPath(), marksPath, annotationReader);
     }
 
     @Override
@@ -82,7 +82,7 @@ public class BuilderProposeMarks
             ProgressReporterMultiple prm,
             AnnotationGuiContext context,
             Logger logger,
-            boolean useDefaultCfg)
+            boolean useDefaultMarks)
             throws CreateException {
 
         try {
@@ -94,8 +94,8 @@ public class BuilderProposeMarks
                             stacks(),
                             logger);
 
-            // Open initial cfg
-            InitAnnotation annotationExst = openAnnotation.open(useDefaultCfg, logger);
+            // Open initial marks
+            InitAnnotation annotationExst = openAnnotation.open(useDefaultMarks, logger);
 
             return new InitParamsProposeMarks(
                     context.getAnnotationRefresher(),

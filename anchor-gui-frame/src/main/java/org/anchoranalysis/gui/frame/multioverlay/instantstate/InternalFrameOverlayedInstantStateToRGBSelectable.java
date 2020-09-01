@@ -27,10 +27,6 @@
 package org.anchoranalysis.gui.frame.multioverlay.instantstate;
 
 import java.util.Optional;
-import org.anchoranalysis.anchor.overlay.Overlay;
-import org.anchoranalysis.anchor.overlay.OverlayedInstantState;
-import org.anchoranalysis.anchor.overlay.collection.ColoredOverlayCollection;
-import org.anchoranalysis.anchor.overlay.collection.OverlayCollection;
 import org.anchoranalysis.core.color.ColorIndex;
 import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.idgetter.IDGetter;
@@ -38,26 +34,29 @@ import org.anchoranalysis.core.index.container.BoundedIndexContainer;
 import org.anchoranalysis.core.index.container.bridge.BoundedIndexContainerBridgeWithoutIndex;
 import org.anchoranalysis.core.property.IPropertyValueReceivable;
 import org.anchoranalysis.core.property.PropertyValueReceivableFromIndicesSelection;
-import org.anchoranalysis.gui.frame.details.IGenerateExtraDetail;
+import org.anchoranalysis.gui.frame.details.GenerateExtraDetail;
 import org.anchoranalysis.gui.frame.details.canvas.InternalFrameCanvas;
 import org.anchoranalysis.gui.frame.display.overlay.GetOverlayCollection;
 import org.anchoranalysis.gui.frame.display.overlay.OverlayRetriever;
-import org.anchoranalysis.gui.image.frame.ISliderState;
+import org.anchoranalysis.gui.image.frame.SliderState;
 import org.anchoranalysis.gui.indices.DualIndicesSelection;
 import org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.ControllerPopupMenuWithBackground;
 import org.anchoranalysis.gui.retrieveelements.IRetrieveElements;
-import org.anchoranalysis.gui.retrieveelements.RetrieveElements;
 import org.anchoranalysis.gui.retrieveelements.RetrieveElementsList;
 import org.anchoranalysis.gui.retrieveelements.RetrieveElementsOverlayCollection;
 import org.anchoranalysis.gui.videostats.IModuleCreatorDefaultState;
 import org.anchoranalysis.gui.videostats.dropdown.VideoStatsModuleGlobalParams;
-import org.anchoranalysis.gui.videostats.internalframe.cfgtorgb.ColoredOverlayedInstantState;
-import org.anchoranalysis.gui.videostats.internalframe.cfgtorgb.markdisplay.MarkDisplaySettingsWrapper;
+import org.anchoranalysis.gui.videostats.internalframe.markstorgb.IndexableColoredOverlays;
+import org.anchoranalysis.gui.videostats.internalframe.markstorgb.markdisplay.MarkDisplaySettingsWrapper;
 import org.anchoranalysis.gui.videostats.link.LinkModules;
 import org.anchoranalysis.gui.videostats.module.DefaultModuleState;
 import org.anchoranalysis.gui.videostats.module.VideoStatsModule;
 import org.anchoranalysis.image.object.properties.ObjectWithProperties;
 import org.anchoranalysis.image.stack.rgb.RGBStack;
+import org.anchoranalysis.overlay.IndexableOverlays;
+import org.anchoranalysis.overlay.Overlay;
+import org.anchoranalysis.overlay.collection.ColoredOverlayCollection;
+import org.anchoranalysis.overlay.collection.OverlayCollection;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -76,7 +75,7 @@ public class InternalFrameOverlayedInstantStateToRGBSelectable {
 
     private boolean sendReceiveIndices = false;
 
-    // Returns a Cfg representing the currently selected marks
+    // Returns a Marks representing the currently selected marks
     private class CurrentlySelectedMarks implements GetOverlayCollection {
 
         @Override
@@ -86,7 +85,6 @@ public class InternalFrameOverlayedInstantStateToRGBSelectable {
                     .createSubsetFromIDs(selectionIndices.getCurrentSelection());
         }
     }
-    ;
 
     public InternalFrameOverlayedInstantStateToRGBSelectable(
             String title, boolean indexesAreFrames, boolean sendReceiveIndices) {
@@ -95,8 +93,8 @@ public class InternalFrameOverlayedInstantStateToRGBSelectable {
     }
 
     // Must be called before usage
-    public ISliderState init(
-            BoundedIndexContainer<OverlayedInstantState> cfgCntr,
+    public SliderState init(
+            BoundedIndexContainer<IndexableOverlays> marksCntr,
             ColorIndex colorIndex,
             IDGetter<Overlay> idGetter,
             IDGetter<Overlay> idColorGetter,
@@ -113,16 +111,16 @@ public class InternalFrameOverlayedInstantStateToRGBSelectable {
         MarkDisplaySettingsWrapper markDisplaySettingsWrapper =
                 new MarkDisplaySettingsWrapper(
                         initialState.getMarkDisplaySettings().duplicate(),
-                        (ObjectWithProperties mask, RGBStack stack, int id) ->
+                        (ObjectWithProperties object, RGBStack stack, int id) ->
                                 selectionIndices.getCurrentSelection().contains(id));
 
-        BoundedIndexContainer<ColoredOverlayedInstantState> cfgCntrColored =
+        BoundedIndexContainer<IndexableColoredOverlays> marksCntrColored =
                 new BoundedIndexContainerBridgeWithoutIndex<>(
-                        cfgCntr, new AddColorBridge(colorIndex, idColorGetter));
+                        marksCntr, new AddColorBridge(colorIndex, idColorGetter));
 
-        ISliderState sliderState =
+        SliderState sliderState =
                 delegate.init(
-                        cfgCntrColored,
+                        marksCntrColored,
                         idGetter,
                         includeFrameAdjusting,
                         initialState,
@@ -130,27 +128,21 @@ public class InternalFrameOverlayedInstantStateToRGBSelectable {
                         createElementRetriever(),
                         mpg);
 
-        IGenerateExtraDetail cfgSizeDetail =
-                new IGenerateExtraDetail() {
-
-                    @Override
-                    public String genStr(int index) {
-                        OverlayRetriever or = delegate.getOverlayRetriever();
-                        return String.format(
-                                "cfgSize=%s",
-                                or.getOverlays() != null ? or.getOverlays().size() : -1);
-                    }
+        GenerateExtraDetail marksSizeDetail =
+                index -> {
+                    OverlayRetriever or = delegate.getOverlayRetriever();
+                    return String.format(
+                            "marksSize=%s",
+                            or.getOverlays() != null ? or.getOverlays().size() : -1);
                 };
 
-        delegate.addAdditionalDetails(cfgSizeDetail);
+        delegate.addAdditionalDetails(marksSizeDetail);
 
         // When a new object is selected, then we need to redraw (partially)
         new PropertyValueReceivableFromIndicesSelection(selectionIndices.getCurrentSelection())
                 .addPropertyValueChangeListener(
-                        new RedrawFromCfgGetter(
-                                currentlySelectedMarksGetter,
-                                delegate.getRedrawable(),
-                                mpg.getLogger()));
+                        new RedrawFromMarksGetter(
+                                currentlySelectedMarksGetter, delegate.getRedrawable()));
 
         markClickAdapter =
                 new ClickAdapter(selectionIndices, sliderState, delegate.getOverlayRetriever());
@@ -160,22 +152,17 @@ public class InternalFrameOverlayedInstantStateToRGBSelectable {
     }
 
     private IRetrieveElements createElementRetriever() {
-        return new IRetrieveElements() {
+        return () -> {
+            RetrieveElementsList rel = new RetrieveElementsList();
+            rel.add(delegate.getElementRetriever().retrieveElements());
 
-            @Override
-            public RetrieveElements retrieveElements() {
+            RetrieveElementsOverlayCollection rempp = new RetrieveElementsOverlayCollection();
+            rempp.setCurrentSelectedObjects(
+                    currentlySelectedMarksGetter.getOverlays().getOverlays());
+            rempp.setCurrentObjects(delegate.getOverlayRetriever().getOverlays().getOverlays());
 
-                RetrieveElementsList rel = new RetrieveElementsList();
-                rel.add(delegate.getElementRetriever().retrieveElements());
-
-                RetrieveElementsOverlayCollection rempp = new RetrieveElementsOverlayCollection();
-                rempp.setCurrentSelectedObjects(
-                        currentlySelectedMarksGetter.getOverlays().getOverlays());
-                rempp.setCurrentObjects(delegate.getOverlayRetriever().getOverlays().getOverlays());
-
-                rel.add(rempp);
-                return rel;
-            }
+            rel.add(rempp);
+            return rel;
         };
     }
 
@@ -198,7 +185,7 @@ public class InternalFrameOverlayedInstantStateToRGBSelectable {
                                 }));
     }
 
-    public IModuleCreatorDefaultState moduleCreator(ISliderState sliderState) {
+    public IModuleCreatorDefaultState moduleCreator(SliderState sliderState) {
         return defaultFrameState -> {
             VideoStatsModule module =
                     delegate.moduleCreator(sliderState).createVideoStatsModule(defaultFrameState);
@@ -222,7 +209,7 @@ public class InternalFrameOverlayedInstantStateToRGBSelectable {
         delegate.flush();
     }
 
-    public IPropertyValueReceivable<OverlayCollection> createSelectCfgReceivable() {
+    public IPropertyValueReceivable<OverlayCollection> createSelectMarksReceivable() {
         return markClickAdapter.createSelectOverlayCollectionReceivable();
     }
 
@@ -234,11 +221,11 @@ public class InternalFrameOverlayedInstantStateToRGBSelectable {
         return delegate.getElementRetriever();
     }
 
-    public boolean addAdditionalDetails(IGenerateExtraDetail arg0) {
+    public boolean addAdditionalDetails(GenerateExtraDetail arg0) {
         return delegate.addAdditionalDetails(arg0);
     }
 
-    public ControllerPopupMenuWithBackground controllerBackgroundMenu(ISliderState sliderState) {
+    public ControllerPopupMenuWithBackground controllerBackgroundMenu(SliderState sliderState) {
         return delegate.controllerBackgroundMenu(sliderState);
     }
 }

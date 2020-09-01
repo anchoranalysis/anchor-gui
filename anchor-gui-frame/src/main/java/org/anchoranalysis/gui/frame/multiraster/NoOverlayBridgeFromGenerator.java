@@ -26,7 +26,7 @@
 
 package org.anchoranalysis.gui.frame.multiraster;
 
-import org.anchoranalysis.core.functional.function.FunctionWithException;
+import org.anchoranalysis.core.functional.function.CheckedFunction;
 import org.anchoranalysis.core.index.SetOperationFailedException;
 import org.anchoranalysis.gui.container.background.BackgroundStackContainerException;
 import org.anchoranalysis.gui.frame.display.BoundOverlayedDisplayStack;
@@ -36,8 +36,7 @@ import org.anchoranalysis.io.generator.IterableObjectGenerator;
 import org.anchoranalysis.io.output.error.OutputWriteFailedException;
 
 class NoOverlayBridgeFromGenerator
-        implements FunctionWithException<
-                Integer, DisplayUpdate, BackgroundStackContainerException> {
+        implements CheckedFunction<Integer, DisplayUpdate, BackgroundStackContainerException> {
 
     private IterableObjectGenerator<Integer, DisplayStack> generator;
 

@@ -26,7 +26,7 @@
 
 package org.anchoranalysis.gui.annotation.strategy.builder.mark;
 
-import org.anchoranalysis.gui.annotation.AnnotationBackground;
+import org.anchoranalysis.gui.annotation.AnnotationBackgroundInstance;
 import org.anchoranalysis.gui.annotation.AnnotationRefresher;
 import org.anchoranalysis.gui.annotation.InitAnnotation;
 import org.anchoranalysis.gui.annotation.mark.MarkAnnotator;
@@ -41,7 +41,7 @@ public class InitParamsProposeMarks extends InitParamsWithBackground {
     public InitParamsProposeMarks(
             AnnotationRefresher annotationRefresher,
             MarkAnnotator markAnnotator,
-            AnnotationBackground annotationBackground,
+            AnnotationBackgroundInstance annotationBackground,
             InitAnnotation initAnnotation) {
         super(annotationBackground);
         this.annotationRefresher = annotationRefresher;

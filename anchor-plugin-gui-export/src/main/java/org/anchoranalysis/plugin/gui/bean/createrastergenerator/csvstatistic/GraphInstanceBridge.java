@@ -28,32 +28,32 @@ package org.anchoranalysis.plugin.gui.bean.createrastergenerator.csvstatistic;
 
 import java.util.Iterator;
 import java.util.Optional;
-import org.anchoranalysis.anchor.plot.AxisLimits;
-import org.anchoranalysis.anchor.plot.GraphInstance;
-import org.anchoranalysis.anchor.plot.bean.GraphDefinition;
 import org.anchoranalysis.core.error.CreateException;
-import org.anchoranalysis.core.functional.function.FunctionWithException;
+import org.anchoranalysis.core.functional.function.CheckedFunction;
 import org.anchoranalysis.core.index.container.BoundedIndexContainer;
 import org.anchoranalysis.core.index.container.bridge.BoundedIndexContainerBridgeWithoutIndex;
 import org.anchoranalysis.gui.io.loader.manifest.finder.csvstatistic.CSVStatistic;
 import org.anchoranalysis.gui.plot.BoundedIndexContainerIterator;
+import org.anchoranalysis.plot.AxisLimits;
+import org.anchoranalysis.plot.PlotInstance;
+import org.anchoranalysis.plot.bean.Plot;
 import org.anchoranalysis.plugin.gui.bean.exporttask.MappedFrom;
 
 class GraphInstanceBridge<T>
-        implements FunctionWithException<MappedFrom<CSVStatistic>, GraphInstance, CreateException> {
+        implements CheckedFunction<MappedFrom<CSVStatistic>, PlotInstance, CreateException> {
 
     // START: PARAMETERS IN
-    private GraphDefinition<T> graphDefinition;
+    private Plot<T> graphDefinition;
     private BoundedIndexContainer<CSVStatistic> cntr;
-    private FunctionWithException<CSVStatistic, T, ? extends Exception> elementBridge;
+    private CheckedFunction<CSVStatistic, T, ? extends Exception> elementBridge;
     // END: PARAMETERS IN
 
     private Optional<AxisLimits> rangeLimits = Optional.empty();
 
     public GraphInstanceBridge(
-            GraphDefinition<T> graphDefinition,
+            Plot<T> graphDefinition,
             BoundedIndexContainer<CSVStatistic> cntr,
-            FunctionWithException<CSVStatistic, T, ? extends Exception> elementBridge) {
+            CheckedFunction<CSVStatistic, T, ? extends Exception> elementBridge) {
         super();
         this.graphDefinition = graphDefinition;
         this.cntr = cntr;
@@ -61,7 +61,7 @@ class GraphInstanceBridge<T>
     }
 
     @Override
-    public GraphInstance apply(MappedFrom<CSVStatistic> sourceObject) throws CreateException {
+    public PlotInstance apply(MappedFrom<CSVStatistic> sourceObject) throws CreateException {
 
         assert (graphDefinition != null);
 
@@ -101,7 +101,7 @@ class GraphInstanceBridge<T>
             AxisLimits domainLimits)
             throws CreateException {
         Iterator<T> itrAll = new BoundedIndexContainerIterator<>(boundBridge, 1000);
-        GraphInstance instance =
+        PlotInstance instance =
                 graphDefinition.create(itrAll, Optional.of(domainLimits), Optional.empty());
         return instance.getRangeAxisLimits();
     }

@@ -33,7 +33,7 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import org.anchoranalysis.core.progress.ProgressReporterNull;
 import org.anchoranalysis.gui.frame.details.ControllerPopupMenu;
-import org.anchoranalysis.gui.image.frame.ISliderState;
+import org.anchoranalysis.gui.image.frame.SliderState;
 import org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.ControllerPopupMenuWithBackground;
 import org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.IBackgroundSetter;
 import org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.IGetNames;
@@ -47,7 +47,7 @@ class AddBackgroundPopup {
             ControllerPopupMenu popUpMenu,
             IBackgroundSetter backgroundSetter,
             List<NamedRasterSet> list,
-            ISliderState sliderState,
+            SliderState sliderState,
             VideoStatsModuleGlobalParams mpg) {
         ControllerPopupMenuWithBackground controller =
                 new ControllerPopupMenuWithBackground(popUpMenu, backgroundSetter);
@@ -59,19 +59,19 @@ class AddBackgroundPopup {
                 sourceObject -> {
                     return list.get(sourceObject)
                             .getBackgroundSet()
-                            .call(ProgressReporterNull.get())
+                            .get(ProgressReporterNull.get())
                             .singleStack(name);
                 };
     }
 
     private static IGetNames createGetNames(
-            List<NamedRasterSet> list, ISliderState sliderState, VideoStatsModuleGlobalParams mpg) {
+            List<NamedRasterSet> list, SliderState sliderState, VideoStatsModuleGlobalParams mpg) {
         return () -> {
             try {
                 Set<String> names =
                         list.get(sliderState.getIndex())
                                 .getBackgroundSet()
-                                .call(ProgressReporterNull.get())
+                                .get(ProgressReporterNull.get())
                                 .names();
                 return new ArrayList<>(names);
 

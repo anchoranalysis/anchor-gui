@@ -26,26 +26,24 @@
 
 package org.anchoranalysis.gui.frame.multioverlay.instantstate;
 
-import org.anchoranalysis.core.functional.function.FunctionWithException;
+import org.anchoranalysis.core.functional.function.CheckedFunction;
 import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.index.container.BoundedIndexContainer;
 import org.anchoranalysis.gui.container.background.BackgroundStackContainerException;
 import org.anchoranalysis.gui.displayupdate.OverlayedDisplayStack;
-import org.anchoranalysis.gui.videostats.internalframe.cfgtorgb.ColoredOverlayedInstantState;
+import org.anchoranalysis.gui.videostats.internalframe.markstorgb.IndexableColoredOverlays;
 import org.anchoranalysis.image.stack.DisplayStack;
 
 class IndexToRedrawUpdate
-        implements FunctionWithException<
+        implements CheckedFunction<
                 Integer, OverlayedDisplayStack, BackgroundStackContainerException> {
 
-    private BoundedIndexBridge<ColoredOverlayedInstantState> delegate;
-    private FunctionWithException<Integer, DisplayStack, BackgroundStackContainerException>
-            background;
+    private BoundedIndexBridge<IndexableColoredOverlays> delegate;
+    private CheckedFunction<Integer, DisplayStack, BackgroundStackContainerException> background;
 
     public IndexToRedrawUpdate(
-            BoundedIndexContainer<ColoredOverlayedInstantState> cntr,
-            FunctionWithException<Integer, DisplayStack, BackgroundStackContainerException>
-                    background) {
+            BoundedIndexContainer<IndexableColoredOverlays> cntr,
+            CheckedFunction<Integer, DisplayStack, BackgroundStackContainerException> background) {
         delegate = new BoundedIndexBridge<>(cntr);
         this.background = background;
     }
@@ -55,7 +53,7 @@ class IndexToRedrawUpdate
             throws BackgroundStackContainerException {
 
         try {
-            ColoredOverlayedInstantState found = delegate.apply(sourceObject);
+            IndexableColoredOverlays found = delegate.apply(sourceObject);
 
             return new OverlayedDisplayStack(
                     found.getOverlayCollection(), background.apply(sourceObject));
@@ -66,7 +64,7 @@ class IndexToRedrawUpdate
     }
 
     public void setImageStackCntr(
-            FunctionWithException<Integer, DisplayStack, BackgroundStackContainerException>
+            CheckedFunction<Integer, DisplayStack, BackgroundStackContainerException>
                     imageStackCntr) {
         this.background = imageStackCntr;
     }

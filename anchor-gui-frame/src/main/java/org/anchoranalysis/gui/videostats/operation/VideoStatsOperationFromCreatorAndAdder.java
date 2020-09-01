@@ -29,7 +29,7 @@ package org.anchoranalysis.gui.videostats.operation;
 import java.util.Optional;
 import org.anchoranalysis.core.log.Logger;
 import org.anchoranalysis.gui.videostats.dropdown.VideoStatsModuleCreatorAndAdder;
-import org.anchoranalysis.gui.videostats.operation.combine.IVideoStatsOperationCombine;
+import org.anchoranalysis.gui.videostats.operation.combine.VideoStatsOperationCombine;
 import org.anchoranalysis.gui.videostats.threading.InteractiveThreadPool;
 
 public class VideoStatsOperationFromCreatorAndAdder implements VideoStatsOperation {
@@ -61,7 +61,7 @@ public class VideoStatsOperationFromCreatorAndAdder implements VideoStatsOperati
     }
 
     @Override
-    public Optional<IVideoStatsOperationCombine> getCombiner() {
+    public Optional<VideoStatsOperationCombine> getCombiner() {
         return creatorAndAdder.getCreator().getCombiner();
     }
 }

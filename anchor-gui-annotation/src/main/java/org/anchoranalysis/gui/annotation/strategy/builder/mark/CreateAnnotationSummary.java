@@ -81,7 +81,7 @@ class CreateAnnotationSummary {
 
     private static String shortDescription(MarkAnnotation annotation) {
         if (annotation.isAccepted()) {
-            return Integer.toString(annotation.getCfg().size());
+            return Integer.toString(annotation.getMarks().size());
         } else {
             return ""; // Empty-string if not-accepted
         }

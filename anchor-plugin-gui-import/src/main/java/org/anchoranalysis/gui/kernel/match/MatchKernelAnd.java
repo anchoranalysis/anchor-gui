@@ -27,13 +27,13 @@
 package org.anchoranalysis.gui.kernel.match;
 
 import java.util.ArrayList;
-import org.anchoranalysis.mpp.sgmn.kernel.proposer.KernelIterDescription;
+import lombok.NoArgsConstructor;
+import org.anchoranalysis.mpp.segment.kernel.proposer.KernelDescision;
 
+@NoArgsConstructor
 public class MatchKernelAnd extends MatchKernel {
 
     private ArrayList<MatchKernel> conditions = new ArrayList<>();
-
-    public MatchKernelAnd() {}
 
     public MatchKernelAnd(MatchKernel condition1, MatchKernel condition2) {
         conditions.add(condition1);
@@ -45,7 +45,7 @@ public class MatchKernelAnd extends MatchKernel {
     }
 
     @Override
-    public boolean matches(KernelIterDescription kid) {
+    public boolean matches(KernelDescision kid) {
 
         // Try all conditions
         for (MatchKernel condition : conditions) {

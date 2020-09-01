@@ -29,21 +29,21 @@ package org.anchoranalysis.gui.videostats.link;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.Action;
-import org.anchoranalysis.anchor.mpp.cfg.Cfg;
 import org.anchoranalysis.core.index.IntArray;
 import org.anchoranalysis.gui.IconFactory;
 import org.anchoranalysis.gui.videostats.ModuleEventRouter;
 import org.anchoranalysis.gui.videostats.SubgroupRetriever;
 import org.anchoranalysis.gui.videostats.module.VideoStatsModule;
-import org.anchoranalysis.mpp.io.cfg.CfgWithDisplayStack;
+import org.anchoranalysis.mpp.io.marks.MarksWithDisplayStack;
+import org.anchoranalysis.mpp.mark.MarkCollection;
 
 public class LinkedPropertiesAmongModules {
 
     private LinkedPropertyModuleSet<Integer> linkedFrameIndex;
     private LinkedPropertyModuleSet<Integer> linkedSliceNum;
     private LinkedPropertyModuleSet<IntArray> linkedMarkIndices;
-    private LinkedPropertyModuleSet<Cfg> linkedOverlays;
-    private LinkedPropertyModuleSet<CfgWithDisplayStack> linkedOverlaysWithStack;
+    private LinkedPropertyModuleSet<MarkCollection> linkedOverlays;
+    private LinkedPropertyModuleSet<MarksWithDisplayStack> linkedOverlaysWithStack;
 
     public LinkedPropertiesAmongModules(
             ModuleEventRouter moduleEventRouter, SubgroupRetriever subgroupRetriever) {

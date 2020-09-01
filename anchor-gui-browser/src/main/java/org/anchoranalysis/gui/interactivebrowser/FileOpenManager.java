@@ -29,7 +29,7 @@ package org.anchoranalysis.gui.interactivebrowser;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.gui.file.interactive.InteractiveFile;
 import org.anchoranalysis.gui.file.opened.OpenedFile;
-import org.anchoranalysis.gui.videostats.dropdown.IAddVideoStatsModule;
+import org.anchoranalysis.gui.videostats.dropdown.AddVideoStatsModule;
 import org.anchoranalysis.gui.videostats.frame.IGetToolbar;
 import org.anchoranalysis.gui.videostats.module.VideoStatsModule;
 import org.anchoranalysis.io.output.bound.BoundOutputManagerRouteErrors;
@@ -37,7 +37,7 @@ import org.anchoranalysis.io.output.bound.BoundOutputManagerRouteErrors;
 public class FileOpenManager implements IOpenFile {
 
     // The Parameters we need to perform the opening
-    private IAddVideoStatsModule globalSubgroupAdder;
+    private AddVideoStatsModule globalSubgroupAdder;
     private IGetToolbar videoStatsFrame;
     private BoundOutputManagerRouteErrors outputManager;
 
@@ -49,7 +49,7 @@ public class FileOpenManager implements IOpenFile {
             new VideoStatsFileMapToOpenedFileCounter();
 
     public FileOpenManager(
-            IAddVideoStatsModule globalSubgroupAdder,
+            AddVideoStatsModule globalSubgroupAdder,
             IGetToolbar videoStatsFrame,
             BoundOutputManagerRouteErrors outputManager) {
         super();

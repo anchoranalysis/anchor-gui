@@ -30,13 +30,10 @@ import java.util.Optional;
 import lombok.AllArgsConstructor;
 import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.error.OperationFailedException;
-import org.anchoranalysis.core.progress.CallableWithProgressReporter;
-import org.anchoranalysis.gui.backgroundset.BackgroundSet;
-import org.anchoranalysis.gui.container.background.BackgroundStackContainerException;
-import org.anchoranalysis.gui.image.frame.ISliderState;
-import org.anchoranalysis.gui.io.loader.manifest.finder.FinderCfgNRGSet;
+import org.anchoranalysis.gui.image.frame.SliderState;
+import org.anchoranalysis.gui.io.loader.manifest.finder.FinderMarksWithEnergy;
 import org.anchoranalysis.gui.videostats.IModuleCreatorDefaultState;
-import org.anchoranalysis.gui.videostats.internalframe.MergedCfgNRGHistoryInternalFrame;
+import org.anchoranalysis.gui.videostats.internalframe.MergedMarksHistoryInternalFrame;
 import org.anchoranalysis.gui.videostats.module.DefaultModuleStateManager;
 import org.anchoranalysis.gui.videostats.module.VideoStatsModuleCreateException;
 import org.anchoranalysis.gui.videostats.modulecreator.VideoStatsModuleCreatorContext;
@@ -44,11 +41,10 @@ import org.anchoranalysis.gui.videostats.modulecreator.VideoStatsModuleCreatorCo
 @AllArgsConstructor
 class CombinationCreator extends VideoStatsModuleCreatorContext {
 
-    private FinderCfgNRGSet finderFirst;
-    private FinderCfgNRGSet finderSecond;
+    private FinderMarksWithEnergy finderFirst;
+    private FinderMarksWithEnergy finderSecond;
     private String combinationName;
-    private CallableWithProgressReporter<BackgroundSet, BackgroundStackContainerException>
-            backgroundSet;
+    private BackgroundSetProgressingSupplier backgroundSet;
 
     @Override
     public boolean precondition() {
@@ -64,11 +60,11 @@ class CombinationCreator extends VideoStatsModuleCreatorContext {
 
         try {
 
-            MergedCfgNRGHistoryInternalFrame imageFrame =
-                    new MergedCfgNRGHistoryInternalFrame(combinationName);
+            MergedMarksHistoryInternalFrame imageFrame =
+                    new MergedMarksHistoryInternalFrame(combinationName);
 
             try {
-                ISliderState sliderState =
+                SliderState sliderState =
                         imageFrame.init(
                                 finderFirst.getHistory(),
                                 finderSecond.getHistory(),

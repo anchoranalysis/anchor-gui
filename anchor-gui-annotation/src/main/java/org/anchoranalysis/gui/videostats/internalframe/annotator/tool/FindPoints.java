@@ -29,16 +29,16 @@ package org.anchoranalysis.gui.videostats.internalframe.annotator.tool;
 import java.util.List;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
-import org.anchoranalysis.anchor.mpp.bean.regionmap.RegionMap;
-import org.anchoranalysis.anchor.mpp.bean.regionmap.RegionMembershipWithFlags;
-import org.anchoranalysis.anchor.mpp.cfg.Cfg;
-import org.anchoranalysis.anchor.mpp.mark.Mark;
 import org.anchoranalysis.core.functional.FunctionalList;
 import org.anchoranalysis.core.functional.OptionalUtilities;
 import org.anchoranalysis.core.geometry.Point3d;
 import org.anchoranalysis.core.geometry.Point3i;
 import org.anchoranalysis.core.geometry.PointConverter;
 import org.anchoranalysis.gui.videostats.internalframe.annotator.currentstate.IQuerySelectedPoints;
+import org.anchoranalysis.mpp.bean.regionmap.RegionMap;
+import org.anchoranalysis.mpp.bean.regionmap.RegionMembershipWithFlags;
+import org.anchoranalysis.mpp.mark.Mark;
+import org.anchoranalysis.mpp.mark.MarkCollection;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 class FindPoints {
@@ -47,26 +47,26 @@ class FindPoints {
 
     private static final int DISTANCE_THRESHOLD_SQUARED = DISTANCE_THRESHOLD * DISTANCE_THRESHOLD;
 
-    public static Cfg findMarksContainingPoint(
-            Cfg cfg, Point3d point, RegionMap regionMap, int regionID) {
+    public static MarkCollection findMarksContainingPoint(
+            MarkCollection marks, Point3d point, RegionMap regionMap, int regionID) {
 
-        Cfg cfgOut = new Cfg();
+        MarkCollection marksOut = new MarkCollection();
 
         RegionMembershipWithFlags rm = regionMap.membershipWithFlagsForIndex(regionID);
 
         // Find marks that contain the point x, y
-        for (Mark m : cfg) {
-            byte membership = m.evalPointInside(point);
+        for (Mark m : marks) {
+            byte membership = m.isPointInside(point);
             if (rm.isMemberFlag(membership)) {
-                cfgOut.add(m);
+                marksOut.add(m);
             }
         }
-        return cfgOut;
+        return marksOut;
     }
 
     public static List<Point3i> findSelectedPointsNear(
             Point3d point, IQuerySelectedPoints selectedPoints) {
-        return findSelectedPointsNear(PointConverter.intFromDouble(point), selectedPoints);
+        return findSelectedPointsNear(PointConverter.intFromDoubleFloor(point), selectedPoints);
     }
 
     private static List<Point3i> findSelectedPointsNear(
@@ -77,17 +77,17 @@ class FindPoints {
         // Find marks that contain the point x, y
         return FunctionalList.mapToListOptional(
                 listPoints,
-                p -> {
-                    int distanceSquared = distanceFromPoints(p, pointNear);
+                point -> {
+                    int distanceSquared = distanceFromPoints(point, pointNear);
                     return OptionalUtilities.createFromFlag(
-                            distanceSquared < DISTANCE_THRESHOLD_SQUARED, () -> p);
+                            distanceSquared < DISTANCE_THRESHOLD_SQUARED, point);
                 });
     }
 
     private static int distanceFromPoints(Point3i p1, Point3i p2) {
-        int px = p1.getX() - p2.getX();
-        int py = p1.getY() - p2.getY();
-        int pz = p1.getZ() - p2.getZ();
+        int px = p1.x() - p2.x();
+        int py = p1.y() - p2.y();
+        int pz = p1.z() - p2.z();
 
         return (px * px) + (py * py) + (pz * pz);
     }

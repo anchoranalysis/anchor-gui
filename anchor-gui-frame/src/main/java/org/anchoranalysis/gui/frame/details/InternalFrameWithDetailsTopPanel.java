@@ -38,17 +38,17 @@ import javax.swing.SwingConstants;
 import javax.swing.event.InternalFrameAdapter;
 import javax.swing.event.InternalFrameEvent;
 import org.anchoranalysis.core.error.InitException;
-import org.anchoranalysis.core.index.IIndexGettableSettable;
+import org.anchoranalysis.core.index.IndexGettableSettable;
 import org.anchoranalysis.core.index.container.BoundedRangeIncompleteDynamic;
 import org.anchoranalysis.gui.displayupdate.DisplayUpdateRememberStack;
 import org.anchoranalysis.gui.frame.details.canvas.ControllerAction;
 import org.anchoranalysis.gui.frame.details.canvas.InitialSliderState;
 import org.anchoranalysis.gui.frame.details.canvas.InternalFrameCanvas;
 import org.anchoranalysis.gui.frame.details.canvas.controller.imageview.ControllerImageView;
-import org.anchoranalysis.gui.image.frame.ISliderState;
+import org.anchoranalysis.gui.image.frame.SliderState;
 import org.anchoranalysis.gui.retrieveelements.IRetrieveElements;
 import org.anchoranalysis.gui.videostats.dropdown.VideoStatsModuleGlobalParams;
-import org.anchoranalysis.image.extent.ImageDimensions;
+import org.anchoranalysis.image.extent.Dimensions;
 
 // TODO refactor
 public class InternalFrameWithDetailsTopPanel {
@@ -71,9 +71,9 @@ public class InternalFrameWithDetailsTopPanel {
         delegate = new InternalFrameCanvas(frameName);
     }
 
-    public ISliderState init(
+    public SliderState init(
             BoundedRangeIncompleteDynamic indexBounds,
-            IIndexGettableSettable indexCntr,
+            IndexGettableSettable indexCntr,
             DisplayUpdateRememberStack stackProvider,
             InitialSliderState initialSliceState,
             IRetrieveElements elementRetriever,
@@ -82,7 +82,7 @@ public class InternalFrameWithDetailsTopPanel {
 
         setupTopPanel();
 
-        ISliderState sliderState =
+        SliderState sliderState =
                 delegate.init(
                         indexBounds,
                         indexCntr,
@@ -111,8 +111,8 @@ public class InternalFrameWithDetailsTopPanel {
         delegate.setIndexSliderVisible(visibility);
     }
 
-    public ImageDimensions getDimensions() {
-        return delegate.getDimensions();
+    public Dimensions dimensions() {
+        return delegate.dimensions();
     }
 
     public void flush() {
@@ -124,7 +124,7 @@ public class InternalFrameWithDetailsTopPanel {
     }
 
     // Detail generator
-    public boolean addAdditionalDetails(IGenerateExtraDetail arg0) {
+    public boolean addAdditionalDetails(GenerateExtraDetail arg0) {
         return stringConstructor.addAdditionalDetails(arg0);
     }
 

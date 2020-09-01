@@ -27,9 +27,9 @@
 package org.anchoranalysis.gui.feature.evaluator;
 
 import javax.swing.JPanel;
-import org.anchoranalysis.anchor.overlay.collection.OverlayCollection;
-import org.anchoranalysis.gui.cfgnrgtable.TablePanel;
-import org.anchoranalysis.gui.feature.evaluator.singlepair.IUpdatableSinglePair;
+import org.anchoranalysis.gui.feature.evaluator.singlepair.UpdatableSinglePair;
+import org.anchoranalysis.gui.marks.table.TablePanel;
+import org.anchoranalysis.overlay.collection.OverlayCollection;
 
 class OverlayDescriptionPanel {
 
@@ -44,7 +44,7 @@ class OverlayDescriptionPanel {
         return descriptionTopPanel.isFrozen();
     }
 
-    public IUpdatableSinglePair getMarkDescription() {
+    public UpdatableSinglePair getMarkDescription() {
         return markDescription;
     }
 

@@ -27,26 +27,25 @@
 package org.anchoranalysis.gui.frame.threaded.overlay;
 
 import java.util.function.Supplier;
-import org.anchoranalysis.core.functional.function.FunctionWithException;
+import org.anchoranalysis.core.functional.function.CheckedFunction;
 import org.anchoranalysis.gui.container.background.BackgroundStackContainerException;
 import org.anchoranalysis.gui.displayupdate.OverlayedDisplayStack;
 import org.anchoranalysis.gui.frame.display.OverlayedDisplayStackUpdate;
 
-// Finds ColoredCfgRedrawUpdate which implement changes to existing ColoredCfg
+// Finds ColoredMarksRedrawUpdate which implement changes to existing ColoredMarks
 class FindCorrectUpdate
-        implements FunctionWithException<
+        implements CheckedFunction<
                 Integer, OverlayedDisplayStackUpdate, BackgroundStackContainerException> {
     private int oldIndex = -1;
 
-    private final FunctionWithException<
-                    Integer, OverlayedDisplayStack, BackgroundStackContainerException>
+    private final CheckedFunction<Integer, OverlayedDisplayStack, BackgroundStackContainerException>
             integerToOverlayedBridge;
 
     private Supplier<Boolean> funcHasBeenInit;
     private IGetClearUpdate getClearUpdate;
 
     public FindCorrectUpdate(
-            FunctionWithException<Integer, OverlayedDisplayStack, BackgroundStackContainerException>
+            CheckedFunction<Integer, OverlayedDisplayStack, BackgroundStackContainerException>
                     integerToOverlayedBridge,
             Supplier<Boolean> funcHasBeenInit,
             IGetClearUpdate getClearUpdate) {

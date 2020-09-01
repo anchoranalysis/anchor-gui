@@ -31,17 +31,16 @@ import static org.anchoranalysis.gui.videostats.internalframe.annotator.FrameAct
 import java.util.Optional;
 import javax.swing.Action;
 import javax.swing.JInternalFrame;
+import org.anchoranalysis.annotation.image.ImageLabelAnnotation;
+import org.anchoranalysis.annotation.io.image.WholeImageLabelAnnotationWriter;
 import org.anchoranalysis.annotation.io.input.AnnotationWithStrategy;
-import org.anchoranalysis.annotation.io.wholeimage.WholeImageLabelAnnotationWriter;
-import org.anchoranalysis.annotation.wholeimage.WholeImageLabelAnnotation;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.log.Logger;
 import org.anchoranalysis.core.progress.ProgressReporterMultiple;
 import org.anchoranalysis.core.progress.ProgressReporterNull;
-import org.anchoranalysis.gui.annotation.AnnotationBackground;
+import org.anchoranalysis.gui.annotation.AnnotationBackgroundInstance;
 import org.anchoranalysis.gui.annotation.AnnotationRefresher;
-import org.anchoranalysis.gui.annotation.bean.label.AnnotationLabel;
 import org.anchoranalysis.gui.annotation.builder.AdditionalFramesContext;
 import org.anchoranalysis.gui.annotation.builder.AnnotationGuiBuilderWithDelegate;
 import org.anchoranalysis.gui.annotation.builder.AnnotationGuiContext;
@@ -53,6 +52,7 @@ import org.anchoranalysis.gui.videostats.internalframe.annotator.AnnotationWrite
 import org.anchoranalysis.gui.videostats.internalframe.annotator.SaveMonitor;
 import org.anchoranalysis.gui.videostats.internalframe.annotator.navigation.PanelNavigation;
 import org.anchoranalysis.gui.videostats.internalframe.annotator.navigation.PanelWithLabel;
+import org.anchoranalysis.plugin.annotation.bean.label.AnnotationLabel;
 import org.anchoranalysis.plugin.annotation.bean.strategy.ReadAnnotationFromFile;
 import org.anchoranalysis.plugin.annotation.bean.strategy.WholeImageLabelStrategy;
 
@@ -72,13 +72,17 @@ public class BuilderWholeImage
             ProgressReporterMultiple prm,
             AnnotationGuiContext context,
             Logger logger,
-            boolean useDefaultCfg)
+            boolean useDefaultMarks)
             throws CreateException {
 
-        AnnotationBackground background =
-                createBackground(prm, stacks().call(ProgressReporterNull.get()));
+        try {
+            AnnotationBackgroundInstance background =
+                    createBackground(prm, stacks().get(ProgressReporterNull.get()));
 
-        return new InitParamsWholeImage(background, context.getAnnotationRefresher());
+            return new InitParamsWholeImage(background, context.getAnnotationRefresher());
+        } catch (OperationFailedException e) {
+            throw new CreateException(e);
+        }
     }
 
     @Override
@@ -131,7 +135,7 @@ public class BuilderWholeImage
 
     private Action saveAnnotationClose(
             AnnotationLabel label,
-            AnnotationWriterGUI<WholeImageLabelAnnotation> writer,
+            AnnotationWriterGUI<ImageLabelAnnotation> writer,
             JInternalFrame parentComponent) {
         return actionCloseFrame(
                 parentComponent,
@@ -141,11 +145,11 @@ public class BuilderWholeImage
                                 createAnnotation(label), annotationPath(), parentComponent));
     }
 
-    private static WholeImageLabelAnnotation createAnnotation(AnnotationLabel label) {
-        return new WholeImageLabelAnnotation(label.getUniqueLabel());
+    private static ImageLabelAnnotation createAnnotation(AnnotationLabel label) {
+        return new ImageLabelAnnotation(label.getUniqueLabel());
     }
 
-    private static AnnotationWriterGUI<WholeImageLabelAnnotation> createWriter(
+    private static AnnotationWriterGUI<ImageLabelAnnotation> createWriter(
             AnnotationRefresher annotationRefresher, Optional<SaveMonitor> saveMonitor) {
         return new AnnotationWriterGUI<>(
                 new WholeImageLabelAnnotationWriter(), annotationRefresher, saveMonitor);

@@ -27,12 +27,12 @@
 package org.anchoranalysis.gui.frame.canvas.zoom;
 
 import lombok.Getter;
-import org.anchoranalysis.anchor.mpp.bean.bound.ResolvedBound;
 import org.anchoranalysis.core.geometry.Point2i;
 import org.anchoranalysis.image.extent.BoundingBox;
+import org.anchoranalysis.image.extent.Dimensions;
 import org.anchoranalysis.image.extent.Extent;
-import org.anchoranalysis.image.extent.ImageDimensions;
 import org.anchoranalysis.image.scale.ScaleFactor;
+import org.anchoranalysis.mpp.bean.bound.ResolvedBound;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 
 public class ZoomScale {
@@ -83,12 +83,12 @@ public class ZoomScale {
     }
 
     // Establishes an upper and lower limit for zooming
-    public void establishBounds(ImageDimensions dimensions) {
+    public void establishBounds(Dimensions dimensions) {
 
         // The smallest zoom that keeps out size above 10, or 1
         // ceil( x = log2( minWidth / actualWidth ) )
-        int smallestZoomX = smallestZoom(MIN_WIDTH, dimensions.getX());
-        int smallestZoomY = smallestZoom(MIN_HEIGHT, dimensions.getY());
+        int smallestZoomX = smallestZoom(MIN_WIDTH, dimensions.x());
+        int smallestZoomY = smallestZoom(MIN_HEIGHT, dimensions.y());
         int smallestZoomExp = Math.max(smallestZoomX, smallestZoomY);
 
         // The largest zoom is 10
@@ -119,28 +119,25 @@ public class ZoomScale {
 
     public Point2i applyScale(Point2i point) {
         Point2i out = new Point2i();
-        out.setX(applyScale(point.getX()));
-        out.setY(applyScale(point.getY()));
+        out.setX(applyScale(point.x()));
+        out.setY(applyScale(point.y()));
         return out;
     }
 
-    public BoundingBox applyScale(BoundingBox bbox) {
-        return bbox.scale(new ScaleFactor(scale));
+    public BoundingBox applyScale(BoundingBox box) {
+        return box.scale(new ScaleFactor(scale));
     }
 
     public Extent applyScale(Extent e) {
-        return new Extent(applyScale(e.getX()), applyScale(e.getY()), e.getZ());
+        return new Extent(applyScale(e.x()), applyScale(e.y()), e.z());
     }
 
     public Point2i removeScale(Point2i point) {
-        Point2i out = new Point2i();
-        out.setX(removeScale(point.getX()));
-        out.setY(removeScale(point.getY()));
-        return out;
+        return new Point2i(removeScale(point.x()), removeScale(point.y()));
     }
 
     public Extent removeScale(Extent e) {
-        return new Extent(removeScale(e.getX()), removeScale(e.getY()), e.getZ());
+        return new Extent(removeScale(e.x()), removeScale(e.y()), e.z());
     }
 
     // Resolves a value expressed in scaled coordinates into image-ocordinates

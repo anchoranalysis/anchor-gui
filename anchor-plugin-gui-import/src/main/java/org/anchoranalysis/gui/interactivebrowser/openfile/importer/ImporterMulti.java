@@ -53,6 +53,6 @@ public class ImporterMulti extends ImporterFromBean {
                 inputManager,
                 (creator, input) -> creator.setInput(inputManager),
                 f,
-                "stack-cfg-set");
+                "stack-marks-set");
     }
 }

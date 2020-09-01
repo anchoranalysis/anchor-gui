@@ -26,19 +26,19 @@
 
 package org.anchoranalysis.gui.videostats.internalframe;
 
-import org.anchoranalysis.anchor.overlay.Overlay;
-import org.anchoranalysis.anchor.overlay.OverlayedInstantState;
-import org.anchoranalysis.anchor.overlay.collection.OverlayCollection;
-import org.anchoranalysis.anchor.overlay.id.IDGetterOverlayID;
 import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.idgetter.IDGetter;
 import org.anchoranalysis.core.index.container.SingleContainer;
 import org.anchoranalysis.gui.frame.multioverlay.instantstate.InternalFrameOverlayedInstantStateToRGBSelectable;
-import org.anchoranalysis.gui.image.frame.ISliderState;
+import org.anchoranalysis.gui.image.frame.SliderState;
 import org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.ControllerPopupMenuWithBackground;
 import org.anchoranalysis.gui.videostats.IModuleCreatorDefaultState;
 import org.anchoranalysis.gui.videostats.dropdown.VideoStatsModuleGlobalParams;
 import org.anchoranalysis.gui.videostats.module.DefaultModuleState;
+import org.anchoranalysis.overlay.IndexableOverlays;
+import org.anchoranalysis.overlay.Overlay;
+import org.anchoranalysis.overlay.collection.OverlayCollection;
+import org.anchoranalysis.overlay.id.IDGetterOverlayID;
 
 public class InternalFrameStaticOverlaySelectable {
 
@@ -50,20 +50,20 @@ public class InternalFrameStaticOverlaySelectable {
                         title, false, sendReceiveIndices);
     }
 
-    public ISliderState init(
+    public SliderState init(
             OverlayCollection oc, DefaultModuleState defaultState, VideoStatsModuleGlobalParams mpg)
             throws InitException {
 
-        OverlayedInstantState cis = new OverlayedInstantState(0, oc);
+        IndexableOverlays cis = new IndexableOverlays(0, oc);
 
-        SingleContainer<OverlayedInstantState> cfgCntr = new SingleContainer<>(false);
-        cfgCntr.setItem(cis, cis.getIndex());
+        SingleContainer<IndexableOverlays> marksCntr = new SingleContainer<>(false);
+        marksCntr.setItem(cis, cis.getIndex());
 
         IDGetter<Overlay> idGetter = new IDGetterOverlayID();
 
-        ISliderState sliderState =
+        SliderState sliderState =
                 this.delegate.init(
-                        cfgCntr,
+                        marksCntr,
                         mpg.getDefaultColorIndexForMarks(),
                         idGetter,
                         idGetter,
@@ -76,11 +76,11 @@ public class InternalFrameStaticOverlaySelectable {
         return sliderState;
     }
 
-    public ControllerPopupMenuWithBackground controllerBackgroundMenu(ISliderState sliderState) {
+    public ControllerPopupMenuWithBackground controllerBackgroundMenu(SliderState sliderState) {
         return delegate.controllerBackgroundMenu(sliderState);
     }
 
-    public IModuleCreatorDefaultState moduleCreator(ISliderState sliderState) {
+    public IModuleCreatorDefaultState moduleCreator(SliderState sliderState) {
         return delegate.moduleCreator(sliderState);
     }
 }

@@ -28,13 +28,13 @@ package org.anchoranalysis.gui.feature.evaluator.params;
 
 import java.util.Optional;
 import lombok.AllArgsConstructor;
-import org.anchoranalysis.anchor.mpp.mark.voxelized.memo.VoxelizedMarkMemo;
 import org.anchoranalysis.core.error.CreateException;
+import org.anchoranalysis.feature.energy.EnergyStack;
 import org.anchoranalysis.feature.input.FeatureInput;
-import org.anchoranalysis.feature.nrg.NRGStackWithParams;
 import org.anchoranalysis.image.binary.values.BinaryValuesByte;
 import org.anchoranalysis.image.feature.object.input.FeatureInputPairObjects;
 import org.anchoranalysis.image.object.ObjectMask;
+import org.anchoranalysis.mpp.mark.voxelized.memo.VoxelizedMarkMemo;
 
 @AllArgsConstructor
 public class ObjectPairwiseFactory extends PairwiseFactory {
@@ -43,25 +43,25 @@ public class ObjectPairwiseFactory extends PairwiseFactory {
 
     @Override
     public FeatureInput create(
-            VoxelizedMarkMemo pmm1, VoxelizedMarkMemo pmm2, NRGStackWithParams nrgStack)
+            VoxelizedMarkMemo pmm1, VoxelizedMarkMemo pmm2, EnergyStack energyStack)
             throws CreateException {
 
         ObjectMask object1 =
                 pmm1.getMark()
-                        .calcMask(
-                                nrgStack.getDimensions(),
+                        .deriveObject(
+                                energyStack.dimensions(),
                                 pmm1.getRegionMap().membershipWithFlagsForIndex(regionID),
                                 BinaryValuesByte.getDefault())
-                        .getMask();
+                        .withoutProperties();
 
         ObjectMask object2 =
                 pmm1.getMark()
-                        .calcMask(
-                                nrgStack.getDimensions(),
+                        .deriveObject(
+                                energyStack.dimensions(),
                                 pmm2.getRegionMap().membershipWithFlagsForIndex(regionID),
                                 BinaryValuesByte.getDefault())
-                        .getMask();
+                        .withoutProperties();
 
-        return new FeatureInputPairObjects(object1, object2, Optional.of(nrgStack));
+        return new FeatureInputPairObjects(object1, object2, Optional.of(energyStack));
     }
 }

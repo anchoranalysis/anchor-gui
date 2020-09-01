@@ -30,8 +30,8 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import org.anchoranalysis.gui.frame.details.canvas.InternalFrameCanvas;
-import org.anchoranalysis.gui.image.frame.ISliderState;
-import org.anchoranalysis.image.extent.ImageResolution;
+import org.anchoranalysis.gui.image.frame.SliderState;
+import org.anchoranalysis.image.extent.Resolution;
 import org.anchoranalysis.image.voxel.datatype.VoxelDataType;
 
 class StringHelper {
@@ -39,18 +39,18 @@ class StringHelper {
     // optional decimal places 0.##
     private static DecimalFormat resFormat = new DecimalFormat("0");
 
-    private ISliderState sliderState;
+    private SliderState sliderState;
     private InternalFrameCanvas internalFrameCanvas;
-    private List<IGenerateExtraDetail> listExtra = new ArrayList<>();
+    private List<GenerateExtraDetail> listExtra = new ArrayList<>();
 
-    public StringHelper(InternalFrameCanvas internalFrameCanvas, ISliderState sliderState) {
+    public StringHelper(InternalFrameCanvas internalFrameCanvas, SliderState sliderState) {
         super();
         this.internalFrameCanvas = internalFrameCanvas;
         this.sliderState = sliderState;
     }
 
     // Detail generator
-    public boolean addAdditionalDetails(IGenerateExtraDetail arg0) {
+    public boolean addAdditionalDetails(GenerateExtraDetail arg0) {
         return listExtra.add(arg0);
     }
 
@@ -68,28 +68,27 @@ class StringHelper {
         }
     }
 
-    public String genResString() {
-        ImageResolution sr = internalFrameCanvas.getRes();
-        if (sr.getX() == sr.getY()) {
-            return String.format(
-                    "resXY=%s resZ=%s", formatUnits(sr.getX()), formatUnits(sr.getZ()));
+    public String resolution() {
+        Resolution sr = internalFrameCanvas.getRes();
+        if (sr.x() == sr.y()) {
+            return String.format("resXY=%s resZ=%s", formatUnits(sr.x()), formatUnits(sr.z()));
         } else {
             return String.format(
                     "resX=%s resY=%s resZ=%s)",
-                    formatUnits(sr.getX()), formatUnits(sr.getY()), formatUnits(sr.getZ()));
+                    formatUnits(sr.x()), formatUnits(sr.y()), formatUnits(sr.z()));
         }
     }
 
-    public String posString(int x, int y) {
+    public String position(int x, int y) {
         return String.format("(%3d,%3d)", x, y);
     }
 
-    public String zoomString() {
+    public String zoom() {
         int zoomPercentage = internalFrameCanvas.getZoomScale().asPercentage();
         return String.format("Zoom=%4d%s", zoomPercentage, "%");
     }
 
-    public String typeString() {
+    public String dataType() {
         return internalFrameCanvas
                 .associatedDataType()
                 .map(VoxelDataType::toString)
@@ -98,8 +97,8 @@ class StringHelper {
 
     public String extraString() {
         StringBuilder sb = new StringBuilder();
-        for (IGenerateExtraDetail extra : listExtra) {
-            sb.append(extra.genStr(sliderState.getIndex()));
+        for (GenerateExtraDetail extra : listExtra) {
+            sb.append(extra.extraDetail(sliderState.getIndex()));
             sb.append(" ");
         }
         return sb.toString();

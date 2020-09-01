@@ -27,61 +27,54 @@
 package org.anchoranalysis.gui.videostats.link;
 
 import java.util.HashMap;
-import org.anchoranalysis.anchor.overlay.collection.OverlayCollection;
-import org.anchoranalysis.core.functional.function.FunctionWithException;
+import lombok.Getter;
+import org.anchoranalysis.core.functional.function.CheckedFunction;
 import org.anchoranalysis.core.index.IntArray;
 import org.anchoranalysis.core.property.IPropertyValueSendable;
 import org.anchoranalysis.gui.container.background.BackgroundStackContainerException;
-import org.anchoranalysis.gui.image.OverlayCollectionWithNrgStack;
+import org.anchoranalysis.gui.image.OverlaysWithEnergyStack;
 import org.anchoranalysis.image.stack.DisplayStack;
+import org.anchoranalysis.overlay.collection.OverlayCollection;
 
 public class DefaultLinkStateManager {
 
-    private DefaultLinkState delegate;
+    @Getter private DefaultLinkState state;
 
-    @SuppressWarnings("rawtypes")
-    private HashMap<String, IPropertyValueSendable> mapSendableProperties = new HashMap<>();
+    private HashMap<String, IPropertyValueSendable<?>> mapSendableProperties = new HashMap<>();
 
     public DefaultLinkStateManager(DefaultLinkState state) {
-        this.delegate = state;
+        this.state = state;
 
         this.<Integer>putMap(
-                LinkFramesUniqueID.SLICE_NUM, (value, adjusting) -> delegate.setSliceNum(value));
+                LinkFramesUniqueID.SLICE_NUM, (value, adjusting) -> state.setSliceNum(value));
 
         this.<Integer>putMap(
-                LinkFramesUniqueID.FRAME_INDEX,
-                (value, adjusting) -> delegate.setFrameIndex(value));
+                LinkFramesUniqueID.FRAME_INDEX, (value, adjusting) -> state.setFrameIndex(value));
 
         this.<IntArray>putMap(
                 LinkFramesUniqueID.MARK_INDICES,
-                (value, adjusting) -> delegate.setObjectIDs(value.getArr()));
+                (value, adjusting) -> state.setObjectIDs(value.getArr()));
 
         this.<OverlayCollection>putMap(
                 LinkFramesUniqueID.OVERLAYS,
-                (value, adjusting) -> delegate.setOverlayCollection(value));
+                (value, adjusting) -> state.setOverlayCollection(value));
 
-        this.<OverlayCollectionWithNrgStack>putMap(
+        this.<OverlaysWithEnergyStack>putMap(
                 LinkFramesUniqueID.OVERLAYS_WITH_STACK,
-                (value, adjusting) -> delegate.setCfgWithStack(value));
+                (value, adjusting) -> state.setOverlaysWithStack(value));
     }
 
-    @SuppressWarnings("unchecked")
     public IPropertyValueSendable<Integer> getSendableSliceNum() {
-        return (IPropertyValueSendable<Integer>) getSendable(LinkFramesUniqueID.SLICE_NUM);
+        return getSendable(LinkFramesUniqueID.SLICE_NUM);
     }
 
-    @SuppressWarnings("rawtypes")
-    public IPropertyValueSendable getSendable(String key) {
-        return mapSendableProperties.get(key);
-    }
-
-    public DefaultLinkState getState() {
-        return delegate;
+    @SuppressWarnings({"unchecked"})
+    public <T> IPropertyValueSendable<T> getSendable(String key) {
+        return (IPropertyValueSendable<T>) mapSendableProperties.get(key);
     }
 
     public void setBackground(
-            FunctionWithException<Integer, DisplayStack, BackgroundStackContainerException>
-                    background) {
+            CheckedFunction<Integer, DisplayStack, BackgroundStackContainerException> background) {
         getState().setBackground(background);
     }
 
@@ -93,14 +86,13 @@ public class DefaultLinkStateManager {
      * Provides a copy of the current state (if you change it, it won't affect the global defaults )
      */
     public DefaultLinkState copy() {
-        return delegate.duplicate();
+        return state.duplicate();
     }
 
     /** Provides a copy of the default module state with a changed background */
     public DefaultLinkState copyChangeBackground(
-            FunctionWithException<Integer, DisplayStack, BackgroundStackContainerException>
-                    background) {
-        DefaultLinkState dup = delegate.duplicate();
+            CheckedFunction<Integer, DisplayStack, BackgroundStackContainerException> background) {
+        DefaultLinkState dup = state.duplicate();
         dup.setBackground(background);
         return dup;
     }

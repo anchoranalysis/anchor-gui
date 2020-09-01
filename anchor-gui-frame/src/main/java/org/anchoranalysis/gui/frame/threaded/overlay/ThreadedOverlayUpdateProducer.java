@@ -26,13 +26,12 @@
 
 package org.anchoranalysis.gui.frame.threaded.overlay;
 
-import org.anchoranalysis.anchor.overlay.Overlay;
-import org.anchoranalysis.anchor.overlay.writer.DrawOverlay;
+import lombok.RequiredArgsConstructor;
 import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.error.reporter.ErrorReporter;
-import org.anchoranalysis.core.functional.function.FunctionWithException;
+import org.anchoranalysis.core.functional.function.CheckedFunction;
 import org.anchoranalysis.core.idgetter.IDGetter;
-import org.anchoranalysis.core.index.IIndexGettableSettable;
+import org.anchoranalysis.core.index.IndexGettableSettable;
 import org.anchoranalysis.core.index.SetOperationFailedException;
 import org.anchoranalysis.core.log.Logger;
 import org.anchoranalysis.core.property.change.PropertyValueChangeEvent;
@@ -40,17 +39,19 @@ import org.anchoranalysis.core.property.change.PropertyValueChangeListener;
 import org.anchoranalysis.gui.container.background.BackgroundStackContainerException;
 import org.anchoranalysis.gui.displayupdate.DisplayUpdateRememberStack;
 import org.anchoranalysis.gui.displayupdate.OverlayedDisplayStack;
-import org.anchoranalysis.gui.frame.display.IRedrawable;
 import org.anchoranalysis.gui.frame.display.OverlayedDisplayStackUpdate;
+import org.anchoranalysis.gui.frame.display.Redrawable;
 import org.anchoranalysis.gui.frame.display.overlay.OverlayRetriever;
-import org.anchoranalysis.gui.frame.threaded.stack.IThreadedProducer;
 import org.anchoranalysis.gui.frame.threaded.stack.ThreadedDisplayUpdateConsumer;
+import org.anchoranalysis.gui.frame.threaded.stack.ThreadedProducer;
 import org.anchoranalysis.gui.image.DisplayUpdateCreator;
-import org.anchoranalysis.gui.mark.MarkDisplaySettings;
-import org.anchoranalysis.gui.videostats.internalframe.cfgtorgb.markdisplay.MarkDisplaySettingsWrapper;
+import org.anchoranalysis.gui.marks.MarkDisplaySettings;
+import org.anchoranalysis.gui.videostats.internalframe.markstorgb.markdisplay.MarkDisplaySettingsWrapper;
 import org.anchoranalysis.gui.videostats.threading.InteractiveThreadPool;
+import org.anchoranalysis.overlay.Overlay;
+import org.anchoranalysis.overlay.writer.DrawOverlay;
 
-class ThreadedOverlayUpdateProducer implements IRedrawable, IThreadedProducer, IGetClearUpdate {
+class ThreadedOverlayUpdateProducer implements Redrawable, ThreadedProducer, IGetClearUpdate {
 
     private ThreadedDisplayUpdateConsumer consumer;
 
@@ -62,25 +63,20 @@ class ThreadedOverlayUpdateProducer implements IRedrawable, IThreadedProducer, I
     private IDGetter<Overlay> idGetter;
     private Logger logger;
 
+    @RequiredArgsConstructor
     private class PropertyValueChange implements PropertyValueChangeListener<MarkDisplaySettings> {
 
         private final MarkDisplaySettingsWrapper markDisplaySettingsWrapper;
 
-        public PropertyValueChange(MarkDisplaySettingsWrapper markDisplaySettingsWrapper) {
-            super();
-            this.markDisplaySettingsWrapper = markDisplaySettingsWrapper;
-        }
-
         @Override
         public void propertyValueChanged(PropertyValueChangeEvent<MarkDisplaySettings> evt) {
 
-            DrawOverlay maskWriter = markDisplaySettingsWrapper.createObjectDrawer();
+            DrawOverlay drawOverlay = markDisplaySettingsWrapper.createObjectDrawer();
 
             try {
-                displayStackCreator.updateMaskWriter(maskWriter);
+                displayStackCreator.updateDrawer(drawOverlay);
                 applyRedrawUpdate(OverlayedDisplayStackUpdate.redrawAll());
 
-                // cfgGenerator.applyRedrawUpdate( new ColoredCfgRedrawUpdate(null) );
             } catch (SetOperationFailedException e) {
                 logger.errorReporter().recordError(ThreadedOverlayUpdateProducer.class, e);
             }
@@ -94,9 +90,8 @@ class ThreadedOverlayUpdateProducer implements IRedrawable, IThreadedProducer, I
     }
 
     public void init(
-            final FunctionWithException<
-                            Integer, OverlayedDisplayStack, BackgroundStackContainerException>
-                    integerToCfgBridge,
+            final CheckedFunction<Integer, OverlayedDisplayStack, BackgroundStackContainerException>
+                    integerToMarksBridge,
             final MarkDisplaySettingsWrapper markDisplaySettingsWrapper,
             int defaultIndex,
             InteractiveThreadPool threadPool,
@@ -109,13 +104,12 @@ class ThreadedOverlayUpdateProducer implements IRedrawable, IThreadedProducer, I
         // When our Mark display settings change
         markDisplaySettingsWrapper.addChangeListener(propertyValueChange);
 
-        FunctionWithException<
-                        Integer, OverlayedDisplayStackUpdate, BackgroundStackContainerException>
+        CheckedFunction<Integer, OverlayedDisplayStackUpdate, BackgroundStackContainerException>
                 findCorrectUpdate =
-                        new FindCorrectUpdate(integerToCfgBridge, () -> consumer != null, this);
+                        new FindCorrectUpdate(integerToMarksBridge, () -> consumer != null, this);
 
         // We create an imageStackGenerator
-        // Gives us a generator that works in terms of indexes, rather than Cfgs
+        // Gives us a generator that works in terms of indexes, rather than Markss
         displayStackCreator =
                 setupDisplayUpdateCreator(
                         findCorrectUpdate,
@@ -139,7 +133,7 @@ class ThreadedOverlayUpdateProducer implements IRedrawable, IThreadedProducer, I
 
     // How it is updated with indexes from other classes (the input control mechanism)
     @Override
-    public IIndexGettableSettable getIndexGettableSettable() {
+    public IndexGettableSettable getIndexGettableSettable() {
         return consumer;
     }
 
@@ -184,18 +178,17 @@ class ThreadedOverlayUpdateProducer implements IRedrawable, IThreadedProducer, I
     }
 
     private static DisplayUpdateCreator setupDisplayUpdateCreator(
-            FunctionWithException<
-                            Integer, OverlayedDisplayStackUpdate, BackgroundStackContainerException>
+            CheckedFunction<Integer, OverlayedDisplayStackUpdate, BackgroundStackContainerException>
                     findCorrectUpdate,
             IDGetter<Overlay> idGetter,
-            DrawOverlay maskWriter)
+            DrawOverlay drawOverlay)
             throws InitException {
 
         DisplayUpdateCreator displayStackCreator =
                 new DisplayUpdateCreator(findCorrectUpdate, idGetter);
 
         try {
-            displayStackCreator.updateMaskWriter(maskWriter);
+            displayStackCreator.updateDrawer(drawOverlay);
         } catch (SetOperationFailedException e) {
             throw new InitException(e);
         }

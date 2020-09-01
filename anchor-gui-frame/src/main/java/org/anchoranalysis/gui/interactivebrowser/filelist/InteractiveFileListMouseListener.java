@@ -36,22 +36,22 @@ import org.anchoranalysis.gui.file.interactive.InteractiveFile;
 import org.anchoranalysis.gui.file.opened.IOpenedFileGUI;
 import org.anchoranalysis.gui.file.opened.OpenedFile;
 import org.anchoranalysis.gui.interactivebrowser.IOpenFile;
-import org.anchoranalysis.gui.mark.MarkDisplaySettings;
-import org.anchoranalysis.gui.videostats.dropdown.IAddVideoStatsModule;
+import org.anchoranalysis.gui.marks.MarkDisplaySettings;
+import org.anchoranalysis.gui.videostats.dropdown.AddVideoStatsModule;
 import org.anchoranalysis.gui.videostats.dropdown.VideoStatsModuleGlobalParams;
 import org.anchoranalysis.gui.videostats.dropdown.opened.OpenedFileGUIMultipleDropDown;
 import org.apache.commons.lang3.ArrayUtils;
 
 public class InteractiveFileListMouseListener extends MouseAdapter {
 
-    private IAddVideoStatsModule adder;
+    private AddVideoStatsModule adder;
     private InteractiveFileListTableModel tableModel;
     private IOpenFile fileOpenManager;
     private VideoStatsModuleGlobalParams mpg;
     private MarkDisplaySettings markDisplaySettings;
 
     public InteractiveFileListMouseListener(
-            IAddVideoStatsModule adder,
+            AddVideoStatsModule adder,
             InteractiveFileListTableModel tableModel,
             IOpenFile fileOpenManager,
             VideoStatsModuleGlobalParams mpg,

@@ -26,15 +26,19 @@
 
 package org.anchoranalysis.gui.videostats.internalframe.evaluator;
 
-import org.anchoranalysis.anchor.mpp.bean.cfg.CfgGen;
-import org.anchoranalysis.anchor.mpp.cfg.Cfg;
-import org.anchoranalysis.anchor.mpp.proposer.ProposerContext;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.geometry.Point3d;
 import org.anchoranalysis.gui.videostats.internalframe.ProposalOperation;
+import org.anchoranalysis.mpp.bean.mark.MarkWithIdentifierFactory;
+import org.anchoranalysis.mpp.mark.MarkCollection;
+import org.anchoranalysis.mpp.proposer.ProposerContext;
 
 public interface ProposalOperationCreator {
 
-    ProposalOperation create(Cfg cfg, Point3d position, ProposerContext context, CfgGen cfgGen)
+    ProposalOperation create(
+            MarkCollection marks,
+            Point3d position,
+            ProposerContext context,
+            MarkWithIdentifierFactory markFactory)
             throws OperationFailedException;
 }

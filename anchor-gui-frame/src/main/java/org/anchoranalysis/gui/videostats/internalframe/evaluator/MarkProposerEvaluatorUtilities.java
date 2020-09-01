@@ -30,16 +30,15 @@ import java.awt.Color;
 import java.util.Optional;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
-import org.anchoranalysis.anchor.mpp.bean.proposer.MarkProposer;
-import org.anchoranalysis.anchor.mpp.cfg.ColoredCfg;
-import org.anchoranalysis.anchor.mpp.mark.Mark;
-import org.anchoranalysis.anchor.mpp.mark.MarkAbstractPosition;
-import org.anchoranalysis.anchor.mpp.mark.conic.MarkConicFactory;
-import org.anchoranalysis.anchor.mpp.proposer.visualization.CreateProposalVisualization;
 import org.anchoranalysis.core.color.RGBColor;
 import org.anchoranalysis.core.geometry.Point3d;
 import org.anchoranalysis.core.random.RandomNumberGenerator;
-import org.anchoranalysis.image.extent.ImageDimensions;
+import org.anchoranalysis.mpp.bean.proposer.MarkProposer;
+import org.anchoranalysis.mpp.mark.ColoredMarks;
+import org.anchoranalysis.mpp.mark.Mark;
+import org.anchoranalysis.mpp.mark.MarkWithPosition;
+import org.anchoranalysis.mpp.mark.conic.MarkConicFactory;
+import org.anchoranalysis.mpp.proposer.visualization.CreateProposalVisualization;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class MarkProposerEvaluatorUtilities {
@@ -47,39 +46,38 @@ public class MarkProposerEvaluatorUtilities {
     public static Mark createMarkFromPosition(
             Point3d position,
             Mark templateMark,
-            final ImageDimensions dimensions,
             final RandomNumberGenerator randomNumberGenerator) {
 
         final Mark me = templateMark.duplicate();
 
-        if (!(me instanceof MarkAbstractPosition)) {
+        if (!(me instanceof MarkWithPosition)) {
             throw new IllegalArgumentException("templateMark is not MarkAbstractPosition");
         }
 
-        MarkAbstractPosition meCast = (MarkAbstractPosition) me;
+        MarkWithPosition meCast = (MarkWithPosition) me;
         meCast.setPos(position);
 
         return me;
     }
 
-    public static ColoredCfg generateCfgFromMark(
-            Mark m, Point3d position, MarkProposer markProposer, boolean detailedVisualization) {
+    public static ColoredMarks generateMarksFromMark(
+            Mark mark, Point3d position, MarkProposer markProposer, boolean detailedVisualization) {
 
-        ColoredCfg cfg = new ColoredCfg();
+        ColoredMarks marks = new ColoredMarks();
 
-        if (m != null) {
-            cfg.addChangeID(m, new RGBColor(Color.BLUE));
-            addMaskAtMousePoint(position, cfg, m.numDims() == 3);
+        if (mark != null) {
+            marks.addChangeID(mark, new RGBColor(Color.BLUE));
+            addMarkAtMousePoint(position, marks, mark.numDims() == 3);
         }
 
         Optional<CreateProposalVisualization> proposalVisualization =
                 markProposer.proposalVisualization(detailedVisualization);
-        proposalVisualization.ifPresent(pv -> pv.addToCfg(cfg));
-        return cfg;
+        proposalVisualization.ifPresent(pv -> pv.addToMarks(marks));
+        return marks;
     }
 
-    private static void addMaskAtMousePoint(Point3d position, ColoredCfg cfg, boolean do3D) {
+    private static void addMarkAtMousePoint(Point3d position, ColoredMarks marks, boolean do3D) {
         Mark mousePoint = MarkConicFactory.createMarkFromPoint(position, 1, do3D);
-        cfg.addChangeID(mousePoint, new RGBColor(Color.GREEN));
+        marks.addChangeID(mousePoint, new RGBColor(Color.GREEN));
     }
 }

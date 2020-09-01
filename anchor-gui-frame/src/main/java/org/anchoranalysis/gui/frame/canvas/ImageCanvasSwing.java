@@ -69,8 +69,8 @@ class ImageCanvasSwing extends JPanel {
 
         BufferedImageOverlay.overlayBufferedImage(image, subImage, x, y);
 
-        int xGlobal = x + imageCrnrPoint.getX();
-        int yGlobal = y + imageCrnrPoint.getY();
+        int xGlobal = x + imageCrnrPoint.x();
+        int yGlobal = y + imageCrnrPoint.y();
         repaint(xGlobal, yGlobal, subImage.getWidth(), subImage.getHeight());
     }
 
@@ -97,8 +97,8 @@ class ImageCanvasSwing extends JPanel {
         g.fillRect(0, 0, getWidth(), getHeight());
         g.drawImage(
                 image,
-                imageCrnrPoint.getX(),
-                imageCrnrPoint.getY(),
+                imageCrnrPoint.x(),
+                imageCrnrPoint.y(),
                 null); // see javadoc for more info on the parameters
     }
 

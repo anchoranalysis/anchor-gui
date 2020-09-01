@@ -26,9 +26,9 @@
 
 package org.anchoranalysis.gui.frame.overlays;
 
-import org.anchoranalysis.anchor.mpp.cfg.Cfg;
+import org.anchoranalysis.mpp.mark.MarkCollection;
 
 @FunctionalInterface
 public interface IShowEvaluationResult {
-    void showEvaluationResult(ProposedCfg er, Cfg bboxRedraw);
+    void showEvaluationResult(ProposedMarks er, MarkCollection boxRedraw);
 }

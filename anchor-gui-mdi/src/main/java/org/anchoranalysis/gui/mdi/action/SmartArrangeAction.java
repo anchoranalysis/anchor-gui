@@ -76,17 +76,17 @@ public class SmartArrangeAction extends AbstractAction {
         int desktopHeight = (int) desktopBounds.getHeight();
         int desktopWidth = (int) desktopBounds.getWidth();
 
-        int remainderBottom = desktopHeight - max.getY() - 1;
+        int remainderBottom = desktopHeight - max.y() - 1;
 
         // We then tile the graph frames in the remaining space either to the left, or to the bottom
-        int spaceLeft = (max.getX() + 1) * desktopHeight;
+        int spaceLeft = (max.x() + 1) * desktopHeight;
         int spaceBottom = remainderBottom * desktopWidth;
 
         Rectangle bounds = new Rectangle(desktopBounds);
         if (spaceLeft > spaceBottom) {
-            bounds.width = max.getX() - 1;
+            bounds.width = max.x() - 1;
         } else {
-            bounds.y = max.getY() + 1;
+            bounds.y = max.y() + 1;
             bounds.height = remainderBottom;
         }
 

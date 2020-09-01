@@ -26,17 +26,17 @@
 
 package org.anchoranalysis.gui.frame.details.canvas;
 
-import org.anchoranalysis.core.index.IIndexGettableSettable;
+import org.anchoranalysis.core.index.IndexGettableSettable;
 import org.anchoranalysis.core.property.IPropertyValueSendable;
 
 class IndexSendable implements IPropertyValueSendable<Integer> {
 
-    private IIndexGettableSettable indexCntr;
+    private IndexGettableSettable indexCntr;
     private SliceIndexSlider slider;
     private boolean includeIndexAdjusting;
 
     public IndexSendable(
-            IIndexGettableSettable indexCntr,
+            IndexGettableSettable indexCntr,
             SliceIndexSlider slider,
             boolean includeIndexAdjusting) {
         super();

@@ -30,10 +30,9 @@ import java.util.ArrayList;
 import java.util.List;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.name.provider.NamedProvider;
-import org.anchoranalysis.core.progress.CacheCallWithProgressReporter;
-import org.anchoranalysis.core.progress.CallableWithProgressReporter;
 import org.anchoranalysis.core.progress.ProgressReporterNull;
 import org.anchoranalysis.image.stack.NamedStacks;
+import org.anchoranalysis.image.stack.NamedStacksSupplier;
 import org.anchoranalysis.image.stack.Stack;
 import org.anchoranalysis.io.manifest.ManifestRecorder;
 
@@ -42,8 +41,8 @@ public class FinderStacksCombine implements FinderStacks {
 
     private List<FinderStacks> list = new ArrayList<>();
 
-    private CallableWithProgressReporter<NamedProvider<Stack>, OperationFailedException> operation =
-            CacheCallWithProgressReporter.of(
+    private NamedStacksSupplier operation =
+            NamedStacksSupplier.cache(
                     pr -> {
                         NamedStacks out = new NamedStacks();
 
@@ -56,12 +55,11 @@ public class FinderStacksCombine implements FinderStacks {
 
     @Override
     public NamedProvider<Stack> getStacks() throws OperationFailedException {
-        return operation.call(ProgressReporterNull.get());
+        return operation.get(ProgressReporterNull.get());
     }
 
     @Override
-    public CallableWithProgressReporter<NamedProvider<Stack>, OperationFailedException>
-            getStacksAsOperation() {
+    public NamedStacksSupplier getStacksAsOperation() {
         return operation;
     }
 

@@ -27,47 +27,51 @@
 package org.anchoranalysis.gui.interactivebrowser;
 
 import lombok.Getter;
-import org.anchoranalysis.anchor.mpp.bean.cfg.CfgGen;
-import org.anchoranalysis.anchor.mpp.bean.init.MPPInitParams;
-import org.anchoranalysis.anchor.mpp.feature.nrg.scheme.NRGScheme;
-import org.anchoranalysis.core.cache.CacheCall;
+import org.anchoranalysis.core.cache.CachedSupplier;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.params.KeyValueParams;
-import org.anchoranalysis.feature.nrg.NRGStackWithParams;
+import org.anchoranalysis.feature.energy.EnergyStack;
+import org.anchoranalysis.mpp.bean.init.MPPInitParams;
+import org.anchoranalysis.mpp.bean.mark.MarkWithIdentifierFactory;
+import org.anchoranalysis.mpp.feature.energy.scheme.EnergyScheme;
 
 // A MarkEvaluator after it has been resolved for usage by converting
 //  it into a ProposerSharedObjectsImageSpecific and other necessary components
 public class MarkEvaluatorResolved {
 
-    private final CacheCall<MPPInitParams, CreateException> operationCreateProposerSharedObjects;
-    private final CacheCall<NRGStackWithParams, CreateException> operationCreateNrgStack;
+    private final CachedSupplier<MPPInitParams, CreateException>
+            operationCreateProposerSharedObjects;
+    private final CachedSupplier<EnergyStack, CreateException> operationCreateEnergyStack;
 
-    @Getter private final CfgGen cfgGen;
+    @Getter private final MarkWithIdentifierFactory markFactory;
 
-    @Getter private final NRGScheme nrgScheme;
+    @Getter private final EnergyScheme energyScheme;
 
     public MarkEvaluatorResolved(
-            CacheCall<MPPInitParams, CreateException> proposerSharedObjects,
-            CfgGen cfgGen,
-            NRGScheme nrgScheme,
+            CachedSupplier<MPPInitParams, CreateException> proposerSharedObjects,
+            MarkWithIdentifierFactory markFactory,
+            EnergyScheme energyScheme,
             KeyValueParams params) {
         super();
         this.operationCreateProposerSharedObjects = proposerSharedObjects;
-        this.cfgGen = cfgGen;
-        this.nrgScheme = nrgScheme;
+        this.markFactory = markFactory;
+        this.energyScheme = energyScheme;
 
-        this.operationCreateNrgStack =
-                CacheCall.of(new OperationNrgStack(operationCreateProposerSharedObjects, params));
+        this.operationCreateEnergyStack =
+                CachedSupplier.cache(
+                        () ->
+                                CreateEnergyStackHelper.create(
+                                        operationCreateProposerSharedObjects, params));
     }
 
-    public CacheCall<MPPInitParams, CreateException> getProposerSharedObjectsOperation() {
+    public CachedSupplier<MPPInitParams, CreateException> getProposerSharedObjectsOperation() {
         return operationCreateProposerSharedObjects;
     }
 
-    public NRGStackWithParams getNRGStack() throws OperationFailedException {
+    public EnergyStack getEnergyStack() throws OperationFailedException {
         try {
-            return operationCreateNrgStack.call();
+            return operationCreateEnergyStack.get();
         } catch (CreateException e) {
             throw new OperationFailedException(e);
         }

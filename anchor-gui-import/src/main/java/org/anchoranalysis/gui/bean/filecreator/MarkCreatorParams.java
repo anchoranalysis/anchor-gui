@@ -28,7 +28,7 @@ package org.anchoranalysis.gui.bean.filecreator;
 
 import lombok.Value;
 import org.anchoranalysis.gui.interactivebrowser.MarkEvaluatorManager;
-import org.anchoranalysis.gui.mark.MarkDisplaySettings;
+import org.anchoranalysis.gui.marks.MarkDisplaySettings;
 import org.anchoranalysis.gui.videostats.dropdown.VideoStatsModuleGlobalParams;
 
 @Value

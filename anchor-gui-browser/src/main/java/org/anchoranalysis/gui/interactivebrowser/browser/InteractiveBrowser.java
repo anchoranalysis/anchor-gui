@@ -27,7 +27,6 @@
 package org.anchoranalysis.gui.interactivebrowser.browser;
 
 import java.util.List;
-import org.anchoranalysis.anchor.mpp.feature.bean.mark.MarkEvaluator;
 import org.anchoranalysis.bean.NamedBean;
 import org.anchoranalysis.core.color.ColorIndex;
 import org.anchoranalysis.core.error.CreateException;
@@ -55,6 +54,7 @@ import org.anchoranalysis.io.bean.color.generator.ShuffleColorSetGenerator;
 import org.anchoranalysis.io.color.HashedColorSet;
 import org.anchoranalysis.io.generator.sequence.SequenceMemory;
 import org.anchoranalysis.io.output.bound.BoundIOContext;
+import org.anchoranalysis.mpp.feature.bean.mark.MarkEvaluator;
 import org.anchoranalysis.plugin.gui.bean.exporttask.ExportTaskList;
 
 public class InteractiveBrowser {
@@ -148,12 +148,12 @@ public class InteractiveBrowser {
             throw new InitException(e);
         }
 
-        AdderWithNrg adderWithNrg =
-                new AdderWithNrg(moduleParams, featureListSrc, globalSubgroupAdder);
+        AdderWithEnergy adderWithEnergy =
+                new AdderWithEnergy(moduleParams, featureListSrc, globalSubgroupAdder);
 
         FileCreatorLoader fileCreatorLoader =
                 creatorLoader(
-                        adderWithNrg,
+                        adderWithEnergy,
                         interactiveBrowserInput.getRasterReader(),
                         fileOpenManager,
                         interactiveBrowserInput.getImporterSettings());
@@ -168,18 +168,18 @@ public class InteractiveBrowser {
 
         // We add the GUI components
         addGUIComponentsInner(
-                adderWithNrg,
+                adderWithEnergy,
                 fileCreatorLoader,
                 fileOpenManager,
                 interactiveBrowserInput.getListFileCreators());
     }
 
     private FileCreatorLoader creatorLoader(
-            AdderWithNrg adderWithNrg,
+            AdderWithEnergy adderWithEnergy,
             RasterReader rasterReader,
             FileOpenManager fileOpenManager,
             ImporterSettings importerSettings) {
-        return adderWithNrg.createFileCreatorLoader(
+        return adderWithEnergy.createFileCreatorLoader(
                 rasterReader,
                 fileOpenManager,
                 markEvaluatorManager,
@@ -188,7 +188,7 @@ public class InteractiveBrowser {
     }
 
     private void addGUIComponentsInner(
-            AdderWithNrg adderNrg,
+            AdderWithEnergy adderWithEnergy,
             FileCreatorLoader fileCreatorLoader,
             FileOpenManager fileOpenManager,
             List<FileCreator> fileCreators)
@@ -201,7 +201,7 @@ public class InteractiveBrowser {
 
         videoStatsFrame.getToolbar().addSeparator();
 
-        adderNrg.addGlobalSet(videoStatsFrame.getToolbar());
+        adderWithEnergy.addGlobalSet(videoStatsFrame.getToolbar());
 
         videoStatsFrame.getToolbar().addSeparator();
 

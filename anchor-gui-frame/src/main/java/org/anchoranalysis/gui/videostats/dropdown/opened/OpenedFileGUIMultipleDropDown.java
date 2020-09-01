@@ -31,36 +31,36 @@ import java.util.List;
 import java.util.Optional;
 import javax.swing.JPopupMenu;
 import lombok.Getter;
-import org.anchoranalysis.anchor.overlay.OverlayedInstantState;
 import org.anchoranalysis.core.bridge.BridgeElementWithIndex;
 import org.anchoranalysis.core.error.OperationFailedException;
-import org.anchoranalysis.core.functional.CallableWithException;
 import org.anchoranalysis.gui.file.opened.IOpenedFileGUI;
 import org.anchoranalysis.gui.frame.multioverlay.RasterMultiCreator;
 import org.anchoranalysis.gui.frame.multiraster.NamedRasterSet;
-import org.anchoranalysis.gui.mark.MarkDisplaySettings;
+import org.anchoranalysis.gui.marks.MarkDisplaySettings;
+import org.anchoranalysis.gui.videostats.dropdown.AddVideoStatsModule;
 import org.anchoranalysis.gui.videostats.dropdown.DualMenuWrapper;
-import org.anchoranalysis.gui.videostats.dropdown.IAddVideoStatsModule;
 import org.anchoranalysis.gui.videostats.dropdown.VideoStatsModuleCreatorAndAdder;
 import org.anchoranalysis.gui.videostats.dropdown.VideoStatsModuleGlobalParams;
-import org.anchoranalysis.gui.videostats.internalframe.cfgtorgb.MultiInput;
+import org.anchoranalysis.gui.videostats.internalframe.markstorgb.MultiInput;
 import org.anchoranalysis.gui.videostats.modulecreator.RasterMultiModuleCreator;
 import org.anchoranalysis.gui.videostats.operation.VideoStatsOperation;
 import org.anchoranalysis.gui.videostats.operation.VideoStatsOperationFromCreatorAndAdder;
 import org.anchoranalysis.gui.videostats.operation.VideoStatsOperationMenu;
 import org.anchoranalysis.gui.videostats.operation.VideoStatsOperationOrMenu;
 import org.anchoranalysis.gui.videostats.operation.VideoStatsOperationSequence;
-import org.anchoranalysis.gui.videostats.operation.combine.IVideoStatsOperationCombine;
+import org.anchoranalysis.gui.videostats.operation.combine.OverlayCollectionSupplier;
+import org.anchoranalysis.gui.videostats.operation.combine.VideoStatsOperationCombine;
+import org.anchoranalysis.overlay.IndexableOverlays;
 
 public class OpenedFileGUIMultipleDropDown {
 
     @Getter private JPopupMenu popupMenu = new JPopupMenu();
-    private IAddVideoStatsModule adder;
+    private AddVideoStatsModule adder;
     private VideoStatsModuleGlobalParams mpg;
     private MarkDisplaySettings markDisplaySettings;
 
     public OpenedFileGUIMultipleDropDown(
-            IAddVideoStatsModule adder,
+            AddVideoStatsModule adder,
             List<IOpenedFileGUI> listOpenedGUI,
             VideoStatsModuleGlobalParams moduleParamsGlobal,
             MarkDisplaySettings markDisplaySettings) {
@@ -120,7 +120,7 @@ public class OpenedFileGUIMultipleDropDown {
         VideoStatsOperationSequence all = new VideoStatsOperationSequence(or.getName());
         all.add(or);
 
-        List<IVideoStatsOperationCombine> listCombined = new ArrayList<>();
+        List<VideoStatsOperationCombine> listCombined = new ArrayList<>();
         or.getCombiner().ifPresent(listCombined::add);
 
         // We loop through all the other menus, looking to see if they have the same item. We accept
@@ -144,40 +144,40 @@ public class OpenedFileGUIMultipleDropDown {
 
     // We can improve this logic, as it's not the most clear cut
     private void addCombinedOperations(
-            List<IVideoStatsOperationCombine> listCombined,
+            List<VideoStatsOperationCombine> listCombined,
             VideoStatsOperationMenu out,
             VideoStatsOperation rootOperation,
             MarkDisplaySettings markDisplaySettings) {
         addBackgroundSetAndNoObjects(listCombined, out);
 
-        // Get cfg menu
+        // Get marks menu
         addMulti(
                 listCombined,
                 out,
                 rootOperation,
-                "Cfg",
-                new MultiCfgInputToOverlay(markDisplaySettings),
-                IVideoStatsOperationCombine::getCfg);
+                "Marks",
+                new MultiInputMarksToOverlay(markDisplaySettings),
+                VideoStatsOperationCombine::getMarks);
         addMulti(
                 listCombined,
                 out,
                 rootOperation,
                 "Objects",
                 new MultiObjectsInputToOverlay(),
-                IVideoStatsOperationCombine::getObjects);
+                VideoStatsOperationCombine::getObjects);
     }
 
     private void addBackgroundSetAndNoObjects(
-            List<IVideoStatsOperationCombine> listCombined, VideoStatsOperationMenu out) {
+            List<VideoStatsOperationCombine> listCombined, VideoStatsOperationMenu out) {
 
         List<NamedRasterSet> list = new ArrayList<>();
-        for (IVideoStatsOperationCombine op : listCombined) {
-            if (op.getNrgBackground() != null
-                    && !op.getCfg().isPresent()
+        for (VideoStatsOperationCombine op : listCombined) {
+            if (op.getEnergyBackground() != null
+                    && !op.getMarks().isPresent()
                     && !op.getObjects().isPresent()) {
                 list.add(
                         new NamedRasterSet(
-                                op.generateName(), op.getNrgBackground().getBackgroundSet()));
+                                op.generateName(), op.getEnergyBackground().getBackgroundSet()));
             }
         }
 
@@ -194,7 +194,7 @@ public class OpenedFileGUIMultipleDropDown {
     }
 
     /**
-     * @param <InputType> input-type
+     * @param <T> input-type
      * @param listCombined
      * @param outMenu
      * @param rootOperation
@@ -203,27 +203,29 @@ public class OpenedFileGUIMultipleDropDown {
      * @param getObjFromOperationCombine
      */
     private <T> void addMulti(
-            List<IVideoStatsOperationCombine> listCombined,
+            List<VideoStatsOperationCombine> listCombined,
             VideoStatsOperationMenu outMenu,
             VideoStatsOperation rootOperation,
             String subMenuName,
-            BridgeElementWithIndex<MultiInput<T>, OverlayedInstantState, OperationFailedException>
+            BridgeElementWithIndex<MultiInput<T>, IndexableOverlays, OperationFailedException>
                     bridge,
             GetObjFromOperationCombine<T> getObjFromOperationCombine) {
 
         // First we make a MultRaster, from all that suppport MultiRaster
         List<MultiInput<T>> list = new ArrayList<>();
-        for (IVideoStatsOperationCombine op : listCombined) {
-            if (op.getNrgBackground() != null
-                    && getObjFromOperationCombine.getObj(op).isPresent()) {
+        for (VideoStatsOperationCombine combine : listCombined) {
+            if (combine.getEnergyBackground() != null
+                    && getObjFromOperationCombine.getObj(combine).isPresent()) {
 
-                Optional<CallableWithException<T, OperationFailedException>> opt =
-                        getObjFromOperationCombine.getObj(op);
-                if (opt.isPresent()) {
-                    MultiInput<T> multiInput =
-                            new MultiInput<>(op.generateName(), op.getNrgBackground(), opt.get());
-                    list.add(multiInput);
-                }
+                getObjFromOperationCombine
+                        .getObj(combine)
+                        .ifPresent(
+                                obj ->
+                                        list.add(
+                                                new MultiInput<>(
+                                                        combine.generateName(),
+                                                        combine.getEnergyBackground(),
+                                                        obj)));
             }
         }
 
@@ -245,8 +247,7 @@ public class OpenedFileGUIMultipleDropDown {
 
     @FunctionalInterface
     private interface GetObjFromOperationCombine<T> {
-        public Optional<CallableWithException<T, OperationFailedException>> getObj(
-                IVideoStatsOperationCombine op);
+        public Optional<OverlayCollectionSupplier<T>> getObj(VideoStatsOperationCombine op);
     }
 
     private void addMenu(
@@ -278,10 +279,8 @@ public class OpenedFileGUIMultipleDropDown {
             VideoStatsOperation src, VideoStatsOperationMenu menu) {
 
         for (VideoStatsOperationOrMenu vsoom : menu.getListOperations()) {
-            if (vsoom.isOperation()) {
-                if (src.getName().equals(vsoom.getOperation().getName())) {
-                    return vsoom.getOperation();
-                }
+            if (vsoom.isOperation() && src.getName().equals(vsoom.getOperation().getName())) {
+                return vsoom.getOperation();
             }
         }
         return null;

@@ -27,10 +27,10 @@
 package org.anchoranalysis.gui.videostats.internalframe.annotator.currentstate;
 
 import java.util.List;
-import org.anchoranalysis.anchor.mpp.cfg.Cfg;
-import org.anchoranalysis.anchor.mpp.cfg.ColoredCfg;
 import org.anchoranalysis.core.geometry.Point3i;
 import org.anchoranalysis.gui.videostats.internalframe.annotator.undoredo.IRecordSnapshot;
+import org.anchoranalysis.mpp.mark.ColoredMarks;
+import org.anchoranalysis.mpp.mark.MarkCollection;
 
 class SnapshotReplaceRemove implements IReplaceRemove {
 
@@ -44,20 +44,21 @@ class SnapshotReplaceRemove implements IReplaceRemove {
     }
 
     @Override
-    public void removeCurrentProposedCfg() {
+    public void removeCurrentProposedMarks() {
         recorder.recordSnapshot();
-        delegate.removeCurrentProposedCfg();
+        delegate.removeCurrentProposedMarks();
     }
 
     @Override
-    public void replaceCurrentProposedCfg(Cfg cfgCore, ColoredCfg cfgDisplayed, int sliceZ) {
+    public void replaceCurrentProposedMarks(
+            MarkCollection marksCore, ColoredMarks marksDisplayed, int sliceZ) {
         recorder.recordSnapshot();
-        delegate.removeCurrentProposedCfg();
+        delegate.removeCurrentProposedMarks();
     }
 
     @Override
-    public void removeAcceptedMarksAndSelectedPoints(Cfg cfg, List<Point3i> points) {
+    public void removeAcceptedMarksAndSelectedPoints(MarkCollection marks, List<Point3i> points) {
         recorder.recordSnapshot();
-        delegate.removeAcceptedMarksAndSelectedPoints(cfg, points);
+        delegate.removeAcceptedMarksAndSelectedPoints(marks, points);
     }
 }
