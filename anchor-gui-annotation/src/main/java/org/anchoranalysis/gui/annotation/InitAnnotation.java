@@ -27,7 +27,7 @@
 package org.anchoranalysis.gui.annotation;
 
 import java.util.Optional;
-import org.anchoranalysis.annotation.AnnotationWithMarks;
+import org.anchoranalysis.annotation.mark.AnnotationWithMarks;
 import org.anchoranalysis.gui.videostats.internalframe.annotator.currentstate.PartitionedMarks;
 
 public class InitAnnotation {

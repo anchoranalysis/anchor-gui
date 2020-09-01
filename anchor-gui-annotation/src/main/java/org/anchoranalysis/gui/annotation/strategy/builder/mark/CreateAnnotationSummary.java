@@ -31,22 +31,25 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import org.anchoranalysis.annotation.io.mark.MarkAnnotationReader;
-import org.anchoranalysis.annotation.mark.MarkAnnotation;
+import org.anchoranalysis.annotation.mark.DualMarksAnnotation;
 import org.anchoranalysis.core.error.CreateException;
+import org.anchoranalysis.gui.annotation.mark.RejectionReason;
 import org.anchoranalysis.gui.annotation.state.AnnotationProgressState;
 import org.anchoranalysis.gui.annotation.state.AnnotationSummary;
 import org.anchoranalysis.io.error.AnchorIOException;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 
+@NoArgsConstructor(access=AccessLevel.PRIVATE)
 class CreateAnnotationSummary {
 
     private static Color colorRed = new Color(99, 00, 00);
     private static Color colorGreen = new Color(00, 99, 00);
     private static Color colorGreenSkipped = new Color(41, 171, 135);
     private static Color colorOrange = new Color(207, 83, 00);
-    // private static Color colorOrangeDark = new Color(255, 153, 00);
 
     public static AnnotationSummary apply(
-            Path annotationPath, MarkAnnotationReader annotationReader) throws CreateException {
+            Path annotationPath, MarkAnnotationReader<RejectionReason> annotationReader) throws CreateException {
         AnnotationSummary as = new AnnotationSummary();
 
         AnnotationProgressState aps = annotationProgressState(annotationPath);
@@ -54,7 +57,7 @@ class CreateAnnotationSummary {
         if (aps == AnnotationProgressState.ANNOTATION_FINISHED) {
 
             try {
-                MarkAnnotation a =
+                DualMarksAnnotation<RejectionReason> annotation =
                         annotationReader
                                 .read(annotationPath)
                                 .orElseThrow(
@@ -63,8 +66,8 @@ class CreateAnnotationSummary {
                                                         String.format(
                                                                 "No annotation exists at the specified path: %s",
                                                                 annotationPath)));
-                as.setShortDescription(shortDescription(a));
-                as.setColor(color(aps, a.isAccepted()));
+                as.setShortDescription(shortDescription(annotation));
+                as.setColor(color(aps, annotation.isAccepted()));
                 as.setExistsFinished(true);
 
             } catch (AnchorIOException e) {
@@ -79,9 +82,9 @@ class CreateAnnotationSummary {
         return as;
     }
 
-    private static String shortDescription(MarkAnnotation annotation) {
+    private static String shortDescription(DualMarksAnnotation<RejectionReason> annotation) {
         if (annotation.isAccepted()) {
-            return Integer.toString(annotation.getMarks().size());
+            return Integer.toString(annotation.marks().size());
         } else {
             return ""; // Empty-string if not-accepted
         }

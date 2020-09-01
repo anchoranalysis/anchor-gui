@@ -27,6 +27,7 @@
 package org.anchoranalysis.gui.videostats.internalframe.annotator.currentstate;
 
 import java.util.List;
+import org.anchoranalysis.annotation.mark.DualMarks;
 import org.anchoranalysis.core.geometry.Point3i;
 import org.anchoranalysis.gui.videostats.internalframe.annotator.SaveMonitor;
 import org.anchoranalysis.gui.videostats.internalframe.annotator.navigation.ConfirmResetStateChangedListener;
@@ -80,7 +81,7 @@ public class CurrentStateDisplayer {
         marksShower.show(currentState);
     }
 
-    public QueryAcceptedRejected queryAcceptReject() {
+    public DualMarks queryAcceptReject() {
         return currentState.queryAcceptReject();
     }
 
@@ -196,7 +197,7 @@ public class CurrentStateDisplayer {
         private boolean hasLargeOverlap() {
             return overlapChecker.hasLargeOverlap(
                     currentState.getProposedMarks(),
-                    currentState.queryAcceptReject().getMarksAccepted());
+                    currentState.queryAcceptReject().accepted());
         }
 
         @Override

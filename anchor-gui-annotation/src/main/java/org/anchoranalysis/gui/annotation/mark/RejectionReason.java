@@ -1,6 +1,6 @@
 /*-
  * #%L
- * anchor-gui-annotation
+ * anchor-annotation
  * %%
  * Copyright (C) 2010 - 2020 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann-La Roche
  * %%
@@ -24,13 +24,25 @@
  * #L%
  */
 
-package org.anchoranalysis.gui.videostats.internalframe.annotator.currentstate;
+package org.anchoranalysis.gui.annotation.mark;
 
-import org.anchoranalysis.mpp.mark.MarkCollection;
-
-public interface QueryAcceptedRejected {
-
-    MarkCollection getMarksAccepted();
-
-    MarkCollection getMarksRejected();
+/**
+ * A specific set of reasons for rejecting an image for annotation.
+ * 
+ * TODO removed the hardcoded reasons in favour of something more flexible and generic.
+ * 
+ * @author Owen Feehan
+ */
+public enum RejectionReason {
+    /** Incorrect boundary in image */
+    INCORRECT_BOUNDARY,
+    
+    /** The image is too poor in quality to annotate */
+    POOR_IMAGE_QUALITY,
+    
+    /** The image does not contain the expected image content */
+    INCORRECT_IMAGE_CONTENT,
+    
+    /** Another reason not specified above */
+    OTHER
 }

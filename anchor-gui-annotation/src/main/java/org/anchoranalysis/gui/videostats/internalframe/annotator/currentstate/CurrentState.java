@@ -30,6 +30,7 @@ import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.event.EventListenerList;
+import org.anchoranalysis.annotation.mark.DualMarks;
 import org.anchoranalysis.core.color.RGBColor;
 import org.anchoranalysis.core.geometry.Point3d;
 import org.anchoranalysis.core.geometry.Point3f;
@@ -81,8 +82,8 @@ class CurrentState implements IQuerySelectedPoints {
     public void initAcceptedMarks(PartitionedMarks in) {
         // We don't alter the changedSinceLastSave variable
         marks.addAll(in);
-        listForRefresh.addAll(in.getMarksAccepted());
-        listForRefresh.addAll(in.getMarksRejected());
+        listForRefresh.addAll(in.accepted());
+        listForRefresh.addAll(in.rejected());
     }
 
     public boolean hasCurrentProposedState() {
@@ -133,8 +134,8 @@ class CurrentState implements IQuerySelectedPoints {
         if (currentMarksDisplayed != null) {
             coloredMarks.addAll(currentMarksDisplayed);
         }
-        coloredMarks.addAll(marks.getMarksAccepted(), colorAccepted);
-        coloredMarks.addAll(marks.getMarksRejected(), colorRejected);
+        coloredMarks.addAll(marks.accepted(), colorAccepted);
+        coloredMarks.addAll(marks.rejected(), colorRejected);
         coloredMarks.addAll(currentSelectedPointsMarks, colorSelectedPoints);
         return coloredMarks;
     }
@@ -246,7 +247,7 @@ class CurrentState implements IQuerySelectedPoints {
         return confirmReset;
     }
 
-    public QueryAcceptedRejected queryAcceptReject() {
+    public DualMarks queryAcceptReject() {
         return marks;
     }
 

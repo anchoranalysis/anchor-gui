@@ -28,12 +28,12 @@ package org.anchoranalysis.gui.videostats.internalframe.annotator.tool;
 
 import java.util.List;
 import java.util.Optional;
+import org.anchoranalysis.annotation.mark.DualMarks;
 import org.anchoranalysis.core.geometry.Point3d;
 import org.anchoranalysis.core.geometry.Point3i;
 import org.anchoranalysis.gui.frame.overlays.ProposedMarks;
 import org.anchoranalysis.gui.videostats.internalframe.annotator.currentstate.IQuerySelectedPoints;
 import org.anchoranalysis.gui.videostats.internalframe.annotator.currentstate.IReplaceRemove;
-import org.anchoranalysis.gui.videostats.internalframe.annotator.currentstate.QueryAcceptedRejected;
 import org.anchoranalysis.gui.videostats.internalframe.annotator.navigation.ISwitchToGuessOrSelectPoints;
 import org.anchoranalysis.gui.videostats.internalframe.evaluator.EvaluatorWithContext;
 import org.anchoranalysis.mpp.bean.regionmap.RegionMap;
@@ -49,11 +49,11 @@ public class DeleteTool extends AnnotationTool {
 
     private ISwitchToGuessOrSelectPoints switcher;
     private IQuerySelectedPoints selectedPoints;
-    private QueryAcceptedRejected queryAcceptReject;
+    private DualMarks queryAcceptReject;
     private IReplaceRemove replaceRemove;
 
     public DeleteTool(
-            QueryAcceptedRejected queryAcceptReject,
+            DualMarks queryAcceptReject,
             IQuerySelectedPoints selectedPoints,
             IReplaceRemove replaceRemove,
             ISwitchToGuessOrSelectPoints panelTool) {
@@ -68,8 +68,8 @@ public class DeleteTool extends AnnotationTool {
     public void leftMouseClickedAtPoint(Point3d point) {
 
         MarkCollection marks = new MarkCollection();
-        marks.addAll(queryAcceptReject.getMarksAccepted());
-        marks.addAll(queryAcceptReject.getMarksRejected());
+        marks.addAll(queryAcceptReject.accepted());
+        marks.addAll(queryAcceptReject.rejected());
 
         MarkCollection marksToRemove =
                 FindPoints.findMarksContainingPoint(marks, point, regionMap, regionID);
