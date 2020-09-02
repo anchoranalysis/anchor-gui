@@ -34,5 +34,5 @@ import org.anchoranalysis.image.stack.DisplayStack;
 public interface ImageStackContainerFromName {
 
     CheckedFunction<Integer, DisplayStack, BackgroundStackContainerException>
-            imageStackCntrFromName(String name) throws BackgroundStackContainerException;
+            get(String name) throws BackgroundStackContainerException;
 }

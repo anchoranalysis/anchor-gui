@@ -52,7 +52,7 @@ class StackFromBackgroundSetViaMap implements ImageStackContainerFromName {
 
     @Override
     public CheckedFunction<Integer, DisplayStack, BackgroundStackContainerException>
-            imageStackCntrFromName(String name) throws BackgroundStackContainerException {
+            get(String name) throws BackgroundStackContainerException {
         try {
             return backgroundSet.get(ProgressReporterNull.get()).stackCntr(map.get(name));
         } catch (Exception e) {

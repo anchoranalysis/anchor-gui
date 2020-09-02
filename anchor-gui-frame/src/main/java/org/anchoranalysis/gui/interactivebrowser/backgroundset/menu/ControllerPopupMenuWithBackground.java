@@ -40,7 +40,7 @@ import org.anchoranalysis.gui.videostats.dropdown.VideoStatsModuleGlobalParams;
 public class ControllerPopupMenuWithBackground {
 
     private ControllerPopupMenu delegate;
-    private IBackgroundSetter backgroundSetter;
+    private BackgroundSetter backgroundSetter;
 
     public void add(
             IGetNames nameGetter,

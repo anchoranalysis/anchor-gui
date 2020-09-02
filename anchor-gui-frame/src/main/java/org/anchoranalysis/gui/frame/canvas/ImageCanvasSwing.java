@@ -48,7 +48,9 @@ class ImageCanvasSwing extends JPanel {
     private Point2i imageCrnrPoint = pointOrigin;
 
     public Extent createExtent() {
-        return new Extent(getWidth(), getHeight());
+        int width = Math.max( getWidth(), 1);
+        int height = Math.max( getHeight(), 1);
+        return new Extent(width, height);
     }
 
     public void updated(BufferedImage image) {

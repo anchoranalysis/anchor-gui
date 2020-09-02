@@ -127,7 +127,7 @@ class InternalFrameMultiOverlay<T> {
         // We always set an initial background
         try {
             return defaultState.copyChangeBackground(
-                    imageStackCntrFromName.imageStackCntrFromName(stackName));
+                    imageStackCntrFromName.get(stackName));
 
         } catch (BackgroundStackContainerException e) {
             throw new InitException(e);
