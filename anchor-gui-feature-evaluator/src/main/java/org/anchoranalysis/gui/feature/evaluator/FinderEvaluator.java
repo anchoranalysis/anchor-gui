@@ -59,7 +59,7 @@ class FinderEvaluator {
     private SharedFeatureMulti sharedFeatureList;
     private Logger logger;
 
-    // We take the first valid mark we can find, or NULL if there aren't any
+    // We take the first valid mark we can find, or null if there aren't any
     public static Overlay findOverlayFromCurrentSelection(OverlayCollection overlays) {
 
         if (overlays.size() > 0) {
@@ -171,8 +171,8 @@ class FinderEvaluator {
         public boolean canGenerateEdge(Mark m1, Mark m2) throws CreateException {
             return addCriteria
                     .generateEdge(
-                            PxlMarkMemoFactory.create(m1, raster.getEnergyStack(), regionMap),
-                            PxlMarkMemoFactory.create(m2, raster.getEnergyStack(), regionMap),
+                            PxlMarkMemoFactory.create(m1, raster.withoutParams(), regionMap),
+                            PxlMarkMemoFactory.create(m2, raster.withoutParams(), regionMap),
                             raster,
                             session,
                             raster.dimensions().z() > 1)

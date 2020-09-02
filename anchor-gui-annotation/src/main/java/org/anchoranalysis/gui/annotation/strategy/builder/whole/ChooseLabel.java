@@ -65,7 +65,7 @@ class ChooseLabel extends PanelWithLabel {
         JPanel panel = new JPanel();
         panel.setLayout(new GridBagLayout());
 
-        // This will return NULL if no label exists
+        // This will return null if no label exists
         Optional<ImageLabelAnnotation> existingLabel = readCurrentAnnotation.get();
 
         int row = 0;

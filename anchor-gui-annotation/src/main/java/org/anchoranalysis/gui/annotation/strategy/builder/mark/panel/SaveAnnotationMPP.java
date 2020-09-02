@@ -102,7 +102,7 @@ class SaveAnnotationMPP implements ISaveAnnotation<DualMarksAnnotation<Rejection
         annotationWriter.saveAnnotation(annotation, annotationPath, dialogParent);
     }
 
-    // Returns NULL if cancelled
+    // Returns null if cancelled
     private static Optional<RejectionReason> promptForRejectionReason() {
 
         String[] choices = {

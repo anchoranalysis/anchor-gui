@@ -60,9 +60,9 @@ class CreateParamsPair {
         }
 
         VoxelizedMarkMemo pmmSrc =
-                PxlMarkMemoFactory.create(markSrc, raster.getEnergyStack(), regionMap);
+                PxlMarkMemoFactory.create(markSrc, raster.withoutParams(), regionMap);
         VoxelizedMarkMemo pmmDest =
-                PxlMarkMemoFactory.create(markDest, raster.getEnergyStack(), regionMap);
+                PxlMarkMemoFactory.create(markDest, raster.withoutParams(), regionMap);
         params = new CreatePairFromMark(pmmSrc, pmmDest, raster);
         return params;
     }

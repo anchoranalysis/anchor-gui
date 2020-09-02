@@ -74,7 +74,7 @@ public class FinderStacksCombine implements FinderStacks {
         return result;
     }
 
-    // Uses OR behaviour, so returns TRUE if any of the elements exist
+    // Uses OR behaviour, so returns true if any of the elements exist
     @Override
     public boolean exists() {
         for (FinderStacks finder : list) {

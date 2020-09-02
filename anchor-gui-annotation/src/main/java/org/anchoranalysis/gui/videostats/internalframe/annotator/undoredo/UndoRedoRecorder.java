@@ -52,8 +52,8 @@ public class UndoRedoRecorder<T> implements IUndoRedo, IRecordSnapshot {
     }
 
     // These are other states which we can undo, or redo to
-    private T undoState; // Can be NULL
-    private T redoState; // Can be NULL
+    private T undoState; // Can be null
+    private T redoState; // Can be null
 
     private EventListenerList listeners = new EventListenerList();
 

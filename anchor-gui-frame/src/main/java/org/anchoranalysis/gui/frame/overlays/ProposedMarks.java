@@ -47,7 +47,7 @@ public class ProposedMarks {
      * The marks that need to be redrawn, as they have changed
      *
      * <p>Optional. The marks that have changed from the previous time (to avoid redrawing
-     * everything), otherwise NULL.
+     * everything), otherwise null.
      */
     @Getter @Setter private MarkCollection marksToRedraw = new MarkCollection();
 

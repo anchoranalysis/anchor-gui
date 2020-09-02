@@ -361,7 +361,7 @@ public class ManifestDropDown {
                 );
     }
 
-    // Returns TRUE if it's added a default, FALSE otherwise
+    // Returns true if it's added a default, false otherwise
     private boolean addMarkss(
             OperationCreateBackgroundSetWithAdder operationBwsaWithEnergy,
             FinderEnergyStack finderEnergyStack,

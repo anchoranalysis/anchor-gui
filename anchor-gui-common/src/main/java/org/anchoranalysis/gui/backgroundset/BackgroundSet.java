@@ -87,7 +87,7 @@ public class BackgroundSet {
         }
     }
 
-    // Gives us a stack container for a particular name, or NULL if none exists
+    // Gives us a stack container for a particular name, or null if none exists
     // NOTE: There is only a mapping between 0 and a single image
     public CheckedFunction<Integer, DisplayStack, BackgroundStackContainerException> stackCntr(
             String name) throws GetOperationFailedException {

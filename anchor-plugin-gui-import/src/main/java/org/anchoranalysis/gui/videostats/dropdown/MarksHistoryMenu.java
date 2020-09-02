@@ -88,9 +88,9 @@ public class MarksHistoryMenu {
     public void init(
             FinderHistoryFolder<IndexableMarksWithEnergy> finderMarksHistory,
             ContainerGetter<IndexableMarksWithEnergy>
-                    finderSecondaryHistory, // Can be NULL if there's no secondary
+                    finderSecondaryHistory, // Can be null if there's no secondary
             ContainerGetter<IndexableMarksWithEnergy>
-                    finderTertiaryHistory, // Can be NULL if there's no secondary
+                    finderTertiaryHistory, // Can be null if there's no secondary
             EnergyBackground energyBackground,
             FinderCSVStats finderCSVStats,
             MarksWithEnergyFinderContext context)

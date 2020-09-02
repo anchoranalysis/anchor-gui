@@ -38,7 +38,7 @@ import org.anchoranalysis.gui.videostats.dropdown.DualMenuWrapper;
 // A menu allowing modules to be called
 public class VideoStatsOperationMenu {
 
-    // One or other of these should be non-NULL
+    // One or other of these should be non-null
     private DualMenuWrapper menu;
 
     // The parent menu, in case we need to back to the root node

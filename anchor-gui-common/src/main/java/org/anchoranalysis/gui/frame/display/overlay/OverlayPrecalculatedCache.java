@@ -265,7 +265,7 @@ public class OverlayPrecalculatedCache implements OverlayRetriever {
      * @param overlay
      * @param index
      * @param dimScaled
-     * @return NULL if rejected
+     * @return null if rejected
      * @throws OperationFailedException
      */
     private Optional<PrecalculationOverlay> getOrCreateScaledOverlayForObject(
@@ -303,7 +303,7 @@ public class OverlayPrecalculatedCache implements OverlayRetriever {
 
             // If the object-mask we make from the overlay has no pixels, then we reject it by
             // returning
-            // NULL
+            // null
             if (!omScaledProps.withoutProperties().voxelsOn().anyExists()) {
                 return Optional.empty();
             }

@@ -87,7 +87,7 @@ public class FinderStacksFromEnergyStack implements FinderStacks {
     private Stack extractStack() throws OperationFailedException {
         try {
             EnergyStack energyStackWithParams = delegate.energyStackSupplier().get();
-            return energyStackWithParams.getEnergyStack().asStack().extractUpToThreeChannels();
+            return energyStackWithParams.withoutParams().asStack().extractUpToThreeChannels();
         } catch (GetOperationFailedException e) {
             throw e.asOperationFailedException();
         }

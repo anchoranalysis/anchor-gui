@@ -37,7 +37,7 @@ import org.anchoranalysis.image.stack.DisplayStack;
 import org.anchoranalysis.image.stack.Stack;
 
 // An interface that allows receiving elements from a module
-// When a function returns NULL, that element doesn't exist
+// When a function returns null, that element doesn't exist
 @AllArgsConstructor
 public class RetrieveElementsImage extends RetrieveElements {
 
