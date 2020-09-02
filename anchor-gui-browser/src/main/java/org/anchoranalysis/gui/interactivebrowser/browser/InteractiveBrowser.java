@@ -49,8 +49,8 @@ import org.anchoranalysis.gui.videostats.dropdown.VideoStatsModuleGlobalParams;
 import org.anchoranalysis.gui.videostats.frame.VideoStatsFrame;
 import org.anchoranalysis.gui.videostats.module.DefaultModuleState;
 import org.anchoranalysis.image.io.bean.rasterreader.RasterReader;
-import org.anchoranalysis.io.bean.color.generator.HSBColorSetGenerator;
-import org.anchoranalysis.io.bean.color.generator.ShuffleColorSetGenerator;
+import org.anchoranalysis.io.bean.color.list.HSB;
+import org.anchoranalysis.io.bean.color.list.Shuffle;
 import org.anchoranalysis.io.color.HashedColorSet;
 import org.anchoranalysis.io.generator.sequence.SequenceMemory;
 import org.anchoranalysis.io.output.bound.BoundIOContext;
@@ -252,7 +252,7 @@ public class InteractiveBrowser {
     private ColorIndex createColorIndex() throws InitException {
         try {
             return new HashedColorSet(
-                    new ShuffleColorSetGenerator(new HSBColorSetGenerator()), NUM_COLORS);
+                    new Shuffle(new HSB()), NUM_COLORS);
         } catch (OperationFailedException e) {
             throw new InitException(e);
         }
