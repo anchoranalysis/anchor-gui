@@ -30,7 +30,7 @@ import com.sun.tools.visualvm.charts.SimpleXYChartDescriptor; // NOSONAR
 import com.sun.tools.visualvm.charts.SimpleXYChartSupport;
 import lombok.RequiredArgsConstructor;
 import org.anchoranalysis.mpp.feature.energy.marks.MarksWithTotalEnergy;
-import org.anchoranalysis.mpp.segment.optscheme.feedback.aggregate.Aggregator;
+import org.anchoranalysis.mpp.segment.optimization.feedback.aggregate.Aggregator;
 
 @RequiredArgsConstructor
 public class NumberMarksGraphDefinition extends GraphDefinition {

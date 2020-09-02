@@ -32,7 +32,7 @@ import lombok.RequiredArgsConstructor;
 import org.anchoranalysis.mpp.feature.energy.marks.MarksWithTotalEnergy;
 import org.anchoranalysis.mpp.segment.kernel.proposer.WeightedKernel;
 import org.anchoranalysis.mpp.segment.kernel.proposer.WeightedKernelList;
-import org.anchoranalysis.mpp.segment.optscheme.feedback.aggregate.Aggregator;
+import org.anchoranalysis.mpp.segment.optimization.feedback.aggregate.Aggregator;
 
 @RequiredArgsConstructor
 public class AcceptanceRateGraphDefinition extends GraphDefinition {

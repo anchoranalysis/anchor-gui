@@ -27,7 +27,7 @@
 package org.anchoranalysis.gui.videostats;
 
 import org.anchoranalysis.mpp.feature.energy.marks.MarksWithTotalEnergy;
-import org.anchoranalysis.mpp.segment.optscheme.feedback.aggregate.Aggregator;
+import org.anchoranalysis.mpp.segment.optimization.feedback.aggregate.Aggregator;
 
 public interface EnergyUpdater {
 
