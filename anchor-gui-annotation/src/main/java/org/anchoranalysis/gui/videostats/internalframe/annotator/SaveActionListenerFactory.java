@@ -62,25 +62,19 @@ public class SaveActionListenerFactory implements ISaveActionListenerFactory {
     public ActionListener saveFinished(JInternalFrame frame) {
         return listenerCloseFrame(
                 frame,
-                () ->
-                    saveAnnotation.saveFinished(queryAcceptReject, annotationWriter, frame)
-                );
+                () -> saveAnnotation.saveFinished(queryAcceptReject, annotationWriter, frame));
     }
 
     @Override
     public ActionListener savePaused(JComponent dialogParent) {
         return listener(
-                () -> 
-                    saveAnnotation.savePaused(queryAcceptReject, annotationWriter, dialogParent)
-                );
+                () -> saveAnnotation.savePaused(queryAcceptReject, annotationWriter, dialogParent));
     }
 
     @Override
     public ActionListener skipAnnotation(JInternalFrame frame) {
         return listenerCloseFrame(
                 frame,
-                () -> 
-                    saveAnnotation.skipAnnotation(queryAcceptReject, annotationWriter, frame)
-                );
+                () -> saveAnnotation.skipAnnotation(queryAcceptReject, annotationWriter, frame));
     }
 }

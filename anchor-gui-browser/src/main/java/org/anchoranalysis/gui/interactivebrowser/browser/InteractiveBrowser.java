@@ -251,8 +251,7 @@ public class InteractiveBrowser {
 
     private ColorIndex createColorIndex() throws InitException {
         try {
-            return new HashedColorSet(
-                    new Shuffle(new HSB()), NUM_COLORS);
+            return new HashedColorSet(new Shuffle(new HSB()), NUM_COLORS);
         } catch (OperationFailedException e) {
             throw new InitException(e);
         }

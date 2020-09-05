@@ -33,6 +33,6 @@ import org.anchoranalysis.image.stack.DisplayStack;
 @FunctionalInterface
 public interface ImageStackContainerFromName {
 
-    CheckedFunction<Integer, DisplayStack, BackgroundStackContainerException>
-            get(String name) throws BackgroundStackContainerException;
+    CheckedFunction<Integer, DisplayStack, BackgroundStackContainerException> get(String name)
+            throws BackgroundStackContainerException;
 }

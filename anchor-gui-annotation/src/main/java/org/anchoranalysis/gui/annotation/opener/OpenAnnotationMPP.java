@@ -28,6 +28,7 @@ package org.anchoranalysis.gui.annotation.opener;
 
 import java.nio.file.Path;
 import java.util.Optional;
+import lombok.AllArgsConstructor;
 import org.anchoranalysis.annotation.io.mark.MarkAnnotationReader;
 import org.anchoranalysis.annotation.mark.DualMarksAnnotation;
 import org.anchoranalysis.core.log.Logger;
@@ -39,12 +40,10 @@ import org.anchoranalysis.gui.videostats.module.VideoStatsModuleCreateException;
 import org.anchoranalysis.io.deserializer.DeserializationFailedException;
 import org.anchoranalysis.io.error.AnchorIOException;
 import org.anchoranalysis.mpp.mark.MarkCollection;
-import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
 public class OpenAnnotationMPP implements OpenAnnotation {
 
-    
     private Path annotationPath;
     private Optional<Path> defaultMarksPath;
     private MarkAnnotationReader<RejectionReason> annotationReader;
@@ -54,7 +53,8 @@ public class OpenAnnotationMPP implements OpenAnnotation {
             throws VideoStatsModuleCreateException {
 
         // We try to read an existing annotation
-        Optional<DualMarksAnnotation<RejectionReason>> annotationExst = readAnnotation(annotationPath);
+        Optional<DualMarksAnnotation<RejectionReason>> annotationExst =
+                readAnnotation(annotationPath);
 
         if (annotationExst.isPresent()) {
             return readMarksFromAnnotation(annotationExst.get());

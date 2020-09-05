@@ -30,6 +30,7 @@ import java.io.File;
 import java.nio.file.Path;
 import java.util.Optional;
 import javax.swing.JFrame;
+import lombok.RequiredArgsConstructor;
 import org.anchoranalysis.annotation.io.mark.MarkAnnotationReader;
 import org.anchoranalysis.annotation.io.mark.MarkAnnotationWriter;
 import org.anchoranalysis.annotation.mark.DualMarksAnnotation;
@@ -40,7 +41,6 @@ import org.anchoranalysis.gui.annotation.mark.RejectionReason;
 import org.anchoranalysis.gui.videostats.internalframe.annotator.AnnotationWriterGUI;
 import org.anchoranalysis.io.error.AnchorIOException;
 import org.apache.commons.io.FilenameUtils;
-import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 public class ExportScaledMarks extends ExportAnnotation {
@@ -50,7 +50,7 @@ public class ExportScaledMarks extends ExportAnnotation {
     // END REQUIRED ARGUMENTS
 
     private MarkAnnotationReader<RejectionReason> reader = new MarkAnnotationReader<>(true);
-        
+
     @Override
     public boolean isPromptForScalingNeeded() {
         return true;

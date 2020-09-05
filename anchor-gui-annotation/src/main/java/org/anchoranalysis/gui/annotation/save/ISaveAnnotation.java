@@ -34,17 +34,11 @@ import org.anchoranalysis.gui.videostats.internalframe.annotator.AnnotationWrite
 public interface ISaveAnnotation<T extends Annotation> {
 
     void saveFinished(
-            DualMarks query,
-            AnnotationWriterGUI<T> annotationWriter,
-            JComponent dialogParent);
+            DualMarks query, AnnotationWriterGUI<T> annotationWriter, JComponent dialogParent);
 
     void savePaused(
-            DualMarks query,
-            AnnotationWriterGUI<T> annotationWriter,
-            JComponent dialogParent);
+            DualMarks query, AnnotationWriterGUI<T> annotationWriter, JComponent dialogParent);
 
     void skipAnnotation(
-            DualMarks query,
-            AnnotationWriterGUI<T> annotationWriter,
-            JComponent dialogParent);
+            DualMarks query, AnnotationWriterGUI<T> annotationWriter, JComponent dialogParent);
 }

@@ -65,7 +65,7 @@ public class ThreadedIndexedDisplayStackSetter implements BackgroundSetter, Thre
     }
 
     // How it is updated with indexes from other classes (the input control mechanism)
-    public IndexGettableSettable getIndexGettableSettable() {   // NOSONAR
+    public IndexGettableSettable getIndexGettableSettable() { // NOSONAR
         return delegate;
     }
 

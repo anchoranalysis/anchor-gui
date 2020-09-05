@@ -29,6 +29,7 @@ package org.anchoranalysis.gui.annotation.builder;
 import java.io.File;
 import java.nio.file.Path;
 import java.util.Optional;
+import lombok.RequiredArgsConstructor;
 import org.anchoranalysis.annotation.io.bean.AnnotatorStrategy;
 import org.anchoranalysis.annotation.io.input.AnnotationWithStrategy;
 import org.anchoranalysis.core.error.CreateException;
@@ -41,7 +42,6 @@ import org.anchoranalysis.gui.videostats.internalframe.annotator.AnnotationInitP
 import org.anchoranalysis.image.stack.NamedStacksSupplier;
 import org.anchoranalysis.image.stack.Stack;
 import org.anchoranalysis.io.error.AnchorIOException;
-import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 public abstract class AnnotationGuiBuilderWithDelegate<

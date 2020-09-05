@@ -28,21 +28,21 @@ package org.anchoranalysis.gui.annotation.mark;
 
 /**
  * A specific set of reasons for rejecting an image for annotation.
- * 
- * TODO removed the hardcoded reasons in favour of something more flexible and generic.
- * 
+ *
+ * <p>TODO removed the hardcoded reasons in favour of something more flexible and generic.
+ *
  * @author Owen Feehan
  */
 public enum RejectionReason {
     /** Incorrect boundary in image */
     INCORRECT_BOUNDARY,
-    
+
     /** The image is too poor in quality to annotate */
     POOR_IMAGE_QUALITY,
-    
+
     /** The image does not contain the expected image content */
     INCORRECT_IMAGE_CONTENT,
-    
+
     /** Another reason not specified above */
     OTHER
 }

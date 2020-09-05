@@ -57,7 +57,8 @@ import org.anchoranalysis.plugin.annotation.bean.strategy.PathFromGenerator;
 public class BuilderProposeMarks
         extends AnnotationGuiBuilderWithDelegate<InitParamsProposeMarks, MarkProposerStrategy> {
 
-    private MarkAnnotationReader<RejectionReason> annotationReader = new MarkAnnotationReader<>(true);
+    private MarkAnnotationReader<RejectionReason> annotationReader =
+            new MarkAnnotationReader<>(true);
 
     private OpenAnnotationMPP openAnnotation;
 

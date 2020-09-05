@@ -30,6 +30,8 @@ import java.awt.Color;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import org.anchoranalysis.annotation.io.mark.MarkAnnotationReader;
 import org.anchoranalysis.annotation.mark.DualMarksAnnotation;
 import org.anchoranalysis.core.error.CreateException;
@@ -37,10 +39,8 @@ import org.anchoranalysis.gui.annotation.mark.RejectionReason;
 import org.anchoranalysis.gui.annotation.state.AnnotationProgressState;
 import org.anchoranalysis.gui.annotation.state.AnnotationSummary;
 import org.anchoranalysis.io.error.AnchorIOException;
-import lombok.AccessLevel;
-import lombok.NoArgsConstructor;
 
-@NoArgsConstructor(access=AccessLevel.PRIVATE)
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 class CreateAnnotationSummary {
 
     private static Color colorRed = new Color(99, 00, 00);
@@ -49,7 +49,8 @@ class CreateAnnotationSummary {
     private static Color colorOrange = new Color(207, 83, 00);
 
     public static AnnotationSummary apply(
-            Path annotationPath, MarkAnnotationReader<RejectionReason> annotationReader) throws CreateException {
+            Path annotationPath, MarkAnnotationReader<RejectionReason> annotationReader)
+            throws CreateException {
         AnnotationSummary as = new AnnotationSummary();
 
         AnnotationProgressState aps = annotationProgressState(annotationPath);

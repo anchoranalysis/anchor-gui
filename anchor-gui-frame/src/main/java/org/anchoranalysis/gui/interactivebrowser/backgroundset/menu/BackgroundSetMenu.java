@@ -54,8 +54,10 @@ class BackgroundSetMenu {
         private final transient BackgroundSetter backgroundSetter;
         private final transient ErrorReporter errorReporter;
 
-        public BackgroundChangeAction(String backgroundSetName,
-                ImageStackContainerFromName stackContainerGetter, BackgroundSetter backgroundSetter,
+        public BackgroundChangeAction(
+                String backgroundSetName,
+                ImageStackContainerFromName stackContainerGetter,
+                BackgroundSetter backgroundSetter,
                 ErrorReporter errorReporter) {
             super(backgroundSetName);
             this.backgroundSetName = backgroundSetName;
@@ -63,7 +65,7 @@ class BackgroundSetMenu {
             this.backgroundSetter = backgroundSetter;
             this.errorReporter = errorReporter;
         }
-        
+
         @Override
         public void actionPerformed(ActionEvent arg0) {
 
@@ -104,8 +106,8 @@ class BackgroundSetMenu {
         }
 
         @Override
-        public void menuDeselected(MenuEvent arg0) {  
-         // NOTHING TO DO
+        public void menuDeselected(MenuEvent arg0) {
+            // NOTHING TO DO
         }
 
         @Override

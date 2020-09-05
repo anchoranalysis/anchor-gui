@@ -35,7 +35,8 @@ public class InitParamsWholeImage extends InitParamsWithBackground {
     private AnnotationRefresher annotationRefresher;
 
     public InitParamsWholeImage(
-            AnnotationBackgroundInstance annotationBackground, AnnotationRefresher annotationRefresher) {
+            AnnotationBackgroundInstance annotationBackground,
+            AnnotationRefresher annotationRefresher) {
         super(annotationBackground);
         this.annotationRefresher = annotationRefresher;
     }

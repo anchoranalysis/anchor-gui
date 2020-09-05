@@ -55,10 +55,7 @@ class SaveAnnotationMPP implements ISaveAnnotation<DualMarksAnnotation<Rejection
             JComponent dialogParent) {
 
         saveAnnotation(
-                annotationWriter,
-                annotation ->
-                        annotation.assignAccepted(query),
-                dialogParent);
+                annotationWriter, annotation -> annotation.assignAccepted(query), dialogParent);
     }
 
     @Override
@@ -68,10 +65,7 @@ class SaveAnnotationMPP implements ISaveAnnotation<DualMarksAnnotation<Rejection
             JComponent dialogParent) {
 
         saveAnnotation(
-                annotationWriter,
-                annotation ->
-                        annotation.assignPaused(query),
-                dialogParent);
+                annotationWriter, annotation -> annotation.assignPaused(query), dialogParent);
     }
 
     @Override
@@ -86,9 +80,7 @@ class SaveAnnotationMPP implements ISaveAnnotation<DualMarksAnnotation<Rejection
                                 saveAnnotation(
                                         annotationWriter,
                                         annotation ->
-                                                annotation.assignRejected(
-                                                        query,
-                                                        rejectionReason),
+                                                annotation.assignRejected(query, rejectionReason),
                                         dialogParent));
     }
 

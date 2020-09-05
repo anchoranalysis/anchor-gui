@@ -54,7 +54,8 @@ public class ClickableGraphFactory {
         ClickableGraphInstance clickable = new ClickableGraphInstance(graphInstance);
 
         if (domainLimits.isPresent()) {
-            clickable.addXAxisIndexListener(minAxis(domainLimits.get()), maxAxis(domainLimits.get()));
+            clickable.addXAxisIndexListener(
+                    minAxis(domainLimits.get()), maxAxis(domainLimits.get()));
         }
         return clickable;
     }

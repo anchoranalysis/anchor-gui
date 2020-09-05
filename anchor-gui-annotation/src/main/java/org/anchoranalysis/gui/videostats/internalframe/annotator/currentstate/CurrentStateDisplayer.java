@@ -196,8 +196,7 @@ public class CurrentStateDisplayer {
 
         private boolean hasLargeOverlap() {
             return overlapChecker.hasLargeOverlap(
-                    currentState.getProposedMarks(),
-                    currentState.queryAcceptReject().accepted());
+                    currentState.getProposedMarks(), currentState.queryAcceptReject().accepted());
         }
 
         @Override
