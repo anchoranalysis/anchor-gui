@@ -55,7 +55,7 @@ public class KeyValueParamsAugmenter {
         KeyValueParamsForImageCreator creator =
                 new KeyValueParamsForImageCreator(scheme, sharedFeatures, logger);
         try {
-            KeyValueParams kpvNew = creator.createParamsForImage(in.getEnergyStack());
+            KeyValueParams kpvNew = creator.createParamsForImage(in.withoutParams());
 
             return addParams(in, kpvNew);
 

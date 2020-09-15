@@ -30,8 +30,7 @@ import org.anchoranalysis.core.error.reporter.ErrorReporter;
 import org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.IGetNames;
 import org.anchoranalysis.gui.videostats.dropdown.BackgroundSetProgressingSupplier;
 
-public class ChangeableBackgroundDefinitionSimple
-        extends ChangeableBackgroundWithDefault {
+public class ChangeableBackgroundDefinitionSimple extends ChangeableBackgroundWithDefault {
 
     public ChangeableBackgroundDefinitionSimple(BackgroundSetProgressingSupplier backgroundSet) {
         super(backgroundSet);

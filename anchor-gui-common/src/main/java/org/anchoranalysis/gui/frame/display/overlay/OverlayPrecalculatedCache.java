@@ -36,9 +36,9 @@ import org.anchoranalysis.core.geometry.Point3i;
 import org.anchoranalysis.core.index.SetOperationFailedException;
 import org.anchoranalysis.image.binary.values.BinaryValues;
 import org.anchoranalysis.image.binary.values.BinaryValuesByte;
-import org.anchoranalysis.image.extent.BoundingBox;
 import org.anchoranalysis.image.extent.Dimensions;
-import org.anchoranalysis.image.index.BoundingBoxRTree;
+import org.anchoranalysis.image.extent.box.BoundingBox;
+import org.anchoranalysis.image.index.RTree;
 import org.anchoranalysis.image.object.properties.ObjectWithProperties;
 import org.anchoranalysis.image.scale.ScaleFactor;
 import org.anchoranalysis.overlay.Overlay;
@@ -55,7 +55,7 @@ public class OverlayPrecalculatedCache implements OverlayRetriever {
      * Spatially indexes the bounding boxes in listBoundingBox (using the array index). Created when
      * needed.
      */
-    private BoundingBoxRTree rTree = null;
+    private RTree<Integer> rTree = null;
 
     /**
      * The zoomFactor associated with the generatedObjectsZoomed cache. -1 indicates there is none
@@ -113,7 +113,7 @@ public class OverlayPrecalculatedCache implements OverlayRetriever {
 
         // If we haven't bother initializing these things before, we do now
         if (rTree == null) {
-            rTree = new BoundingBoxRTree(overlayList.getListBoundingBox(), 10000);
+            rTree = createRTreeOfIndices(overlayList.getListBoundingBox(), 10000);
         }
         if (overlayList.hasGeneratedObjectsZoomed() || zoomFactorNew != zoomFactor) {
             overlayList.setZoomedToNull();
@@ -174,7 +174,7 @@ public class OverlayPrecalculatedCache implements OverlayRetriever {
 
                 if (rTree != null) {
                     // We add it under the ID of what we've just added
-                    rTree.add(overlayList.size() - 1, box);
+                    rTree.add(box, overlayList.size() - 1);
                 }
 
                 overlayList.assertSizesMatchSimple();
@@ -214,11 +214,11 @@ public class OverlayPrecalculatedCache implements OverlayRetriever {
 
         for (Integer id : ids) {
 
-            Overlay ol = overlayList.getOverlay(id);
+            Overlay overlay = overlayList.getOverlay(id);
 
             // Check if it's actually inside
-            if (ol.isPointInside(drawOverlay, point)) {
-                out.add(ol);
+            if (overlay.isPointInside(drawOverlay, point)) {
+                out.add(overlay);
             }
         }
         return out;
@@ -265,7 +265,7 @@ public class OverlayPrecalculatedCache implements OverlayRetriever {
      * @param overlay
      * @param index
      * @param dimScaled
-     * @return NULL if rejected
+     * @return null if rejected
      * @throws OperationFailedException
      */
     private Optional<PrecalculationOverlay> getOrCreateScaledOverlayForObject(
@@ -303,7 +303,7 @@ public class OverlayPrecalculatedCache implements OverlayRetriever {
 
             // If the object-mask we make from the overlay has no pixels, then we reject it by
             // returning
-            // NULL
+            // null
             if (!omScaledProps.withoutProperties().voxelsOn().anyExists()) {
                 return Optional.empty();
             }
@@ -356,5 +356,21 @@ public class OverlayPrecalculatedCache implements OverlayRetriever {
     private Dimensions createDimensionsScaled(double zoomFactorNew) {
         // We create a scaled version of our dimensions
         return dimEntireImage.scaleXYBy(new ScaleFactor(zoomFactorNew));
+    }
+    
+    /**
+     * Creates an r-tree with the indices of each item from a list.
+     *
+     * @param boxes added to the r-tree, with the index of the element in the stream as the corresponding item
+     * @param maxNumberEntriesSuggested suggested a maximum number of entries in the r-tree
+     */
+    private static RTree<Integer> createRTreeOfIndices(List<BoundingBox> boxes, int maxNumberEntriesSuggested) {
+        RTree<Integer> tree = new RTree<>(maxNumberEntriesSuggested);
+        
+        for( int i=0; i<boxes.size(); i++) {
+            tree.add(boxes.get(i), i);
+        }
+        
+        return tree;
     }
 }

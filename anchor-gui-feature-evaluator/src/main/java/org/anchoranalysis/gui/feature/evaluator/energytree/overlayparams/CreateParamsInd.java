@@ -57,7 +57,7 @@ class CreateParamsInd {
             return params;
         }
 
-        VoxelizedMarkMemo pmm = PxlMarkMemoFactory.create(mark, raster.getEnergyStack(), regionMap);
+        VoxelizedMarkMemo pmm = PxlMarkMemoFactory.create(mark, raster.withoutParams(), regionMap);
         assert (pmm != null);
         return new CreateIndFromMark(pmm, raster);
     }

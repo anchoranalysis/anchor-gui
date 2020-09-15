@@ -34,8 +34,8 @@ import lombok.AllArgsConstructor;
 import org.anchoranalysis.core.progress.ProgressReporterNull;
 import org.anchoranalysis.gui.frame.details.ControllerPopupMenu;
 import org.anchoranalysis.gui.image.frame.SliderState;
+import org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.BackgroundSetter;
 import org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.ControllerPopupMenuWithBackground;
-import org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.IBackgroundSetter;
 import org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.IGetNames;
 import org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.definition.ImageStackContainerFromName;
 import org.anchoranalysis.gui.videostats.dropdown.VideoStatsModuleGlobalParams;
@@ -45,7 +45,7 @@ class AddBackgroundPopup {
 
     public static void apply(
             ControllerPopupMenu popUpMenu,
-            IBackgroundSetter backgroundSetter,
+            BackgroundSetter backgroundSetter,
             List<NamedRasterSet> list,
             SliderState sliderState,
             VideoStatsModuleGlobalParams mpg) {

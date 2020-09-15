@@ -36,9 +36,9 @@ import org.anchoranalysis.core.geometry.ReadableTuple3i;
 import org.anchoranalysis.core.index.SetOperationFailedException;
 import org.anchoranalysis.gui.frame.canvas.zoom.ZoomScale;
 import org.anchoranalysis.gui.frame.display.BoundOverlayedDisplayStack;
-import org.anchoranalysis.image.extent.BoundingBox;
 import org.anchoranalysis.image.extent.Dimensions;
 import org.anchoranalysis.image.extent.Extent;
+import org.anchoranalysis.image.extent.box.BoundingBox;
 import org.anchoranalysis.image.stack.DisplayStack;
 import org.anchoranalysis.image.stack.region.RegionExtracter;
 import org.anchoranalysis.image.voxel.datatype.VoxelDataType;
@@ -134,7 +134,8 @@ class DisplayStackViewport {
 
     public Point2i cornerAfterChangeInViewSize(
             Extent extentOld, Extent extentNew, Point2i scrollValImage) {
-        Extent diff = extentOld.subtract(extentNew.asTuple()).divide(2);
+        Point3i diff = extentOld.subtract(extentNew.asTuple());
+        diff.divideBy(2);
 
         addCond(scrollValImage, diff, extentOld);
 
@@ -142,7 +143,7 @@ class DisplayStackViewport {
                 scrollValImage, extentNew, dimensionsEntire());
     }
 
-    private static void addCond(Point2i scrollVal, Extent toAdd, Extent cond) {
+    private static void addCond(Point2i scrollVal, ReadableTuple3i toAdd, Extent cond) {
         if (cond.x() > 0 && toAdd.x() != 0) {
             scrollVal.setX(scrollVal.x() + toAdd.x());
         }

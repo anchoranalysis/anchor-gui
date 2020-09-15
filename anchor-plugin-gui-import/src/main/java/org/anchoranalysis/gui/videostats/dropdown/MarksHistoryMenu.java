@@ -26,6 +26,7 @@
 
 package org.anchoranalysis.gui.videostats.dropdown;
 
+import com.google.common.base.Preconditions;
 import java.io.IOException;
 import javax.swing.JFrame;
 import org.anchoranalysis.bean.error.BeanDuplicateException;
@@ -66,7 +67,6 @@ import org.anchoranalysis.plugin.gui.bean.graphdefinition.line.GraphDefinitionLi
 import org.anchoranalysis.plugin.gui.bean.graphdefinition.line.GraphDefinitionLineIterVsTemperature;
 import org.anchoranalysis.plugin.gui.bean.graphdefinition.line.GraphDefinitionLineIterVsTime;
 import org.anchoranalysis.plugin.gui.bean.graphdefinition.line.GraphDefinitionLineIterVsTimePerIter;
-import com.google.common.base.Preconditions;
 
 // TODO needs heavy refactoring for readability
 public class MarksHistoryMenu {
@@ -88,9 +88,9 @@ public class MarksHistoryMenu {
     public void init(
             FinderHistoryFolder<IndexableMarksWithEnergy> finderMarksHistory,
             ContainerGetter<IndexableMarksWithEnergy>
-                    finderSecondaryHistory, // Can be NULL if there's no secondary
+                    finderSecondaryHistory, // Can be null if there's no secondary
             ContainerGetter<IndexableMarksWithEnergy>
-                    finderTertiaryHistory, // Can be NULL if there's no secondary
+                    finderTertiaryHistory, // Can be null if there's no secondary
             EnergyBackground energyBackground,
             FinderCSVStats finderCSVStats,
             MarksWithEnergyFinderContext context)
@@ -304,7 +304,7 @@ public class MarksHistoryMenu {
                             }
                         }
                     }
-                    
+
                     private void addCSVStatistic(
                             VideoStatsOperationMenu subMenu,
                             Plot<CSVStatistic> graphDefinition,

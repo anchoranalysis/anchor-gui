@@ -32,9 +32,9 @@ import org.anchoranalysis.annotation.io.bean.AnnotationBackground;
 import org.anchoranalysis.bean.shared.StringMap;
 import org.anchoranalysis.gui.annotation.AnnotationBackgroundInstance;
 import org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.definition.ChangeableBackground;
+import org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.definition.ChangeableBackgroundDefinitionSimple;
 import org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.definition.ChangeableBackgroundIgnoreContains;
 import org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.definition.ChangeableBackgroundMapped;
-import org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.definition.ChangeableBackgroundDefinitionSimple;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 class BackgroundInstanceCreator {

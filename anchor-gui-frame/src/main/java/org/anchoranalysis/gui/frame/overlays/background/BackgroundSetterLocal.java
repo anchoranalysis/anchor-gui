@@ -32,16 +32,16 @@ import org.anchoranalysis.core.index.SetOperationFailedException;
 import org.anchoranalysis.gui.container.background.BackgroundStackContainerException;
 import org.anchoranalysis.gui.frame.display.OverlayedDisplayStackUpdate;
 import org.anchoranalysis.gui.frame.display.Redrawable;
-import org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.IBackgroundSetter;
+import org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.BackgroundSetter;
 import org.anchoranalysis.image.stack.DisplayStack;
 
 @AllArgsConstructor
-class BackgroundSetterLocal implements IBackgroundSetter {
+class BackgroundSetterLocal implements BackgroundSetter {
 
     private Redrawable redrawable;
 
     @Override
-    public void setImageStackCntr(
+    public void setImageStackContainer(
             CheckedFunction<Integer, DisplayStack, BackgroundStackContainerException>
                     imageStackCntr)
             throws SetOperationFailedException {

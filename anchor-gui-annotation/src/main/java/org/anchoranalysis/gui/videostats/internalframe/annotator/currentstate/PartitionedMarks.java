@@ -27,6 +27,7 @@
 package org.anchoranalysis.gui.videostats.internalframe.annotator.currentstate;
 
 import lombok.NoArgsConstructor;
+import org.anchoranalysis.annotation.mark.DualMarks;
 import org.anchoranalysis.mpp.mark.Mark;
 import org.anchoranalysis.mpp.mark.MarkCollection;
 
@@ -36,7 +37,7 @@ import org.anchoranalysis.mpp.mark.MarkCollection;
  * @author Owen Feehan
  */
 @NoArgsConstructor
-public class PartitionedMarks implements QueryAcceptedRejected {
+public class PartitionedMarks implements DualMarks {
 
     private MarkCollection marksAccepted = new MarkCollection();
     private MarkCollection marksRejected = new MarkCollection();
@@ -80,12 +81,12 @@ public class PartitionedMarks implements QueryAcceptedRejected {
     }
 
     @Override
-    public MarkCollection getMarksAccepted() {
+    public MarkCollection accepted() {
         return marksAccepted;
     }
 
     @Override
-    public MarkCollection getMarksRejected() {
+    public MarkCollection rejected() {
         return marksRejected;
     }
 

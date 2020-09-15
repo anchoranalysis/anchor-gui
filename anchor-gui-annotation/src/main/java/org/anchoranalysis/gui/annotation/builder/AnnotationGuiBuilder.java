@@ -66,7 +66,7 @@ public abstract class AnnotationGuiBuilder<T extends AnnotationInitParams> {
     /**
      * A mechanism for exporting annotations
      *
-     * @return mechanism or NULL if it isn't supported
+     * @return mechanism or null if it isn't supported
      */
     public abstract ExportAnnotation exportAnnotation();
 

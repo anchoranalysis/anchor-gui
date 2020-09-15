@@ -31,8 +31,7 @@ import lombok.Getter;
 import org.anchoranalysis.gui.videostats.dropdown.BackgroundSetProgressingSupplier;
 
 @AllArgsConstructor
-public abstract class ChangeableBackgroundWithDefault
-        implements ChangeableBackground {
+public abstract class ChangeableBackgroundWithDefault implements ChangeableBackground {
 
     @Getter private BackgroundSetProgressingSupplier backgroundSet;
 

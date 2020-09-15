@@ -33,6 +33,8 @@ import javax.swing.JOptionPane;
 import javax.swing.event.MenuEvent;
 import javax.swing.event.MenuListener;
 import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
 import org.anchoranalysis.core.error.reporter.ErrorReporter;
 import org.anchoranalysis.core.index.SetOperationFailedException;
 import org.anchoranalysis.gui.container.background.BackgroundStackContainerException;
@@ -41,24 +43,35 @@ import org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.definition.I
 // A menu which allows changing of the background
 class BackgroundSetMenu {
 
-    private JMenu menu;
+    @Getter private JMenu menu;
 
-    @AllArgsConstructor
     public static class BackgroundChangeAction extends AbstractAction {
 
         private static final long serialVersionUID = -7238970062538672779L;
 
-        private String backgroundSetName;
-        private ImageStackContainerFromName stackCntrGetter;
-        private IBackgroundSetter backgroundSetter;
-        private ErrorReporter errorReporter;
+        private final String backgroundSetName;
+        private final transient ImageStackContainerFromName stackContainerGetter;
+        private final transient BackgroundSetter backgroundSetter;
+        private final transient ErrorReporter errorReporter;
+
+        public BackgroundChangeAction(
+                String backgroundSetName,
+                ImageStackContainerFromName stackContainerGetter,
+                BackgroundSetter backgroundSetter,
+                ErrorReporter errorReporter) {
+            super(backgroundSetName);
+            this.backgroundSetName = backgroundSetName;
+            this.stackContainerGetter = stackContainerGetter;
+            this.backgroundSetter = backgroundSetter;
+            this.errorReporter = errorReporter;
+        }
 
         @Override
         public void actionPerformed(ActionEvent arg0) {
 
             try {
-                backgroundSetter.setImageStackCntr(
-                        stackCntrGetter.imageStackCntrFromName(backgroundSetName));
+                backgroundSetter.setImageStackContainer(
+                        stackContainerGetter.get(backgroundSetName));
             } catch (BackgroundStackContainerException | SetOperationFailedException e) {
                 errorReporter.recordError(BackgroundSetMenu.class, e);
                 JOptionPane.showMessageDialog(
@@ -69,49 +82,33 @@ class BackgroundSetMenu {
 
     private ShowMenuListener showMenuListener;
 
+    @AllArgsConstructor
     private static class ShowMenuListener implements MenuListener {
 
-        private IGetNames nameGetter;
-        private ImageStackContainerFromName stackCntrFromName;
-        private IBackgroundSetter backgroundSetter;
         private JMenu menu;
+        private BackgroundSetter backgroundSetter;
+        @Setter private IGetNames nameGetter;
+        @Setter private ImageStackContainerFromName stackContainerFromName;
         private ErrorReporter errorReporter;
-
-        public ShowMenuListener(
-                JMenu menu,
-                IBackgroundSetter backgroundSetter,
-                IGetNames nameGetter,
-                ImageStackContainerFromName stackCntrFromName,
-                ErrorReporter errorReporter) {
-            this.menu = menu;
-            this.nameGetter = nameGetter;
-            this.backgroundSetter = backgroundSetter;
-            this.stackCntrFromName = stackCntrFromName;
-            this.errorReporter = errorReporter;
-        }
 
         private void addItems() {
 
             for (String name : nameGetter.names()) {
                 menu.add(
                         new BackgroundChangeAction(
-                                name, stackCntrFromName, backgroundSetter, errorReporter));
+                                name, stackContainerFromName, backgroundSetter, errorReporter));
             }
         }
 
-        public void setNameGetter(IGetNames nameGetter) {
-            this.nameGetter = nameGetter;
-        }
-
-        public void setStackCntrFromName(ImageStackContainerFromName stackCntrFromName) {
-            this.stackCntrFromName = stackCntrFromName;
+        @Override
+        public void menuCanceled(MenuEvent arg0) {
+            // NOTHING TO DO
         }
 
         @Override
-        public void menuCanceled(MenuEvent arg0) {}
-
-        @Override
-        public void menuDeselected(MenuEvent arg0) {}
+        public void menuDeselected(MenuEvent arg0) {
+            // NOTHING TO DO
+        }
 
         @Override
         public void menuSelected(MenuEvent arg0) {
@@ -122,23 +119,18 @@ class BackgroundSetMenu {
 
     public BackgroundSetMenu(
             final IGetNames nameGetter,
-            ImageStackContainerFromName stackCntrFromName,
-            IBackgroundSetter backgroundSetter,
+            ImageStackContainerFromName stackContainerFromName,
+            BackgroundSetter backgroundSetter,
             ErrorReporter errorReporter) {
-        assert (backgroundSetter != null);
         menu = new JMenu("Background");
         showMenuListener =
                 new ShowMenuListener(
-                        menu, backgroundSetter, nameGetter, stackCntrFromName, errorReporter);
+                        menu, backgroundSetter, nameGetter, stackContainerFromName, errorReporter);
         menu.addMenuListener(showMenuListener);
-    }
-
-    public JMenu getMenu() {
-        return menu;
     }
 
     public void update(IGetNames nameGetter, ImageStackContainerFromName stackCntrFromName) {
         showMenuListener.setNameGetter(nameGetter);
-        showMenuListener.setStackCntrFromName(stackCntrFromName);
+        showMenuListener.setStackContainerFromName(stackCntrFromName);
     }
 }

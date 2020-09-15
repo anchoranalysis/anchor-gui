@@ -32,9 +32,9 @@ import org.anchoranalysis.gui.container.background.BackgroundStackContainerExcep
 import org.anchoranalysis.image.stack.DisplayStack;
 
 @FunctionalInterface
-public interface IBackgroundSetter {
+public interface BackgroundSetter {
 
-    void setImageStackCntr(
+    void setImageStackContainer(
             CheckedFunction<Integer, DisplayStack, BackgroundStackContainerException>
                     imageStackCntr)
             throws SetOperationFailedException;

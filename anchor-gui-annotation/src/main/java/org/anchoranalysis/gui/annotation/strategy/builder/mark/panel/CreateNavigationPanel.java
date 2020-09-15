@@ -30,6 +30,7 @@ import java.nio.file.Path;
 import java.util.Optional;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
+import org.anchoranalysis.annotation.mark.DualMarks;
 import org.anchoranalysis.gui.annotation.AnnotationRefresher;
 import org.anchoranalysis.gui.annotation.InitAnnotation;
 import org.anchoranalysis.gui.annotation.strategy.builder.mark.InitParamsProposeMarks;
@@ -39,7 +40,6 @@ import org.anchoranalysis.gui.videostats.internalframe.annotator.ISaveActionList
 import org.anchoranalysis.gui.videostats.internalframe.annotator.SaveActionListenerFactory;
 import org.anchoranalysis.gui.videostats.internalframe.annotator.SaveMonitor;
 import org.anchoranalysis.gui.videostats.internalframe.annotator.currentstate.CurrentStateDisplayer;
-import org.anchoranalysis.gui.videostats.internalframe.annotator.currentstate.QueryAcceptedRejected;
 import org.anchoranalysis.gui.videostats.internalframe.annotator.currentstate.ShowCurrentState;
 import org.anchoranalysis.gui.videostats.internalframe.annotator.navigation.PanelNavigation;
 
@@ -80,10 +80,10 @@ public class CreateNavigationPanel {
 
     private static ISaveActionListenerFactory createSaveActions(
             Path annotationPath,
-            QueryAcceptedRejected queryAcceptReject,
+            DualMarks queryAcceptReject,
             AnnotationRefresher annotationRefresher,
             Optional<SaveMonitor> saveMonitor) {
-        return new SaveActionListenerFactory<>(
+        return new SaveActionListenerFactory(
                 new SaveAnnotationMPP(annotationPath),
                 queryAcceptReject,
                 annotationRefresher,

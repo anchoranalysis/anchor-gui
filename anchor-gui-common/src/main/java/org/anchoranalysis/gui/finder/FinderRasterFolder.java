@@ -90,10 +90,7 @@ public class FinderRasterFolder extends FinderSingleFolder {
                 new SequencedFolderRasterReader(getFoundFolder(), rasterReader);
 
         AddFromSequenceHelper.addFromSequence(
-                getFoundFolder().getAssociatedSequence(),
-                reader,
-                stacks::add,
-                namesAsIndexes);
+                getFoundFolder().getAssociatedSequence(), reader, stacks::add, namesAsIndexes);
 
         return stacks;
     }

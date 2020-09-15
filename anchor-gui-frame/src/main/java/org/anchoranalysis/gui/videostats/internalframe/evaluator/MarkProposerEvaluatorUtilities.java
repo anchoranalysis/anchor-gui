@@ -67,7 +67,7 @@ public class MarkProposerEvaluatorUtilities {
 
         if (mark != null) {
             marks.addChangeID(mark, new RGBColor(Color.BLUE));
-            addMarkAtMousePoint(position, marks, mark.numDims() == 3);
+            addMarkAtMousePoint(position, marks, mark.numberDimensions() == 3);
         }
 
         Optional<CreateProposalVisualization> proposalVisualization =

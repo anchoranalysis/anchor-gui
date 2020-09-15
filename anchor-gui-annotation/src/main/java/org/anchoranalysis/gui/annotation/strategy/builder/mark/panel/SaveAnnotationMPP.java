@@ -32,14 +32,14 @@ import java.util.Optional;
 import java.util.function.Consumer;
 import javax.swing.JComponent;
 import javax.swing.JOptionPane;
-import org.anchoranalysis.annotation.mark.MarkAnnotation;
-import org.anchoranalysis.annotation.mark.RejectionReason;
+import org.anchoranalysis.annotation.mark.DualMarks;
+import org.anchoranalysis.annotation.mark.DualMarksAnnotation;
 import org.anchoranalysis.core.error.friendly.AnchorImpossibleSituationException;
+import org.anchoranalysis.gui.annotation.mark.RejectionReason;
 import org.anchoranalysis.gui.annotation.save.ISaveAnnotation;
 import org.anchoranalysis.gui.videostats.internalframe.annotator.AnnotationWriterGUI;
-import org.anchoranalysis.gui.videostats.internalframe.annotator.currentstate.QueryAcceptedRejected;
 
-class SaveAnnotationMPP implements ISaveAnnotation<MarkAnnotation> {
+class SaveAnnotationMPP implements ISaveAnnotation<DualMarksAnnotation<RejectionReason>> {
 
     private Path annotationPath;
 
@@ -50,34 +50,28 @@ class SaveAnnotationMPP implements ISaveAnnotation<MarkAnnotation> {
 
     @Override
     public void saveFinished(
-            QueryAcceptedRejected query,
-            AnnotationWriterGUI<MarkAnnotation> annotationWriter,
+            DualMarks query,
+            AnnotationWriterGUI<DualMarksAnnotation<RejectionReason>> annotationWriter,
             JComponent dialogParent) {
 
         saveAnnotation(
-                annotationWriter,
-                annotation ->
-                        annotation.markAccepted(query.getMarksAccepted(), query.getMarksRejected()),
-                dialogParent);
+                annotationWriter, annotation -> annotation.assignAccepted(query), dialogParent);
     }
 
     @Override
     public void savePaused(
-            QueryAcceptedRejected query,
-            AnnotationWriterGUI<MarkAnnotation> annotationWriter,
+            DualMarks query,
+            AnnotationWriterGUI<DualMarksAnnotation<RejectionReason>> annotationWriter,
             JComponent dialogParent) {
 
         saveAnnotation(
-                annotationWriter,
-                annotation ->
-                        annotation.markPaused(query.getMarksAccepted(), query.getMarksRejected()),
-                dialogParent);
+                annotationWriter, annotation -> annotation.assignPaused(query), dialogParent);
     }
 
     @Override
     public void skipAnnotation(
-            QueryAcceptedRejected query,
-            AnnotationWriterGUI<MarkAnnotation> annotationWriter,
+            DualMarks query,
+            AnnotationWriterGUI<DualMarksAnnotation<RejectionReason>> annotationWriter,
             JComponent dialogParent) {
 
         promptForRejectionReason()
@@ -86,24 +80,21 @@ class SaveAnnotationMPP implements ISaveAnnotation<MarkAnnotation> {
                                 saveAnnotation(
                                         annotationWriter,
                                         annotation ->
-                                                annotation.markRejected(
-                                                        query.getMarksAccepted(),
-                                                        query.getMarksRejected(),
-                                                        rejectionReason),
+                                                annotation.assignRejected(query, rejectionReason),
                                         dialogParent));
     }
 
     private void saveAnnotation(
-            AnnotationWriterGUI<MarkAnnotation> annotationWriter,
-            Consumer<MarkAnnotation> opAnnotation,
+            AnnotationWriterGUI<DualMarksAnnotation<RejectionReason>> annotationWriter,
+            Consumer<DualMarksAnnotation<RejectionReason>> opAnnotation,
             Component dialogParent) {
 
-        MarkAnnotation annotation = new MarkAnnotation();
+        DualMarksAnnotation<RejectionReason> annotation = new DualMarksAnnotation<>();
         opAnnotation.accept(annotation);
         annotationWriter.saveAnnotation(annotation, annotationPath, dialogParent);
     }
 
-    // Returns NULL if cancelled
+    // Returns null if cancelled
     private static Optional<RejectionReason> promptForRejectionReason() {
 
         String[] choices = {

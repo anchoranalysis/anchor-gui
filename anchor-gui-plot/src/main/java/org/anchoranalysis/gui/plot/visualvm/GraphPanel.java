@@ -37,7 +37,7 @@ import javax.swing.JPanel;
 import org.anchoranalysis.gui.plot.definition.GraphDefinition;
 import org.anchoranalysis.gui.videostats.EnergyUpdater;
 import org.anchoranalysis.mpp.feature.energy.marks.MarksWithTotalEnergy;
-import org.anchoranalysis.mpp.segment.optscheme.feedback.aggregate.Aggregator;
+import org.anchoranalysis.mpp.segment.optimization.feedback.aggregate.Aggregator;
 
 public class GraphPanel extends JPanel implements EnergyUpdater {
 

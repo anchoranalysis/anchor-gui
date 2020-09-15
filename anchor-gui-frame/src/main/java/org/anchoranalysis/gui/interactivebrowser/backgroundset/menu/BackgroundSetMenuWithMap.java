@@ -39,7 +39,7 @@ class BackgroundSetMenuWithMap implements BackgroundUpdater {
 
     public BackgroundSetMenuWithMap(
             ChangeableBackground backgroundDefinition,
-            IBackgroundSetter backgroundSetter,
+            BackgroundSetter backgroundSetter,
             ErrorReporter errorReporter) {
         delegate =
                 new BackgroundSetMenu(

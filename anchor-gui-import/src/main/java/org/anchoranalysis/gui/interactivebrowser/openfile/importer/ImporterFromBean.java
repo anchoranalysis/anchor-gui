@@ -34,7 +34,7 @@ import org.anchoranalysis.gui.bean.filecreator.FileCreator;
 
 public abstract class ImporterFromBean extends AnchorBean<ImporterFromBean> {
 
-    /** Returns TRUE iff a creator can be made from the bean */
+    /** Returns true iff a creator can be made from the bean */
     public abstract boolean isApplicable(Object bean);
 
     public abstract Optional<FileCreator> create(Object bean, File file) throws CreateException;

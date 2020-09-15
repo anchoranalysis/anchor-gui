@@ -32,22 +32,22 @@ import java.awt.event.ActionListener;
 import java.util.Optional;
 import javax.swing.JComponent;
 import javax.swing.JInternalFrame;
-import org.anchoranalysis.annotation.Annotation;
 import org.anchoranalysis.annotation.io.mark.MarkAnnotationWriter;
-import org.anchoranalysis.annotation.mark.MarkAnnotation;
+import org.anchoranalysis.annotation.mark.DualMarks;
+import org.anchoranalysis.annotation.mark.DualMarksAnnotation;
 import org.anchoranalysis.gui.annotation.AnnotationRefresher;
+import org.anchoranalysis.gui.annotation.mark.RejectionReason;
 import org.anchoranalysis.gui.annotation.save.ISaveAnnotation;
-import org.anchoranalysis.gui.videostats.internalframe.annotator.currentstate.QueryAcceptedRejected;
 
-public class SaveActionListenerFactory<T extends Annotation> implements ISaveActionListenerFactory {
+public class SaveActionListenerFactory implements ISaveActionListenerFactory {
 
-    private ISaveAnnotation<MarkAnnotation> saveAnnotation;
-    private QueryAcceptedRejected queryAcceptReject;
-    private AnnotationWriterGUI<MarkAnnotation> annotationWriter;
+    private ISaveAnnotation<DualMarksAnnotation<RejectionReason>> saveAnnotation;
+    private DualMarks queryAcceptReject;
+    private AnnotationWriterGUI<DualMarksAnnotation<RejectionReason>> annotationWriter;
 
     public SaveActionListenerFactory(
-            ISaveAnnotation<MarkAnnotation> saveAnnotation,
-            QueryAcceptedRejected queryAcceptReject,
+            ISaveAnnotation<DualMarksAnnotation<RejectionReason>> saveAnnotation,
+            DualMarks queryAcceptReject,
             AnnotationRefresher annotationRefresher,
             Optional<SaveMonitor> saveMonitor) {
         super();
@@ -55,32 +55,26 @@ public class SaveActionListenerFactory<T extends Annotation> implements ISaveAct
         this.queryAcceptReject = queryAcceptReject;
         this.annotationWriter =
                 new AnnotationWriterGUI<>(
-                        new MarkAnnotationWriter(), annotationRefresher, saveMonitor);
+                        new MarkAnnotationWriter<>(), annotationRefresher, saveMonitor);
     }
 
     @Override
     public ActionListener saveFinished(JInternalFrame frame) {
         return listenerCloseFrame(
                 frame,
-                () -> {
-                    saveAnnotation.saveFinished(queryAcceptReject, annotationWriter, frame);
-                });
+                () -> saveAnnotation.saveFinished(queryAcceptReject, annotationWriter, frame));
     }
 
     @Override
     public ActionListener savePaused(JComponent dialogParent) {
         return listener(
-                () -> {
-                    saveAnnotation.savePaused(queryAcceptReject, annotationWriter, dialogParent);
-                });
+                () -> saveAnnotation.savePaused(queryAcceptReject, annotationWriter, dialogParent));
     }
 
     @Override
     public ActionListener skipAnnotation(JInternalFrame frame) {
         return listenerCloseFrame(
                 frame,
-                () -> {
-                    saveAnnotation.skipAnnotation(queryAcceptReject, annotationWriter, frame);
-                });
+                () -> saveAnnotation.skipAnnotation(queryAcceptReject, annotationWriter, frame));
     }
 }

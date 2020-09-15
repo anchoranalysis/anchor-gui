@@ -82,15 +82,15 @@ public class ThreadedDisplayUpdateConsumer
     private class UpdateImage extends InteractiveWorker<Integer, Integer> {
 
         @Override
-        protected Integer doInBackground() {    // NOSONAR
+        protected Integer doInBackground() { // NOSONAR
 
-            while (true) {  // NOSONAR
+            while (true) { // NOSONAR
 
                 synchronized (updateMonitor) {
                     if (!updateMonitor.isInNeedOfUpdate()) {
                         try {
                             updateMonitor.wait();
-                        } catch (InterruptedException e) {  // NOSONAR
+                        } catch (InterruptedException e) { // NOSONAR
                             // END condition for loop
                             return 0;
                         }

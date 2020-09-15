@@ -42,6 +42,7 @@ import org.anchoranalysis.gui.annotation.builder.AnnotationGuiContext;
 import org.anchoranalysis.gui.annotation.export.ExportAnnotation;
 import org.anchoranalysis.gui.annotation.export.ExportScaledMarks;
 import org.anchoranalysis.gui.annotation.mark.MarkAnnotator;
+import org.anchoranalysis.gui.annotation.mark.RejectionReason;
 import org.anchoranalysis.gui.annotation.opener.OpenAnnotationMPP;
 import org.anchoranalysis.gui.annotation.state.AnnotationSummary;
 import org.anchoranalysis.gui.annotation.strategy.builder.mark.panel.CreateNavigationPanel;
@@ -56,7 +57,8 @@ import org.anchoranalysis.plugin.annotation.bean.strategy.PathFromGenerator;
 public class BuilderProposeMarks
         extends AnnotationGuiBuilderWithDelegate<InitParamsProposeMarks, MarkProposerStrategy> {
 
-    private MarkAnnotationReader annotationReader = new MarkAnnotationReader(true);
+    private MarkAnnotationReader<RejectionReason> annotationReader =
+            new MarkAnnotationReader<>(true);
 
     private OpenAnnotationMPP openAnnotation;
 

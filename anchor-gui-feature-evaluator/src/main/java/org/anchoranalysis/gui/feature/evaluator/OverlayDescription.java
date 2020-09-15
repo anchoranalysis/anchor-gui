@@ -52,7 +52,7 @@ class OverlayDescription extends TitleValueTableModel implements UpdatableSingle
             return;
         }
 
-        Resolution sr = raster.dimensions() != null ? raster.dimensions().resolution() : null;
+        Resolution sr = raster.dimensions() != null ? raster.resolution() : null;
         addOverlayDetails(overlay, "", sr);
 
         fireTableDataChanged();
@@ -70,25 +70,25 @@ class OverlayDescription extends TitleValueTableModel implements UpdatableSingle
 
         addEntry(new SimpleTitleValue("Pair", pair.toString()));
 
-        addOverlayDetails(pair.getSource(), "Source: ", raster.dimensions().resolution());
-        addOverlayDetails(pair.getDestination(), "Dest: ", raster.dimensions().resolution());
+        addOverlayDetails(pair.getSource(), "Source: ", raster.resolution());
+        addOverlayDetails(pair.getDestination(), "Dest: ", raster.resolution());
 
         fireTableDataChanged();
     }
 
     private void addOverlayDetails(Overlay overlay, String titlePrefix, Resolution sr) {
 
-        OverlayProperties op = overlay.generateProperties(sr);
+        OverlayProperties properties = overlay.generateProperties(sr);
 
         ArrayList<NameValue<String>> listToAdd = new ArrayList<>();
-        for (NameValue<String> nv : op) {
-            listToAdd.add(nv);
+        for (NameValue<String> nameValue : properties) {
+            listToAdd.add(nameValue);
         }
 
         Collections.sort(listToAdd, new ComparatorOrderByName<String>());
 
-        for (NameValue<String> nv : listToAdd) {
-            addEntry(new SimpleTitleValue(titlePrefix + nv.getName(), nv.getValue()));
+        for (NameValue<String> nameValue : listToAdd) {
+            addEntry(new SimpleTitleValue(titlePrefix + nameValue.getName(), nameValue.getValue()));
         }
     }
 }

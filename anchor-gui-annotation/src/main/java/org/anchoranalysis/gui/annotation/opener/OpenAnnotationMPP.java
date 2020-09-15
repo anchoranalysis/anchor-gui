@@ -28,40 +28,33 @@ package org.anchoranalysis.gui.annotation.opener;
 
 import java.nio.file.Path;
 import java.util.Optional;
+import lombok.AllArgsConstructor;
 import org.anchoranalysis.annotation.io.mark.MarkAnnotationReader;
-import org.anchoranalysis.annotation.mark.MarkAnnotation;
-import org.anchoranalysis.annotation.mark.RejectionReason;
+import org.anchoranalysis.annotation.mark.DualMarksAnnotation;
 import org.anchoranalysis.core.log.Logger;
 import org.anchoranalysis.gui.annotation.AnnotatorModuleCreator;
 import org.anchoranalysis.gui.annotation.InitAnnotation;
+import org.anchoranalysis.gui.annotation.mark.RejectionReason;
 import org.anchoranalysis.gui.videostats.internalframe.annotator.currentstate.PartitionedMarks;
 import org.anchoranalysis.gui.videostats.module.VideoStatsModuleCreateException;
 import org.anchoranalysis.io.deserializer.DeserializationFailedException;
 import org.anchoranalysis.io.error.AnchorIOException;
 import org.anchoranalysis.mpp.mark.MarkCollection;
 
+@AllArgsConstructor
 public class OpenAnnotationMPP implements OpenAnnotation {
 
-    private MarkAnnotationReader annotationReader;
     private Path annotationPath;
     private Optional<Path> defaultMarksPath;
-
-    public OpenAnnotationMPP(
-            Path annotationPath,
-            Optional<Path> defaultMarksPath,
-            MarkAnnotationReader annotationReader) {
-        super();
-        this.annotationPath = annotationPath;
-        this.defaultMarksPath = defaultMarksPath;
-        this.annotationReader = annotationReader;
-    }
+    private MarkAnnotationReader<RejectionReason> annotationReader;
 
     @Override
     public InitAnnotation open(boolean useDefaultMarks, Logger logger)
             throws VideoStatsModuleCreateException {
 
         // We try to read an existing annotation
-        Optional<MarkAnnotation> annotationExst = readAnnotation(annotationPath);
+        Optional<DualMarksAnnotation<RejectionReason>> annotationExst =
+                readAnnotation(annotationPath);
 
         if (annotationExst.isPresent()) {
             return readMarksFromAnnotation(annotationExst.get());
@@ -80,16 +73,16 @@ public class OpenAnnotationMPP implements OpenAnnotation {
                 && defaultMarksPath.isPresent();
     }
 
-    private static InitAnnotation readMarksFromAnnotation(MarkAnnotation annotationExst) {
+    private InitAnnotation readMarksFromAnnotation(DualMarksAnnotation<RejectionReason> existing) {
 
         PartitionedMarks initMarks =
-                new PartitionedMarks(annotationExst.getMarks(), annotationExst.getMarksReject());
+                new PartitionedMarks(existing.marks(), existing.getMarksReject());
 
-        if (annotationExst.isAccepted()) {
-            return new InitAnnotation(Optional.of(annotationExst), initMarks);
+        if (existing.isAccepted()) {
+            return new InitAnnotation(Optional.of(existing), initMarks);
         } else {
-            String initMsg = errorMessage(annotationExst.getRejectionReason());
-            return new InitAnnotation(Optional.of(annotationExst), initMarks, initMsg);
+            String initMsg = errorMessage(existing.getRejectionReason());
+            return new InitAnnotation(Optional.of(existing), initMarks, initMsg);
         }
     }
 
@@ -126,7 +119,7 @@ public class OpenAnnotationMPP implements OpenAnnotation {
         return sb.toString();
     }
 
-    private Optional<MarkAnnotation> readAnnotation(Path annotationPath)
+    private Optional<DualMarksAnnotation<RejectionReason>> readAnnotation(Path annotationPath)
             throws VideoStatsModuleCreateException {
         try {
             // We try to read an existing annotation

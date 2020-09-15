@@ -30,27 +30,26 @@ import java.io.File;
 import java.nio.file.Path;
 import java.util.Optional;
 import javax.swing.JFrame;
+import lombok.RequiredArgsConstructor;
 import org.anchoranalysis.annotation.io.mark.MarkAnnotationReader;
 import org.anchoranalysis.annotation.io.mark.MarkAnnotationWriter;
-import org.anchoranalysis.annotation.mark.MarkAnnotation;
+import org.anchoranalysis.annotation.mark.DualMarksAnnotation;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.error.OptionalOperationUnsupportedException;
 import org.anchoranalysis.gui.annotation.AnnotationRefresher;
+import org.anchoranalysis.gui.annotation.mark.RejectionReason;
 import org.anchoranalysis.gui.videostats.internalframe.annotator.AnnotationWriterGUI;
 import org.anchoranalysis.io.error.AnchorIOException;
 import org.apache.commons.io.FilenameUtils;
 
+@RequiredArgsConstructor
 public class ExportScaledMarks extends ExportAnnotation {
 
-    private MarkAnnotationReader reader = new MarkAnnotationReader(true);
-    private Path annotationPath;
+    // START REQUIRED ARGUMENTS
+    private final Path annotationPath;
+    // END REQUIRED ARGUMENTS
 
-    public ExportScaledMarks(Path annotationPath) {
-        super();
-        assert (annotationPath != null);
-        // Read annotation
-        this.annotationPath = annotationPath;
-    }
+    private MarkAnnotationReader<RejectionReason> reader = new MarkAnnotationReader<>(true);
 
     @Override
     public boolean isPromptForScalingNeeded() {
@@ -73,7 +72,7 @@ public class ExportScaledMarks extends ExportAnnotation {
 
         try {
             // Read file
-            Optional<MarkAnnotation> ann = reader.read(path);
+            Optional<DualMarksAnnotation<RejectionReason>> ann = reader.read(path);
 
             if (!ann.isPresent()) {
                 throw new OperationFailedException("There is no annotation to export");
@@ -84,9 +83,9 @@ public class ExportScaledMarks extends ExportAnnotation {
                 ann.get().scaleXY(scaleFactor);
             }
 
-            MarkAnnotationWriter writer = new MarkAnnotationWriter();
+            MarkAnnotationWriter<RejectionReason> writer = new MarkAnnotationWriter<>();
             writer.setDisablePathModification(true);
-            AnnotationWriterGUI<MarkAnnotation> writerGUI =
+            AnnotationWriterGUI<DualMarksAnnotation<RejectionReason>> writerGUI =
                     new AnnotationWriterGUI<>(writer, annotationRefresher, Optional.empty());
             writerGUI.saveAnnotation(ann.get(), path, parentFrame);
         } catch (AnchorIOException | OptionalOperationUnsupportedException e) {

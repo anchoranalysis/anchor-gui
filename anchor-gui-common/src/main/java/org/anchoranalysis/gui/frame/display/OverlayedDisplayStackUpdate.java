@@ -29,51 +29,49 @@ package org.anchoranalysis.gui.frame.display;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 import org.anchoranalysis.core.color.RGBColor;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.index.SetOperationFailedException;
-import org.anchoranalysis.image.extent.BoundingBox;
+import org.anchoranalysis.image.extent.box.BoundingBox;
 import org.anchoranalysis.image.stack.DisplayStack;
 import org.anchoranalysis.overlay.Overlay;
 import org.anchoranalysis.overlay.collection.ColoredOverlayCollection;
 import org.anchoranalysis.overlay.collection.OverlayCollection;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
 
-@AllArgsConstructor(access=AccessLevel.PRIVATE)
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class OverlayedDisplayStackUpdate {
 
-    /**
-     *  If null, we don't change the current marks
-     */
+    /** If null, we don't change the current marks */
     @Getter private ColoredOverlayCollection coloredMarks;
-    
-    /**
-     *  If null, we don't change the existing background
-     */
+
+    /** If null, we don't change the existing background */
     @Getter private DisplayStack backgroundStack;
-    
+
     /**
      * If non-null, additional marks that should be updated, as they might have changed in some way
      */
     private OverlayCollection changedMarks;
-    
+
     /**
-     *  Do we redraw specific bounding boxes, or look for everything?
-     *  
-     *  <p>If true, then the coloredMarks passed can be considered similar to the existing marks. If false, not assigns a new configuration completely, throwing out what's already there
+     * Do we redraw specific bounding boxes, or look for everything?
+     *
+     * <p>If true, then the coloredMarks passed can be considered similar to the existing marks. If
+     * false, not assigns a new configuration completely, throwing out what's already there
      */
-    @Getter private boolean redrawSpecific = false; 
- 
+    @Getter private boolean redrawSpecific = false;
+
     public static OverlayedDisplayStackUpdate assignOverlays(
             ColoredOverlayCollection coloredMarks) {
         return new OverlayedDisplayStackUpdate(coloredMarks, null, null, false);
     }
-    
+
     /**
-     * Replaces the existing coloredMarks with something similar, but we don't know what's changed exactly
-     * 
+     * Replaces the existing coloredMarks with something similar, but we don't know what's changed
+     * exactly
+     *
      * @param marksToAssign the marks to assign
      * @param changedMarks
      * @return
@@ -81,7 +79,6 @@ public class OverlayedDisplayStackUpdate {
     public static OverlayedDisplayStackUpdate updateOverlaysWithSimilar(
             ColoredOverlayCollection marksToAssign, OverlayCollection changedMarks) {
         return new OverlayedDisplayStackUpdate(marksToAssign, null, changedMarks, true);
-
     }
 
     public static OverlayedDisplayStackUpdate updateOverlaysWithSimilar(

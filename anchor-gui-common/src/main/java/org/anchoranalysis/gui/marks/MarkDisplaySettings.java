@@ -97,10 +97,10 @@ public class MarkDisplaySettings {
     private DrawObject createInsideConditionalWriter(
             IfElse.Condition conditionSelected, int borderSize) {
 
-        // TRUE WRITER is for when selected
+        // true WRITER is for when selected
         DrawObject trueWriter = new Filled();
 
-        // FALSE writer is for when not selected
+        // false writer is for when not selected
         Outline falseWriter = new Outline(borderSize, false);
 
         // Combining both situations gives us a selectable

@@ -28,23 +28,17 @@ package org.anchoranalysis.gui.annotation.save;
 
 import javax.swing.JComponent;
 import org.anchoranalysis.annotation.Annotation;
+import org.anchoranalysis.annotation.mark.DualMarks;
 import org.anchoranalysis.gui.videostats.internalframe.annotator.AnnotationWriterGUI;
-import org.anchoranalysis.gui.videostats.internalframe.annotator.currentstate.QueryAcceptedRejected;
 
 public interface ISaveAnnotation<T extends Annotation> {
 
     void saveFinished(
-            QueryAcceptedRejected query,
-            AnnotationWriterGUI<T> annotationWriter,
-            JComponent dialogParent);
+            DualMarks query, AnnotationWriterGUI<T> annotationWriter, JComponent dialogParent);
 
     void savePaused(
-            QueryAcceptedRejected query,
-            AnnotationWriterGUI<T> annotationWriter,
-            JComponent dialogParent);
+            DualMarks query, AnnotationWriterGUI<T> annotationWriter, JComponent dialogParent);
 
     void skipAnnotation(
-            QueryAcceptedRejected query,
-            AnnotationWriterGUI<T> annotationWriter,
-            JComponent dialogParent);
+            DualMarks query, AnnotationWriterGUI<T> annotationWriter, JComponent dialogParent);
 }

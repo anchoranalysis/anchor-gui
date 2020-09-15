@@ -26,13 +26,13 @@
 
 package org.anchoranalysis.plugin.gui.bean.createrastergenerator.energybreakdown;
 
-import java.nio.ByteBuffer;
 import java.util.List;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.idgetter.IDGetter;
 import org.anchoranalysis.gui.frame.display.OverlayedDisplayStackUpdate;
 import org.anchoranalysis.image.channel.Channel;
-import org.anchoranalysis.image.extent.BoundingBox;
+import org.anchoranalysis.image.convert.UnsignedByteBuffer;
+import org.anchoranalysis.image.extent.box.BoundingBox;
 import org.anchoranalysis.image.io.stack.ConvertDisplayStackToRGB;
 import org.anchoranalysis.image.stack.DisplayStack;
 import org.anchoranalysis.image.stack.rgb.RGBStack;
@@ -155,7 +155,7 @@ class CachedRGB {
             for (int c = 0; c < 3; c++) {
                 Channel rgbTarget = rgb.channelAt(c);
 
-                Voxels<ByteBuffer> voxelsTarget = rgbTarget.voxels().asByte();
+                Voxels<UnsignedByteBuffer> voxelsTarget = rgbTarget.voxels().asByte();
 
                 int bgChannel = selectBackgroundChannel(c, backgroundOriginal.getNumberChannels());
                 backgroundOriginal.copyPixelsTo(bgChannel, boxClipped, voxelsTarget, boxClipped);
