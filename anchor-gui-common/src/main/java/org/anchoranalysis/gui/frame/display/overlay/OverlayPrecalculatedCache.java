@@ -357,20 +357,22 @@ public class OverlayPrecalculatedCache implements OverlayRetriever {
         // We create a scaled version of our dimensions
         return dimEntireImage.scaleXYBy(new ScaleFactor(zoomFactorNew));
     }
-    
+
     /**
      * Creates an r-tree with the indices of each item from a list.
      *
-     * @param boxes added to the r-tree, with the index of the element in the stream as the corresponding item
+     * @param boxes added to the r-tree, with the index of the element in the stream as the
+     *     corresponding item
      * @param maxNumberEntriesSuggested suggested a maximum number of entries in the r-tree
      */
-    private static RTree<Integer> createRTreeOfIndices(List<BoundingBox> boxes, int maxNumberEntriesSuggested) {
+    private static RTree<Integer> createRTreeOfIndices(
+            List<BoundingBox> boxes, int maxNumberEntriesSuggested) {
         RTree<Integer> tree = new RTree<>(maxNumberEntriesSuggested);
-        
-        for( int i=0; i<boxes.size(); i++) {
+
+        for (int i = 0; i < boxes.size(); i++) {
             tree.add(boxes.get(i), i);
         }
-        
+
         return tree;
     }
 }
