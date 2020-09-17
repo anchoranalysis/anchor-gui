@@ -84,7 +84,7 @@ public class MarkEvaluatorSetForImage {
                         operationProposerSharedObjects,
                         me.getMarkFactory(),
                         me.getEnergySchemeCreator().create(),
-                        keyParams.get().get());
+                        keyParams.get().get()); // NOSONAR
             } catch (CreateException | IOException e) {
                 throw new OperationFailedException(e);
             }

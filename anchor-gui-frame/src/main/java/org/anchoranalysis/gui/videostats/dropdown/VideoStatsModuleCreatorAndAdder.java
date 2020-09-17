@@ -27,6 +27,7 @@
 package org.anchoranalysis.gui.videostats.dropdown;
 
 import java.awt.Component;
+import java.io.InterruptedIOException;
 import java.util.concurrent.ExecutionException;
 import javax.swing.JOptionPane;
 import lombok.AllArgsConstructor;
@@ -105,7 +106,7 @@ public class VideoStatsModuleCreatorAndAdder {
                 creator.createAndAddVideoStatsModule(get());
             } catch (InterruptedException
                     | ExecutionException
-                    | VideoStatsModuleCreateException e) {
+                    | VideoStatsModuleCreateException e) {  // NOSONAR
                 displayErrorDialog(e);
             }
         }

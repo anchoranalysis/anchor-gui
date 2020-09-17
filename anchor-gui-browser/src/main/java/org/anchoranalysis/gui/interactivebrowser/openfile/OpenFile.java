@@ -176,7 +176,7 @@ public class OpenFile extends AbstractAction {
             }
 
             fileCreatorLoader.addFileListSummaryModule(
-                    fileType.creatorForFile(files, importerSettings), parentComponent);
+                    fileType.creatorForFile(files, importerSettings), parentComponent); // NOSONAR
 
         } catch (CreateException | OperationFailedException e) {
             logger.errorReporter().recordError(OpenFile.class, e);
