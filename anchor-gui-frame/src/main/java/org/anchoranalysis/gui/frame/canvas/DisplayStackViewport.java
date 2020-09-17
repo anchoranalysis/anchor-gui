@@ -36,11 +36,11 @@ import org.anchoranalysis.core.geometry.ReadableTuple3i;
 import org.anchoranalysis.core.index.SetOperationFailedException;
 import org.anchoranalysis.gui.frame.canvas.zoom.ZoomScale;
 import org.anchoranalysis.gui.frame.display.BoundOverlayedDisplayStack;
+import org.anchoranalysis.gui.region.RegionExtracter;
 import org.anchoranalysis.image.extent.Dimensions;
 import org.anchoranalysis.image.extent.Extent;
 import org.anchoranalysis.image.extent.box.BoundingBox;
 import org.anchoranalysis.image.stack.DisplayStack;
-import org.anchoranalysis.image.stack.region.RegionExtracter;
 import org.anchoranalysis.image.voxel.datatype.VoxelDataType;
 
 // Shows a certain amount of a stack at any given time

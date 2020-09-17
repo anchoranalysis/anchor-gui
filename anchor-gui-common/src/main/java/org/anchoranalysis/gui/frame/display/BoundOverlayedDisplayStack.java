@@ -29,10 +29,11 @@ package org.anchoranalysis.gui.frame.display;
 import java.util.Optional;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.geometry.Point3i;
+import org.anchoranalysis.gui.region.RegionExtracter;
+import org.anchoranalysis.gui.region.RegionExtracterFromDisplayStack;
 import org.anchoranalysis.image.extent.Dimensions;
 import org.anchoranalysis.image.extent.box.BoundingBox;
 import org.anchoranalysis.image.stack.DisplayStack;
-import org.anchoranalysis.image.stack.region.RegionExtracter;
 import org.anchoranalysis.image.voxel.datatype.VoxelDataType;
 
 public class BoundOverlayedDisplayStack {
@@ -55,9 +56,9 @@ public class BoundOverlayedDisplayStack {
 
     public void initRegionExtracter() {
         if (overlay == null) {
-            this.regionExtracter = background.createRegionExtracter();
+            this.regionExtracter = createRegionExtracterFromDisplayStack();
         } else {
-            RegionExtracter reBackground = background.createRegionExtracter();
+            RegionExtracter reBackground = createRegionExtracterFromDisplayStack();
             this.regionExtracter = new RegionExtracterFromOverlay(reBackground, overlay);
         }
     }
@@ -68,7 +69,7 @@ public class BoundOverlayedDisplayStack {
 
     // Creates a new DisplayStack after imposing the overlay on the background
     public DisplayStack extractFullyOverlayed() throws OperationFailedException {
-        RegionExtracter re = background.createRegionExtracter();
+        RegionExtracter re = createRegionExtracterFromDisplayStack();
         return re.extractRegionFrom(new BoundingBox(background.dimensions()), 1.0);
     }
 
@@ -91,5 +92,10 @@ public class BoundOverlayedDisplayStack {
 
     public DisplayStack getBackground() {
         return background;
+    }
+    
+
+    private RegionExtracter createRegionExtracterFromDisplayStack() {
+        return new RegionExtracterFromDisplayStack(background.getConverters(), background.getStack());
     }
 }

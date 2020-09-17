@@ -1,6 +1,6 @@
 /*-
  * #%L
- * anchor-gui-common
+ * anchor-image
  * %%
  * Copyright (C) 2010 - 2020 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann-La Roche
  * %%
@@ -24,39 +24,15 @@
  * #L%
  */
 
-package org.anchoranalysis.gui.frame.display;
+package org.anchoranalysis.gui.region;
 
-import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.OperationFailedException;
-import org.anchoranalysis.gui.region.RegionExtracter;
 import org.anchoranalysis.image.extent.box.BoundingBox;
-import org.anchoranalysis.image.io.stack.ConvertDisplayStackToRGB;
 import org.anchoranalysis.image.stack.DisplayStack;
-import org.anchoranalysis.image.stack.rgb.RGBStack;
 
-class RegionExtracterFromOverlay implements RegionExtracter {
+// Extracts regions from a DisplayStack for presentation to the user
+public interface RegionExtracter {
 
-    private RegionExtracter regionExtracter;
-    private BoundColoredOverlayCollection overlay;
-
-    public RegionExtracterFromOverlay(
-            RegionExtracter regionExtracter, BoundColoredOverlayCollection overlay) {
-        super();
-        this.regionExtracter = regionExtracter;
-        this.overlay = overlay;
-    }
-
-    @Override
-    public DisplayStack extractRegionFrom(BoundingBox box, double zoomFactor)
-            throws OperationFailedException {
-        DisplayStack ds = regionExtracter.extractRegionFrom(box, zoomFactor);
-
-        try {
-            RGBStack rgbStack = ConvertDisplayStackToRGB.convert(ds);
-            overlay.drawRGB(rgbStack, box, zoomFactor);
-            return DisplayStack.create(rgbStack);
-        } catch (CreateException e) {
-            throw new OperationFailedException(e);
-        }
-    }
+    DisplayStack extractRegionFrom(BoundingBox box, double zoomFactor)
+            throws OperationFailedException;
 }
