@@ -34,8 +34,7 @@ import java.util.Optional;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.image.stack.Stack;
 import org.anchoranalysis.image.stack.bufferedimage.CreateStackFromBufferedImage;
-import org.anchoranalysis.io.generator.IterableObjectGenerator;
-import org.anchoranalysis.io.generator.ObjectGenerator;
+import org.anchoranalysis.io.generator.TwoStageGenerator;
 import org.anchoranalysis.io.manifest.ManifestDescription;
 import org.anchoranalysis.io.output.bean.OutputWriteSettings;
 import org.anchoranalysis.io.output.error.OutputWriteFailedException;
@@ -43,13 +42,12 @@ import org.anchoranalysis.plot.PlotInstance;
 import org.anchoranalysis.plot.io.GraphOutputter;
 import org.jfree.chart.ChartUtils;
 
-class GraphInstanceGenerator extends ObjectGenerator<Stack>
-        implements IterableObjectGenerator<PlotInstance, Stack> {
+class GraphInstanceGenerator extends TwoStageGenerator<PlotInstance,Stack> {
 
     private PlotInstance object;
 
-    private int width;
-    private int height;
+    private final int width;
+    private final int height;
 
     private String manifestFunction = "graph";
 
@@ -83,7 +81,7 @@ class GraphInstanceGenerator extends ObjectGenerator<Stack>
     public void end() throws OutputWriteFailedException {}
 
     @Override
-    public ObjectGenerator<Stack> getGenerator() {
+    public TwoStageGenerator<PlotInstance,Stack> getGenerator() {
         return this;
     }
 
@@ -108,16 +106,8 @@ class GraphInstanceGenerator extends ObjectGenerator<Stack>
         return Optional.of(new ManifestDescription("raster", manifestFunction));
     }
 
-    public String getManifestFunction() {
-        return manifestFunction;
-    }
-
-    public void setManifestFunction(String manifestFunction) {
-        this.manifestFunction = manifestFunction;
-    }
-
     @Override
-    public Stack generate() throws OutputWriteFailedException {
+    public Stack transform() throws OutputWriteFailedException {
 
         BufferedImage bufferedImage = GraphOutputter.createBufferedImage(object, width, height);
 

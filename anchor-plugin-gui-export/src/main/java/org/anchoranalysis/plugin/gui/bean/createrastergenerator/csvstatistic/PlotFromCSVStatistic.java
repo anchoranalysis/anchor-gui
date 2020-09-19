@@ -33,8 +33,8 @@ import org.anchoranalysis.core.functional.function.CheckedFunction;
 import org.anchoranalysis.gui.bean.exporttask.ExportTaskParams;
 import org.anchoranalysis.gui.io.loader.manifest.finder.csvstatistic.CSVStatistic;
 import org.anchoranalysis.image.stack.Stack;
-import org.anchoranalysis.io.generator.IterableObjectGenerator;
-import org.anchoranalysis.io.generator.IterableObjectGeneratorBridge;
+import org.anchoranalysis.io.generator.IterableSingleFileTypeGenerator;
+import org.anchoranalysis.io.generator.IterableIntermediateGeneratorBridge;
 import org.anchoranalysis.plot.PlotInstance;
 import org.anchoranalysis.plugin.gui.bean.createrastergenerator.PlotGeneratorBase;
 import org.anchoranalysis.plugin.gui.bean.exporttask.MappedFrom;
@@ -45,7 +45,7 @@ public class PlotFromCSVStatistic<T> extends PlotGeneratorBase<T, CSVStatistic> 
     private final CheckedFunction<CSVStatistic, T, CreateException> elementBridge;
 
     @Override
-    public IterableObjectGenerator<MappedFrom<CSVStatistic>, Stack> createGenerator(
+    public IterableSingleFileTypeGenerator<MappedFrom<CSVStatistic>, Stack> createGenerator(
             final ExportTaskParams params) throws CreateException {
 
         assert (getGraphDefinition() != null);
@@ -57,7 +57,7 @@ public class PlotFromCSVStatistic<T> extends PlotGeneratorBase<T, CSVStatistic> 
                             params.getFinderCsvStatistics().get(),
                             elementBridge);
 
-            return new IterableObjectGeneratorBridge<>(createGraphInstanceGenerator(), bridge);
+            return new IterableIntermediateGeneratorBridge<>(createGraphInstanceGenerator(), bridge);
 
         } catch (OperationFailedException e) {
             throw new CreateException(e);

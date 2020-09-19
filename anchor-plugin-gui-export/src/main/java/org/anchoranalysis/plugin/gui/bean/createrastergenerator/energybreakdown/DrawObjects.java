@@ -36,12 +36,13 @@ import org.anchoranalysis.core.idgetter.IDGetterIter;
 import org.anchoranalysis.core.name.provider.NamedProviderGetException;
 import org.anchoranalysis.gui.bean.exporttask.ExportTaskParams;
 import org.anchoranalysis.gui.frame.display.OverlayedDisplayStackUpdate;
-import org.anchoranalysis.image.io.generator.raster.RasterGeneratorFromDisplayStack;
+import org.anchoranalysis.image.io.generator.raster.RasterGeneratorDelegateToDisplayStack;
+import org.anchoranalysis.image.io.rasterwriter.RasterWriteOptions;
 import org.anchoranalysis.image.stack.DisplayStack;
 import org.anchoranalysis.image.stack.Stack;
 import org.anchoranalysis.io.bean.object.writer.Outline;
-import org.anchoranalysis.io.generator.IterableObjectGenerator;
-import org.anchoranalysis.io.generator.IterableObjectGeneratorBridge;
+import org.anchoranalysis.io.generator.IterableSingleFileTypeGenerator;
+import org.anchoranalysis.io.generator.IterableIntermediateGeneratorBridge;
 import org.anchoranalysis.mpp.bean.regionmap.RegionMapSingleton;
 import org.anchoranalysis.mpp.bean.regionmap.RegionMembershipWithFlags;
 import org.anchoranalysis.mpp.feature.energy.IndexableMarksWithEnergy;
@@ -61,6 +62,8 @@ import org.anchoranalysis.plugin.gui.bean.exporttask.MappedFrom;
 
 public class DrawObjects extends GeneratorFactory<IndexableMarksWithEnergy> {
 
+    private static final RasterWriteOptions RASTER_OPTIONS = new RasterWriteOptions(false, 3);
+    
     // END BEAN PROPERTIES
     @BeanField @Getter @Setter private DrawObject drawObject;
 
@@ -78,10 +81,10 @@ public class DrawObjects extends GeneratorFactory<IndexableMarksWithEnergy> {
     }
 
     @Override
-    public IterableObjectGenerator<MappedFrom<IndexableMarksWithEnergy>, Stack> createGenerator(
+    public IterableSingleFileTypeGenerator<MappedFrom<IndexableMarksWithEnergy>, Stack> createGenerator(
             final ExportTaskParams params) throws CreateException {
 
-        final IterableObjectGenerator<OverlayedDisplayStackUpdate, Stack> generator;
+        final IterableSingleFileTypeGenerator<OverlayedDisplayStackUpdate, Stack> generator;
 
         if (mip) {
             throw new CreateException("The mip flag is no longer supported for this bean");
@@ -91,14 +94,14 @@ public class DrawObjects extends GeneratorFactory<IndexableMarksWithEnergy> {
             CachedRGB cachedRGB = new CachedRGB(new IDGetterOverlayID());
 
             CachedRGBGenerator ccGenerator =
-                    new CachedRGBGenerator(cachedRGB, params.getOutputManager().getErrorReporter());
+                    new CachedRGBGenerator(cachedRGB, RASTER_OPTIONS, params.getOutputManager().getErrorReporter());
 
             ccGenerator.updateDrawer(new SimpleOverlayWriter(drawObject));
 
-            generator = new RasterGeneratorFromDisplayStack<>(ccGenerator, true);
+            generator = new RasterGeneratorDelegateToDisplayStack<>(ccGenerator, true);
         }
 
-        return new IterableObjectGeneratorBridge<>(generator, elem -> bridgeElement(elem, params));
+        return new IterableIntermediateGeneratorBridge<>(generator, elem -> bridgeElement(elem, params));
     }
 
     @Override

@@ -30,19 +30,20 @@ import java.nio.file.Path;
 import java.util.Optional;
 import java.util.function.Supplier;
 import lombok.RequiredArgsConstructor;
+import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.index.SetOperationFailedException;
-import org.anchoranalysis.io.generator.IterableObjectGenerator;
-import org.anchoranalysis.io.generator.ObjectGenerator;
+import org.anchoranalysis.io.generator.IterableSingleFileTypeGenerator;
+import org.anchoranalysis.io.generator.SingleFileTypeGenerator;
+import org.anchoranalysis.io.generator.TwoStageGenerator;
 import org.anchoranalysis.io.manifest.ManifestDescription;
 import org.anchoranalysis.io.output.bean.OutputWriteSettings;
 import org.anchoranalysis.io.output.error.OutputWriteFailedException;
 
 @RequiredArgsConstructor
-class OperationGenerator<S, T> extends ObjectGenerator<S>
-        implements IterableObjectGenerator<Supplier<T>, S> {
+class OperationGenerator<S, T> extends TwoStageGenerator<Supplier<T>,S> {
 
     // START REQUIRED ARGUMENTS
-    private final IterableObjectGenerator<T, S> delegate;
+    private final IterableSingleFileTypeGenerator<T, S> delegate;
     // END REQUIRED ARGUMENTS
 
     private Supplier<T> element;
@@ -69,13 +70,13 @@ class OperationGenerator<S, T> extends ObjectGenerator<S>
     }
 
     @Override
-    public ObjectGenerator<S> getGenerator() {
+    public SingleFileTypeGenerator<?,S> getGenerator() {
         return delegate.getGenerator();
     }
 
     @Override
-    public S generate() throws OutputWriteFailedException {
-        return delegate.getGenerator().generate();
+    public S transform() throws OutputWriteFailedException {
+        return delegate.getGenerator().transform();
     }
 
     @Override
@@ -85,7 +86,7 @@ class OperationGenerator<S, T> extends ObjectGenerator<S>
     }
 
     @Override
-    public String getFileExtension(OutputWriteSettings outputWriteSettings) {
+    public String getFileExtension(OutputWriteSettings outputWriteSettings) throws OperationFailedException {
         return delegate.getGenerator().getFileExtension(outputWriteSettings);
     }
 

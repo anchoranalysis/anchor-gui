@@ -32,8 +32,8 @@ import org.anchoranalysis.bean.annotation.BeanField;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.gui.bean.exporttask.ExportTaskParams;
 import org.anchoranalysis.image.stack.Stack;
-import org.anchoranalysis.io.generator.IterableObjectGenerator;
-import org.anchoranalysis.io.generator.IterableObjectGeneratorBridge;
+import org.anchoranalysis.io.generator.IterableSingleFileTypeGenerator;
+import org.anchoranalysis.io.generator.IterableIntermediateGeneratorBridge;
 import org.anchoranalysis.plugin.gui.bean.createrastergenerator.GeneratorFactory;
 
 public class DemuxDualState<T> extends GeneratorFactory<DualStateWithoutIndex<T>> {
@@ -49,12 +49,12 @@ public class DemuxDualState<T> extends GeneratorFactory<DualStateWithoutIndex<T>
     }
 
     @Override
-    public IterableObjectGenerator<MappedFrom<DualStateWithoutIndex<T>>, Stack> createGenerator(
+    public IterableSingleFileTypeGenerator<MappedFrom<DualStateWithoutIndex<T>>, Stack> createGenerator(
             ExportTaskParams params) throws CreateException {
 
-        IterableObjectGenerator<MappedFrom<T>, Stack> generator = item.createGenerator(params);
+        IterableSingleFileTypeGenerator<MappedFrom<T>, Stack> generator = item.createGenerator(params);
 
-        return new IterableObjectGeneratorBridge<>(
+        return new IterableIntermediateGeneratorBridge<>(
                 generator,
                 sourceObject ->
                         new MappedFrom<>(

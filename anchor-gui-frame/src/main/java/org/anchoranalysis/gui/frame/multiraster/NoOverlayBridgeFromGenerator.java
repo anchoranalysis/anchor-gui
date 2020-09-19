@@ -32,15 +32,15 @@ import org.anchoranalysis.gui.container.background.BackgroundStackContainerExcep
 import org.anchoranalysis.gui.frame.display.BoundOverlayedDisplayStack;
 import org.anchoranalysis.gui.frame.display.DisplayUpdate;
 import org.anchoranalysis.image.stack.DisplayStack;
-import org.anchoranalysis.io.generator.IterableObjectGenerator;
+import org.anchoranalysis.io.generator.IterableSingleFileTypeGenerator;
 import org.anchoranalysis.io.output.error.OutputWriteFailedException;
 
 class NoOverlayBridgeFromGenerator
         implements CheckedFunction<Integer, DisplayUpdate, BackgroundStackContainerException> {
 
-    private IterableObjectGenerator<Integer, DisplayStack> generator;
+    private IterableSingleFileTypeGenerator<Integer, DisplayStack> generator;
 
-    public NoOverlayBridgeFromGenerator(IterableObjectGenerator<Integer, DisplayStack> generator) {
+    public NoOverlayBridgeFromGenerator(IterableSingleFileTypeGenerator<Integer, DisplayStack> generator) {
         super();
         this.generator = generator;
     }
@@ -50,7 +50,7 @@ class NoOverlayBridgeFromGenerator
         try {
             generator.setIterableElement(sourceObject);
             BoundOverlayedDisplayStack overlayedStack =
-                    new BoundOverlayedDisplayStack(generator.getGenerator().generate());
+                    new BoundOverlayedDisplayStack(generator.getGenerator().transform());
             return DisplayUpdate.assignNewStack(overlayedStack);
 
         } catch (SetOperationFailedException | OutputWriteFailedException e) {

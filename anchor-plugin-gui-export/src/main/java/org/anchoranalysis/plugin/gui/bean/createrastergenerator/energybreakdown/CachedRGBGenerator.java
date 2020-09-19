@@ -35,7 +35,9 @@ import org.anchoranalysis.core.index.SetOperationFailedException;
 import org.anchoranalysis.gui.frame.display.OverlayedDisplayStackUpdate;
 import org.anchoranalysis.image.io.generator.raster.RasterGenerator;
 import org.anchoranalysis.image.io.generator.raster.RasterWriterUtilities;
+import org.anchoranalysis.image.io.rasterwriter.RasterWriteOptions;
 import org.anchoranalysis.image.stack.DisplayStack;
+import org.anchoranalysis.io.generator.TwoStageGenerator;
 import org.anchoranalysis.io.output.bean.OutputWriteSettings;
 import org.anchoranalysis.io.output.error.OutputWriteFailedException;
 import org.anchoranalysis.overlay.writer.DrawOverlay;
@@ -45,6 +47,10 @@ class CachedRGBGenerator extends CacheableOverlaysToRGBGenerator {
 
     // START BEAN PROPERTIES
     private final CachedRGB cachedRGB;
+
+    /** Options that determine how the raster is written. */
+    private final RasterWriteOptions rasterOptions;
+    
     private final ErrorReporter errorReporter;
     // END BEAN PROPERTIES
 
@@ -57,7 +63,7 @@ class CachedRGBGenerator extends CacheableOverlaysToRGBGenerator {
     }
 
     @Override
-    public DisplayStack generate() throws OutputWriteFailedException {
+    public DisplayStack transform() throws OutputWriteFailedException {
         try {
             return DisplayStack.create(cachedRGB.getRGB());
         } catch (CreateException e) {
@@ -112,7 +118,12 @@ class CachedRGBGenerator extends CacheableOverlaysToRGBGenerator {
     }
 
     @Override
-    public String getFileExtension(OutputWriteSettings outputWriteSettings) {
-        return RasterWriterUtilities.getDefaultRasterFileExtension(outputWriteSettings);
+    public String getFileExtension(OutputWriteSettings outputWriteSettings) throws OperationFailedException {
+        return RasterWriterUtilities.fileExtensionForDefaultRasterWriter(outputWriteSettings, rasterOptions);
+    }
+
+    @Override
+    public TwoStageGenerator<?, DisplayStack> getGenerator() {
+        return this;
     }
 }

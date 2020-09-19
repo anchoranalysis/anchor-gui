@@ -30,24 +30,17 @@ import java.util.Optional;
 import org.anchoranalysis.gui.frame.display.OverlayedDisplayStackUpdate;
 import org.anchoranalysis.gui.frame.display.Redrawable;
 import org.anchoranalysis.image.stack.DisplayStack;
-import org.anchoranalysis.io.generator.IterableObjectGenerator;
-import org.anchoranalysis.io.generator.ObjectGenerator;
+import org.anchoranalysis.io.generator.TwoStageGenerator;
 import org.anchoranalysis.io.manifest.ManifestDescription;
 import org.anchoranalysis.io.output.error.OutputWriteFailedException;
 import org.anchoranalysis.overlay.writer.DrawOverlay;
 
-public abstract class CacheableOverlaysToRGBGenerator extends ObjectGenerator<DisplayStack>
-        implements Redrawable, IterableObjectGenerator<OverlayedDisplayStackUpdate, DisplayStack> {
+public abstract class CacheableOverlaysToRGBGenerator extends TwoStageGenerator<OverlayedDisplayStackUpdate,DisplayStack> implements Redrawable {
 
     // THIS MUST BE CALLED before we do any drawing.
     public abstract void updateDrawer(DrawOverlay drawOverlay);
 
     public abstract DisplayStack getBackground();
-
-    @Override
-    public ObjectGenerator<DisplayStack> getGenerator() {
-        return this;
-    }
 
     @Override
     public Optional<ManifestDescription> createManifestDescription() {
