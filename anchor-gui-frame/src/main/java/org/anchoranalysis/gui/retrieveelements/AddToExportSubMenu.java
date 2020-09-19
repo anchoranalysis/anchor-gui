@@ -30,7 +30,7 @@ import java.util.Optional;
 import java.util.function.Supplier;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.image.stack.Stack;
-import org.anchoranalysis.io.generator.IterableGenerator;
+import org.anchoranalysis.io.generator.Generator;
 import org.anchoranalysis.io.manifest.ManifestDescription;
 import org.anchoranalysis.io.output.bound.BoundOutputManagerRouteErrors;
 
@@ -40,7 +40,7 @@ public interface AddToExportSubMenu {
             throws OperationFailedException;
 
     <T> void addExportItem(
-            IterableGenerator<T> generator,
+            Generator<T> generator,
             T itemToGenerate,
             String outputName,
             String label,

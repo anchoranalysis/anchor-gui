@@ -38,14 +38,14 @@ import org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.BackgroundSe
 import org.anchoranalysis.gui.videostats.threading.InteractiveThreadPool;
 import org.anchoranalysis.image.io.generator.raster.DisplayStackGenerator;
 import org.anchoranalysis.image.stack.DisplayStack;
-import org.anchoranalysis.io.generator.IterableSingleFileTypeGenerator;
-import org.anchoranalysis.io.generator.IterableSingleFileTypeGeneratorBridge;
+import org.anchoranalysis.io.generator.SingleFileTypeGenerator;
+import org.anchoranalysis.io.generator.SingleFileTypeGeneratorBridge;
 
 public class ThreadedIndexedDisplayStackSetter implements BackgroundSetter, ThreadedProducer {
 
     private ThreadedDisplayUpdateConsumer delegate;
 
-    private IterableSingleFileTypeGenerator<DisplayStack, DisplayStack> stackGenerator;
+    private SingleFileTypeGenerator<DisplayStack, DisplayStack> stackGenerator;
 
     public void init(
             CheckedFunction<Integer, DisplayStack, ? extends Throwable> displayStacks,
@@ -90,7 +90,7 @@ public class ThreadedIndexedDisplayStackSetter implements BackgroundSetter, Thre
     private CheckedFunction<Integer, DisplayUpdate, BackgroundStackContainerException> ensure8bit(
             CheckedFunction<Integer, DisplayStack, ? extends Throwable> cntr) {
         return new NoOverlayBridgeFromGenerator(
-                new IterableSingleFileTypeGeneratorBridge<>(
+                new SingleFileTypeGeneratorBridge<>(
                         stackGenerator, new EnsureUnsigned8Bit<>(cntr)));
     }
 }

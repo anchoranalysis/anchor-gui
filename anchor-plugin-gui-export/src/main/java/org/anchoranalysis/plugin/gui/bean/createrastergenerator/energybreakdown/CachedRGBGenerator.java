@@ -37,7 +37,6 @@ import org.anchoranalysis.image.io.generator.raster.RasterGenerator;
 import org.anchoranalysis.image.io.generator.raster.RasterWriterUtilities;
 import org.anchoranalysis.image.io.rasterwriter.RasterWriteOptions;
 import org.anchoranalysis.image.stack.DisplayStack;
-import org.anchoranalysis.io.generator.TwoStageGenerator;
 import org.anchoranalysis.io.output.bean.OutputWriteSettings;
 import org.anchoranalysis.io.output.error.OutputWriteFailedException;
 import org.anchoranalysis.overlay.writer.DrawOverlay;
@@ -72,27 +71,27 @@ class CachedRGBGenerator extends CacheableOverlaysToRGBGenerator {
     }
 
     @Override
-    public OverlayedDisplayStackUpdate getIterableElement() {
+    public OverlayedDisplayStackUpdate getElement() {
         return element;
     }
 
     @Override
     public void applyRedrawUpdate(OverlayedDisplayStackUpdate update) {
         try {
-            setIterableElement(update);
+            assignElement(update);
         } catch (SetOperationFailedException e) {
             errorReporter.recordError(CachedRGBGenerator.class, e);
         }
     }
 
     @Override
-    public void setIterableElement(OverlayedDisplayStackUpdate element)
+    public void assignElement(OverlayedDisplayStackUpdate element)
             throws SetOperationFailedException {
 
         // We don't do any changes if is exactly the same, if some other
         //   factor has altered, to change how the generator would
         //   produce it's output then, it must be externally triggered
-        if (element == getIterableElement()) {
+        if (element == getElement()) {
             return;
         }
 
@@ -120,10 +119,5 @@ class CachedRGBGenerator extends CacheableOverlaysToRGBGenerator {
     @Override
     public String getFileExtension(OutputWriteSettings outputWriteSettings) throws OperationFailedException {
         return RasterWriterUtilities.fileExtensionForDefaultRasterWriter(outputWriteSettings, rasterOptions);
-    }
-
-    @Override
-    public TwoStageGenerator<OverlayedDisplayStackUpdate, DisplayStack> getGenerator() {
-        return this;
     }
 }

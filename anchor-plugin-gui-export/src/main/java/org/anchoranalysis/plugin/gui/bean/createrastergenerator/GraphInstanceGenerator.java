@@ -32,9 +32,11 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.util.Optional;
 import org.anchoranalysis.core.error.OperationFailedException;
+import org.anchoranalysis.core.error.friendly.AnchorImpossibleSituationException;
+import org.anchoranalysis.core.index.SetOperationFailedException;
 import org.anchoranalysis.image.stack.Stack;
 import org.anchoranalysis.image.stack.bufferedimage.CreateStackFromBufferedImage;
-import org.anchoranalysis.io.generator.TwoStageGenerator;
+import org.anchoranalysis.io.generator.SingleFileTypeGeneratorWithElement;
 import org.anchoranalysis.io.manifest.ManifestDescription;
 import org.anchoranalysis.io.output.bean.OutputWriteSettings;
 import org.anchoranalysis.io.output.error.OutputWriteFailedException;
@@ -42,9 +44,7 @@ import org.anchoranalysis.plot.PlotInstance;
 import org.anchoranalysis.plot.io.GraphOutputter;
 import org.jfree.chart.ChartUtils;
 
-class GraphInstanceGenerator extends TwoStageGenerator<PlotInstance,Stack> {
-
-    private PlotInstance object;
+class GraphInstanceGenerator extends SingleFileTypeGeneratorWithElement<PlotInstance,Stack> {
 
     private final int width;
     private final int height;
@@ -57,32 +57,15 @@ class GraphInstanceGenerator extends TwoStageGenerator<PlotInstance,Stack> {
         this.height = height;
     }
 
-    public GraphInstanceGenerator(PlotInstance object, int width, int height) {
+    public GraphInstanceGenerator(PlotInstance element, int width, int height) {
         super();
-        this.object = object;
         this.width = width;
         this.height = height;
-    }
-
-    @Override
-    public PlotInstance getIterableElement() {
-        return object;
-    }
-
-    @Override
-    public void setIterableElement(PlotInstance element) {
-        object = element;
-    }
-
-    @Override
-    public void start() throws OutputWriteFailedException {}
-
-    @Override
-    public void end() throws OutputWriteFailedException {}
-
-    @Override
-    public TwoStageGenerator<PlotInstance,Stack> getGenerator() {
-        return this;
+        try {
+            assignElement(element);
+        } catch (SetOperationFailedException e) {
+            throw new AnchorImpossibleSituationException();
+        }
     }
 
     @Override
@@ -90,7 +73,7 @@ class GraphInstanceGenerator extends TwoStageGenerator<PlotInstance,Stack> {
             throws OutputWriteFailedException {
 
         try (FileOutputStream fileOutput = new FileOutputStream(filePath.toFile())) {
-            ChartUtils.writeChartAsPNG(fileOutput, object.getChart(), width, height);
+            ChartUtils.writeChartAsPNG(fileOutput, getElement().getChart(), width, height);
         } catch (IOException e) {
             throw new OutputWriteFailedException(e);
         }
@@ -109,12 +92,22 @@ class GraphInstanceGenerator extends TwoStageGenerator<PlotInstance,Stack> {
     @Override
     public Stack transform() throws OutputWriteFailedException {
 
-        BufferedImage bufferedImage = GraphOutputter.createBufferedImage(object, width, height);
+        BufferedImage bufferedImage = GraphOutputter.createBufferedImage(getElement(), width, height);
 
         try {
             return CreateStackFromBufferedImage.create(bufferedImage);
         } catch (OperationFailedException e) {
             throw new OutputWriteFailedException(e);
         }
+    }
+    
+    @Override
+    public void start() throws OutputWriteFailedException {
+        // NOTHING TO DO
+    }
+
+    @Override
+    public void end() throws OutputWriteFailedException {
+        // NOTHING TO DO
     }
 }

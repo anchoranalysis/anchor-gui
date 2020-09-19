@@ -41,8 +41,8 @@ import org.anchoranalysis.image.io.rasterwriter.RasterWriteOptions;
 import org.anchoranalysis.image.stack.DisplayStack;
 import org.anchoranalysis.image.stack.Stack;
 import org.anchoranalysis.io.bean.object.writer.Outline;
-import org.anchoranalysis.io.generator.IterableSingleFileTypeGenerator;
-import org.anchoranalysis.io.generator.IterableSingleFileTypeGeneratorBridge;
+import org.anchoranalysis.io.generator.SingleFileTypeGenerator;
+import org.anchoranalysis.io.generator.SingleFileTypeGeneratorBridge;
 import org.anchoranalysis.mpp.bean.regionmap.RegionMapSingleton;
 import org.anchoranalysis.mpp.bean.regionmap.RegionMembershipWithFlags;
 import org.anchoranalysis.mpp.feature.energy.IndexableMarksWithEnergy;
@@ -81,10 +81,10 @@ public class DrawObjects extends GeneratorFactory<IndexableMarksWithEnergy> {
     }
 
     @Override
-    public IterableSingleFileTypeGenerator<MappedFrom<IndexableMarksWithEnergy>, Stack> createGenerator(
+    public SingleFileTypeGenerator<MappedFrom<IndexableMarksWithEnergy>, Stack> createGenerator(
             final ExportTaskParams params) throws CreateException {
 
-        final IterableSingleFileTypeGenerator<OverlayedDisplayStackUpdate, Stack> generator;
+        final SingleFileTypeGenerator<OverlayedDisplayStackUpdate, Stack> generator;
 
         if (mip) {
             throw new CreateException("The mip flag is no longer supported for this bean");
@@ -101,7 +101,7 @@ public class DrawObjects extends GeneratorFactory<IndexableMarksWithEnergy> {
             generator = new RasterGeneratorDelegateToDisplayStack<>(ccGenerator, true);
         }
 
-        return new IterableSingleFileTypeGeneratorBridge<>(generator, elem -> bridgeElement(elem, params));
+        return new SingleFileTypeGeneratorBridge<>(generator, elem -> bridgeElement(elem, params));
     }
 
     @Override

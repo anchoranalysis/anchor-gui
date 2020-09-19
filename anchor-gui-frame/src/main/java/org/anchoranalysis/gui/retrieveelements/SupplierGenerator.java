@@ -1,6 +1,6 @@
 /*-
  * #%L
- * anchor-plugin-gui-export
+ * anchor-gui-frame
  * %%
  * Copyright (C) 2010 - 2020 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann-La Roche
  * %%
@@ -24,19 +24,23 @@
  * #L%
  */
 
-package org.anchoranalysis.plugin.gui.bean.createrastergenerator;
+package org.anchoranalysis.gui.retrieveelements;
 
-import org.anchoranalysis.bean.AnchorBean;
-import org.anchoranalysis.core.error.CreateException;
-import org.anchoranalysis.gui.bean.exporttask.ExportTaskParams;
-import org.anchoranalysis.image.stack.Stack;
+import java.util.function.Supplier;
 import org.anchoranalysis.io.generator.SingleFileTypeGenerator;
-import org.anchoranalysis.plugin.gui.bean.exporttask.MappedFrom;
+import org.anchoranalysis.io.generator.SingleFileTypeGeneratorBridge;
 
-public abstract class GeneratorFactory<T> extends AnchorBean<GeneratorFactory<T>> {
+/**
+ * A generator that gets an element from a supplier.
+ * 
+ * @author Owen Feehan
+ *
+ * @param <S> generator-type
+ * @param <T> type that is supplied
+ */
+class SupplierGenerator<S, T> extends SingleFileTypeGeneratorBridge<S,Supplier<T>,T> {
 
-    public abstract SingleFileTypeGenerator<MappedFrom<T>, Stack> createGenerator(
-            ExportTaskParams params) throws CreateException;
-
-    public abstract boolean hasNecessaryParams(ExportTaskParams params);
+    public SupplierGenerator(SingleFileTypeGenerator<T, S> generator) {
+        super(generator, Supplier::get);
+    }
 }

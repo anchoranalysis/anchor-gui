@@ -32,8 +32,8 @@ import org.anchoranalysis.gui.plot.EnergyGraphItem;
 import org.anchoranalysis.gui.plot.creator.GeneratePlotEnergy;
 import org.anchoranalysis.gui.plot.panel.ClickableGraphInstance;
 import org.anchoranalysis.image.stack.Stack;
-import org.anchoranalysis.io.generator.IterableSingleFileTypeGenerator;
-import org.anchoranalysis.io.generator.IterableSingleFileTypeGeneratorBridge;
+import org.anchoranalysis.io.generator.SingleFileTypeGenerator;
+import org.anchoranalysis.io.generator.SingleFileTypeGeneratorBridge;
 import org.anchoranalysis.mpp.feature.energy.IndexableMarksWithEnergy;
 import org.anchoranalysis.plot.PlotInstance;
 import org.anchoranalysis.plugin.gui.bean.createrastergenerator.PlotGeneratorBase;
@@ -42,27 +42,27 @@ import org.anchoranalysis.plugin.gui.bean.exporttask.MappedFrom;
 public class PlotEnergy extends PlotGeneratorBase<EnergyGraphItem, IndexableMarksWithEnergy> {
 
     @Override
-    public IterableSingleFileTypeGenerator<MappedFrom<IndexableMarksWithEnergy>, Stack> createGenerator(
+    public SingleFileTypeGenerator<MappedFrom<IndexableMarksWithEnergy>, Stack> createGenerator(
             ExportTaskParams params) throws CreateException {
 
-        IterableSingleFileTypeGenerator<PlotInstance, Stack> generator = createGraphInstanceGenerator();
+        SingleFileTypeGenerator<PlotInstance, Stack> generator = createGraphInstanceGenerator();
 
-        return new IterableSingleFileTypeGeneratorBridge<>(
+        return new SingleFileTypeGeneratorBridge<>(
                 createBridge(generator, params), MappedFrom::getObject);
     }
 
-    private IterableSingleFileTypeGeneratorBridge<Stack, IndexableMarksWithEnergy, ClickableGraphInstance>
+    private SingleFileTypeGeneratorBridge<Stack, IndexableMarksWithEnergy, ClickableGraphInstance>
             createBridge(
-                    IterableSingleFileTypeGenerator<PlotInstance, Stack> generator,
+                    SingleFileTypeGenerator<PlotInstance, Stack> generator,
                     ExportTaskParams params) {
         // Presents a generator for a GraphInstance as a generator for ClickableGraphInstance
-        IterableSingleFileTypeGeneratorBridge<Stack, ClickableGraphInstance, PlotInstance>
+        SingleFileTypeGeneratorBridge<Stack, ClickableGraphInstance, PlotInstance>
                 clickableGenerator =
-                        new IterableSingleFileTypeGeneratorBridge<>(
+                        new SingleFileTypeGeneratorBridge<>(
                                 generator, ClickableGraphInstance::getGraphInstance);
 
         // Presents a generator for a ClickableGraphInstance as a generator for Stack
-        return new IterableSingleFileTypeGeneratorBridge<>(
+        return new SingleFileTypeGeneratorBridge<>(
                 clickableGenerator,
                 new GeneratePlotEnergy(getGraphDefinition(), params.getColorIndexMarks()));
     }

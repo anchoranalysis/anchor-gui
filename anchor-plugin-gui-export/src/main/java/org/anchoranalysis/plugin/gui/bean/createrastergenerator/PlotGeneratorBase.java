@@ -32,7 +32,7 @@ import org.anchoranalysis.bean.annotation.BeanField;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.gui.bean.exporttask.ExportTaskParams;
 import org.anchoranalysis.image.stack.Stack;
-import org.anchoranalysis.io.generator.IterableSingleFileTypeGenerator;
+import org.anchoranalysis.io.generator.SingleFileTypeGenerator;
 import org.anchoranalysis.plot.PlotInstance;
 import org.anchoranalysis.plot.bean.Plot;
 import org.anchoranalysis.plugin.gui.bean.exporttask.MappedFrom;
@@ -47,12 +47,12 @@ public abstract class PlotGeneratorBase<T, S> extends GeneratorFactory<S> {
     @BeanField @Getter @Setter private int height = 768;
     // END BEAN PARAMETERS
 
-    protected IterableSingleFileTypeGenerator<PlotInstance, Stack> createGraphInstanceGenerator() {
+    protected SingleFileTypeGenerator<PlotInstance, Stack> createGraphInstanceGenerator() {
         return new GraphInstanceGenerator(width, height);
     }
 
     @Override
-    public abstract IterableSingleFileTypeGenerator<MappedFrom<S>, Stack> createGenerator(
+    public abstract SingleFileTypeGenerator<MappedFrom<S>, Stack> createGenerator(
             ExportTaskParams params) throws CreateException;
 
     @Override

@@ -31,14 +31,14 @@ import javax.swing.JOptionPane;
 import javax.swing.ProgressMonitor;
 import lombok.AllArgsConstructor;
 import org.anchoranalysis.core.index.SetOperationFailedException;
-import org.anchoranalysis.io.generator.IterableGenerator;
+import org.anchoranalysis.io.generator.Generator;
 import org.anchoranalysis.io.generator.sequence.SequenceMemory;
 import org.anchoranalysis.io.namestyle.IndexableOutputNameStyle;
 
 @AllArgsConstructor
 public class ExportTaskGenerator<T> implements ExportTask {
 
-    private final IterableGenerator<T> generator;
+    private final Generator<T> generator;
     private final T item;
     private final JFrame parentFrame;
     private final IndexableOutputNameStyle outputNameStyle;
@@ -56,18 +56,18 @@ public class ExportTaskGenerator<T> implements ExportTask {
         int index = sequenceMemory.lastIndex(outputNameStyle.getOutputName());
 
         try {
-            generator.setIterableElement(item);
+            generator.assignElement(item);
         } catch (SetOperationFailedException e) {
             throw new ExportTaskFailedException(e);
         }
 
-        int numWritten =
+        int numberWritten =
                 params.getOutputManager()
                         .getWriterCheckIfAllowed()
-                        .write(outputNameStyle, generator::getGenerator, index);
-        sequenceMemory.updateIndex(outputNameStyle.getOutputName(), index + numWritten);
+                        .write(outputNameStyle, () -> generator, index);
+        sequenceMemory.updateIndex(outputNameStyle.getOutputName(), index + numberWritten);
 
-        if (numWritten == 0) {
+        if (numberWritten == 0) {
             JOptionPane.showMessageDialog(parentFrame, "An error occurred");
         }
 

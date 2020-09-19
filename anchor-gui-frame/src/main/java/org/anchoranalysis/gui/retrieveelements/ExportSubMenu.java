@@ -41,7 +41,7 @@ import org.anchoranalysis.gui.bean.exporttask.ExportTaskGenerator;
 import org.anchoranalysis.gui.bean.exporttask.ExportTaskParams;
 import org.anchoranalysis.image.io.generator.raster.StackGenerator;
 import org.anchoranalysis.image.stack.Stack;
-import org.anchoranalysis.io.generator.IterableGenerator;
+import org.anchoranalysis.io.generator.Generator;
 import org.anchoranalysis.io.manifest.ManifestDescription;
 import org.anchoranalysis.io.manifest.ManifestFolderDescription;
 import org.anchoranalysis.io.manifest.sequencetype.IncrementalSequenceType;
@@ -61,14 +61,14 @@ public class ExportSubMenu implements AddToExportSubMenu {
             throws OperationFailedException {
 
         StackGenerator stackGenerator = new StackGenerator(true, outputName);
-        OperationGenerator<Stack, Stack> generator = new OperationGenerator<>(stackGenerator);
+        SupplierGenerator<Stack, Stack> generator = new SupplierGenerator<>(stackGenerator);
         addExportItem(
                 generator, stack, outputName, label, generator.createManifestDescription(), 1);
     }
 
     @Override
     public <T> void addExportItem(
-            IterableGenerator<T> generator,
+            Generator<T> generator,
             T itemToGenerate,
             String outputName,
             String label,

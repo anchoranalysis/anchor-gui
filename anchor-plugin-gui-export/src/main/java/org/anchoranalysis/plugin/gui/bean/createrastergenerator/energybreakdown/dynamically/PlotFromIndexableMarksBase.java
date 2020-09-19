@@ -33,8 +33,8 @@ import org.anchoranalysis.core.functional.function.CheckedFunction;
 import org.anchoranalysis.gui.bean.exporttask.ExportTaskParams;
 import org.anchoranalysis.gui.io.loader.manifest.finder.csvstatistic.CSVStatistic;
 import org.anchoranalysis.image.stack.Stack;
-import org.anchoranalysis.io.generator.IterableSingleFileTypeGenerator;
-import org.anchoranalysis.io.generator.IterableSingleFileTypeGeneratorBridge;
+import org.anchoranalysis.io.generator.SingleFileTypeGenerator;
+import org.anchoranalysis.io.generator.SingleFileTypeGeneratorBridge;
 import org.anchoranalysis.mpp.feature.energy.IndexableMarksWithEnergy;
 import org.anchoranalysis.plugin.gui.bean.createrastergenerator.PlotGeneratorBase;
 import org.anchoranalysis.plugin.gui.bean.createrastergenerator.csvstatistic.PlotFromCSVStatistic;
@@ -62,14 +62,14 @@ public abstract class PlotFromIndexableMarksBase<T>
     }
 
     @Override
-    public IterableSingleFileTypeGenerator<MappedFrom<IndexableMarksWithEnergy>, Stack> createGenerator(
+    public SingleFileTypeGenerator<MappedFrom<IndexableMarksWithEnergy>, Stack> createGenerator(
             ExportTaskParams params) throws CreateException {
 
-        IterableSingleFileTypeGenerator<MappedFrom<CSVStatistic>, Stack> generator =
+        SingleFileTypeGenerator<MappedFrom<CSVStatistic>, Stack> generator =
                 createDelegateIfNecessary().createGenerator(params);
 
         try {
-            return new IterableSingleFileTypeGeneratorBridge<>(
+            return new SingleFileTypeGeneratorBridge<>(
                     generator,
                     new FindNearestStatisticBridge(params.getFinderCsvStatistics().get()));
 
