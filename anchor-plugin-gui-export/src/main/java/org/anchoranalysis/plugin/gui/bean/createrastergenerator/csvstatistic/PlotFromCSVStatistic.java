@@ -34,7 +34,7 @@ import org.anchoranalysis.gui.bean.exporttask.ExportTaskParams;
 import org.anchoranalysis.gui.io.loader.manifest.finder.csvstatistic.CSVStatistic;
 import org.anchoranalysis.image.stack.Stack;
 import org.anchoranalysis.io.generator.IterableSingleFileTypeGenerator;
-import org.anchoranalysis.io.generator.IterableIntermediateGeneratorBridge;
+import org.anchoranalysis.io.generator.IterableSingleFileTypeGeneratorBridge;
 import org.anchoranalysis.plot.PlotInstance;
 import org.anchoranalysis.plugin.gui.bean.createrastergenerator.PlotGeneratorBase;
 import org.anchoranalysis.plugin.gui.bean.exporttask.MappedFrom;
@@ -57,7 +57,7 @@ public class PlotFromCSVStatistic<T> extends PlotGeneratorBase<T, CSVStatistic> 
                             params.getFinderCsvStatistics().get(),
                             elementBridge);
 
-            return new IterableIntermediateGeneratorBridge<>(createGraphInstanceGenerator(), bridge);
+            return new IterableSingleFileTypeGeneratorBridge<>(createGraphInstanceGenerator(), bridge);
 
         } catch (OperationFailedException e) {
             throw new CreateException(e);

@@ -33,7 +33,7 @@ import org.anchoranalysis.gui.plot.creator.GeneratePlotEnergy;
 import org.anchoranalysis.gui.plot.panel.ClickableGraphInstance;
 import org.anchoranalysis.image.stack.Stack;
 import org.anchoranalysis.io.generator.IterableSingleFileTypeGenerator;
-import org.anchoranalysis.io.generator.IterableIntermediateGeneratorBridge;
+import org.anchoranalysis.io.generator.IterableSingleFileTypeGeneratorBridge;
 import org.anchoranalysis.mpp.feature.energy.IndexableMarksWithEnergy;
 import org.anchoranalysis.plot.PlotInstance;
 import org.anchoranalysis.plugin.gui.bean.createrastergenerator.PlotGeneratorBase;
@@ -47,22 +47,22 @@ public class PlotEnergy extends PlotGeneratorBase<EnergyGraphItem, IndexableMark
 
         IterableSingleFileTypeGenerator<PlotInstance, Stack> generator = createGraphInstanceGenerator();
 
-        return new IterableIntermediateGeneratorBridge<>(
+        return new IterableSingleFileTypeGeneratorBridge<>(
                 createBridge(generator, params), MappedFrom::getObject);
     }
 
-    private IterableIntermediateGeneratorBridge<Stack, IndexableMarksWithEnergy, ClickableGraphInstance>
+    private IterableSingleFileTypeGeneratorBridge<Stack, IndexableMarksWithEnergy, ClickableGraphInstance>
             createBridge(
                     IterableSingleFileTypeGenerator<PlotInstance, Stack> generator,
                     ExportTaskParams params) {
         // Presents a generator for a GraphInstance as a generator for ClickableGraphInstance
-        IterableIntermediateGeneratorBridge<Stack, ClickableGraphInstance, PlotInstance>
+        IterableSingleFileTypeGeneratorBridge<Stack, ClickableGraphInstance, PlotInstance>
                 clickableGenerator =
-                        new IterableIntermediateGeneratorBridge<>(
+                        new IterableSingleFileTypeGeneratorBridge<>(
                                 generator, ClickableGraphInstance::getGraphInstance);
 
         // Presents a generator for a ClickableGraphInstance as a generator for Stack
-        return new IterableIntermediateGeneratorBridge<>(
+        return new IterableSingleFileTypeGeneratorBridge<>(
                 clickableGenerator,
                 new GeneratePlotEnergy(getGraphDefinition(), params.getColorIndexMarks()));
     }

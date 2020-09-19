@@ -34,7 +34,7 @@ import org.anchoranalysis.gui.bean.exporttask.ExportTaskParams;
 import org.anchoranalysis.image.io.generator.raster.StringRasterGenerator;
 import org.anchoranalysis.image.stack.Stack;
 import org.anchoranalysis.io.generator.IterableSingleFileTypeGenerator;
-import org.anchoranalysis.io.generator.IterableIntermediateGeneratorBridge;
+import org.anchoranalysis.io.generator.IterableSingleFileTypeGeneratorBridge;
 import org.anchoranalysis.mpp.feature.energy.IndexableMarksWithEnergy;
 import org.anchoranalysis.mpp.feature.energy.marks.MarksWithEnergyBreakdown;
 import org.anchoranalysis.plugin.gui.bean.exporttask.MappedFrom;
@@ -50,7 +50,7 @@ public abstract class CreateStringRasterGenerator
     public IterableSingleFileTypeGenerator<MappedFrom<IndexableMarksWithEnergy>, Stack> createGenerator(
             ExportTaskParams params) throws CreateException {
 
-        return new IterableIntermediateGeneratorBridge<>(
+        return new IterableSingleFileTypeGeneratorBridge<>(
                 stringGenerator.createGenerator(),
                 sourceObject -> extractStringFrom(sourceObject.getObject().getMarks()));
     }

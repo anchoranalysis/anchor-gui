@@ -32,7 +32,6 @@ import java.util.function.Supplier;
 import lombok.RequiredArgsConstructor;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.index.SetOperationFailedException;
-import org.anchoranalysis.io.generator.IterableSingleFileTypeGenerator;
 import org.anchoranalysis.io.generator.SingleFileTypeGenerator;
 import org.anchoranalysis.io.generator.TwoStageGenerator;
 import org.anchoranalysis.io.manifest.ManifestDescription;
@@ -43,7 +42,7 @@ import org.anchoranalysis.io.output.error.OutputWriteFailedException;
 class OperationGenerator<S, T> extends TwoStageGenerator<Supplier<T>,S> {
 
     // START REQUIRED ARGUMENTS
-    private final IterableSingleFileTypeGenerator<T, S> delegate;
+    private final SingleFileTypeGenerator<T, S> delegate;
     // END REQUIRED ARGUMENTS
 
     private Supplier<T> element;

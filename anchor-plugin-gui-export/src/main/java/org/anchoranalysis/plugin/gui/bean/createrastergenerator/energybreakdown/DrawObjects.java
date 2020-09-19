@@ -42,7 +42,7 @@ import org.anchoranalysis.image.stack.DisplayStack;
 import org.anchoranalysis.image.stack.Stack;
 import org.anchoranalysis.io.bean.object.writer.Outline;
 import org.anchoranalysis.io.generator.IterableSingleFileTypeGenerator;
-import org.anchoranalysis.io.generator.IterableIntermediateGeneratorBridge;
+import org.anchoranalysis.io.generator.IterableSingleFileTypeGeneratorBridge;
 import org.anchoranalysis.mpp.bean.regionmap.RegionMapSingleton;
 import org.anchoranalysis.mpp.bean.regionmap.RegionMembershipWithFlags;
 import org.anchoranalysis.mpp.feature.energy.IndexableMarksWithEnergy;
@@ -101,7 +101,7 @@ public class DrawObjects extends GeneratorFactory<IndexableMarksWithEnergy> {
             generator = new RasterGeneratorDelegateToDisplayStack<>(ccGenerator, true);
         }
 
-        return new IterableIntermediateGeneratorBridge<>(generator, elem -> bridgeElement(elem, params));
+        return new IterableSingleFileTypeGeneratorBridge<>(generator, elem -> bridgeElement(elem, params));
     }
 
     @Override

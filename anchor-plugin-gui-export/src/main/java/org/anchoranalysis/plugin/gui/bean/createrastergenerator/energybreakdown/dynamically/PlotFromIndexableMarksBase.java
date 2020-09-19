@@ -34,7 +34,7 @@ import org.anchoranalysis.gui.bean.exporttask.ExportTaskParams;
 import org.anchoranalysis.gui.io.loader.manifest.finder.csvstatistic.CSVStatistic;
 import org.anchoranalysis.image.stack.Stack;
 import org.anchoranalysis.io.generator.IterableSingleFileTypeGenerator;
-import org.anchoranalysis.io.generator.IterableIntermediateGeneratorBridge;
+import org.anchoranalysis.io.generator.IterableSingleFileTypeGeneratorBridge;
 import org.anchoranalysis.mpp.feature.energy.IndexableMarksWithEnergy;
 import org.anchoranalysis.plugin.gui.bean.createrastergenerator.PlotGeneratorBase;
 import org.anchoranalysis.plugin.gui.bean.createrastergenerator.csvstatistic.PlotFromCSVStatistic;
@@ -69,7 +69,7 @@ public abstract class PlotFromIndexableMarksBase<T>
                 createDelegateIfNecessary().createGenerator(params);
 
         try {
-            return new IterableIntermediateGeneratorBridge<>(
+            return new IterableSingleFileTypeGeneratorBridge<>(
                     generator,
                     new FindNearestStatisticBridge(params.getFinderCsvStatistics().get()));
 
