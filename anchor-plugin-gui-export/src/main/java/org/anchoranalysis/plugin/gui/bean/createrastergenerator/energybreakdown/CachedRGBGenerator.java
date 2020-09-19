@@ -123,7 +123,7 @@ class CachedRGBGenerator extends CacheableOverlaysToRGBGenerator {
     }
 
     @Override
-    public TwoStageGenerator<?, DisplayStack> getGenerator() {
+    public TwoStageGenerator<OverlayedDisplayStackUpdate, DisplayStack> getGenerator() {
         return this;
     }
 }

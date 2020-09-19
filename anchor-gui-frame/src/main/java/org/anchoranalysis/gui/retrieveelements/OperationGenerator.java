@@ -70,8 +70,8 @@ class OperationGenerator<S, T> extends TwoStageGenerator<Supplier<T>,S> {
     }
 
     @Override
-    public SingleFileTypeGenerator<?,S> getGenerator() {
-        return delegate.getGenerator();
+    public SingleFileTypeGenerator<Supplier<T>,S> getGenerator() {
+        return this;
     }
 
     @Override
