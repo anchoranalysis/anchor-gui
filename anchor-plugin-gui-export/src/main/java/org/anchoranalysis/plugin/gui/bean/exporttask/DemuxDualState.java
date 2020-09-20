@@ -31,9 +31,8 @@ import lombok.Setter;
 import org.anchoranalysis.bean.annotation.BeanField;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.gui.bean.exporttask.ExportTaskParams;
-import org.anchoranalysis.image.stack.Stack;
-import org.anchoranalysis.io.generator.SingleFileTypeGenerator;
-import org.anchoranalysis.io.generator.SingleFileTypeGeneratorBridge;
+import org.anchoranalysis.image.io.generator.raster.RasterGenerator;
+import org.anchoranalysis.image.io.generator.raster.RasterGeneratorBridge;
 import org.anchoranalysis.plugin.gui.bean.createrastergenerator.GeneratorFactory;
 
 public class DemuxDualState<T> extends GeneratorFactory<DualStateWithoutIndex<T>> {
@@ -49,12 +48,12 @@ public class DemuxDualState<T> extends GeneratorFactory<DualStateWithoutIndex<T>
     }
 
     @Override
-    public SingleFileTypeGenerator<MappedFrom<DualStateWithoutIndex<T>>, Stack> createGenerator(
+    public RasterGenerator<MappedFrom<DualStateWithoutIndex<T>>> createGenerator(
             ExportTaskParams params) throws CreateException {
 
-        SingleFileTypeGenerator<MappedFrom<T>, Stack> generator = item.createGenerator(params);
+        RasterGenerator<MappedFrom<T>> generator = item.createGenerator(params);
 
-        return new SingleFileTypeGeneratorBridge<>(
+        return new RasterGeneratorBridge<>(
                 generator,
                 sourceObject ->
                         new MappedFrom<>(

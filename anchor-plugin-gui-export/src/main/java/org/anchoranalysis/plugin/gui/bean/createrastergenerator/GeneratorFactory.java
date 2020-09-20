@@ -29,13 +29,12 @@ package org.anchoranalysis.plugin.gui.bean.createrastergenerator;
 import org.anchoranalysis.bean.AnchorBean;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.gui.bean.exporttask.ExportTaskParams;
-import org.anchoranalysis.image.stack.Stack;
-import org.anchoranalysis.io.generator.SingleFileTypeGenerator;
+import org.anchoranalysis.image.io.generator.raster.RasterGenerator;
 import org.anchoranalysis.plugin.gui.bean.exporttask.MappedFrom;
 
 public abstract class GeneratorFactory<T> extends AnchorBean<GeneratorFactory<T>> {
 
-    public abstract SingleFileTypeGenerator<MappedFrom<T>, Stack> createGenerator(
+    public abstract RasterGenerator<MappedFrom<T>> createGenerator(
             ExportTaskParams params) throws CreateException;
 
     public abstract boolean hasNecessaryParams(ExportTaskParams params);

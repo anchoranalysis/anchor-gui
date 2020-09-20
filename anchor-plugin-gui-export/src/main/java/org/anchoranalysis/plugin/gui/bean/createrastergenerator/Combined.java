@@ -34,8 +34,7 @@ import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.gui.bean.exporttask.ExportTaskParams;
 import org.anchoranalysis.image.bean.arrangeraster.ArrangeRasterBean;
 import org.anchoranalysis.image.io.bean.generator.CombineRasterGenerator;
-import org.anchoranalysis.image.stack.Stack;
-import org.anchoranalysis.io.generator.SingleFileTypeGenerator;
+import org.anchoranalysis.image.io.generator.raster.RasterGenerator;
 import org.anchoranalysis.plugin.gui.bean.exporttask.MappedFrom;
 
 public class Combined<T> extends GeneratorFactory<T> {
@@ -47,7 +46,7 @@ public class Combined<T> extends GeneratorFactory<T> {
     // END BEAN PROPERTIES
 
     @Override
-    public SingleFileTypeGenerator<MappedFrom<T>, Stack> createGenerator(ExportTaskParams params)
+    public RasterGenerator<MappedFrom<T>> createGenerator(ExportTaskParams params)
             throws CreateException {
 
         CombineRasterGenerator<MappedFrom<T>> combineGenerator = new CombineRasterGenerator<>();

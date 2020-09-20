@@ -32,11 +32,10 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.util.Optional;
 import org.anchoranalysis.core.error.OperationFailedException;
-import org.anchoranalysis.core.error.friendly.AnchorImpossibleSituationException;
-import org.anchoranalysis.core.index.SetOperationFailedException;
+import org.anchoranalysis.image.io.generator.raster.RasterGeneratorWithElement;
+import org.anchoranalysis.image.io.rasterwriter.RasterWriteOptions;
 import org.anchoranalysis.image.stack.Stack;
 import org.anchoranalysis.image.stack.bufferedimage.CreateStackFromBufferedImage;
-import org.anchoranalysis.io.generator.SingleFileTypeGeneratorWithElement;
 import org.anchoranalysis.io.manifest.ManifestDescription;
 import org.anchoranalysis.io.output.bean.OutputWriteSettings;
 import org.anchoranalysis.io.output.error.OutputWriteFailedException;
@@ -44,7 +43,7 @@ import org.anchoranalysis.plot.PlotInstance;
 import org.anchoranalysis.plot.io.GraphOutputter;
 import org.jfree.chart.ChartUtils;
 
-class GraphInstanceGenerator extends SingleFileTypeGeneratorWithElement<PlotInstance,Stack> {
+class GraphInstanceGenerator extends RasterGeneratorWithElement<PlotInstance> {
 
     private final int width;
     private final int height;
@@ -61,11 +60,7 @@ class GraphInstanceGenerator extends SingleFileTypeGeneratorWithElement<PlotInst
         super();
         this.width = width;
         this.height = height;
-        try {
-            assignElement(element);
-        } catch (SetOperationFailedException e) {
-            throw new AnchorImpossibleSituationException();
-        }
+        assignElement(element);
     }
 
     @Override
@@ -109,5 +104,15 @@ class GraphInstanceGenerator extends SingleFileTypeGeneratorWithElement<PlotInst
     @Override
     public void end() throws OutputWriteFailedException {
         // NOTHING TO DO
+    }
+
+    @Override
+    public boolean isRGB() {
+        return true;
+    }
+
+    @Override
+    public RasterWriteOptions rasterWriteOptions() {
+        return RasterWriteOptions.rgbAlways2D();
     }
 }

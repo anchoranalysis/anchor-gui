@@ -31,9 +31,8 @@ import org.anchoranalysis.gui.bean.exporttask.ExportTaskParams;
 import org.anchoranalysis.gui.plot.EnergyGraphItem;
 import org.anchoranalysis.gui.plot.creator.GeneratePlotEnergy;
 import org.anchoranalysis.gui.plot.panel.ClickableGraphInstance;
-import org.anchoranalysis.image.stack.Stack;
-import org.anchoranalysis.io.generator.SingleFileTypeGenerator;
-import org.anchoranalysis.io.generator.SingleFileTypeGeneratorBridge;
+import org.anchoranalysis.image.io.generator.raster.RasterGenerator;
+import org.anchoranalysis.image.io.generator.raster.RasterGeneratorBridge;
 import org.anchoranalysis.mpp.feature.energy.IndexableMarksWithEnergy;
 import org.anchoranalysis.plot.PlotInstance;
 import org.anchoranalysis.plugin.gui.bean.createrastergenerator.PlotGeneratorBase;
@@ -42,27 +41,27 @@ import org.anchoranalysis.plugin.gui.bean.exporttask.MappedFrom;
 public class PlotEnergy extends PlotGeneratorBase<EnergyGraphItem, IndexableMarksWithEnergy> {
 
     @Override
-    public SingleFileTypeGenerator<MappedFrom<IndexableMarksWithEnergy>, Stack> createGenerator(
+    public RasterGenerator<MappedFrom<IndexableMarksWithEnergy>> createGenerator(
             ExportTaskParams params) throws CreateException {
 
-        SingleFileTypeGenerator<PlotInstance, Stack> generator = createGraphInstanceGenerator();
+        RasterGenerator<PlotInstance> generator = createGraphInstanceGenerator();
 
-        return new SingleFileTypeGeneratorBridge<>(
+        return new RasterGeneratorBridge<>(
                 createBridge(generator, params), MappedFrom::getObject);
     }
 
-    private SingleFileTypeGeneratorBridge<Stack, IndexableMarksWithEnergy, ClickableGraphInstance>
+    private RasterGeneratorBridge<IndexableMarksWithEnergy, ClickableGraphInstance>
             createBridge(
-                    SingleFileTypeGenerator<PlotInstance, Stack> generator,
+                    RasterGenerator<PlotInstance> generator,
                     ExportTaskParams params) {
         // Presents a generator for a GraphInstance as a generator for ClickableGraphInstance
-        SingleFileTypeGeneratorBridge<Stack, ClickableGraphInstance, PlotInstance>
+        RasterGeneratorBridge<ClickableGraphInstance, PlotInstance>
                 clickableGenerator =
-                        new SingleFileTypeGeneratorBridge<>(
+                        new RasterGeneratorBridge<>(
                                 generator, ClickableGraphInstance::getGraphInstance);
 
         // Presents a generator for a ClickableGraphInstance as a generator for Stack
-        return new SingleFileTypeGeneratorBridge<>(
+        return new RasterGeneratorBridge<>(
                 clickableGenerator,
                 new GeneratePlotEnergy(getGraphDefinition(), params.getColorIndexMarks()));
     }
