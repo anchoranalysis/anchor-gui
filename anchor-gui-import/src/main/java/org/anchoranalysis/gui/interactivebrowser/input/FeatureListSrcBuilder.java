@@ -90,8 +90,7 @@ public class FeatureListSrcBuilder {
         addFromStore(energySchemeSet, soFeature.getFeatureListSet(), energyScheme.getRegionMap());
 
         // We deliberately do not used the SharedFeatures as we wish to keep the Image Features
-        // seperate
-        //  and prevent any of the features being initialized prematurely
+        // separate and prevent any of the features being initialized prematurely.
         KeyValueParamsAugmenter augmenter =
                 new KeyValueParamsAugmenter(energyScheme, soFeature.getSharedFeatureSet(), logger);
 
