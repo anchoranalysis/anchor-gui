@@ -32,6 +32,7 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.util.Optional;
 import org.anchoranalysis.core.error.OperationFailedException;
+import org.anchoranalysis.image.bean.spatial.SizeXY;
 import org.anchoranalysis.image.io.generator.raster.RasterGeneratorWithElement;
 import org.anchoranalysis.image.io.rasterwriter.RasterWriteOptions;
 import org.anchoranalysis.image.stack.Stack;
@@ -40,35 +41,30 @@ import org.anchoranalysis.io.manifest.ManifestDescription;
 import org.anchoranalysis.io.output.bean.OutputWriteSettings;
 import org.anchoranalysis.io.output.error.OutputWriteFailedException;
 import org.anchoranalysis.plot.PlotInstance;
-import org.anchoranalysis.plot.io.GraphOutputter;
+import org.anchoranalysis.plot.io.PlotOutputter;
 import org.jfree.chart.ChartUtils;
+import lombok.AllArgsConstructor;
 
-class GraphInstanceGenerator extends RasterGeneratorWithElement<PlotInstance> {
+/**
+ * Writes a plot to the file-system as a PNG file.
+ * 
+ * @author Owen Feehan
+ *
+ */
+@AllArgsConstructor
+class PlotGenerator extends RasterGeneratorWithElement<PlotInstance> {
 
-    private final int width;
-    private final int height;
+    private static final String MANIFEST_FUNCTION = "plot";
 
-    private String manifestFunction = "graph";
-
-    public GraphInstanceGenerator(int width, int height) {
-        super();
-        this.width = width;
-        this.height = height;
-    }
-
-    public GraphInstanceGenerator(PlotInstance element, int width, int height) {
-        super();
-        this.width = width;
-        this.height = height;
-        assignElement(element);
-    }
-
+    /** Width/height of raster-image into which the plot is rendered. */
+    private final SizeXY size;
+    
     @Override
     public void writeToFile(OutputWriteSettings outputWriteSettings, Path filePath)
             throws OutputWriteFailedException {
 
         try (FileOutputStream fileOutput = new FileOutputStream(filePath.toFile())) {
-            ChartUtils.writeChartAsPNG(fileOutput, getElement().getChart(), width, height);
+            ChartUtils.writeChartAsPNG(fileOutput, getElement().getChart(), size.getWidth(), size.getHeight());
         } catch (IOException e) {
             throw new OutputWriteFailedException(e);
         }
@@ -81,29 +77,19 @@ class GraphInstanceGenerator extends RasterGeneratorWithElement<PlotInstance> {
 
     @Override
     public Optional<ManifestDescription> createManifestDescription() {
-        return Optional.of(new ManifestDescription("raster", manifestFunction));
+        return Optional.of(new ManifestDescription("raster", MANIFEST_FUNCTION));
     }
 
     @Override
     public Stack transform() throws OutputWriteFailedException {
 
-        BufferedImage bufferedImage = GraphOutputter.createBufferedImage(getElement(), width, height);
+        BufferedImage bufferedImage = PlotOutputter.createBufferedImage(getElement(), size.getWidth(), size.getHeight());
 
         try {
             return CreateStackFromBufferedImage.create(bufferedImage);
         } catch (OperationFailedException e) {
             throw new OutputWriteFailedException(e);
         }
-    }
-    
-    @Override
-    public void start() throws OutputWriteFailedException {
-        // NOTHING TO DO
-    }
-
-    @Override
-    public void end() throws OutputWriteFailedException {
-        // NOTHING TO DO
     }
 
     @Override

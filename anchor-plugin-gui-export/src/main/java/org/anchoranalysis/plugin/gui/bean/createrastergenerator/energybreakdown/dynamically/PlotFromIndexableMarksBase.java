@@ -53,8 +53,7 @@ public abstract class PlotFromIndexableMarksBase<T>
     private PlotFromCSVStatistic<T> createDelegateIfNecessary() {
         if (delegate == null) {
             delegate = new PlotFromCSVStatistic<>(elementBridge);
-            delegate.setHeight(getHeight());
-            delegate.setWidth(getWidth());
+            delegate.setSize(getSize());
             delegate.setGraphDefinition(getGraphDefinition());
         }
         return delegate;

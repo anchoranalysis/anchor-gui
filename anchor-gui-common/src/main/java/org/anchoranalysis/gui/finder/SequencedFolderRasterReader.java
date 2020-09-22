@@ -51,8 +51,7 @@ class SequencedFolderRasterReader extends SequencedFolderCntrCreator<Stack> {
         try {
             OpenedRaster or = rasterReader.openFile(path);
             try {
-                Stack stack = or.open(0, ProgressReporterNull.get()).get(0);
-                return stack.duplicate();
+                return or.open(0, ProgressReporterNull.get()).get(0);
             } finally {
                 or.close();
             }

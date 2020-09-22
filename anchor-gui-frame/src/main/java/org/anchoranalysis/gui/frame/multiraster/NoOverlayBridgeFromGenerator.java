@@ -26,12 +26,12 @@
 
 package org.anchoranalysis.gui.frame.multiraster;
 
+import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.functional.function.CheckedFunction;
 import org.anchoranalysis.gui.container.background.BackgroundStackContainerException;
 import org.anchoranalysis.gui.frame.display.BoundOverlayedDisplayStack;
 import org.anchoranalysis.gui.frame.display.DisplayUpdate;
-import org.anchoranalysis.image.stack.DisplayStack;
-import org.anchoranalysis.io.generator.SingleFileTypeGenerator;
+import org.anchoranalysis.image.io.generator.raster.RasterGenerator;
 import org.anchoranalysis.io.output.error.OutputWriteFailedException;
 import lombok.AllArgsConstructor;
 
@@ -39,7 +39,7 @@ import lombok.AllArgsConstructor;
 class NoOverlayBridgeFromGenerator
         implements CheckedFunction<Integer, DisplayUpdate, BackgroundStackContainerException> {
 
-    private SingleFileTypeGenerator<Integer, DisplayStack> generator;
+    private RasterGenerator<Integer> generator;
 
     @Override
     public DisplayUpdate apply(Integer sourceObject) throws BackgroundStackContainerException {
@@ -48,7 +48,7 @@ class NoOverlayBridgeFromGenerator
                     new BoundOverlayedDisplayStack(generator.transform(sourceObject));
             return DisplayUpdate.assignNewStack(overlayedStack);
 
-        } catch (OutputWriteFailedException e) {
+        } catch (OutputWriteFailedException | CreateException e) {
             throw new BackgroundStackContainerException(e);
         }
     }

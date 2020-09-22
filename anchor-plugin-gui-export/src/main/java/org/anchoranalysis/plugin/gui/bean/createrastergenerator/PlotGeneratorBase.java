@@ -31,6 +31,7 @@ import lombok.Setter;
 import org.anchoranalysis.bean.annotation.BeanField;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.gui.bean.exporttask.ExportTaskParams;
+import org.anchoranalysis.image.bean.spatial.SizeXY;
 import org.anchoranalysis.image.io.generator.raster.RasterGenerator;
 import org.anchoranalysis.plot.PlotInstance;
 import org.anchoranalysis.plot.bean.Plot;
@@ -41,13 +42,11 @@ public abstract class PlotGeneratorBase<T, S> extends GeneratorFactory<S> {
     // START BEAN PARAMETERS
     @BeanField @Getter @Setter private Plot<T> graphDefinition;
 
-    @BeanField @Getter @Setter private int width = 1024;
-
-    @BeanField @Getter @Setter private int height = 768;
+    @BeanField @Getter @Setter private SizeXY size = new SizeXY(1024,768);
     // END BEAN PARAMETERS
 
-    protected RasterGenerator<PlotInstance> createGraphInstanceGenerator() {
-        return new GraphInstanceGenerator(width, height);
+    protected RasterGenerator<PlotInstance> createPlotGenerator() {
+        return new PlotGenerator(size);
     }
 
     @Override
@@ -60,6 +59,6 @@ public abstract class PlotGeneratorBase<T, S> extends GeneratorFactory<S> {
     @Override
     public String describeBean() {
         return String.format(
-                "graph=%s, width=%d, height=%d", graphDefinition.getTitle(), width, height);
+                "graph=%s, size=%s", graphDefinition.getTitle(), size);
     }
 }

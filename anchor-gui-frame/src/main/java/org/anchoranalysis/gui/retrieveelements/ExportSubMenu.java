@@ -60,7 +60,7 @@ public class ExportSubMenu implements AddToExportSubMenu {
     public void addExportItemStackGenerator(String outputName, String label, Supplier<Stack> stack)
             throws OperationFailedException {
 
-        StackGenerator stackGenerator = new StackGenerator(true, outputName);
+        StackGenerator stackGenerator = new StackGenerator(true, outputName, false);
         SupplierGenerator<Stack, Stack> generator = new SupplierGenerator<>(stackGenerator);
         addExportItem(
                 generator, stack, outputName, label, generator.createManifestDescription(), 1);

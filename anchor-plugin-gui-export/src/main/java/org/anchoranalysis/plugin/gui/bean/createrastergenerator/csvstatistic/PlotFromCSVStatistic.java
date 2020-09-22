@@ -56,7 +56,7 @@ public class PlotFromCSVStatistic<T> extends PlotGeneratorBase<T, CSVStatistic> 
                             params.getFinderCsvStatistics().get(),
                             elementBridge);
 
-            return new RasterGeneratorBridge<>(createGraphInstanceGenerator(), bridge);
+            return new RasterGeneratorBridge<>(createPlotGenerator(), bridge);
 
         } catch (OperationFailedException e) {
             throw new CreateException(e);

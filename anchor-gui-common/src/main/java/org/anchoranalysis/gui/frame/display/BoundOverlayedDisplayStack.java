@@ -27,6 +27,7 @@
 package org.anchoranalysis.gui.frame.display;
 
 import java.util.Optional;
+import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.geometry.Point3i;
 import org.anchoranalysis.gui.region.RegionExtracter;
@@ -34,6 +35,7 @@ import org.anchoranalysis.gui.region.RegionExtracterFromDisplayStack;
 import org.anchoranalysis.image.extent.Dimensions;
 import org.anchoranalysis.image.extent.box.BoundingBox;
 import org.anchoranalysis.image.stack.DisplayStack;
+import org.anchoranalysis.image.stack.Stack;
 import org.anchoranalysis.image.voxel.datatype.VoxelDataType;
 
 public class BoundOverlayedDisplayStack {
@@ -42,6 +44,10 @@ public class BoundOverlayedDisplayStack {
     private BoundColoredOverlayCollection overlay;
     private RegionExtracter regionExtracter;
 
+    public BoundOverlayedDisplayStack(Stack background) throws CreateException {
+        this.background = DisplayStack.create(background);
+    }
+    
     public BoundOverlayedDisplayStack(DisplayStack background) {
         super();
         this.background = background;

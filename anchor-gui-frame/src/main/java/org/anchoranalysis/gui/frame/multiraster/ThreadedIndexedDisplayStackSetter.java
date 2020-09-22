@@ -37,22 +37,22 @@ import org.anchoranalysis.gui.frame.threaded.stack.ThreadedProducer;
 import org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.BackgroundSetter;
 import org.anchoranalysis.gui.videostats.threading.InteractiveThreadPool;
 import org.anchoranalysis.image.io.generator.raster.DisplayStackGenerator;
+import org.anchoranalysis.image.io.generator.raster.RasterGenerator;
+import org.anchoranalysis.image.io.generator.raster.RasterGeneratorBridge;
 import org.anchoranalysis.image.stack.DisplayStack;
-import org.anchoranalysis.io.generator.SingleFileTypeGenerator;
-import org.anchoranalysis.io.generator.SingleFileTypeGeneratorBridge;
 
 public class ThreadedIndexedDisplayStackSetter implements BackgroundSetter, ThreadedProducer {
 
     private ThreadedDisplayUpdateConsumer delegate;
 
-    private SingleFileTypeGenerator<DisplayStack, DisplayStack> stackGenerator;
+    private RasterGenerator<DisplayStack> stackGenerator;
 
     public void init(
             CheckedFunction<Integer, DisplayStack, ? extends Throwable> displayStacks,
             InteractiveThreadPool threadPool,
             ErrorReporter errorReporter) {
 
-        stackGenerator = new DisplayStackGenerator("display");
+        stackGenerator = new DisplayStackGenerator("display", false);
 
         delegate =
                 new ThreadedDisplayUpdateConsumer(
@@ -90,7 +90,7 @@ public class ThreadedIndexedDisplayStackSetter implements BackgroundSetter, Thre
     private CheckedFunction<Integer, DisplayUpdate, BackgroundStackContainerException> ensure8bit(
             CheckedFunction<Integer, DisplayStack, ? extends Throwable> cntr) {
         return new NoOverlayBridgeFromGenerator(
-                new SingleFileTypeGeneratorBridge<>(
+                new RasterGeneratorBridge<>(
                         stackGenerator, new EnsureUnsigned8Bit<>(cntr)));
     }
 }

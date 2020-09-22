@@ -44,7 +44,7 @@ public class PlotEnergy extends PlotGeneratorBase<EnergyGraphItem, IndexableMark
     public RasterGenerator<MappedFrom<IndexableMarksWithEnergy>> createGenerator(
             ExportTaskParams params) throws CreateException {
 
-        RasterGenerator<PlotInstance> generator = createGraphInstanceGenerator();
+        RasterGenerator<PlotInstance> generator = createPlotGenerator();
 
         return new RasterGeneratorBridge<>(
                 createBridge(generator, params), MappedFrom::getObject);
