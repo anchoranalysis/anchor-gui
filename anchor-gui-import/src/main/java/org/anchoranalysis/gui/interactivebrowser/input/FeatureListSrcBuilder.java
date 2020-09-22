@@ -128,8 +128,7 @@ public class FeatureListSrcBuilder {
                 // soFeature.getCachedCalculationList()) );
 
                 // Determines which features belong in the Unary part of the EnergyScheme, and which
-                // in
-                // the Pairwise part
+                // in the Pairwise part.
                 FeatureList<FeatureInputSingleMemo> outUnary = FeatureListFactory.empty();
                 FeatureList<FeatureInputPairMemo> outPairwise = FeatureListFactory.empty();
                 determineUnaryPairwiseFeatures(fl, outUnary, outPairwise);

@@ -46,7 +46,7 @@ import org.jfree.chart.ChartUtils;
 import lombok.AllArgsConstructor;
 
 /**
- * Writes a plot to the file-system as a PNG file.
+ * Writes a plot to the filesystem as a PNG file.
  * 
  * @author Owen Feehan
  *
