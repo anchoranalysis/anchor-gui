@@ -28,7 +28,7 @@ package org.anchoranalysis.gui.plot.creator;
 
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.functional.function.CheckedFunction;
-import org.anchoranalysis.gui.io.loader.manifest.finder.csvstatistic.CSVStatistic;
+import org.anchoranalysis.gui.manifest.csvstatistic.CSVStatistic;
 import org.anchoranalysis.gui.plot.definition.line.LinePlotNumberMarks;
 import org.anchoranalysis.gui.plot.definition.line.LinePlotNumberMarks.Item;
 import org.anchoranalysis.mpp.feature.energy.IndexableMarksWithEnergy;

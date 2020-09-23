@@ -35,13 +35,13 @@ import org.anchoranalysis.core.color.ColorIndex;
 import org.anchoranalysis.core.log.CommonContext;
 import org.anchoranalysis.core.log.Logger;
 import org.anchoranalysis.core.random.RandomNumberGenerator;
+import org.anchoranalysis.gui.export.bean.task.ExportTaskList;
 import org.anchoranalysis.gui.retrieveelements.ExportPopupParams;
 import org.anchoranalysis.gui.videostats.threading.InteractiveThreadPool;
 import org.anchoranalysis.io.params.InputContextParams;
 import org.anchoranalysis.mpp.bean.regionmap.RegionMap;
 import org.anchoranalysis.mpp.bean.regionmap.RegionMapSingleton;
 import org.anchoranalysis.plot.bean.colorscheme.GraphColorScheme;
-import org.anchoranalysis.plugin.gui.bean.exporttask.ExportTaskList;
 
 // Globally available parameters for a VideoStatsModule
 @RequiredArgsConstructor

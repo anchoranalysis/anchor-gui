@@ -30,8 +30,9 @@ import javax.swing.JFrame;
 import org.anchoranalysis.bean.error.BeanDuplicateException;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.error.reporter.ErrorReporter;
-import org.anchoranalysis.gui.bean.exporttask.ExportTaskBean;
-import org.anchoranalysis.gui.bean.exporttask.ExportTaskParams;
+import org.anchoranalysis.gui.export.bean.ExportTaskBean;
+import org.anchoranalysis.gui.export.bean.ExportTaskParams;
+import org.anchoranalysis.gui.export.bean.task.ExportTaskList;
 import org.anchoranalysis.gui.finder.imgstackcollection.FinderStacks;
 import org.anchoranalysis.gui.io.loader.manifest.finder.FinderMarksWithEnergy;
 import org.anchoranalysis.gui.io.loader.manifest.finder.MarksWithEnergyFinderContext;
@@ -40,7 +41,6 @@ import org.anchoranalysis.gui.videostats.dropdown.contextualmodulecreator.Single
 import org.anchoranalysis.gui.videostats.operation.VideoStatsOperationFromExportTask;
 import org.anchoranalysis.gui.videostats.operation.VideoStatsOperationMenu;
 import org.anchoranalysis.io.output.bound.BoundOutputManagerRouteErrors;
-import org.anchoranalysis.plugin.gui.bean.exporttask.ExportTaskList;
 
 public class CombinedMenu {
 

@@ -30,9 +30,9 @@ import java.util.List;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.index.container.BoundedIndexContainer;
 import org.anchoranalysis.core.index.container.bridge.BoundedIndexContainerBridgeWithoutIndex;
-import org.anchoranalysis.gui.bean.exporttask.ExportTaskParams;
 import org.anchoranalysis.gui.container.ContainerGetter;
 import org.anchoranalysis.gui.container.ContainerUtilities;
+import org.anchoranalysis.gui.export.bean.ExportTaskParams;
 import org.anchoranalysis.gui.mergebridge.DualStateContainer;
 import org.anchoranalysis.mpp.feature.energy.IndexableMarksWithEnergy;
 

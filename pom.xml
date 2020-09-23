@@ -33,7 +33,6 @@
 	   <module>anchor-plugin-gui-annotation</module>
 	   <module>anchor-plugin-gui-export</module>
 	   <module>anchor-plugin-gui-import</module>
-	   <module>anchor-plugin-gui-live</module>
     </modules>
 
 	<!-- Provides a means of reaching anchor-pom and ImageJ -->

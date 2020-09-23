@@ -27,7 +27,7 @@
 package org.anchoranalysis.plugin.gui.bean.graphdefinition.line;
 
 import org.anchoranalysis.core.index.GetOperationFailedException;
-import org.anchoranalysis.gui.io.loader.manifest.finder.csvstatistic.CSVStatistic;
+import org.anchoranalysis.gui.manifest.csvstatistic.CSVStatistic;
 import org.anchoranalysis.plot.bean.colorscheme.GraphColorScheme;
 
 public class GraphDefinitionLineIterVsAccptProbMultipleSeries

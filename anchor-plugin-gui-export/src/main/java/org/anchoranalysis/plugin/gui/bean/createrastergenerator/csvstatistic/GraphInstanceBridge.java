@@ -32,7 +32,7 @@ import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.functional.function.CheckedFunction;
 import org.anchoranalysis.core.index.container.BoundedIndexContainer;
 import org.anchoranalysis.core.index.container.bridge.BoundedIndexContainerBridgeWithoutIndex;
-import org.anchoranalysis.gui.io.loader.manifest.finder.csvstatistic.CSVStatistic;
+import org.anchoranalysis.gui.manifest.csvstatistic.CSVStatistic;
 import org.anchoranalysis.gui.plot.BoundedIndexContainerIterator;
 import org.anchoranalysis.plot.AxisLimits;
 import org.anchoranalysis.plot.PlotInstance;

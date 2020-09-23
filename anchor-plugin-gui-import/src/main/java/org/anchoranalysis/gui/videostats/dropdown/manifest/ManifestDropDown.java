@@ -46,7 +46,7 @@ import org.anchoranalysis.gui.interactivebrowser.MarkEvaluatorManager;
 import org.anchoranalysis.gui.interactivebrowser.MarkEvaluatorSetForImage;
 import org.anchoranalysis.gui.io.loader.manifest.finder.FinderMarksFolder;
 import org.anchoranalysis.gui.io.loader.manifest.finder.MarksWithEnergyFinderContext;
-import org.anchoranalysis.gui.io.loader.manifest.finder.historyfolder.FinderHistoryFolderKernelDecision;
+import org.anchoranalysis.gui.manifest.historyfolder.FinderHistoryFolderKernelDecision;
 import org.anchoranalysis.gui.marks.MarkDisplaySettings;
 import org.anchoranalysis.gui.series.TimeSequenceProvider;
 import org.anchoranalysis.gui.series.TimeSequenceProviderSupplier;

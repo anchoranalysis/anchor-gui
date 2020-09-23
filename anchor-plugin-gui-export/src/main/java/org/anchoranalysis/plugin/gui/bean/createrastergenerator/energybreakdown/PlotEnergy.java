@@ -27,7 +27,7 @@
 package org.anchoranalysis.plugin.gui.bean.createrastergenerator.energybreakdown;
 
 import org.anchoranalysis.core.error.CreateException;
-import org.anchoranalysis.gui.bean.exporttask.ExportTaskParams;
+import org.anchoranalysis.gui.export.bean.ExportTaskParams;
 import org.anchoranalysis.gui.plot.EnergyGraphItem;
 import org.anchoranalysis.gui.plot.creator.GeneratePlotEnergy;
 import org.anchoranalysis.gui.plot.panel.ClickableGraphInstance;

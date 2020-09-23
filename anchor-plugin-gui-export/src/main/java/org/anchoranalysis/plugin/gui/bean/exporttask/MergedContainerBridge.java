@@ -33,8 +33,8 @@ import org.anchoranalysis.core.error.friendly.AnchorImpossibleSituationException
 import org.anchoranalysis.core.functional.function.CheckedFunction;
 import org.anchoranalysis.core.index.container.BoundedIndexContainer;
 import org.anchoranalysis.core.index.container.bridge.BoundedIndexContainerBridgeWithoutIndex;
-import org.anchoranalysis.gui.bean.exporttask.ExportTaskParams;
 import org.anchoranalysis.gui.container.ContainerUtilities;
+import org.anchoranalysis.gui.export.bean.ExportTaskParams;
 import org.anchoranalysis.gui.mergebridge.DualStateContainer;
 import org.anchoranalysis.gui.mergebridge.MergeMarksBridge;
 import org.anchoranalysis.gui.mergebridge.MergedColorIndex;

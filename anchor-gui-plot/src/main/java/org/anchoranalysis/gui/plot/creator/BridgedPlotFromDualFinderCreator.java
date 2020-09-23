@@ -31,9 +31,9 @@ import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.functional.function.CheckedFunction;
 import org.anchoranalysis.core.index.container.BoundedIndexContainer;
 import org.anchoranalysis.core.index.container.bridge.BoundedIndexContainerBridgeWithoutIndex;
-import org.anchoranalysis.gui.io.loader.manifest.finder.FinderCSVStats;
-import org.anchoranalysis.gui.io.loader.manifest.finder.csvstatistic.CSVStatistic;
-import org.anchoranalysis.gui.io.loader.manifest.finder.historyfolder.FinderHistoryFolder;
+import org.anchoranalysis.gui.manifest.FinderCSVStats;
+import org.anchoranalysis.gui.manifest.csvstatistic.CSVStatistic;
+import org.anchoranalysis.gui.manifest.historyfolder.FinderHistoryFolder;
 import org.anchoranalysis.mpp.feature.energy.IndexableMarksWithEnergy;
 
 public abstract class BridgedPlotFromDualFinderCreator<T> implements GraphFromDualFinderCreator<T> {

@@ -30,10 +30,10 @@ import java.awt.event.ActionListener;
 import java.util.Optional;
 import javax.swing.JFrame;
 import org.anchoranalysis.core.error.reporter.ErrorReporter;
-import org.anchoranalysis.gui.bean.exporttask.ExportTask;
-import org.anchoranalysis.gui.bean.exporttask.ExportTaskActionAsThread;
-import org.anchoranalysis.gui.bean.exporttask.ExportTaskActionAsThread.ExportTaskCommand;
-import org.anchoranalysis.gui.bean.exporttask.ExportTaskParams;
+import org.anchoranalysis.gui.export.bean.ExportTask;
+import org.anchoranalysis.gui.export.bean.ExportTaskActionAsThread;
+import org.anchoranalysis.gui.export.bean.ExportTaskParams;
+import org.anchoranalysis.gui.export.bean.ExportTaskActionAsThread.ExportTaskCommand;
 import org.anchoranalysis.gui.videostats.operation.combine.VideoStatsOperationCombine;
 
 public class VideoStatsOperationFromExportTask implements VideoStatsOperation {

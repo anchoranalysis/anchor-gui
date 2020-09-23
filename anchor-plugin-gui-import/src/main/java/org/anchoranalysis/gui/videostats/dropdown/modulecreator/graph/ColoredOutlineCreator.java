@@ -31,7 +31,7 @@ import lombok.AllArgsConstructor;
 import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.gui.image.frame.SliderState;
-import org.anchoranalysis.gui.io.loader.manifest.finder.historyfolder.FinderHistoryFolder;
+import org.anchoranalysis.gui.manifest.historyfolder.FinderHistoryFolder;
 import org.anchoranalysis.gui.videostats.IModuleCreatorDefaultState;
 import org.anchoranalysis.gui.videostats.dropdown.BackgroundSetProgressingSupplier;
 import org.anchoranalysis.gui.videostats.dropdown.VideoStatsModuleGlobalParams;

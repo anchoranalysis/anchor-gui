@@ -34,7 +34,7 @@ import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.idgetter.IDGetter;
 import org.anchoranalysis.core.idgetter.IDGetterIter;
 import org.anchoranalysis.core.name.provider.NamedProviderGetException;
-import org.anchoranalysis.gui.bean.exporttask.ExportTaskParams;
+import org.anchoranalysis.gui.export.bean.ExportTaskParams;
 import org.anchoranalysis.gui.frame.display.OverlayedDisplayStackUpdate;
 import org.anchoranalysis.image.io.generator.raster.RasterGenerator;
 import org.anchoranalysis.image.io.generator.raster.RasterGeneratorBridge;

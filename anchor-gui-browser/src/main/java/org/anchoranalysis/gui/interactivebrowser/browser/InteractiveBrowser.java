@@ -35,6 +35,7 @@ import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.random.RandomNumberGenerator;
 import org.anchoranalysis.core.random.RandomNumberGeneratorMersenne;
 import org.anchoranalysis.gui.bean.filecreator.FileCreator;
+import org.anchoranalysis.gui.export.bean.task.ExportTaskList;
 import org.anchoranalysis.gui.feature.evaluator.treetable.FeatureListSrc;
 import org.anchoranalysis.gui.interactivebrowser.FileOpenManager;
 import org.anchoranalysis.gui.interactivebrowser.MarkEvaluatorManager;
@@ -55,7 +56,6 @@ import org.anchoranalysis.io.color.HashedColorSet;
 import org.anchoranalysis.io.generator.sequence.SequenceMemory;
 import org.anchoranalysis.io.output.bound.BoundIOContext;
 import org.anchoranalysis.mpp.feature.bean.mark.MarkEvaluator;
-import org.anchoranalysis.plugin.gui.bean.exporttask.ExportTaskList;
 
 public class InteractiveBrowser {
 

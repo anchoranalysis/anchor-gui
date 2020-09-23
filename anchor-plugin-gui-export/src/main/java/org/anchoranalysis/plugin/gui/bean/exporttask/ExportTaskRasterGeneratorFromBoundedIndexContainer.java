@@ -34,8 +34,8 @@ import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.functional.function.CheckedFunction;
 import org.anchoranalysis.core.index.container.BoundedIndexContainer;
-import org.anchoranalysis.gui.bean.exporttask.ExportTaskFailedException;
-import org.anchoranalysis.gui.bean.exporttask.ExportTaskParams;
+import org.anchoranalysis.gui.export.bean.ExportTaskFailedException;
+import org.anchoranalysis.gui.export.bean.ExportTaskParams;
 
 public abstract class ExportTaskRasterGeneratorFromBoundedIndexContainer<T>
         extends ExportTaskRasterGeneratorSequence<T> {

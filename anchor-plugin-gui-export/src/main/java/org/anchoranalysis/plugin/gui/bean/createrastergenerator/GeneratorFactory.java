@@ -28,7 +28,7 @@ package org.anchoranalysis.plugin.gui.bean.createrastergenerator;
 
 import org.anchoranalysis.bean.AnchorBean;
 import org.anchoranalysis.core.error.CreateException;
-import org.anchoranalysis.gui.bean.exporttask.ExportTaskParams;
+import org.anchoranalysis.gui.export.bean.ExportTaskParams;
 import org.anchoranalysis.image.io.generator.raster.RasterGenerator;
 import org.anchoranalysis.plugin.gui.bean.exporttask.MappedFrom;
 
