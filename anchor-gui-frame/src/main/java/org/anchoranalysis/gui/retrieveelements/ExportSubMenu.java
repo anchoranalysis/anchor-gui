@@ -90,7 +90,7 @@ public class ExportSubMenu implements AddToExportSubMenu {
         exportTaskParams.setOutputManager(
                 params.getOutputManager()
                         .getWriterAlwaysAllowed()
-                        .bindAsSubdirectory(outputName, mfd)
+                        .createSubdirectory(outputName, mfd)
                         .orElseThrow(
                                 () ->
                                         new AnchorFriendlyRuntimeException(

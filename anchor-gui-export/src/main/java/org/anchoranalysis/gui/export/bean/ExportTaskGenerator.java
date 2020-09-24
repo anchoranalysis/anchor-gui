@@ -45,10 +45,10 @@ public class ExportTaskGenerator<T> implements ExportTask {
     private final SequenceMemory sequenceMemory;
 
     @Override
-    public boolean hasNecessaryParams(ExportTaskParams params) {
-        return true;
+    public void init() {
+        // NOTHING TO DO
     }
-
+    
     @Override
     public boolean execute(ExportTaskParams params, ProgressMonitor progressMonitor)
             throws ExportTaskFailedException {
@@ -64,7 +64,7 @@ public class ExportTaskGenerator<T> implements ExportTask {
         int numberWritten =
                 params.getOutputManager()
                         .getWriterCheckIfAllowed()
-                        .write(outputNameStyle, () -> generator, index);
+                        .write(outputNameStyle, () -> generator, Integer.toString(index) );
         sequenceMemory.updateIndex(outputNameStyle.getOutputName(), index + numberWritten);
 
         if (numberWritten == 0) {
@@ -90,12 +90,12 @@ public class ExportTaskGenerator<T> implements ExportTask {
     }
 
     @Override
-    public String getOutputName() {
-        return outputNameStyle.getOutputName();
+    public boolean hasNecessaryParams(ExportTaskParams params) {
+        return true;
     }
 
     @Override
-    public void init() {
-        // NOTHING TO DO
+    public String getOutputName() {
+        return outputNameStyle.getOutputName();
     }
 }
