@@ -33,12 +33,14 @@ import org.anchoranalysis.plot.index.LinePlot.YValGetter;
 
 public class GraphDefinitionLineIterVsTemperature extends GraphDefinitionLineIterVsCSVStatistic {
 
+    private static final String TEMPERATURE = "temperature";
+    
     public GraphDefinitionLineIterVsTemperature(PlotColorScheme graphColorScheme) {
 
         super(
-                "Temperature",
-                new String[] {"Temperature"},
-                "Temperature",
+                TEMPERATURE,
+                new String[] {TEMPERATURE},
+                TEMPERATURE,
                 new YValGetter<CSVStatistic>() {
 
                     @Override
