@@ -30,7 +30,7 @@ import com.sun.tools.visualvm.charts.SimpleXYChartDescriptor;
 import com.sun.tools.visualvm.charts.SimpleXYChartSupport;
 import org.anchoranalysis.gui.videostats.EnergyUpdater;
 
-public abstract class GraphDefinition implements EnergyUpdater {
+public abstract class PlotDefinition implements EnergyUpdater {
 
     public abstract String title();
 

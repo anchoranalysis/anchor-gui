@@ -33,32 +33,31 @@ import org.anchoranalysis.mpp.feature.energy.marks.MarksWithTotalEnergy;
 import org.anchoranalysis.mpp.segment.optimization.feedback.aggregate.Aggregator;
 
 @RequiredArgsConstructor
-public class TemperatureGraphDefinition extends GraphDefinition {
+public class ExecutionTime extends PlotDefinition {
 
     // START REQUIRED ARGUMENTS
     private final int windowSize;
     // END REQUIRED ARGUMENTS
 
-    private double temperature;
-
-    private long resolve(double energy) {
-        return (long) (100 * energy);
-    }
+    private double msPerIter = -1;
+    private long lastTimeStamp = -1;
+    private int divider;
 
     @Override
     public String title() {
-        return "Temperature";
+        return "Execution Time";
     }
 
     @Override
     public SimpleXYChartDescriptor descriptor() {
         SimpleXYChartDescriptor descriptor =
-                SimpleXYChartDescriptor.decimal(0, 100, 0, 0.01d, true, windowSize);
-        descriptor.addLineFillItems("Temperature");
+                SimpleXYChartDescriptor.decimal(0, 1000, 0, 0.01d, true, windowSize);
+        descriptor.addLineFillItems("ms per iteration");
 
-        descriptor.setDetailsItems(new String[] {"Iteration", "Time", "Temperature"});
+        descriptor.setDetailsItems(
+                new String[] {"Iteration", "Time", "ms per iteration", "Last divider"});
 
-        setTitleAndAxes(descriptor, title(), "time", "temperature");
+        setTitleAndAxes(descriptor, title(), "time", "ms per iteration");
 
         return descriptor;
     }
@@ -67,7 +66,7 @@ public class TemperatureGraphDefinition extends GraphDefinition {
     public long[] valueArray(int iter, long timeStamp) {
 
         long[] values = new long[1];
-        values[0] = resolve(this.temperature);
+        values[0] = resolve(this.msPerIter);
         return values;
     }
 
@@ -77,17 +76,30 @@ public class TemperatureGraphDefinition extends GraphDefinition {
         return new String[] {
             iter + "",
             support.formatTime(timeStamp - timeZoneOffset),
-            String.format("%e", this.temperature),
+            String.format("%e", this.msPerIter),
+            String.format("%d", this.divider)
         };
     }
 
     @Override
-    public void updateCurrent(int iter, long timeStamp, MarksWithTotalEnergy crnt, Aggregator agg) {
-        this.temperature = agg.getTemperature();
+    public void updateCurrent(
+            int iter, long timeStamp, MarksWithTotalEnergy current, Aggregator aggregator) {
+
+        if (lastTimeStamp != -1 && aggregator.hasLastDivider()) {
+            long timeDiff = timeStamp - lastTimeStamp;
+            this.msPerIter = ((double) timeDiff) / aggregator.getLastDivider();
+            this.divider = aggregator.getLastDivider();
+        }
+
+        lastTimeStamp = timeStamp;
     }
 
     @Override
     public void updateBest(int iter, long timeStamp, MarksWithTotalEnergy best) {
         // NOTHING TO DO
+    }
+
+    private static long resolve(double energy) {
+        return (long) (100 * energy);
     }
 }

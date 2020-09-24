@@ -26,40 +26,38 @@
 
 package org.anchoranalysis.gui.plot.definition;
 
-import com.sun.tools.visualvm.charts.SimpleXYChartDescriptor; // NOSONAR
+import com.sun.tools.visualvm.charts.SimpleXYChartDescriptor;
 import com.sun.tools.visualvm.charts.SimpleXYChartSupport;
 import lombok.RequiredArgsConstructor;
 import org.anchoranalysis.mpp.feature.energy.marks.MarksWithTotalEnergy;
 import org.anchoranalysis.mpp.segment.optimization.feedback.aggregate.Aggregator;
 
 @RequiredArgsConstructor
-public class NumberMarksGraphDefinition extends GraphDefinition {
+public class EnergyPlot extends PlotDefinition {
 
     // START REQUIRED ARGUMENTS
     private final int windowSize;
     // END REQUIRED ARGUMENTS
 
-    private double sizeCurrent;
-    private int sizeBest;
+    private double energyCurrent;
+    private double energyBest;
 
     @Override
     public String title() {
-        return "Configuration Size";
+        return "-log Energy";
     }
 
     @Override
     public SimpleXYChartDescriptor descriptor() {
         SimpleXYChartDescriptor descriptor =
-                SimpleXYChartDescriptor.decimal(0, 100, 0, 1d, true, windowSize);
-        descriptor.addLineItems("Number Marks (best)");
-        descriptor.addLineItems("Number Marks (current)");
+                SimpleXYChartDescriptor.decimal(-10, 10, -10, 0.01d, true, windowSize);
+        descriptor.addLineFillItems("-log Energy (best)");
+        descriptor.addLineFillItems("-log Energy (current)");
 
         descriptor.setDetailsItems(
-                new String[] {
-                    "Iteration", "Time", "Number Marks (best)", "Number Marks (current)"
-                });
+                new String[] {"Iteration", "Time", "-log Energy (best)", "-log Energy (current)"});
 
-        setTitleAndAxes(descriptor, title(), "time", "number");
+        setTitleAndAxes(descriptor, title(), "time", "energy");
 
         return descriptor;
     }
@@ -68,8 +66,8 @@ public class NumberMarksGraphDefinition extends GraphDefinition {
     public long[] valueArray(int iter, long timeStamp) {
 
         long[] values = new long[2];
-        values[0] = this.sizeBest;
-        values[1] = (long) this.sizeCurrent;
+        values[0] = resolve(this.energyBest);
+        values[1] = resolve(this.energyCurrent);
         return values;
     }
 
@@ -79,18 +77,23 @@ public class NumberMarksGraphDefinition extends GraphDefinition {
         return new String[] {
             iter + "",
             support.formatTime(timeStamp - timeZoneOffset),
-            String.format("%4.1f", (double) this.sizeBest),
-            String.format("%4.1f", this.sizeCurrent)
+            String.format("%e", this.energyBest),
+            String.format("%e", this.energyCurrent)
         };
     }
 
     @Override
-    public void updateCurrent(int iter, long timeStamp, MarksWithTotalEnergy crnt, Aggregator agg) {
-        this.sizeCurrent = agg.getSize();
+    public void updateCurrent(
+            int iter, long timeStamp, MarksWithTotalEnergy current, Aggregator aggregator) {
+        this.energyCurrent = aggregator.getEnergy();
     }
 
     @Override
     public void updateBest(int iter, long timeStamp, MarksWithTotalEnergy best) {
-        this.sizeBest = best.size();
+        this.energyBest = best.getEnergyTotal();
+    }
+
+    private static long resolve(double energy) {
+        return (long) (100 * energy);
     }
 }

@@ -33,13 +33,13 @@ import org.anchoranalysis.gui.plot.definition.line.LinePlotNumberMarks;
 import org.anchoranalysis.gui.plot.definition.line.LinePlotNumberMarks.Item;
 import org.anchoranalysis.mpp.feature.energy.IndexableMarksWithEnergy;
 import org.anchoranalysis.plot.bean.Plot;
-import org.anchoranalysis.plot.bean.colorscheme.GraphColorScheme;
+import org.anchoranalysis.plot.bean.colorscheme.PlotColorScheme;
 
 public class BridgedPlotNumberMarksCreator
         extends BridgedPlotFromDualFinderCreator<LinePlotNumberMarks.Item> {
 
     @Override
-    public Plot<LinePlotNumberMarks.Item> createGraphDefinition(GraphColorScheme graphColorScheme)
+    public Plot<LinePlotNumberMarks.Item> createGraphDefinition(PlotColorScheme graphColorScheme)
             throws CreateException {
         LinePlotNumberMarks graphDefinition = new LinePlotNumberMarks();
         graphDefinition.setGraphColorScheme(graphColorScheme);

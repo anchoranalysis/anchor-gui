@@ -40,7 +40,7 @@ import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.XYPlot;
 
-public class ClickableGraphInstance {
+public class ClickablePlotInstance {
 
     private PlotInstance graphInstance;
 
@@ -49,7 +49,7 @@ public class ClickableGraphInstance {
     private Optional<IPropertyValueReceivable<Integer>> selectFrameReceivable = Optional.empty();
     private Optional<IPropertyValueSendable<Integer>> selectFrameSendable = Optional.empty();
 
-    ClickableGraphInstance(PlotInstance graphInstance) {
+    ClickablePlotInstance(PlotInstance graphInstance) {
         this.graphInstance = graphInstance;
     }
 
@@ -125,16 +125,7 @@ public class ClickableGraphInstance {
 
         final XAxisClickListener clickListener = new XAxisClickListener(minIndex, maxIndex);
         setPanelMouseClickListener(clickListener);
-
-        setSelectFrameSendable(
-                new IPropertyValueSendable<Integer>() {
-
-                    @Override
-                    public void setPropertyValue(Integer frameIndex, boolean adjusting) {
-                        graphInstance.getChart().getXYPlot().setDomainCrosshairValue(frameIndex);
-                    }
-                });
-
+        setSelectFrameSendable( (Integer frameIndex, boolean adjusting) -> graphInstance.getChart().getXYPlot().setDomainCrosshairValue(frameIndex) ); 
         setSelectFrameReceivable(clickListener);
     }
 

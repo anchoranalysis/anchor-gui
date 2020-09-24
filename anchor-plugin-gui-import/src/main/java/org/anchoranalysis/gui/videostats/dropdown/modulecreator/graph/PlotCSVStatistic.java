@@ -37,7 +37,7 @@ import org.anchoranalysis.gui.manifest.FinderCSVStats;
 import org.anchoranalysis.gui.manifest.csvstatistic.CSVStatistic;
 import org.anchoranalysis.gui.plot.BoundedIndexContainerIterator;
 import org.anchoranalysis.gui.plot.panel.ClickableGraphFactory;
-import org.anchoranalysis.gui.plot.panel.ClickableGraphInstance;
+import org.anchoranalysis.gui.plot.panel.ClickablePlotInstance;
 import org.anchoranalysis.gui.plot.visualvm.InternalFrameGraphAsModule;
 import org.anchoranalysis.gui.reassign.FrameTitleCreator;
 import org.anchoranalysis.gui.videostats.IModuleCreatorDefaultState;
@@ -73,13 +73,13 @@ public class PlotCSVStatistic extends VideoStatsModuleCreatorContext {
             int minIndex = cntr.previousEqualIndex(cntr.getMaximumIndex());
             CSVStatistic stat = cntr.get(minIndex);
 
-            if (!definition.isItemAccepted(stat)) {
+            if (!definition.isItemIncluded(stat)) {
                 return Optional.empty();
             }
 
             Iterator<CSVStatistic> itr = new BoundedIndexContainerIterator<>(cntr, 1000);
 
-            ClickableGraphInstance graphInstance =
+            ClickablePlotInstance graphInstance =
                     ClickableGraphFactory.create(definition, itr, null, null);
 
             String graphFrameTitle = FrameTitleCreator.prefix(namePrefix, title());

@@ -38,7 +38,7 @@ import org.anchoranalysis.plot.bean.Plot;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class ClickableGraphFactory {
 
-    public static <T> ClickableGraphInstance create(
+    public static <T> ClickablePlotInstance create(
             Plot<T> definition,
             Iterator<T> items,
             Optional<AxisLimits> domainLimits,
@@ -48,10 +48,10 @@ public class ClickableGraphFactory {
         return createWithXAxisIndex(instance, domainLimits);
     }
 
-    private static ClickableGraphInstance createWithXAxisIndex(
+    private static ClickablePlotInstance createWithXAxisIndex(
             PlotInstance graphInstance, Optional<AxisLimits> domainLimits) {
 
-        ClickableGraphInstance clickable = new ClickableGraphInstance(graphInstance);
+        ClickablePlotInstance clickable = new ClickablePlotInstance(graphInstance);
 
         if (domainLimits.isPresent()) {
             clickable.addXAxisIndexListener(

@@ -29,7 +29,7 @@ package org.anchoranalysis.plugin.gui.bean.graphdefinition.line;
 import org.anchoranalysis.gui.manifest.csvstatistic.CSVStatistic;
 import org.anchoranalysis.mpp.feature.energy.marks.VoxelizedMarksWithEnergy;
 import org.anchoranalysis.mpp.segment.bean.kernel.proposer.KernelProposer;
-import org.anchoranalysis.plot.bean.colorscheme.GraphColorScheme;
+import org.anchoranalysis.plot.bean.colorscheme.PlotColorScheme;
 import org.anchoranalysis.plot.index.LinePlot.YValGetter;
 
 public class GraphDefinitionLineIterVsKernelAccptProb
@@ -38,7 +38,7 @@ public class GraphDefinitionLineIterVsKernelAccptProb
     public GraphDefinitionLineIterVsKernelAccptProb(
             KernelProposer<VoxelizedMarksWithEnergy> kernelProposer,
             int index,
-            GraphColorScheme graphColorScheme) {
+            PlotColorScheme graphColorScheme) {
         this(
                 kernelProposer.getAllKernelFactories().get(index).getName(),
                 new String[] {kernelProposer.getAllKernelFactories().get(index).getName()},
@@ -50,7 +50,7 @@ public class GraphDefinitionLineIterVsKernelAccptProb
             String subtitle,
             String[] seriesNames,
             final YValGetter<CSVStatistic> yValGetter,
-            GraphColorScheme graphColorScheme) {
+            PlotColorScheme graphColorScheme) {
 
         super(
                 "Rate of Kernel Acceptance - " + subtitle,
@@ -62,7 +62,7 @@ public class GraphDefinitionLineIterVsKernelAccptProb
     }
 
     @Override
-    public boolean isItemAccepted(CSVStatistic item) {
+    public boolean isItemIncluded(CSVStatistic item) {
         return item.hasAccptProb();
     }
 }

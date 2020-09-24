@@ -33,31 +33,32 @@ import org.anchoranalysis.mpp.feature.energy.marks.MarksWithTotalEnergy;
 import org.anchoranalysis.mpp.segment.optimization.feedback.aggregate.Aggregator;
 
 @RequiredArgsConstructor
-public class EnergyGraphDefinition extends GraphDefinition {
+public class Temperature extends PlotDefinition {
 
     // START REQUIRED ARGUMENTS
     private final int windowSize;
     // END REQUIRED ARGUMENTS
 
-    private double energyCurrent;
-    private double energyBest;
+    private double temperature;
+
+    private long resolve(double energy) {
+        return (long) (100 * energy);
+    }
 
     @Override
     public String title() {
-        return "-log Energy";
+        return "Temperature";
     }
 
     @Override
     public SimpleXYChartDescriptor descriptor() {
         SimpleXYChartDescriptor descriptor =
-                SimpleXYChartDescriptor.decimal(-10, 10, -10, 0.01d, true, windowSize);
-        descriptor.addLineFillItems("-log Energy (best)");
-        descriptor.addLineFillItems("-log Energy (current)");
+                SimpleXYChartDescriptor.decimal(0, 100, 0, 0.01d, true, windowSize);
+        descriptor.addLineFillItems("Temperature");
 
-        descriptor.setDetailsItems(
-                new String[] {"Iteration", "Time", "-log Energy (best)", "-log Energy (current)"});
+        descriptor.setDetailsItems(new String[] {"Iteration", "Time", "Temperature"});
 
-        setTitleAndAxes(descriptor, title(), "time", "energy");
+        setTitleAndAxes(descriptor, title(), "time", "temperature");
 
         return descriptor;
     }
@@ -65,9 +66,8 @@ public class EnergyGraphDefinition extends GraphDefinition {
     @Override
     public long[] valueArray(int iter, long timeStamp) {
 
-        long[] values = new long[2];
-        values[0] = resolve(this.energyBest);
-        values[1] = resolve(this.energyCurrent);
+        long[] values = new long[1];
+        values[0] = resolve(this.temperature);
         return values;
     }
 
@@ -77,23 +77,17 @@ public class EnergyGraphDefinition extends GraphDefinition {
         return new String[] {
             iter + "",
             support.formatTime(timeStamp - timeZoneOffset),
-            String.format("%e", this.energyBest),
-            String.format("%e", this.energyCurrent)
+            String.format("%e", this.temperature),
         };
     }
 
     @Override
-    public void updateCurrent(
-            int iter, long timeStamp, MarksWithTotalEnergy current, Aggregator aggregator) {
-        this.energyCurrent = aggregator.getEnergy();
+    public void updateCurrent(int iter, long timeStamp, MarksWithTotalEnergy crnt, Aggregator agg) {
+        this.temperature = agg.getTemperature();
     }
 
     @Override
     public void updateBest(int iter, long timeStamp, MarksWithTotalEnergy best) {
-        this.energyBest = best.getEnergyTotal();
-    }
-
-    private static long resolve(double energy) {
-        return (long) (100 * energy);
+        // NOTHING TO DO
     }
 }

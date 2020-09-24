@@ -41,7 +41,7 @@ import org.anchoranalysis.gui.videostats.module.VideoStatsModuleCreateException;
 import org.anchoranalysis.gui.videostats.modulecreator.VideoStatsModuleCreator;
 import org.anchoranalysis.mpp.feature.energy.IndexableMarksWithEnergy;
 import org.anchoranalysis.plot.bean.Plot;
-import org.anchoranalysis.plot.bean.colorscheme.GraphColorScheme;
+import org.anchoranalysis.plot.bean.colorscheme.PlotColorScheme;
 
 public interface GraphFromDualFinderCreator<T> {
 
@@ -52,7 +52,7 @@ public interface GraphFromDualFinderCreator<T> {
             final FinderHistoryFolder<IndexableMarksWithEnergy> finderMarksHistory)
             throws CreateException;
 
-    Plot<T> createGraphDefinition(GraphColorScheme graphColorScheme) throws CreateException;
+    Plot<T> createGraphDefinition(PlotColorScheme graphColorScheme) throws CreateException;
 
     // useCSV is a flag indicating which of the two to use
     public default VideoStatsModuleCreator createGraphModule(

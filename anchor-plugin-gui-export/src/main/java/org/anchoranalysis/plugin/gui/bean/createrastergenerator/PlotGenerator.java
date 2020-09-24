@@ -41,7 +41,6 @@ import org.anchoranalysis.io.manifest.ManifestDescription;
 import org.anchoranalysis.io.output.bean.OutputWriteSettings;
 import org.anchoranalysis.io.output.error.OutputWriteFailedException;
 import org.anchoranalysis.plot.PlotInstance;
-import org.anchoranalysis.plot.io.PlotOutputter;
 import org.jfree.chart.ChartUtils;
 import lombok.AllArgsConstructor;
 
@@ -83,7 +82,7 @@ class PlotGenerator extends RasterGeneratorWithElement<PlotInstance> {
     @Override
     public Stack transform() throws OutputWriteFailedException {
 
-        BufferedImage bufferedImage = PlotOutputter.createBufferedImage(getElement(), size.getWidth(), size.getHeight());
+        BufferedImage bufferedImage = getElement().createBufferedImage(size.getWidth(), size.getHeight());
 
         try {
             return CreateStackFromBufferedImage.create(bufferedImage);

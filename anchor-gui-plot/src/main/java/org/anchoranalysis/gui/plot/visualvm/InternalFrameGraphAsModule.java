@@ -30,7 +30,7 @@ import java.util.Optional;
 import javax.swing.JInternalFrame;
 import org.anchoranalysis.core.property.IPropertyValueReceivable;
 import org.anchoranalysis.core.property.IPropertyValueSendable;
-import org.anchoranalysis.gui.plot.panel.ClickableGraphInstance;
+import org.anchoranalysis.gui.plot.panel.ClickablePlotInstance;
 import org.anchoranalysis.gui.plot.panel.GraphPanel;
 import org.anchoranalysis.gui.videostats.IModuleCreatorDefaultState;
 import org.anchoranalysis.gui.videostats.link.LinkModules;
@@ -39,9 +39,9 @@ import org.anchoranalysis.gui.videostats.module.VideoStatsModule;
 public class InternalFrameGraphAsModule {
 
     private JInternalFrame frame;
-    private ClickableGraphInstance graphInstance;
+    private ClickablePlotInstance graphInstance;
 
-    public InternalFrameGraphAsModule(String title, ClickableGraphInstance graphInstance) {
+    public InternalFrameGraphAsModule(String title, ClickablePlotInstance graphInstance) {
         frame =
                 new InternalFrameWithPanel(title, new GraphPanel(graphInstance).getPanel())
                         .getFrame();
@@ -49,7 +49,7 @@ public class InternalFrameGraphAsModule {
     }
 
     public InternalFrameGraphAsModule(
-            String title, ClickableGraphInstance graphInstance, JInternalFrame frame) {
+            String title, ClickablePlotInstance graphInstance, JInternalFrame frame) {
         this.frame = frame;
         this.graphInstance = graphInstance;
     }

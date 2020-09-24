@@ -38,7 +38,7 @@ public class GraphPanel {
 
     private EventListenerList eventListenerList = new EventListenerList();
 
-    public GraphPanel(ClickableGraphInstance graphInstance) {
+    public GraphPanel(ClickablePlotInstance graphInstance) {
 
         // we put the chart into a panel
         this.chartPanel = new ChartPanel(graphInstance.getChart());
@@ -53,7 +53,7 @@ public class GraphPanel {
                     GraphPanelMouseClickListener.class, graphInstance.getPanelMouseClickListener());
         }
 
-        // Pases ChartMoustEvent to our PanelMouseClickListeners
+        // Passes ChartMoustEvent to our PanelMouseClickListeners
         chartPanel.addChartMouseListener(
                 new ChartMouseListener() {
 
@@ -72,7 +72,7 @@ public class GraphPanel {
                 });
     }
 
-    public void updateGraph(ClickableGraphInstance graphInstance) {
+    public void updateGraph(ClickablePlotInstance graphInstance) {
 
         if (graphInstance != null) {
             chartPanel.setChart(graphInstance.getChart());

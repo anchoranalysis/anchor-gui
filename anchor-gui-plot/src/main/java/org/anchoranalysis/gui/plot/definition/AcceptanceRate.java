@@ -30,34 +30,49 @@ import com.sun.tools.visualvm.charts.SimpleXYChartDescriptor;
 import com.sun.tools.visualvm.charts.SimpleXYChartSupport;
 import lombok.RequiredArgsConstructor;
 import org.anchoranalysis.mpp.feature.energy.marks.MarksWithTotalEnergy;
+import org.anchoranalysis.mpp.segment.kernel.proposer.WeightedKernel;
+import org.anchoranalysis.mpp.segment.kernel.proposer.WeightedKernelList;
 import org.anchoranalysis.mpp.segment.optimization.feedback.aggregate.Aggregator;
 
 @RequiredArgsConstructor
-public class ExecutionTimeGraphDefinition extends GraphDefinition {
+public class AcceptanceRate extends PlotDefinition {
 
     // START REQUIRED ARGUMENTS
     private final int windowSize;
+    private final WeightedKernelList<?> kernelFactoryList;
     // END REQUIRED ARGUMENTS
 
-    private double msPerIter = -1;
-    private long lastTimeStamp = -1;
-    private int divider;
+    private Aggregator aggregator;
 
     @Override
     public String title() {
-        return "Execution Time";
+        return "Acceptance Rate";
     }
 
     @Override
     public SimpleXYChartDescriptor descriptor() {
         SimpleXYChartDescriptor descriptor =
-                SimpleXYChartDescriptor.decimal(0, 1000, 0, 0.01d, true, windowSize);
-        descriptor.addLineFillItems("ms per iteration");
+                SimpleXYChartDescriptor.decimal(0, 500, 0, 0.001d, true, windowSize);
 
-        descriptor.setDetailsItems(
-                new String[] {"Iteration", "Time", "ms per iteration", "Last divider"});
+        descriptor.addLineItems("all");
+        for (WeightedKernel<?> kf : kernelFactoryList) {
+            descriptor.addLineItems(kf.getName());
+        }
 
-        setTitleAndAxes(descriptor, title(), "time", "ms per iteration");
+        int numKernel = kernelFactoryList.size();
+
+        int i = 0;
+        String[] details = new String[3 + numKernel];
+        details[i++] = "Iteration";
+        details[i++] = "Time";
+        details[i++] = "all";
+        for (WeightedKernel<?> kf : kernelFactoryList) {
+            details[i++] = kf.getName();
+        }
+
+        descriptor.setDetailsItems(details);
+
+        setTitleAndAxes(descriptor, title(), "time", "acceptance rate");
 
         return descriptor;
     }
@@ -65,33 +80,40 @@ public class ExecutionTimeGraphDefinition extends GraphDefinition {
     @Override
     public long[] valueArray(int iter, long timeStamp) {
 
-        long[] values = new long[1];
-        values[0] = resolve(this.msPerIter);
+        int numKernel = kernelFactoryList.size();
+
+        int i = 0;
+        long[] values = new long[1 + numKernel];
+        values[i++] = resolve(this.aggregator.getAcceptAll());
+        for (int j = 0; j < numKernel; j++) {
+            values[i++] = resolve(aggregator.getKernelAccepted().get(j));
+        }
+
         return values;
     }
 
     @Override
     public String[] detailsArray(
             int iter, long timeStamp, long timeZoneOffset, SimpleXYChartSupport support) {
-        return new String[] {
-            iter + "",
-            support.formatTime(timeStamp - timeZoneOffset),
-            String.format("%e", this.msPerIter),
-            String.format("%d", this.divider)
-        };
+
+        int numKernel = kernelFactoryList.size();
+
+        int i = 0;
+
+        String[] details = new String[3 + numKernel];
+        details[i++] = iter + "";
+        details[i++] = support.formatTime(timeStamp - timeZoneOffset);
+        details[i++] = String.format("%e", aggregator.getAcceptAll());
+        for (int j = 0; j < numKernel; j++) {
+            details[i++] = String.format("%.3f", aggregator.getKernelAccepted().get(j));
+        }
+        return details;
     }
 
     @Override
     public void updateCurrent(
             int iter, long timeStamp, MarksWithTotalEnergy current, Aggregator aggregator) {
-
-        if (lastTimeStamp != -1 && aggregator.hasLastDivider()) {
-            long timeDiff = timeStamp - lastTimeStamp;
-            this.msPerIter = ((double) timeDiff) / aggregator.getLastDivider();
-            this.divider = aggregator.getLastDivider();
-        }
-
-        lastTimeStamp = timeStamp;
+        this.aggregator = aggregator;
     }
 
     @Override
@@ -100,6 +122,6 @@ public class ExecutionTimeGraphDefinition extends GraphDefinition {
     }
 
     private static long resolve(double energy) {
-        return (long) (100 * energy);
+        return (long) (1000 * energy);
     }
 }

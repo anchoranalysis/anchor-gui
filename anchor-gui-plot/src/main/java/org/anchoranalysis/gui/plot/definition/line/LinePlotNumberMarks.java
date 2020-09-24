@@ -38,13 +38,13 @@ import org.anchoranalysis.core.index.IndexGetter;
 import org.anchoranalysis.plot.AxisLimits;
 import org.anchoranalysis.plot.PlotInstance;
 import org.anchoranalysis.plot.bean.Plot;
-import org.anchoranalysis.plot.bean.colorscheme.GraphColorScheme;
+import org.anchoranalysis.plot.bean.colorscheme.PlotColorScheme;
 import org.anchoranalysis.plot.index.LinePlot;
 
 public class LinePlotNumberMarks extends Plot<LinePlotNumberMarks.Item> {
 
     // START BEAN PROPERITES
-    @BeanField @Getter @Setter private GraphColorScheme graphColorScheme = new GraphColorScheme();
+    @BeanField @Getter @Setter private PlotColorScheme graphColorScheme = new PlotColorScheme();
     // END BEAN PROPERTIES
 
     // Item
@@ -83,7 +83,7 @@ public class LinePlotNumberMarks extends Plot<LinePlotNumberMarks.Item> {
     }
 
     @Override
-    public boolean isItemAccepted(Item item) {
+    public boolean isItemIncluded(Item item) {
         return true;
     }
 

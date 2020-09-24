@@ -34,22 +34,22 @@ import org.anchoranalysis.gui.plot.EnergyGraphItem;
 import org.anchoranalysis.plot.AxisLimits;
 import org.anchoranalysis.plot.PlotInstance;
 import org.anchoranalysis.plot.bean.Plot;
-import org.anchoranalysis.plot.bean.colorscheme.GraphColorScheme;
-import org.anchoranalysis.plot.index.BarChart;
+import org.anchoranalysis.plot.bean.colorscheme.PlotColorScheme;
+import org.anchoranalysis.plot.index.BarPlot;
 
 public class BarPlotEnergyBreakdown extends Plot<EnergyGraphItem> {
 
-    private BarChart<EnergyGraphItem> delegate;
+    private BarPlot<EnergyGraphItem> delegate;
 
     public BarPlotEnergyBreakdown() throws InitException {
 
         delegate =
-                new BarChart<>(
+                new BarPlot<>(
                         getTitle(),
                         new String[] {"Energy Total"},
-                        (EnergyGraphItem item, int seriesNum) -> item.getObjectID(),
-                        (EnergyGraphItem item, int seriesNum) -> item.getEnergy(),
-                        (EnergyGraphItem item, int seriesNum) -> item.getPaint(),
+                        (EnergyGraphItem item, int seriesIndex) -> item.getObjectID(),
+                        (EnergyGraphItem item, int seriesIndex) -> item.getEnergy(),
+                        (EnergyGraphItem item, int seriesIndex) -> item.getPaint(),
                         false);
         delegate.getLabels().setX("Mark");
         delegate.getLabels().setY("Energy Coefficient");
@@ -70,7 +70,7 @@ public class BarPlotEnergyBreakdown extends Plot<EnergyGraphItem> {
     }
 
     @Override
-    public boolean isItemAccepted(EnergyGraphItem item) {
+    public boolean isItemIncluded(EnergyGraphItem item) {
         return true;
     }
 
@@ -89,11 +89,11 @@ public class BarPlotEnergyBreakdown extends Plot<EnergyGraphItem> {
         return getTitle();
     }
 
-    public GraphColorScheme getGraphColorScheme() {
+    public PlotColorScheme getGraphColorScheme() {
         return delegate.getGraphColorScheme();
     }
 
-    public void setGraphColorScheme(GraphColorScheme graphColorScheme) {
+    public void setGraphColorScheme(PlotColorScheme graphColorScheme) {
         delegate.setGraphColorScheme(graphColorScheme);
     }
 }

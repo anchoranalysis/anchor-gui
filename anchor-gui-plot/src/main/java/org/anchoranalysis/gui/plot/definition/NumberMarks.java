@@ -26,53 +26,40 @@
 
 package org.anchoranalysis.gui.plot.definition;
 
-import com.sun.tools.visualvm.charts.SimpleXYChartDescriptor;
+import com.sun.tools.visualvm.charts.SimpleXYChartDescriptor; // NOSONAR
 import com.sun.tools.visualvm.charts.SimpleXYChartSupport;
 import lombok.RequiredArgsConstructor;
 import org.anchoranalysis.mpp.feature.energy.marks.MarksWithTotalEnergy;
-import org.anchoranalysis.mpp.segment.kernel.proposer.WeightedKernel;
-import org.anchoranalysis.mpp.segment.kernel.proposer.WeightedKernelList;
 import org.anchoranalysis.mpp.segment.optimization.feedback.aggregate.Aggregator;
 
 @RequiredArgsConstructor
-public class AcceptanceRateGraphDefinition extends GraphDefinition {
+public class NumberMarks extends PlotDefinition {
 
     // START REQUIRED ARGUMENTS
     private final int windowSize;
-    private final WeightedKernelList<?> kernelFactoryList;
     // END REQUIRED ARGUMENTS
 
-    private Aggregator aggregator;
+    private double sizeCurrent;
+    private int sizeBest;
 
     @Override
     public String title() {
-        return "Acceptance Rate";
+        return "Configuration Size";
     }
 
     @Override
     public SimpleXYChartDescriptor descriptor() {
         SimpleXYChartDescriptor descriptor =
-                SimpleXYChartDescriptor.decimal(0, 500, 0, 0.001d, true, windowSize);
+                SimpleXYChartDescriptor.decimal(0, 100, 0, 1d, true, windowSize);
+        descriptor.addLineItems("Number Marks (best)");
+        descriptor.addLineItems("Number Marks (current)");
 
-        descriptor.addLineItems("all");
-        for (WeightedKernel<?> kf : kernelFactoryList) {
-            descriptor.addLineItems(kf.getName());
-        }
+        descriptor.setDetailsItems(
+                new String[] {
+                    "Iteration", "Time", "Number Marks (best)", "Number Marks (current)"
+                });
 
-        int numKernel = kernelFactoryList.size();
-
-        int i = 0;
-        String[] details = new String[3 + numKernel];
-        details[i++] = "Iteration";
-        details[i++] = "Time";
-        details[i++] = "all";
-        for (WeightedKernel<?> kf : kernelFactoryList) {
-            details[i++] = kf.getName();
-        }
-
-        descriptor.setDetailsItems(details);
-
-        setTitleAndAxes(descriptor, title(), "time", "acceptance rate");
+        setTitleAndAxes(descriptor, title(), "time", "number");
 
         return descriptor;
     }
@@ -80,48 +67,30 @@ public class AcceptanceRateGraphDefinition extends GraphDefinition {
     @Override
     public long[] valueArray(int iter, long timeStamp) {
 
-        int numKernel = kernelFactoryList.size();
-
-        int i = 0;
-        long[] values = new long[1 + numKernel];
-        values[i++] = resolve(this.aggregator.getAcceptAll());
-        for (int j = 0; j < numKernel; j++) {
-            values[i++] = resolve(aggregator.getKernelAccepted().get(j));
-        }
-
+        long[] values = new long[2];
+        values[0] = this.sizeBest;
+        values[1] = (long) this.sizeCurrent;
         return values;
     }
 
     @Override
     public String[] detailsArray(
             int iter, long timeStamp, long timeZoneOffset, SimpleXYChartSupport support) {
-
-        int numKernel = kernelFactoryList.size();
-
-        int i = 0;
-
-        String[] details = new String[3 + numKernel];
-        details[i++] = iter + "";
-        details[i++] = support.formatTime(timeStamp - timeZoneOffset);
-        details[i++] = String.format("%e", aggregator.getAcceptAll());
-        for (int j = 0; j < numKernel; j++) {
-            details[i++] = String.format("%.3f", aggregator.getKernelAccepted().get(j));
-        }
-        return details;
+        return new String[] {
+            iter + "",
+            support.formatTime(timeStamp - timeZoneOffset),
+            String.format("%4.1f", (double) this.sizeBest),
+            String.format("%4.1f", this.sizeCurrent)
+        };
     }
 
     @Override
-    public void updateCurrent(
-            int iter, long timeStamp, MarksWithTotalEnergy current, Aggregator aggregator) {
-        this.aggregator = aggregator;
+    public void updateCurrent(int iter, long timeStamp, MarksWithTotalEnergy crnt, Aggregator agg) {
+        this.sizeCurrent = agg.getSize();
     }
 
     @Override
     public void updateBest(int iter, long timeStamp, MarksWithTotalEnergy best) {
-        // NOTHING TO DO
-    }
-
-    private static long resolve(double energy) {
-        return (long) (1000 * energy);
+        this.sizeBest = best.size();
     }
 }

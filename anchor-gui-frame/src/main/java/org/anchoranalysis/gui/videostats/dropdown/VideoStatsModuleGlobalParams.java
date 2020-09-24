@@ -41,7 +41,7 @@ import org.anchoranalysis.gui.videostats.threading.InteractiveThreadPool;
 import org.anchoranalysis.io.params.InputContextParams;
 import org.anchoranalysis.mpp.bean.regionmap.RegionMap;
 import org.anchoranalysis.mpp.bean.regionmap.RegionMapSingleton;
-import org.anchoranalysis.plot.bean.colorscheme.GraphColorScheme;
+import org.anchoranalysis.plot.bean.colorscheme.PlotColorScheme;
 
 // Globally available parameters for a VideoStatsModule
 @RequiredArgsConstructor
@@ -63,7 +63,7 @@ public class VideoStatsModuleGlobalParams {
     @Getter private final GraphicsConfiguration graphicsCurrentScreen;
     // END BEAN PROPERTIES
 
-    @Getter @Setter private GraphColorScheme graphColorScheme = new GraphColorScheme();
+    @Getter @Setter private PlotColorScheme graphColorScheme = new PlotColorScheme();
 
     @Getter
     private RegionMap regionMap = RegionMapSingleton.instance(); // For now we use global regionMaps

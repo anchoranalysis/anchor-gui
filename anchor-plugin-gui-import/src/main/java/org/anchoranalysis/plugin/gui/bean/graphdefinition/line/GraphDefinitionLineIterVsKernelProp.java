@@ -30,7 +30,7 @@ import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.gui.manifest.csvstatistic.CSVStatistic;
 import org.anchoranalysis.mpp.feature.energy.marks.VoxelizedMarksWithEnergy;
 import org.anchoranalysis.mpp.segment.bean.kernel.proposer.KernelProposer;
-import org.anchoranalysis.plot.bean.colorscheme.GraphColorScheme;
+import org.anchoranalysis.plot.bean.colorscheme.PlotColorScheme;
 import org.anchoranalysis.plot.index.LinePlot.YValGetter;
 
 public class GraphDefinitionLineIterVsKernelProp extends GraphDefinitionLineIterVsCSVStatistic {
@@ -38,7 +38,7 @@ public class GraphDefinitionLineIterVsKernelProp extends GraphDefinitionLineIter
     public GraphDefinitionLineIterVsKernelProp(
             KernelProposer<VoxelizedMarksWithEnergy> kernelProposer,
             final int index,
-            GraphColorScheme graphColorScheme) {
+            PlotColorScheme graphColorScheme) {
 
         super(
                 "Rate of Kernel Proposal - "
@@ -57,7 +57,7 @@ public class GraphDefinitionLineIterVsKernelProp extends GraphDefinitionLineIter
     }
 
     @Override
-    public boolean isItemAccepted(CSVStatistic item) {
+    public boolean isItemIncluded(CSVStatistic item) {
         return item.hasAccptProb();
     }
 }

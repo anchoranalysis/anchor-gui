@@ -34,7 +34,7 @@ import org.anchoranalysis.core.functional.function.CheckedFunction;
 import org.anchoranalysis.core.index.IntArray;
 import org.anchoranalysis.core.property.IPropertyValueReceivable;
 import org.anchoranalysis.core.property.IPropertyValueSendable;
-import org.anchoranalysis.gui.plot.panel.ClickableGraphInstance;
+import org.anchoranalysis.gui.plot.panel.ClickablePlotInstance;
 import org.anchoranalysis.gui.plot.panel.GraphPanel;
 import org.anchoranalysis.mpp.feature.energy.IndexableMarksWithEnergy;
 import org.anchoranalysis.overlay.collection.OverlayCollection;
@@ -44,7 +44,7 @@ public class MarksGraphPanel extends StatePanel<IndexableMarksWithEnergy> {
 
     // START REQUIRED ARGUMENTS
     private final CheckedFunction<
-                    IndexableMarksWithEnergy, ClickableGraphInstance, OperationFailedException>
+                    IndexableMarksWithEnergy, ClickablePlotInstance, OperationFailedException>
             graphGenerator;
     // END REQUIRED ARGUMENTS
 
@@ -59,7 +59,7 @@ public class MarksGraphPanel extends StatePanel<IndexableMarksWithEnergy> {
     public void updateState(IndexableMarksWithEnergy state) throws StatePanelUpdateException {
 
         try {
-            ClickableGraphInstance graphInstance = graphGenerator.apply(state);
+            ClickablePlotInstance graphInstance = graphGenerator.apply(state);
 
             if (graphPanel == null) {
                 this.graphPanel = new GraphPanel(graphInstance);

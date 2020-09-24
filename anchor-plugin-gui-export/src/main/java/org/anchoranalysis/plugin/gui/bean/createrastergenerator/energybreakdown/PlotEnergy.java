@@ -30,7 +30,7 @@ import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.gui.export.bean.ExportTaskParams;
 import org.anchoranalysis.gui.plot.EnergyGraphItem;
 import org.anchoranalysis.gui.plot.creator.GeneratePlotEnergy;
-import org.anchoranalysis.gui.plot.panel.ClickableGraphInstance;
+import org.anchoranalysis.gui.plot.panel.ClickablePlotInstance;
 import org.anchoranalysis.image.io.generator.raster.RasterGenerator;
 import org.anchoranalysis.image.io.generator.raster.RasterGeneratorBridge;
 import org.anchoranalysis.mpp.feature.energy.IndexableMarksWithEnergy;
@@ -50,15 +50,15 @@ public class PlotEnergy extends PlotGeneratorBase<EnergyGraphItem, IndexableMark
                 createBridge(generator, params), MappedFrom::getObject);
     }
 
-    private RasterGeneratorBridge<IndexableMarksWithEnergy, ClickableGraphInstance>
+    private RasterGeneratorBridge<IndexableMarksWithEnergy, ClickablePlotInstance>
             createBridge(
                     RasterGenerator<PlotInstance> generator,
                     ExportTaskParams params) {
         // Presents a generator for a GraphInstance as a generator for ClickableGraphInstance
-        RasterGeneratorBridge<ClickableGraphInstance, PlotInstance>
+        RasterGeneratorBridge<ClickablePlotInstance, PlotInstance>
                 clickableGenerator =
                         new RasterGeneratorBridge<>(
-                                generator, ClickableGraphInstance::getGraphInstance);
+                                generator, ClickablePlotInstance::getGraphInstance);
 
         // Presents a generator for a ClickableGraphInstance as a generator for Stack
         return new RasterGeneratorBridge<>(

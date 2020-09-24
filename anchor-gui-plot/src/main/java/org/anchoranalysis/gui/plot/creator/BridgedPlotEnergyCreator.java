@@ -33,14 +33,14 @@ import org.anchoranalysis.gui.plot.definition.line.LinePlotIterationVsEnergy;
 import org.anchoranalysis.gui.plot.definition.line.LinePlotIterationVsEnergy.Item;
 import org.anchoranalysis.mpp.feature.energy.IndexableMarksWithEnergy;
 import org.anchoranalysis.plot.bean.Plot;
-import org.anchoranalysis.plot.bean.colorscheme.GraphColorScheme;
+import org.anchoranalysis.plot.bean.colorscheme.PlotColorScheme;
 
 public class BridgedPlotEnergyCreator
         extends BridgedPlotFromDualFinderCreator<LinePlotIterationVsEnergy.Item> {
 
     @Override
     public Plot<LinePlotIterationVsEnergy.Item> createGraphDefinition(
-            GraphColorScheme graphColorScheme) throws CreateException {
+            PlotColorScheme graphColorScheme) throws CreateException {
 
         LinePlotIterationVsEnergy graphDefinition = new LinePlotIterationVsEnergy();
         graphDefinition.setGraphColorScheme(graphColorScheme);

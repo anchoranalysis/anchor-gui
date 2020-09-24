@@ -40,7 +40,7 @@ import org.anchoranalysis.gui.videostats.dropdown.contextualmodulecreator.Contex
 import org.anchoranalysis.gui.videostats.modulecreator.VideoStatsModuleCreator;
 import org.anchoranalysis.mpp.feature.energy.IndexableMarksWithEnergy;
 import org.anchoranalysis.plot.bean.Plot;
-import org.anchoranalysis.plot.bean.colorscheme.GraphColorScheme;
+import org.anchoranalysis.plot.bean.colorscheme.PlotColorScheme;
 
 @AllArgsConstructor
 public class GraphDualFinderCreator<T> extends ContextualModuleCreator {
@@ -48,7 +48,7 @@ public class GraphDualFinderCreator<T> extends ContextualModuleCreator {
     private final GraphFromDualFinderCreator<T> creator;
     private final FinderHistoryFolder<IndexableMarksWithEnergy> finderMarksHistory;
     private final FinderCSVStats finderCSVStats;
-    private final GraphColorScheme graphColorScheme;
+    private final PlotColorScheme graphColorScheme;
 
     @Override
     public NamedModule[] create(

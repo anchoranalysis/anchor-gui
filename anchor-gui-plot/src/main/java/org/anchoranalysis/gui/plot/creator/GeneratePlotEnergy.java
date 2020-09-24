@@ -40,7 +40,7 @@ import org.anchoranalysis.core.functional.function.CheckedFunction;
 import org.anchoranalysis.feature.energy.EnergyTotal;
 import org.anchoranalysis.gui.plot.EnergyGraphItem;
 import org.anchoranalysis.gui.plot.panel.ClickableGraphFactory;
-import org.anchoranalysis.gui.plot.panel.ClickableGraphInstance;
+import org.anchoranalysis.gui.plot.panel.ClickablePlotInstance;
 import org.anchoranalysis.mpp.feature.energy.EnergyPair;
 import org.anchoranalysis.mpp.feature.energy.IndexableMarksWithEnergy;
 import org.anchoranalysis.mpp.mark.Mark;
@@ -50,13 +50,13 @@ import org.anchoranalysis.plot.bean.Plot;
 @AllArgsConstructor
 public class GeneratePlotEnergy
         implements CheckedFunction<
-                IndexableMarksWithEnergy, ClickableGraphInstance, OperationFailedException> {
+                IndexableMarksWithEnergy, ClickablePlotInstance, OperationFailedException> {
 
     private final Plot<EnergyGraphItem> definition;
     private final ColorIndex colorIndex;
 
     @Override
-    public ClickableGraphInstance apply(IndexableMarksWithEnergy state)
+    public ClickablePlotInstance apply(IndexableMarksWithEnergy state)
             throws OperationFailedException {
 
         if (state.getMarks() != null) {
