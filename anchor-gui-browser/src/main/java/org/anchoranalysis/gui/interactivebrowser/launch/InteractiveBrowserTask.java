@@ -51,7 +51,7 @@ public class InteractiveBrowserTask extends TaskWithoutSharedState<InteractiveBr
     }
 
     @Override
-    public void doJobOnInputObject(InputBound<InteractiveBrowserInput, NoSharedState> params)
+    public void doJobOnInput(InputBound<InteractiveBrowserInput, NoSharedState> params)
             throws JobExecutionException {
 
         try {
