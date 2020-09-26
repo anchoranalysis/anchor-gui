@@ -108,20 +108,13 @@ public class ExportTaskBoundedIndexContainerGeneratorSeries<T>
         int min = container.getMinimumIndex();
         int max = container.getMaximumIndex();
 
-        int numAdd = calculateIncrements(min, max);
-
         int indexOut = 0;
         IncrementalSequenceType sequenceType = new IncrementalSequenceType(indexOut);
         sequenceType.setIncrementSize(1);
 
         sequenceType.setStart(min);
 
-        int realNumAdd = numAdd;
-        if (limitIterations >= 0) {
-            realNumAdd = Math.min(numAdd, limitIterations);
-        }
-
-        generatorSequenceWriter.start(sequenceType, realNumAdd);
+        generatorSequenceWriter.start(sequenceType);
 
         if (startAtEnd) {
             for (int i = max; i >= min; i -= incrementSize) {
@@ -163,18 +156,13 @@ public class ExportTaskBoundedIndexContainerGeneratorSeries<T>
         return true;
     }
 
-    private int calculateIncrements(int min, int max) {
-        double incr = (double) (max - min) / incrementSize;
-        return (int) Math.floor(incr) + 1;
-    }
-
     private void addToWriter(
-            BoundedIndexContainer<T> cntr,
+            BoundedIndexContainer<T> container,
             GeneratorSequenceNonIncremental<MappedFrom<T>> generatorSequenceWriter,
-            int i,
+            int indexIn,
             int indexOut)
             throws OutputWriteFailedException, GetOperationFailedException {
-        int index = cntr.previousEqualIndex(i);
-        generatorSequenceWriter.add(new MappedFrom<>(i, cntr.get(index)), String.valueOf(indexOut));
+        int index = container.previousEqualIndex(indexIn);
+        generatorSequenceWriter.add(new MappedFrom<>(indexIn, container.get(index)), String.valueOf(indexOut));
     }
 }
