@@ -101,7 +101,7 @@ public class InternalFrameMarkProposerEvaluator {
         evaluatorChooser.init(markEvaluatorSet);
 
         outputPanel.init(
-                mpg.getDefaultColorIndexForMarks(), mpg.getExportPopupParams().getOutputManager());
+                mpg.getDefaultColorIndexForMarks(), mpg.getExportPopupParams().getOutputter());
 
         SliderState sliderState = delegate.init(defaultState, mpg);
 

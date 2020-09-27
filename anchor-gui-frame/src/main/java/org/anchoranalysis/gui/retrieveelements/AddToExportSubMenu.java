@@ -32,7 +32,7 @@ import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.image.stack.Stack;
 import org.anchoranalysis.io.generator.Generator;
 import org.anchoranalysis.io.manifest.ManifestDescription;
-import org.anchoranalysis.io.output.bound.BoundOutputManagerRouteErrors;
+import org.anchoranalysis.io.output.bound.Outputter;
 
 public interface AddToExportSubMenu {
 
@@ -47,5 +47,5 @@ public interface AddToExportSubMenu {
             Optional<ManifestDescription> md,
             int numItems);
 
-    BoundOutputManagerRouteErrors getOutputManager();
+    Outputter getOutputter();
 }

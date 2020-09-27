@@ -46,7 +46,7 @@ import org.anchoranalysis.io.manifest.ManifestDescription;
 import org.anchoranalysis.io.manifest.ManifestFolderDescription;
 import org.anchoranalysis.io.manifest.sequencetype.IncrementalSequenceType;
 import org.anchoranalysis.io.namestyle.IntegerSuffixOutputNameStyle;
-import org.anchoranalysis.io.output.bound.BoundOutputManagerRouteErrors;
+import org.anchoranalysis.io.output.bound.Outputter;
 
 @RequiredArgsConstructor
 public class ExportSubMenu implements AddToExportSubMenu {
@@ -87,9 +87,9 @@ public class ExportSubMenu implements AddToExportSubMenu {
                         new IncrementalSequenceType());
 
         // NB: As bindAsSubFolder can now return nulls, maybe some knock-on bugs are introduced here
-        exportTaskParams.setOutputManager(
-                params.getOutputManager()
-                        .getWriterAlwaysAllowed()
+        exportTaskParams.setOutputter(
+                params.getOutputter()
+                        .writerPermissive()
                         .createSubdirectory(outputName, mfd)
                         .orElseThrow(
                                 () ->
@@ -123,7 +123,7 @@ public class ExportSubMenu implements AddToExportSubMenu {
     }
 
     @Override
-    public BoundOutputManagerRouteErrors getOutputManager() {
-        return params.getOutputManager();
+    public Outputter getOutputter() {
+        return params.getOutputter();
     }
 }

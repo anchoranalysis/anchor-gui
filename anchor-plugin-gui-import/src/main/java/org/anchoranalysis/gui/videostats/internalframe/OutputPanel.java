@@ -39,7 +39,7 @@ import org.anchoranalysis.io.generator.sequence.GeneratorSequenceIncrementalWrit
 import org.anchoranalysis.io.manifest.ManifestDescription;
 import org.anchoranalysis.io.namestyle.IndexableOutputNameStyle;
 import org.anchoranalysis.io.namestyle.IntegerSuffixOutputNameStyle;
-import org.anchoranalysis.io.output.bound.BoundOutputManagerRouteErrors;
+import org.anchoranalysis.io.output.bound.Outputter;
 import org.anchoranalysis.mpp.io.marks.ColoredMarksWithDisplayStack;
 import org.anchoranalysis.mpp.io.marks.MarksWithDisplayStack;
 import org.anchoranalysis.mpp.io.marks.generator.MarksGenerator;
@@ -50,7 +50,7 @@ public class OutputPanel {
 
     private JPanel panel;
 
-    private BoundOutputManagerRouteErrors outputManager;
+    private Outputter outputter;
 
     private GeneratorSequenceIncrementalRerouteErrors<ColoredMarksWithDisplayStack> sequenceWriter;
 
@@ -76,7 +76,7 @@ public class OutputPanel {
             sequenceWriter =
                     new GeneratorSequenceIncrementalRerouteErrors<>(
                             new GeneratorSequenceIncrementalWriter<>(
-                                    outputManager.getDelegate(),
+                                    outputter.getChecked(),
                                     outputNameStyle.getOutputName(),
                                     outputNameStyle,
                                     generator,
@@ -124,9 +124,9 @@ public class OutputPanel {
         this.errorReporter = errorReporter;
     }
 
-    public void init(ColorIndex colorIndex, BoundOutputManagerRouteErrors outputManager) {
+    public void init(ColorIndex colorIndex, Outputter outputter) {
         this.colorIndex = colorIndex;
-        this.outputManager = outputManager;
+        this.outputter = outputter;
     }
 
     public JPanel getPanel() {

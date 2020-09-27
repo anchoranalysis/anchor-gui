@@ -52,7 +52,7 @@ import org.anchoranalysis.image.object.ObjectCollection;
 import org.anchoranalysis.io.manifest.ManifestFolderDescription;
 import org.anchoranalysis.io.manifest.sequencetype.SetSequenceType;
 import org.anchoranalysis.io.output.bean.OutputWriteSettings;
-import org.anchoranalysis.io.output.bound.BoundOutputManagerRouteErrors;
+import org.anchoranalysis.io.output.bound.Outputter;
 import org.anchoranalysis.mpp.mark.MarkCollection;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
@@ -194,8 +194,8 @@ public class DropDownUtilities {
         }
     }
 
-    public static BoundOutputManagerRouteErrors createOutputManagerForSubfolder(
-            BoundOutputManagerRouteErrors parentOutputManager, String subFolderName)
+    public static Outputter createOutputterForSubdirectory(
+            Outputter parentOutputter, String subdirectoryName)
             throws InitException {
 
         ManifestFolderDescription mfd =
@@ -203,9 +203,9 @@ public class DropDownUtilities {
                         "interactiveOutput", "manifestInteractiveOutput", new SetSequenceType());
 
         // NB: As bindAsSubFolder can now return nulls, maybe some knock-on bugs are introduced here
-        return parentOutputManager
-                .getWriterAlwaysAllowed()
-                .createSubdirectory(subFolderName, mfd)
+        return parentOutputter
+                .writerPermissive()
+                .createSubdirectory(subdirectoryName, mfd)
                 .orElseThrow(() -> new InitException("Cannot create a sub-folder for output"));
     }
 

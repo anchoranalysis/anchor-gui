@@ -29,44 +29,19 @@ package org.anchoranalysis.gui.retrieveelements;
 import javax.swing.JFrame;
 import org.anchoranalysis.core.error.reporter.ErrorReporter;
 import org.anchoranalysis.io.generator.sequence.SequenceMemory;
-import org.anchoranalysis.io.output.bound.BoundOutputManagerRouteErrors;
+import org.anchoranalysis.io.output.bound.Outputter;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 
+@RequiredArgsConstructor
 public class ExportPopupParams {
-    private JFrame parentFrame;
-    private BoundOutputManagerRouteErrors outputManager;
-    private ErrorReporter errorReporter;
-    private SequenceMemory sequenceMemory;
 
-    public ExportPopupParams(ErrorReporter errorReporter) {
-        super();
-        this.errorReporter = errorReporter;
-    }
-
-    public JFrame getParentFrame() {
-        return parentFrame;
-    }
-
-    public void setParentFrame(JFrame parentFrame) {
-        this.parentFrame = parentFrame;
-    }
-
-    public BoundOutputManagerRouteErrors getOutputManager() {
-        return outputManager;
-    }
-
-    public void setOutputManager(BoundOutputManagerRouteErrors outputManager) {
-        this.outputManager = outputManager;
-    }
-
-    public SequenceMemory getSequenceMemory() {
-        return sequenceMemory;
-    }
-
-    public void setSequenceMemory(SequenceMemory sequenceMemory) {
-        this.sequenceMemory = sequenceMemory;
-    }
-
-    public ErrorReporter getErrorReporter() {
-        return errorReporter;
-    }
+    // START REQUIRED ARGUMENTS
+    @Getter private final ErrorReporter errorReporter;
+    // END REQUIRED ARGUMENTS
+    
+    @Getter @Setter private JFrame parentFrame;
+    @Getter @Setter private Outputter outputter;
+    @Getter @Setter private SequenceMemory sequenceMemory;
 }

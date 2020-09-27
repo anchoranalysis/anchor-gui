@@ -120,7 +120,7 @@ public class InteractiveBrowser {
 
     private FileOpenManager createFileOpenManager(SubgrouppedAdder globalSubgroupAdder) {
         return new FileOpenManager(
-                globalSubgroupAdder, videoStatsFrame, context.getOutputManager());
+                globalSubgroupAdder, videoStatsFrame, context.getOutputter());
     }
 
     private void initMarkEvaluatorManager(InteractiveBrowserInput interactiveBrowserInput) {
@@ -228,8 +228,8 @@ public class InteractiveBrowser {
     private ExportPopupParams createExportPopupParams() {
         SequenceMemory sequenceMemory = new SequenceMemory();
         ExportPopupParams popUpParams = new ExportPopupParams(context.getErrorReporter());
-        assert (context.getOutputManager() != null);
-        popUpParams.setOutputManager(context.getOutputManager());
+        assert (context.getOutputter() != null);
+        popUpParams.setOutputter(context.getOutputter());
         popUpParams.setParentFrame(videoStatsFrame);
         popUpParams.setSequenceMemory(sequenceMemory);
         return popUpParams;

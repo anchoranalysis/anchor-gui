@@ -87,7 +87,7 @@ public class RetrieveElementsOverlayCollection extends RetrieveElements {
                 new CollectionGenerator<>(
                         "selectedMarksObjects",
                         generatorMark,
-                        popUp.getOutputManager().getDelegate(),
+                        popUp.getOutputter().getChecked(),
                         3,
                         true);
         popUp.addExportItem(

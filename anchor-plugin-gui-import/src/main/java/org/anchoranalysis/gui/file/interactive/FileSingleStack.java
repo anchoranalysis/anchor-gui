@@ -44,7 +44,7 @@ import org.anchoranalysis.gui.videostats.dropdown.AddVideoStatsModule;
 import org.anchoranalysis.gui.videostats.dropdown.multicollection.MultiCollectionDropDown;
 import org.anchoranalysis.image.io.input.ProvidesStackInput;
 import org.anchoranalysis.image.stack.TimeSequence;
-import org.anchoranalysis.io.output.bound.BoundOutputManagerRouteErrors;
+import org.anchoranalysis.io.output.bound.Outputter;
 
 public class FileSingleStack extends InteractiveFile {
 
@@ -74,7 +74,7 @@ public class FileSingleStack extends InteractiveFile {
 
     @Override
     public OpenedFile open(
-            AddVideoStatsModule globalSubgroupAdder, BoundOutputManagerRouteErrors outputManager)
+            AddVideoStatsModule globalSubgroupAdder, Outputter outputter)
             throws OperationFailedException {
 
         MultiCollectionDropDown dropDown =
@@ -88,7 +88,7 @@ public class FileSingleStack extends InteractiveFile {
                         true);
 
         try {
-            dropDown.init(globalSubgroupAdder, outputManager, params);
+            dropDown.init(globalSubgroupAdder, outputter, params);
         } catch (InitException e) {
             throw new OperationFailedException(e);
         }

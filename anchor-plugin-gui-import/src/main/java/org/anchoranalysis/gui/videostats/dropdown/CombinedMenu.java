@@ -40,7 +40,7 @@ import org.anchoranalysis.gui.videostats.dropdown.contextualmodulecreator.Contex
 import org.anchoranalysis.gui.videostats.dropdown.contextualmodulecreator.SingleContextualModuleCreator;
 import org.anchoranalysis.gui.videostats.operation.VideoStatsOperationFromExportTask;
 import org.anchoranalysis.gui.videostats.operation.VideoStatsOperationMenu;
-import org.anchoranalysis.io.output.bound.BoundOutputManagerRouteErrors;
+import org.anchoranalysis.io.output.bound.Outputter;
 
 public class CombinedMenu {
 
@@ -79,7 +79,7 @@ public class CombinedMenu {
                 finderSecond,
                 context.getFinderStacks(),
                 context.getMpg().getExportTaskList(),
-                context.getOutputManager(),
+                context.getOutputter(),
                 context.getParentFrame(),
                 context.getMpg().getLogger().errorReporter());
     }
@@ -94,7 +94,7 @@ public class CombinedMenu {
             final FinderMarksWithEnergy finderSecond,
             FinderStacks finderStacks,
             ExportTaskList exportTaskList,
-            BoundOutputManagerRouteErrors outputManager,
+            Outputter outputter,
             JFrame parentFrame,
             ErrorReporter errorReporter) {
         VideoStatsOperationMenu exportSubMenu = menu.createSubMenu(name + ": export ", true);
@@ -103,12 +103,12 @@ public class CombinedMenu {
         exportTaskParams.addFinderMarksHistory(finderFirst);
         exportTaskParams.addFinderMarksHistory(finderSecond);
         exportTaskParams.setFinderStacks(finderStacks);
-        exportTaskParams.setOutputManager(outputManager);
+        exportTaskParams.setOutputter(outputter);
 
         // TODO, HACK, as the RGB creator requires this
         try {
             exportTaskParams.setColorIndexMarks(
-                    outputManager.getOutputWriteSettings().defaultColorIndexFor(3));
+                    outputter.getSettings().defaultColorIndexFor(3));
         } catch (OperationFailedException e) {
             errorReporter.recordError(CombinedMenu.class, e);
         }

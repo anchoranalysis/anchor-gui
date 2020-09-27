@@ -42,7 +42,7 @@ import org.anchoranalysis.gui.videostats.dropdown.common.EnergyBackground;
 import org.anchoranalysis.gui.videostats.modulecreator.VideoStatsModuleCreator;
 import org.anchoranalysis.gui.videostats.operation.VideoStatsOperationFromCreatorAndAdder;
 import org.anchoranalysis.io.output.bean.OutputWriteSettings;
-import org.anchoranalysis.io.output.bound.BoundOutputManagerRouteErrors;
+import org.anchoranalysis.io.output.bound.Outputter;
 
 public class AnnotationDropDown {
 
@@ -62,10 +62,10 @@ public class AnnotationDropDown {
 
     public void init(
             AddVideoStatsModule adder,
-            BoundOutputManagerRouteErrors outputManager,
+            Outputter outputter,
             VideoStatsModuleGlobalParams mpg) {
 
-        addAnnotation(adder, outputManager.getOutputWriteSettings(), mpg);
+        addAnnotation(adder, outputter.getSettings(), mpg);
 
         // Add Channel Viewer
         addChannelViewer(adder, mpg);

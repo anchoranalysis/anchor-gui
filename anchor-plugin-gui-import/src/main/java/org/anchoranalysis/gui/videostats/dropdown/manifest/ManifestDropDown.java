@@ -69,7 +69,7 @@ import org.anchoranalysis.image.stack.NamedStacksSupplier;
 import org.anchoranalysis.image.stack.wrap.WrapStackAsTimeSequence;
 import org.anchoranalysis.io.manifest.deserializer.folder.LoadContainer;
 import org.anchoranalysis.io.manifest.finder.FinderSerializedObject;
-import org.anchoranalysis.io.output.bound.BoundOutputManagerRouteErrors;
+import org.anchoranalysis.io.output.bound.Outputter;
 import org.anchoranalysis.mpp.feature.energy.IndexableMarksWithEnergy;
 import org.anchoranalysis.mpp.feature.energy.marks.MarksWithEnergyBreakdown;
 import org.anchoranalysis.mpp.feature.energy.marks.VoxelizedMarksWithEnergy;
@@ -228,7 +228,7 @@ public class ManifestDropDown {
             AddVideoStatsModule adder,
             RasterReader rasterReader,
             MarkEvaluatorManager markEvaluatorManager,
-            BoundOutputManagerRouteErrors outputManager,
+            Outputter outputter,
             VideoStatsModuleGlobalParams mpg)
             throws InitException {
 
@@ -255,15 +255,15 @@ public class ManifestDropDown {
         addKernelHistoryNavigator(
                 finderKernelIterDescription, finderKernelProposer, backgroundEnergy, mpg);
 
-        outputManager =
-                DropDownUtilities.createOutputManagerForSubfolder(
-                        outputManager, delegate.getName());
+        outputter =
+                DropDownUtilities.createOutputterForSubdirectory(
+                        outputter, delegate.getName());
 
         // Proposer Evaluators
         MarkEvaluatorSetForImage markEvaluatorSet =
                 createMarkEvaluatorSet(markEvaluatorManager, finderStacks, finderGroupParams);
         addProposerEvaluator(
-                finderStacks, finderEnergyStack, markEvaluatorSet, outputManager, adder, mpg);
+                finderStacks, finderEnergyStack, markEvaluatorSet, outputter, adder, mpg);
 
         delegate.getRootMenu().addSeparator();
 
@@ -272,7 +272,7 @@ public class ManifestDropDown {
                 finderStacks,
                 backgroundEnergy,
                 finderKernelProposer,
-                outputManager,
+                outputter,
                 adder,
                 mpg);
     }
@@ -282,7 +282,7 @@ public class ManifestDropDown {
             FinderStacksCombine finderStacks,
             OperationCreateBackgroundSetWithAdder backgroundEnergy,
             FinderSerializedObject<KernelProposer<VoxelizedMarksWithEnergy>> finderKernelProposer,
-            BoundOutputManagerRouteErrors outputManager,
+            Outputter outputter,
             AddVideoStatsModule adder,
             VideoStatsModuleGlobalParams mpg) {
         try {
@@ -291,7 +291,7 @@ public class ManifestDropDown {
                             finderStacks,
                             finderKernelProposer,
                             adder.getParentFrame(),
-                            outputManager,
+                            outputter,
                             mpg);
 
             AddSets addSets = new AddSets(delegate, backgroundEnergy, context);
@@ -307,7 +307,7 @@ public class ManifestDropDown {
             FinderStacksCombine finderStacks,
             FinderEnergyStack finderEnergyStack,
             MarkEvaluatorSetForImage markEvaluatorSet,
-            BoundOutputManagerRouteErrors outputManager,
+            Outputter outputter,
             AddVideoStatsModule adder,
             VideoStatsModuleGlobalParams mpg) {
         OperationCreateBackgroundSetWithAdder operationBwsa =
@@ -326,7 +326,7 @@ public class ManifestDropDown {
                 operationBwsa.operationAdder(),
                 operationBwsa.energyBackground().getBackground().getBackgroundSet(),
                 markEvaluatorSet,
-                outputManager.getOutputWriteSettings(),
+                outputter.getSettings(),
                 true,
                 mpg);
     }

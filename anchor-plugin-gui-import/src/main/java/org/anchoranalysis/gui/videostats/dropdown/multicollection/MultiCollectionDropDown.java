@@ -49,7 +49,7 @@ import org.anchoranalysis.gui.videostats.dropdown.common.EnergyBackground;
 import org.anchoranalysis.gui.videostats.dropdown.common.GuessEnergyFromStacks;
 import org.anchoranalysis.image.object.ObjectCollection;
 import org.anchoranalysis.image.stack.wrap.WrapTimeSequenceAsStack;
-import org.anchoranalysis.io.output.bound.BoundOutputManagerRouteErrors;
+import org.anchoranalysis.io.output.bound.Outputter;
 import org.anchoranalysis.mpp.mark.MarkCollection;
 
 public class MultiCollectionDropDown {
@@ -80,7 +80,7 @@ public class MultiCollectionDropDown {
 
     public void init(
             final AddVideoStatsModule adder,
-            BoundOutputManagerRouteErrors outputManager,
+            Outputter outputter,
             MarkCreatorParams params)
             throws InitException {
 
@@ -127,7 +127,7 @@ public class MultiCollectionDropDown {
                     params.getMarkEvaluatorManager(),
                     operationBwsa,
                     params.getModuleParams(),
-                    outputManager);
+                    outputter);
         }
     }
 
@@ -135,12 +135,12 @@ public class MultiCollectionDropDown {
             MarkEvaluatorManager markEvaluatorManager,
             OperationCreateBackgroundSetWithAdder operationBwsa,
             VideoStatsModuleGlobalParams mpg,
-            BoundOutputManagerRouteErrors outputManager)
+            Outputter outputter)
             throws InitException {
 
-        BoundOutputManagerRouteErrors outputManagerSub =
-                DropDownUtilities.createOutputManagerForSubfolder(
-                        outputManager, delegate.getName());
+        Outputter outputterSubdirectory =
+                DropDownUtilities.createOutputterForSubdirectory(
+                        outputter, delegate.getName());
 
         try {
             MarkEvaluatorSetForImage markEvaluatorSet =
@@ -157,7 +157,7 @@ public class MultiCollectionDropDown {
                         operationBwsa.operationAdder(),
                         operationBwsa.energyBackground().getBackground().getBackgroundSet(),
                         markEvaluatorSet,
-                        outputManagerSub.getOutputWriteSettings(),
+                        outputterSubdirectory.getSettings(),
                         true,
                         mpg);
             }

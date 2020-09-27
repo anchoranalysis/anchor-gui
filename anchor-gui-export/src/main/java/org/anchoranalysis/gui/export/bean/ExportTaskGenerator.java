@@ -62,8 +62,8 @@ public class ExportTaskGenerator<T> implements ExportTask {
         }
 
         int numberWritten =
-                params.getOutputManager()
-                        .getWriterCheckIfAllowed()
+                params.getOutputter()
+                        .writerSelective()
                         .write(outputNameStyle, () -> generator, Integer.toString(index) );
         sequenceMemory.updateIndex(outputNameStyle.getOutputName(), index + numberWritten);
 

@@ -56,7 +56,7 @@ import org.anchoranalysis.gui.videostats.dropdown.modulecreator.graph.PlotEnergy
 import org.anchoranalysis.gui.videostats.operation.VideoStatsOperationFromExportTask;
 import org.anchoranalysis.gui.videostats.operation.VideoStatsOperationMenu;
 import org.anchoranalysis.io.manifest.finder.FinderSerializedObject;
-import org.anchoranalysis.io.output.bound.BoundOutputManagerRouteErrors;
+import org.anchoranalysis.io.output.bound.Outputter;
 import org.anchoranalysis.mpp.feature.energy.IndexableMarksWithEnergy;
 import org.anchoranalysis.mpp.feature.energy.marks.VoxelizedMarksWithEnergy;
 import org.anchoranalysis.mpp.segment.bean.kernel.proposer.KernelProposer;
@@ -139,7 +139,7 @@ public class MarksHistoryMenu {
                 finderCSVStats,
                 context.getMpg().getDefaultColorIndexForMarks(),
                 context.getMpg().getExportTaskList(),
-                context.getOutputManager(),
+                context.getOutputter(),
                 context.getParentFrame(),
                 context.getMpg().getLogger().errorReporter());
     }
@@ -152,7 +152,7 @@ public class MarksHistoryMenu {
             FinderCSVStats finderCSVStats,
             ColorIndex colorIndex,
             ExportTaskList exportTaskList,
-            BoundOutputManagerRouteErrors outputManager,
+            Outputter outputter,
             JFrame parentFrame,
             ErrorReporter errorReporter) {
         VideoStatsOperationMenu exportSubMenu = menu.createSubMenu("Export", true);
@@ -164,7 +164,7 @@ public class MarksHistoryMenu {
         exportTaskParams.setFinderCsvStatistics(finderCSVStats);
         exportTaskParams.addFinderMarksHistory(finderSecondaryHistory);
         exportTaskParams.addFinderMarksHistory(finderTertiaryHistory);
-        exportTaskParams.setOutputManager(outputManager);
+        exportTaskParams.setOutputter(outputter);
 
         for (ExportTaskBean exportTask : exportTaskList) {
 

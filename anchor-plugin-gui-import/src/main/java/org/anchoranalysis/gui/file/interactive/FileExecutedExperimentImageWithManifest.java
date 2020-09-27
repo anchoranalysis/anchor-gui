@@ -37,7 +37,7 @@ import org.anchoranalysis.gui.file.opened.OpenedFileGUI;
 import org.anchoranalysis.gui.videostats.dropdown.AddVideoStatsModule;
 import org.anchoranalysis.gui.videostats.dropdown.manifest.ManifestDropDown;
 import org.anchoranalysis.image.io.bean.rasterreader.RasterReader;
-import org.anchoranalysis.io.output.bound.BoundOutputManagerRouteErrors;
+import org.anchoranalysis.io.output.bound.Outputter;
 import org.anchoranalysis.plugin.io.manifest.CoupledManifests;
 
 // A file representing the results applied to an image within an executed experiment
@@ -60,7 +60,7 @@ public class FileExecutedExperimentImageWithManifest extends InteractiveFile {
 
     @Override
     public OpenedFile open(
-            final AddVideoStatsModule adder, final BoundOutputManagerRouteErrors outputManager)
+            final AddVideoStatsModule adder, final Outputter outputter)
             throws OperationFailedException {
 
         manifestDropDown =
@@ -71,7 +71,7 @@ public class FileExecutedExperimentImageWithManifest extends InteractiveFile {
                     adder,
                     rasterReader,
                     markCreatorParams.getMarkEvaluatorManager(),
-                    outputManager,
+                    outputter,
                     markCreatorParams.getModuleParams());
         } catch (InitException e) {
             throw new OperationFailedException(e);
