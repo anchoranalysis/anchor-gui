@@ -32,13 +32,12 @@ import org.anchoranalysis.io.generator.SingleFileTypeGeneratorBridge;
 
 /**
  * A generator that gets an element from a supplier.
- * 
- * @author Owen Feehan
  *
+ * @author Owen Feehan
  * @param <S> generator-type
  * @param <T> type that is supplied
  */
-class SupplierGenerator<S, T> extends SingleFileTypeGeneratorBridge<S,Supplier<T>,T> {
+class SupplierGenerator<S, T> extends SingleFileTypeGeneratorBridge<S, Supplier<T>, T> {
 
     public SupplierGenerator(SingleFileTypeGenerator<T, S> generator) {
         super(generator, Supplier::get);

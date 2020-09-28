@@ -62,7 +62,8 @@ public class RetrieveElementsImage extends RetrieveElements {
         }
 
         if (stack.dimensions().z() > 1) {
-            FlattenStackGenerator generatorMIP = new FlattenStackGenerator(true, "selectedStackMIP");
+            FlattenStackGenerator generatorMIP =
+                    new FlattenStackGenerator(true, "selectedStackMIP");
 
             SupplierGenerator<Stack, Stack> generator = new SupplierGenerator<>(generatorMIP);
             popUp.addExportItem(

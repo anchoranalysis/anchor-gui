@@ -34,8 +34,8 @@ import org.anchoranalysis.plugin.gui.bean.exporttask.MappedFrom;
 
 public abstract class GeneratorFactory<T> extends AnchorBean<GeneratorFactory<T>> {
 
-    public abstract RasterGenerator<MappedFrom<T>> createGenerator(
-            ExportTaskParams params) throws CreateException;
+    public abstract RasterGenerator<MappedFrom<T>> createGenerator(ExportTaskParams params)
+            throws CreateException;
 
     public abstract boolean hasNecessaryParams(ExportTaskParams params);
 }

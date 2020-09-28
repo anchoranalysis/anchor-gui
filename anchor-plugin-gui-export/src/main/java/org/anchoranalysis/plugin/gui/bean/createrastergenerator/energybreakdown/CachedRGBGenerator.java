@@ -48,7 +48,7 @@ class CachedRGBGenerator extends CacheableOverlaysToRGBGenerator {
 
     /** Options that determine how the raster is written. */
     private final RasterWriteOptions rasterOptions;
-    
+
     private final ErrorReporter errorReporter;
     // END BEAN PROPERTIES
 
@@ -116,7 +116,9 @@ class CachedRGBGenerator extends CacheableOverlaysToRGBGenerator {
     }
 
     @Override
-    public String getFileExtension(OutputWriteSettings outputWriteSettings) throws OperationFailedException {
-        return RasterWriterUtilities.fileExtensionForDefaultRasterWriter(outputWriteSettings, rasterOptions);
+    public String getFileExtension(OutputWriteSettings outputWriteSettings)
+            throws OperationFailedException {
+        return RasterWriterUtilities.fileExtensionForDefaultRasterWriter(
+                outputWriteSettings, rasterOptions);
     }
 }

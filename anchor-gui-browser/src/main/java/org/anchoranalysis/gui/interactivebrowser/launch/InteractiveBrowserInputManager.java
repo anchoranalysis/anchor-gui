@@ -75,7 +75,7 @@ public class InteractiveBrowserInputManager extends InputManager<InteractiveBrow
     // END BEAN PROPERTIES
 
     @Override
-    public List<InteractiveBrowserInput> inputObjects(InputManagerParams params)
+    public List<InteractiveBrowserInput> inputs(InputManagerParams params)
             throws AnchorIOException {
 
         InteractiveBrowserInput ibi = new InteractiveBrowserInput();

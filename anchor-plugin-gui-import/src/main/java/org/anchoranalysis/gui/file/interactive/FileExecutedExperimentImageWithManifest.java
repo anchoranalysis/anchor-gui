@@ -59,8 +59,7 @@ public class FileExecutedExperimentImageWithManifest extends InteractiveFile {
     }
 
     @Override
-    public OpenedFile open(
-            final AddVideoStatsModule adder, final Outputter outputter)
+    public OpenedFile open(final AddVideoStatsModule adder, final Outputter outputter)
             throws OperationFailedException {
 
         manifestDropDown =

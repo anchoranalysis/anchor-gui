@@ -41,33 +41,36 @@ class MeanInterpolator {
 
     /** To avoid repeatedly recreating on the heap */
     private final RunningSum runningSum = new RunningSum();
-    
+
     public MeanInterpolator(double zoomFactor) {
         double zoomFactorInv = 1 / zoomFactor;
         int size = (int) Math.round(zoomFactorInv);
 
-        sizeToInterpolate = new Extent(size,size);
+        sizeToInterpolate = new Extent(size, size);
     }
 
     /**
      * Finds the mean of voxels at a particular point plus a certain extent.
-     * 
+     *
      * @param cornerPoint
      * @param buffer
      * @param extent
      * @return
      * @throws OperationFailedException
      */
-    public double interpolateVoxelsAt(Point2i cornerPoint, UnsignedBufferAsInt buffer, Extent extent)
+    public double interpolateVoxelsAt(
+            Point2i cornerPoint, UnsignedBufferAsInt buffer, Extent extent)
             throws OperationFailedException {
 
         runningSum.reset();
-        
-        sizeToInterpolate.iterateOverXYWithShift(cornerPoint, point -> {
-            if (extent.contains(point)) {
-                runningSum.increment( buffer.getUnsigned(extent.offset(point)) );
-            }
-        });
+
+        sizeToInterpolate.iterateOverXYWithShift(
+                cornerPoint,
+                point -> {
+                    if (extent.contains(point)) {
+                        runningSum.increment(buffer.getUnsigned(extent.offset(point)));
+                    }
+                });
 
         if (runningSum.getCount() == 0) {
             throw new OperationFailedException(EXC_ZERO_CNT);

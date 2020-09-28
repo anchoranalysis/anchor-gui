@@ -42,7 +42,7 @@ public abstract class PlotGeneratorBase<T, S> extends GeneratorFactory<S> {
     // START BEAN PARAMETERS
     @BeanField @Getter @Setter private Plot<T> graphDefinition;
 
-    @BeanField @Getter @Setter private SizeXY size = new SizeXY(1024,768);
+    @BeanField @Getter @Setter private SizeXY size = new SizeXY(1024, 768);
     // END BEAN PARAMETERS
 
     protected RasterGenerator<PlotInstance> createPlotGenerator() {
@@ -50,15 +50,14 @@ public abstract class PlotGeneratorBase<T, S> extends GeneratorFactory<S> {
     }
 
     @Override
-    public abstract RasterGenerator<MappedFrom<S>> createGenerator(
-            ExportTaskParams params) throws CreateException;
+    public abstract RasterGenerator<MappedFrom<S>> createGenerator(ExportTaskParams params)
+            throws CreateException;
 
     @Override
     public abstract boolean hasNecessaryParams(ExportTaskParams params);
 
     @Override
     public String describeBean() {
-        return String.format(
-                "graph=%s, size=%s", graphDefinition.getTitle(), size);
+        return String.format("graph=%s, size=%s", graphDefinition.getTitle(), size);
     }
 }

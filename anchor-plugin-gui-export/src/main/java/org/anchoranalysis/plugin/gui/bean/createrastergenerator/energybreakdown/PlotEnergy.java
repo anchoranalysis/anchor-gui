@@ -46,19 +46,14 @@ public class PlotEnergy extends PlotGeneratorBase<EnergyGraphItem, IndexableMark
 
         RasterGenerator<PlotInstance> generator = createPlotGenerator();
 
-        return new RasterGeneratorBridge<>(
-                createBridge(generator, params), MappedFrom::getObject);
+        return new RasterGeneratorBridge<>(createBridge(generator, params), MappedFrom::getObject);
     }
 
-    private RasterGeneratorBridge<IndexableMarksWithEnergy, ClickablePlotInstance>
-            createBridge(
-                    RasterGenerator<PlotInstance> generator,
-                    ExportTaskParams params) {
+    private RasterGeneratorBridge<IndexableMarksWithEnergy, ClickablePlotInstance> createBridge(
+            RasterGenerator<PlotInstance> generator, ExportTaskParams params) {
         // Presents a generator for a GraphInstance as a generator for ClickableGraphInstance
-        RasterGeneratorBridge<ClickablePlotInstance, PlotInstance>
-                clickableGenerator =
-                        new RasterGeneratorBridge<>(
-                                generator, ClickablePlotInstance::getGraphInstance);
+        RasterGeneratorBridge<ClickablePlotInstance, PlotInstance> clickableGenerator =
+                new RasterGeneratorBridge<>(generator, ClickablePlotInstance::getGraphInstance);
 
         // Presents a generator for a ClickableGraphInstance as a generator for Stack
         return new RasterGeneratorBridge<>(

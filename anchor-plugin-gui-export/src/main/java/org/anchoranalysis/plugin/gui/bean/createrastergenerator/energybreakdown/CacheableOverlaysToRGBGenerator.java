@@ -35,7 +35,9 @@ import org.anchoranalysis.io.manifest.ManifestDescription;
 import org.anchoranalysis.io.output.error.OutputWriteFailedException;
 import org.anchoranalysis.overlay.writer.DrawOverlay;
 
-public abstract class CacheableOverlaysToRGBGenerator extends SingleFileTypeGenerator<OverlayedDisplayStackUpdate,DisplayStack> implements Redrawable {
+public abstract class CacheableOverlaysToRGBGenerator
+        extends SingleFileTypeGenerator<OverlayedDisplayStackUpdate, DisplayStack>
+        implements Redrawable {
 
     // THIS MUST BE CALLED before we do any drawing.
     public abstract void updateDrawer(DrawOverlay drawOverlay);

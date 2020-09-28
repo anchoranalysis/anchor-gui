@@ -61,7 +61,7 @@ import org.anchoranalysis.plugin.gui.bean.createrastergenerator.GeneratorFactory
 import org.anchoranalysis.plugin.gui.bean.exporttask.MappedFrom;
 
 public class DrawObjects extends GeneratorFactory<IndexableMarksWithEnergy> {
-    
+
     // END BEAN PROPERTIES
     @BeanField @Getter @Setter private DrawObject drawObject;
 
@@ -92,7 +92,10 @@ public class DrawObjects extends GeneratorFactory<IndexableMarksWithEnergy> {
             CachedRGB cachedRGB = new CachedRGB(new IDGetterOverlayID());
 
             CachedRGBGenerator ccGenerator =
-                    new CachedRGBGenerator(cachedRGB, createRasterOptions(), params.getOutputter().getErrorReporter());
+                    new CachedRGBGenerator(
+                            cachedRGB,
+                            createRasterOptions(),
+                            params.getOutputter().getErrorReporter());
 
             ccGenerator.updateDrawer(new SimpleOverlayWriter(drawObject));
 
@@ -120,7 +123,7 @@ public class DrawObjects extends GeneratorFactory<IndexableMarksWithEnergy> {
             return new MarkCollection();
         }
     }
-    
+
     private RasterWriteOptions createRasterOptions() {
         return RasterWriteOptions.alwaysOneOrThreeChannels(mip);
     }

@@ -119,8 +119,7 @@ public class InteractiveBrowser {
     }
 
     private FileOpenManager createFileOpenManager(SubgrouppedAdder globalSubgroupAdder) {
-        return new FileOpenManager(
-                globalSubgroupAdder, videoStatsFrame, context.getOutputter());
+        return new FileOpenManager(globalSubgroupAdder, videoStatsFrame, context.getOutputter());
     }
 
     private void initMarkEvaluatorManager(InteractiveBrowserInput interactiveBrowserInput) {

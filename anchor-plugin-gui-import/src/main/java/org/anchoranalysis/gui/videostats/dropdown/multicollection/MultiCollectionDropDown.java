@@ -78,10 +78,7 @@ public class MultiCollectionDropDown {
         this.objCollection = objCollection;
     }
 
-    public void init(
-            final AddVideoStatsModule adder,
-            Outputter outputter,
-            MarkCreatorParams params)
+    public void init(final AddVideoStatsModule adder, Outputter outputter, MarkCreatorParams params)
             throws InitException {
 
         OperationCreateBackgroundSetWithAdder operationBwsa =
@@ -139,8 +136,7 @@ public class MultiCollectionDropDown {
             throws InitException {
 
         Outputter outputterSubdirectory =
-                DropDownUtilities.createOutputterForSubdirectory(
-                        outputter, delegate.getName());
+                DropDownUtilities.createOutputterForSubdirectory(outputter, delegate.getName());
 
         try {
             MarkEvaluatorSetForImage markEvaluatorSet =

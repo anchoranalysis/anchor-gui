@@ -47,7 +47,7 @@ public class BoundOverlayedDisplayStack {
     public BoundOverlayedDisplayStack(Stack background) throws CreateException {
         this.background = DisplayStack.create(background);
     }
-    
+
     public BoundOverlayedDisplayStack(DisplayStack background) {
         super();
         this.background = background;
@@ -99,9 +99,9 @@ public class BoundOverlayedDisplayStack {
     public DisplayStack getBackground() {
         return background;
     }
-    
 
     private RegionExtracter createRegionExtracterFromDisplayStack() {
-        return new RegionExtracterFromDisplayStack(background.getConverters(), background.getStack());
+        return new RegionExtracterFromDisplayStack(
+                background.getConverters(), background.getStack());
     }
 }

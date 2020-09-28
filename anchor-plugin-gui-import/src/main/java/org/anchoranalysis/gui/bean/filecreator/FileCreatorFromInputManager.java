@@ -54,7 +54,7 @@ public abstract class FileCreatorFromInputManager<T extends InputFromManager>
         try {
 
             List<? extends T> list =
-                    input.inputObjects(
+                    input.inputs(
                             new InputManagerParams(
                                     params.createInputContext(),
                                     progressReporter,

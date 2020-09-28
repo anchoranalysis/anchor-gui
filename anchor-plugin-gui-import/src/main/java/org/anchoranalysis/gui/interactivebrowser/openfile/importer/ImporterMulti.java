@@ -36,8 +36,8 @@ import org.anchoranalysis.mpp.io.input.MultiInput;
 
 /**
  * TODO this class no longer supports MultiInputManagerQuick, fix to support it again
- * @author Owen Feehan
  *
+ * @author Owen Feehan
  */
 public class ImporterMulti extends ImporterFromBean {
 

@@ -44,8 +44,7 @@ public abstract class InteractiveFile implements Comparable<InteractiveFile> {
     public abstract String type();
 
     public abstract OpenedFile open(
-            final AddVideoStatsModule globalSubgroupAdder,
-            final Outputter outputter)
+            final AddVideoStatsModule globalSubgroupAdder, final Outputter outputter)
             throws OperationFailedException;
 
     @Override

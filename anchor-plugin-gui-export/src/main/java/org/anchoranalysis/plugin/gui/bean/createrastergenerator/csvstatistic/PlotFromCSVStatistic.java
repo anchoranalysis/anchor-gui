@@ -44,8 +44,8 @@ public class PlotFromCSVStatistic<T> extends PlotGeneratorBase<T, CSVStatistic> 
     private final CheckedFunction<CSVStatistic, T, CreateException> elementBridge;
 
     @Override
-    public RasterGenerator<MappedFrom<CSVStatistic>> createGenerator(
-            final ExportTaskParams params) throws CreateException {
+    public RasterGenerator<MappedFrom<CSVStatistic>> createGenerator(final ExportTaskParams params)
+            throws CreateException {
 
         assert (getGraphDefinition() != null);
 

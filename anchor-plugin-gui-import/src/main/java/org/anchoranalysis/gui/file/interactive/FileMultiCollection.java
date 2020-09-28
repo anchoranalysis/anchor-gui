@@ -73,8 +73,7 @@ public class FileMultiCollection extends InteractiveFile {
     }
 
     @Override
-    public OpenedFile open(
-            AddVideoStatsModule globalSubgroupAdder, Outputter outputter)
+    public OpenedFile open(AddVideoStatsModule globalSubgroupAdder, Outputter outputter)
             throws OperationFailedException {
 
         LazyEvaluationStore<TimeSequence> stacks = new LazyEvaluationStore<>("stacks");

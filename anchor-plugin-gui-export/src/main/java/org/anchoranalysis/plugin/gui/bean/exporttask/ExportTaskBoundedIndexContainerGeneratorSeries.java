@@ -163,6 +163,7 @@ public class ExportTaskBoundedIndexContainerGeneratorSeries<T>
             int indexOut)
             throws OutputWriteFailedException, GetOperationFailedException {
         int index = container.previousEqualIndex(indexIn);
-        generatorSequenceWriter.add(new MappedFrom<>(indexIn, container.get(index)), String.valueOf(indexOut));
+        generatorSequenceWriter.add(
+                new MappedFrom<>(indexIn, container.get(index)), String.valueOf(indexOut));
     }
 }

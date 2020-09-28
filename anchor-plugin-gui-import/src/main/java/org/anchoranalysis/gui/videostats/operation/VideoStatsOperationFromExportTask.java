@@ -32,8 +32,8 @@ import javax.swing.JFrame;
 import org.anchoranalysis.core.error.reporter.ErrorReporter;
 import org.anchoranalysis.gui.export.bean.ExportTask;
 import org.anchoranalysis.gui.export.bean.ExportTaskActionAsThread;
-import org.anchoranalysis.gui.export.bean.ExportTaskParams;
 import org.anchoranalysis.gui.export.bean.ExportTaskActionAsThread.ExportTaskCommand;
+import org.anchoranalysis.gui.export.bean.ExportTaskParams;
 import org.anchoranalysis.gui.videostats.operation.combine.VideoStatsOperationCombine;
 
 public class VideoStatsOperationFromExportTask implements VideoStatsOperation {

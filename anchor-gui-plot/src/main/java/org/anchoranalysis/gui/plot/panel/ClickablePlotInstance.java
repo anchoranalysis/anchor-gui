@@ -125,7 +125,9 @@ public class ClickablePlotInstance {
 
         final XAxisClickListener clickListener = new XAxisClickListener(minIndex, maxIndex);
         setPanelMouseClickListener(clickListener);
-        setSelectFrameSendable( (Integer frameIndex, boolean adjusting) -> graphInstance.getChart().getXYPlot().setDomainCrosshairValue(frameIndex) ); 
+        setSelectFrameSendable(
+                (Integer frameIndex, boolean adjusting) ->
+                        graphInstance.getChart().getXYPlot().setDomainCrosshairValue(frameIndex));
         setSelectFrameReceivable(clickListener);
     }
 

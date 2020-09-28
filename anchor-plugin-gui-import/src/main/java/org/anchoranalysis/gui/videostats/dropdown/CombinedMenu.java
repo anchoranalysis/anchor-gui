@@ -107,8 +107,7 @@ public class CombinedMenu {
 
         // TODO, HACK, as the RGB creator requires this
         try {
-            exportTaskParams.setColorIndexMarks(
-                    outputter.getSettings().defaultColorIndexFor(3));
+            exportTaskParams.setColorIndexMarks(outputter.getSettings().defaultColorIndexFor(3));
         } catch (OperationFailedException e) {
             errorReporter.recordError(CombinedMenu.class, e);
         }

@@ -140,7 +140,7 @@ public class AnnotationListInternalFrame {
             throws OperationFailedException {
         try {
             Collection<AnnotationWithStrategy<T>> inputObjects =
-                    inputManager.inputObjects(
+                    inputManager.inputs(
                             new InputManagerParams(
                                     params.getModuleParams().createInputContext(),
                                     progressReporter,

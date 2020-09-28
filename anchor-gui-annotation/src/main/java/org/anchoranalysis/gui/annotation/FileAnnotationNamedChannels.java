@@ -95,8 +95,7 @@ public class FileAnnotationNamedChannels extends InteractiveFile {
     }
 
     @Override
-    public OpenedFile open(
-            AddVideoStatsModule globalSubgroupAdder, Outputter outputter)
+    public OpenedFile open(AddVideoStatsModule globalSubgroupAdder, Outputter outputter)
             throws OperationFailedException {
 
         AnnotationRefresher refresherResetCache =

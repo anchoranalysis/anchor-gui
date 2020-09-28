@@ -90,7 +90,6 @@ public class ThreadedIndexedDisplayStackSetter implements BackgroundSetter, Thre
     private CheckedFunction<Integer, DisplayUpdate, BackgroundStackContainerException> ensure8bit(
             CheckedFunction<Integer, DisplayStack, ? extends Throwable> cntr) {
         return new NoOverlayBridgeFromGenerator(
-                new RasterGeneratorBridge<>(
-                        stackGenerator, new EnsureUnsigned8Bit<>(cntr)));
+                new RasterGeneratorBridge<>(stackGenerator, new EnsureUnsigned8Bit<>(cntr)));
     }
 }

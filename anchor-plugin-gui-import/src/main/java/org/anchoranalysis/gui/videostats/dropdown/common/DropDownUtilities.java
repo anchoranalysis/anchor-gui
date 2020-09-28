@@ -195,8 +195,7 @@ public class DropDownUtilities {
     }
 
     public static Outputter createOutputterForSubdirectory(
-            Outputter parentOutputter, String subdirectoryName)
-            throws InitException {
+            Outputter parentOutputter, String subdirectoryName) throws InitException {
 
         ManifestFolderDescription mfd =
                 new ManifestFolderDescription(

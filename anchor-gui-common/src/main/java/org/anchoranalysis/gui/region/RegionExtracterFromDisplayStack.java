@@ -113,9 +113,12 @@ public class RegionExtracterFromDisplayStack implements RegionExtracter {
 
         Extent extentTarget = box.extent().scaleXYBy(sf);
 
-        Voxels<UnsignedByteBuffer> voxels = VoxelsFactory.getUnsignedByte().createInitialized(extentTarget);
+        Voxels<UnsignedByteBuffer> voxels =
+                VoxelsFactory.getUnsignedByte().createInitialized(extentTarget);
 
-        Optional<MeanInterpolator> interpolator = OptionalUtilities.createFromFlag(zoomFactor < 1, () -> new MeanInterpolator(zoomFactor));
+        Optional<MeanInterpolator> interpolator =
+                OptionalUtilities.createFromFlag(
+                        zoomFactor < 1, () -> new MeanInterpolator(zoomFactor));
 
         if (extractedSlice.getVoxelDataType().equals(UnsignedByteVoxelType.INSTANCE)) {
             interpolateRegion(
@@ -159,7 +162,7 @@ public class RegionExtracterFromDisplayStack implements RegionExtracter {
                 .get(UnsignedByteVoxelType.INSTANCE)
                 .create(voxels, dimensions.resolution());
     }
-    
+
     private static <T extends UnsignedBufferAsInt> void interpolateRegion(
             Voxels<T> from,
             Voxels<T> to,
@@ -178,7 +181,7 @@ public class RegionExtracterFromDisplayStack implements RegionExtracter {
             assert (to.slice(z - cornerMin.z()) != null);
 
             VoxelBuffer<T> sliceFrom = from.slice(z);
-            
+
             VoxelBuffer<T> sliceTo = to.slice(z - cornerMin.z());
 
             // We go through every pixel in the new width, and height, and sample from the original
@@ -186,28 +189,36 @@ public class RegionExtracterFromDisplayStack implements RegionExtracter {
             int index = 0;
             for (int y = 0; y < extentTarget.y(); y++) {
 
-                int yOriginal = scaleToOriginal(y,zoomFactor) + cornerMin.y();
+                int yOriginal = scaleToOriginal(y, zoomFactor) + cornerMin.y();
                 for (int x = 0; x < extentTarget.x(); x++) {
 
-                    int xOriginal = scaleToOriginal(x,zoomFactor) + cornerMin.x();
+                    int xOriginal = scaleToOriginal(x, zoomFactor) + cornerMin.x();
 
                     Point2i point = new Point2i(xOriginal, yOriginal);
-                    
+
                     transferPoint(interpolator, point, index, sliceFrom, sliceTo, extentSource);
-                    
+
                     index++;
                 }
             }
         }
     }
-    
+
     private static int scaleToOriginal(int valueUnscaled, double zoomFactor) {
         return (int) (valueUnscaled / zoomFactor);
     }
-    
-    private static <T extends UnsignedBufferAsInt> void transferPoint(Optional<MeanInterpolator> interpolator, Point2i point, int sourceIndex, VoxelBuffer<T> sliceFrom, VoxelBuffer<T> sliceTo, Extent extentSource) throws OperationFailedException {
+
+    private static <T extends UnsignedBufferAsInt> void transferPoint(
+            Optional<MeanInterpolator> interpolator,
+            Point2i point,
+            int sourceIndex,
+            VoxelBuffer<T> sliceFrom,
+            VoxelBuffer<T> sliceTo,
+            Extent extentSource)
+            throws OperationFailedException {
         if (interpolator.isPresent()) {
-            double value = interpolator.get().interpolateVoxelsAt(point, sliceFrom.buffer(), extentSource);
+            double value =
+                    interpolator.get().interpolateVoxelsAt(point, sliceFrom.buffer(), extentSource);
             sliceTo.buffer().putDouble(sourceIndex, value);
         } else {
             sliceTo.transferFrom(sourceIndex, sliceFrom, extentSource.offset(point));

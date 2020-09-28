@@ -61,9 +61,7 @@ public class AnnotationDropDown {
     }
 
     public void init(
-            AddVideoStatsModule adder,
-            Outputter outputter,
-            VideoStatsModuleGlobalParams mpg) {
+            AddVideoStatsModule adder, Outputter outputter, VideoStatsModuleGlobalParams mpg) {
 
         addAnnotation(adder, outputter.getSettings(), mpg);
 

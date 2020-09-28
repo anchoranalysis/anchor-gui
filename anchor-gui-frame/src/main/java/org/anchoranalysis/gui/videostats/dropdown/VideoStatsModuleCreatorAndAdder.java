@@ -60,7 +60,7 @@ public class VideoStatsModuleCreatorAndAdder {
         // START REQUIRED ARGUMENTS
         private final Logger logger;
         // END REQUIRED ARGUMENTS
-        
+
         private Throwable exceptionRecorded;
 
         public void beforeBackground(Component parentComponent) {
@@ -103,9 +103,9 @@ public class VideoStatsModuleCreatorAndAdder {
 
             try {
                 creator.createAndAddVideoStatsModule(get());
-            } catch (InterruptedException       // NOSONAR
+            } catch (InterruptedException // NOSONAR
                     | ExecutionException
-                    | VideoStatsModuleCreateException e) {  
+                    | VideoStatsModuleCreateException e) {
                 displayErrorDialog(e);
             }
         }

@@ -48,7 +48,7 @@ public class ExportTaskGenerator<T> implements ExportTask {
     public void init() {
         // NOTHING TO DO
     }
-    
+
     @Override
     public boolean execute(ExportTaskParams params, ProgressMonitor progressMonitor)
             throws ExportTaskFailedException {
@@ -64,7 +64,7 @@ public class ExportTaskGenerator<T> implements ExportTask {
         int numberWritten =
                 params.getOutputter()
                         .writerSelective()
-                        .write(outputNameStyle, () -> generator, Integer.toString(index) );
+                        .write(outputNameStyle, () -> generator, Integer.toString(index));
         sequenceMemory.updateIndex(outputNameStyle.getOutputName(), index + numberWritten);
 
         if (numberWritten == 0) {

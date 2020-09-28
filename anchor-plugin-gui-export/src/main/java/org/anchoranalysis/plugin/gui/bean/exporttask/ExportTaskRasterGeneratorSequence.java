@@ -54,8 +54,7 @@ public abstract class ExportTaskRasterGeneratorSequence<T> extends ExportTaskBea
 
         return new GeneratorSequenceFactory(getOutputName(), getOutputName())
                 .createNonIncremental(
-                        getCreateRasterGenerator().createGenerator(params),
-                        params.getOutputter());
+                        getCreateRasterGenerator().createGenerator(params), params.getOutputter());
     }
 
     @Override

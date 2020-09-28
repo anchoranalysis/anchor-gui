@@ -255,9 +255,7 @@ public class ManifestDropDown {
         addKernelHistoryNavigator(
                 finderKernelIterDescription, finderKernelProposer, backgroundEnergy, mpg);
 
-        outputter =
-                DropDownUtilities.createOutputterForSubdirectory(
-                        outputter, delegate.getName());
+        outputter = DropDownUtilities.createOutputterForSubdirectory(outputter, delegate.getName());
 
         // Proposer Evaluators
         MarkEvaluatorSetForImage markEvaluatorSet =

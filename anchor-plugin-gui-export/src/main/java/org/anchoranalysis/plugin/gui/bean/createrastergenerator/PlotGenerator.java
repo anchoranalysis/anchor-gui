@@ -31,6 +31,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.Optional;
+import lombok.AllArgsConstructor;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.image.bean.spatial.SizeXY;
 import org.anchoranalysis.image.io.generator.raster.RasterGeneratorWithElement;
@@ -42,13 +43,11 @@ import org.anchoranalysis.io.output.bean.OutputWriteSettings;
 import org.anchoranalysis.io.output.error.OutputWriteFailedException;
 import org.anchoranalysis.plot.PlotInstance;
 import org.jfree.chart.ChartUtils;
-import lombok.AllArgsConstructor;
 
 /**
  * Writes a plot to the filesystem as a PNG file.
- * 
- * @author Owen Feehan
  *
+ * @author Owen Feehan
  */
 @AllArgsConstructor
 class PlotGenerator extends RasterGeneratorWithElement<PlotInstance> {
@@ -57,13 +56,14 @@ class PlotGenerator extends RasterGeneratorWithElement<PlotInstance> {
 
     /** Width/height of raster-image into which the plot is rendered. */
     private final SizeXY size;
-    
+
     @Override
     public void writeToFile(OutputWriteSettings outputWriteSettings, Path filePath)
             throws OutputWriteFailedException {
 
         try (FileOutputStream fileOutput = new FileOutputStream(filePath.toFile())) {
-            ChartUtils.writeChartAsPNG(fileOutput, getElement().getChart(), size.getWidth(), size.getHeight());
+            ChartUtils.writeChartAsPNG(
+                    fileOutput, getElement().getChart(), size.getWidth(), size.getHeight());
         } catch (IOException e) {
             throw new OutputWriteFailedException(e);
         }
@@ -82,7 +82,8 @@ class PlotGenerator extends RasterGeneratorWithElement<PlotInstance> {
     @Override
     public Stack transform() throws OutputWriteFailedException {
 
-        BufferedImage bufferedImage = getElement().createBufferedImage(size.getWidth(), size.getHeight());
+        BufferedImage bufferedImage =
+                getElement().createBufferedImage(size.getWidth(), size.getHeight());
 
         try {
             return CreateStackFromBufferedImage.create(bufferedImage);

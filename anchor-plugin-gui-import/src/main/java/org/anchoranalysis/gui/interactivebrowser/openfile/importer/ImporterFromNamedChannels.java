@@ -35,9 +35,8 @@ import org.anchoranalysis.plugin.io.bean.input.channel.NamedChannelsBase;
 
 /**
  * TODO this class no longer supports NamedChannelsQuick, fix to support it again
- * 
- * @author Owen Feehan
  *
+ * @author Owen Feehan
  */
 public class ImporterFromNamedChannels extends ImporterFromBean {
 

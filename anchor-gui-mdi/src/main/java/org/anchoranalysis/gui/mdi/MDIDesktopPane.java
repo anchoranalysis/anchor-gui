@@ -194,7 +194,7 @@ public class MDIDesktopPane extends JDesktopPane {
         private Insets getScrollPaneInsets() {
             JScrollPane scrollPane = getScrollPane();
             if (scrollPane == null) return new Insets(0, 0, 0, 0);
-            else return getScrollPane().getBorder().getBorderInsets(scrollPane);    // NOSONAR
+            else return getScrollPane().getBorder().getBorderInsets(scrollPane); // NOSONAR
         }
 
         private JScrollPane getScrollPane() {
