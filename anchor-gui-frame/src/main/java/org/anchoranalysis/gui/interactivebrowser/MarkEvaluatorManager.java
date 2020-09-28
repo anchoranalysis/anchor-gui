@@ -32,7 +32,7 @@ import java.util.Set;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.image.stack.NamedStacksSupplier;
-import org.anchoranalysis.io.output.bound.BoundIOContext;
+import org.anchoranalysis.io.output.outputter.InputOutputContext;
 import org.anchoranalysis.mpp.feature.bean.mark.MarkEvaluator;
 
 // Manages the various MarkEvaluators that are available in the application
@@ -40,9 +40,9 @@ public class MarkEvaluatorManager {
 
     private Map<String, MarkEvaluator> map = new HashMap<>();
 
-    private BoundIOContext context;
+    private InputOutputContext context;
 
-    public MarkEvaluatorManager(BoundIOContext context) {
+    public MarkEvaluatorManager(InputOutputContext context) {
         super();
         this.context = context;
     }

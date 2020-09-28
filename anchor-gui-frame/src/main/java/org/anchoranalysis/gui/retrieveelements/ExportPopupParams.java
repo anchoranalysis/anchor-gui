@@ -29,7 +29,7 @@ package org.anchoranalysis.gui.retrieveelements;
 import javax.swing.JFrame;
 import org.anchoranalysis.core.error.reporter.ErrorReporter;
 import org.anchoranalysis.io.generator.sequence.SequenceMemory;
-import org.anchoranalysis.io.output.bound.Outputter;
+import org.anchoranalysis.io.output.outputter.Outputter;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;

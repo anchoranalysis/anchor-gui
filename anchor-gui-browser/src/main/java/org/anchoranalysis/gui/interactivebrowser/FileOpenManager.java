@@ -32,7 +32,7 @@ import org.anchoranalysis.gui.file.opened.OpenedFile;
 import org.anchoranalysis.gui.videostats.dropdown.AddVideoStatsModule;
 import org.anchoranalysis.gui.videostats.frame.IGetToolbar;
 import org.anchoranalysis.gui.videostats.module.VideoStatsModule;
-import org.anchoranalysis.io.output.bound.Outputter;
+import org.anchoranalysis.io.output.outputter.Outputter;
 
 public class FileOpenManager implements IOpenFile {
 

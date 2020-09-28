@@ -54,7 +54,7 @@ import org.anchoranalysis.io.bean.color.list.HSB;
 import org.anchoranalysis.io.bean.color.list.Shuffle;
 import org.anchoranalysis.io.color.HashedColorSet;
 import org.anchoranalysis.io.generator.sequence.SequenceMemory;
-import org.anchoranalysis.io.output.bound.BoundIOContext;
+import org.anchoranalysis.io.output.outputter.InputOutputContext;
 import org.anchoranalysis.mpp.feature.bean.mark.MarkEvaluator;
 
 public class InteractiveBrowser {
@@ -74,9 +74,9 @@ public class InteractiveBrowser {
 
     private OpenFileTypeFactory openFileTypeFactory;
 
-    private BoundIOContext context;
+    private InputOutputContext context;
 
-    public InteractiveBrowser(BoundIOContext context, ExportTaskList exportTaskList) {
+    public InteractiveBrowser(InputOutputContext context, ExportTaskList exportTaskList) {
         super();
         this.exportTaskList = exportTaskList;
         this.context = context;

@@ -40,7 +40,7 @@ import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.name.store.StoreSupplier;
 import org.anchoranalysis.core.progress.ProgressReporterNull;
 import org.anchoranalysis.image.stack.NamedStacksSupplier;
-import org.anchoranalysis.io.output.bound.BoundIOContext;
+import org.anchoranalysis.io.output.outputter.InputOutputContext;
 import org.anchoranalysis.mpp.bean.init.MPPInitParams;
 import org.anchoranalysis.mpp.feature.bean.mark.MarkEvaluator;
 import org.anchoranalysis.mpp.io.input.MPPInitParamsFactory;
@@ -51,7 +51,7 @@ public class MarkEvaluatorSetForImage {
     // START REQUIRED ARGUMENTS
     private final NamedStacksSupplier namedStacks;
     private final KeyValueParamsSupplier keyParams;
-    private final BoundIOContext context;
+    private final InputOutputContext context;
     // END REQUIRED ARGUMENTS
 
     private Map<String, StoreSupplier<MarkEvaluatorResolved>> map = new HashMap<>();
