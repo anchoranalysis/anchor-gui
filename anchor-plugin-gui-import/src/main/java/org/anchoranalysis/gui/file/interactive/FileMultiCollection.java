@@ -45,26 +45,22 @@ import org.anchoranalysis.image.stack.TimeSequence;
 import org.anchoranalysis.io.output.outputter.Outputter;
 import org.anchoranalysis.mpp.io.input.MultiInput;
 import org.anchoranalysis.mpp.mark.MarkCollection;
+import lombok.AllArgsConstructor;
 
+@AllArgsConstructor
 public class FileMultiCollection extends InteractiveFile {
 
-    private MultiInput inputObject;
+    private MultiInput input;
     private MarkCreatorParams markCreatorParams;
-
-    public FileMultiCollection(MultiInput inputObject, MarkCreatorParams markCreatorParams) {
-        super();
-        this.inputObject = inputObject;
-        this.markCreatorParams = markCreatorParams;
-    }
 
     @Override
     public String identifier() {
-        return inputObject.descriptiveName();
+        return input.descriptiveName();
     }
 
     @Override
     public Optional<File> associatedFile() {
-        return inputObject.pathForBinding().map(Path::toFile);
+        return input.pathForBinding().map(Path::toFile);
     }
 
     @Override
@@ -77,18 +73,18 @@ public class FileMultiCollection extends InteractiveFile {
             throws OperationFailedException {
 
         LazyEvaluationStore<TimeSequence> stacks = new LazyEvaluationStore<>("stacks");
-        inputObject.stack().addToStore(stacks);
+        input.stack().addToStore(stacks);
 
         LazyEvaluationStore<MarkCollection> markss = new LazyEvaluationStore<>("marks");
-        inputObject.marks().addToStore(markss);
+        input.marks().addToStore(markss);
 
         LazyEvaluationStore<KeyValueParams> keyValueParams =
                 new LazyEvaluationStore<>("keyValueParams");
-        inputObject.keyValueParams().addToStore(keyValueParams);
+        input.keyValueParams().addToStore(keyValueParams);
 
         LazyEvaluationStore<ObjectCollection> objects =
                 new LazyEvaluationStore<>("object-collections");
-        inputObject.objects().addToStore(objects);
+        input.objects().addToStore(objects);
 
         MultiCollectionDropDown dropDown =
                 new MultiCollectionDropDown(
@@ -111,7 +107,7 @@ public class FileMultiCollection extends InteractiveFile {
     private TimeSequenceProvider createTimeSequenceProvider(
             LazyEvaluationStore<TimeSequence> stacks) throws CreateException {
         try {
-            return new TimeSequenceProvider(stacks, inputObject.numberFrames());
+            return new TimeSequenceProvider(stacks, input.numberFrames());
         } catch (OperationFailedException e) {
             throw new CreateException(e);
         }

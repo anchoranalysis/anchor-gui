@@ -87,7 +87,7 @@ class AddObjects {
             OperationCreateBackgroundSetWithAdder operationBwsaWithEnergy) {
         try {
             final FinderObjectCollectionFolder finderObjects =
-                    new FinderObjectCollectionFolder(OutputterDirectories.OBJECT);
+                    new FinderObjectCollectionFolder(OutputterDirectories.OBJECTS);
             finderObjects.doFind(manifests.getFileManifest().get());
 
             if (finderObjects.exists()) {

@@ -45,26 +45,22 @@ import org.anchoranalysis.gui.videostats.dropdown.multicollection.MultiCollectio
 import org.anchoranalysis.image.io.input.ProvidesStackInput;
 import org.anchoranalysis.image.stack.TimeSequence;
 import org.anchoranalysis.io.output.outputter.Outputter;
+import lombok.AllArgsConstructor;
 
+@AllArgsConstructor
 public class FileSingleStack extends InteractiveFile {
 
-    private ProvidesStackInput inputObject;
+    private ProvidesStackInput input;
     private MarkCreatorParams params;
-
-    public FileSingleStack(ProvidesStackInput ncc, MarkCreatorParams params) {
-        super();
-        this.inputObject = ncc;
-        this.params = params;
-    }
 
     @Override
     public String identifier() {
-        return inputObject.descriptiveName();
+        return input.descriptiveName();
     }
 
     @Override
     public Optional<File> associatedFile() {
-        return inputObject.pathForBinding().map(Path::toFile);
+        return input.pathForBinding().map(Path::toFile);
     }
 
     @Override
@@ -95,13 +91,13 @@ public class FileSingleStack extends InteractiveFile {
         return new OpenedFileGUI(this, dropDown.openedFileGUI());
     }
 
-    private TimeSequenceProvider createTimeSeries(ProgressReporter progressReporter, int seriesNum)
+    private TimeSequenceProvider createTimeSeries(ProgressReporter progressReporter, int seriesIndex)
             throws CreateException {
         try {
             LazyEvaluationStore<TimeSequence> stacks =
                     new LazyEvaluationStore<>("createTimeSeries");
-            inputObject.addToStoreInferNames(stacks, seriesNum, progressReporter);
-            return new TimeSequenceProvider(stacks, inputObject.numberFrames());
+            input.addToStoreInferNames(stacks, seriesIndex, progressReporter);
+            return new TimeSequenceProvider(stacks, input.numberFrames());
         } catch (OperationFailedException e) {
             throw new CreateException(e);
         }

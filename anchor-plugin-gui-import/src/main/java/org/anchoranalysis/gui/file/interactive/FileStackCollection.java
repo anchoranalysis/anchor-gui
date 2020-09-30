@@ -52,17 +52,17 @@ import org.apache.commons.io.FilenameUtils;
 @AllArgsConstructor
 public class FileStackCollection extends InteractiveFile {
 
-    private StackSequenceInput inputObject;
+    private StackSequenceInput input;
     private MarkCreatorParams params;
 
     @Override
     public String identifier() {
-        return FilenameUtils.removeExtension(new File(inputObject.descriptiveName()).getName());
+        return FilenameUtils.removeExtension(new File(input.descriptiveName()).getName());
     }
 
     @Override
     public Optional<File> associatedFile() {
-        return inputObject.pathForBinding().map(Path::toFile);
+        return input.pathForBinding().map(Path::toFile);
     }
 
     @Override
@@ -95,17 +95,17 @@ public class FileStackCollection extends InteractiveFile {
     }
 
     private TimeSequenceProvider extractTimeSequenceFromInput(
-            ProgressReporter progressReporter, int seriesNum) throws CreateException {
+            ProgressReporter progressReporter, int seriesIndex) throws CreateException {
         try {
             TimeSequence timeSeries =
-                    inputObject.createStackSequenceForSeries(seriesNum).get(progressReporter);
+                    input.createStackSequenceForSeries(seriesIndex).get(progressReporter);
 
             LazyEvaluationStore<TimeSequence> store =
                     new LazyEvaluationStore<>("extractTimeSequence");
 
             store.add("input_stack", () -> timeSeries);
 
-            return new TimeSequenceProvider(store, inputObject.numberFrames());
+            return new TimeSequenceProvider(store, input.numberFrames());
         } catch (RasterIOException | OperationFailedException e) {
             throw new CreateException(e);
         }

@@ -26,7 +26,6 @@
 
 package org.anchoranalysis.gui.interactivebrowser.launch;
 
-import java.util.Optional;
 import lombok.Getter;
 import lombok.Setter;
 import org.anchoranalysis.bean.annotation.BeanField;
@@ -39,19 +38,12 @@ import org.anchoranalysis.experiment.task.NoSharedState;
 import org.anchoranalysis.gui.export.bean.task.ExportTaskList;
 import org.anchoranalysis.gui.interactivebrowser.browser.InteractiveBrowser;
 import org.anchoranalysis.gui.interactivebrowser.input.InteractiveBrowserInput;
-import org.anchoranalysis.io.output.MultiLevelOutputEnabled;
-import org.anchoranalysis.io.output.bean.rules.Permissive;
 
 public class InteractiveBrowserTask extends TaskWithoutSharedState<InteractiveBrowserInput> {
 
     // START BEAN PROPERTIES
     @BeanField @Getter @Setter private ExportTaskList exportTaskList;
     // END BEAN PROPERTIES
-
-    @Override
-    public Optional<MultiLevelOutputEnabled> defaultOutputs() {
-        return Optional.of(Permissive.INSTANCE);
-    }
 
     @Override
     public InputTypesExpected inputTypesExpected() {
@@ -65,7 +57,7 @@ public class InteractiveBrowserTask extends TaskWithoutSharedState<InteractiveBr
         try {
             InteractiveBrowser browser =
                     new InteractiveBrowser(params.context(), getExportTaskList());
-            browser.init(params.getInputObject());
+            browser.init(params.getInput());
             browser.showWithDefaultView();
         } catch (InitException e) {
             throw new JobExecutionException(e);

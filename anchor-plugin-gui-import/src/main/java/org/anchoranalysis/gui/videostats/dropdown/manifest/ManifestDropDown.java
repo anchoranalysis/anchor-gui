@@ -143,7 +143,7 @@ public class ManifestDropDown {
             FinderEnergyStack finderEnergyStack, RasterReader rasterReader) throws InitException {
         // Finders
         FinderStacksCombine combined = new FinderStacksCombine();
-        combined.add(new FinderStacksFromFolder(rasterReader, StacksOutputter.OUTPUT_NAME));
+        combined.add(new FinderStacksFromFolder(rasterReader, StacksOutputter.OUTPUT_STACKS));
         combined.add(new FinderStacksFromRootFiles(rasterReader, "out"));
         combined.add(
                 new FinderStacksFromEnergyStack(
