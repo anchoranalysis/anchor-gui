@@ -32,7 +32,7 @@ import lombok.Setter;
 import org.anchoranalysis.bean.annotation.BeanField;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.gui.export.bean.ExportTaskParams;
-import org.anchoranalysis.image.bean.arrangeraster.ArrangeRasterBean;
+import org.anchoranalysis.image.bean.spatial.arrange.ArrangeStackBean;
 import org.anchoranalysis.image.io.bean.generator.CombineRasterGenerator;
 import org.anchoranalysis.image.io.generator.raster.RasterGenerator;
 import org.anchoranalysis.plugin.gui.bean.exporttask.MappedFrom;
@@ -42,7 +42,7 @@ public class Combined<T> extends GeneratorFactory<T> {
     // START BEAN PROPERTIES
     @BeanField @Getter @Setter private List<GeneratorFactory<T>> createRasterGeneratorList;
 
-    @BeanField @Getter @Setter private ArrangeRasterBean arrange;
+    @BeanField @Getter @Setter private ArrangeStackBean arrange;
     // END BEAN PROPERTIES
 
     @Override
