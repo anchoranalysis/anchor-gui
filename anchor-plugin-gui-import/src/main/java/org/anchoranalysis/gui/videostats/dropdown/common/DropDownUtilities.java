@@ -204,7 +204,7 @@ public class DropDownUtilities {
         // NB: As bindAsSubFolder can now return nulls, maybe some knock-on bugs are introduced here
         return parentOutputter
                 .writerPermissive()
-                .createSubdirectory(subdirectoryName, mfd)
+                .createSubdirectory(subdirectoryName, mfd, false)
                 .orElseThrow(() -> new InitException("Cannot create a sub-folder for output"));
     }
 
