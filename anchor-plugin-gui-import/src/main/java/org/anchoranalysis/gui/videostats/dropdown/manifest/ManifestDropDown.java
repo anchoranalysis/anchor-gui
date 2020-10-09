@@ -64,7 +64,6 @@ import org.anchoranalysis.gui.videostats.dropdown.contextualmodulecreator.Single
 import org.anchoranalysis.gui.videostats.dropdown.modulecreator.graph.KernelIterDescriptionModuleCreator;
 import org.anchoranalysis.gui.videostats.operation.combine.OverlayCollectionSupplier;
 import org.anchoranalysis.image.io.bean.rasterreader.RasterReader;
-import org.anchoranalysis.image.io.stack.StacksOutputter;
 import org.anchoranalysis.image.stack.NamedStacksSupplier;
 import org.anchoranalysis.image.stack.wrap.WrapStackAsTimeSequence;
 import org.anchoranalysis.io.manifest.deserializer.folder.LoadContainer;
@@ -75,6 +74,7 @@ import org.anchoranalysis.mpp.feature.energy.marks.MarksWithEnergyBreakdown;
 import org.anchoranalysis.mpp.feature.energy.marks.VoxelizedMarksWithEnergy;
 import org.anchoranalysis.mpp.mark.MarkCollection;
 import org.anchoranalysis.mpp.segment.bean.kernel.proposer.KernelProposer;
+import org.anchoranalysis.mpp.segment.define.OutputterDirectories;
 import org.anchoranalysis.plugin.io.manifest.CoupledManifests;
 
 public class ManifestDropDown {
@@ -143,7 +143,7 @@ public class ManifestDropDown {
             FinderEnergyStack finderEnergyStack, RasterReader rasterReader) throws InitException {
         // Finders
         FinderStacksCombine combined = new FinderStacksCombine();
-        combined.add(new FinderStacksFromFolder(rasterReader, StacksOutputter.OUTPUT_STACKS));
+        combined.add(new FinderStacksFromFolder(rasterReader, OutputterDirectories.STACKS));
         combined.add(new FinderStacksFromRootFiles(rasterReader, "out"));
         combined.add(
                 new FinderStacksFromEnergyStack(

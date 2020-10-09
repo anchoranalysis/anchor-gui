@@ -45,6 +45,7 @@ import org.anchoranalysis.image.stack.TimeSequence;
 import org.anchoranalysis.io.output.outputter.Outputter;
 import org.anchoranalysis.mpp.io.input.MultiInput;
 import org.anchoranalysis.mpp.mark.MarkCollection;
+import org.anchoranalysis.mpp.segment.define.OutputterDirectories;
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
@@ -72,10 +73,10 @@ public class FileMultiCollection extends InteractiveFile {
     public OpenedFile open(AddVideoStatsModule globalSubgroupAdder, Outputter outputter)
             throws OperationFailedException {
 
-        LazyEvaluationStore<TimeSequence> stacks = new LazyEvaluationStore<>("stacks");
+        LazyEvaluationStore<TimeSequence> stacks = new LazyEvaluationStore<>(OutputterDirectories.STACKS);
         input.stack().addToStore(stacks);
 
-        LazyEvaluationStore<MarkCollection> markss = new LazyEvaluationStore<>("marks");
+        LazyEvaluationStore<MarkCollection> markss = new LazyEvaluationStore<>(OutputterDirectories.MARKS);
         input.marks().addToStore(markss);
 
         LazyEvaluationStore<KeyValueParams> keyValueParams =
