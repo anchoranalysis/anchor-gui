@@ -33,7 +33,6 @@ import org.anchoranalysis.bean.error.BeanDuplicateException;
 import org.anchoranalysis.core.color.ColorIndex;
 import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.error.OperationFailedException;
-import org.anchoranalysis.core.error.reporter.ErrorReporter;
 import org.anchoranalysis.gui.container.ContainerGetter;
 import org.anchoranalysis.gui.export.bean.ExportTaskBean;
 import org.anchoranalysis.gui.export.bean.ExportTaskParams;
@@ -56,7 +55,7 @@ import org.anchoranalysis.gui.videostats.dropdown.modulecreator.graph.PlotEnergy
 import org.anchoranalysis.gui.videostats.operation.VideoStatsOperationFromExportTask;
 import org.anchoranalysis.gui.videostats.operation.VideoStatsOperationMenu;
 import org.anchoranalysis.io.manifest.finder.FinderSerializedObject;
-import org.anchoranalysis.io.output.outputter.Outputter;
+import org.anchoranalysis.io.output.outputter.InputOutputContext;
 import org.anchoranalysis.mpp.feature.energy.IndexableMarksWithEnergy;
 import org.anchoranalysis.mpp.feature.energy.marks.VoxelizedMarksWithEnergy;
 import org.anchoranalysis.mpp.segment.bean.kernel.proposer.KernelProposer;
@@ -139,9 +138,8 @@ public class MarksHistoryMenu {
                 finderCSVStats,
                 context.getMpg().getDefaultColorIndexForMarks(),
                 context.getMpg().getExportTaskList(),
-                context.getOutputter(),
                 context.getParentFrame(),
-                context.getMpg().getLogger().errorReporter());
+                context.getInputOutputContext());
     }
 
     private void addExportTasks(
@@ -152,19 +150,17 @@ public class MarksHistoryMenu {
             FinderCSVStats finderCSVStats,
             ColorIndex colorIndex,
             ExportTaskList exportTaskList,
-            Outputter outputter,
             JFrame parentFrame,
-            ErrorReporter errorReporter) {
+            InputOutputContext inputOutputContext) {
         VideoStatsOperationMenu exportSubMenu = menu.createSubMenu("Export", true);
 
-        ExportTaskParams exportTaskParams = new ExportTaskParams();
+        ExportTaskParams exportTaskParams = new ExportTaskParams(inputOutputContext);
         exportTaskParams.setColorIndexMarks(colorIndex);
         exportTaskParams.addFinderMarksHistory(finderMarksHistory);
         exportTaskParams.setFinderStacks(finderStacks);
         exportTaskParams.setFinderCsvStatistics(finderCSVStats);
         exportTaskParams.addFinderMarksHistory(finderSecondaryHistory);
         exportTaskParams.addFinderMarksHistory(finderTertiaryHistory);
-        exportTaskParams.setOutputter(outputter);
 
         for (ExportTaskBean exportTask : exportTaskList) {
 
@@ -175,10 +171,10 @@ public class MarksHistoryMenu {
 
                     exportSubMenu.add(
                             new VideoStatsOperationFromExportTask(
-                                    exportTaskDup, exportTaskParams, parentFrame, errorReporter));
+                                    exportTaskDup, exportTaskParams, parentFrame, inputOutputContext.getErrorReporter()));
 
                 } catch (BeanDuplicateException e) {
-                    errorReporter.recordError(MarksHistoryMenu.class, e);
+                    inputOutputContext.getErrorReporter().recordError(MarksHistoryMenu.class, e);
                 }
             }
         }

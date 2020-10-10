@@ -40,7 +40,7 @@ import org.anchoranalysis.gui.file.opened.OpenedFileGUI;
 import org.anchoranalysis.gui.interactivebrowser.MarkEvaluatorManager;
 import org.anchoranalysis.gui.videostats.dropdown.AddVideoStatsModule;
 import org.anchoranalysis.gui.videostats.dropdown.VideoStatsModuleGlobalParams;
-import org.anchoranalysis.io.output.outputter.Outputter;
+import org.anchoranalysis.io.output.outputter.InputOutputContext;
 
 public class FileAnnotationNamedChannels extends InteractiveFile {
 
@@ -95,7 +95,7 @@ public class FileAnnotationNamedChannels extends InteractiveFile {
     }
 
     @Override
-    public OpenedFile open(AddVideoStatsModule globalSubgroupAdder, Outputter outputter)
+    public OpenedFile open(AddVideoStatsModule globalSubgroupAdder, InputOutputContext context)
             throws OperationFailedException {
 
         AnnotationRefresher refresherResetCache =
@@ -110,7 +110,7 @@ public class FileAnnotationNamedChannels extends InteractiveFile {
                         new AnnotationGuiContext(refresherResetCache, markEvaluatorManager),
                         identifier());
 
-        dropDown.init(globalSubgroupAdder, outputter, mpg);
+        dropDown.init(globalSubgroupAdder, mpg, context);
 
         return new OpenedFileGUI(this, dropDown.openedFileGUI());
     }

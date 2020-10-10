@@ -32,32 +32,26 @@ import org.anchoranalysis.gui.file.opened.OpenedFile;
 import org.anchoranalysis.gui.videostats.dropdown.AddVideoStatsModule;
 import org.anchoranalysis.gui.videostats.frame.IGetToolbar;
 import org.anchoranalysis.gui.videostats.module.VideoStatsModule;
-import org.anchoranalysis.io.output.outputter.Outputter;
+import org.anchoranalysis.io.output.outputter.InputOutputContext;
+import lombok.RequiredArgsConstructor;
 
+@RequiredArgsConstructor
 public class FileOpenManager implements IOpenFile {
 
+    // START REQUIRED ARGUMENTS
+    
     // The Parameters we need to perform the opening
-    private AddVideoStatsModule globalSubgroupAdder;
-    private IGetToolbar videoStatsFrame;
-    private Outputter outputter;
+    private final AddVideoStatsModule globalSubgroupAdder;
+    private final IGetToolbar videoStatsFrame;
+    private final InputOutputContext inputOutputContext;
+    // END REQUIRED ARGUMENTS
 
     // A map to keep track from currently opened-modules to the appropriate file counter
-    private VideoStatsModuleMapToOpenedFileCounter mapModules;
+    private VideoStatsModuleMapToOpenedFileCounter mapModules = new VideoStatsModuleMapToOpenedFileCounter();
 
     // A hash-map we use to keep track of all currently opened-files to the file counter
     private VideoStatsFileMapToOpenedFileCounter mapFile =
             new VideoStatsFileMapToOpenedFileCounter();
-
-    public FileOpenManager(
-            AddVideoStatsModule globalSubgroupAdder,
-            IGetToolbar videoStatsFrame,
-            Outputter outputter) {
-        super();
-        this.globalSubgroupAdder = globalSubgroupAdder;
-        this.videoStatsFrame = videoStatsFrame;
-        this.outputter = outputter;
-        this.mapModules = new VideoStatsModuleMapToOpenedFileCounter();
-    }
 
     @Override
     public OpenedFile open(InteractiveFile file) throws OperationFailedException {
@@ -71,7 +65,7 @@ public class FileOpenManager implements IOpenFile {
 
             AdderGUICountToolbar addToToolbarAdder =
                     new AdderGUICountToolbar(globalSubgroupAdder, counter);
-            OpenedFile of = file.open(addToToolbarAdder, outputter);
+            OpenedFile of = file.open(addToToolbarAdder, inputOutputContext);
             counter.setOpenedFile(of);
 
             // We don't actually add this to our mapFile, until the first module is added, as

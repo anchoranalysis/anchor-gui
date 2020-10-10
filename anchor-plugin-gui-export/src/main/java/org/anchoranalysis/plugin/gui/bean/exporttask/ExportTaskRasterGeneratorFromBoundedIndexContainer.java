@@ -36,6 +36,10 @@ import org.anchoranalysis.core.functional.function.CheckedFunction;
 import org.anchoranalysis.core.index.container.BoundedIndexContainer;
 import org.anchoranalysis.gui.export.bean.ExportTaskFailedException;
 import org.anchoranalysis.gui.export.bean.ExportTaskParams;
+import org.anchoranalysis.io.generator.Generator;
+import org.anchoranalysis.io.generator.sequence.OutputSequenceFactory;
+import org.anchoranalysis.io.generator.sequence.pattern.OutputPatternIntegerSuffix;
+import org.anchoranalysis.io.output.error.OutputWriteFailedException;
 
 public abstract class ExportTaskRasterGeneratorFromBoundedIndexContainer<T>
         extends ExportTaskRasterGeneratorSequence<T> {
@@ -71,20 +75,11 @@ public abstract class ExportTaskRasterGeneratorFromBoundedIndexContainer<T>
     public void setIncrementSize(int incrementSize) {
         delegate.setIncrementSize(incrementSize);
     }
-
-    public String getDscrContrib() {
-        return delegate.getDscrContrib();
-    }
-
+    
     @Override
     public boolean execute(ExportTaskParams params, ProgressMonitor progressMonitor)
             throws ExportTaskFailedException {
-
-        try {
-            return delegate.execute(params, progressMonitor, createGeneratorSequenceWriter(params));
-        } catch (CreateException e) {
-            throw new ExportTaskFailedException(e);
-        }
+        return delegate.execute(params, progressMonitor, outputSequenceCreator(params));
     }
 
     public boolean isStartAtEnd() {
@@ -101,5 +96,23 @@ public abstract class ExportTaskRasterGeneratorFromBoundedIndexContainer<T>
 
     public void setLimitIterations(int limitIterations) {
         delegate.setLimitIterations(limitIterations);
+    }
+    
+    private CreateOutputSequence<T> outputSequenceCreator(
+            ExportTaskParams params) {
+        return startIndex -> new OutputSequenceFactory<>(
+                createGenerator(params),
+                params.getInputOutputContext()
+            ).incrementingIntegers(
+                new OutputPatternIntegerSuffix(getOutputName(),false),
+                startIndex, 1);
+    }
+    
+    private Generator<MappedFrom<T>> createGenerator(ExportTaskParams params) throws OutputWriteFailedException {
+        try {
+            return getCreateRasterGenerator().createGenerator(params);
+        } catch (CreateException e) {
+            throw new OutputWriteFailedException(e);
+        }
     }
 }

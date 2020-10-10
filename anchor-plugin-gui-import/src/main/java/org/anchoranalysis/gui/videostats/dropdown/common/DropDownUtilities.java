@@ -50,9 +50,9 @@ import org.anchoranalysis.gui.videostats.operation.VideoStatsOperationMenu;
 import org.anchoranalysis.gui.videostats.operation.combine.OverlayCollectionSupplier;
 import org.anchoranalysis.image.object.ObjectCollection;
 import org.anchoranalysis.io.manifest.ManifestFolderDescription;
-import org.anchoranalysis.io.manifest.sequencetype.SetSequenceType;
+import org.anchoranalysis.io.manifest.sequencetype.StringsWithoutOrder;
 import org.anchoranalysis.io.output.bean.OutputWriteSettings;
-import org.anchoranalysis.io.output.outputter.Outputter;
+import org.anchoranalysis.io.output.outputter.InputOutputContext;
 import org.anchoranalysis.mpp.mark.MarkCollection;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
@@ -194,18 +194,15 @@ public class DropDownUtilities {
         }
     }
 
-    public static Outputter createOutputterForSubdirectory(
-            Outputter parentOutputter, String subdirectoryName) throws InitException {
+    public static InputOutputContext createSubdirectoryContext(
+            InputOutputContext inputOutputContext, String subdirectoryName) throws InitException {
 
         ManifestFolderDescription mfd =
                 new ManifestFolderDescription(
-                        "interactiveOutput", "manifestInteractiveOutput", new SetSequenceType());
+                        "interactiveOutput", "manifestInteractiveOutput", new StringsWithoutOrder());
 
         // NB: As bindAsSubFolder can now return nulls, maybe some knock-on bugs are introduced here
-        return parentOutputter
-                .writerPermissive()
-                .createSubdirectory(subdirectoryName, mfd, false)
-                .orElseThrow(() -> new InitException("Cannot create a sub-folder for output"));
+        return inputOutputContext.subdirectory(subdirectoryName, mfd, false);
     }
 
     private static void addModule(

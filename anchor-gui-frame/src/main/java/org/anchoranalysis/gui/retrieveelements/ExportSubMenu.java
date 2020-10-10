@@ -44,9 +44,9 @@ import org.anchoranalysis.image.stack.Stack;
 import org.anchoranalysis.io.generator.Generator;
 import org.anchoranalysis.io.manifest.ManifestDescription;
 import org.anchoranalysis.io.manifest.ManifestFolderDescription;
-import org.anchoranalysis.io.manifest.sequencetype.IncrementalSequenceType;
+import org.anchoranalysis.io.manifest.sequencetype.IncrementingIntegers;
 import org.anchoranalysis.io.namestyle.IntegerSuffixOutputNameStyle;
-import org.anchoranalysis.io.output.outputter.Outputter;
+import org.anchoranalysis.io.output.outputter.InputOutputContext;
 
 @RequiredArgsConstructor
 public class ExportSubMenu implements AddToExportSubMenu {
@@ -60,50 +60,34 @@ public class ExportSubMenu implements AddToExportSubMenu {
     public void addExportItemStackGenerator(String outputName, String label, Supplier<Stack> stack)
             throws OperationFailedException {
 
-        StackGenerator stackGenerator = new StackGenerator(true, outputName, false);
+        StackGenerator stackGenerator = new StackGenerator(true, Optional.of(outputName), false);
         SupplierGenerator<Stack, Stack> generator = new SupplierGenerator<>(stackGenerator);
         addExportItem(
                 generator, stack, outputName, label, generator.createManifestDescription(), 1);
     }
-
+    
     @Override
     public <T> void addExportItem(
             Generator<T> generator,
             T itemToGenerate,
             String outputName,
             String label,
-            Optional<ManifestDescription> md,
-            int numItems) {
+            Optional<ManifestDescription> manifestDescription,
+            int numberItems) {
 
+        ManifestFolderDescription manifestFolderDescription = createManifestFolderDescription(manifestDescription);
+        
         // No parameters available in this context
-        ExportTaskParams exportTaskParams = new ExportTaskParams();
-
-        ManifestFolderDescription mfd =
-                new ManifestFolderDescription(
-                        md.orElseThrow(
-                                () ->
-                                        new AnchorFriendlyRuntimeException(
-                                                "A manifest-description is required for this operation")),
-                        new IncrementalSequenceType());
-
-        // NB: As bindAsSubFolder can now return nulls, maybe some knock-on bugs are introduced here
-        exportTaskParams.setOutputter(
-                params.getOutputter()
-                        .writerPermissive()
-                        .createSubdirectory(outputName, mfd, false)
-                        .orElseThrow(
-                                () ->
-                                        new AnchorFriendlyRuntimeException(
-                                                "No subdirectory can be created for output")));
-
-        IntegerSuffixOutputNameStyle ons = new IntegerSuffixOutputNameStyle(outputName, 6);
+        ExportTaskParams exportTaskParams = new ExportTaskParams(
+           params.getContext().subdirectory(outputName, manifestFolderDescription, false)   
+        );
 
         ExportTask task =
                 new ExportTaskGenerator<T>(
                         generator,
                         itemToGenerate,
                         params.getParentFrame(),
-                        ons,
+                        new IntegerSuffixOutputNameStyle(outputName, 6),
                         params.getSequenceMemory());
 
         ExportTaskActionAsThread action =
@@ -123,7 +107,16 @@ public class ExportSubMenu implements AddToExportSubMenu {
     }
 
     @Override
-    public Outputter getOutputter() {
-        return params.getOutputter();
+    public InputOutputContext getInputOutputContext() {
+        return params.getContext();
+    }
+    
+    private ManifestFolderDescription createManifestFolderDescription(Optional<ManifestDescription> manifestDescription) {
+        return new ManifestFolderDescription(
+                manifestDescription.orElseThrow(
+                        () ->
+                                new AnchorFriendlyRuntimeException(
+                                        "A manifest-description is required for this operation")),
+                new IncrementingIntegers());
     }
 }

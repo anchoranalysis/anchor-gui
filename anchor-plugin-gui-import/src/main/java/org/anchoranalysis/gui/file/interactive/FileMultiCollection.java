@@ -42,7 +42,7 @@ import org.anchoranalysis.gui.videostats.dropdown.AddVideoStatsModule;
 import org.anchoranalysis.gui.videostats.dropdown.multicollection.MultiCollectionDropDown;
 import org.anchoranalysis.image.object.ObjectCollection;
 import org.anchoranalysis.image.stack.TimeSequence;
-import org.anchoranalysis.io.output.outputter.Outputter;
+import org.anchoranalysis.io.output.outputter.InputOutputContext;
 import org.anchoranalysis.mpp.io.input.MultiInput;
 import org.anchoranalysis.mpp.mark.MarkCollection;
 import org.anchoranalysis.mpp.segment.define.OutputterDirectories;
@@ -70,7 +70,7 @@ public class FileMultiCollection extends InteractiveFile {
     }
 
     @Override
-    public OpenedFile open(AddVideoStatsModule globalSubgroupAdder, Outputter outputter)
+    public OpenedFile open(AddVideoStatsModule globalSubgroupAdder, InputOutputContext context)
             throws OperationFailedException {
 
         LazyEvaluationStore<TimeSequence> stacks = new LazyEvaluationStore<>(OutputterDirectories.STACKS);
@@ -97,7 +97,7 @@ public class FileMultiCollection extends InteractiveFile {
                         true);
 
         try {
-            dropDown.init(globalSubgroupAdder, outputter, markCreatorParams);
+            dropDown.init(globalSubgroupAdder, context, markCreatorParams);
         } catch (InitException e) {
             throw new OperationFailedException(e);
         }

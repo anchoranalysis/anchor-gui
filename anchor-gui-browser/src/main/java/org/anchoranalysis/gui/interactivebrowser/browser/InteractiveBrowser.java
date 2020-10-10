@@ -119,7 +119,7 @@ public class InteractiveBrowser {
     }
 
     private FileOpenManager createFileOpenManager(SubgrouppedAdder globalSubgroupAdder) {
-        return new FileOpenManager(globalSubgroupAdder, videoStatsFrame, context.getOutputter());
+        return new FileOpenManager(globalSubgroupAdder, videoStatsFrame, context);
     }
 
     private void initMarkEvaluatorManager(InteractiveBrowserInput interactiveBrowserInput) {
@@ -225,13 +225,11 @@ public class InteractiveBrowser {
     }
 
     private ExportPopupParams createExportPopupParams() {
-        SequenceMemory sequenceMemory = new SequenceMemory();
-        ExportPopupParams popUpParams = new ExportPopupParams(context.getErrorReporter());
-        assert (context.getOutputter() != null);
-        popUpParams.setOutputter(context.getOutputter());
-        popUpParams.setParentFrame(videoStatsFrame);
-        popUpParams.setSequenceMemory(sequenceMemory);
-        return popUpParams;
+        return new ExportPopupParams(
+            videoStatsFrame,
+            new SequenceMemory(),
+            context
+        );
     }
 
     private VideoStatsModuleGlobalParams createModuleParams(

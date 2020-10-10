@@ -86,7 +86,7 @@ public class FinderMarksFolder extends FinderSingleFolder {
                 new SequencedFolderDeserializer<>(getFoundFolder(), deserializer);
 
         AddFromSequenceHelper.addFromSequence(
-                getFoundFolder().getAssociatedSequence(), sfrr, out::add, namesAsIndexes);
+                getFoundFolder().getAssociatedElementRange(), sfrr, out::add, namesAsIndexes);
         return out;
     }
 }

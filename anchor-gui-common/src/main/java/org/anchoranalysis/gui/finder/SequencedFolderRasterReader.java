@@ -33,10 +33,10 @@ import org.anchoranalysis.image.io.RasterIOException;
 import org.anchoranalysis.image.io.bean.rasterreader.RasterReader;
 import org.anchoranalysis.image.io.rasterreader.OpenedRaster;
 import org.anchoranalysis.image.stack.Stack;
-import org.anchoranalysis.io.manifest.deserializer.folder.sequenced.SequencedFolderCntrCreator;
+import org.anchoranalysis.io.manifest.deserializer.folder.sequenced.SequencedFolderContainerCreator;
 import org.anchoranalysis.io.manifest.folder.SequencedFolder;
 
-class SequencedFolderRasterReader extends SequencedFolderCntrCreator<Stack> {
+class SequencedFolderRasterReader extends SequencedFolderContainerCreator<Stack> {
 
     private RasterReader rasterReader;
 

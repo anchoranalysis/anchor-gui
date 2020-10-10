@@ -29,7 +29,6 @@ package org.anchoranalysis.gui.videostats.dropdown;
 import javax.swing.JFrame;
 import org.anchoranalysis.bean.error.BeanDuplicateException;
 import org.anchoranalysis.core.error.OperationFailedException;
-import org.anchoranalysis.core.error.reporter.ErrorReporter;
 import org.anchoranalysis.gui.export.bean.ExportTaskBean;
 import org.anchoranalysis.gui.export.bean.ExportTaskParams;
 import org.anchoranalysis.gui.export.bean.task.ExportTaskList;
@@ -40,7 +39,7 @@ import org.anchoranalysis.gui.videostats.dropdown.contextualmodulecreator.Contex
 import org.anchoranalysis.gui.videostats.dropdown.contextualmodulecreator.SingleContextualModuleCreator;
 import org.anchoranalysis.gui.videostats.operation.VideoStatsOperationFromExportTask;
 import org.anchoranalysis.gui.videostats.operation.VideoStatsOperationMenu;
-import org.anchoranalysis.io.output.outputter.Outputter;
+import org.anchoranalysis.io.output.outputter.InputOutputContext;
 
 public class CombinedMenu {
 
@@ -79,9 +78,8 @@ public class CombinedMenu {
                 finderSecond,
                 context.getFinderStacks(),
                 context.getMpg().getExportTaskList(),
-                context.getOutputter(),
                 context.getParentFrame(),
-                context.getMpg().getLogger().errorReporter());
+                context.getInputOutputContext());
     }
 
     public VideoStatsOperationMenu getMenu() {
@@ -94,22 +92,20 @@ public class CombinedMenu {
             final FinderMarksWithEnergy finderSecond,
             FinderStacks finderStacks,
             ExportTaskList exportTaskList,
-            Outputter outputter,
             JFrame parentFrame,
-            ErrorReporter errorReporter) {
+            InputOutputContext context) {
         VideoStatsOperationMenu exportSubMenu = menu.createSubMenu(name + ": export ", true);
 
-        ExportTaskParams exportTaskParams = new ExportTaskParams();
+        ExportTaskParams exportTaskParams = new ExportTaskParams(context);
         exportTaskParams.addFinderMarksHistory(finderFirst);
         exportTaskParams.addFinderMarksHistory(finderSecond);
         exportTaskParams.setFinderStacks(finderStacks);
-        exportTaskParams.setOutputter(outputter);
 
         // TODO, HACK, as the RGB creator requires this
         try {
-            exportTaskParams.setColorIndexMarks(outputter.getSettings().defaultColorIndexFor(3));
+            exportTaskParams.setColorIndexMarks(context.getOutputter().getSettings().defaultColorIndexFor(3));
         } catch (OperationFailedException e) {
-            errorReporter.recordError(CombinedMenu.class, e);
+            context.getErrorReporter().recordError(CombinedMenu.class, e);
         }
 
         for (ExportTaskBean exportTask : exportTaskList) {
@@ -121,10 +117,10 @@ public class CombinedMenu {
 
                     exportSubMenu.add(
                             new VideoStatsOperationFromExportTask(
-                                    exportTaskDup, exportTaskParams, parentFrame, errorReporter));
+                                    exportTaskDup, exportTaskParams, parentFrame, context.getErrorReporter()));
 
                 } catch (BeanDuplicateException e) {
-                    errorReporter.recordError(CombinedMenu.class, e);
+                    context.getErrorReporter().recordError(CombinedMenu.class, e);
                 }
             }
         }

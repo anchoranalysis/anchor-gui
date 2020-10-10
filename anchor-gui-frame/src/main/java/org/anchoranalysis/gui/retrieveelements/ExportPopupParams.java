@@ -27,21 +27,14 @@
 package org.anchoranalysis.gui.retrieveelements;
 
 import javax.swing.JFrame;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
-import org.anchoranalysis.core.error.reporter.ErrorReporter;
+import lombok.AllArgsConstructor;
+import lombok.Value;
 import org.anchoranalysis.io.generator.sequence.SequenceMemory;
-import org.anchoranalysis.io.output.outputter.Outputter;
+import org.anchoranalysis.io.output.outputter.InputOutputContext;
 
-@RequiredArgsConstructor
+@AllArgsConstructor @Value 
 public class ExportPopupParams {
-
-    // START REQUIRED ARGUMENTS
-    @Getter private final ErrorReporter errorReporter;
-    // END REQUIRED ARGUMENTS
-
-    @Getter @Setter private JFrame parentFrame;
-    @Getter @Setter private Outputter outputter;
-    @Getter @Setter private SequenceMemory sequenceMemory;
+    private JFrame parentFrame;
+    private SequenceMemory sequenceMemory;
+    private InputOutputContext context;
 }

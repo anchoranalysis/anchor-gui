@@ -34,7 +34,7 @@ import org.anchoranalysis.image.io.bean.rasterreader.RasterReader;
 import org.anchoranalysis.image.stack.NamedStacks;
 import org.anchoranalysis.image.stack.Stack;
 import org.anchoranalysis.io.manifest.ManifestRecorder;
-import org.anchoranalysis.io.manifest.deserializer.folder.BoundsFromSequenceType;
+import org.anchoranalysis.io.manifest.deserializer.folder.BoundsFromRange;
 import org.anchoranalysis.io.manifest.finder.FinderSingleFolder;
 import org.anchoranalysis.io.manifest.finder.FinderUtilities;
 import org.anchoranalysis.io.manifest.folder.FolderWrite;
@@ -90,14 +90,14 @@ public class FinderRasterFolder extends FinderSingleFolder {
                 new SequencedFolderRasterReader(getFoundFolder(), rasterReader);
 
         AddFromSequenceHelper.addFromSequence(
-                getFoundFolder().getAssociatedSequence(), reader, stacks::add, namesAsIndexes);
+                getFoundFolder().getAssociatedElementRange(), reader, stacks::add, namesAsIndexes);
 
         return stacks;
     }
 
     private BoundedIndexContainer<Stack> createContainer(FolderWrite folder) {
-        return new BoundsFromSequenceType<>(
+        return new BoundsFromRange<>(
                 new SequencedFolderRasterReader(folder, rasterReader),
-                folder.getAssociatedSequence());
+                folder.getAssociatedElementRange());
     }
 }

@@ -76,7 +76,7 @@ public class InternalFrameMarkProposerEvaluator {
 
     public InternalFrameMarkProposerEvaluator(ErrorReporter errorReporter) {
 
-        this.outputPanel = new OutputPanel(errorReporter);
+        this.outputPanel = new OutputPanel();
         this.proposeLoopPanel = new ProposeLoopPanel();
         this.errorReporter = errorReporter;
         evaluatorChooser =
@@ -101,7 +101,7 @@ public class InternalFrameMarkProposerEvaluator {
         evaluatorChooser.init(markEvaluatorSet);
 
         outputPanel.init(
-                mpg.getDefaultColorIndexForMarks(), mpg.getExportPopupParams().getOutputter());
+                mpg.getDefaultColorIndexForMarks(), mpg.getExportPopupParams().getContext());
 
         SliderState sliderState = delegate.init(defaultState, mpg);
 

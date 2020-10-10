@@ -49,6 +49,7 @@ import org.anchoranalysis.gui.videostats.dropdown.common.EnergyBackground;
 import org.anchoranalysis.gui.videostats.dropdown.common.GuessEnergyFromStacks;
 import org.anchoranalysis.image.object.ObjectCollection;
 import org.anchoranalysis.image.stack.wrap.WrapTimeSequenceAsStack;
+import org.anchoranalysis.io.output.outputter.InputOutputContext;
 import org.anchoranalysis.io.output.outputter.Outputter;
 import org.anchoranalysis.mpp.mark.MarkCollection;
 
@@ -78,7 +79,7 @@ public class MultiCollectionDropDown {
         this.objCollection = objCollection;
     }
 
-    public void init(final AddVideoStatsModule adder, Outputter outputter, MarkCreatorParams params)
+    public void init(final AddVideoStatsModule adder, InputOutputContext context, MarkCreatorParams params)
             throws InitException {
 
         OperationCreateBackgroundSetWithAdder operationBwsa =
@@ -124,7 +125,7 @@ public class MultiCollectionDropDown {
                     params.getMarkEvaluatorManager(),
                     operationBwsa,
                     params.getModuleParams(),
-                    outputter);
+                    context);
         }
     }
 
@@ -132,11 +133,11 @@ public class MultiCollectionDropDown {
             MarkEvaluatorManager markEvaluatorManager,
             OperationCreateBackgroundSetWithAdder operationBwsa,
             VideoStatsModuleGlobalParams mpg,
-            Outputter outputter)
+            InputOutputContext context)
             throws InitException {
 
         Outputter outputterSubdirectory =
-                DropDownUtilities.createOutputterForSubdirectory(outputter, delegate.getName());
+                DropDownUtilities.createSubdirectoryContext(context, delegate.getName()).getOutputter();
 
         try {
             MarkEvaluatorSetForImage markEvaluatorSet =

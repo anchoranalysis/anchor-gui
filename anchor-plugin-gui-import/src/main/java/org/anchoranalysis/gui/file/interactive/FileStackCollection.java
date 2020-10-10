@@ -45,7 +45,7 @@ import org.anchoranalysis.gui.videostats.dropdown.AddVideoStatsModule;
 import org.anchoranalysis.gui.videostats.dropdown.multicollection.MultiCollectionDropDown;
 import org.anchoranalysis.image.io.RasterIOException;
 import org.anchoranalysis.image.stack.TimeSequence;
-import org.anchoranalysis.io.output.outputter.Outputter;
+import org.anchoranalysis.io.output.outputter.InputOutputContext;
 import org.anchoranalysis.plugin.io.bean.input.stack.StackSequenceInput;
 import org.apache.commons.io.FilenameUtils;
 
@@ -71,7 +71,7 @@ public class FileStackCollection extends InteractiveFile {
     }
 
     @Override
-    public OpenedFile open(AddVideoStatsModule globalSubgroupAdder, Outputter outputter)
+    public OpenedFile open(AddVideoStatsModule globalSubgroupAdder, InputOutputContext context)
             throws OperationFailedException {
 
         MultiCollectionDropDown dropDown =
@@ -86,7 +86,7 @@ public class FileStackCollection extends InteractiveFile {
                         false);
 
         try {
-            dropDown.init(globalSubgroupAdder, outputter, params);
+            dropDown.init(globalSubgroupAdder, context, params);
         } catch (InitException e) {
             throw new OperationFailedException(e);
         }

@@ -95,7 +95,7 @@ public class DrawObjects extends GeneratorFactory<IndexableMarksWithEnergy> {
                     new CachedRGBGenerator(
                             cachedRGB,
                             createRasterOptions(),
-                            params.getOutputter().getErrorReporter());
+                            params.getInputOutputContext().getErrorReporter());
 
             ccGenerator.updateDrawer(new SimpleOverlayWriter(drawObject));
 

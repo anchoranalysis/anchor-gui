@@ -28,18 +28,19 @@ package org.anchoranalysis.gui.videostats.internalframe;
 
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
+import java.util.Optional;
 import javax.swing.AbstractAction;
+import javax.swing.Action;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import org.anchoranalysis.core.color.ColorIndex;
-import org.anchoranalysis.core.error.reporter.ErrorReporter;
 import org.anchoranalysis.io.bean.object.writer.Outline;
-import org.anchoranalysis.io.generator.sequence.GeneratorSequenceIncrementalRerouteErrors;
-import org.anchoranalysis.io.generator.sequence.GeneratorSequenceIncrementalWriter;
+import org.anchoranalysis.io.generator.sequence.OutputSequenceIncrementing;
+import org.anchoranalysis.io.generator.sequence.pattern.OutputPatternIntegerSuffix;
+import org.anchoranalysis.io.generator.sequence.OutputSequenceFactory;
 import org.anchoranalysis.io.manifest.ManifestDescription;
-import org.anchoranalysis.io.namestyle.IndexableOutputNameStyle;
-import org.anchoranalysis.io.namestyle.IntegerSuffixOutputNameStyle;
-import org.anchoranalysis.io.output.outputter.Outputter;
+import org.anchoranalysis.io.output.error.OutputWriteFailedException;
+import org.anchoranalysis.io.output.outputter.InputOutputContext;
 import org.anchoranalysis.mpp.io.marks.ColoredMarksWithDisplayStack;
 import org.anchoranalysis.mpp.io.marks.MarksWithDisplayStack;
 import org.anchoranalysis.mpp.io.marks.generator.MarksGenerator;
@@ -50,13 +51,11 @@ public class OutputPanel {
 
     private JPanel panel;
 
-    private Outputter outputter;
+    private InputOutputContext context;
 
-    private GeneratorSequenceIncrementalRerouteErrors<ColoredMarksWithDisplayStack> sequenceWriter;
+    private OutputSequenceIncrementing<ColoredMarksWithDisplayStack> outputSequence;
 
     private ColorIndex colorIndex;
-
-    private final ErrorReporter errorReporter;
 
     private class StartAction extends AbstractAction {
 
@@ -70,22 +69,14 @@ public class OutputPanel {
         public void actionPerformed(ActionEvent arg0) {
             MarksGenerator generator = new MarksGenerator(new Outline(2), new IDGetterOverlayID());
 
-            IndexableOutputNameStyle outputNameStyle =
-                    new IntegerSuffixOutputNameStyle("markEvaluator", 6);
+            OutputPatternIntegerSuffix directory = new OutputPatternIntegerSuffix("markEvaluator", 6, false, Optional.of(new ManifestDescription("raster", "markEvaluator")));
 
-            sequenceWriter =
-                    new GeneratorSequenceIncrementalRerouteErrors<>(
-                            new GeneratorSequenceIncrementalWriter<>(
-                                    outputter.getChecked(),
-                                    outputNameStyle.getOutputName(),
-                                    outputNameStyle,
-                                    generator,
-                                    new ManifestDescription("raster", "markEvaluator"),
-                                    0,
-                                    true),
-                            errorReporter);
-
-            sequenceWriter.start();
+            try {
+                outputSequence = new OutputSequenceFactory<>(generator, context).incrementingByOne(directory);
+            } catch (OutputWriteFailedException e) {
+                context.getErrorReporter().recordError(OutputPanel.class, e);
+                outputSequence = null;
+            }
         }
     }
 
@@ -100,33 +91,28 @@ public class OutputPanel {
 
         @Override
         public void actionPerformed(ActionEvent arg0) {
-            if (sequenceWriter != null) {
-                sequenceWriter.end();
-                sequenceWriter = null;
+            if (outputSequence != null) {
+                try {
+                    outputSequence.close();
+                } catch (OutputWriteFailedException e) {
+                    context.getErrorReporter().recordError(OutputPanel.class, e);
+                }
+                outputSequence = null;
             }
         }
     }
 
-    public OutputPanel(ErrorReporter errorReporter) {
+    public OutputPanel() {
 
         panel = new JPanel();
         panel.setLayout(new FlowLayout());
-
-        {
-            JButton button = new JButton(new StartAction());
-            panel.add(button);
-        }
-        {
-            JButton button = new JButton(new EndAction());
-            panel.add(button);
-        }
-
-        this.errorReporter = errorReporter;
+        createAndButton(new StartAction(), panel);
+        createAndButton(new EndAction(), panel);
     }
 
-    public void init(ColorIndex colorIndex, Outputter outputter) {
+    public void init(ColorIndex colorIndex, InputOutputContext context) {
         this.colorIndex = colorIndex;
-        this.outputter = outputter;
+        this.context = context;
     }
 
     public JPanel getPanel() {
@@ -134,11 +120,20 @@ public class OutputPanel {
     }
 
     public void output(MarksWithDisplayStack cws) {
-        if (sequenceWriter != null) {
+        if (outputSequence != null) {
 
             ColoredMarksWithDisplayStack colored =
                     new ColoredMarksWithDisplayStack(cws, colorIndex, new IDGetterMarkID());
-            sequenceWriter.add(colored);
+            try {
+                outputSequence.add(colored);
+            } catch (OutputWriteFailedException e) {
+                context.getErrorReporter().recordError(OutputPanel.class, e);
+                outputSequence = null;
+            }
         }
+    }
+        
+    private static void createAndButton(Action action, JPanel panel) {
+        panel.add(new JButton(action)); 
     }
 }

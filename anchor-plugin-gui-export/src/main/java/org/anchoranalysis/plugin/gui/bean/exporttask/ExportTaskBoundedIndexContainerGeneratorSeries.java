@@ -37,8 +37,7 @@ import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.index.container.BoundedIndexContainer;
 import org.anchoranalysis.gui.export.bean.ExportTaskFailedException;
 import org.anchoranalysis.gui.export.bean.ExportTaskParams;
-import org.anchoranalysis.io.generator.sequence.GeneratorSequenceNonIncremental;
-import org.anchoranalysis.io.manifest.sequencetype.IncrementalSequenceType;
+import org.anchoranalysis.io.generator.sequence.OutputSequenceIndexed;
 import org.anchoranalysis.io.output.error.OutputWriteFailedException;
 
 public class ExportTaskBoundedIndexContainerGeneratorSeries<T>
@@ -63,10 +62,10 @@ public class ExportTaskBoundedIndexContainerGeneratorSeries<T>
     public boolean execute(
             ExportTaskParams params,
             ProgressMonitor progressMonitor,
-            GeneratorSequenceNonIncremental<MappedFrom<T>> generatorSequenceWriter)
+            CreateOutputSequence<T> outputSequenceCreator)
             throws ExportTaskFailedException {
         try {
-            return execute(containerBridge.apply(params), progressMonitor, generatorSequenceWriter);
+            return execute(containerBridge.apply(params), progressMonitor, outputSequenceCreator);
         } catch (OutputWriteFailedException
                 | OperationFailedException
                 | GetOperationFailedException e) {
@@ -89,81 +88,73 @@ public class ExportTaskBoundedIndexContainerGeneratorSeries<T>
             throw new ExportTaskFailedException(e);
         }
     }
-
-    public String getDscrContrib() {
-        return String.format("incrementSize=%d", this.incrementSize);
-    }
-
+    
     public CheckedFunction<ExportTaskParams, BoundedIndexContainer<T>, OperationFailedException>
             getContainerBridge() {
         return containerBridge;
     }
-
+    
     private boolean execute(
             BoundedIndexContainer<T> container,
             ProgressMonitor progressMonitor,
-            GeneratorSequenceNonIncremental<MappedFrom<T>> generatorSequenceWriter)
+            CreateOutputSequence<T> outputSequenceCreator)
             throws OutputWriteFailedException, GetOperationFailedException {
 
         int min = container.getMinimumIndex();
         int max = container.getMaximumIndex();
 
         int indexOut = 0;
-        IncrementalSequenceType sequenceType = new IncrementalSequenceType(indexOut);
-        sequenceType.setIncrementSize(1);
 
-        sequenceType.setStart(min);
+        try(OutputSequenceIndexed<MappedFrom<T>,Integer> outputSequence = outputSequenceCreator.createAndStart(min)) {
 
-        generatorSequenceWriter.start(sequenceType);
-
-        if (startAtEnd) {
-            for (int i = max; i >= min; i -= incrementSize) {
-
-                // Escape if we reach our match iterations (limitIterations is off if its negative)
-                if (indexOut == limitIterations) {
-                    break;
+            if (startAtEnd) {
+                for (int i = max; i >= min; i -= incrementSize) {
+    
+                    // Escape if we reach our match iterations (limitIterations is off if its negative)
+                    if (indexOut == limitIterations) {
+                        break;
+                    }
+    
+                    if (progressMonitor.isCanceled()) {
+                        return false;
+                    }
+    
+                    addToWriter(container, outputSequence, i, indexOut);
+    
+                    progressMonitor.setProgress(indexOut++);
                 }
-
-                if (progressMonitor.isCanceled()) {
-                    return false;
+            } else {
+                for (int i = min; i <= max; i += incrementSize) {
+    
+                    // Escape if we reach our match iterations (limitIterations is off if its negative)
+                    if (indexOut == limitIterations) {
+                        break;
+                    }
+    
+                    if (progressMonitor.isCanceled()) {
+                        return false;
+                    }
+    
+                    addToWriter(container, outputSequence, i, indexOut);
+    
+                    progressMonitor.setProgress(indexOut++);
                 }
-
-                addToWriter(container, generatorSequenceWriter, i, indexOut);
-
-                progressMonitor.setProgress(indexOut++);
             }
-        } else {
-            for (int i = min; i <= max; i += incrementSize) {
-
-                // Escape if we reach our match iterations (limitIterations is off if its negative)
-                if (indexOut == limitIterations) {
-                    break;
-                }
-
-                if (progressMonitor.isCanceled()) {
-                    return false;
-                }
-
-                addToWriter(container, generatorSequenceWriter, i, indexOut);
-
-                progressMonitor.setProgress(indexOut++);
-            }
+        } finally {
+            progressMonitor.setProgress(max);
         }
-        progressMonitor.setProgress(max);
-
-        generatorSequenceWriter.end();
 
         return true;
     }
 
     private void addToWriter(
             BoundedIndexContainer<T> container,
-            GeneratorSequenceNonIncremental<MappedFrom<T>> generatorSequenceWriter,
+            OutputSequenceIndexed<MappedFrom<T>,Integer> generatorSequenceWriter,
             int indexIn,
             int indexOut)
             throws OutputWriteFailedException, GetOperationFailedException {
         int index = container.previousEqualIndex(indexIn);
         generatorSequenceWriter.add(
-                new MappedFrom<>(indexIn, container.get(index)), String.valueOf(indexOut));
+                new MappedFrom<>(indexIn, container.get(index)), indexOut);
     }
 }

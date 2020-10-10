@@ -34,7 +34,7 @@ import org.anchoranalysis.core.color.ColorIndex;
 import org.anchoranalysis.gui.container.ContainerGetter;
 import org.anchoranalysis.gui.finder.imgstackcollection.FinderStacks;
 import org.anchoranalysis.gui.manifest.FinderCSVStats;
-import org.anchoranalysis.io.output.outputter.Outputter;
+import org.anchoranalysis.io.output.outputter.InputOutputContext;
 import org.anchoranalysis.mpp.feature.energy.IndexableMarksWithEnergy;
 
 // Parameters an exportTask can draw itself from
@@ -43,11 +43,15 @@ public class ExportTaskParams {
     @Getter @Setter private ColorIndex colorIndexMarks;
     @Getter @Setter private FinderCSVStats finderCsvStatistics;
     @Getter @Setter private FinderStacks finderStacks;
-    @Getter @Setter private Outputter outputter;
+    @Getter private InputOutputContext inputOutputContext;
 
     private List<ContainerGetter<IndexableMarksWithEnergy>> listFinderMarksHistory =
             new ArrayList<>();
 
+    public ExportTaskParams(InputOutputContext inputOutputContext) {
+        this.inputOutputContext = inputOutputContext;
+    }
+    
     public ContainerGetter<IndexableMarksWithEnergy> getFinderMarksHistory() {
         return listFinderMarksHistory.get(0);
     }

@@ -29,11 +29,8 @@ package org.anchoranalysis.plugin.gui.bean.exporttask;
 import lombok.Getter;
 import lombok.Setter;
 import org.anchoranalysis.bean.annotation.BeanField;
-import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.gui.export.bean.ExportTaskBean;
 import org.anchoranalysis.gui.export.bean.ExportTaskParams;
-import org.anchoranalysis.io.generator.sequence.GeneratorSequenceFactory;
-import org.anchoranalysis.io.generator.sequence.GeneratorSequenceNonIncremental;
 import org.anchoranalysis.plugin.gui.bean.createrastergenerator.GeneratorFactory;
 
 public abstract class ExportTaskRasterGeneratorSequence<T> extends ExportTaskBean {
@@ -47,14 +44,6 @@ public abstract class ExportTaskRasterGeneratorSequence<T> extends ExportTaskBea
     @Override
     public boolean hasNecessaryParams(ExportTaskParams params) {
         return createRasterGenerator.hasNecessaryParams(params);
-    }
-
-    protected GeneratorSequenceNonIncremental<MappedFrom<T>> createGeneratorSequenceWriter(
-            ExportTaskParams params) throws CreateException {
-
-        return new GeneratorSequenceFactory(getOutputName(), getOutputName())
-                .createNonIncremental(
-                        getCreateRasterGenerator().createGenerator(params), params.getOutputter());
     }
 
     @Override
