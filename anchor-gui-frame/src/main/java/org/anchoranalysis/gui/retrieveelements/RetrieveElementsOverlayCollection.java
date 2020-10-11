@@ -30,8 +30,7 @@ import java.util.Collection;
 import java.util.Optional;
 import org.anchoranalysis.image.io.objects.ObjectCollectionWriter;
 import org.anchoranalysis.image.object.ObjectCollection;
-import org.anchoranalysis.io.generator.collection.SubfolderGenerator;
-import org.anchoranalysis.io.generator.sequence.CollectionGenerator;
+import org.anchoranalysis.io.generator.collection.CollectionAsSubdirectoryGenerator;
 import org.anchoranalysis.io.generator.serialized.ObjectOutputStreamGenerator;
 import org.anchoranalysis.mpp.mark.Mark;
 import org.anchoranalysis.mpp.mark.MarkCollection;
@@ -74,7 +73,7 @@ public class RetrieveElementsOverlayCollection extends RetrieveElements {
                 "selectedObjects",
                 "Selected Objects",
                 Optional.of(
-                        SubfolderGenerator.createManifestDescription(
+                        CollectionAsSubdirectoryGenerator.createManifestDescription(
                                 ObjectCollectionWriter.MANIFEST_DESCRIPTION)),
                 1);
     }
@@ -83,13 +82,11 @@ public class RetrieveElementsOverlayCollection extends RetrieveElements {
         Collection<Mark> marksCreated = marks.createSet();
         ObjectOutputStreamGenerator<Mark> generatorMark =
                 new ObjectOutputStreamGenerator<>(Optional.of("mark"));
-        CollectionGenerator<Mark> generatorCollection =
-                new CollectionGenerator<>(
-                        "selectedMarksObjects",
+        CollectionAsSubdirectoryGenerator<Mark,Collection<Mark>> generatorCollection =
+                new CollectionAsSubdirectoryGenerator<>(
                         generatorMark,
-                        popUp.getInputOutputContext().getOutputter().getChecked(),
-                        3,
-                        true);
+                        "selectedMarksObjects"
+                );
         popUp.addExportItem(
                 generatorCollection,
                 marksCreated,
