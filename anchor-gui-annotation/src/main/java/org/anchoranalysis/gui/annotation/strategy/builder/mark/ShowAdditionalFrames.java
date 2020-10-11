@@ -54,7 +54,7 @@ class ShowAdditionalFrames {
                         strategy.getAdditionalBackgrounds(),
                         matchPath,
                         context.getName(),
-                        strategy.getRasterReader());
+                        strategy.getStackReader());
         showAdditional.apply();
 
         ShowComparers showComparers =

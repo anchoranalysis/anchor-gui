@@ -44,8 +44,8 @@ import org.anchoranalysis.gui.videostats.dropdown.VideoStatsModuleGlobalParams;
 import org.anchoranalysis.gui.videostats.module.DefaultModuleState;
 import org.anchoranalysis.gui.videostats.module.VideoStatsModuleCreateException;
 import org.anchoranalysis.image.io.RasterIOException;
-import org.anchoranalysis.image.io.bean.rasterreader.RasterReader;
-import org.anchoranalysis.image.io.rasterreader.OpenedRaster;
+import org.anchoranalysis.image.io.bean.stack.StackReader;
+import org.anchoranalysis.image.io.stack.OpenedRaster;
 import org.anchoranalysis.image.stack.Stack;
 import org.anchoranalysis.image.stack.TimeSequence;
 
@@ -55,11 +55,11 @@ public class ShowRaster {
     private final AddVideoStatsModule adder;
     private final VideoStatsModuleGlobalParams mpg;
 
-    public void openAndShow(String rasterName, final Path rasterPath, RasterReader rasterReader) {
+    public void openAndShow(String rasterName, final Path rasterPath, StackReader stackReader) {
 
         show(
                 progressReporter -> {
-                    try (OpenedRaster or = rasterReader.openFile(rasterPath)) {
+                    try (OpenedRaster or = stackReader.openFile(rasterPath)) {
                         TimeSequence ts = or.open(0, progressReporter);
 
                         Stack stack = ts.get(0);

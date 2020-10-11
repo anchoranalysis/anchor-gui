@@ -29,7 +29,7 @@ package org.anchoranalysis.gui.io.loader.manifest.finder;
 import java.util.List;
 import java.util.Optional;
 import org.anchoranalysis.core.error.reporter.ErrorReporter;
-import org.anchoranalysis.image.io.bean.rasterreader.RasterReader;
+import org.anchoranalysis.image.io.bean.stack.StackReader;
 import org.anchoranalysis.io.manifest.ManifestRecorder;
 import org.anchoranalysis.io.manifest.file.FileWrite;
 import org.anchoranalysis.io.manifest.finder.FinderUtilities;
@@ -41,11 +41,11 @@ public class FinderRasterStackByOutputName extends FinderRasterStack {
     private String outputName;
 
     public FinderRasterStackByOutputName(
-            RasterReader rasterReader, String outputName, ErrorReporter errorReporter) {
+            StackReader stackReader, String outputName, ErrorReporter errorReporter) {
 
         // TODO fix
         // Assumes its a trebble channel source
-        super(rasterReader, errorReporter);
+        super(stackReader, errorReporter);
         this.outputName = outputName;
     }
 

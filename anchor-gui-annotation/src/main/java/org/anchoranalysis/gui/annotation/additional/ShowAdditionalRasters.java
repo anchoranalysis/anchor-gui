@@ -30,7 +30,7 @@ import java.nio.file.Path;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import org.anchoranalysis.core.error.OperationFailedException;
-import org.anchoranalysis.image.io.bean.rasterreader.RasterReader;
+import org.anchoranalysis.image.io.bean.stack.StackReader;
 import org.anchoranalysis.io.bean.path.derive.DerivePath;
 import org.anchoranalysis.io.exception.AnchorIOException;
 
@@ -41,7 +41,7 @@ public class ShowAdditionalRasters {
     private final List<DerivePath> derivers;
     private final Path matchPath;
     private final String name;
-    private final RasterReader rasterReader;
+    private final StackReader stackReader;
 
     public void apply() throws OperationFailedException {
 
@@ -49,7 +49,7 @@ public class ShowAdditionalRasters {
             // Any additional image windows to be opened
             for (DerivePath derivePath : derivers) {
                 Path rasterPath = derivePath.deriveFrom(matchPath, false);
-                showRaster.openAndShow(name, rasterPath, rasterReader);
+                showRaster.openAndShow(name, rasterPath, stackReader);
             }
         } catch (AnchorIOException e) {
             throw new OperationFailedException(e);

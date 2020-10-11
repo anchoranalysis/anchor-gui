@@ -36,13 +36,13 @@ import org.anchoranalysis.core.idgetter.IDGetterIter;
 import org.anchoranalysis.core.name.provider.NamedProviderGetException;
 import org.anchoranalysis.gui.export.bean.ExportTaskParams;
 import org.anchoranalysis.gui.frame.display.OverlayedDisplayStackUpdate;
+import org.anchoranalysis.image.io.bean.object.draw.Outline;
 import org.anchoranalysis.image.io.generator.raster.RasterGenerator;
 import org.anchoranalysis.image.io.generator.raster.RasterGeneratorBridge;
 import org.anchoranalysis.image.io.generator.raster.RasterGeneratorDelegateToDisplayStack;
-import org.anchoranalysis.image.io.rasterwriter.RasterWriteOptions;
+import org.anchoranalysis.image.io.stack.StackWriteOptions;
 import org.anchoranalysis.image.stack.DisplayStack;
 import org.anchoranalysis.image.stack.Stack;
-import org.anchoranalysis.io.bean.object.writer.Outline;
 import org.anchoranalysis.mpp.bean.regionmap.RegionMapSingleton;
 import org.anchoranalysis.mpp.bean.regionmap.RegionMembershipWithFlags;
 import org.anchoranalysis.mpp.feature.energy.IndexableMarksWithEnergy;
@@ -124,8 +124,8 @@ public class DrawObjects extends GeneratorFactory<IndexableMarksWithEnergy> {
         }
     }
 
-    private RasterWriteOptions createRasterOptions() {
-        return RasterWriteOptions.alwaysOneOrThreeChannels(mip);
+    private StackWriteOptions createRasterOptions() {
+        return StackWriteOptions.alwaysOneOrThreeChannels(mip);
     }
 
     private IDGetter<Mark> colorGetter() {

@@ -37,8 +37,7 @@ import org.anchoranalysis.gui.container.background.BackgroundStackContainerExcep
 import org.anchoranalysis.gui.finder.FinderRasterSingleChannel;
 import org.anchoranalysis.image.channel.Channel;
 import org.anchoranalysis.image.io.RasterIOException;
-import org.anchoranalysis.image.io.bean.rasterreader.RasterReader;
-import org.anchoranalysis.image.io.bean.rasterreader.RasterReaderUtilities;
+import org.anchoranalysis.image.io.bean.stack.StackReader;
 import org.anchoranalysis.image.stack.DisplayStack;
 import org.anchoranalysis.image.stack.Stack;
 import org.anchoranalysis.io.manifest.file.FileWrite;
@@ -49,16 +48,16 @@ public abstract class FinderRasterStack extends FinderSingleFile
 
     private Optional<Stack> result;
 
-    private RasterReader rasterReader;
+    private StackReader stackReader;
 
-    public FinderRasterStack(RasterReader rasterReader, ErrorReporter errorReporter) {
+    public FinderRasterStack(StackReader stackReader, ErrorReporter errorReporter) {
         super(errorReporter);
-        this.rasterReader = rasterReader;
+        this.stackReader = stackReader;
     }
 
     private Stack createStack(FileWrite fileWrite) throws RasterIOException {
         // Assume single series, single channel
-        return RasterReaderUtilities.openStackFromPath(rasterReader, fileWrite.calculatePath());
+        return stackReader.readStack(fileWrite.calculatePath());
     }
 
     public Stack get() throws OperationFailedException {

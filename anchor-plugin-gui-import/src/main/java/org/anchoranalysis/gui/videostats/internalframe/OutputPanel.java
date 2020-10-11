@@ -34,7 +34,7 @@ import javax.swing.Action;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import org.anchoranalysis.core.color.ColorIndex;
-import org.anchoranalysis.io.bean.object.writer.Outline;
+import org.anchoranalysis.image.io.bean.object.draw.Outline;
 import org.anchoranalysis.io.generator.sequence.OutputSequenceIncrementing;
 import org.anchoranalysis.io.generator.sequence.pattern.OutputPatternIntegerSuffix;
 import org.anchoranalysis.io.generator.sequence.OutputSequenceFactory;

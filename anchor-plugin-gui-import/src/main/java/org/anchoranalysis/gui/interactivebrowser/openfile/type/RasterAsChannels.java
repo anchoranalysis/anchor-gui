@@ -34,7 +34,7 @@ import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.gui.bean.filecreator.FileCreator;
 import org.anchoranalysis.gui.bean.filecreator.NamedSingleStackCreator;
 import org.anchoranalysis.gui.interactivebrowser.openfile.importer.ImporterSettings;
-import org.anchoranalysis.image.io.bean.rasterreader.RasterReader;
+import org.anchoranalysis.image.io.bean.stack.StackReader;
 import org.anchoranalysis.io.bean.files.provider.SpecificPathList;
 import org.anchoranalysis.io.bean.input.InputManager;
 import org.anchoranalysis.io.input.FileInput;
@@ -74,10 +74,10 @@ public class RasterAsChannels extends OpenFileType {
 
     private static NamedChannels createNamedChannels(InputManager<FileInput> fileInputManager) {
 
-        RasterReader reader = RegisterBeanFactories.getDefaultInstances().get(RasterReader.class);
+        StackReader reader = RegisterBeanFactories.getDefaultInstances().get(StackReader.class);
 
         NamedChannels inputManager = new NamedChannels();
-        inputManager.setRasterReader(reader);
+        inputManager.setStackReader(reader);
         inputManager.setFileInput(fileInputManager);
         inputManager.setUseLastSeriesIndexOnly(true);
         inputManager.setChannelMap(new Autoname());

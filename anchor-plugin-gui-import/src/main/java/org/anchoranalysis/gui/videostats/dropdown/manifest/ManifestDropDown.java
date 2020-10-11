@@ -63,7 +63,7 @@ import org.anchoranalysis.gui.videostats.dropdown.contextualmodulecreator.Energy
 import org.anchoranalysis.gui.videostats.dropdown.contextualmodulecreator.SingleContextualModuleCreator;
 import org.anchoranalysis.gui.videostats.dropdown.modulecreator.graph.KernelIterDescriptionModuleCreator;
 import org.anchoranalysis.gui.videostats.operation.combine.OverlayCollectionSupplier;
-import org.anchoranalysis.image.io.bean.rasterreader.RasterReader;
+import org.anchoranalysis.image.io.bean.stack.StackReader;
 import org.anchoranalysis.image.stack.NamedStacksSupplier;
 import org.anchoranalysis.image.stack.wrap.WrapStackAsTimeSequence;
 import org.anchoranalysis.io.manifest.deserializer.folder.LoadContainer;
@@ -141,18 +141,18 @@ public class ManifestDropDown {
     }
 
     private FinderStacksCombine createFinderStacks(
-            FinderEnergyStack finderEnergyStack, RasterReader rasterReader) throws InitException {
+            FinderEnergyStack finderEnergyStack, StackReader stackReader) throws InitException {
         // Finders
         FinderStacksCombine combined = new FinderStacksCombine();
-        combined.add(new FinderStacksFromFolder(rasterReader, OutputterDirectories.STACKS));
-        combined.add(new FinderStacksFromRootFiles(rasterReader, "out"));
+        combined.add(new FinderStacksFromFolder(stackReader, OutputterDirectories.STACKS));
+        combined.add(new FinderStacksFromRootFiles(stackReader, "out"));
         combined.add(
                 new FinderStacksFromEnergyStack(
                         finderEnergyStack)); // Adds the energy stack to the input stack collection
 
         // Disabled, as they not be the same size as the existing image
-        combined.add(new FinderStacksFromRootFiles(rasterReader, "stackFromCollection"));
-        combined.add(new FinderStacksFromFolder(rasterReader, "channelScaledCollection"));
+        combined.add(new FinderStacksFromRootFiles(stackReader, "stackFromCollection"));
+        combined.add(new FinderStacksFromFolder(stackReader, "channelScaledCollection"));
 
         try {
             if (!combined.doFind(manifests.getFileManifest().get())) {
@@ -166,9 +166,9 @@ public class ManifestDropDown {
     }
 
     private FinderEnergyStack createFinderEnergyStack(
-            RasterReader rasterReader, VideoStatsModuleGlobalParams mpg) throws InitException {
+            StackReader stackReader, VideoStatsModuleGlobalParams mpg) throws InitException {
         FinderEnergyStack finderEnergyStack =
-                new FinderEnergyStack(rasterReader, mpg.getLogger().errorReporter());
+                new FinderEnergyStack(stackReader, mpg.getLogger().errorReporter());
         try {
             finderEnergyStack.doFind(manifests.getFileManifest().get());
         } catch (OperationFailedException e) {
@@ -227,15 +227,15 @@ public class ManifestDropDown {
 
     public void init(
             AddVideoStatsModule adder,
-            RasterReader rasterReader,
+            StackReader stackReader,
             MarkEvaluatorManager markEvaluatorManager,
             InputOutputContext inputOutputContext,
             VideoStatsModuleGlobalParams mpg)
             throws InitException {
 
         // Some necessary Finders and Objects
-        FinderEnergyStack finderEnergyStack = createFinderEnergyStack(rasterReader, mpg);
-        FinderStacksCombine finderStacks = createFinderStacks(finderEnergyStack, rasterReader);
+        FinderEnergyStack finderEnergyStack = createFinderEnergyStack(stackReader, mpg);
+        FinderStacksCombine finderStacks = createFinderStacks(finderEnergyStack, stackReader);
         OperationCreateBackgroundSetWithAdder backgroundEnergy =
                 createBackgroundSetWithEnergy(finderEnergyStack, finderStacks, adder, mpg);
 

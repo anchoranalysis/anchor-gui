@@ -34,15 +34,15 @@ import org.anchoranalysis.core.index.container.SingleContainer;
 import org.anchoranalysis.gui.container.background.BackgroundStackContainer;
 import org.anchoranalysis.gui.container.background.BackgroundStackContainerException;
 import org.anchoranalysis.image.channel.Channel;
-import org.anchoranalysis.image.io.bean.rasterreader.RasterReader;
+import org.anchoranalysis.image.io.bean.stack.StackReader;
 import org.anchoranalysis.image.stack.DisplayStack;
 
 // We can eliminate this finder in a moment
 public abstract class FinderRasterChannelZeroOne extends FinderRasterChannel
         implements BackgroundStackContainer {
 
-    public FinderRasterChannelZeroOne(RasterReader rasterReader, ErrorReporter errorReporter) {
-        super(rasterReader, true, errorReporter);
+    public FinderRasterChannelZeroOne(StackReader stackReader, ErrorReporter errorReporter) {
+        super(stackReader, true, errorReporter);
     }
 
     @Override

@@ -38,7 +38,7 @@ import org.anchoranalysis.core.random.RandomNumberGenerator;
 import org.anchoranalysis.gui.export.bean.task.ExportTaskList;
 import org.anchoranalysis.gui.retrieveelements.ExportPopupParams;
 import org.anchoranalysis.gui.videostats.threading.InteractiveThreadPool;
-import org.anchoranalysis.io.params.InputContextParams;
+import org.anchoranalysis.io.input.InputContextParams;
 import org.anchoranalysis.mpp.bean.regionmap.RegionMap;
 import org.anchoranalysis.mpp.bean.regionmap.RegionMapSingleton;
 import org.anchoranalysis.plot.bean.colorscheme.PlotColorScheme;

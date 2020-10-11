@@ -41,7 +41,7 @@ import org.anchoranalysis.gui.backgroundset.BackgroundSet;
 import org.anchoranalysis.gui.container.background.BackgroundStackContainerException;
 import org.anchoranalysis.image.stack.DisplayStack;
 import org.anchoranalysis.image.stack.Stack;
-import org.anchoranalysis.io.bean.color.list.ColorScheme;
+import org.anchoranalysis.io.bean.color.scheme.ColorScheme;
 
 @RequiredArgsConstructor
 public class ShowComparers {

@@ -30,7 +30,7 @@ import java.util.List;
 import java.util.Optional;
 import org.anchoranalysis.core.error.reporter.ErrorReporter;
 import org.anchoranalysis.image.experiment.identifiers.StackIdentifiers;
-import org.anchoranalysis.image.io.bean.rasterreader.RasterReader;
+import org.anchoranalysis.image.io.bean.stack.StackReader;
 import org.anchoranalysis.io.manifest.ManifestRecorder;
 import org.anchoranalysis.io.manifest.file.FileWrite;
 import org.anchoranalysis.io.manifest.finder.FinderUtilities;
@@ -39,10 +39,10 @@ import org.anchoranalysis.io.manifest.match.FileWriteOutputName;
 
 public class FinderScaledOriginal extends FinderRasterStack {
 
-    public FinderScaledOriginal(RasterReader rasterReader, ErrorReporter errorReporter) {
+    public FinderScaledOriginal(StackReader stackReader, ErrorReporter errorReporter) {
         // TODO fix
         // Assumes its a single channel source
-        super(rasterReader, errorReporter);
+        super(stackReader, errorReporter);
     }
 
     @Override

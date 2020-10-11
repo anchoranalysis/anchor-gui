@@ -33,8 +33,8 @@ import org.anchoranalysis.core.name.store.StoreSupplier;
 import org.anchoranalysis.core.progress.ProgressReporter;
 import org.anchoranalysis.core.progress.ProgressReporterNull;
 import org.anchoranalysis.image.io.RasterIOException;
-import org.anchoranalysis.image.io.bean.rasterreader.RasterReader;
-import org.anchoranalysis.image.io.rasterreader.OpenedRaster;
+import org.anchoranalysis.image.io.bean.stack.StackReader;
+import org.anchoranalysis.image.io.stack.OpenedRaster;
 import org.anchoranalysis.image.stack.NamedStacks;
 import org.anchoranalysis.image.stack.Stack;
 import org.anchoranalysis.io.manifest.ManifestRecorder;
@@ -52,13 +52,13 @@ public class FinderRasterFilesByManifestDescriptionFunction implements Finder {
 
     private List<FileWrite> list;
 
-    private RasterReader rasterReader;
+    private StackReader stackReader;
 
     public FinderRasterFilesByManifestDescriptionFunction(
-            RasterReader rasterReader, String function) {
+            StackReader stackReader, String function) {
 
         this.function = function;
-        this.rasterReader = rasterReader;
+        this.stackReader = stackReader;
     }
 
     @Override
@@ -92,16 +92,16 @@ public class FinderRasterFilesByManifestDescriptionFunction implements Finder {
                             () ->
                                     openStack(
                                             fileWrite.calculatePath(),
-                                            rasterReader,
+                                            stackReader,
                                             ProgressReporterNull.get())));
         }
         return out;
     }
 
     private Stack openStack(
-            Path filePath, RasterReader rasterReader, ProgressReporter progressReporter)
+            Path filePath, StackReader stackReader, ProgressReporter progressReporter)
             throws OperationFailedException {
-        try (OpenedRaster openedRaster = rasterReader.openFile(filePath)) {
+        try (OpenedRaster openedRaster = stackReader.openFile(filePath)) {
             return openedRaster.open(0, progressReporter).get(0);
 
         } catch (RasterIOException e) {

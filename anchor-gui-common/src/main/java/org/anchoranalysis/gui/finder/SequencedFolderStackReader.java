@@ -30,26 +30,26 @@ import java.nio.file.Path;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.progress.ProgressReporterNull;
 import org.anchoranalysis.image.io.RasterIOException;
-import org.anchoranalysis.image.io.bean.rasterreader.RasterReader;
-import org.anchoranalysis.image.io.rasterreader.OpenedRaster;
+import org.anchoranalysis.image.io.bean.stack.StackReader;
+import org.anchoranalysis.image.io.stack.OpenedRaster;
 import org.anchoranalysis.image.stack.Stack;
 import org.anchoranalysis.io.manifest.deserializer.folder.sequenced.SequencedFolderContainerCreator;
 import org.anchoranalysis.io.manifest.folder.SequencedFolder;
 
-class SequencedFolderRasterReader extends SequencedFolderContainerCreator<Stack> {
+class SequencedFolderStackReader extends SequencedFolderContainerCreator<Stack> {
 
-    private RasterReader rasterReader;
+    private StackReader stackReader;
 
-    public SequencedFolderRasterReader(SequencedFolder rootFolder, RasterReader rasterReader) {
+    public SequencedFolderStackReader(SequencedFolder rootFolder, StackReader stackReader) {
         super(rootFolder);
-        this.rasterReader = rasterReader;
+        this.stackReader = stackReader;
     }
 
     @Override
     protected Stack createFromFilePath(Path path) throws CreateException {
         // We don't support multiple series for now
         try {
-            OpenedRaster or = rasterReader.openFile(path);
+            OpenedRaster or = stackReader.openFile(path);
             try {
                 return or.open(0, ProgressReporterNull.get()).get(0);
             } finally {

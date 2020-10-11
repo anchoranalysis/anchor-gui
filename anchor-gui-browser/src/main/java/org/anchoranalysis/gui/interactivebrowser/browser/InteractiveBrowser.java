@@ -49,9 +49,9 @@ import org.anchoranalysis.gui.retrieveelements.ExportPopupParams;
 import org.anchoranalysis.gui.videostats.dropdown.VideoStatsModuleGlobalParams;
 import org.anchoranalysis.gui.videostats.frame.VideoStatsFrame;
 import org.anchoranalysis.gui.videostats.module.DefaultModuleState;
-import org.anchoranalysis.image.io.bean.rasterreader.RasterReader;
-import org.anchoranalysis.io.bean.color.list.HSB;
-import org.anchoranalysis.io.bean.color.list.Shuffle;
+import org.anchoranalysis.image.io.bean.stack.StackReader;
+import org.anchoranalysis.io.bean.color.scheme.HSB;
+import org.anchoranalysis.io.bean.color.scheme.Shuffle;
 import org.anchoranalysis.io.generator.sequence.SequenceMemory;
 import org.anchoranalysis.io.output.outputter.InputOutputContext;
 import org.anchoranalysis.mpp.feature.bean.mark.MarkEvaluator;
@@ -152,7 +152,7 @@ public class InteractiveBrowser {
         FileCreatorLoader fileCreatorLoader =
                 creatorLoader(
                         adderWithEnergy,
-                        interactiveBrowserInput.getRasterReader(),
+                        interactiveBrowserInput.getStackReader(),
                         fileOpenManager,
                         interactiveBrowserInput.getImporterSettings());
 
@@ -174,11 +174,11 @@ public class InteractiveBrowser {
 
     private FileCreatorLoader creatorLoader(
             AdderWithEnergy adderWithEnergy,
-            RasterReader rasterReader,
+            StackReader stackReader,
             FileOpenManager fileOpenManager,
             ImporterSettings importerSettings) {
         return adderWithEnergy.createFileCreatorLoader(
-                rasterReader,
+                stackReader,
                 fileOpenManager,
                 markEvaluatorManager,
                 importerSettings,

@@ -33,7 +33,7 @@ import org.anchoranalysis.core.name.provider.NamedProvider;
 import org.anchoranalysis.core.progress.ProgressReporterNull;
 import org.anchoranalysis.feature.energy.EnergyStack;
 import org.anchoranalysis.gui.videostats.dropdown.common.EnergyStackSupplier;
-import org.anchoranalysis.image.io.bean.rasterreader.RasterReader;
+import org.anchoranalysis.image.io.bean.stack.StackReader;
 import org.anchoranalysis.image.stack.NamedStacksSupplier;
 import org.anchoranalysis.image.stack.Stack;
 import org.anchoranalysis.io.manifest.ManifestRecorder;
@@ -48,8 +48,8 @@ public class FinderEnergyStack implements Finder {
 
     private NamedStacksSupplier operationStacks;
 
-    public FinderEnergyStack(RasterReader rasterReader, ErrorReporter errorReporter) {
-        finderRasterFolder = new FinderRasterFolder("energyStack", "energyStack", rasterReader);
+    public FinderEnergyStack(StackReader stackReader, ErrorReporter errorReporter) {
+        finderRasterFolder = new FinderRasterFolder("energyStack", "energyStack", stackReader);
 
         this.operationStacks =
                 NamedStacksSupplier.cache(

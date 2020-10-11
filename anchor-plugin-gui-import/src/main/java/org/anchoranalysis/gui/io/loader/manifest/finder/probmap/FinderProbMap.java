@@ -40,7 +40,7 @@ import org.anchoranalysis.gui.container.background.BackgroundStackContainerExcep
 import org.anchoranalysis.gui.finder.FinderRasterSingleChannel;
 import org.anchoranalysis.image.channel.Channel;
 import org.anchoranalysis.image.extent.IncorrectImageSizeException;
-import org.anchoranalysis.image.io.bean.rasterreader.RasterReader;
+import org.anchoranalysis.image.io.bean.stack.StackReader;
 import org.anchoranalysis.image.stack.DisplayStack;
 import org.anchoranalysis.image.stack.Stack;
 import org.anchoranalysis.io.manifest.ManifestRecorder;
@@ -55,10 +55,10 @@ public class FinderProbMap implements BackgroundStackContainer, FinderRasterSing
     private final String displayName;
 
     public FinderProbMap(
-            RasterReader rasterReader, String singleRasterOutputName, ErrorReporter errorReporter) {
+            StackReader stackReader, String singleRasterOutputName, ErrorReporter errorReporter) {
         singleRaster =
-                new FinderProbMapSingleRaster(rasterReader, singleRasterOutputName, errorReporter);
-        rasterSeries = new FinderProbMapRasterSeries(rasterReader, singleRasterOutputName);
+                new FinderProbMapSingleRaster(stackReader, singleRasterOutputName, errorReporter);
+        rasterSeries = new FinderProbMapRasterSeries(stackReader, singleRasterOutputName);
         displayName = singleRasterOutputName;
     }
 

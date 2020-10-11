@@ -35,8 +35,8 @@ import org.anchoranalysis.core.progress.ProgressReporterNull;
 import org.anchoranalysis.gui.finder.FinderRasterSingleChannel;
 import org.anchoranalysis.image.channel.Channel;
 import org.anchoranalysis.image.io.RasterIOException;
-import org.anchoranalysis.image.io.bean.rasterreader.RasterReader;
-import org.anchoranalysis.image.io.rasterreader.OpenedRaster;
+import org.anchoranalysis.image.io.bean.stack.StackReader;
+import org.anchoranalysis.image.io.stack.OpenedRaster;
 import org.anchoranalysis.image.stack.Stack;
 import org.anchoranalysis.io.manifest.file.FileWrite;
 import org.anchoranalysis.io.manifest.finder.FinderSingleFile;
@@ -46,14 +46,14 @@ public abstract class FinderRasterChannel extends FinderSingleFile
 
     private Optional<Channel> result = Optional.empty();
 
-    private RasterReader rasterReader;
+    private StackReader stackReader;
 
     private boolean normalizeChannel;
 
     public FinderRasterChannel(
-            RasterReader rasterReader, boolean normalizeChannel, ErrorReporter errorReporter) {
+            StackReader stackReader, boolean normalizeChannel, ErrorReporter errorReporter) {
         super(errorReporter);
-        this.rasterReader = rasterReader;
+        this.stackReader = stackReader;
         this.normalizeChannel = normalizeChannel;
     }
 
@@ -84,7 +84,7 @@ public abstract class FinderRasterChannel extends FinderSingleFile
         // Assume single series, single channel
         Path filePath = fileWrite.calculatePath();
 
-        try (OpenedRaster openedRaster = rasterReader.openFile(filePath)) {
+        try (OpenedRaster openedRaster = stackReader.openFile(filePath)) {
             if (openedRaster.numberSeries() != 1) {
                 throw new CreateException("there must be exactly one series");
             }

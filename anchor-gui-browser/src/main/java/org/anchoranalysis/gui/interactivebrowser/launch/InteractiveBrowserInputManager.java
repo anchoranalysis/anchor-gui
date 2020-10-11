@@ -40,7 +40,7 @@ import org.anchoranalysis.feature.input.FeatureInput;
 import org.anchoranalysis.gui.bean.filecreator.FileCreator;
 import org.anchoranalysis.gui.interactivebrowser.input.InteractiveBrowserInput;
 import org.anchoranalysis.gui.interactivebrowser.openfile.importer.ImporterSettings;
-import org.anchoranalysis.image.io.bean.rasterreader.RasterReader;
+import org.anchoranalysis.image.io.bean.stack.StackReader;
 import org.anchoranalysis.io.bean.input.InputManager;
 import org.anchoranalysis.io.bean.input.InputManagerParams;
 import org.anchoranalysis.io.bean.path.provider.FilePathProvider;
@@ -53,7 +53,7 @@ public class InteractiveBrowserInputManager extends InputManager<InteractiveBrow
     // START BEAN PROPERTIES
     @BeanField @Getter @Setter private List<FileCreator> listFileCreators = new ArrayList<>();
 
-    @BeanField @DefaultInstance @Getter @Setter private RasterReader rasterReader;
+    @BeanField @DefaultInstance @Getter @Setter private StackReader stackReader;
 
     @BeanField @OptionalBean @Getter @Setter private EnergySchemeCreator energySchemeCreator;
 
@@ -80,7 +80,7 @@ public class InteractiveBrowserInputManager extends InputManager<InteractiveBrow
 
         InteractiveBrowserInput ibi = new InteractiveBrowserInput();
         ibi.setListFileCreators(listFileCreators);
-        ibi.setRasterReader(rasterReader);
+        ibi.setStackReader(stackReader);
         ibi.setEnergySchemeCreator(energySchemeCreator);
         ibi.setNamedItemSharedFeatureList(namedItemSharedFeatureList);
         ibi.setNamedItemMarkEvaluatorList(namedItemMarkEvaluatorList);

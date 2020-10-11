@@ -125,7 +125,7 @@ public class ExecutedExperimentFileCreator extends FileCreatorGeneralList {
 
         FileExecutedExperimentImageWithManifest file =
                 new FileExecutedExperimentImageWithManifest(
-                        coupledManifests, params.getRasterReader(), params.getMarkCreatorParams());
+                        coupledManifests, params.getStackReader(), params.getMarkCreatorParams());
 
         listFiles.add(file);
     }

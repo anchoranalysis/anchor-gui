@@ -35,7 +35,7 @@ import lombok.AllArgsConstructor;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.image.bean.spatial.SizeXY;
 import org.anchoranalysis.image.io.generator.raster.RasterGeneratorWithElement;
-import org.anchoranalysis.image.io.rasterwriter.RasterWriteOptions;
+import org.anchoranalysis.image.io.stack.StackWriteOptions;
 import org.anchoranalysis.image.stack.Stack;
 import org.anchoranalysis.image.stack.bufferedimage.CreateStackFromBufferedImage;
 import org.anchoranalysis.io.manifest.ManifestDescription;
@@ -98,7 +98,7 @@ class PlotGenerator extends RasterGeneratorWithElement<PlotInstance> {
     }
 
     @Override
-    public RasterWriteOptions rasterWriteOptions() {
-        return RasterWriteOptions.rgbAlways2D();
+    public StackWriteOptions writeOptions() {
+        return StackWriteOptions.rgbAlways2D();
     }
 }

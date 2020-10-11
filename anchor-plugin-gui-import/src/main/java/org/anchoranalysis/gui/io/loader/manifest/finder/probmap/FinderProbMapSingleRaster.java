@@ -29,7 +29,7 @@ package org.anchoranalysis.gui.io.loader.manifest.finder.probmap;
 import java.util.Optional;
 import org.anchoranalysis.core.error.reporter.ErrorReporter;
 import org.anchoranalysis.gui.io.loader.manifest.finder.FinderRasterChannelZeroOne;
-import org.anchoranalysis.image.io.bean.rasterreader.RasterReader;
+import org.anchoranalysis.image.io.bean.stack.StackReader;
 import org.anchoranalysis.io.manifest.ManifestRecorder;
 import org.anchoranalysis.io.manifest.file.FileWrite;
 import org.anchoranalysis.io.manifest.finder.FinderUtilities;
@@ -41,8 +41,8 @@ public class FinderProbMapSingleRaster extends FinderRasterChannelZeroOne {
     private String probMapOutputName;
 
     public FinderProbMapSingleRaster(
-            RasterReader rasterReader, String probMapOutputName, ErrorReporter errorReporter) {
-        super(rasterReader, errorReporter);
+            StackReader stackReader, String probMapOutputName, ErrorReporter errorReporter) {
+        super(stackReader, errorReporter);
         this.probMapOutputName = probMapOutputName;
     }
 

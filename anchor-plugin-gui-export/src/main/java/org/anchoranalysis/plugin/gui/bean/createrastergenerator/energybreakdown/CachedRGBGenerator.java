@@ -34,7 +34,7 @@ import org.anchoranalysis.core.error.reporter.ErrorReporter;
 import org.anchoranalysis.core.index.SetOperationFailedException;
 import org.anchoranalysis.gui.frame.display.OverlayedDisplayStackUpdate;
 import org.anchoranalysis.image.io.generator.raster.RasterWriterUtilities;
-import org.anchoranalysis.image.io.rasterwriter.RasterWriteOptions;
+import org.anchoranalysis.image.io.stack.StackWriteOptions;
 import org.anchoranalysis.image.stack.DisplayStack;
 import org.anchoranalysis.io.output.bean.OutputWriteSettings;
 import org.anchoranalysis.io.output.error.OutputWriteFailedException;
@@ -47,7 +47,7 @@ class CachedRGBGenerator extends CacheableOverlaysToRGBGenerator {
     private final CachedRGB cachedRGB;
 
     /** Options that determine how the raster is written. */
-    private final RasterWriteOptions rasterOptions;
+    private final StackWriteOptions rasterOptions;
 
     private final ErrorReporter errorReporter;
     // END BEAN PROPERTIES
