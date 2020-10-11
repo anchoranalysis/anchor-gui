@@ -50,7 +50,7 @@ import org.anchoranalysis.gui.videostats.internalframe.annotator.AnnotationFrame
 import org.anchoranalysis.gui.videostats.internalframe.annotator.AnnotationPanelParams;
 import org.anchoranalysis.gui.videostats.internalframe.annotator.navigation.PanelNavigation;
 import org.anchoranalysis.gui.videostats.module.VideoStatsModuleCreateException;
-import org.anchoranalysis.io.error.AnchorIOException;
+import org.anchoranalysis.io.exception.AnchorIOException;
 import org.anchoranalysis.plugin.annotation.bean.strategy.MarkProposerStrategy;
 import org.anchoranalysis.plugin.annotation.bean.strategy.PathFromGenerator;
 
@@ -72,7 +72,7 @@ public class BuilderProposeMarks
 
         Optional<Path> marksPath =
                 OptionalUtilities.mapBoth(
-                        getStrategy().marksFilePathGenerator(),
+                        getStrategy().marksDeriver(),
                         pathForBinding(),
                         PathFromGenerator::derivePath);
 

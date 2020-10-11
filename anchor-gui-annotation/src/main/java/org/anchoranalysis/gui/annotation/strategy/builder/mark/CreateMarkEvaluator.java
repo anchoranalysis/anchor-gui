@@ -39,8 +39,8 @@ import org.anchoranalysis.gui.annotation.mark.MarkAnnotator;
 import org.anchoranalysis.gui.interactivebrowser.MarkEvaluatorManager;
 import org.anchoranalysis.gui.interactivebrowser.MarkEvaluatorSetForImage;
 import org.anchoranalysis.image.stack.NamedStacksSupplier;
-import org.anchoranalysis.io.bean.filepath.generator.FilePathGenerator;
-import org.anchoranalysis.io.error.AnchorIOException;
+import org.anchoranalysis.io.bean.path.derive.DerivePath;
+import org.anchoranalysis.io.exception.AnchorIOException;
 import org.anchoranalysis.plugin.annotation.bean.strategy.MarkProposerStrategy;
 import org.anchoranalysis.plugin.annotation.bean.strategy.PathFromGenerator;
 
@@ -69,20 +69,20 @@ class CreateMarkEvaluator {
             throws CreateException {
         return markEvaluatorManager.createSetForStackCollection(
                 stacks,
-                () -> paramsFromGenerator(pathForBinding, strategy.paramsFilePathGenerator()));
+                () -> paramsFromGenerator(pathForBinding, strategy.paramsDeriver()));
     }
 
     private static Optional<KeyValueParams> paramsFromGenerator(
-            Path pathForBinding, Optional<FilePathGenerator> filePathGenerator) throws IOException {
+            Path pathForBinding, Optional<DerivePath> derivePath) throws IOException {
         return OptionalUtilities.map(
-                filePathGenerator, generator -> readParams(generator, pathForBinding));
+                derivePath, generator -> readParams(generator, pathForBinding));
     }
 
     private static KeyValueParams readParams(
-            FilePathGenerator filePathGenerator, Path pathForBinding) throws IOException {
+            DerivePath derivePath, Path pathForBinding) throws IOException {
         try {
             return KeyValueParams.readFromFile(
-                    PathFromGenerator.derivePath(filePathGenerator, pathForBinding));
+                    PathFromGenerator.derivePath(derivePath, pathForBinding));
         } catch (AnchorIOException e) {
             throw new IOException(e);
         }

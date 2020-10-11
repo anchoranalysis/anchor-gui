@@ -32,7 +32,7 @@ import org.anchoranalysis.bean.AnchorBean;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.gui.bean.filecreator.FileCreator;
 import org.anchoranalysis.gui.interactivebrowser.openfile.importer.ImporterSettings;
-import org.anchoranalysis.io.bean.provider.file.SpecificPathList;
+import org.anchoranalysis.io.bean.files.provider.SpecificPathList;
 import org.apache.commons.io.FilenameUtils;
 
 // Describes what type of file we are opening

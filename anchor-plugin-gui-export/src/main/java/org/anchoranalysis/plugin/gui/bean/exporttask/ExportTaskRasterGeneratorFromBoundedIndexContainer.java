@@ -102,7 +102,7 @@ public abstract class ExportTaskRasterGeneratorFromBoundedIndexContainer<T>
             ExportTaskParams params) {
         return startIndex -> new OutputSequenceFactory<>(
                 createGenerator(params),
-                params.getInputOutputContext()
+                params.getInputOutputContext().getOutputter().getChecked()
             ).incrementingIntegers(
                 new OutputPatternIntegerSuffix(getOutputName(),false),
                 startIndex, 1);

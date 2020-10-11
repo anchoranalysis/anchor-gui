@@ -41,6 +41,7 @@ import org.anchoranalysis.io.generator.sequence.OutputSequenceFactory;
 import org.anchoranalysis.io.manifest.ManifestDescription;
 import org.anchoranalysis.io.output.error.OutputWriteFailedException;
 import org.anchoranalysis.io.output.outputter.InputOutputContext;
+import org.anchoranalysis.io.output.outputter.OutputterChecked;
 import org.anchoranalysis.mpp.io.marks.ColoredMarksWithDisplayStack;
 import org.anchoranalysis.mpp.io.marks.MarksWithDisplayStack;
 import org.anchoranalysis.mpp.io.marks.generator.MarksGenerator;
@@ -71,8 +72,10 @@ public class OutputPanel {
 
             OutputPatternIntegerSuffix directory = new OutputPatternIntegerSuffix("markEvaluator", 6, false, Optional.of(new ManifestDescription("raster", "markEvaluator")));
 
+            OutputterChecked outputter = context.getOutputter().getChecked();
+            
             try {
-                outputSequence = new OutputSequenceFactory<>(generator, context).incrementingByOne(directory);
+                outputSequence = new OutputSequenceFactory<>(generator, outputter).incrementingByOne(directory);
             } catch (OutputWriteFailedException e) {
                 context.getErrorReporter().recordError(OutputPanel.class, e);
                 outputSequence = null;

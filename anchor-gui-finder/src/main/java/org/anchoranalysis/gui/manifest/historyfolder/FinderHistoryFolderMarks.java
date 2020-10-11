@@ -28,7 +28,7 @@ package org.anchoranalysis.gui.manifest.historyfolder;
 
 import org.anchoranalysis.io.bean.deserializer.Deserializer;
 import org.anchoranalysis.io.bean.deserializer.ObjectInputStreamDeserializer;
-import org.anchoranalysis.io.deserializer.DeserializationFailedException;
+import org.anchoranalysis.io.exception.DeserializationFailedException;
 import org.anchoranalysis.io.manifest.deserializer.folder.BundleDeserializers;
 import org.anchoranalysis.io.manifest.deserializer.folder.HistoryCreator;
 import org.anchoranalysis.io.manifest.deserializer.folder.LoadContainer;

@@ -71,7 +71,7 @@ public class MergedColorIndex implements ColorIndex {
     }
 
     @Override
-    public int numUniqueColors() {
+    public int numberUniqueColors() {
         return colorList.size();
     }
 

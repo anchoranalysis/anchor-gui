@@ -52,7 +52,6 @@ import org.anchoranalysis.gui.videostats.module.DefaultModuleState;
 import org.anchoranalysis.image.io.bean.rasterreader.RasterReader;
 import org.anchoranalysis.io.bean.color.list.HSB;
 import org.anchoranalysis.io.bean.color.list.Shuffle;
-import org.anchoranalysis.io.color.HashedColorSet;
 import org.anchoranalysis.io.generator.sequence.SequenceMemory;
 import org.anchoranalysis.io.output.outputter.InputOutputContext;
 import org.anchoranalysis.mpp.feature.bean.mark.MarkEvaluator;
@@ -61,7 +60,7 @@ public class InteractiveBrowser {
 
     // How long the splash screen displays for
     private static final int SPLASH_SCREEN_TIME = 2000;
-    private static final int NUM_COLORS = 20;
+    private static final int NUMBER_COLORS = 20;
 
     private VideoStatsFrame videoStatsFrame;
 
@@ -248,7 +247,7 @@ public class InteractiveBrowser {
 
     private ColorIndex createColorIndex() throws InitException {
         try {
-            return new HashedColorSet(new Shuffle(new HSB()), NUM_COLORS);
+            return new Shuffle(new HSB()).colorForEachIndex(NUMBER_COLORS);
         } catch (OperationFailedException e) {
             throw new InitException(e);
         }

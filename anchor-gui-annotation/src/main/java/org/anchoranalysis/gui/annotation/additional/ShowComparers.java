@@ -41,14 +41,14 @@ import org.anchoranalysis.gui.backgroundset.BackgroundSet;
 import org.anchoranalysis.gui.container.background.BackgroundStackContainerException;
 import org.anchoranalysis.image.stack.DisplayStack;
 import org.anchoranalysis.image.stack.Stack;
-import org.anchoranalysis.io.bean.color.list.ColorListFactory;
+import org.anchoranalysis.io.bean.color.list.ColorScheme;
 
 @RequiredArgsConstructor
 public class ShowComparers {
 
     private final ShowRaster showRaster;
     private final MultipleComparer multipleComparer;
-    private final ColorListFactory colorSetGenerator;
+    private final ColorScheme colorSetGenerator;
     private final Path matchPath;
     private final String name;
     private final CheckedFunction<Integer, DisplayStack, ? extends Throwable> defaultBackground;

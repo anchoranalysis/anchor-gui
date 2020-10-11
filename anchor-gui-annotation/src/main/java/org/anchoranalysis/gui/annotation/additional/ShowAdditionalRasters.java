@@ -31,14 +31,14 @@ import java.util.List;
 import lombok.AllArgsConstructor;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.image.io.bean.rasterreader.RasterReader;
-import org.anchoranalysis.io.bean.filepath.generator.FilePathGenerator;
-import org.anchoranalysis.io.error.AnchorIOException;
+import org.anchoranalysis.io.bean.path.derive.DerivePath;
+import org.anchoranalysis.io.exception.AnchorIOException;
 
 @AllArgsConstructor
 public class ShowAdditionalRasters {
 
     private final ShowRaster showRaster;
-    private final List<FilePathGenerator> listFilePathGenerator;
+    private final List<DerivePath> derivers;
     private final Path matchPath;
     private final String name;
     private final RasterReader rasterReader;
@@ -47,8 +47,8 @@ public class ShowAdditionalRasters {
 
         try {
             // Any additional image windows to be opened
-            for (FilePathGenerator filePathGenerator : listFilePathGenerator) {
-                Path rasterPath = filePathGenerator.outFilePath(matchPath, false);
+            for (DerivePath derivePath : derivers) {
+                Path rasterPath = derivePath.deriveFrom(matchPath, false);
                 showRaster.openAndShow(name, rasterPath, rasterReader);
             }
         } catch (AnchorIOException e) {

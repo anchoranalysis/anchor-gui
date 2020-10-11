@@ -33,7 +33,7 @@ import org.anchoranalysis.annotation.io.input.AnnotationWithStrategy;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.gui.annotation.strategy.builder.mark.BuilderProposeMarks;
 import org.anchoranalysis.gui.annotation.strategy.builder.whole.BuilderWholeImage;
-import org.anchoranalysis.io.error.AnchorIOException;
+import org.anchoranalysis.io.exception.AnchorIOException;
 import org.anchoranalysis.plugin.annotation.bean.strategy.MarkProposerStrategy;
 import org.anchoranalysis.plugin.annotation.bean.strategy.WholeImageLabelStrategy;
 
