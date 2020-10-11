@@ -45,7 +45,7 @@ import org.anchoranalysis.io.generator.Generator;
 import org.anchoranalysis.io.manifest.ManifestDescription;
 import org.anchoranalysis.io.manifest.ManifestFolderDescription;
 import org.anchoranalysis.io.manifest.sequencetype.IncrementingIntegers;
-import org.anchoranalysis.io.namestyle.IntegerSuffixOutputNameStyle;
+import org.anchoranalysis.io.output.namestyle.IntegerSuffixOutputNameStyle;
 import org.anchoranalysis.io.output.outputter.InputOutputContext;
 
 @RequiredArgsConstructor

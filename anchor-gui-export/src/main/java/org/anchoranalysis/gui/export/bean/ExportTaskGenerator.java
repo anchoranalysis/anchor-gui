@@ -33,7 +33,7 @@ import lombok.AllArgsConstructor;
 import org.anchoranalysis.core.index.SetOperationFailedException;
 import org.anchoranalysis.io.generator.Generator;
 import org.anchoranalysis.io.generator.sequence.SequenceMemory;
-import org.anchoranalysis.io.namestyle.IndexableOutputNameStyle;
+import org.anchoranalysis.io.output.namestyle.IndexableOutputNameStyle;
 
 @AllArgsConstructor
 public class ExportTaskGenerator<T> implements ExportTask {

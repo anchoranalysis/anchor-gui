@@ -33,7 +33,8 @@ import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.error.reporter.ErrorReporter;
 import org.anchoranalysis.core.index.SetOperationFailedException;
 import org.anchoranalysis.gui.frame.display.OverlayedDisplayStackUpdate;
-import org.anchoranalysis.image.io.generator.raster.RasterWriterUtilities;
+import org.anchoranalysis.image.io.RasterIOException;
+import org.anchoranalysis.image.io.generator.raster.GeneratorOutputter;
 import org.anchoranalysis.image.io.stack.StackWriteOptions;
 import org.anchoranalysis.image.stack.DisplayStack;
 import org.anchoranalysis.io.output.bean.OutputWriteSettings;
@@ -111,14 +112,18 @@ class CachedRGBGenerator extends CacheableOverlaysToRGBGenerator {
     @Override
     public void writeToFile(OutputWriteSettings outputWriteSettings, Path filePath)
             throws OutputWriteFailedException {
-        RasterWriterUtilities.writeRasterUsingDefault(
-                cachedRGB.getRGB().asStack(), outputWriteSettings, filePath, true, rasterOptions);
+        try {
+            GeneratorOutputter.writer(outputWriteSettings).writeStack(
+                    cachedRGB.getRGB().asStack(), filePath, true, rasterOptions);
+        } catch (RasterIOException e) {
+            throw new OutputWriteFailedException(e);
+        }
     }
 
     @Override
     public String getFileExtension(OutputWriteSettings outputWriteSettings)
             throws OperationFailedException {
-        return RasterWriterUtilities.fileExtensionForDefaultRasterWriter(
+        return GeneratorOutputter.fileExtensionWriter(
                 outputWriteSettings, rasterOptions);
     }
 }
