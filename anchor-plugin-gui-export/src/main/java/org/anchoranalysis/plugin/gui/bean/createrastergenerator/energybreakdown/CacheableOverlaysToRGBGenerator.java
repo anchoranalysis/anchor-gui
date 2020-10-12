@@ -32,7 +32,6 @@ import org.anchoranalysis.gui.frame.display.Redrawable;
 import org.anchoranalysis.image.stack.DisplayStack;
 import org.anchoranalysis.io.generator.SingleFileTypeGenerator;
 import org.anchoranalysis.io.manifest.ManifestDescription;
-import org.anchoranalysis.io.output.error.OutputWriteFailedException;
 import org.anchoranalysis.overlay.writer.DrawOverlay;
 
 public abstract class CacheableOverlaysToRGBGenerator
@@ -48,10 +47,4 @@ public abstract class CacheableOverlaysToRGBGenerator
     public Optional<ManifestDescription> createManifestDescription() {
         return Optional.of(new ManifestDescription("raster", "marks"));
     }
-
-    @Override
-    public void start() throws OutputWriteFailedException {}
-
-    @Override
-    public void end() throws OutputWriteFailedException {}
 }

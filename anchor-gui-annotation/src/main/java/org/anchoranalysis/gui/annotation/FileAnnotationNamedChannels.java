@@ -73,7 +73,7 @@ public class FileAnnotationNamedChannels extends InteractiveFile {
 
     @Override
     public String identifier() {
-        return annotation.descriptiveName();
+        return annotation.inputName();
     }
 
     private void invalidateProgressState() {

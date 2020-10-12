@@ -43,7 +43,7 @@ import org.anchoranalysis.gui.series.TimeSequenceProvider;
 import org.anchoranalysis.gui.series.TimeSequenceProviderSupplier;
 import org.anchoranalysis.gui.videostats.dropdown.AddVideoStatsModule;
 import org.anchoranalysis.gui.videostats.dropdown.multicollection.MultiCollectionDropDown;
-import org.anchoranalysis.image.io.RasterIOException;
+import org.anchoranalysis.image.io.ImageIOException;
 import org.anchoranalysis.image.stack.TimeSequence;
 import org.anchoranalysis.io.output.outputter.InputOutputContext;
 import org.anchoranalysis.plugin.io.bean.input.stack.StackSequenceInput;
@@ -57,7 +57,7 @@ public class FileStackCollection extends InteractiveFile {
 
     @Override
     public String identifier() {
-        return FilenameUtils.removeExtension(new File(input.descriptiveName()).getName());
+        return FilenameUtils.removeExtension(new File(input.name()).getName());
     }
 
     @Override
@@ -106,7 +106,7 @@ public class FileStackCollection extends InteractiveFile {
             store.add("input_stack", () -> timeSeries);
 
             return new TimeSequenceProvider(store, input.numberFrames());
-        } catch (RasterIOException | OperationFailedException e) {
+        } catch (ImageIOException | OperationFailedException e) {
             throw new CreateException(e);
         }
     }

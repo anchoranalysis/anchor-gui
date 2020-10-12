@@ -40,7 +40,7 @@ import org.anchoranalysis.gui.interactivebrowser.MarkEvaluatorManager;
 import org.anchoranalysis.gui.interactivebrowser.MarkEvaluatorSetForImage;
 import org.anchoranalysis.image.stack.NamedStacksSupplier;
 import org.anchoranalysis.io.bean.path.derive.DerivePath;
-import org.anchoranalysis.io.exception.AnchorIOException;
+import org.anchoranalysis.io.exception.DerivePathException;
 import org.anchoranalysis.plugin.annotation.bean.strategy.MarkProposerStrategy;
 import org.anchoranalysis.plugin.annotation.bean.strategy.PathFromGenerator;
 
@@ -83,7 +83,7 @@ class CreateMarkEvaluator {
         try {
             return KeyValueParams.readFromFile(
                     PathFromGenerator.derivePath(derivePath, pathForBinding));
-        } catch (AnchorIOException e) {
+        } catch (DerivePathException e) {
             throw new IOException(e);
         }
     }

@@ -29,7 +29,7 @@ package org.anchoranalysis.gui.finder;
 import java.nio.file.Path;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.progress.ProgressReporterNull;
-import org.anchoranalysis.image.io.RasterIOException;
+import org.anchoranalysis.image.io.ImageIOException;
 import org.anchoranalysis.image.io.bean.stack.StackReader;
 import org.anchoranalysis.image.io.stack.OpenedRaster;
 import org.anchoranalysis.image.stack.Stack;
@@ -55,7 +55,7 @@ class SequencedFolderStackReader extends SequencedFolderContainerCreator<Stack> 
             } finally {
                 or.close();
             }
-        } catch (RasterIOException e) {
+        } catch (ImageIOException e) {
             throw new CreateException(e);
         }
     }

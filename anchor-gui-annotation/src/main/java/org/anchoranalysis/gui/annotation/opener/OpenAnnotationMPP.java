@@ -37,7 +37,7 @@ import org.anchoranalysis.gui.annotation.InitAnnotation;
 import org.anchoranalysis.gui.annotation.mark.RejectionReason;
 import org.anchoranalysis.gui.videostats.internalframe.annotator.currentstate.PartitionedMarks;
 import org.anchoranalysis.gui.videostats.module.VideoStatsModuleCreateException;
-import org.anchoranalysis.io.exception.AnchorIOException;
+import org.anchoranalysis.io.exception.InputReadFailedException;
 import org.anchoranalysis.io.manifest.deserializer.DeserializationFailedException;
 import org.anchoranalysis.mpp.mark.MarkCollection;
 
@@ -125,7 +125,7 @@ public class OpenAnnotationMPP implements OpenAnnotation {
             // We try to read an existing annotation
             // If we can read an annotation let's do it
             return annotationReader.read(annotationPath);
-        } catch (AnchorIOException e) {
+        } catch (InputReadFailedException e) {
             throw new VideoStatsModuleCreateException(e);
         }
     }

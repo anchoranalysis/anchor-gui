@@ -105,8 +105,9 @@ public class ExportTaskBoundedIndexContainerGeneratorSeries<T>
 
         int indexOut = 0;
 
-        try(OutputSequenceIndexed<MappedFrom<T>,Integer> outputSequence = outputSequenceCreator.createAndStart(min)) {
+        OutputSequenceIndexed<MappedFrom<T>,Integer> outputSequence = outputSequenceCreator.createAndStart(min);
 
+        try {
             if (startAtEnd) {
                 for (int i = max; i >= min; i -= incrementSize) {
     

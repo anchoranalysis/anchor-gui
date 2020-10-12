@@ -56,7 +56,7 @@ public class FileMultiCollection extends InteractiveFile {
 
     @Override
     public String identifier() {
-        return input.descriptiveName();
+        return input.name();
     }
 
     @Override

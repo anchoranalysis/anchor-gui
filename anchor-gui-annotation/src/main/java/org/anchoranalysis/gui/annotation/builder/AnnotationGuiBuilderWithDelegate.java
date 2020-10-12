@@ -41,7 +41,7 @@ import org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.definition.C
 import org.anchoranalysis.gui.videostats.internalframe.annotator.AnnotationInitParams;
 import org.anchoranalysis.image.stack.NamedStacksSupplier;
 import org.anchoranalysis.image.stack.Stack;
-import org.anchoranalysis.io.exception.AnchorIOException;
+import org.anchoranalysis.io.exception.InputReadFailedException;
 
 @RequiredArgsConstructor
 public abstract class AnnotationGuiBuilderWithDelegate<
@@ -70,8 +70,8 @@ public abstract class AnnotationGuiBuilderWithDelegate<
     }
 
     @Override
-    public String descriptiveName() {
-        return delegate.descriptiveName();
+    public String inputName() {
+        return delegate.name();
     }
 
     @Override
@@ -87,7 +87,7 @@ public abstract class AnnotationGuiBuilderWithDelegate<
         return delegate.pathForBinding();
     }
 
-    protected Path pathForBindingRequired() throws AnchorIOException {
+    protected Path pathForBindingRequired() throws InputReadFailedException {
         return delegate.pathForBindingRequired();
     }
 

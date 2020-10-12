@@ -33,7 +33,7 @@ import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.error.reporter.ErrorReporter;
 import org.anchoranalysis.core.index.SetOperationFailedException;
 import org.anchoranalysis.gui.frame.display.OverlayedDisplayStackUpdate;
-import org.anchoranalysis.image.io.RasterIOException;
+import org.anchoranalysis.image.io.ImageIOException;
 import org.anchoranalysis.image.io.generator.raster.GeneratorOutputter;
 import org.anchoranalysis.image.io.stack.StackWriteOptions;
 import org.anchoranalysis.image.stack.DisplayStack;
@@ -115,7 +115,7 @@ class CachedRGBGenerator extends CacheableOverlaysToRGBGenerator {
         try {
             GeneratorOutputter.writer(outputWriteSettings).writeStack(
                     cachedRGB.getRGB().asStack(), filePath, true, rasterOptions);
-        } catch (RasterIOException e) {
+        } catch (ImageIOException e) {
             throw new OutputWriteFailedException(e);
         }
     }

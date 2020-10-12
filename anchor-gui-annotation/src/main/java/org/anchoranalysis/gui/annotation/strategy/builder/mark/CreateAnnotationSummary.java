@@ -38,7 +38,7 @@ import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.gui.annotation.mark.RejectionReason;
 import org.anchoranalysis.gui.annotation.state.AnnotationProgressState;
 import org.anchoranalysis.gui.annotation.state.AnnotationSummary;
-import org.anchoranalysis.io.exception.AnchorIOException;
+import org.anchoranalysis.io.exception.InputReadFailedException;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 class CreateAnnotationSummary {
@@ -71,7 +71,7 @@ class CreateAnnotationSummary {
                 as.setColor(color(aps, annotation.isAccepted()));
                 as.setExistsFinished(true);
 
-            } catch (AnchorIOException e) {
+            } catch (InputReadFailedException e) {
                 throw new CreateException(e);
             }
         } else {

@@ -32,7 +32,7 @@ import lombok.AllArgsConstructor;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.image.io.bean.stack.StackReader;
 import org.anchoranalysis.io.bean.path.derive.DerivePath;
-import org.anchoranalysis.io.exception.AnchorIOException;
+import org.anchoranalysis.io.exception.DerivePathException;
 
 @AllArgsConstructor
 public class ShowAdditionalRasters {
@@ -51,7 +51,7 @@ public class ShowAdditionalRasters {
                 Path rasterPath = derivePath.deriveFrom(matchPath, false);
                 showRaster.openAndShow(name, rasterPath, stackReader);
             }
-        } catch (AnchorIOException e) {
+        } catch (DerivePathException e) {
             throw new OperationFailedException(e);
         }
     }

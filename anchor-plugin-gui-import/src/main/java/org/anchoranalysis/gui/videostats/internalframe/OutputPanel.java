@@ -94,14 +94,7 @@ public class OutputPanel {
 
         @Override
         public void actionPerformed(ActionEvent arg0) {
-            if (outputSequence != null) {
-                try {
-                    outputSequence.close();
-                } catch (OutputWriteFailedException e) {
-                    context.getErrorReporter().recordError(OutputPanel.class, e);
-                }
-                outputSequence = null;
-            }
+            outputSequence = null;
         }
     }
 

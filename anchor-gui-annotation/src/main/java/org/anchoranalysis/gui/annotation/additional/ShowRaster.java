@@ -43,7 +43,7 @@ import org.anchoranalysis.gui.videostats.dropdown.BackgroundSetProgressingSuppli
 import org.anchoranalysis.gui.videostats.dropdown.VideoStatsModuleGlobalParams;
 import org.anchoranalysis.gui.videostats.module.DefaultModuleState;
 import org.anchoranalysis.gui.videostats.module.VideoStatsModuleCreateException;
-import org.anchoranalysis.image.io.RasterIOException;
+import org.anchoranalysis.image.io.ImageIOException;
 import org.anchoranalysis.image.io.bean.stack.StackReader;
 import org.anchoranalysis.image.io.stack.OpenedRaster;
 import org.anchoranalysis.image.stack.Stack;
@@ -69,7 +69,7 @@ public class ShowRaster {
 
                         return backgroundSet;
 
-                    } catch (RasterIOException | OperationFailedException e) {
+                    } catch (ImageIOException | OperationFailedException e) {
                         throw new BackgroundStackContainerException(rasterName, e);
                     }
                 },

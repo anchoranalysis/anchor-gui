@@ -44,7 +44,7 @@ import org.anchoranalysis.image.io.bean.stack.StackReader;
 import org.anchoranalysis.io.bean.input.InputManager;
 import org.anchoranalysis.io.bean.input.InputManagerParams;
 import org.anchoranalysis.io.bean.path.provider.FilePathProvider;
-import org.anchoranalysis.io.exception.AnchorIOException;
+import org.anchoranalysis.io.exception.InputReadFailedException;
 import org.anchoranalysis.mpp.feature.bean.energy.scheme.EnergySchemeCreator;
 import org.anchoranalysis.mpp.feature.bean.mark.MarkEvaluator;
 
@@ -76,7 +76,7 @@ public class InteractiveBrowserInputManager extends InputManager<InteractiveBrow
 
     @Override
     public List<InteractiveBrowserInput> inputs(InputManagerParams params)
-            throws AnchorIOException {
+            throws InputReadFailedException {
 
         InteractiveBrowserInput ibi = new InteractiveBrowserInput();
         ibi.setListFileCreators(listFileCreators);

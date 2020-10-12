@@ -34,7 +34,7 @@ import org.anchoranalysis.core.error.reporter.ErrorReporter;
 import org.anchoranalysis.core.progress.ProgressReporterNull;
 import org.anchoranalysis.gui.finder.FinderRasterSingleChannel;
 import org.anchoranalysis.image.channel.Channel;
-import org.anchoranalysis.image.io.RasterIOException;
+import org.anchoranalysis.image.io.ImageIOException;
 import org.anchoranalysis.image.io.bean.stack.StackReader;
 import org.anchoranalysis.image.io.stack.OpenedRaster;
 import org.anchoranalysis.image.stack.Stack;
@@ -62,7 +62,7 @@ public abstract class FinderRasterChannel extends FinderSingleFile
         if (!result.isPresent()) {
             try {
                 result = Optional.of(createChannel(getFoundFile()));
-            } catch (RasterIOException | CreateException e) {
+            } catch (ImageIOException | CreateException e) {
                 throw new OperationFailedException(e);
             }
         }
@@ -79,7 +79,7 @@ public abstract class FinderRasterChannel extends FinderSingleFile
         return 1;
     }
 
-    private Channel createChannel(FileWrite fileWrite) throws RasterIOException, CreateException {
+    private Channel createChannel(FileWrite fileWrite) throws ImageIOException, CreateException {
 
         // Assume single series, single channel
         Path filePath = fileWrite.calculatePath();

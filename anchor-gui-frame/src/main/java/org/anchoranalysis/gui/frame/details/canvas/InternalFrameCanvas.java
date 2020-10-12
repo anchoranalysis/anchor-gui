@@ -280,8 +280,8 @@ public class InternalFrameCanvas {
         return canvas.getZoomScale();
     }
 
-    public Resolution getRes() {
-        return canvas.getRes();
+    public Optional<Resolution> getResolution() {
+        return canvas.getResolution();
     }
 
     public boolean canvasContainsAbsolute(Point2i point) {

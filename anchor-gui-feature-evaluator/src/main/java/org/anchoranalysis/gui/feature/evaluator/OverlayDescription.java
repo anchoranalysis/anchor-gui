@@ -28,6 +28,7 @@ package org.anchoranalysis.gui.feature.evaluator;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Optional;
 import org.anchoranalysis.core.name.value.ComparatorOrderByName;
 import org.anchoranalysis.core.name.value.NameValue;
 import org.anchoranalysis.feature.energy.EnergyStack;
@@ -52,8 +53,7 @@ class OverlayDescription extends TitleValueTableModel implements UpdatableSingle
             return;
         }
 
-        Resolution sr = raster.dimensions() != null ? raster.resolution() : null;
-        addOverlayDetails(overlay, "", sr);
+        addOverlayDetails(overlay, "", raster.dimensions().resolution());
 
         fireTableDataChanged();
     }
@@ -76,9 +76,9 @@ class OverlayDescription extends TitleValueTableModel implements UpdatableSingle
         fireTableDataChanged();
     }
 
-    private void addOverlayDetails(Overlay overlay, String titlePrefix, Resolution sr) {
+    private void addOverlayDetails(Overlay overlay, String titlePrefix, Optional<Resolution> resolution) {
 
-        OverlayProperties properties = overlay.generateProperties(sr);
+        OverlayProperties properties = overlay.generateProperties(resolution);
 
         ArrayList<NameValue<String>> listToAdd = new ArrayList<>();
         for (NameValue<String> nameValue : properties) {

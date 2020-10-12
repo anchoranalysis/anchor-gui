@@ -575,7 +575,7 @@ public class ImageCanvas {
         return panel.getPreferredSize();
     }
 
-    public Resolution getRes() {
+    public Optional<Resolution> getResolution() {
         return displayStackViewport.getResolution();
     }
 

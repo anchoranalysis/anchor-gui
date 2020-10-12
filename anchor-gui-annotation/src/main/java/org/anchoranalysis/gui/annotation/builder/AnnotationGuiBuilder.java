@@ -94,7 +94,7 @@ public abstract class AnnotationGuiBuilder<T extends AnnotationInitParams> {
     // Cached-operation
     public abstract NamedStacksSupplier stacks();
 
-    public abstract String descriptiveName();
+    public abstract String inputName();
 
     public abstract Optional<File> associatedFile();
 

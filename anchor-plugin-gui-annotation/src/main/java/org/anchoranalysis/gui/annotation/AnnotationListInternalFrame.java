@@ -48,7 +48,7 @@ import org.anchoranalysis.gui.videostats.IModuleCreatorDefaultState;
 import org.anchoranalysis.gui.videostats.dropdown.AddVideoStatsModule;
 import org.anchoranalysis.image.io.input.ProvidesStackInput;
 import org.anchoranalysis.io.bean.input.InputManagerParams;
-import org.anchoranalysis.io.exception.AnchorIOException;
+import org.anchoranalysis.io.exception.InputReadFailedException;
 
 public class AnnotationListInternalFrame {
 
@@ -152,7 +152,7 @@ public class AnnotationListInternalFrame {
                     params.getModuleParams(),
                     ProgressReporterNull.get());
 
-        } catch (AnchorIOException | CreateException e) {
+        } catch (InputReadFailedException | CreateException e) {
             throw new OperationFailedException(e);
         }
     }

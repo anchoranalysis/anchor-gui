@@ -69,13 +69,16 @@ class StringHelper {
     }
 
     public String resolution() {
-        Resolution sr = internalFrameCanvas.getRes();
-        if (sr.x() == sr.y()) {
-            return String.format("resXY=%s resZ=%s", formatUnits(sr.x()), formatUnits(sr.z()));
+        return internalFrameCanvas.getResolution().map(StringHelper::resolutionAsString).orElse("res=None");
+    }
+    
+    private static String resolutionAsString(Resolution resolution) {
+        if (resolution.x() == resolution.y()) {
+            return String.format("resXY=%s resZ=%s", formatUnits(resolution.x()), formatUnits(resolution.z()));
         } else {
             return String.format(
                     "resX=%s resY=%s resZ=%s)",
-                    formatUnits(sr.x()), formatUnits(sr.y()), formatUnits(sr.z()));
+                    formatUnits(resolution.x()), formatUnits(resolution.y()), formatUnits(resolution.z()));
         }
     }
 

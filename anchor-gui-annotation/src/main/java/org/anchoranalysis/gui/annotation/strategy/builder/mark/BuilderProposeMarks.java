@@ -50,7 +50,8 @@ import org.anchoranalysis.gui.videostats.internalframe.annotator.AnnotationFrame
 import org.anchoranalysis.gui.videostats.internalframe.annotator.AnnotationPanelParams;
 import org.anchoranalysis.gui.videostats.internalframe.annotator.navigation.PanelNavigation;
 import org.anchoranalysis.gui.videostats.module.VideoStatsModuleCreateException;
-import org.anchoranalysis.io.exception.AnchorIOException;
+import org.anchoranalysis.io.exception.DerivePathException;
+import org.anchoranalysis.io.exception.InputReadFailedException;
 import org.anchoranalysis.plugin.annotation.bean.strategy.MarkProposerStrategy;
 import org.anchoranalysis.plugin.annotation.bean.strategy.PathFromGenerator;
 
@@ -63,20 +64,23 @@ public class BuilderProposeMarks
     private OpenAnnotationMPP openAnnotation;
 
     public BuilderProposeMarks(AnnotationWithStrategy<MarkProposerStrategy> delegate)
-            throws AnchorIOException {
+            throws CreateException {
         super(delegate);
         this.openAnnotation = createOpenAnnotation();
     }
 
-    private OpenAnnotationMPP createOpenAnnotation() throws AnchorIOException {
-
-        Optional<Path> marksPath =
-                OptionalUtilities.mapBoth(
-                        getStrategy().marksDeriver(),
-                        pathForBinding(),
-                        PathFromGenerator::derivePath);
-
-        return new OpenAnnotationMPP(annotationPath(), marksPath, annotationReader);
+    private OpenAnnotationMPP createOpenAnnotation() throws CreateException {
+        try {
+            Optional<Path> marksPath =
+                    OptionalUtilities.mapBoth(
+                            getStrategy().marksDeriver(),
+                            pathForBinding(),
+                            PathFromGenerator::derivePath);
+    
+            return new OpenAnnotationMPP(annotationPath(), marksPath, annotationReader);
+        } catch (DerivePathException e) {
+            throw new CreateException(e);
+        }
     }
 
     @Override
@@ -97,15 +101,15 @@ public class BuilderProposeMarks
                             logger);
 
             // Open initial marks
-            InitAnnotation annotationExst = openAnnotation.open(useDefaultMarks, logger);
+            InitAnnotation annotationExisting = openAnnotation.open(useDefaultMarks, logger);
 
             return new InitParamsProposeMarks(
                     context.getAnnotationRefresher(),
                     markAnnotator,
                     createBackground(prm, markAnnotator.getBackgroundStacks()),
-                    annotationExst);
+                    annotationExisting);
 
-        } catch (VideoStatsModuleCreateException | AnchorIOException e) {
+        } catch (VideoStatsModuleCreateException | InputReadFailedException e) {
             throw new CreateException(e);
         }
     }
@@ -126,7 +130,7 @@ public class BuilderProposeMarks
         try {
             ShowAdditionalFrames.apply(
                     paramsInit, context, pathForBindingRequired(), getStrategy());
-        } catch (AnchorIOException e) {
+        } catch (InputReadFailedException e) {
             throw new OperationFailedException(e);
         }
     }

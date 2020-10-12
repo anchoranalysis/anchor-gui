@@ -124,7 +124,7 @@ class DisplayStackViewportZoomed {
         return dimensionsEntire().scaleXYBy(new ScaleFactor(zoomScale.getScale()));
     }
 
-    public Resolution getResolution() {
+    public Optional<Resolution> getResolution() {
         return delegate.dimensionsEntire().resolution();
     }
 
