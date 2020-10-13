@@ -115,16 +115,14 @@ class CachedRGBGenerator extends SingleFileTypeGenerator<OverlayedDisplayStackUp
         // We don't do any changes if is exactly the same, if some other
         //   factor has altered, to change how the generator would
         //   produce it's output then, it must be externally triggered
-        if (elementToAssign == this.element) {
-            return;
-        }
+        if (elementToAssign != this.element) {
+            this.element = elementToAssign;
 
-        this.element = elementToAssign;
-
-        try {
-            cachedRGB.updateMarks(elementToAssign);
-        } catch (OperationFailedException e) {
-            throw new OutputWriteFailedException(e);
+            try {
+                cachedRGB.updateMarks(elementToAssign);
+            } catch (OperationFailedException e) {
+                throw new OutputWriteFailedException(e);
+            }
         }
     }
 }
