@@ -82,24 +82,6 @@ class CachedRGBGenerator extends SingleFileTypeGenerator<OverlayedDisplayStackUp
         }
     }
 
-    private void assignElement(OverlayedDisplayStackUpdate elementToAssign) throws OutputWriteFailedException {
-
-        // We don't do any changes if is exactly the same, if some other
-        //   factor has altered, to change how the generator would
-        //   produce it's output then, it must be externally triggered
-        if (elementToAssign == this.element) {
-            return;
-        }
-
-        this.element = elementToAssign;
-
-        try {
-            cachedRGB.updateMarks(elementToAssign);
-        } catch (OperationFailedException e) {
-            throw new OutputWriteFailedException(e);
-        }
-    }
-
     public DisplayStack getBackground() {
         return cachedRGB.getBackground();
     }
@@ -126,5 +108,23 @@ class CachedRGBGenerator extends SingleFileTypeGenerator<OverlayedDisplayStackUp
     @Override
     public Optional<ManifestDescription> createManifestDescription() {
         return Optional.of(new ManifestDescription("raster", "marks"));
+    }
+    
+    private void assignElement(OverlayedDisplayStackUpdate elementToAssign) throws OutputWriteFailedException {
+
+        // We don't do any changes if is exactly the same, if some other
+        //   factor has altered, to change how the generator would
+        //   produce it's output then, it must be externally triggered
+        if (elementToAssign == this.element) {
+            return;
+        }
+
+        this.element = elementToAssign;
+
+        try {
+            cachedRGB.updateMarks(elementToAssign);
+        } catch (OperationFailedException e) {
+            throw new OutputWriteFailedException(e);
+        }
     }
 }
