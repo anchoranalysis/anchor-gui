@@ -1,6 +1,6 @@
 /*-
  * #%L
- * anchor-gui-export
+ * anchor-plugin-gui-export
  * %%
  * Copyright (C) 2010 - 2020 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann-La Roche
  * %%
@@ -24,10 +24,15 @@
  * #L%
  */
 
-package org.anchoranalysis.gui.export.bean;
+package org.anchoranalysis.plugin.gui.bean.export.derivestack.plot;
 
-import org.anchoranalysis.bean.AnchorBean;
+import org.anchoranalysis.gui.plot.creator.BridgedPlotNumberMarksCreator;
+import org.anchoranalysis.gui.plot.definition.line.LinePlotNumberMarks;
+import org.anchoranalysis.plugin.gui.bean.export.derivestack.plot.csv.PlotFromCSVStatistic;
 
-public abstract class ExportTaskBean extends AnchorBean<ExportTaskBean> implements ExportTask {
+public class NumberMarks extends PlotFromCSVStatistic<LinePlotNumberMarks.Item> {
 
+    public NumberMarks() {
+        super(new BridgedPlotNumberMarksCreator().createCSVStatisticBridge());
+    }
 }

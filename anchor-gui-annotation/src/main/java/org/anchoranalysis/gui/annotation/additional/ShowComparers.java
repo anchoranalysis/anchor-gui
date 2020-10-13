@@ -48,7 +48,7 @@ public class ShowComparers {
 
     private final ShowRaster showRaster;
     private final MultipleComparer multipleComparer;
-    private final ColorScheme colorSetGenerator;
+    private final ColorScheme colorScheme;
     private final Path matchPath;
     private final String name;
     private final CheckedFunction<Integer, DisplayStack, ? extends Throwable> defaultBackground;
@@ -72,7 +72,7 @@ public class ShowComparers {
                             annotationExst,
                             background,
                             matchPath,
-                            colorSetGenerator,
+                            colorScheme,
                             modelDirectory,
                             logger,
                             false);

@@ -61,7 +61,7 @@ class ShowAdditionalFrames {
                 new ShowComparers(
                         showRaster,
                         strategy.getMultipleComparer(),
-                        context.getOutputWriteSettings().getDefaultColorSetGenerator(),
+                        context.getOutputWriteSettings().getDefaultColors(),
                         matchPath,
                         context.getName(),
                         paramsInit.getBackground().getDefaultBackground(),

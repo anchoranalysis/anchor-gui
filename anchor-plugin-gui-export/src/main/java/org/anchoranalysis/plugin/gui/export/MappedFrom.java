@@ -1,6 +1,6 @@
 /*-
  * #%L
- * anchor-gui-export
+ * anchor-plugin-gui-export
  * %%
  * Copyright (C) 2010 - 2020 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann-La Roche
  * %%
@@ -24,10 +24,14 @@
  * #L%
  */
 
-package org.anchoranalysis.gui.export.bean;
+package org.anchoranalysis.plugin.gui.export;
 
-import org.anchoranalysis.bean.AnchorBean;
+import lombok.AllArgsConstructor;
+import lombok.Value;
 
-public abstract class ExportTaskBean extends AnchorBean<ExportTaskBean> implements ExportTask {
+@AllArgsConstructor @Value
+public class MappedFrom<T> {
 
+    private int originalIteration;
+    private T object;
 }

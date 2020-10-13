@@ -30,7 +30,6 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.ProgressMonitor;
 import lombok.AllArgsConstructor;
-import org.anchoranalysis.core.index.SetOperationFailedException;
 import org.anchoranalysis.io.generator.Generator;
 import org.anchoranalysis.io.generator.sequence.SequenceMemory;
 import org.anchoranalysis.io.output.namestyle.IndexableOutputNameStyle;
@@ -55,16 +54,10 @@ public class ExportTaskGenerator<T> implements ExportTask {
 
         int index = sequenceMemory.lastIndex(outputNameStyle.getOutputName());
 
-        try {
-            generator.assignElement(item);
-        } catch (SetOperationFailedException e) {
-            throw new ExportTaskFailedException(e);
-        }
-
         int numberWritten =
                 params.getInputOutputContext().getOutputter()
                         .writerSelective()
-                        .write(outputNameStyle, () -> generator, Integer.toString(index));
+                        .writeWithIndex(outputNameStyle, () -> generator, () -> item, Integer.toString(index));
         sequenceMemory.updateIndex(outputNameStyle.getOutputName(), index + numberWritten);
 
         if (numberWritten == 0) {

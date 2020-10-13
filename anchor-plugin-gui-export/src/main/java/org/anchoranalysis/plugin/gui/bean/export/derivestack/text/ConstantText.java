@@ -1,6 +1,6 @@
 /*-
  * #%L
- * anchor-gui-export
+ * anchor-plugin-gui-export
  * %%
  * Copyright (C) 2010 - 2020 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann-La Roche
  * %%
@@ -24,10 +24,21 @@
  * #L%
  */
 
-package org.anchoranalysis.gui.export.bean;
+package org.anchoranalysis.plugin.gui.bean.export.derivestack.text;
 
-import org.anchoranalysis.bean.AnchorBean;
+import lombok.Getter;
+import lombok.Setter;
+import org.anchoranalysis.bean.annotation.BeanField;
+import org.anchoranalysis.mpp.feature.energy.marks.MarksWithEnergyBreakdown;
 
-public abstract class ExportTaskBean extends AnchorBean<ExportTaskBean> implements ExportTask {
+public class ConstantText extends DrawTextFromMarks {
 
+    // START BEAN PROPERTIES
+    @BeanField @Getter @Setter private String text;
+    // END BEAN PROPERTIES
+
+    @Override
+    protected String extractStringFrom(MarksWithEnergyBreakdown marks) {
+        return text;
+    }
 }

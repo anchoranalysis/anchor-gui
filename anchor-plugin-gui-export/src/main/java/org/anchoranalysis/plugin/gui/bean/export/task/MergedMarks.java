@@ -1,6 +1,6 @@
 /*-
  * #%L
- * anchor-gui-export
+ * anchor-plugin-gui-export
  * %%
  * Copyright (C) 2010 - 2020 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann-La Roche
  * %%
@@ -24,10 +24,22 @@
  * #L%
  */
 
-package org.anchoranalysis.gui.export.bean;
+package org.anchoranalysis.plugin.gui.bean.export.task;
 
-import org.anchoranalysis.bean.AnchorBean;
+import org.anchoranalysis.mpp.bean.regionmap.RegionMapSingleton;
+import org.anchoranalysis.mpp.bean.regionmap.RegionMembershipWithFlags;
+import org.anchoranalysis.mpp.feature.energy.IndexableMarksWithEnergy;
+import org.anchoranalysis.mpp.mark.GlobalRegionIdentifiers;
 
-public abstract class ExportTaskBean extends AnchorBean<ExportTaskBean> implements ExportTask {
+public class MergedMarks
+        extends FromBoundedIndexContainer<IndexableMarksWithEnergy> {
 
+    public void init() {
+        RegionMembershipWithFlags regionMembership =
+                RegionMapSingleton.instance()
+                        .membershipWithFlagsForIndex(GlobalRegionIdentifiers.SUBMARK_INSIDE);
+        super.setBridge(
+                // TODO the null doesn't seem correct
+                new MergedContainerBridge(() -> regionMembership, null));
+    }
 }

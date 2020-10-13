@@ -1,6 +1,6 @@
 /*-
  * #%L
- * anchor-gui-export
+ * anchor-plugin-gui-export
  * %%
  * Copyright (C) 2010 - 2020 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann-La Roche
  * %%
@@ -24,10 +24,26 @@
  * #L%
  */
 
-package org.anchoranalysis.gui.export.bean;
+package org.anchoranalysis.plugin.gui.export;
 
-import org.anchoranalysis.bean.AnchorBean;
+import java.util.ArrayList;
+import java.util.List;
 
-public abstract class ExportTaskBean extends AnchorBean<ExportTaskBean> implements ExportTask {
+public class DualStateWithoutIndex<T> {
 
+    private List<T> list;
+
+    public DualStateWithoutIndex(T item) {
+        list = new ArrayList<>();
+        list.add(item);
+    }
+
+    public DualStateWithoutIndex(List<T> list) {
+        super();
+        this.list = list;
+    }
+
+    public T getItem(int index) {
+        return list.get(index);
+    }
 }

@@ -1,6 +1,6 @@
 /*-
  * #%L
- * anchor-gui-export
+ * anchor-plugin-gui-export
  * %%
  * Copyright (C) 2010 - 2020 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann-La Roche
  * %%
@@ -24,10 +24,14 @@
  * #L%
  */
 
-package org.anchoranalysis.gui.export.bean;
+package org.anchoranalysis.plugin.gui.bean.export.derivestack.plot.csv;
 
-import org.anchoranalysis.bean.AnchorBean;
+import org.anchoranalysis.gui.plot.creator.BridgedPlotEnergyCreator;
+import org.anchoranalysis.gui.plot.definition.line.LinePlotIterationVsEnergy;
 
-public abstract class ExportTaskBean extends AnchorBean<ExportTaskBean> implements ExportTask {
+public class Energy extends PlotFromCSVStatistic<LinePlotIterationVsEnergy.Item> {
 
+    public Energy() {
+        super(new BridgedPlotEnergyCreator().createCSVStatisticBridge());
+    }
 }

@@ -1,6 +1,6 @@
 /*-
  * #%L
- * anchor-gui-export
+ * anchor-plugin-gui-export
  * %%
  * Copyright (C) 2010 - 2020 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann-La Roche
  * %%
@@ -24,10 +24,26 @@
  * #L%
  */
 
-package org.anchoranalysis.gui.export.bean;
+package org.anchoranalysis.plugin.gui.bean.export.derivestack;
 
 import org.anchoranalysis.bean.AnchorBean;
+import org.anchoranalysis.core.error.CreateException;
+import org.anchoranalysis.gui.export.bean.ExportTaskParams;
+import org.anchoranalysis.image.io.generator.raster.RasterGenerator;
+import org.anchoranalysis.image.stack.Stack;
+import org.anchoranalysis.plugin.gui.export.MappedFrom;
 
-public abstract class ExportTaskBean extends AnchorBean<ExportTaskBean> implements ExportTask {
+/**
+ * Derives a {@link Stack} from another element.
+ * 
+ * @author Owen Feehan
+ *
+ * @param <T> element to derive stack from.
+ */
+public abstract class DeriveStack<T> extends AnchorBean<DeriveStack<T>> {
 
+    public abstract RasterGenerator<MappedFrom<T>> createGenerator(ExportTaskParams params)
+            throws CreateException;
+
+    public abstract boolean hasNecessaryParams(ExportTaskParams params);
 }

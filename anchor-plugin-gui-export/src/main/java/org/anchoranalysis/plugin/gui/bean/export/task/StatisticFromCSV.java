@@ -1,6 +1,6 @@
 /*-
  * #%L
- * anchor-gui-export
+ * anchor-plugin-gui-export
  * %%
  * Copyright (C) 2010 - 2020 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann-La Roche
  * %%
@@ -24,10 +24,32 @@
  * #L%
  */
 
-package org.anchoranalysis.gui.export.bean;
+package org.anchoranalysis.plugin.gui.bean.export.task;
 
-import org.anchoranalysis.bean.AnchorBean;
+import org.anchoranalysis.core.error.OperationFailedException;
+import org.anchoranalysis.core.functional.function.CheckedFunction;
+import org.anchoranalysis.core.index.container.BoundedIndexContainer;
+import org.anchoranalysis.gui.export.bean.ExportTaskParams;
+import org.anchoranalysis.gui.manifest.csvstatistic.CSVStatistic;
 
-public abstract class ExportTaskBean extends AnchorBean<ExportTaskBean> implements ExportTask {
+public class StatisticFromCSV
+        extends FromBoundedIndexContainer<CSVStatistic> {
 
+    private static class ExportTaskParamsCSVStatisticContainerBridge
+            implements CheckedFunction<
+                    ExportTaskParams,
+                    BoundedIndexContainer<CSVStatistic>,
+                    OperationFailedException> {
+
+        @Override
+        public BoundedIndexContainer<CSVStatistic> apply(ExportTaskParams sourceObject)
+                throws OperationFailedException {
+            return sourceObject.getFinderCsvStatistics().get();
+        }
+    }
+
+    @Override
+    public void init() {
+        setBridge(new ExportTaskParamsCSVStatisticContainerBridge());
+    }
 }
