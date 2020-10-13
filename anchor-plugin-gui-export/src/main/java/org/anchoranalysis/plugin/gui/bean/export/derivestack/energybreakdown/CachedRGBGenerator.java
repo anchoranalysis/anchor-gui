@@ -32,7 +32,6 @@ import lombok.RequiredArgsConstructor;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.error.reporter.ErrorReporter;
-import org.anchoranalysis.core.index.SetOperationFailedException;
 import org.anchoranalysis.gui.frame.display.OverlayedDisplayStackUpdate;
 import org.anchoranalysis.gui.frame.display.Redrawable;
 import org.anchoranalysis.image.io.ImageIOException;
@@ -65,8 +64,9 @@ class CachedRGBGenerator extends SingleFileTypeGenerator<OverlayedDisplayStackUp
     }
 
     @Override
-    public DisplayStack transform() throws OutputWriteFailedException {
+    public DisplayStack transform(OverlayedDisplayStackUpdate element) throws OutputWriteFailedException {
         try {
+            assignElement(element);
             return DisplayStack.create(cachedRGB.getRGB());
         } catch (CreateException e) {
             throw new OutputWriteFailedException(e);
@@ -74,36 +74,29 @@ class CachedRGBGenerator extends SingleFileTypeGenerator<OverlayedDisplayStackUp
     }
 
     @Override
-    public OverlayedDisplayStackUpdate getElement() {
-        return element;
-    }
-
-    @Override
     public void applyRedrawUpdate(OverlayedDisplayStackUpdate update) {
         try {
             assignElement(update);
-        } catch (SetOperationFailedException e) {
+        } catch (OutputWriteFailedException e) {
             errorReporter.recordError(CachedRGBGenerator.class, e);
         }
     }
 
-    @Override
-    public void assignElement(OverlayedDisplayStackUpdate element)
-            throws SetOperationFailedException {
+    private void assignElement(OverlayedDisplayStackUpdate elementToAssign) throws OutputWriteFailedException {
 
         // We don't do any changes if is exactly the same, if some other
         //   factor has altered, to change how the generator would
         //   produce it's output then, it must be externally triggered
-        if (element == getElement()) {
+        if (elementToAssign == this.element) {
             return;
         }
 
-        this.element = element;
+        this.element = elementToAssign;
 
         try {
-            cachedRGB.updateMarks(element);
+            cachedRGB.updateMarks(elementToAssign);
         } catch (OperationFailedException e) {
-            throw new SetOperationFailedException(e);
+            throw new OutputWriteFailedException(e);
         }
     }
 
@@ -112,9 +105,10 @@ class CachedRGBGenerator extends SingleFileTypeGenerator<OverlayedDisplayStackUp
     }
 
     @Override
-    public void writeToFile(OutputWriteSettings outputWriteSettings, Path filePath)
+    public void writeToFile(OverlayedDisplayStackUpdate element, OutputWriteSettings outputWriteSettings, Path filePath)
             throws OutputWriteFailedException {
         try {
+            assignElement(element);
             GeneratorOutputter.writer(outputWriteSettings).writeStack(
                     cachedRGB.getRGB().asStack(), filePath, true, rasterOptions);
         } catch (ImageIOException e) {

@@ -82,7 +82,7 @@ public class RetrieveElementsOverlayCollection extends RetrieveElements {
         Collection<Mark> marksCreated = marks.createSet();
         ObjectOutputStreamGenerator<Mark> generatorMark =
                 new ObjectOutputStreamGenerator<>(Optional.of("mark"));
-        CollectionGenerator<Mark,Collection<Mark>> generatorCollection =
+        CollectionGenerator<Mark> generatorCollection =
                 new CollectionGenerator<>(
                         generatorMark,
                         "selectedMarksObjects"

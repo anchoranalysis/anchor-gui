@@ -34,7 +34,7 @@ import java.util.Optional;
 import lombok.AllArgsConstructor;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.image.bean.spatial.SizeXY;
-import org.anchoranalysis.image.io.generator.raster.RasterGeneratorWithElement;
+import org.anchoranalysis.image.io.generator.raster.RasterGenerator;
 import org.anchoranalysis.image.io.stack.StackWriteOptions;
 import org.anchoranalysis.image.stack.Stack;
 import org.anchoranalysis.image.stack.bufferedimage.CreateStackFromBufferedImage;
@@ -47,10 +47,14 @@ import org.jfree.chart.ChartUtils;
 /**
  * Writes a plot to the filesystem as a PNG file.
  *
+ * <p>Note that {@link #writeToFile} replaces the existing behaviour in {@link RasterGenerator}.
+ * 
+ * <p>TODO fix the above point.
+ * 
  * @author Owen Feehan
  */
 @AllArgsConstructor
-class PlotGenerator extends RasterGeneratorWithElement<PlotInstance> {
+class PlotGenerator extends RasterGenerator<PlotInstance> {
 
     private static final String MANIFEST_FUNCTION = "plot";
 
@@ -58,12 +62,12 @@ class PlotGenerator extends RasterGeneratorWithElement<PlotInstance> {
     private final SizeXY size;
 
     @Override
-    public void writeToFile(OutputWriteSettings outputWriteSettings, Path filePath)
+    public void writeToFile(PlotInstance element, OutputWriteSettings outputWriteSettings, Path filePath)
             throws OutputWriteFailedException {
 
         try (FileOutputStream fileOutput = new FileOutputStream(filePath.toFile())) {
             ChartUtils.writeChartAsPNG(
-                    fileOutput, getElement().getChart(), size.getWidth(), size.getHeight());
+                    fileOutput, element.getChart(), size.getWidth(), size.getHeight());
         } catch (IOException e) {
             throw new OutputWriteFailedException(e);
         }
@@ -80,10 +84,10 @@ class PlotGenerator extends RasterGeneratorWithElement<PlotInstance> {
     }
 
     @Override
-    public Stack transform() throws OutputWriteFailedException {
+    public Stack transform(PlotInstance element) throws OutputWriteFailedException {
 
         BufferedImage bufferedImage =
-                getElement().createBufferedImage(size.getWidth(), size.getHeight());
+                element.createBufferedImage(size.getWidth(), size.getHeight());
 
         try {
             return CreateStackFromBufferedImage.create(bufferedImage);
