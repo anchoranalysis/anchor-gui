@@ -26,46 +26,35 @@
 
 package org.anchoranalysis.gui.io.loader.manifest.finder;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.function.Predicate;
 import lombok.AllArgsConstructor;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.log.Logger;
 import org.anchoranalysis.core.name.provider.NameValueSet;
 import org.anchoranalysis.core.name.provider.NamedProvider;
 import org.anchoranalysis.image.object.ObjectCollection;
-import org.anchoranalysis.io.manifest.ManifestRecorder;
-import org.anchoranalysis.io.manifest.finder.FinderSingleFolder;
-import org.anchoranalysis.io.manifest.finder.FinderUtilities;
-import org.anchoranalysis.io.manifest.folder.FolderWrite;
-import org.anchoranalysis.io.manifest.match.FolderWritePath;
+import org.anchoranalysis.io.manifest.directory.DirectoryWrite;
+import org.anchoranalysis.io.manifest.finder.FinderSingleDirectory;
+import org.anchoranalysis.io.manifest.finder.match.DirectoryMatch;
 
 @AllArgsConstructor
-public class FinderObjectCollectionFolder extends FinderSingleFolder {
+public class FinderObjectsDirectory extends FinderSingleDirectory {
 
-    private final String folderName;
-
-    @Override
-    protected Optional<FolderWrite> findFolder(ManifestRecorder manifestRecorder) {
-
-        List<FolderWrite> list =
-                FinderUtilities.findListFolder(manifestRecorder, new FolderWritePath(folderName));
-
-        if (!list.isEmpty()) {
-            return Optional.of(list.get(0));
-        } else {
-            return Optional.empty();
-        }
-    }
+    private final String directoryName;
 
     // If namesAsIndexes is true, we use the indexes as names instead of the existing names
     public NamedProvider<ObjectCollection> createNamedProvider(Logger logger)
             throws OperationFailedException {
 
-        if (getFoundFolder() == null) {
+        if (!exists()) {
             return new NameValueSet<>();
         }
 
-        return new CreateObjectStoreFromDirectory().apply(getFoundFolder().calculatePath(), logger);
+        return new CreateObjectStoreFromDirectory().apply(getFoundDirectory().calculatePath(), logger);
+    }
+
+    @Override
+    protected Predicate<DirectoryWrite> matchDirectories() {
+        return DirectoryMatch.path(directoryName);
     }
 }

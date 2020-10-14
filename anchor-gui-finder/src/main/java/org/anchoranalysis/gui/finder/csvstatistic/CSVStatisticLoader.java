@@ -24,20 +24,14 @@
  * #L%
  */
 
-package org.anchoranalysis.gui.manifest.historyfolder;
+package org.anchoranalysis.gui.finder.csvstatistic;
 
-import org.anchoranalysis.core.bridge.BridgeElementWithIndex;
-import org.anchoranalysis.core.error.AnchorNeverOccursException;
-import org.anchoranalysis.mpp.feature.energy.IndexableMarksWithEnergy;
-import org.anchoranalysis.mpp.feature.energy.marks.MarksWithEnergyBreakdown;
+import java.nio.file.Path;
+import org.anchoranalysis.core.index.container.BoundedIndexContainer;
+import org.anchoranalysis.io.csv.reader.CSVReaderException;
 
-class IndexableMarksBridge
-        implements BridgeElementWithIndex<
-                MarksWithEnergyBreakdown, IndexableMarksWithEnergy, AnchorNeverOccursException> {
+public abstract class CSVStatisticLoader {
 
-    @Override
-    public IndexableMarksWithEnergy bridgeElement(
-            int index, MarksWithEnergyBreakdown sourceObject) {
-        return new IndexableMarksWithEnergy(index, sourceObject);
-    }
+    public abstract BoundedIndexContainer<CSVStatistic> createContainerFromCSV(Path csvPath)
+            throws CSVReaderException;
 }

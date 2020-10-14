@@ -1,6 +1,6 @@
 /*-
  * #%L
- * anchor-gui-finder
+ * anchor-gui-frame
  * %%
  * Copyright (C) 2010 - 2020 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann-La Roche
  * %%
@@ -24,14 +24,24 @@
  * #L%
  */
 
-package org.anchoranalysis.gui.manifest.csvstatistic;
+package org.anchoranalysis.gui.frame.canvas;
 
-import java.nio.file.Path;
-import org.anchoranalysis.core.index.container.BoundedIndexContainer;
-import org.anchoranalysis.io.csv.reader.CSVReaderException;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionListener;
+import lombok.AllArgsConstructor;
 
-public abstract class CSVStatisticLoader {
+@AllArgsConstructor
+class MouseMotionListenerRelative implements MouseMotionListener {
 
-    public abstract BoundedIndexContainer<CSVStatistic> createContainerFromCSV(Path csvPath)
-            throws CSVReaderException;
+    private BroadcastMouseEvents<MouseMotionListener> broadcast;
+
+    @Override
+    public void mouseDragged(MouseEvent event) {
+        broadcast.sendChangedEvent(event, false, (listener, eventNew) -> listener.mouseDragged(eventNew) );
+    }
+
+    @Override
+    public void mouseMoved(MouseEvent event) {
+        broadcast.sendChangedEvent(event, false, (listener, eventNew) -> listener.mouseMoved(eventNew) );
+    }
 }

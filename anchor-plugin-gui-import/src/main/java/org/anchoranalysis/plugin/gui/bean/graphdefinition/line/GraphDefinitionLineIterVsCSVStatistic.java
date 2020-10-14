@@ -29,7 +29,7 @@ package org.anchoranalysis.plugin.gui.bean.graphdefinition.line;
 import java.util.Iterator;
 import java.util.Optional;
 import org.anchoranalysis.core.error.CreateException;
-import org.anchoranalysis.gui.manifest.csvstatistic.CSVStatistic;
+import org.anchoranalysis.gui.finder.csvstatistic.CSVStatistic;
 import org.anchoranalysis.plot.AxisLimits;
 import org.anchoranalysis.plot.PlotInstance;
 import org.anchoranalysis.plot.bean.Plot;

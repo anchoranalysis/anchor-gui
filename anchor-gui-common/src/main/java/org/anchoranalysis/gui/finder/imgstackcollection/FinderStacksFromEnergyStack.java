@@ -38,7 +38,7 @@ import org.anchoranalysis.gui.finder.FinderEnergyStack;
 import org.anchoranalysis.image.stack.NamedStacks;
 import org.anchoranalysis.image.stack.NamedStacksSupplier;
 import org.anchoranalysis.image.stack.Stack;
-import org.anchoranalysis.io.manifest.ManifestRecorder;
+import org.anchoranalysis.io.manifest.Manifest;
 
 @RequiredArgsConstructor
 public class FinderStacksFromEnergyStack implements FinderStacks {
@@ -60,7 +60,7 @@ public class FinderStacksFromEnergyStack implements FinderStacks {
     }
 
     @Override
-    public boolean doFind(ManifestRecorder manifestRecorder) {
+    public boolean doFind(Manifest manifestRecorder) {
         return delegate.doFind(manifestRecorder);
     }
 

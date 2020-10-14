@@ -30,7 +30,7 @@ import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.functional.function.CheckedFunction;
 import org.anchoranalysis.core.index.container.BoundedIndexContainer;
 import org.anchoranalysis.gui.export.bean.ExportTaskParams;
-import org.anchoranalysis.gui.manifest.csvstatistic.CSVStatistic;
+import org.anchoranalysis.gui.finder.csvstatistic.CSVStatistic;
 
 public class StatisticFromCSV
         extends FromBoundedIndexContainer<CSVStatistic> {

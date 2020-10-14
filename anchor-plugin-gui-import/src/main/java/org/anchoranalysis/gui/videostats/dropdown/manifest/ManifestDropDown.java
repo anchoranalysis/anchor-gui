@@ -32,11 +32,12 @@ import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.index.GetOperationFailedException;
+import org.anchoranalysis.core.index.container.BoundedIndexContainer;
 import org.anchoranalysis.core.index.container.SingleContainer;
 import org.anchoranalysis.core.name.provider.NamedProvider;
 import org.anchoranalysis.core.params.KeyValueParams;
 import org.anchoranalysis.feature.energy.EnergyStack;
-import org.anchoranalysis.gui.file.opened.IOpenedFileGUI;
+import org.anchoranalysis.gui.file.opened.OpenedFileGUI;
 import org.anchoranalysis.gui.finder.FinderEnergyStack;
 import org.anchoranalysis.gui.finder.imgstackcollection.FinderStacksCombine;
 import org.anchoranalysis.gui.finder.imgstackcollection.FinderStacksFromEnergyStack;
@@ -63,7 +64,7 @@ import org.anchoranalysis.gui.videostats.operation.combine.OverlayCollectionSupp
 import org.anchoranalysis.image.io.bean.stack.StackReader;
 import org.anchoranalysis.image.stack.NamedStacksSupplier;
 import org.anchoranalysis.image.stack.wrap.WrapStackAsTimeSequence;
-import org.anchoranalysis.io.manifest.deserializer.folder.LoadContainer;
+import org.anchoranalysis.io.manifest.finder.FindFailedException;
 import org.anchoranalysis.io.manifest.finder.FinderSerializedObject;
 import org.anchoranalysis.io.output.outputter.InputOutputContext;
 import org.anchoranalysis.io.output.outputter.Outputter;
@@ -88,6 +89,14 @@ public class ManifestDropDown {
         this.delegate =
                 new BoundVideoStatsModuleDropDown(
                         manifests.name(), "/toolbarIcon/rectangle.png");
+    }
+    
+    public OpenedFileGUI openedFileGUI() {
+        return delegate.openedFileGUI();
+    }
+
+    public String getName() {
+        return delegate.getName();
     }
 
     private OperationCreateBackgroundSetWithAdder createBackgroundSetWithEnergy(
@@ -150,10 +159,10 @@ public class ManifestDropDown {
         combined.add(new FinderStacksFromFolder(stackReader, "channelScaledCollection"));
 
         try {
-            if (!combined.doFind(manifests.getFileManifest().get())) {
+            if (!combined.doFind(manifests.getJobManifest().get())) {
                 throw new InitException("cannot find image stack collection");
             }
-        } catch (OperationFailedException e) {
+        } catch (OperationFailedException | FindFailedException e) {
             throw new InitException(e);
         }
 
@@ -165,7 +174,7 @@ public class ManifestDropDown {
         FinderEnergyStack finderEnergyStack =
                 new FinderEnergyStack(stackReader, mpg.getLogger().errorReporter());
         try {
-            finderEnergyStack.doFind(manifests.getFileManifest().get());
+            finderEnergyStack.doFind(manifests.getJobManifest().get());
         } catch (OperationFailedException e) {
             throw new InitException(e);
         }
@@ -177,7 +186,7 @@ public class ManifestDropDown {
         final FinderSerializedObject<KeyValueParams> finderGroupParams =
                 new FinderSerializedObject<>("groupParams", mpg.getLogger().errorReporter());
         try {
-            finderGroupParams.doFind(manifests.getFileManifest().get());
+            finderGroupParams.doFind(manifests.getJobManifest().get());
         } catch (OperationFailedException e) {
             throw new InitException(e);
         }
@@ -212,7 +221,7 @@ public class ManifestDropDown {
                 createBackgroundSetWithEnergy(finderEnergyStack, finderStacks, adder, mpg);
 
         // Add: Markss, Rasters and object-masks
-        boolean defaultAdded = addMarkss(backgroundEnergy, finderEnergyStack, mpg);
+        boolean defaultAdded = addMarks(backgroundEnergy, finderEnergyStack, mpg);
         addRaster(backgroundEnergy, mpg, defaultAdded);
         new AddObjects(delegate, manifests, finderEnergyStack, mpg, markDisplaySettings)
                 .apply(backgroundEnergy);
@@ -271,7 +280,7 @@ public class ManifestDropDown {
     }
 
     // Returns true if it's added a default, false otherwise
-    private boolean addMarkss(
+    private boolean addMarks(
             OperationCreateBackgroundSetWithAdder operationBwsaWithEnergy,
             FinderEnergyStack finderEnergyStack,
             VideoStatsModuleGlobalParams mpg) {
@@ -281,7 +290,7 @@ public class ManifestDropDown {
         try {
             final FinderSerializedObject<MarkCollection> finderFinalMarks =
                     new FinderSerializedObject<>("marks", mpg.getLogger().errorReporter());
-            finderFinalMarks.doFind(manifests.getFileManifest().get());
+            finderFinalMarks.doFind(manifests.getJobManifest().get());
 
             if (finderFinalMarks.exists()) {
 
@@ -326,11 +335,11 @@ public class ManifestDropDown {
         try {
             final FinderSerializedObject<MarksWithEnergyBreakdown> finderFinalMarks =
                     new FinderSerializedObject<>("marks", mpg.getLogger().errorReporter());
-            finderFinalMarks.doFind(manifests.getFileManifest().get());
+            finderFinalMarks.doFind(manifests.getJobManifest().get());
 
             if (finderFinalMarks.exists()) {
 
-                CachedSupplier<LoadContainer<IndexableMarksWithEnergy>, OperationFailedException>
+                CachedSupplier<BoundedIndexContainer<IndexableMarksWithEnergy>, OperationFailedException>
                         op =
                                 CachedSupplier.cache(
                                         () -> {
@@ -343,12 +352,7 @@ public class ManifestDropDown {
                                                 throw new OperationFailedException(e);
                                             }
 
-                                            LoadContainer<IndexableMarksWithEnergy> lc =
-                                                    new LoadContainer<>();
-                                            lc.setExpensiveLoad(false);
-                                            lc.setContainer(
-                                                    new SingleContainer<>(instantState, 0, false));
-                                            return lc;
+                                            return new SingleContainer<>(instantState, 0, false);
                                         });
 
                 if (finderEnergyStack.exists()) {
@@ -376,7 +380,7 @@ public class ManifestDropDown {
             VideoStatsModuleGlobalParams mpg) {
         try {
             FinderMarksFolder finder = new FinderMarksFolder("marksCollection", "marks");
-            finder.doFind(manifests.getFileManifest().get());
+            finder.doFind(manifests.getJobManifest().get());
 
             NamedProvider<MarkCollection> provider = finder.createNamedProvider(false);
             DropDownUtilities.addMarksSubmenu(
@@ -390,13 +394,5 @@ public class ManifestDropDown {
         } catch (OperationFailedException e) {
             mpg.getLogger().errorReporter().recordError(ManifestDropDown.class, e);
         }
-    }
-
-    public IOpenedFileGUI openedFileGUI() {
-        return delegate.openedFileGUI();
-    }
-
-    public String getName() {
-        return delegate.getName();
     }
 }

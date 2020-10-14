@@ -29,6 +29,7 @@ package org.anchoranalysis.gui.videostats.internalframe;
 import org.anchoranalysis.anchor.mpp.feature.instantstate.EnergyInstantStateBridge;
 import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.idgetter.IDGetter;
+import org.anchoranalysis.core.index.container.BoundedIndexContainer;
 import org.anchoranalysis.core.index.container.bridge.BoundedIndexContainerBridgeWithoutIndex;
 import org.anchoranalysis.gui.frame.multioverlay.instantstate.InternalFrameOverlayedInstantStateToRGBSelectable;
 import org.anchoranalysis.gui.image.frame.SliderState;
@@ -36,7 +37,6 @@ import org.anchoranalysis.gui.videostats.IModuleCreatorDefaultState;
 import org.anchoranalysis.gui.videostats.dropdown.BackgroundSetProgressingSupplier;
 import org.anchoranalysis.gui.videostats.dropdown.VideoStatsModuleGlobalParams;
 import org.anchoranalysis.gui.videostats.module.DefaultModuleState;
-import org.anchoranalysis.io.manifest.deserializer.folder.LoadContainer;
 import org.anchoranalysis.mpp.feature.energy.IndexableMarksWithEnergy;
 import org.anchoranalysis.overlay.Overlay;
 import org.anchoranalysis.overlay.id.IDGetterOverlayID;
@@ -50,7 +50,7 @@ public class InternalFrameMarksHistoryFolder {
     }
 
     public SliderState init(
-            LoadContainer<IndexableMarksWithEnergy> history,
+            BoundedIndexContainer<IndexableMarksWithEnergy> history,
             DefaultModuleState defaultState,
             BackgroundSetProgressingSupplier backgroundSet,
             VideoStatsModuleGlobalParams mpg)
@@ -61,13 +61,13 @@ public class InternalFrameMarksHistoryFolder {
         SliderState sliderState =
                 this.delegate.init(
                         new BoundedIndexContainerBridgeWithoutIndex<>(
-                                history.getContainer(),
+                                history,
                                 new EnergyInstantStateBridge(
                                         defaultState.getMarkDisplaySettings().regionMembership())),
                         mpg.getDefaultColorIndexForMarks(),
                         idGetter,
                         idGetter,
-                        !history.isExpensiveLoad(),
+                        true,
                         defaultState,
                         mpg);
 

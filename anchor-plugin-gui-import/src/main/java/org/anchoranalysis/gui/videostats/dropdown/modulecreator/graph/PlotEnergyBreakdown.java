@@ -32,7 +32,7 @@ import org.anchoranalysis.core.color.ColorIndex;
 import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.error.reporter.ErrorReporter;
-import org.anchoranalysis.gui.manifest.historyfolder.FinderHistoryFolder;
+import org.anchoranalysis.gui.finder.FinderHistoryFolder;
 import org.anchoranalysis.gui.marks.MarksGraphPanel;
 import org.anchoranalysis.gui.marks.StatePanelFrameHistoryMarks;
 import org.anchoranalysis.gui.plot.EnergyGraphItem;

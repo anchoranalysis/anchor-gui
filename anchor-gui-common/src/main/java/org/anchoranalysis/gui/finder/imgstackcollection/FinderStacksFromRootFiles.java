@@ -33,7 +33,8 @@ import org.anchoranalysis.gui.finder.FinderRasterFilesByManifestDescriptionFunct
 import org.anchoranalysis.image.io.bean.stack.StackReader;
 import org.anchoranalysis.image.stack.NamedStacksSupplier;
 import org.anchoranalysis.image.stack.Stack;
-import org.anchoranalysis.io.manifest.ManifestRecorder;
+import org.anchoranalysis.io.manifest.Manifest;
+import org.anchoranalysis.io.manifest.finder.FindFailedException;
 
 // Finds an image stack collection from the files in the root directory
 public class FinderStacksFromRootFiles implements FinderStacks {
@@ -58,7 +59,7 @@ public class FinderStacksFromRootFiles implements FinderStacks {
     }
 
     @Override
-    public boolean doFind(ManifestRecorder manifestRecorder) {
+    public boolean doFind(Manifest manifestRecorder) throws FindFailedException {
         return delegate.doFind(manifestRecorder);
     }
 

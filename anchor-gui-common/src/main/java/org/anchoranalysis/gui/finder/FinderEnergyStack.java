@@ -36,7 +36,7 @@ import org.anchoranalysis.gui.videostats.dropdown.common.EnergyStackSupplier;
 import org.anchoranalysis.image.io.bean.stack.StackReader;
 import org.anchoranalysis.image.stack.NamedStacksSupplier;
 import org.anchoranalysis.image.stack.Stack;
-import org.anchoranalysis.io.manifest.ManifestRecorder;
+import org.anchoranalysis.io.manifest.Manifest;
 import org.anchoranalysis.io.manifest.finder.Finder;
 import org.anchoranalysis.io.manifest.finder.FinderKeyValueParams;
 
@@ -61,7 +61,7 @@ public class FinderEnergyStack implements Finder {
     }
 
     @Override
-    public boolean doFind(ManifestRecorder manifestRecorder) {
+    public boolean doFind(Manifest manifestRecorder) {
         finderImageParams.doFind(manifestRecorder);
         return finderRasterFolder.doFind(manifestRecorder);
     }

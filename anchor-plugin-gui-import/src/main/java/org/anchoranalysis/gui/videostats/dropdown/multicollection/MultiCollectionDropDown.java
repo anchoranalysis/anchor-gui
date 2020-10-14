@@ -35,7 +35,7 @@ import org.anchoranalysis.core.name.store.NamedProviderStore;
 import org.anchoranalysis.core.params.KeyValueParams;
 import org.anchoranalysis.core.progress.ProgressReporter;
 import org.anchoranalysis.gui.bean.filecreator.MarkCreatorParams;
-import org.anchoranalysis.gui.file.opened.IOpenedFileGUI;
+import org.anchoranalysis.gui.file.opened.OpenedFileGUI;
 import org.anchoranalysis.gui.interactivebrowser.MarkEvaluatorManager;
 import org.anchoranalysis.gui.interactivebrowser.MarkEvaluatorSetForImage;
 import org.anchoranalysis.gui.series.TimeSequenceProviderSupplier;
@@ -164,7 +164,7 @@ public class MultiCollectionDropDown {
         }
     }
 
-    public IOpenedFileGUI openedFileGUI() {
+    public OpenedFileGUI openedFileGUI() {
         return delegate.openedFileGUI();
     }
 

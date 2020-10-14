@@ -31,7 +31,7 @@ import org.anchoranalysis.gui.annotation.AnnotatorModuleCreator;
 import org.anchoranalysis.gui.annotation.builder.AnnotationGuiBuilder;
 import org.anchoranalysis.gui.annotation.builder.AnnotationGuiContext;
 import org.anchoranalysis.gui.annotation.export.ExportAnnotation;
-import org.anchoranalysis.gui.file.opened.IOpenedFileGUI;
+import org.anchoranalysis.gui.file.opened.OpenedFileGUI;
 import org.anchoranalysis.gui.videostats.dropdown.AddVideoStatsModule;
 import org.anchoranalysis.gui.videostats.dropdown.BoundVideoStatsModuleDropDown;
 import org.anchoranalysis.gui.videostats.dropdown.OperationCreateBackgroundSetWithAdder;
@@ -126,7 +126,7 @@ public class AnnotationDropDown {
                 false);
     }
 
-    public IOpenedFileGUI openedFileGUI() {
+    public OpenedFileGUI openedFileGUI() {
         return delegate.openedFileGUI();
     }
 

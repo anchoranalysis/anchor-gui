@@ -33,7 +33,7 @@ import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.gui.bean.filecreator.MarkCreatorParams;
 import org.anchoranalysis.gui.file.opened.OpenedFile;
-import org.anchoranalysis.gui.file.opened.OpenedFileGUI;
+import org.anchoranalysis.gui.file.opened.OpenedFileGUIWithFile;
 import org.anchoranalysis.gui.videostats.dropdown.AddVideoStatsModule;
 import org.anchoranalysis.gui.videostats.dropdown.manifest.ManifestDropDown;
 import org.anchoranalysis.image.io.bean.stack.StackReader;
@@ -76,7 +76,7 @@ public class FileExecutedExperimentImageWithManifest extends InteractiveFile {
             throw new OperationFailedException(e);
         }
 
-        return new OpenedFileGUI(this, manifestDropDown.openedFileGUI());
+        return new OpenedFileGUIWithFile(this, manifestDropDown.openedFileGUI());
     }
 
     @Override

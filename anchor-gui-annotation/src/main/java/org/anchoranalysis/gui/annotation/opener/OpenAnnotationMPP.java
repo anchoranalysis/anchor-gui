@@ -32,13 +32,13 @@ import lombok.AllArgsConstructor;
 import org.anchoranalysis.annotation.io.mark.MarkAnnotationReader;
 import org.anchoranalysis.annotation.mark.DualMarksAnnotation;
 import org.anchoranalysis.core.log.Logger;
+import org.anchoranalysis.core.serialize.DeserializationFailedException;
 import org.anchoranalysis.gui.annotation.AnnotatorModuleCreator;
 import org.anchoranalysis.gui.annotation.InitAnnotation;
 import org.anchoranalysis.gui.annotation.mark.RejectionReason;
 import org.anchoranalysis.gui.videostats.internalframe.annotator.currentstate.PartitionedMarks;
 import org.anchoranalysis.gui.videostats.module.VideoStatsModuleCreateException;
 import org.anchoranalysis.io.exception.InputReadFailedException;
-import org.anchoranalysis.io.manifest.deserializer.DeserializationFailedException;
 import org.anchoranalysis.mpp.mark.MarkCollection;
 
 @AllArgsConstructor

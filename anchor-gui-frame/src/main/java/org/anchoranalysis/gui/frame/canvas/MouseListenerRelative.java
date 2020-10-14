@@ -27,36 +27,44 @@
 package org.anchoranalysis.gui.frame.canvas;
 
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseMotionListener;
-import javax.swing.event.EventListenerList;
+import java.awt.event.MouseListener;
+import lombok.AllArgsConstructor;
 
-class MouseMotionListenerRel implements MouseMotionListener {
+/**
+ * 
+ * <p>We ignore any of these events if CONTROL or SHIFT is pressed, as we reserve
+ *  these for ourselves
+ * 
+ * @author Owen Feehan
+ *
+ */
+@AllArgsConstructor
+class MouseListenerRelative implements MouseListener {
 
-    private MouseEventCreator eventCreator;
-    private EventListenerList eventList;
+    private BroadcastMouseEvents<MouseListener> broadcast;
 
-    public MouseMotionListenerRel(MouseEventCreator eventCreator, EventListenerList eventList) {
-        super();
-        this.eventCreator = eventCreator;
-        this.eventList = eventList;
-    }
-
-    private MouseMotionListener[] getListeners() {
-        return eventList.getListeners(MouseMotionListener.class);
+    @Override
+    public void mouseClicked(MouseEvent event) {
+        broadcast.sendChangedEvent(event, false, (listener, eventNew) -> listener.mouseClicked(eventNew) );
     }
 
     @Override
-    public void mouseDragged(MouseEvent arg0) {
-        for (MouseMotionListener el : getListeners()) {
-            el.mouseDragged(eventCreator.mouseEventNew(arg0));
-        }
+    public void mousePressed(MouseEvent event) {
+        broadcast.sendChangedEvent(event, false, (listener, eventNew) -> listener.mousePressed(eventNew) );
     }
 
     @Override
-    public void mouseMoved(MouseEvent arg0) {
+    public void mouseReleased(MouseEvent event) {
+        broadcast.sendChangedEvent(event, false, (listener, eventNew) -> listener.mouseReleased(eventNew) );
+    }
 
-        for (MouseMotionListener el : getListeners()) {
-            el.mouseMoved(eventCreator.mouseEventNew(arg0));
-        }
+    @Override
+    public void mouseEntered(MouseEvent event) {
+        broadcast.sendChangedEvent(event, true, (listener, eventNew) -> listener.mouseEntered(eventNew) );
+    }
+
+    @Override
+    public void mouseExited(MouseEvent event) {
+        broadcast.sendChangedEvent(event, true, (listener, eventNew) -> listener.mouseExited(eventNew) );
     }
 }

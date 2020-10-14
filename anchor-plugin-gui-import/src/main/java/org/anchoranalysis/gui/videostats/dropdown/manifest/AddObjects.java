@@ -30,12 +30,13 @@ import java.io.IOException;
 import lombok.AllArgsConstructor;
 import org.anchoranalysis.core.cache.CachedSupplier;
 import org.anchoranalysis.core.error.OperationFailedException;
+import org.anchoranalysis.core.index.container.BoundedIndexContainer;
 import org.anchoranalysis.core.index.container.SingleContainer;
 import org.anchoranalysis.core.name.provider.NamedProvider;
 import org.anchoranalysis.core.name.provider.NamedProviderGetException;
 import org.anchoranalysis.gui.finder.FinderEnergyStack;
 import org.anchoranalysis.gui.io.loader.manifest.finder.FinderMarksFolder;
-import org.anchoranalysis.gui.io.loader.manifest.finder.FinderObjectCollectionFolder;
+import org.anchoranalysis.gui.io.loader.manifest.finder.FinderObjectsDirectory;
 import org.anchoranalysis.gui.marks.MarkDisplaySettings;
 import org.anchoranalysis.gui.videostats.dropdown.BoundVideoStatsModuleDropDown;
 import org.anchoranalysis.gui.videostats.dropdown.OperationCreateBackgroundSetWithAdder;
@@ -46,7 +47,6 @@ import org.anchoranalysis.gui.videostats.dropdown.contextualmodulecreator.Single
 import org.anchoranalysis.gui.videostats.operation.VideoStatsOperationMenu;
 import org.anchoranalysis.gui.videostats.operation.combine.OverlayCollectionSupplier;
 import org.anchoranalysis.image.object.ObjectCollection;
-import org.anchoranalysis.io.manifest.deserializer.folder.LoadContainer;
 import org.anchoranalysis.io.manifest.finder.FinderSerializedObject;
 import org.anchoranalysis.mpp.feature.energy.IndexableMarksWithEnergy;
 import org.anchoranalysis.mpp.feature.energy.marks.MarksWithEnergyBreakdown;
@@ -86,9 +86,9 @@ class AddObjects {
             VideoStatsOperationMenu subMenu,
             OperationCreateBackgroundSetWithAdder operationBwsaWithEnergy) {
         try {
-            final FinderObjectCollectionFolder finderObjects =
-                    new FinderObjectCollectionFolder(OutputterDirectories.OBJECTS);
-            finderObjects.doFind(manifests.getFileManifest().get());
+            final FinderObjectsDirectory finderObjects =
+                    new FinderObjectsDirectory(OutputterDirectories.OBJECTS);
+            finderObjects.doFind(manifests.getJobManifest().get());
 
             if (finderObjects.exists()) {
 
@@ -121,36 +121,20 @@ class AddObjects {
 
         return false;
     }
-
+    
     private boolean fromSerializedMarks(
             OperationCreateBackgroundSetWithAdder operationBwsaWithEnergy) {
         try {
             final FinderSerializedObject<MarksWithEnergyBreakdown> finderFinalMarks =
                     new FinderSerializedObject<>("marks", mpg.getLogger().errorReporter());
-            finderFinalMarks.doFind(manifests.getFileManifest().get());
+            finderFinalMarks.doFind(manifests.getJobManifest().get());
 
             if (finderFinalMarks.exists()) {
 
-                CachedSupplier<LoadContainer<IndexableMarksWithEnergy>, OperationFailedException>
-                        op =
-                                CachedSupplier.cache(
-                                        () -> {
-                                            IndexableMarksWithEnergy instantState;
-                                            try {
-                                                instantState =
-                                                        new IndexableMarksWithEnergy(
-                                                                0, finderFinalMarks.get());
-                                            } catch (IOException e) {
-                                                throw new OperationFailedException(e);
-                                            }
-
-                                            LoadContainer<IndexableMarksWithEnergy> lc =
-                                                    new LoadContainer<>();
-                                            lc.setExpensiveLoad(false);
-                                            lc.setContainer(
-                                                    new SingleContainer<>(instantState, 0, false));
-                                            return lc;
-                                        });
+                CachedSupplier<BoundedIndexContainer<IndexableMarksWithEnergy>, OperationFailedException>
+                        op = CachedSupplier.cache(
+                           () -> createSerializedMarksContainer(finderFinalMarks)
+                        );
 
                 if (finderEnergyStack.exists()) {
                     // Energy Table
@@ -171,12 +155,22 @@ class AddObjects {
         }
         return false;
     }
-
+    
+    private BoundedIndexContainer<IndexableMarksWithEnergy> createSerializedMarksContainer(FinderSerializedObject<MarksWithEnergyBreakdown> finderFinalMarks) throws OperationFailedException {
+        try {
+            IndexableMarksWithEnergy instantState = new IndexableMarksWithEnergy(
+                0, finderFinalMarks.get());
+            return new SingleContainer<>(instantState, 0, false);
+        } catch (IOException e) {
+            throw new OperationFailedException(e);
+        }
+    }
+    
     private void fromMarks(OperationCreateBackgroundSetWithAdder operationBwsaWithEnergy) {
 
         try {
             FinderMarksFolder finder = new FinderMarksFolder("marksCollection", "marks");
-            finder.doFind(manifests.getFileManifest().get());
+            finder.doFind(manifests.getJobManifest().get());
 
             NamedProvider<MarkCollection> provider = finder.createNamedProvider(false);
             DropDownUtilities.addMarksSubmenu(

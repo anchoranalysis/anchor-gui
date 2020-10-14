@@ -45,12 +45,10 @@ public class BackgroundSet {
 
     private HashMap<String, BackgroundSetSupplier<BackgroundStackContainer>> map = new HashMap<>();
 
-    public void addAll(BackgroundSet src) {
-        for (String srcItem : src.map.keySet()) {
-            addItem(srcItem, src.getItem(srcItem));
-        }
+    public BackgroundSet(BackgroundSet source) {
+        source.map.forEach(this::addItem);
     }
-
+    
     public void addItem(String name, BackgroundStackContainer rasterBackground) {
         addItem(name, () -> rasterBackground);
     }

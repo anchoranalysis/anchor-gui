@@ -30,13 +30,13 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPopupMenu;
 import org.anchoranalysis.core.log.Logger;
-import org.anchoranalysis.gui.file.opened.IOpenedFileGUI;
+import org.anchoranalysis.gui.file.opened.OpenedFileGUI;
 import org.anchoranalysis.gui.reassign.JDropdownButton;
 import org.anchoranalysis.gui.videostats.operation.VideoStatsOperationFromCreatorAndAdder;
 import org.anchoranalysis.gui.videostats.operation.VideoStatsOperationMenu;
 import org.anchoranalysis.gui.videostats.threading.InteractiveThreadPool;
 
-public class VideoStatsModuleDropdown implements IOpenedFileGUI {
+public class VideoStatsModuleDropdown implements OpenedFileGUI {
 
     // private static Log log = LogFactory.getLog(VideoStatsModuleDropdown.class);
 

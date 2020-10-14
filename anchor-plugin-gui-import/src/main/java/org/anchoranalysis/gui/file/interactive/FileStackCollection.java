@@ -38,7 +38,7 @@ import org.anchoranalysis.core.name.store.LazyEvaluationStore;
 import org.anchoranalysis.core.progress.ProgressReporter;
 import org.anchoranalysis.gui.bean.filecreator.MarkCreatorParams;
 import org.anchoranalysis.gui.file.opened.OpenedFile;
-import org.anchoranalysis.gui.file.opened.OpenedFileGUI;
+import org.anchoranalysis.gui.file.opened.OpenedFileGUIWithFile;
 import org.anchoranalysis.gui.series.TimeSequenceProvider;
 import org.anchoranalysis.gui.series.TimeSequenceProviderSupplier;
 import org.anchoranalysis.gui.videostats.dropdown.AddVideoStatsModule;
@@ -91,7 +91,7 @@ public class FileStackCollection extends InteractiveFile {
             throw new OperationFailedException(e);
         }
 
-        return new OpenedFileGUI(this, dropDown.openedFileGUI());
+        return new OpenedFileGUIWithFile(this, dropDown.openedFileGUI());
     }
 
     private TimeSequenceProvider extractTimeSequenceFromInput(

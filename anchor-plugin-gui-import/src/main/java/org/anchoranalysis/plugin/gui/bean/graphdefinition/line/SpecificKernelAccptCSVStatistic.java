@@ -27,7 +27,7 @@
 package org.anchoranalysis.plugin.gui.bean.graphdefinition.line;
 
 import org.anchoranalysis.core.index.GetOperationFailedException;
-import org.anchoranalysis.gui.manifest.csvstatistic.CSVStatistic;
+import org.anchoranalysis.gui.finder.csvstatistic.CSVStatistic;
 import org.anchoranalysis.plot.index.LinePlot.YValGetter;
 
 public class SpecificKernelAccptCSVStatistic implements YValGetter<CSVStatistic> {

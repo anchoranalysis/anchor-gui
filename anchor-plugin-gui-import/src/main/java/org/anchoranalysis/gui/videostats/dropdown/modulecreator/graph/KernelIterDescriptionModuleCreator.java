@@ -32,8 +32,8 @@ import lombok.AllArgsConstructor;
 import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.error.reporter.ErrorReporter;
+import org.anchoranalysis.gui.finder.FinderHistoryFolder;
 import org.anchoranalysis.gui.kernel.KernelIterDescriptionNavigatorPanel;
-import org.anchoranalysis.gui.manifest.historyfolder.FinderHistoryFolder;
 import org.anchoranalysis.gui.marks.StatePanel;
 import org.anchoranalysis.gui.marks.StatePanelFrameHistory;
 import org.anchoranalysis.gui.videostats.IModuleCreatorDefaultState;
@@ -80,7 +80,7 @@ public class KernelIterDescriptionModuleCreator extends VideoStatsModuleCreatorC
 
             StatePanel<KernelDescision> panel =
                     new KernelIterDescriptionNavigatorPanel(
-                            finderKernelDecisionHistory.get().getContainer(), kp);
+                            finderKernelDecisionHistory.get(), kp);
 
             StatePanelFrameHistory<KernelDescision> frame =
                     new StatePanelFrameHistory<>(namePrefix, true);

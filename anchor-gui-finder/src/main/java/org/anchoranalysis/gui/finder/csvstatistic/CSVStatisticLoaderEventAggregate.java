@@ -24,33 +24,35 @@
  * #L%
  */
 
-package org.anchoranalysis.gui.manifest.csvstatistic;
+package org.anchoranalysis.gui.finder.csvstatistic;
 
-class CntKernelsFromCsv {
+import java.nio.file.Path;
+import org.anchoranalysis.core.index.container.ArrayListContainer;
+import org.anchoranalysis.core.index.container.BoundedIndexContainer;
+import org.anchoranalysis.io.csv.reader.CSVReaderByLine;
+import org.anchoranalysis.io.csv.reader.CSVReaderByLine.ReadByLine;
+import org.anchoranalysis.io.csv.reader.CSVReaderException;
 
-    public static int apply(String[] headers) {
-        // Find the last header that matches Prop
+public class CSVStatisticLoaderEventAggregate extends CSVStatisticLoader {
 
-        String finalProp = lastPropStr(headers);
-        if (finalProp != null) {
-            String numPart = extractNumPart(finalProp);
-            return Integer.parseInt(numPart) + 1;
-        } else {
-            return 0;
+    @Override
+    public BoundedIndexContainer<CSVStatistic> createContainerFromCSV(Path csvPath)
+            throws CSVReaderException {
+
+        ArrayListContainer<CSVStatistic> cntr = new ArrayListContainer<>();
+
+        try (ReadByLine reader = CSVReaderByLine.open(csvPath)) {
+            reader.read(
+                    (line, firstLine) -> {
+                        int i = 0;
+
+                        CSVStatistic stat = new CSVStatistic();
+                        stat.setIter(Integer.parseInt(line[i++]));
+                        stat.setSize(Integer.parseInt(line[i++]));
+                        stat.setEnergy(Double.parseDouble(line[i++]));
+                        cntr.add(stat);
+                    });
         }
-    }
-
-    private static String lastPropStr(String[] headers) {
-        String finalProp = null;
-        for (String s : headers) {
-            if (s.startsWith("Prop")) {
-                finalProp = s;
-            }
-        }
-        return finalProp;
-    }
-
-    private static String extractNumPart(String s) {
-        return s.substring(4);
+        return cntr;
     }
 }

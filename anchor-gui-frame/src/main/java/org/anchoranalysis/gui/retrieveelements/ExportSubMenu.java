@@ -43,7 +43,7 @@ import org.anchoranalysis.image.io.generator.raster.StackGenerator;
 import org.anchoranalysis.image.stack.Stack;
 import org.anchoranalysis.io.generator.Generator;
 import org.anchoranalysis.io.manifest.ManifestDescription;
-import org.anchoranalysis.io.manifest.ManifestFolderDescription;
+import org.anchoranalysis.io.manifest.ManifestDirectoryDescription;
 import org.anchoranalysis.io.manifest.sequencetype.IncrementingIntegers;
 import org.anchoranalysis.io.output.namestyle.IntegerSuffixOutputNameStyle;
 import org.anchoranalysis.io.output.outputter.InputOutputContext;
@@ -60,7 +60,7 @@ public class ExportSubMenu implements AddToExportSubMenu {
     public void addExportItemStackGenerator(String outputName, String label, Supplier<Stack> stack)
             throws OperationFailedException {
 
-        StackGenerator stackGenerator = new StackGenerator(true, outputName, false);
+        StackGenerator stackGenerator = new StackGenerator(true, Optional.of(outputName), false);
         SupplierGenerator<Stack, Stack> generator = new SupplierGenerator<>(stackGenerator);
         addExportItem(
                 generator, stack, outputName, label, generator.createManifestDescription(), 1);
@@ -75,7 +75,7 @@ public class ExportSubMenu implements AddToExportSubMenu {
             Optional<ManifestDescription> manifestDescription,
             int numberItems) {
 
-        ManifestFolderDescription manifestFolderDescription = createManifestFolderDescription(manifestDescription);
+        ManifestDirectoryDescription manifestFolderDescription = createManifestFolderDescription(manifestDescription);
         
         // No parameters available in this context
         ExportTaskParams exportTaskParams = new ExportTaskParams(
@@ -111,8 +111,8 @@ public class ExportSubMenu implements AddToExportSubMenu {
         return params.getContext();
     }
     
-    private ManifestFolderDescription createManifestFolderDescription(Optional<ManifestDescription> manifestDescription) {
-        return new ManifestFolderDescription(
+    private ManifestDirectoryDescription createManifestFolderDescription(Optional<ManifestDescription> manifestDescription) {
+        return new ManifestDirectoryDescription(
                 manifestDescription.orElseThrow(
                         () ->
                                 new AnchorFriendlyRuntimeException(

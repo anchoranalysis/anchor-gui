@@ -36,7 +36,7 @@ import org.anchoranalysis.core.name.store.LazyEvaluationStore;
 import org.anchoranalysis.core.params.KeyValueParams;
 import org.anchoranalysis.gui.bean.filecreator.MarkCreatorParams;
 import org.anchoranalysis.gui.file.opened.OpenedFile;
-import org.anchoranalysis.gui.file.opened.OpenedFileGUI;
+import org.anchoranalysis.gui.file.opened.OpenedFileGUIWithFile;
 import org.anchoranalysis.gui.series.TimeSequenceProvider;
 import org.anchoranalysis.gui.videostats.dropdown.AddVideoStatsModule;
 import org.anchoranalysis.gui.videostats.dropdown.multicollection.MultiCollectionDropDown;
@@ -102,7 +102,7 @@ public class FileMultiCollection extends InteractiveFile {
             throw new OperationFailedException(e);
         }
 
-        return new OpenedFileGUI(this, dropDown.openedFileGUI());
+        return new OpenedFileGUIWithFile(this, dropDown.openedFileGUI());
     }
 
     private TimeSequenceProvider createTimeSequenceProvider(

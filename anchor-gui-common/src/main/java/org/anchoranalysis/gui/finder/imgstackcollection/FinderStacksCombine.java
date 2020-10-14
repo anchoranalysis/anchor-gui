@@ -34,7 +34,8 @@ import org.anchoranalysis.core.progress.ProgressReporterNull;
 import org.anchoranalysis.image.stack.NamedStacks;
 import org.anchoranalysis.image.stack.NamedStacksSupplier;
 import org.anchoranalysis.image.stack.Stack;
-import org.anchoranalysis.io.manifest.ManifestRecorder;
+import org.anchoranalysis.io.manifest.Manifest;
+import org.anchoranalysis.io.manifest.finder.FindFailedException;
 
 /** Combines a number of other {@link FinderStacks} */
 public class FinderStacksCombine implements FinderStacks {
@@ -64,7 +65,7 @@ public class FinderStacksCombine implements FinderStacks {
     }
 
     @Override
-    public boolean doFind(ManifestRecorder manifestRecorder) {
+    public boolean doFind(Manifest manifestRecorder) throws FindFailedException {
         boolean result = false;
         for (FinderStacks finder : list) {
             if (finder.doFind(manifestRecorder)) {

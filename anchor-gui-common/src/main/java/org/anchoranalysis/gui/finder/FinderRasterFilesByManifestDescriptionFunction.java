@@ -37,40 +37,30 @@ import org.anchoranalysis.image.io.bean.stack.StackReader;
 import org.anchoranalysis.image.io.stack.OpenedRaster;
 import org.anchoranalysis.image.stack.NamedStacks;
 import org.anchoranalysis.image.stack.Stack;
-import org.anchoranalysis.io.manifest.ManifestRecorder;
+import org.anchoranalysis.io.manifest.Manifest;
 import org.anchoranalysis.io.manifest.file.FileWrite;
+import org.anchoranalysis.io.manifest.finder.FindFailedException;
 import org.anchoranalysis.io.manifest.finder.Finder;
 import org.anchoranalysis.io.manifest.finder.FinderUtilities;
-import org.anchoranalysis.io.manifest.match.FileWriteManifestMatch;
-import org.anchoranalysis.io.manifest.match.ManifestDescriptionFunctionMatch;
-import org.anchoranalysis.io.manifest.match.ManifestDescriptionMatchAnd;
-import org.anchoranalysis.io.manifest.match.ManifestDescriptionTypeMatch;
+import org.anchoranalysis.io.manifest.finder.match.FileMatch;
+import lombok.RequiredArgsConstructor;
 
+@RequiredArgsConstructor
 public class FinderRasterFilesByManifestDescriptionFunction implements Finder {
 
-    private String function;
+    // START REQUIRED ARGUMENTS
+    private final StackReader stackReader;
+    
+    private final String function;
+    // END REQUIRED ARGUMENTS
 
     private List<FileWrite> list;
-
-    private StackReader stackReader;
-
-    public FinderRasterFilesByManifestDescriptionFunction(
-            StackReader stackReader, String function) {
-
-        this.function = function;
-        this.stackReader = stackReader;
-    }
-
+    
     @Override
-    public boolean doFind(ManifestRecorder manifestRecorder) {
-
-        ManifestDescriptionMatchAnd matchManifest = new ManifestDescriptionMatchAnd();
-        matchManifest.addCondition(new ManifestDescriptionFunctionMatch(function));
-        matchManifest.addCondition(new ManifestDescriptionTypeMatch("raster"));
-
+    public boolean doFind(Manifest manifestRecorder) throws FindFailedException {
         list =
                 FinderUtilities.findListFile(
-                        manifestRecorder, new FileWriteManifestMatch(matchManifest));
+                        manifestRecorder, FileMatch.description(function, "raster"));
         return exists();
     }
 

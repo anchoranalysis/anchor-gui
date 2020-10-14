@@ -33,27 +33,35 @@ import org.anchoranalysis.image.io.ImageIOException;
 import org.anchoranalysis.image.io.bean.stack.StackReader;
 import org.anchoranalysis.image.io.stack.OpenedRaster;
 import org.anchoranalysis.image.stack.Stack;
-import org.anchoranalysis.io.manifest.deserializer.folder.sequenced.SequencedFolderContainerCreator;
-import org.anchoranalysis.io.manifest.folder.SequencedFolder;
+import org.anchoranalysis.io.manifest.directory.sequenced.DeriveElementsFromSequencedDirectory;
+import org.anchoranalysis.io.manifest.directory.sequenced.SequencedDirectory;
 
-class SequencedFolderStackReader extends SequencedFolderContainerCreator<Stack> {
+/**
+ * Reads a stack from each file in a directory with a sequence of files.
+ * 
+ * <p>Only the first time-point of the first series is opened.
+ * 
+ * @author Owen Feehan
+ *
+ */
+class SequencedDirectoryStackReader extends DeriveElementsFromSequencedDirectory<Stack> {
 
     private StackReader stackReader;
 
-    public SequencedFolderStackReader(SequencedFolder rootFolder, StackReader stackReader) {
+    public SequencedDirectoryStackReader(SequencedDirectory rootFolder, StackReader stackReader) {
         super(rootFolder);
         this.stackReader = stackReader;
     }
 
     @Override
-    protected Stack createFromFilePath(Path path) throws CreateException {
+    protected Stack createFromFile(Path path) throws CreateException {
         // We don't support multiple series for now
         try {
-            OpenedRaster or = stackReader.openFile(path);
+            OpenedRaster openedRaster = stackReader.openFile(path);
             try {
-                return or.open(0, ProgressReporterNull.get()).get(0);
+                return openedRaster.open(0, ProgressReporterNull.get()).get(0);
             } finally {
-                or.close();
+                openedRaster.close();
             }
         } catch (ImageIOException e) {
             throw new CreateException(e);

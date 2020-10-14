@@ -1,6 +1,6 @@
 /*-
  * #%L
- * anchor-plugin-gui-import
+ * anchor-gui-finder
  * %%
  * Copyright (C) 2010 - 2020 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann-La Roche
  * %%
@@ -24,52 +24,51 @@
  * #L%
  */
 
-package org.anchoranalysis.gui.io.loader.manifest.finder;
+package org.anchoranalysis.gui.finder;
 
 import java.util.function.Predicate;
-import lombok.RequiredArgsConstructor;
 import org.anchoranalysis.core.error.OperationFailedException;
-import org.anchoranalysis.core.name.provider.NameValueSet;
-import org.anchoranalysis.core.name.provider.NamedProvider;
-import org.anchoranalysis.core.name.store.LazyEvaluationStore;
-import org.anchoranalysis.core.serialize.Deserializer;
-import org.anchoranalysis.core.serialize.XStreamDeserializer;
-import org.anchoranalysis.gui.finder.AddFromSequenceHelper;
+import org.anchoranalysis.core.index.container.BoundedIndexContainer;
+import org.anchoranalysis.core.serialize.DeserializationFailedException;
+import org.anchoranalysis.gui.container.ContainerGetter;
 import org.anchoranalysis.io.manifest.directory.DirectoryWrite;
-import org.anchoranalysis.io.manifest.directory.sequenced.SequencedDirectoryDeserializer;
 import org.anchoranalysis.io.manifest.finder.FinderSingleDirectory;
 import org.anchoranalysis.io.manifest.finder.match.DirectoryMatch;
-import org.anchoranalysis.mpp.mark.MarkCollection;
+import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
-public class FinderMarksFolder extends FinderSingleDirectory {
+public abstract class FinderHistoryFolder<T> extends FinderSingleDirectory
+        implements ContainerGetter<T> {
 
-    private static final Deserializer<MarkCollection> DESERIALIZER = new XStreamDeserializer<>();
-    
-    // START REQUIRED ARGUMENTS
     private final String manifestFunction;
-    private final String directoryName;
-    // END REQUIRED ARGUMENTS
+    
+    private BoundedIndexContainer<T> history;
 
-    public NamedProvider<MarkCollection> createNamedProvider(boolean namesAsIndexes)
-            throws OperationFailedException {
+    protected abstract BoundedIndexContainer<T> createFromSerialized(DirectoryWrite folder)
+            throws DeserializationFailedException;
 
-        if (!exists()) {
-            return new NameValueSet<>();
+    public BoundedIndexContainer<T> get() throws OperationFailedException {
+
+        try {
+            assert (exists());
+
+            if (history == null) {
+                this.history = createFromSerialized(getFoundDirectory());
+            }
+        } catch (DeserializationFailedException e) {
+            throw new OperationFailedException(e);
         }
 
-        LazyEvaluationStore<MarkCollection> out = new LazyEvaluationStore<>("finderMarksFolder");
+        return this.history;
+    }
 
-        SequencedDirectoryDeserializer<MarkCollection> deserializer =
-                new SequencedDirectoryDeserializer<>(getFoundDirectory(), DESERIALIZER);
-
-        AddFromSequenceHelper.addFromSequence(
-                getFoundDirectory().getAssociatedElementRange(), deserializer, out::add, namesAsIndexes);
-        return out;
+    @Override
+    public BoundedIndexContainer<T> getContainer() throws OperationFailedException {
+        return get();
     }
 
     @Override
     protected Predicate<DirectoryWrite> matchDirectories() {
-        return DirectoryMatch.path(directoryName).and(DirectoryMatch.description(this.manifestFunction, "serialized"));
+        return DirectoryMatch.description(this.manifestFunction, "serialized");
     }
 }

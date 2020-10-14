@@ -24,7 +24,7 @@
  * #L%
  */
 
-package org.anchoranalysis.gui.manifest.csvstatistic;
+package org.anchoranalysis.gui.finder.csvstatistic;
 
 import java.nio.file.Path;
 import org.anchoranalysis.core.index.container.ArrayListContainer;
@@ -43,7 +43,7 @@ public class CSVStatisticLoaderIntervalAggregate extends CSVStatisticLoader {
 
         try (ReadByLine reader = CSVReaderByLine.open(csvPath)) {
 
-            int numKernels = CntKernelsFromCsv.apply(reader.headers());
+            int numKernels = CountKernelsInCSV.apply(reader.headers());
 
             reader.read((line, firstLine) -> cntr.add(statFromLine(line, cntr, numKernels)));
         }

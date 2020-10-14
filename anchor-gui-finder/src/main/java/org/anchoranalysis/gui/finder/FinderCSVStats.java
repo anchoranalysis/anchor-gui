@@ -24,36 +24,36 @@
  * #L%
  */
 
-package org.anchoranalysis.gui.manifest;
+package org.anchoranalysis.gui.finder;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Predicate;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.error.reporter.ErrorReporter;
 import org.anchoranalysis.core.index.container.BoundedIndexContainer;
-import org.anchoranalysis.gui.manifest.csvstatistic.CSVStatistic;
-import org.anchoranalysis.gui.manifest.csvstatistic.CSVStatisticLoader;
-import org.anchoranalysis.gui.manifest.csvstatistic.CSVStatisticLoaderEventAggregate;
-import org.anchoranalysis.gui.manifest.csvstatistic.CSVStatisticLoaderIntervalAggregate;
+import org.anchoranalysis.gui.finder.csvstatistic.CSVStatistic;
+import org.anchoranalysis.gui.finder.csvstatistic.CSVStatisticLoader;
+import org.anchoranalysis.gui.finder.csvstatistic.CSVStatisticLoaderEventAggregate;
+import org.anchoranalysis.gui.finder.csvstatistic.CSVStatisticLoaderIntervalAggregate;
 import org.anchoranalysis.io.csv.reader.CSVReaderException;
-import org.anchoranalysis.io.manifest.ManifestRecorder;
+import org.anchoranalysis.io.manifest.Manifest;
 import org.anchoranalysis.io.manifest.file.FileWrite;
+import org.anchoranalysis.io.manifest.finder.FindFailedException;
 import org.anchoranalysis.io.manifest.finder.FinderSingleFile;
-import org.anchoranalysis.io.manifest.finder.MultipleFilesException;
-import org.anchoranalysis.io.manifest.match.FileWriteAnd;
-import org.anchoranalysis.io.manifest.match.FileWriteManifestMatch;
-import org.anchoranalysis.io.manifest.match.FileWriteOutputName;
-import org.anchoranalysis.io.manifest.match.ManifestDescriptionFunctionMatch;
-import org.anchoranalysis.io.manifest.match.ManifestDescriptionMatchAnd;
-import org.anchoranalysis.io.manifest.match.ManifestDescriptionMatchOr;
-import org.anchoranalysis.io.manifest.match.ManifestDescriptionTypeMatch;
+import org.anchoranalysis.io.manifest.finder.match.FileMatch;
+import org.anchoranalysis.plugin.mpp.segment.bean.optimization.reporter.CSVReporterAggregated;
+import org.anchoranalysis.plugin.mpp.segment.bean.optimization.reporter.CSVReporterBest;
 
 public class FinderCSVStats extends FinderSingleFile {
 
+    private static final String FUNCTION_EVENT_AGGREGATE = CSVReporterBest.MANIFEST_FUNCTION;
+    private static final String FUNCTION_INTERVAL_AGGREGATE = CSVReporterAggregated.MANIFEST_FUNCTION;
+    
     private final String outputName;
 
-    private Optional<BoundedIndexContainer<CSVStatistic>> statsCntr = Optional.empty();
+    private Optional<BoundedIndexContainer<CSVStatistic>> container = Optional.empty();
 
     public FinderCSVStats(String outputName, ErrorReporter errorReporter) {
         super(errorReporter);
@@ -64,24 +64,24 @@ public class FinderCSVStats extends FinderSingleFile {
 
         assert (exists());
 
-        if (!statsCntr.isPresent()) {
-            statsCntr = Optional.of(createContainer(getFoundFile()));
+        if (!container.isPresent()) {
+            container = Optional.of(createContainer(getFoundFile()));
         }
-        return statsCntr.get();
+        return container.get();
     }
 
     @Override
-    protected Optional<FileWrite> findFile(ManifestRecorder manifestRecorder)
-            throws MultipleFilesException {
+    protected Optional<FileWrite> findFile(Manifest manifest)
+            throws FindFailedException {
 
         if (outputName.isEmpty()) {
             return Optional.empty();
         }
 
-        List<FileWrite> found = findIncrementalCSVStats(manifestRecorder, "csv", outputName);
+        List<FileWrite> found = findIncrementalCSVStats(manifest, "csv", outputName);
 
         if (found.size() >= 2) {
-            throw new MultipleFilesException("Multiple matching manifest descriptions find");
+            throw new FindFailedException("Multiple matching manifest descriptions find");
         }
 
         if (found.isEmpty()) {
@@ -91,24 +91,12 @@ public class FinderCSVStats extends FinderSingleFile {
     }
 
     private static List<FileWrite> findIncrementalCSVStats(
-            ManifestRecorder manifestRecorder, String type, String outputName) {
+            Manifest manifest, String type, String outputName) throws FindFailedException {
 
-        FileWriteAnd match = new FileWriteAnd();
-
-        match.addCondition(
-                new FileWriteManifestMatch(
-                        new ManifestDescriptionMatchAnd(
-                                new ManifestDescriptionMatchOr(
-                                        new ManifestDescriptionFunctionMatch(
-                                                "event_aggregate_stats"),
-                                        new ManifestDescriptionFunctionMatch(
-                                                "interval_aggregate_stats")),
-                                new ManifestDescriptionTypeMatch(type))));
-
-        match.addCondition(new FileWriteOutputName(outputName));
-
+        Predicate<FileWrite> match = FileMatch.descriptionAndOutputName(FUNCTION_EVENT_AGGREGATE, FUNCTION_INTERVAL_AGGREGATE, type, outputName);
+        
         ArrayList<FileWrite> foundList = new ArrayList<>();
-        manifestRecorder.getRootFolder().findFile(foundList, match, false);
+        manifest.getRootFolder().findFile(foundList, match, false);
         return foundList;
     }
 
@@ -124,12 +112,12 @@ public class FinderCSVStats extends FinderSingleFile {
             throw new OperationFailedException(e);
         }
     }
-
+    
     private CSVStatisticLoader createStatisticLoader(String function)
             throws OperationFailedException {
-        if (function.equals("event_aggregate_stats")) {
+        if (function.equals(FUNCTION_EVENT_AGGREGATE)) {
             return new CSVStatisticLoaderEventAggregate();
-        } else if (function.equals("interval_aggregate_stats")) {
+        } else if (function.equals(FUNCTION_INTERVAL_AGGREGATE)) {
             return new CSVStatisticLoaderIntervalAggregate();
         } else {
             throw new OperationFailedException("Cannot determine which CSVStatisticLoader to use");

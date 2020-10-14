@@ -32,8 +32,8 @@ import lombok.Getter;
 import lombok.Setter;
 import org.anchoranalysis.core.color.ColorIndex;
 import org.anchoranalysis.gui.container.ContainerGetter;
+import org.anchoranalysis.gui.finder.FinderCSVStats;
 import org.anchoranalysis.gui.finder.imgstackcollection.FinderStacks;
-import org.anchoranalysis.gui.manifest.FinderCSVStats;
 import org.anchoranalysis.io.output.outputter.InputOutputContext;
 import org.anchoranalysis.mpp.feature.energy.IndexableMarksWithEnergy;
 

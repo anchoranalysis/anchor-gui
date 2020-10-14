@@ -36,7 +36,7 @@ import org.anchoranalysis.gui.annotation.dropdown.AnnotationDropDown;
 import org.anchoranalysis.gui.annotation.state.AnnotationSummary;
 import org.anchoranalysis.gui.file.interactive.InteractiveFile;
 import org.anchoranalysis.gui.file.opened.OpenedFile;
-import org.anchoranalysis.gui.file.opened.OpenedFileGUI;
+import org.anchoranalysis.gui.file.opened.OpenedFileGUIWithFile;
 import org.anchoranalysis.gui.interactivebrowser.MarkEvaluatorManager;
 import org.anchoranalysis.gui.videostats.dropdown.AddVideoStatsModule;
 import org.anchoranalysis.gui.videostats.dropdown.VideoStatsModuleGlobalParams;
@@ -112,7 +112,7 @@ public class FileAnnotationNamedChannels extends InteractiveFile {
 
         dropDown.init(globalSubgroupAdder, mpg, context);
 
-        return new OpenedFileGUI(this, dropDown.openedFileGUI());
+        return new OpenedFileGUIWithFile(this, dropDown.openedFileGUI());
     }
 
     @Override

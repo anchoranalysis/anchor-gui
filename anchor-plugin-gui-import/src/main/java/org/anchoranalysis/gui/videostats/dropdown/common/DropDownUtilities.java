@@ -49,7 +49,7 @@ import org.anchoranalysis.gui.videostats.operation.VideoStatsOperationFromCreato
 import org.anchoranalysis.gui.videostats.operation.VideoStatsOperationMenu;
 import org.anchoranalysis.gui.videostats.operation.combine.OverlayCollectionSupplier;
 import org.anchoranalysis.image.object.ObjectCollection;
-import org.anchoranalysis.io.manifest.ManifestFolderDescription;
+import org.anchoranalysis.io.manifest.ManifestDirectoryDescription;
 import org.anchoranalysis.io.manifest.sequencetype.StringsWithoutOrder;
 import org.anchoranalysis.io.output.bean.OutputWriteSettings;
 import org.anchoranalysis.io.output.outputter.InputOutputContext;
@@ -197,8 +197,8 @@ public class DropDownUtilities {
     public static InputOutputContext createSubdirectoryContext(
             InputOutputContext inputOutputContext, String subdirectoryName) throws InitException {
 
-        ManifestFolderDescription mfd =
-                new ManifestFolderDescription(
+        ManifestDirectoryDescription mfd =
+                new ManifestDirectoryDescription(
                         "interactiveOutput", "manifestInteractiveOutput", new StringsWithoutOrder());
 
         // NB: As bindAsSubFolder can now return nulls, maybe some knock-on bugs are introduced here

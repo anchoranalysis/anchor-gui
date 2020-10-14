@@ -24,7 +24,7 @@
  * #L%
  */
 
-package org.anchoranalysis.gui.manifest.csvstatistic;
+package org.anchoranalysis.gui.finder.csvstatistic;
 
 import lombok.Getter;
 import lombok.Setter;
