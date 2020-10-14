@@ -38,7 +38,7 @@ import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.gui.annotation.mark.RejectionReason;
 import org.anchoranalysis.gui.annotation.state.AnnotationProgressState;
 import org.anchoranalysis.gui.annotation.state.AnnotationSummary;
-import org.anchoranalysis.io.exception.InputReadFailedException;
+import org.anchoranalysis.io.input.InputReadFailedException;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 class CreateAnnotationSummary {

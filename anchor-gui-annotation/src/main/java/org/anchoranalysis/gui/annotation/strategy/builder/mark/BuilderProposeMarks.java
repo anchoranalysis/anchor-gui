@@ -50,8 +50,8 @@ import org.anchoranalysis.gui.videostats.internalframe.annotator.AnnotationFrame
 import org.anchoranalysis.gui.videostats.internalframe.annotator.AnnotationPanelParams;
 import org.anchoranalysis.gui.videostats.internalframe.annotator.navigation.PanelNavigation;
 import org.anchoranalysis.gui.videostats.module.VideoStatsModuleCreateException;
-import org.anchoranalysis.io.exception.DerivePathException;
-import org.anchoranalysis.io.exception.InputReadFailedException;
+import org.anchoranalysis.io.input.InputReadFailedException;
+import org.anchoranalysis.io.input.path.DerivePathException;
 import org.anchoranalysis.plugin.annotation.bean.strategy.MarkProposerStrategy;
 import org.anchoranalysis.plugin.annotation.bean.strategy.PathFromGenerator;
 

@@ -35,7 +35,7 @@ import org.anchoranalysis.core.name.store.LazyEvaluationStore;
 import org.anchoranalysis.core.serialize.Deserializer;
 import org.anchoranalysis.core.serialize.XStreamDeserializer;
 import org.anchoranalysis.gui.finder.AddFromSequenceHelper;
-import org.anchoranalysis.io.manifest.directory.DirectoryWrite;
+import org.anchoranalysis.io.manifest.directory.MutableDirectory;
 import org.anchoranalysis.io.manifest.directory.sequenced.SequencedDirectoryDeserializer;
 import org.anchoranalysis.io.manifest.finder.FinderSingleDirectory;
 import org.anchoranalysis.io.manifest.finder.match.DirectoryMatch;
@@ -69,7 +69,7 @@ public class FinderMarksFolder extends FinderSingleDirectory {
     }
 
     @Override
-    protected Predicate<DirectoryWrite> matchDirectories() {
+    protected Predicate<MutableDirectory> matchDirectories() {
         return DirectoryMatch.path(directoryName).and(DirectoryMatch.description(this.manifestFunction, "serialized"));
     }
 }

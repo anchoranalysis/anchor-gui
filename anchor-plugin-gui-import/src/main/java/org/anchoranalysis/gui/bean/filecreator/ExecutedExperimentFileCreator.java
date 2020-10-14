@@ -37,7 +37,7 @@ import org.anchoranalysis.core.progress.ProgressReporter;
 import org.anchoranalysis.core.serialize.DeserializationFailedException;
 import org.anchoranalysis.gui.file.interactive.FileExecutedExperimentImageWithManifest;
 import org.anchoranalysis.gui.file.interactive.InteractiveFile;
-import org.anchoranalysis.io.bean.input.InputManagerParams;
+import org.anchoranalysis.io.input.bean.InputManagerParams;
 import org.anchoranalysis.io.manifest.Manifest;
 import org.anchoranalysis.io.manifest.finder.FinderSerializedObject;
 import org.anchoranalysis.mpp.feature.energy.scheme.EnergyScheme;

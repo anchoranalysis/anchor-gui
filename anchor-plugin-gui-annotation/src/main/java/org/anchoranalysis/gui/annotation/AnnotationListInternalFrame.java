@@ -47,8 +47,8 @@ import org.anchoranalysis.gui.interactivebrowser.filelist.InteractiveFileListInt
 import org.anchoranalysis.gui.videostats.IModuleCreatorDefaultState;
 import org.anchoranalysis.gui.videostats.dropdown.AddVideoStatsModule;
 import org.anchoranalysis.image.io.input.ProvidesStackInput;
-import org.anchoranalysis.io.bean.input.InputManagerParams;
-import org.anchoranalysis.io.exception.InputReadFailedException;
+import org.anchoranalysis.io.input.InputReadFailedException;
+import org.anchoranalysis.io.input.bean.InputManagerParams;
 
 public class AnnotationListInternalFrame {
 

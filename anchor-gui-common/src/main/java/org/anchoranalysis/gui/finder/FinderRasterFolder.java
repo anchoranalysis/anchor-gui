@@ -33,7 +33,7 @@ import org.anchoranalysis.core.index.container.BoundsFromRange;
 import org.anchoranalysis.image.io.bean.stack.StackReader;
 import org.anchoranalysis.image.stack.NamedStacks;
 import org.anchoranalysis.image.stack.Stack;
-import org.anchoranalysis.io.manifest.directory.DirectoryWrite;
+import org.anchoranalysis.io.manifest.directory.MutableDirectory;
 import org.anchoranalysis.io.manifest.finder.FinderSingleDirectory;
 import org.anchoranalysis.io.manifest.finder.match.DirectoryMatch;
 
@@ -75,11 +75,11 @@ public class FinderRasterFolder extends FinderSingleDirectory {
     }
 
     @Override
-    protected Predicate<DirectoryWrite> matchDirectories() {
+    protected Predicate<MutableDirectory> matchDirectories() {
         return DirectoryMatch.path(directoryName).and(DirectoryMatch.description(this.manifestFunction, "raster"));
     }
 
-    private BoundedIndexContainer<Stack> createContainer(DirectoryWrite folder) {
+    private BoundedIndexContainer<Stack> createContainer(MutableDirectory folder) {
         return new BoundsFromRange<>(
                 new SequencedDirectoryStackReader(folder, stackReader),
                 folder.getAssociatedElementRange());

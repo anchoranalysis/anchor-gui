@@ -41,7 +41,7 @@ import org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.definition.C
 import org.anchoranalysis.gui.videostats.internalframe.annotator.AnnotationInitParams;
 import org.anchoranalysis.image.stack.NamedStacksSupplier;
 import org.anchoranalysis.image.stack.Stack;
-import org.anchoranalysis.io.exception.InputReadFailedException;
+import org.anchoranalysis.io.input.InputReadFailedException;
 
 @RequiredArgsConstructor
 public abstract class AnnotationGuiBuilderWithDelegate<

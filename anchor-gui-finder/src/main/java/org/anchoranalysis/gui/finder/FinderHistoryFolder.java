@@ -31,7 +31,7 @@ import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.index.container.BoundedIndexContainer;
 import org.anchoranalysis.core.serialize.DeserializationFailedException;
 import org.anchoranalysis.gui.container.ContainerGetter;
-import org.anchoranalysis.io.manifest.directory.DirectoryWrite;
+import org.anchoranalysis.io.manifest.directory.MutableDirectory;
 import org.anchoranalysis.io.manifest.finder.FinderSingleDirectory;
 import org.anchoranalysis.io.manifest.finder.match.DirectoryMatch;
 import lombok.RequiredArgsConstructor;
@@ -44,7 +44,7 @@ public abstract class FinderHistoryFolder<T> extends FinderSingleDirectory
     
     private BoundedIndexContainer<T> history;
 
-    protected abstract BoundedIndexContainer<T> createFromSerialized(DirectoryWrite folder)
+    protected abstract BoundedIndexContainer<T> createFromSerialized(MutableDirectory folder)
             throws DeserializationFailedException;
 
     public BoundedIndexContainer<T> get() throws OperationFailedException {
@@ -68,7 +68,7 @@ public abstract class FinderHistoryFolder<T> extends FinderSingleDirectory
     }
 
     @Override
-    protected Predicate<DirectoryWrite> matchDirectories() {
+    protected Predicate<MutableDirectory> matchDirectories() {
         return DirectoryMatch.description(this.manifestFunction, "serialized");
     }
 }

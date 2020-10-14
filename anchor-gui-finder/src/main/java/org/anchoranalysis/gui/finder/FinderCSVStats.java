@@ -37,7 +37,7 @@ import org.anchoranalysis.gui.finder.csvstatistic.CSVStatistic;
 import org.anchoranalysis.gui.finder.csvstatistic.CSVStatisticLoader;
 import org.anchoranalysis.gui.finder.csvstatistic.CSVStatisticLoaderEventAggregate;
 import org.anchoranalysis.gui.finder.csvstatistic.CSVStatisticLoaderIntervalAggregate;
-import org.anchoranalysis.io.csv.reader.CSVReaderException;
+import org.anchoranalysis.io.input.csv.CSVReaderException;
 import org.anchoranalysis.io.manifest.Manifest;
 import org.anchoranalysis.io.manifest.file.FileWrite;
 import org.anchoranalysis.io.manifest.finder.FindFailedException;

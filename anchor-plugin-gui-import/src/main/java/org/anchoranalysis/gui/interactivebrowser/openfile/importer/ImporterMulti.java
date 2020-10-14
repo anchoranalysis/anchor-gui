@@ -30,7 +30,7 @@ import java.io.File;
 import java.util.Optional;
 import org.anchoranalysis.gui.bean.filecreator.FileCreator;
 import org.anchoranalysis.gui.bean.filecreator.NamedMultiCollectionCreator;
-import org.anchoranalysis.io.bean.input.InputManager;
+import org.anchoranalysis.io.input.bean.InputManager;
 import org.anchoranalysis.mpp.io.bean.input.MultiInputManager;
 import org.anchoranalysis.mpp.io.input.MultiInput;
 

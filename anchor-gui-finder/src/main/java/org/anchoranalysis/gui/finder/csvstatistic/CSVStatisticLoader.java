@@ -28,7 +28,7 @@ package org.anchoranalysis.gui.finder.csvstatistic;
 
 import java.nio.file.Path;
 import org.anchoranalysis.core.index.container.BoundedIndexContainer;
-import org.anchoranalysis.io.csv.reader.CSVReaderException;
+import org.anchoranalysis.io.input.csv.CSVReaderException;
 
 public abstract class CSVStatisticLoader {
 

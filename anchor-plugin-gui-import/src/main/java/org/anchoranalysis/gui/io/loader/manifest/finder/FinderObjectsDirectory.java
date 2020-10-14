@@ -33,7 +33,7 @@ import org.anchoranalysis.core.log.Logger;
 import org.anchoranalysis.core.name.provider.NameValueSet;
 import org.anchoranalysis.core.name.provider.NamedProvider;
 import org.anchoranalysis.image.object.ObjectCollection;
-import org.anchoranalysis.io.manifest.directory.DirectoryWrite;
+import org.anchoranalysis.io.manifest.directory.MutableDirectory;
 import org.anchoranalysis.io.manifest.finder.FinderSingleDirectory;
 import org.anchoranalysis.io.manifest.finder.match.DirectoryMatch;
 
@@ -54,7 +54,7 @@ public class FinderObjectsDirectory extends FinderSingleDirectory {
     }
 
     @Override
-    protected Predicate<DirectoryWrite> matchDirectories() {
+    protected Predicate<MutableDirectory> matchDirectories() {
         return DirectoryMatch.path(directoryName);
     }
 }

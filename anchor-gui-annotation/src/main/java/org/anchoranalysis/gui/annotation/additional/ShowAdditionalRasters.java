@@ -31,8 +31,8 @@ import java.util.List;
 import lombok.AllArgsConstructor;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.image.io.bean.stack.StackReader;
-import org.anchoranalysis.io.bean.path.derive.DerivePath;
-import org.anchoranalysis.io.exception.DerivePathException;
+import org.anchoranalysis.io.input.bean.path.DerivePath;
+import org.anchoranalysis.io.input.path.DerivePathException;
 
 @AllArgsConstructor
 public class ShowAdditionalRasters {
