@@ -31,7 +31,7 @@ import java.util.ArrayList;
 import java.util.List;
 import org.anchoranalysis.gui.frame.details.canvas.InternalFrameCanvas;
 import org.anchoranalysis.gui.image.frame.SliderState;
-import org.anchoranalysis.image.extent.Resolution;
+import org.anchoranalysis.image.dimensions.Resolution;
 import org.anchoranalysis.image.voxel.datatype.VoxelDataType;
 
 class StringHelper {

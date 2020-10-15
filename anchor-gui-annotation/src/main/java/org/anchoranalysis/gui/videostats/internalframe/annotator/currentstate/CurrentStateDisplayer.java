@@ -34,7 +34,7 @@ import org.anchoranalysis.gui.videostats.internalframe.annotator.navigation.Conf
 import org.anchoranalysis.gui.videostats.internalframe.annotator.tool.ToolErrorReporter;
 import org.anchoranalysis.gui.videostats.internalframe.annotator.undoredo.IUndoRedo;
 import org.anchoranalysis.gui.videostats.internalframe.annotator.undoredo.UndoRedoRecorder;
-import org.anchoranalysis.image.extent.Dimensions;
+import org.anchoranalysis.image.dimensions.Dimensions;
 import org.anchoranalysis.mpp.bean.regionmap.RegionMap;
 import org.anchoranalysis.mpp.mark.ColoredMarks;
 import org.anchoranalysis.mpp.mark.Mark;

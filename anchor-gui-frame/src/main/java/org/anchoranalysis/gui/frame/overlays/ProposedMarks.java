@@ -28,7 +28,7 @@ package org.anchoranalysis.gui.frame.overlays;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.anchoranalysis.image.extent.Dimensions;
+import org.anchoranalysis.image.dimensions.Dimensions;
 import org.anchoranalysis.mpp.bean.regionmap.RegionMapSingleton;
 import org.anchoranalysis.mpp.bean.regionmap.RegionMembershipWithFlags;
 import org.anchoranalysis.mpp.mark.ColoredMarks;

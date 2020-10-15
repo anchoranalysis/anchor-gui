@@ -29,7 +29,7 @@ package org.anchoranalysis.gui.frame.canvas;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import org.anchoranalysis.core.geometry.Point2i;
-import org.anchoranalysis.image.extent.Dimensions;
+import org.anchoranalysis.image.dimensions.Dimensions;
 import org.anchoranalysis.image.extent.Extent;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)

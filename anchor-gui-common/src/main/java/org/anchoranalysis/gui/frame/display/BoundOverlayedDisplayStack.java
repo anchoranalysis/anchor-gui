@@ -32,7 +32,7 @@ import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.geometry.Point3i;
 import org.anchoranalysis.gui.region.RegionExtracter;
 import org.anchoranalysis.gui.region.RegionExtracterFromDisplayStack;
-import org.anchoranalysis.image.extent.Dimensions;
+import org.anchoranalysis.image.dimensions.Dimensions;
 import org.anchoranalysis.image.extent.box.BoundingBox;
 import org.anchoranalysis.image.stack.DisplayStack;
 import org.anchoranalysis.image.stack.Stack;
@@ -76,7 +76,7 @@ public class BoundOverlayedDisplayStack {
     // Creates a new DisplayStack after imposing the overlay on the background
     public DisplayStack extractFullyOverlayed() throws OperationFailedException {
         RegionExtracter re = createRegionExtracterFromDisplayStack();
-        return re.extractRegionFrom(new BoundingBox(background.dimensions()), 1.0);
+        return re.extractRegionFrom(new BoundingBox(background.dimensions().extent()), 1.0);
     }
 
     public final int getNumberChannels() {

@@ -26,8 +26,8 @@
 
 package org.anchoranalysis.gui.frame.canvas.zoom;
 
+import org.anchoranalysis.image.dimensions.Dimensions;
 import lombok.AllArgsConstructor;
-import org.anchoranalysis.image.extent.Dimensions;
 
 @AllArgsConstructor
 public class DefaultZoomSuggestor {

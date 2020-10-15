@@ -41,7 +41,7 @@ import org.anchoranalysis.gui.videostats.internalframe.annotator.navigation.Pane
 import org.anchoranalysis.gui.videostats.internalframe.annotator.navigation.PanelTool;
 import org.anchoranalysis.gui.videostats.internalframe.annotator.tool.ToolErrorReporter;
 import org.anchoranalysis.gui.videostats.internalframe.evaluator.EvaluatorWithContext;
-import org.anchoranalysis.image.extent.Dimensions;
+import org.anchoranalysis.image.dimensions.Dimensions;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 class HelperPanelBuilder {

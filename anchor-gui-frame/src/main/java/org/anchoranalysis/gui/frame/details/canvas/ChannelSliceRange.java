@@ -28,7 +28,7 @@ package org.anchoranalysis.gui.frame.details.canvas;
 
 import lombok.AllArgsConstructor;
 import org.anchoranalysis.core.index.container.BoundedRange;
-import org.anchoranalysis.image.extent.Dimensions;
+import org.anchoranalysis.image.dimensions.Dimensions;
 
 @AllArgsConstructor
 class ChannelSliceRange implements BoundedRange {
