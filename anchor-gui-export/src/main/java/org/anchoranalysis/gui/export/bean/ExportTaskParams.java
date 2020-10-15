@@ -29,28 +29,27 @@ package org.anchoranalysis.gui.export.bean;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import org.anchoranalysis.core.color.ColorIndex;
 import org.anchoranalysis.gui.container.ContainerGetter;
-import org.anchoranalysis.gui.finder.FinderCSVStats;
 import org.anchoranalysis.gui.finder.imgstackcollection.FinderStacks;
 import org.anchoranalysis.io.output.outputter.InputOutputContext;
 import org.anchoranalysis.mpp.feature.energy.IndexableMarksWithEnergy;
 
 // Parameters an exportTask can draw itself from
+@RequiredArgsConstructor
 public class ExportTaskParams {
 
+    // START REQUIRED ARGUMENTS
+    @Getter private final InputOutputContext inputOutputContext;
+    // END REQUIRED ARGUMENTS
+    
     @Getter @Setter private ColorIndex colorIndexMarks;
-    @Getter @Setter private FinderCSVStats finderCsvStatistics;
     @Getter @Setter private FinderStacks finderStacks;
-    @Getter private InputOutputContext inputOutputContext;
 
     private List<ContainerGetter<IndexableMarksWithEnergy>> listFinderMarksHistory =
             new ArrayList<>();
-
-    public ExportTaskParams(InputOutputContext inputOutputContext) {
-        this.inputOutputContext = inputOutputContext;
-    }
     
     public ContainerGetter<IndexableMarksWithEnergy> getFinderMarksHistory() {
         return listFinderMarksHistory.get(0);

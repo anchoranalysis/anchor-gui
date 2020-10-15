@@ -38,7 +38,7 @@ import org.anchoranalysis.image.io.stack.OpenedRaster;
 import org.anchoranalysis.image.stack.NamedStacks;
 import org.anchoranalysis.image.stack.Stack;
 import org.anchoranalysis.io.manifest.Manifest;
-import org.anchoranalysis.io.manifest.file.FileWrite;
+import org.anchoranalysis.io.manifest.file.OutputtedFile;
 import org.anchoranalysis.io.manifest.finder.FindFailedException;
 import org.anchoranalysis.io.manifest.finder.Finder;
 import org.anchoranalysis.io.manifest.finder.FinderUtilities;
@@ -54,7 +54,7 @@ public class FinderRasterFilesByManifestDescriptionFunction implements Finder {
     private final String function;
     // END REQUIRED ARGUMENTS
 
-    private List<FileWrite> list;
+    private List<OutputtedFile> list;
     
     @Override
     public boolean doFind(Manifest manifestRecorder) throws FindFailedException {
@@ -72,7 +72,7 @@ public class FinderRasterFilesByManifestDescriptionFunction implements Finder {
     public NamedStacks createStackCollection() {
 
         NamedStacks out = new NamedStacks();
-        for (FileWrite fileWrite : list) {
+        for (OutputtedFile fileWrite : list) {
             String name = fileWrite.getIndex();
 
             // Assume single series, single channel
