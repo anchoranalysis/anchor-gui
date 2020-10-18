@@ -37,7 +37,7 @@ import org.anchoranalysis.gui.frame.display.BoundColoredOverlayCollection;
 import org.anchoranalysis.gui.frame.display.DisplayUpdate;
 import org.anchoranalysis.gui.frame.display.OverlayedDisplayStackUpdate;
 import org.anchoranalysis.gui.frame.display.overlay.OverlayRetriever;
-import org.anchoranalysis.image.stack.DisplayStack;
+import org.anchoranalysis.image.core.stack.DisplayStack;
 import org.anchoranalysis.overlay.Overlay;
 import org.anchoranalysis.overlay.writer.DrawOverlay;
 

@@ -36,9 +36,9 @@ import org.anchoranalysis.gui.container.background.BackgroundStackContainerExcep
 import org.anchoranalysis.gui.videostats.dropdown.BackgroundSetProgressingSupplier;
 import org.anchoranalysis.gui.videostats.dropdown.CreateBackgroundSetFactory;
 import org.anchoranalysis.gui.videostats.link.DefaultLinkStateManager;
-import org.anchoranalysis.image.dimensions.Dimensions;
-import org.anchoranalysis.image.stack.DisplayStack;
-import org.anchoranalysis.image.stack.Stack;
+import org.anchoranalysis.image.core.dimensions.Dimensions;
+import org.anchoranalysis.image.core.stack.DisplayStack;
+import org.anchoranalysis.image.core.stack.Stack;
 
 public class AnnotationBackgroundInstance {
 

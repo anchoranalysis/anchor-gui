@@ -54,8 +54,8 @@ import org.anchoranalysis.gui.videostats.internalframe.markstorgb.markdisplay.Ma
 import org.anchoranalysis.gui.videostats.link.LinkModules;
 import org.anchoranalysis.gui.videostats.module.DefaultModuleState;
 import org.anchoranalysis.gui.videostats.module.VideoStatsModule;
-import org.anchoranalysis.image.dimensions.Dimensions;
-import org.anchoranalysis.image.stack.DisplayStack;
+import org.anchoranalysis.image.core.dimensions.Dimensions;
+import org.anchoranalysis.image.core.stack.DisplayStack;
 import org.anchoranalysis.overlay.Overlay;
 
 class InternalFrameOverlayedInstantStateToRGB {

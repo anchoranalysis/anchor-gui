@@ -42,7 +42,7 @@ import org.anchoranalysis.gui.videostats.dropdown.VideoStatsModuleGlobalParams;
 import org.anchoranalysis.gui.videostats.link.LinkModules;
 import org.anchoranalysis.gui.videostats.module.DefaultModuleState;
 import org.anchoranalysis.gui.videostats.module.VideoStatsModule;
-import org.anchoranalysis.image.stack.DisplayStack;
+import org.anchoranalysis.image.core.stack.DisplayStack;
 import org.anchoranalysis.overlay.collection.OverlayCollection;
 
 // A frame that supports quickly drawing marks on top of existing images based upon a mouse-click

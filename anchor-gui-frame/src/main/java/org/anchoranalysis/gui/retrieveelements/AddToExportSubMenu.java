@@ -29,7 +29,7 @@ package org.anchoranalysis.gui.retrieveelements;
 import java.util.Optional;
 import java.util.function.Supplier;
 import org.anchoranalysis.core.error.OperationFailedException;
-import org.anchoranalysis.image.stack.Stack;
+import org.anchoranalysis.image.core.stack.Stack;
 import org.anchoranalysis.io.generator.Generator;
 import org.anchoranalysis.io.manifest.ManifestDescription;
 import org.anchoranalysis.io.output.outputter.InputOutputContext;

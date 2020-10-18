@@ -29,8 +29,6 @@ package org.anchoranalysis.gui.videostats.internalframe.annotator.tool;
 import java.util.List;
 import java.util.Optional;
 import org.anchoranalysis.annotation.mark.DualMarks;
-import org.anchoranalysis.core.geometry.Point3d;
-import org.anchoranalysis.core.geometry.Point3i;
 import org.anchoranalysis.gui.frame.overlays.ProposedMarks;
 import org.anchoranalysis.gui.videostats.internalframe.annotator.currentstate.IQuerySelectedPoints;
 import org.anchoranalysis.gui.videostats.internalframe.annotator.currentstate.IReplaceRemove;
@@ -40,6 +38,8 @@ import org.anchoranalysis.mpp.bean.regionmap.RegionMap;
 import org.anchoranalysis.mpp.bean.regionmap.RegionMapSingleton;
 import org.anchoranalysis.mpp.mark.GlobalRegionIdentifiers;
 import org.anchoranalysis.mpp.mark.MarkCollection;
+import org.anchoranalysis.spatial.point.Point3d;
+import org.anchoranalysis.spatial.point.Point3i;
 
 // Membership is always based upon SUBMARK_CORE
 public class DeleteTool extends AnnotationTool {

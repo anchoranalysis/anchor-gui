@@ -28,8 +28,8 @@ package org.anchoranalysis.gui.frame.canvas;
 
 import javax.swing.JScrollBar;
 import javax.swing.event.ChangeListener;
-import org.anchoranalysis.core.geometry.Point2i;
-import org.anchoranalysis.image.extent.Extent;
+import org.anchoranalysis.spatial.extent.Extent;
+import org.anchoranalysis.spatial.point.Point2i;
 
 // Two scroll bars mapping a 2d extent
 class ExtentScrollBars {

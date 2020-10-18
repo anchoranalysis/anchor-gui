@@ -28,9 +28,9 @@ package org.anchoranalysis.gui.region;
 
 import org.anchoranalysis.core.arithmetic.RunningSum;
 import org.anchoranalysis.core.error.OperationFailedException;
-import org.anchoranalysis.core.geometry.Point2i;
-import org.anchoranalysis.image.convert.UnsignedBufferAsInt;
-import org.anchoranalysis.image.extent.Extent;
+import org.anchoranalysis.image.voxel.buffer.primitive.UnsignedBufferAsInt;
+import org.anchoranalysis.spatial.extent.Extent;
+import org.anchoranalysis.spatial.point.Point2i;
 
 class MeanInterpolator {
 

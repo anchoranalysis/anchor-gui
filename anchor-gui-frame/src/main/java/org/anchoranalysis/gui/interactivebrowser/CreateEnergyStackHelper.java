@@ -35,8 +35,8 @@ import org.anchoranalysis.core.name.provider.NamedProviderGetException;
 import org.anchoranalysis.core.params.KeyValueParams;
 import org.anchoranalysis.feature.energy.EnergyStack;
 import org.anchoranalysis.feature.energy.EnergyStackWithoutParams;
+import org.anchoranalysis.image.core.stack.Stack;
 import org.anchoranalysis.image.experiment.identifiers.StackIdentifiers;
-import org.anchoranalysis.image.stack.Stack;
 import org.anchoranalysis.mpp.bean.init.MPPInitParams;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)

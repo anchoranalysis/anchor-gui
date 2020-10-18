@@ -30,17 +30,17 @@ import java.awt.image.BufferedImage;
 import java.util.Optional;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.OperationFailedException;
-import org.anchoranalysis.core.geometry.Point2i;
-import org.anchoranalysis.core.geometry.Point3i;
-import org.anchoranalysis.core.geometry.ReadableTuple3i;
 import org.anchoranalysis.gui.frame.canvas.zoom.ZoomScale;
 import org.anchoranalysis.gui.frame.display.BoundOverlayedDisplayStack;
 import org.anchoranalysis.gui.region.RegionExtracter;
-import org.anchoranalysis.image.dimensions.Dimensions;
-import org.anchoranalysis.image.extent.Extent;
-import org.anchoranalysis.image.extent.box.BoundingBox;
-import org.anchoranalysis.image.stack.DisplayStack;
+import org.anchoranalysis.image.core.dimensions.Dimensions;
+import org.anchoranalysis.image.core.stack.DisplayStack;
 import org.anchoranalysis.image.voxel.datatype.VoxelDataType;
+import org.anchoranalysis.spatial.extent.Extent;
+import org.anchoranalysis.spatial.extent.box.BoundingBox;
+import org.anchoranalysis.spatial.point.Point2i;
+import org.anchoranalysis.spatial.point.Point3i;
+import org.anchoranalysis.spatial.point.ReadableTuple3i;
 
 // Shows a certain amount of a stack at any given time
 class DisplayStackViewport {

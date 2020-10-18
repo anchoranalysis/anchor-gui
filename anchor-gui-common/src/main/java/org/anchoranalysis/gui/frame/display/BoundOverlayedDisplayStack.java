@@ -29,14 +29,14 @@ package org.anchoranalysis.gui.frame.display;
 import java.util.Optional;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.OperationFailedException;
-import org.anchoranalysis.core.geometry.Point3i;
 import org.anchoranalysis.gui.region.RegionExtracter;
 import org.anchoranalysis.gui.region.RegionExtracterFromDisplayStack;
-import org.anchoranalysis.image.dimensions.Dimensions;
-import org.anchoranalysis.image.extent.box.BoundingBox;
-import org.anchoranalysis.image.stack.DisplayStack;
-import org.anchoranalysis.image.stack.Stack;
+import org.anchoranalysis.image.core.dimensions.Dimensions;
+import org.anchoranalysis.image.core.stack.DisplayStack;
+import org.anchoranalysis.image.core.stack.Stack;
 import org.anchoranalysis.image.voxel.datatype.VoxelDataType;
+import org.anchoranalysis.spatial.extent.box.BoundingBox;
+import org.anchoranalysis.spatial.point.Point3i;
 
 public class BoundOverlayedDisplayStack {
 

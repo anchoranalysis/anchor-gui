@@ -38,7 +38,7 @@ import org.anchoranalysis.core.params.KeyValueParams;
 import org.anchoranalysis.gui.annotation.mark.MarkAnnotator;
 import org.anchoranalysis.gui.interactivebrowser.MarkEvaluatorManager;
 import org.anchoranalysis.gui.interactivebrowser.MarkEvaluatorSetForImage;
-import org.anchoranalysis.image.stack.NamedStacksSupplier;
+import org.anchoranalysis.image.core.stack.NamedStacksSupplier;
 import org.anchoranalysis.io.input.bean.path.DerivePath;
 import org.anchoranalysis.io.input.path.DerivePathException;
 import org.anchoranalysis.plugin.annotation.bean.strategy.MarkProposerStrategy;

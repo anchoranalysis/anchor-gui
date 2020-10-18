@@ -28,7 +28,7 @@ package org.anchoranalysis.gui.frame.canvas;
 
 import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
-import org.anchoranalysis.core.geometry.Point2i;
+import org.anchoranalysis.spatial.point.Point2i;
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor

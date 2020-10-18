@@ -28,17 +28,17 @@ package org.anchoranalysis.gui.videostats.internalframe.annotator.tool;
 
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
-import org.anchoranalysis.core.geometry.Point3d;
 import org.anchoranalysis.gui.frame.overlays.ProposedMarks;
 import org.anchoranalysis.gui.videostats.internalframe.annotator.currentstate.IAcceptProposal;
 import org.anchoranalysis.gui.videostats.internalframe.annotator.currentstate.IChangeSelectedPoints;
 import org.anchoranalysis.gui.videostats.internalframe.annotator.currentstate.IQuerySelectedPoints;
 import org.anchoranalysis.gui.videostats.internalframe.evaluator.EvaluatorWithContext;
-import org.anchoranalysis.image.dimensions.Dimensions;
+import org.anchoranalysis.image.core.dimensions.Dimensions;
 import org.anchoranalysis.mpp.bean.points.fitter.InsufficientPointsException;
 import org.anchoranalysis.mpp.bean.points.fitter.PointsFitter;
 import org.anchoranalysis.mpp.bean.points.fitter.PointsFitterException;
 import org.anchoranalysis.mpp.mark.Mark;
+import org.anchoranalysis.spatial.point.Point3d;
 
 @RequiredArgsConstructor
 public class SelectPointsTool extends AnnotationTool {

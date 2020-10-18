@@ -38,12 +38,12 @@ import org.anchoranalysis.core.progress.ProgressReporter;
 import org.anchoranalysis.core.progress.ProgressReporterIncrement;
 import org.anchoranalysis.gui.container.background.BackgroundStackContainer;
 import org.anchoranalysis.gui.container.background.BackgroundStackContainerException;
-import org.anchoranalysis.image.channel.factory.ChannelFactory;
-import org.anchoranalysis.image.dimensions.Dimensions;
-import org.anchoranalysis.image.dimensions.IncorrectImageSizeException;
+import org.anchoranalysis.image.core.channel.factory.ChannelFactory;
+import org.anchoranalysis.image.core.dimensions.Dimensions;
+import org.anchoranalysis.image.core.dimensions.IncorrectImageSizeException;
+import org.anchoranalysis.image.core.stack.Stack;
+import org.anchoranalysis.image.core.stack.TimeSequence;
 import org.anchoranalysis.image.experiment.identifiers.StackIdentifiers;
-import org.anchoranalysis.image.stack.Stack;
-import org.anchoranalysis.image.stack.TimeSequence;
 import org.anchoranalysis.image.voxel.datatype.UnsignedByteVoxelType;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)

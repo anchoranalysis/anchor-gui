@@ -27,8 +27,8 @@
 package org.anchoranalysis.gui.region;
 
 import org.anchoranalysis.core.error.OperationFailedException;
-import org.anchoranalysis.image.extent.box.BoundingBox;
-import org.anchoranalysis.image.stack.DisplayStack;
+import org.anchoranalysis.image.core.stack.DisplayStack;
+import org.anchoranalysis.spatial.extent.box.BoundingBox;
 
 // Extracts regions from a DisplayStack for presentation to the user
 public interface RegionExtracter {

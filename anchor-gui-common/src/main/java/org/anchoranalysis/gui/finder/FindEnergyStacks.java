@@ -33,10 +33,10 @@ import org.anchoranalysis.core.name.provider.NamedProvider;
 import org.anchoranalysis.core.name.provider.NamedProviderGetException;
 import org.anchoranalysis.core.progress.ProgressReporterNull;
 import org.anchoranalysis.feature.energy.EnergyStack;
-import org.anchoranalysis.image.channel.Channel;
-import org.anchoranalysis.image.dimensions.IncorrectImageSizeException;
-import org.anchoranalysis.image.stack.NamedStacksSupplier;
-import org.anchoranalysis.image.stack.Stack;
+import org.anchoranalysis.image.core.channel.Channel;
+import org.anchoranalysis.image.core.dimensions.IncorrectImageSizeException;
+import org.anchoranalysis.image.core.stack.NamedStacksSupplier;
+import org.anchoranalysis.image.core.stack.Stack;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 class FindEnergyStacks {

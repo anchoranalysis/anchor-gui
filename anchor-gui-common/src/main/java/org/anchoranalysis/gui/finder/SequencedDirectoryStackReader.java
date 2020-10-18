@@ -29,10 +29,10 @@ package org.anchoranalysis.gui.finder;
 import java.nio.file.Path;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.progress.ProgressReporterNull;
+import org.anchoranalysis.image.core.stack.Stack;
 import org.anchoranalysis.image.io.ImageIOException;
 import org.anchoranalysis.image.io.bean.stack.StackReader;
 import org.anchoranalysis.image.io.stack.OpenedRaster;
-import org.anchoranalysis.image.stack.Stack;
 import org.anchoranalysis.io.manifest.directory.sequenced.DeriveElementsFromSequencedDirectory;
 import org.anchoranalysis.io.manifest.directory.sequenced.SequencedDirectory;
 

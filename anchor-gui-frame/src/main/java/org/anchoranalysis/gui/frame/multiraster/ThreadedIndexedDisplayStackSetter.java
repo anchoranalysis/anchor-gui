@@ -36,10 +36,10 @@ import org.anchoranalysis.gui.frame.threaded.stack.ThreadedDisplayUpdateConsumer
 import org.anchoranalysis.gui.frame.threaded.stack.ThreadedProducer;
 import org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.BackgroundSetter;
 import org.anchoranalysis.gui.videostats.threading.InteractiveThreadPool;
+import org.anchoranalysis.image.core.stack.DisplayStack;
 import org.anchoranalysis.image.io.generator.raster.DisplayStackGenerator;
 import org.anchoranalysis.image.io.generator.raster.RasterGenerator;
 import org.anchoranalysis.image.io.generator.raster.RasterGeneratorBridge;
-import org.anchoranalysis.image.stack.DisplayStack;
 
 public class ThreadedIndexedDisplayStackSetter implements BackgroundSetter, ThreadedProducer {
 

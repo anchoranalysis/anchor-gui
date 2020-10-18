@@ -30,16 +30,16 @@ import java.util.List;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.idgetter.IDGetter;
 import org.anchoranalysis.gui.frame.display.OverlayedDisplayStackUpdate;
-import org.anchoranalysis.image.channel.Channel;
-import org.anchoranalysis.image.convert.UnsignedByteBuffer;
-import org.anchoranalysis.image.extent.box.BoundingBox;
+import org.anchoranalysis.image.core.channel.Channel;
+import org.anchoranalysis.image.core.stack.DisplayStack;
+import org.anchoranalysis.image.core.stack.rgb.RGBStack;
 import org.anchoranalysis.image.io.stack.ConvertDisplayStackToRGB;
-import org.anchoranalysis.image.stack.DisplayStack;
-import org.anchoranalysis.image.stack.rgb.RGBStack;
 import org.anchoranalysis.image.voxel.Voxels;
+import org.anchoranalysis.image.voxel.buffer.primitive.UnsignedByteBuffer;
 import org.anchoranalysis.overlay.Overlay;
 import org.anchoranalysis.overlay.collection.ColoredOverlayCollection;
 import org.anchoranalysis.overlay.writer.DrawOverlay;
+import org.anchoranalysis.spatial.extent.box.BoundingBox;
 
 class CachedRGB {
 

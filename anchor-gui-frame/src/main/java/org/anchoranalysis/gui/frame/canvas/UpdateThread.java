@@ -28,7 +28,7 @@ package org.anchoranalysis.gui.frame.canvas;
 
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.error.reporter.ErrorReporter;
-import org.anchoranalysis.core.geometry.Point2i;
+import org.anchoranalysis.spatial.point.Point2i;
 
 class UpdateThread implements Runnable {
 

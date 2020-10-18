@@ -26,7 +26,7 @@
 
 package org.anchoranalysis.gui.frame.canvas.zoom;
 
-import org.anchoranalysis.image.dimensions.Dimensions;
+import org.anchoranalysis.image.core.dimensions.Dimensions;
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor

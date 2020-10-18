@@ -34,7 +34,6 @@ import javax.swing.event.EventListenerList;
 import lombok.RequiredArgsConstructor;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.error.reporter.ErrorReporter;
-import org.anchoranalysis.core.geometry.Point3d;
 import org.anchoranalysis.core.random.RandomNumberGenerator;
 import org.anchoranalysis.gui.frame.overlays.ExtractOverlays;
 import org.anchoranalysis.gui.frame.overlays.ProposedMarks;
@@ -49,6 +48,7 @@ import org.anchoranalysis.mpp.proposer.ProposalAbnormalFailureException;
 import org.anchoranalysis.mpp.proposer.ProposerContext;
 import org.anchoranalysis.mpp.proposer.error.ErrorNodeNull;
 import org.anchoranalysis.mpp.proposer.error.ProposerFailureDescription;
+import org.anchoranalysis.spatial.point.Point3d;
 
 @RequiredArgsConstructor
 public class MarksProposerMouseClickAdapter extends MouseAdapter {

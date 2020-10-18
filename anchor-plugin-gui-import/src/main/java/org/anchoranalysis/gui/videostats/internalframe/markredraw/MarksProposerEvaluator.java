@@ -31,7 +31,6 @@ import java.util.Optional;
 import lombok.AllArgsConstructor;
 import org.anchoranalysis.core.color.ColorList;
 import org.anchoranalysis.core.color.RGBColor;
-import org.anchoranalysis.core.geometry.Point3d;
 import org.anchoranalysis.gui.frame.overlays.ProposedMarks;
 import org.anchoranalysis.gui.videostats.internalframe.ProposalOperation;
 import org.anchoranalysis.gui.videostats.internalframe.evaluator.ProposalOperationCreator;
@@ -41,6 +40,7 @@ import org.anchoranalysis.mpp.mark.ColoredMarks;
 import org.anchoranalysis.mpp.mark.Mark;
 import org.anchoranalysis.mpp.mark.MarkCollection;
 import org.anchoranalysis.mpp.proposer.ProposerContext;
+import org.anchoranalysis.spatial.point.Point3d;
 
 @AllArgsConstructor
 public class MarksProposerEvaluator implements ProposalOperationCreator {

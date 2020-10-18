@@ -37,7 +37,7 @@ import org.anchoranalysis.gui.videostats.dropdown.common.EnergyBackground;
 import org.anchoranalysis.gui.videostats.module.VideoStatsModuleCreateException;
 import org.anchoranalysis.gui.videostats.operation.combine.OverlayCollectionSupplier;
 import org.anchoranalysis.gui.videostats.operation.combine.VideoStatsOperationCombine;
-import org.anchoranalysis.image.object.ObjectCollection;
+import org.anchoranalysis.image.voxel.object.ObjectCollection;
 import org.anchoranalysis.mpp.mark.MarkCollection;
 
 public class RasterModuleCreator extends VideoStatsModuleCreator {

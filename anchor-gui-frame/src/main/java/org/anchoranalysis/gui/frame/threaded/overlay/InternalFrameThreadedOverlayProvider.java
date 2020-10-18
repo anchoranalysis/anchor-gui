@@ -48,7 +48,7 @@ import org.anchoranalysis.gui.videostats.dropdown.VideoStatsModuleGlobalParams;
 import org.anchoranalysis.gui.videostats.internalframe.markstorgb.markdisplay.MarkDisplaySettingsWrapper;
 import org.anchoranalysis.gui.videostats.module.DefaultModuleState;
 import org.anchoranalysis.gui.videostats.module.VideoStatsModule;
-import org.anchoranalysis.image.dimensions.Dimensions;
+import org.anchoranalysis.image.core.dimensions.Dimensions;
 import org.anchoranalysis.overlay.Overlay;
 
 public class InternalFrameThreadedOverlayProvider {

@@ -32,9 +32,9 @@ import lombok.AllArgsConstructor;
 import org.anchoranalysis.core.cache.CachedSupplier;
 import org.anchoranalysis.core.error.AnchorNeverOccursException;
 import org.anchoranalysis.core.error.OperationFailedException;
+import org.anchoranalysis.image.core.stack.DisplayStack;
+import org.anchoranalysis.image.core.stack.Stack;
 import org.anchoranalysis.image.io.generator.raster.FlattenStackGenerator;
-import org.anchoranalysis.image.stack.DisplayStack;
-import org.anchoranalysis.image.stack.Stack;
 
 // An interface that allows receiving elements from a module
 // When a function returns null, that element doesn't exist

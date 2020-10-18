@@ -32,7 +32,7 @@ import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.log.Logger;
 import org.anchoranalysis.core.name.provider.NameValueSet;
 import org.anchoranalysis.core.name.provider.NamedProvider;
-import org.anchoranalysis.image.object.ObjectCollection;
+import org.anchoranalysis.image.voxel.object.ObjectCollection;
 import org.anchoranalysis.io.manifest.directory.MutableDirectory;
 import org.anchoranalysis.io.manifest.finder.FinderSingleDirectory;
 import org.anchoranalysis.io.manifest.finder.match.DirectoryMatch;

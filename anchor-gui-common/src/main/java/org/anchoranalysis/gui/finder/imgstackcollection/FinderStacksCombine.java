@@ -31,9 +31,9 @@ import java.util.List;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.name.provider.NamedProvider;
 import org.anchoranalysis.core.progress.ProgressReporterNull;
-import org.anchoranalysis.image.stack.NamedStacks;
-import org.anchoranalysis.image.stack.NamedStacksSupplier;
-import org.anchoranalysis.image.stack.Stack;
+import org.anchoranalysis.image.core.stack.NamedStacks;
+import org.anchoranalysis.image.core.stack.NamedStacksSupplier;
+import org.anchoranalysis.image.core.stack.Stack;
 import org.anchoranalysis.io.manifest.Manifest;
 import org.anchoranalysis.io.manifest.finder.FindFailedException;
 

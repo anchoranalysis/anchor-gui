@@ -35,7 +35,7 @@ import org.anchoranalysis.core.name.provider.NamedProviderGetException;
 import org.anchoranalysis.core.progress.ProgressReporterNull;
 import org.anchoranalysis.feature.energy.EnergyStack;
 import org.anchoranalysis.gui.series.TimeSequenceProviderSupplier;
-import org.anchoranalysis.image.stack.TimeSequence;
+import org.anchoranalysis.image.core.stack.TimeSequence;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class GuessEnergyFromStacks {

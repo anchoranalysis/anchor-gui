@@ -43,11 +43,11 @@ import org.anchoranalysis.gui.videostats.dropdown.BackgroundSetProgressingSuppli
 import org.anchoranalysis.gui.videostats.dropdown.VideoStatsModuleGlobalParams;
 import org.anchoranalysis.gui.videostats.module.DefaultModuleState;
 import org.anchoranalysis.gui.videostats.module.VideoStatsModuleCreateException;
+import org.anchoranalysis.image.core.stack.Stack;
+import org.anchoranalysis.image.core.stack.TimeSequence;
 import org.anchoranalysis.image.io.ImageIOException;
 import org.anchoranalysis.image.io.bean.stack.StackReader;
 import org.anchoranalysis.image.io.stack.OpenedRaster;
-import org.anchoranalysis.image.stack.Stack;
-import org.anchoranalysis.image.stack.TimeSequence;
 
 @AllArgsConstructor
 public class ShowRaster {

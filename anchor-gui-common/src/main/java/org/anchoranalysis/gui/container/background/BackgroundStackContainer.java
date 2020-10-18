@@ -27,7 +27,7 @@
 package org.anchoranalysis.gui.container.background;
 
 import org.anchoranalysis.core.index.container.BoundedIndexContainer;
-import org.anchoranalysis.image.stack.DisplayStack;
+import org.anchoranalysis.image.core.stack.DisplayStack;
 
 public interface BackgroundStackContainer {
 

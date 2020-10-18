@@ -29,10 +29,10 @@ package org.anchoranalysis.gui.frame.display;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.gui.region.RegionExtracter;
-import org.anchoranalysis.image.extent.box.BoundingBox;
+import org.anchoranalysis.image.core.stack.DisplayStack;
+import org.anchoranalysis.image.core.stack.rgb.RGBStack;
 import org.anchoranalysis.image.io.stack.ConvertDisplayStackToRGB;
-import org.anchoranalysis.image.stack.DisplayStack;
-import org.anchoranalysis.image.stack.rgb.RGBStack;
+import org.anchoranalysis.spatial.extent.box.BoundingBox;
 
 class RegionExtracterFromOverlay implements RegionExtracter {
 

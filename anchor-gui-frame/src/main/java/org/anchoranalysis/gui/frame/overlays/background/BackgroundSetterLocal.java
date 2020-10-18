@@ -33,7 +33,7 @@ import org.anchoranalysis.gui.container.background.BackgroundStackContainerExcep
 import org.anchoranalysis.gui.frame.display.OverlayedDisplayStackUpdate;
 import org.anchoranalysis.gui.frame.display.Redrawable;
 import org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.BackgroundSetter;
-import org.anchoranalysis.image.stack.DisplayStack;
+import org.anchoranalysis.image.core.stack.DisplayStack;
 
 @AllArgsConstructor
 class BackgroundSetterLocal implements BackgroundSetter {

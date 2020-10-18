@@ -29,7 +29,7 @@ package org.anchoranalysis.gui.retrieveelements;
 import java.util.Collection;
 import java.util.Optional;
 import org.anchoranalysis.image.io.objects.ObjectCollectionWriter;
-import org.anchoranalysis.image.object.ObjectCollection;
+import org.anchoranalysis.image.voxel.object.ObjectCollection;
 import org.anchoranalysis.io.generator.collection.CollectionGenerator;
 import org.anchoranalysis.io.generator.serialized.ObjectOutputStreamGenerator;
 import org.anchoranalysis.mpp.mark.Mark;

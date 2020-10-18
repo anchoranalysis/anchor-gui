@@ -37,8 +37,8 @@ import javax.swing.ImageIcon;
 import javax.swing.JComponent;
 import javax.swing.JDesktopPane;
 import javax.swing.JInternalFrame;
-import org.anchoranalysis.core.geometry.Point2i;
 import org.anchoranalysis.gui.mdi.PartitionedFrameList;
+import org.anchoranalysis.spatial.point.Point2i;
 
 public class SmartArrangeAction extends AbstractAction {
 

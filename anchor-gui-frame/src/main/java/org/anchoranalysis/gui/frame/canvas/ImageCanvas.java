@@ -48,18 +48,18 @@ import javax.swing.event.EventListenerList;
 import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.error.reporter.ErrorReporter;
-import org.anchoranalysis.core.geometry.Point2i;
-import org.anchoranalysis.core.geometry.Point3i;
-import org.anchoranalysis.core.geometry.PointConverter;
 import org.anchoranalysis.gui.displayupdate.ProvidesDisplayUpdate;
 import org.anchoranalysis.gui.frame.canvas.zoom.DefaultZoomSuggestor;
 import org.anchoranalysis.gui.frame.canvas.zoom.ZoomScale;
 import org.anchoranalysis.gui.frame.display.DisplayUpdate;
-import org.anchoranalysis.image.dimensions.Dimensions;
-import org.anchoranalysis.image.dimensions.Resolution;
-import org.anchoranalysis.image.extent.Extent;
-import org.anchoranalysis.image.extent.box.BoundingBox;
+import org.anchoranalysis.image.core.dimensions.Dimensions;
+import org.anchoranalysis.image.core.dimensions.Resolution;
 import org.anchoranalysis.image.voxel.datatype.VoxelDataType;
+import org.anchoranalysis.spatial.extent.Extent;
+import org.anchoranalysis.spatial.extent.box.BoundingBox;
+import org.anchoranalysis.spatial.point.Point2i;
+import org.anchoranalysis.spatial.point.Point3i;
+import org.anchoranalysis.spatial.point.PointConverter;
 
 public class ImageCanvas {
 

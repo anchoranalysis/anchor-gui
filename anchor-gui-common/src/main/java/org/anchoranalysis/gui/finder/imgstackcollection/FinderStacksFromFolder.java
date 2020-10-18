@@ -30,9 +30,9 @@ import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.name.provider.NamedProvider;
 import org.anchoranalysis.core.progress.ProgressReporterNull;
 import org.anchoranalysis.gui.finder.FinderRasterFolder;
+import org.anchoranalysis.image.core.stack.NamedStacksSupplier;
+import org.anchoranalysis.image.core.stack.Stack;
 import org.anchoranalysis.image.io.bean.stack.StackReader;
-import org.anchoranalysis.image.stack.NamedStacksSupplier;
-import org.anchoranalysis.image.stack.Stack;
 import org.anchoranalysis.io.manifest.Manifest;
 
 // Finds an image stack collection

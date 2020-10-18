@@ -28,9 +28,9 @@ package org.anchoranalysis.gui.frame.canvas;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
-import org.anchoranalysis.core.geometry.Point2i;
-import org.anchoranalysis.image.dimensions.Dimensions;
-import org.anchoranalysis.image.extent.Extent;
+import org.anchoranalysis.image.core.dimensions.Dimensions;
+import org.anchoranalysis.spatial.extent.Extent;
+import org.anchoranalysis.spatial.point.Point2i;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 class DisplayStackViewportUtilities {

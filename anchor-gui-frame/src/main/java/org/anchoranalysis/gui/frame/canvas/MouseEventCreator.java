@@ -28,7 +28,7 @@ package org.anchoranalysis.gui.frame.canvas;
 
 import java.awt.Component;
 import java.awt.event.MouseEvent;
-import org.anchoranalysis.core.geometry.Point2i;
+import org.anchoranalysis.spatial.point.Point2i;
 
 class MouseEventCreator {
 

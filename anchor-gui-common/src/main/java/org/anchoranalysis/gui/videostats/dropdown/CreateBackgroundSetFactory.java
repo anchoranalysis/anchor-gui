@@ -34,9 +34,9 @@ import org.anchoranalysis.gui.backgroundset.BackgroundSetFactory;
 import org.anchoranalysis.gui.container.background.BackgroundStackContainerException;
 import org.anchoranalysis.gui.series.TimeSequenceProvider;
 import org.anchoranalysis.gui.series.TimeSequenceProviderSupplier;
-import org.anchoranalysis.image.stack.Stack;
-import org.anchoranalysis.image.stack.TimeSequence;
-import org.anchoranalysis.image.stack.wrap.WrapStackAsTimeSequence;
+import org.anchoranalysis.image.core.stack.Stack;
+import org.anchoranalysis.image.core.stack.TimeSequence;
+import org.anchoranalysis.image.core.stack.wrap.WrapStackAsTimeSequence;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class CreateBackgroundSetFactory {

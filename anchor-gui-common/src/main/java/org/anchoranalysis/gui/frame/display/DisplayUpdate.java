@@ -27,7 +27,7 @@
 package org.anchoranalysis.gui.frame.display;
 
 import java.util.List;
-import org.anchoranalysis.image.extent.box.BoundingBox;
+import org.anchoranalysis.spatial.extent.box.BoundingBox;
 
 public class DisplayUpdate {
 

@@ -29,7 +29,7 @@ package org.anchoranalysis.gui.series;
 import lombok.AllArgsConstructor;
 import lombok.Value;
 import org.anchoranalysis.core.name.provider.NamedProvider;
-import org.anchoranalysis.image.stack.TimeSequence;
+import org.anchoranalysis.image.core.stack.TimeSequence;
 
 @Value
 @AllArgsConstructor

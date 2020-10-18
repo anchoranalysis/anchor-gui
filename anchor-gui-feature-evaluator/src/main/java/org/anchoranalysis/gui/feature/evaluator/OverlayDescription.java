@@ -34,7 +34,7 @@ import org.anchoranalysis.core.name.value.NameValue;
 import org.anchoranalysis.feature.energy.EnergyStack;
 import org.anchoranalysis.gui.feature.evaluator.singlepair.UpdatableSinglePair;
 import org.anchoranalysis.gui.marks.table.TitleValueTableModel;
-import org.anchoranalysis.image.dimensions.Resolution;
+import org.anchoranalysis.image.core.dimensions.Resolution;
 import org.anchoranalysis.mpp.pair.IdentifiablePair;
 import org.anchoranalysis.overlay.Overlay;
 import org.anchoranalysis.overlay.OverlayProperties;

@@ -32,7 +32,7 @@ import org.anchoranalysis.core.functional.function.CheckedFunction;
 import org.anchoranalysis.core.progress.ProgressReporterNull;
 import org.anchoranalysis.gui.container.background.BackgroundStackContainerException;
 import org.anchoranalysis.gui.videostats.dropdown.BackgroundSetProgressingSupplier;
-import org.anchoranalysis.image.stack.DisplayStack;
+import org.anchoranalysis.image.core.stack.DisplayStack;
 
 @AllArgsConstructor
 class StackFromBackgroundSet implements ImageStackContainerFromName {

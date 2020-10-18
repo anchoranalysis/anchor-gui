@@ -39,7 +39,7 @@ import org.anchoranalysis.gui.container.background.BackgroundStackContainerExcep
 import org.anchoranalysis.gui.image.OverlaysWithEnergyStack;
 import org.anchoranalysis.gui.videostats.module.VideoStatsModule;
 import org.anchoranalysis.gui.videostats.module.VideoStatsModule.ReceivableSendablePair;
-import org.anchoranalysis.image.stack.DisplayStack;
+import org.anchoranalysis.image.core.stack.DisplayStack;
 import org.anchoranalysis.overlay.collection.OverlayCollection;
 
 public class LinkModules {

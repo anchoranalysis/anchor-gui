@@ -32,12 +32,12 @@ import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.index.container.BoundChangeListener;
 import org.anchoranalysis.core.index.container.BoundedIndexContainer;
-import org.anchoranalysis.image.channel.Channel;
-import org.anchoranalysis.image.channel.factory.ChannelFactory;
-import org.anchoranalysis.image.dimensions.Dimensions;
-import org.anchoranalysis.image.dimensions.IncorrectImageSizeException;
-import org.anchoranalysis.image.stack.DisplayStack;
-import org.anchoranalysis.image.stack.Stack;
+import org.anchoranalysis.image.core.channel.Channel;
+import org.anchoranalysis.image.core.channel.factory.ChannelFactory;
+import org.anchoranalysis.image.core.dimensions.Dimensions;
+import org.anchoranalysis.image.core.dimensions.IncorrectImageSizeException;
+import org.anchoranalysis.image.core.stack.DisplayStack;
+import org.anchoranalysis.image.core.stack.Stack;
 import org.anchoranalysis.image.voxel.datatype.UnsignedByteVoxelType;
 
 public class CombineRGBBoundedIndexContainer implements BoundedIndexContainer<DisplayStack> {

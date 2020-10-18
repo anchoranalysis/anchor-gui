@@ -29,8 +29,8 @@ package org.anchoranalysis.plugin.gui.bean.export.derivestack;
 import org.anchoranalysis.bean.AnchorBean;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.gui.export.bean.ExportTaskParams;
+import org.anchoranalysis.image.core.stack.Stack;
 import org.anchoranalysis.image.io.generator.raster.RasterGenerator;
-import org.anchoranalysis.image.stack.Stack;
 import org.anchoranalysis.plugin.gui.export.MappedFrom;
 
 /**

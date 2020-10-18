@@ -28,12 +28,12 @@ package org.anchoranalysis.gui.videostats.internalframe.annotator.tool;
 
 import java.util.Optional;
 import lombok.AllArgsConstructor;
-import org.anchoranalysis.core.geometry.Point3d;
 import org.anchoranalysis.gui.frame.overlays.ProposedMarks;
 import org.anchoranalysis.gui.videostats.internalframe.annotator.currentstate.IAcceptProposal;
 import org.anchoranalysis.gui.videostats.internalframe.annotator.currentstate.IReplaceRemove;
 import org.anchoranalysis.gui.videostats.internalframe.evaluator.EvaluatorWithContext;
 import org.anchoranalysis.mpp.overlay.OverlayCollectionMarkFactory;
+import org.anchoranalysis.spatial.point.Point3d;
 
 @AllArgsConstructor
 public class GuessTool extends AnnotationTool {

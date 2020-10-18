@@ -32,7 +32,7 @@ import org.anchoranalysis.gui.videostats.dropdown.VideoStatsModuleGlobalParams;
 import org.anchoranalysis.gui.videostats.dropdown.common.EnergyBackground;
 import org.anchoranalysis.gui.videostats.internalframe.InternalFrameStaticOverlaySelectable;
 import org.anchoranalysis.gui.videostats.operation.combine.OverlayCollectionSupplier;
-import org.anchoranalysis.image.object.ObjectCollection;
+import org.anchoranalysis.image.voxel.object.ObjectCollection;
 import org.anchoranalysis.mpp.mark.MarkCollection;
 import org.anchoranalysis.overlay.collection.OverlayCollection;
 import org.anchoranalysis.overlay.collection.OverlayCollectionObjectFactory;

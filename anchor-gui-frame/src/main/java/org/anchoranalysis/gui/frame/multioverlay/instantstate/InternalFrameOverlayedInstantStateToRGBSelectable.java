@@ -51,8 +51,8 @@ import org.anchoranalysis.gui.videostats.internalframe.markstorgb.markdisplay.Ma
 import org.anchoranalysis.gui.videostats.link.LinkModules;
 import org.anchoranalysis.gui.videostats.module.DefaultModuleState;
 import org.anchoranalysis.gui.videostats.module.VideoStatsModule;
-import org.anchoranalysis.image.object.properties.ObjectWithProperties;
-import org.anchoranalysis.image.stack.rgb.RGBStack;
+import org.anchoranalysis.image.core.object.properties.ObjectWithProperties;
+import org.anchoranalysis.image.core.stack.rgb.RGBStack;
 import org.anchoranalysis.overlay.IndexableOverlays;
 import org.anchoranalysis.overlay.Overlay;
 import org.anchoranalysis.overlay.collection.ColoredOverlayCollection;
