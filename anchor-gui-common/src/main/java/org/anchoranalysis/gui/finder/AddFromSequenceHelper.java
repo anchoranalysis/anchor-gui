@@ -32,7 +32,7 @@ import org.anchoranalysis.core.functional.function.CheckedBiConsumer;
 import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.index.GetterFromIndex;
 import org.anchoranalysis.core.name.store.StoreSupplier;
-import org.anchoranalysis.io.manifest.sequencetype.SequenceType;
+import org.anchoranalysis.io.manifest.sequencetype.IncompleteElementRange;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class AddFromSequenceHelper {
@@ -41,22 +41,22 @@ public class AddFromSequenceHelper {
      * Adds from a sequence
      *
      * @param <T>
-     * @param sequenceType
+     * @param elements
      * @param getter
      * @param addTo
      * @param namesAsIndexes iff true, we use the indexes as names instead of the existing names
      * @throws E
      */
     public static <T, E extends Exception> void addFromSequence(
-            SequenceType sequenceType,
+            IncompleteElementRange elements,
             GetterFromIndex<T> getter,
             CheckedBiConsumer<String, StoreSupplier<T>, E> addTo,
             boolean namesAsIndexes)
             throws E {
-        int min = sequenceType.getMinimumIndex();
+        int min = elements.getMinimumIndex();
 
-        for (int i = min; i != -1; i = sequenceType.nextIndex(i)) {
-            String name = sequenceType.indexStr(i);
+        for (int i = min; i != -1; i = elements.nextIndex(i)) {
+            String name = elements.stringRepresentationForElement(i);
 
             final int index = i;
             addTo.accept(

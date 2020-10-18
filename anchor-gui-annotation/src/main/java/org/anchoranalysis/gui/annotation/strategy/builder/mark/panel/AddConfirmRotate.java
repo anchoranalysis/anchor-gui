@@ -30,13 +30,13 @@ import javax.swing.AbstractAction;
 import javax.swing.ActionMap;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
-import org.anchoranalysis.core.geometry.Point3d;
 import org.anchoranalysis.gui.annotation.WrapAction;
 import org.anchoranalysis.gui.frame.details.canvas.ControllerKeyboard;
 import org.anchoranalysis.gui.frame.details.canvas.ControllerMouse;
 import org.anchoranalysis.gui.image.frame.SliderState;
 import org.anchoranalysis.gui.videostats.internalframe.annotator.navigation.PanelMark;
 import org.anchoranalysis.gui.videostats.internalframe.annotator.navigation.PanelTool;
+import org.anchoranalysis.spatial.point.Point3d;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class AddConfirmRotate {

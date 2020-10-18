@@ -38,7 +38,7 @@ import org.anchoranalysis.gui.videostats.internalframe.InternalFrameStaticOverla
 import org.anchoranalysis.gui.videostats.module.VideoStatsModuleCreateException;
 import org.anchoranalysis.gui.videostats.operation.combine.OverlayCollectionSupplier;
 import org.anchoranalysis.gui.videostats.operation.combine.VideoStatsOperationCombine;
-import org.anchoranalysis.image.object.ObjectCollection;
+import org.anchoranalysis.image.voxel.object.ObjectCollection;
 import org.anchoranalysis.mpp.mark.MarkCollection;
 import org.anchoranalysis.overlay.collection.OverlayCollection;
 

@@ -34,13 +34,13 @@ import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.gui.bean.filecreator.FileCreator;
 import org.anchoranalysis.gui.bean.filecreator.NamedSingleStackCreator;
 import org.anchoranalysis.gui.interactivebrowser.openfile.importer.ImporterSettings;
-import org.anchoranalysis.image.io.bean.rasterreader.RasterReader;
-import org.anchoranalysis.io.bean.input.InputManager;
-import org.anchoranalysis.io.bean.provider.file.SpecificPathList;
-import org.anchoranalysis.io.input.FileInput;
+import org.anchoranalysis.image.io.bean.stack.StackReader;
+import org.anchoranalysis.io.input.bean.InputManager;
+import org.anchoranalysis.io.input.bean.files.SpecificPathList;
+import org.anchoranalysis.io.input.files.FileInput;
 import org.anchoranalysis.plugin.io.bean.channel.map.Autoname;
 import org.anchoranalysis.plugin.io.bean.input.channel.NamedChannels;
-import org.anchoranalysis.plugin.io.bean.input.file.Files;
+import org.anchoranalysis.plugin.io.bean.input.files.NamedFiles;
 
 public class RasterAsChannels extends OpenFileType {
 
@@ -60,7 +60,7 @@ public class RasterAsChannels extends OpenFileType {
 
         SpecificPathList fileList = createFileList(files);
 
-        NamedChannels inputManager = createNamedChannels(new Files(fileList));
+        NamedChannels inputManager = createNamedChannels(new NamedFiles(fileList));
 
         return Arrays.asList(creator(inputManager, files));
     }
@@ -74,10 +74,10 @@ public class RasterAsChannels extends OpenFileType {
 
     private static NamedChannels createNamedChannels(InputManager<FileInput> fileInputManager) {
 
-        RasterReader reader = RegisterBeanFactories.getDefaultInstances().get(RasterReader.class);
+        StackReader reader = RegisterBeanFactories.getDefaultInstances().get(StackReader.class);
 
         NamedChannels inputManager = new NamedChannels();
-        inputManager.setRasterReader(reader);
+        inputManager.setStackReader(reader);
         inputManager.setFileInput(fileInputManager);
         inputManager.setUseLastSeriesIndexOnly(true);
         inputManager.setChannelMap(new Autoname());

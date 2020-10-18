@@ -30,18 +30,17 @@ import java.awt.image.BufferedImage;
 import java.util.Optional;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.OperationFailedException;
-import org.anchoranalysis.core.geometry.Point2i;
-import org.anchoranalysis.core.geometry.Point3i;
-import org.anchoranalysis.core.geometry.ReadableTuple3i;
-import org.anchoranalysis.core.index.SetOperationFailedException;
 import org.anchoranalysis.gui.frame.canvas.zoom.ZoomScale;
 import org.anchoranalysis.gui.frame.display.BoundOverlayedDisplayStack;
-import org.anchoranalysis.image.extent.Dimensions;
-import org.anchoranalysis.image.extent.Extent;
-import org.anchoranalysis.image.extent.box.BoundingBox;
-import org.anchoranalysis.image.stack.DisplayStack;
-import org.anchoranalysis.image.stack.region.RegionExtracter;
+import org.anchoranalysis.gui.region.RegionExtracter;
+import org.anchoranalysis.image.core.dimensions.Dimensions;
+import org.anchoranalysis.image.core.stack.DisplayStack;
 import org.anchoranalysis.image.voxel.datatype.VoxelDataType;
+import org.anchoranalysis.spatial.extent.Extent;
+import org.anchoranalysis.spatial.extent.box.BoundingBox;
+import org.anchoranalysis.spatial.point.Point2i;
+import org.anchoranalysis.spatial.point.Point3i;
+import org.anchoranalysis.spatial.point.ReadableTuple3i;
 
 // Shows a certain amount of a stack at any given time
 class DisplayStackViewport {
@@ -56,8 +55,7 @@ class DisplayStackViewport {
     /** How we extract bounding-boxes of pixels */
     private RegionExtracter regionExtracter;
 
-    public void setDisplayStackEntireImage(BoundOverlayedDisplayStack displayStack)
-            throws SetOperationFailedException {
+    public void setDisplayStackEntireImage(BoundOverlayedDisplayStack displayStack) {
         this.displayStackEntireImage = displayStack;
 
         // We get a new regionExtracter as the displaystack has changed
@@ -143,16 +141,6 @@ class DisplayStackViewport {
                 scrollValImage, extentNew, dimensionsEntire());
     }
 
-    private static void addCond(Point2i scrollVal, ReadableTuple3i toAdd, Extent cond) {
-        if (cond.x() > 0 && toAdd.x() != 0) {
-            scrollVal.setX(scrollVal.x() + toAdd.x());
-        }
-
-        if (cond.y() > 0 && toAdd.y() != 0) {
-            scrollVal.setY(scrollVal.y() + toAdd.y());
-        }
-    }
-
     // If the image point x,y is contained within the canvas
     public boolean canvasContainsAbs(Point3i point) {
         return displayStackEntireImage.dimensions().contains(point);
@@ -189,5 +177,15 @@ class DisplayStackViewport {
 
     public Dimensions dim() {
         return displayStackEntireImage.dimensions();
+    }
+    
+    private static void addCond(Point2i scrollVal, ReadableTuple3i toAdd, Extent cond) {
+        if (cond.x() > 0 && toAdd.x() != 0) {
+            scrollVal.setX(scrollVal.x() + toAdd.x());
+        }
+
+        if (cond.y() > 0 && toAdd.y() != 0) {
+            scrollVal.setY(scrollVal.y() + toAdd.y());
+        }
     }
 }

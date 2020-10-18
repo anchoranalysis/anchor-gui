@@ -34,9 +34,8 @@ import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.gui.bean.filecreator.FileCreator;
 import org.anchoranalysis.gui.bean.filecreator.StackCollectionCreator;
 import org.anchoranalysis.gui.interactivebrowser.openfile.importer.ImporterSettings;
-import org.anchoranalysis.image.io.bean.rasterreader.RasterReader;
-import org.anchoranalysis.io.bean.provider.file.SpecificPathList;
-import org.anchoranalysis.plugin.io.bean.input.file.Files;
+import org.anchoranalysis.image.io.bean.stack.StackReader;
+import org.anchoranalysis.plugin.io.bean.input.files.NamedFiles;
 import org.anchoranalysis.plugin.io.bean.input.stack.Stacks;
 
 public class RasterAsStack extends OpenFileType {
@@ -55,16 +54,13 @@ public class RasterAsStack extends OpenFileType {
     public List<FileCreator> creatorForFile(List<File> files, ImporterSettings importerSettings)
             throws CreateException {
 
-        SpecificPathList fileList = createFileList(files);
+        NamedFiles fileInputManager = new NamedFiles();
+        fileInputManager.setFilesProvider( createFileList(files) );
 
-        Files fileInputManager = new Files();
-        fileInputManager.setFileProvider(fileList);
-
-        // Until we eliminate RasterReaderETHMetadata class we use a cast
-        RasterReader reader = RegisterBeanFactories.getDefaultInstances().get(RasterReader.class);
+        StackReader reader = RegisterBeanFactories.getDefaultInstances().get(StackReader.class);
 
         Stacks inputManager = new Stacks();
-        inputManager.setRasterReader(reader);
+        inputManager.setStackReader(reader);
         inputManager.setFileInput(fileInputManager);
         inputManager.setUseLastSeriesIndexOnly(true);
 

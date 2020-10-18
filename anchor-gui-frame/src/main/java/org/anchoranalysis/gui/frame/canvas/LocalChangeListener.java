@@ -31,18 +31,17 @@ import java.util.List;
 import javax.swing.BoundedRangeModel;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import lombok.RequiredArgsConstructor;
 
+@RequiredArgsConstructor
 class LocalChangeListener implements ChangeListener {
 
-    private boolean includeAdjusting = true;
-    private List<ChangeListener> listeners = new ArrayList<ChangeListener>();
+    // START REQUIRED ARGUMENTS
+    private final boolean includeAdjusting;
+    // END REQUIRED ARGUMENTS
 
+    private List<ChangeListener> listeners = new ArrayList<>();
     private boolean eventsAllowed = true;
-
-    public LocalChangeListener(boolean includeAdjusting) {
-        super();
-        this.includeAdjusting = includeAdjusting;
-    }
 
     public synchronized void enableEvents() {
         eventsAllowed = true;
@@ -57,11 +56,10 @@ class LocalChangeListener implements ChangeListener {
 
         Object source = changeEvent.getSource();
         if (source instanceof BoundedRangeModel) {
-            BoundedRangeModel aModel = (BoundedRangeModel) source;
-            // System.out.println("Something changed: " + source);
+            BoundedRangeModel model = (BoundedRangeModel) source;
             if (eventsAllowed) {
 
-                if (includeAdjusting || !aModel.getValueIsAdjusting()) {
+                if (includeAdjusting || !model.getValueIsAdjusting()) {
                     for (ChangeListener cl : listeners) {
                         cl.stateChanged(changeEvent);
                     }
@@ -70,7 +68,7 @@ class LocalChangeListener implements ChangeListener {
         }
     }
 
-    public void addChangeListener(ChangeListener cl) {
-        listeners.add(cl);
+    public void addChangeListener(ChangeListener listener) {
+        listeners.add(listener);
     }
 }

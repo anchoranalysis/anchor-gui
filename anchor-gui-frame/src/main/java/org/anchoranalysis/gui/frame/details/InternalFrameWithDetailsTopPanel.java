@@ -48,7 +48,7 @@ import org.anchoranalysis.gui.frame.details.canvas.controller.imageview.Controll
 import org.anchoranalysis.gui.image.frame.SliderState;
 import org.anchoranalysis.gui.retrieveelements.IRetrieveElements;
 import org.anchoranalysis.gui.videostats.dropdown.VideoStatsModuleGlobalParams;
-import org.anchoranalysis.image.extent.Dimensions;
+import org.anchoranalysis.image.core.dimensions.Dimensions;
 
 // TODO refactor
 public class InternalFrameWithDetailsTopPanel {

@@ -26,67 +26,50 @@
 
 package org.anchoranalysis.gui.io.loader.manifest.finder;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.function.Predicate;
 import lombok.RequiredArgsConstructor;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.name.provider.NameValueSet;
 import org.anchoranalysis.core.name.provider.NamedProvider;
 import org.anchoranalysis.core.name.store.LazyEvaluationStore;
+import org.anchoranalysis.core.serialize.Deserializer;
+import org.anchoranalysis.core.serialize.XStreamDeserializer;
 import org.anchoranalysis.gui.finder.AddFromSequenceHelper;
-import org.anchoranalysis.io.bean.deserializer.Deserializer;
-import org.anchoranalysis.io.bean.deserializer.XStreamDeserializer;
-import org.anchoranalysis.io.manifest.ManifestRecorder;
-import org.anchoranalysis.io.manifest.deserializer.folder.sequenced.SequencedFolderDeserializer;
-import org.anchoranalysis.io.manifest.finder.FinderSingleFolder;
-import org.anchoranalysis.io.manifest.finder.FinderUtilities;
-import org.anchoranalysis.io.manifest.folder.FolderWrite;
-import org.anchoranalysis.io.manifest.match.FolderWriteAnd;
-import org.anchoranalysis.io.manifest.match.FolderWritePath;
-import org.anchoranalysis.io.manifest.match.helper.folderwrite.FolderWriteFileFunctionType;
+import org.anchoranalysis.io.manifest.directory.MutableDirectory;
+import org.anchoranalysis.io.manifest.directory.sequenced.SequencedDirectoryDeserializer;
+import org.anchoranalysis.io.manifest.finder.FinderSingleDirectory;
+import org.anchoranalysis.io.manifest.finder.match.DirectoryMatch;
 import org.anchoranalysis.mpp.mark.MarkCollection;
 
 @RequiredArgsConstructor
-public class FinderMarksFolder extends FinderSingleFolder {
+public class FinderMarksFolder extends FinderSingleDirectory {
 
+    private static final Deserializer<MarkCollection> DESERIALIZER = new XStreamDeserializer<>();
+    
     // START REQUIRED ARGUMENTS
     private final String manifestFunction;
-    private final String folderName;
+    private final String directoryName;
     // END REQUIRED ARGUMENTS
-
-    private Deserializer<MarkCollection> deserializer = new XStreamDeserializer<>();
-
-    @Override
-    protected Optional<FolderWrite> findFolder(ManifestRecorder manifestRecorder) {
-
-        FolderWriteAnd folderAdd = new FolderWriteAnd();
-        folderAdd.addCondition(new FolderWritePath(folderName));
-        folderAdd.addCondition(
-                new FolderWriteFileFunctionType(this.manifestFunction, "serialized"));
-
-        List<FolderWrite> list = FinderUtilities.findListFolder(manifestRecorder, folderAdd);
-
-        if (!list.isEmpty()) {
-            return Optional.of(list.get(0));
-        } else {
-            return Optional.empty();
-        }
-    }
 
     public NamedProvider<MarkCollection> createNamedProvider(boolean namesAsIndexes)
             throws OperationFailedException {
 
-        if (getFoundFolder() == null) {
+        if (!exists()) {
             return new NameValueSet<>();
         }
 
         LazyEvaluationStore<MarkCollection> out = new LazyEvaluationStore<>("finderMarksFolder");
 
-        SequencedFolderDeserializer<MarkCollection> sfrr =
-                new SequencedFolderDeserializer<>(getFoundFolder(), deserializer);
+        SequencedDirectoryDeserializer<MarkCollection> deserializer =
+                new SequencedDirectoryDeserializer<>(getFoundDirectory(), DESERIALIZER);
 
         AddFromSequenceHelper.addFromSequence(
-                getFoundFolder().getAssociatedSequence(), sfrr, out::add, namesAsIndexes);
+                getFoundDirectory().getAssociatedElementRange(), deserializer, out::add, namesAsIndexes);
         return out;
+    }
+
+    @Override
+    protected Predicate<MutableDirectory> matchDirectories() {
+        return DirectoryMatch.path(directoryName).and(DirectoryMatch.description(this.manifestFunction, "serialized"));
     }
 }

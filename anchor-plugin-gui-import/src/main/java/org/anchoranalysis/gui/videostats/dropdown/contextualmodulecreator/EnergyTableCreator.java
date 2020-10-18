@@ -33,6 +33,7 @@ import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.functional.function.CheckedSupplier;
 import org.anchoranalysis.core.index.GetOperationFailedException;
+import org.anchoranalysis.core.index.container.BoundedIndexContainer;
 import org.anchoranalysis.gui.marks.StatePanelFrameHistoryMarks;
 import org.anchoranalysis.gui.marks.table.MarksEnergyTablePanel;
 import org.anchoranalysis.gui.videostats.IModuleCreatorDefaultState;
@@ -41,13 +42,12 @@ import org.anchoranalysis.gui.videostats.dropdown.common.EnergyStackSupplier;
 import org.anchoranalysis.gui.videostats.module.DefaultModuleStateManager;
 import org.anchoranalysis.gui.videostats.module.VideoStatsModuleCreateException;
 import org.anchoranalysis.gui.videostats.modulecreator.VideoStatsModuleCreatorContext;
-import org.anchoranalysis.io.manifest.deserializer.folder.LoadContainer;
 import org.anchoranalysis.mpp.feature.energy.IndexableMarksWithEnergy;
 
 @AllArgsConstructor
 public class EnergyTableCreator extends VideoStatsModuleCreatorContext {
 
-    private final CheckedSupplier<LoadContainer<IndexableMarksWithEnergy>, OperationFailedException>
+    private final CheckedSupplier<BoundedIndexContainer<IndexableMarksWithEnergy>, OperationFailedException>
             operation;
     private final EnergyStackSupplier energyStackWithParams;
     private final ColorIndex colorIndex;
@@ -65,13 +65,13 @@ public class EnergyTableCreator extends VideoStatsModuleCreatorContext {
             throws VideoStatsModuleCreateException {
 
         try {
-            LoadContainer<IndexableMarksWithEnergy> cntr = operation.get();
+            BoundedIndexContainer<IndexableMarksWithEnergy> container = operation.get();
 
             StatePanelFrameHistoryMarks frame =
-                    new StatePanelFrameHistoryMarks(namePrefix, !cntr.isExpensiveLoad());
+                    new StatePanelFrameHistoryMarks(namePrefix, true);
             frame.init(
                     defaultStateManager.getLinkStateManager().getState().getFrameIndex(),
-                    cntr,
+                    container,
                     new MarksEnergyTablePanel(colorIndex, energyStackWithParams.get()),
                     mpg.getLogger().errorReporter());
             frame.controllerSize().configureSize(300, 600, 300, 1000);

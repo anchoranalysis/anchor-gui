@@ -40,11 +40,11 @@ import org.anchoranalysis.feature.input.FeatureInput;
 import org.anchoranalysis.gui.bean.filecreator.FileCreator;
 import org.anchoranalysis.gui.interactivebrowser.input.InteractiveBrowserInput;
 import org.anchoranalysis.gui.interactivebrowser.openfile.importer.ImporterSettings;
-import org.anchoranalysis.image.io.bean.rasterreader.RasterReader;
-import org.anchoranalysis.io.bean.filepath.provider.FilePathProvider;
-import org.anchoranalysis.io.bean.input.InputManager;
-import org.anchoranalysis.io.bean.input.InputManagerParams;
-import org.anchoranalysis.io.error.AnchorIOException;
+import org.anchoranalysis.image.io.bean.stack.StackReader;
+import org.anchoranalysis.io.input.InputReadFailedException;
+import org.anchoranalysis.io.input.bean.InputManager;
+import org.anchoranalysis.io.input.bean.InputManagerParams;
+import org.anchoranalysis.io.input.bean.path.provider.FilePathProvider;
 import org.anchoranalysis.mpp.feature.bean.energy.scheme.EnergySchemeCreator;
 import org.anchoranalysis.mpp.feature.bean.mark.MarkEvaluator;
 
@@ -53,7 +53,7 @@ public class InteractiveBrowserInputManager extends InputManager<InteractiveBrow
     // START BEAN PROPERTIES
     @BeanField @Getter @Setter private List<FileCreator> listFileCreators = new ArrayList<>();
 
-    @BeanField @DefaultInstance @Getter @Setter private RasterReader rasterReader;
+    @BeanField @DefaultInstance @Getter @Setter private StackReader stackReader;
 
     @BeanField @OptionalBean @Getter @Setter private EnergySchemeCreator energySchemeCreator;
 
@@ -75,12 +75,12 @@ public class InteractiveBrowserInputManager extends InputManager<InteractiveBrow
     // END BEAN PROPERTIES
 
     @Override
-    public List<InteractiveBrowserInput> inputObjects(InputManagerParams params)
-            throws AnchorIOException {
+    public List<InteractiveBrowserInput> inputs(InputManagerParams params)
+            throws InputReadFailedException {
 
         InteractiveBrowserInput ibi = new InteractiveBrowserInput();
         ibi.setListFileCreators(listFileCreators);
-        ibi.setRasterReader(rasterReader);
+        ibi.setStackReader(stackReader);
         ibi.setEnergySchemeCreator(energySchemeCreator);
         ibi.setNamedItemSharedFeatureList(namedItemSharedFeatureList);
         ibi.setNamedItemMarkEvaluatorList(namedItemMarkEvaluatorList);

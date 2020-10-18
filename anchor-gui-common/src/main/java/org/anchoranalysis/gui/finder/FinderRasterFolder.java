@@ -26,53 +26,32 @@
 
 package org.anchoranalysis.gui.finder;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.function.Predicate;
 import lombok.RequiredArgsConstructor;
 import org.anchoranalysis.core.index.container.BoundedIndexContainer;
-import org.anchoranalysis.image.io.bean.rasterreader.RasterReader;
-import org.anchoranalysis.image.stack.NamedStacks;
-import org.anchoranalysis.image.stack.Stack;
-import org.anchoranalysis.io.manifest.ManifestRecorder;
-import org.anchoranalysis.io.manifest.deserializer.folder.BoundsFromSequenceType;
-import org.anchoranalysis.io.manifest.finder.FinderSingleFolder;
-import org.anchoranalysis.io.manifest.finder.FinderUtilities;
-import org.anchoranalysis.io.manifest.folder.FolderWrite;
-import org.anchoranalysis.io.manifest.match.FolderWriteAnd;
-import org.anchoranalysis.io.manifest.match.FolderWritePath;
-import org.anchoranalysis.io.manifest.match.helper.folderwrite.FolderWriteFileFunctionType;
+import org.anchoranalysis.core.index.container.BoundsFromRange;
+import org.anchoranalysis.image.core.stack.NamedStacks;
+import org.anchoranalysis.image.core.stack.Stack;
+import org.anchoranalysis.image.io.bean.stack.StackReader;
+import org.anchoranalysis.io.manifest.directory.MutableDirectory;
+import org.anchoranalysis.io.manifest.finder.FinderSingleDirectory;
+import org.anchoranalysis.io.manifest.finder.match.DirectoryMatch;
 
 @RequiredArgsConstructor
-public class FinderRasterFolder extends FinderSingleFolder {
+public class FinderRasterFolder extends FinderSingleDirectory {
 
     // START: REQUIRED ARGUMENTS
-    private final String folderName;
+    private final String directoryName;
     private final String manifestFunction;
-    private final RasterReader rasterReader;
+    private final StackReader stackReader;
     // END: REQUIRED ARGUMENTS
 
     private BoundedIndexContainer<Stack> result;
 
-    @Override
-    protected Optional<FolderWrite> findFolder(ManifestRecorder manifestRecorder) {
-
-        FolderWriteAnd folderAdd = new FolderWriteAnd();
-        folderAdd.addCondition(new FolderWritePath(folderName));
-        folderAdd.addCondition(new FolderWriteFileFunctionType(this.manifestFunction, "raster"));
-
-        List<FolderWrite> list = FinderUtilities.findListFolder(manifestRecorder, folderAdd);
-
-        if (!list.isEmpty()) {
-            return Optional.of(list.get(0));
-        } else {
-            return Optional.empty();
-        }
-    }
-
     public BoundedIndexContainer<Stack> get() {
         assert (exists());
         if (result == null) {
-            result = createContainer(getFoundFolder());
+            result = createContainer(getFoundDirectory());
         }
         return result;
     }
@@ -80,24 +59,29 @@ public class FinderRasterFolder extends FinderSingleFolder {
     // If namesAsIndexes is true, we use the indexes as names instead of the existing names
     public NamedStacks createStackCollection(boolean namesAsIndexes) {
 
-        if (getFoundFolder() == null) {
+        if (getFoundDirectory() == null) {
             return new NamedStacks();
         }
 
         NamedStacks stacks = new NamedStacks();
 
-        SequencedFolderRasterReader reader =
-                new SequencedFolderRasterReader(getFoundFolder(), rasterReader);
+        SequencedDirectoryStackReader reader =
+                new SequencedDirectoryStackReader(getFoundDirectory(), stackReader);
 
         AddFromSequenceHelper.addFromSequence(
-                getFoundFolder().getAssociatedSequence(), reader, stacks::add, namesAsIndexes);
+                getFoundDirectory().getAssociatedElementRange(), reader, stacks::add, namesAsIndexes);
 
         return stacks;
     }
 
-    private BoundedIndexContainer<Stack> createContainer(FolderWrite folder) {
-        return new BoundsFromSequenceType<>(
-                new SequencedFolderRasterReader(folder, rasterReader),
-                folder.getAssociatedSequence());
+    @Override
+    protected Predicate<MutableDirectory> matchDirectories() {
+        return DirectoryMatch.path(directoryName).and(DirectoryMatch.description(this.manifestFunction, "raster"));
+    }
+
+    private BoundedIndexContainer<Stack> createContainer(MutableDirectory folder) {
+        return new BoundsFromRange<>(
+                new SequencedDirectoryStackReader(folder, stackReader),
+                folder.getAssociatedElementRange());
     }
 }

@@ -31,7 +31,7 @@ import java.util.ArrayList;
 import java.util.List;
 import org.anchoranalysis.gui.frame.details.canvas.InternalFrameCanvas;
 import org.anchoranalysis.gui.image.frame.SliderState;
-import org.anchoranalysis.image.extent.Resolution;
+import org.anchoranalysis.image.core.dimensions.Resolution;
 import org.anchoranalysis.image.voxel.datatype.VoxelDataType;
 
 class StringHelper {
@@ -69,13 +69,16 @@ class StringHelper {
     }
 
     public String resolution() {
-        Resolution sr = internalFrameCanvas.getRes();
-        if (sr.x() == sr.y()) {
-            return String.format("resXY=%s resZ=%s", formatUnits(sr.x()), formatUnits(sr.z()));
+        return internalFrameCanvas.getResolution().map(StringHelper::resolutionAsString).orElse("res=None");
+    }
+    
+    private static String resolutionAsString(Resolution resolution) {
+        if (resolution.x() == resolution.y()) {
+            return String.format("resXY=%s resZ=%s", formatUnits(resolution.x()), formatUnits(resolution.z()));
         } else {
             return String.format(
                     "resX=%s resY=%s resZ=%s)",
-                    formatUnits(sr.x()), formatUnits(sr.y()), formatUnits(sr.z()));
+                    formatUnits(resolution.x()), formatUnits(resolution.y()), formatUnits(resolution.z()));
         }
     }
 

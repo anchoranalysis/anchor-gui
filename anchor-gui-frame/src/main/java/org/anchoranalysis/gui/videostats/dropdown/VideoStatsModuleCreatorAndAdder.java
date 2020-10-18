@@ -30,6 +30,7 @@ import java.awt.Component;
 import java.util.concurrent.ExecutionException;
 import javax.swing.JOptionPane;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.anchoranalysis.core.log.Logger;
 import org.anchoranalysis.core.progress.ProgressReporter;
 import org.anchoranalysis.core.progress.ProgressReporterMultiple;
@@ -53,15 +54,14 @@ public class VideoStatsModuleCreatorAndAdder {
         threadPool.submitWithProgressMonitor(worker, "Create module");
     }
 
+    @RequiredArgsConstructor
     private class Worker extends InteractiveWorker<AddVideoStatsModule, Void> {
 
-        private Throwable exceptionRecorded;
-        private Logger logger;
+        // START REQUIRED ARGUMENTS
+        private final Logger logger;
+        // END REQUIRED ARGUMENTS
 
-        public Worker(Logger logger) {
-            super();
-            this.logger = logger;
-        }
+        private Throwable exceptionRecorded;
 
         public void beforeBackground(Component parentComponent) {
             creator.beforeBackground(parentComponent);
@@ -103,7 +103,7 @@ public class VideoStatsModuleCreatorAndAdder {
 
             try {
                 creator.createAndAddVideoStatsModule(get());
-            } catch (InterruptedException
+            } catch (InterruptedException // NOSONAR
                     | ExecutionException
                     | VideoStatsModuleCreateException e) {
                 displayErrorDialog(e);

@@ -39,13 +39,13 @@ import org.anchoranalysis.core.index.IndexGetter;
 import org.anchoranalysis.plot.AxisLimits;
 import org.anchoranalysis.plot.PlotInstance;
 import org.anchoranalysis.plot.bean.Plot;
-import org.anchoranalysis.plot.bean.colorscheme.GraphColorScheme;
+import org.anchoranalysis.plot.bean.colorscheme.PlotColorScheme;
 import org.anchoranalysis.plot.index.LinePlot;
 
 public class LinePlotIterationVsEnergy extends Plot<LinePlotIterationVsEnergy.Item> {
 
     // START BEAN PROPERITES
-    @BeanField @Getter @Setter private GraphColorScheme graphColorScheme = new GraphColorScheme();
+    @BeanField @Getter @Setter private PlotColorScheme graphColorScheme = new PlotColorScheme();
 
     @BeanField @Getter @Setter private int minMaxIgnoreBeforeIndex = 0;
     // END BEAN PROPERTIES
@@ -102,7 +102,7 @@ public class LinePlotIterationVsEnergy extends Plot<LinePlotIterationVsEnergy.It
     }
 
     @Override
-    public boolean isItemAccepted(Item item) {
+    public boolean isItemIncluded(Item item) {
         return true;
     }
 

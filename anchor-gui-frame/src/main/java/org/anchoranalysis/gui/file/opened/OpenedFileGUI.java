@@ -26,25 +26,17 @@
 
 package org.anchoranalysis.gui.file.opened;
 
-import org.anchoranalysis.gui.file.interactive.InteractiveFile;
+import javax.swing.JButton;
+import javax.swing.JPopupMenu;
+import org.anchoranalysis.gui.videostats.operation.VideoStatsOperationMenu;
 
-public class OpenedFileGUI extends OpenedFile {
+public interface OpenedFileGUI {
 
-    private IOpenedFileGUI openedFileGUI;
-    private InteractiveFile file;
+    VideoStatsOperationMenu getRootMenu();
 
-    public OpenedFileGUI(InteractiveFile file, IOpenedFileGUI openedFileGUI) {
-        super();
-        this.openedFileGUI = openedFileGUI;
-        this.file = file;
-    }
+    JButton getButton();
 
-    @Override
-    public IOpenedFileGUI getGUI() {
-        return openedFileGUI;
-    }
+    JPopupMenu getPopup();
 
-    public InteractiveFile getFile() {
-        return file;
-    }
+    void executeDefaultOperation();
 }

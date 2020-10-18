@@ -27,18 +27,20 @@
 package org.anchoranalysis.plugin.gui.bean.graphdefinition.line;
 
 import org.anchoranalysis.core.index.GetOperationFailedException;
-import org.anchoranalysis.gui.io.loader.manifest.finder.csvstatistic.CSVStatistic;
-import org.anchoranalysis.plot.bean.colorscheme.GraphColorScheme;
+import org.anchoranalysis.gui.finder.csvstatistic.CSVStatistic;
+import org.anchoranalysis.plot.bean.colorscheme.PlotColorScheme;
 import org.anchoranalysis.plot.index.LinePlot.YValGetter;
 
 public class GraphDefinitionLineIterVsTemperature extends GraphDefinitionLineIterVsCSVStatistic {
 
-    public GraphDefinitionLineIterVsTemperature(GraphColorScheme graphColorScheme) {
+    private static final String TEMPERATURE = "temperature";
+
+    public GraphDefinitionLineIterVsTemperature(PlotColorScheme graphColorScheme) {
 
         super(
-                "Temperature",
-                new String[] {"Temperature"},
-                "Temperature",
+                TEMPERATURE,
+                new String[] {TEMPERATURE},
+                TEMPERATURE,
                 new YValGetter<CSVStatistic>() {
 
                     @Override
@@ -51,7 +53,7 @@ public class GraphDefinitionLineIterVsTemperature extends GraphDefinitionLineIte
     }
 
     @Override
-    public boolean isItemAccepted(CSVStatistic item) {
+    public boolean isItemIncluded(CSVStatistic item) {
         return item.hasTemperature();
     }
 }

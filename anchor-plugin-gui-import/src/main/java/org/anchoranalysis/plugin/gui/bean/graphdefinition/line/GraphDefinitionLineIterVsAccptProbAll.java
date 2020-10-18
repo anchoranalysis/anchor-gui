@@ -27,13 +27,13 @@
 package org.anchoranalysis.plugin.gui.bean.graphdefinition.line;
 
 import org.anchoranalysis.core.index.GetOperationFailedException;
-import org.anchoranalysis.gui.io.loader.manifest.finder.csvstatistic.CSVStatistic;
-import org.anchoranalysis.plot.bean.colorscheme.GraphColorScheme;
+import org.anchoranalysis.gui.finder.csvstatistic.CSVStatistic;
+import org.anchoranalysis.plot.bean.colorscheme.PlotColorScheme;
 import org.anchoranalysis.plot.index.LinePlot.YValGetter;
 
 public class GraphDefinitionLineIterVsAccptProbAll extends GraphDefinitionLineIterVsCSVStatistic {
 
-    public GraphDefinitionLineIterVsAccptProbAll(GraphColorScheme graphColorScheme) {
+    public GraphDefinitionLineIterVsAccptProbAll(PlotColorScheme graphColorScheme) {
 
         super(
                 "Rate of Kernel Acceptance (All acceptances)",
@@ -51,7 +51,7 @@ public class GraphDefinitionLineIterVsAccptProbAll extends GraphDefinitionLineIt
     }
 
     @Override
-    public boolean isItemAccepted(CSVStatistic item) {
+    public boolean isItemIncluded(CSVStatistic item) {
         return item.hasAccptProbAll();
     }
 }

@@ -32,13 +32,13 @@ import lombok.AllArgsConstructor;
 import org.anchoranalysis.annotation.io.mark.MarkAnnotationReader;
 import org.anchoranalysis.annotation.mark.DualMarksAnnotation;
 import org.anchoranalysis.core.log.Logger;
+import org.anchoranalysis.core.serialize.DeserializationFailedException;
 import org.anchoranalysis.gui.annotation.AnnotatorModuleCreator;
 import org.anchoranalysis.gui.annotation.InitAnnotation;
 import org.anchoranalysis.gui.annotation.mark.RejectionReason;
 import org.anchoranalysis.gui.videostats.internalframe.annotator.currentstate.PartitionedMarks;
 import org.anchoranalysis.gui.videostats.module.VideoStatsModuleCreateException;
-import org.anchoranalysis.io.deserializer.DeserializationFailedException;
-import org.anchoranalysis.io.error.AnchorIOException;
+import org.anchoranalysis.io.input.InputReadFailedException;
 import org.anchoranalysis.mpp.mark.MarkCollection;
 
 @AllArgsConstructor
@@ -125,7 +125,7 @@ public class OpenAnnotationMPP implements OpenAnnotation {
             // We try to read an existing annotation
             // If we can read an annotation let's do it
             return annotationReader.read(annotationPath);
-        } catch (AnchorIOException e) {
+        } catch (InputReadFailedException e) {
             throw new VideoStatsModuleCreateException(e);
         }
     }

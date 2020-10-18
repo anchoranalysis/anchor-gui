@@ -30,13 +30,13 @@ import lombok.Getter;
 import lombok.Setter;
 import org.anchoranalysis.core.log.Logger;
 import org.anchoranalysis.gui.interactivebrowser.openfile.importer.ImporterSettings;
-import org.anchoranalysis.image.io.bean.rasterreader.RasterReader;
-import org.anchoranalysis.io.params.InputContextParams;
+import org.anchoranalysis.image.io.bean.stack.StackReader;
+import org.anchoranalysis.io.input.InputContextParams;
 
 public class FileCreatorParams {
 
     // Params from InteractiveBrowserInput
-    @Getter @Setter private RasterReader rasterReader;
+    @Getter @Setter private StackReader stackReader;
 
     // Params from General Environment
     @Getter @Setter private MarkCreatorParams markCreatorParams;

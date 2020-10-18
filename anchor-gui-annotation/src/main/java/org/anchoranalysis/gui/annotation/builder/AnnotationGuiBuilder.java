@@ -42,7 +42,7 @@ import org.anchoranalysis.gui.videostats.internalframe.annotator.AnnotationFrame
 import org.anchoranalysis.gui.videostats.internalframe.annotator.AnnotationInitParams;
 import org.anchoranalysis.gui.videostats.internalframe.annotator.AnnotationPanelParams;
 import org.anchoranalysis.gui.videostats.internalframe.annotator.navigation.PanelNavigation;
-import org.anchoranalysis.image.stack.NamedStacksSupplier;
+import org.anchoranalysis.image.core.stack.NamedStacksSupplier;
 
 public abstract class AnnotationGuiBuilder<T extends AnnotationInitParams> {
 
@@ -94,7 +94,7 @@ public abstract class AnnotationGuiBuilder<T extends AnnotationInitParams> {
     // Cached-operation
     public abstract NamedStacksSupplier stacks();
 
-    public abstract String descriptiveName();
+    public abstract String inputName();
 
     public abstract Optional<File> associatedFile();
 

@@ -64,11 +64,11 @@ public class BarPlotEnergySummary extends Plot<Integer> {
                 new BoxPlot<>(
                         getTitle(),
                         seriesNames.toArray(new String[] {}),
-                        (Integer item, int seriesNum) ->
+                        (Integer item, int seriesIndex) ->
                                 features.get(item).getFeature().getFriendlyName(),
-                        (Integer item, int seriesNum) -> {
+                        (Integer item, int seriesIndex) -> {
                             CalculatedFeatureValues calculatedFeatures =
-                                    tableModelList.get(seriesNum);
+                                    tableModelList.get(seriesIndex);
                             return createFromCalculatedFeatureValues(calculatedFeatures, item);
                         },
                         null);
@@ -86,7 +86,7 @@ public class BarPlotEnergySummary extends Plot<Integer> {
     }
 
     @Override
-    public boolean isItemAccepted(Integer item) {
+    public boolean isItemIncluded(Integer item) {
         return true;
     }
 

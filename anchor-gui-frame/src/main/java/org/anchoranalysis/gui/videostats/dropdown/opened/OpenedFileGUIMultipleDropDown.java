@@ -33,7 +33,7 @@ import javax.swing.JPopupMenu;
 import lombok.Getter;
 import org.anchoranalysis.core.bridge.BridgeElementWithIndex;
 import org.anchoranalysis.core.error.OperationFailedException;
-import org.anchoranalysis.gui.file.opened.IOpenedFileGUI;
+import org.anchoranalysis.gui.file.opened.OpenedFileGUI;
 import org.anchoranalysis.gui.frame.multioverlay.RasterMultiCreator;
 import org.anchoranalysis.gui.frame.multiraster.NamedRasterSet;
 import org.anchoranalysis.gui.marks.MarkDisplaySettings;
@@ -61,7 +61,7 @@ public class OpenedFileGUIMultipleDropDown {
 
     public OpenedFileGUIMultipleDropDown(
             AddVideoStatsModule adder,
-            List<IOpenedFileGUI> listOpenedGUI,
+            List<OpenedFileGUI> listOpenedGUI,
             VideoStatsModuleGlobalParams moduleParamsGlobal,
             MarkDisplaySettings markDisplaySettings) {
         if (listOpenedGUI.isEmpty()) {
@@ -73,7 +73,7 @@ public class OpenedFileGUIMultipleDropDown {
         this.markDisplaySettings = markDisplaySettings;
 
         List<VideoStatsOperationMenu> firstList = new ArrayList<>();
-        for (IOpenedFileGUI mdd : listOpenedGUI) {
+        for (OpenedFileGUI mdd : listOpenedGUI) {
             firstList.add(mdd.getRootMenu());
         }
 

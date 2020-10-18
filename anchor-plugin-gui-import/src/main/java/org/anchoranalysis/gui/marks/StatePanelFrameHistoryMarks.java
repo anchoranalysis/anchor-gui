@@ -28,9 +28,9 @@ package org.anchoranalysis.gui.marks;
 
 import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.error.reporter.ErrorReporter;
+import org.anchoranalysis.core.index.container.BoundedIndexContainer;
 import org.anchoranalysis.gui.image.frame.ControllerSize;
 import org.anchoranalysis.gui.videostats.IModuleCreatorDefaultState;
-import org.anchoranalysis.io.manifest.deserializer.folder.LoadContainer;
 import org.anchoranalysis.mpp.feature.energy.IndexableMarksWithEnergy;
 
 public class StatePanelFrameHistoryMarks {
@@ -47,7 +47,7 @@ public class StatePanelFrameHistoryMarks {
     //   can be triggered for the initial state
     public void init(
             int initialIndex,
-            LoadContainer<IndexableMarksWithEnergy> selectedHistory,
+            BoundedIndexContainer<IndexableMarksWithEnergy> selectedHistory,
             StatePanel<IndexableMarksWithEnergy> tablePanel,
             ErrorReporter errorReporter)
             throws InitException {

@@ -37,34 +37,30 @@ import org.anchoranalysis.core.name.store.LazyEvaluationStore;
 import org.anchoranalysis.core.progress.ProgressReporter;
 import org.anchoranalysis.gui.bean.filecreator.MarkCreatorParams;
 import org.anchoranalysis.gui.file.opened.OpenedFile;
-import org.anchoranalysis.gui.file.opened.OpenedFileGUI;
+import org.anchoranalysis.gui.file.opened.OpenedFileGUIWithFile;
 import org.anchoranalysis.gui.series.TimeSequenceProvider;
 import org.anchoranalysis.gui.series.TimeSequenceProviderSupplier;
 import org.anchoranalysis.gui.videostats.dropdown.AddVideoStatsModule;
 import org.anchoranalysis.gui.videostats.dropdown.multicollection.MultiCollectionDropDown;
+import org.anchoranalysis.image.core.stack.TimeSequence;
 import org.anchoranalysis.image.io.input.ProvidesStackInput;
-import org.anchoranalysis.image.stack.TimeSequence;
-import org.anchoranalysis.io.output.bound.BoundOutputManagerRouteErrors;
+import org.anchoranalysis.io.output.outputter.InputOutputContext;
+import lombok.AllArgsConstructor;
 
+@AllArgsConstructor
 public class FileSingleStack extends InteractiveFile {
 
-    private ProvidesStackInput inputObject;
+    private ProvidesStackInput input;
     private MarkCreatorParams params;
-
-    public FileSingleStack(ProvidesStackInput ncc, MarkCreatorParams params) {
-        super();
-        this.inputObject = ncc;
-        this.params = params;
-    }
 
     @Override
     public String identifier() {
-        return inputObject.descriptiveName();
+        return input.name();
     }
 
     @Override
     public Optional<File> associatedFile() {
-        return inputObject.pathForBinding().map(Path::toFile);
+        return input.pathForBinding().map(Path::toFile);
     }
 
     @Override
@@ -73,8 +69,7 @@ public class FileSingleStack extends InteractiveFile {
     }
 
     @Override
-    public OpenedFile open(
-            AddVideoStatsModule globalSubgroupAdder, BoundOutputManagerRouteErrors outputManager)
+    public OpenedFile open(AddVideoStatsModule globalSubgroupAdder, InputOutputContext context)
             throws OperationFailedException {
 
         MultiCollectionDropDown dropDown =
@@ -88,21 +83,21 @@ public class FileSingleStack extends InteractiveFile {
                         true);
 
         try {
-            dropDown.init(globalSubgroupAdder, outputManager, params);
+            dropDown.init(globalSubgroupAdder, context, params);
         } catch (InitException e) {
             throw new OperationFailedException(e);
         }
 
-        return new OpenedFileGUI(this, dropDown.openedFileGUI());
+        return new OpenedFileGUIWithFile(this, dropDown.openedFileGUI());
     }
 
-    private TimeSequenceProvider createTimeSeries(ProgressReporter progressReporter, int seriesNum)
+    private TimeSequenceProvider createTimeSeries(ProgressReporter progressReporter, int seriesIndex)
             throws CreateException {
         try {
             LazyEvaluationStore<TimeSequence> stacks =
                     new LazyEvaluationStore<>("createTimeSeries");
-            inputObject.addToStoreInferNames(stacks, seriesNum, progressReporter);
-            return new TimeSequenceProvider(stacks, inputObject.numberFrames());
+            input.addToStoreInferNames(stacks, seriesIndex, progressReporter);
+            return new TimeSequenceProvider(stacks, input.numberFrames());
         } catch (OperationFailedException e) {
             throw new CreateException(e);
         }

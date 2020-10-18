@@ -30,10 +30,11 @@ import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.name.provider.NamedProvider;
 import org.anchoranalysis.core.progress.ProgressReporterNull;
 import org.anchoranalysis.gui.finder.FinderRasterFilesByManifestDescriptionFunction;
-import org.anchoranalysis.image.io.bean.rasterreader.RasterReader;
-import org.anchoranalysis.image.stack.NamedStacksSupplier;
-import org.anchoranalysis.image.stack.Stack;
-import org.anchoranalysis.io.manifest.ManifestRecorder;
+import org.anchoranalysis.image.core.stack.NamedStacksSupplier;
+import org.anchoranalysis.image.core.stack.Stack;
+import org.anchoranalysis.image.io.bean.stack.StackReader;
+import org.anchoranalysis.io.manifest.Manifest;
+import org.anchoranalysis.io.manifest.finder.FindFailedException;
 
 // Finds an image stack collection from the files in the root directory
 public class FinderStacksFromRootFiles implements FinderStacks {
@@ -43,8 +44,8 @@ public class FinderStacksFromRootFiles implements FinderStacks {
     private NamedStacksSupplier operationStacks =
             NamedStacksSupplier.cache(pr -> delegate.createStackCollection());
 
-    public FinderStacksFromRootFiles(RasterReader rasterReader, String function) {
-        delegate = new FinderRasterFilesByManifestDescriptionFunction(rasterReader, function);
+    public FinderStacksFromRootFiles(StackReader stackReader, String function) {
+        delegate = new FinderRasterFilesByManifestDescriptionFunction(stackReader, function);
     }
 
     @Override
@@ -58,7 +59,7 @@ public class FinderStacksFromRootFiles implements FinderStacks {
     }
 
     @Override
-    public boolean doFind(ManifestRecorder manifestRecorder) {
+    public boolean doFind(Manifest manifestRecorder) throws FindFailedException {
         return delegate.doFind(manifestRecorder);
     }
 

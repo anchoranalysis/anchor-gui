@@ -28,6 +28,8 @@ package org.anchoranalysis.gui.interactivebrowser.browser;
 
 import java.util.List;
 import org.anchoranalysis.bean.NamedBean;
+import org.anchoranalysis.bean.shared.color.scheme.HSB;
+import org.anchoranalysis.bean.shared.color.scheme.Shuffle;
 import org.anchoranalysis.core.color.ColorIndex;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.InitException;
@@ -35,6 +37,7 @@ import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.random.RandomNumberGenerator;
 import org.anchoranalysis.core.random.RandomNumberGeneratorMersenne;
 import org.anchoranalysis.gui.bean.filecreator.FileCreator;
+import org.anchoranalysis.gui.export.bean.task.ExportTaskList;
 import org.anchoranalysis.gui.feature.evaluator.treetable.FeatureListSrc;
 import org.anchoranalysis.gui.interactivebrowser.FileOpenManager;
 import org.anchoranalysis.gui.interactivebrowser.MarkEvaluatorManager;
@@ -48,20 +51,16 @@ import org.anchoranalysis.gui.retrieveelements.ExportPopupParams;
 import org.anchoranalysis.gui.videostats.dropdown.VideoStatsModuleGlobalParams;
 import org.anchoranalysis.gui.videostats.frame.VideoStatsFrame;
 import org.anchoranalysis.gui.videostats.module.DefaultModuleState;
-import org.anchoranalysis.image.io.bean.rasterreader.RasterReader;
-import org.anchoranalysis.io.bean.color.list.HSB;
-import org.anchoranalysis.io.bean.color.list.Shuffle;
-import org.anchoranalysis.io.color.HashedColorSet;
+import org.anchoranalysis.image.io.bean.stack.StackReader;
 import org.anchoranalysis.io.generator.sequence.SequenceMemory;
-import org.anchoranalysis.io.output.bound.BoundIOContext;
+import org.anchoranalysis.io.output.outputter.InputOutputContext;
 import org.anchoranalysis.mpp.feature.bean.mark.MarkEvaluator;
-import org.anchoranalysis.plugin.gui.bean.exporttask.ExportTaskList;
 
 public class InteractiveBrowser {
 
     // How long the splash screen displays for
     private static final int SPLASH_SCREEN_TIME = 2000;
-    private static final int NUM_COLORS = 20;
+    private static final int NUMBER_COLORS = 20;
 
     private VideoStatsFrame videoStatsFrame;
 
@@ -74,9 +73,9 @@ public class InteractiveBrowser {
 
     private OpenFileTypeFactory openFileTypeFactory;
 
-    private BoundIOContext context;
+    private InputOutputContext context;
 
-    public InteractiveBrowser(BoundIOContext context, ExportTaskList exportTaskList) {
+    public InteractiveBrowser(InputOutputContext context, ExportTaskList exportTaskList) {
         super();
         this.exportTaskList = exportTaskList;
         this.context = context;
@@ -119,8 +118,7 @@ public class InteractiveBrowser {
     }
 
     private FileOpenManager createFileOpenManager(SubgrouppedAdder globalSubgroupAdder) {
-        return new FileOpenManager(
-                globalSubgroupAdder, videoStatsFrame, context.getOutputManager());
+        return new FileOpenManager(globalSubgroupAdder, videoStatsFrame, context);
     }
 
     private void initMarkEvaluatorManager(InteractiveBrowserInput interactiveBrowserInput) {
@@ -154,7 +152,7 @@ public class InteractiveBrowser {
         FileCreatorLoader fileCreatorLoader =
                 creatorLoader(
                         adderWithEnergy,
-                        interactiveBrowserInput.getRasterReader(),
+                        interactiveBrowserInput.getStackReader(),
                         fileOpenManager,
                         interactiveBrowserInput.getImporterSettings());
 
@@ -176,11 +174,11 @@ public class InteractiveBrowser {
 
     private FileCreatorLoader creatorLoader(
             AdderWithEnergy adderWithEnergy,
-            RasterReader rasterReader,
+            StackReader stackReader,
             FileOpenManager fileOpenManager,
             ImporterSettings importerSettings) {
         return adderWithEnergy.createFileCreatorLoader(
-                rasterReader,
+                stackReader,
                 fileOpenManager,
                 markEvaluatorManager,
                 importerSettings,
@@ -226,13 +224,11 @@ public class InteractiveBrowser {
     }
 
     private ExportPopupParams createExportPopupParams() {
-        SequenceMemory sequenceMemory = new SequenceMemory();
-        ExportPopupParams popUpParams = new ExportPopupParams(context.getErrorReporter());
-        assert (context.getOutputManager() != null);
-        popUpParams.setOutputManager(context.getOutputManager());
-        popUpParams.setParentFrame(videoStatsFrame);
-        popUpParams.setSequenceMemory(sequenceMemory);
-        return popUpParams;
+        return new ExportPopupParams(
+            videoStatsFrame,
+            new SequenceMemory(),
+            context
+        );
     }
 
     private VideoStatsModuleGlobalParams createModuleParams(
@@ -251,7 +247,7 @@ public class InteractiveBrowser {
 
     private ColorIndex createColorIndex() throws InitException {
         try {
-            return new HashedColorSet(new Shuffle(new HSB()), NUM_COLORS);
+            return new Shuffle(new HSB()).colorForEachIndex(NUMBER_COLORS);
         } catch (OperationFailedException e) {
             throw new InitException(e);
         }

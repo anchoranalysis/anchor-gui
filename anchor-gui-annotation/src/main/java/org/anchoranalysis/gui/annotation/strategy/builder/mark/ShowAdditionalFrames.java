@@ -51,17 +51,17 @@ class ShowAdditionalFrames {
         ShowAdditionalRasters showAdditional =
                 new ShowAdditionalRasters(
                         showRaster,
-                        strategy.getListDisplayRasters(),
+                        strategy.getAdditionalBackgrounds(),
                         matchPath,
                         context.getName(),
-                        strategy.getRasterReader());
+                        strategy.getStackReader());
         showAdditional.apply();
 
         ShowComparers showComparers =
                 new ShowComparers(
                         showRaster,
                         strategy.getMultipleComparer(),
-                        context.getOutputWriteSettings().getDefaultColorSetGenerator(),
+                        context.getOutputWriteSettings().getDefaultColors(),
                         matchPath,
                         context.getName(),
                         paramsInit.getBackground().getDefaultBackground(),

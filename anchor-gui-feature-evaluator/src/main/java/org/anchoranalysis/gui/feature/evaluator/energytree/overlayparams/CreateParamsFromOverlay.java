@@ -34,7 +34,7 @@ import org.anchoranalysis.feature.session.CreateFeatureInput;
 import org.anchoranalysis.gui.feature.FeatureListWithRegionMap;
 import org.anchoranalysis.gui.feature.evaluator.energytree.createparams.CreateIndFromObj;
 import org.anchoranalysis.gui.feature.evaluator.energytree.createparams.CreatePairFromObj;
-import org.anchoranalysis.image.object.ObjectMask;
+import org.anchoranalysis.image.voxel.object.ObjectMask;
 import org.anchoranalysis.mpp.mark.Mark;
 import org.anchoranalysis.mpp.overlay.OverlayMark;
 import org.anchoranalysis.mpp.pair.IdentifiablePair;

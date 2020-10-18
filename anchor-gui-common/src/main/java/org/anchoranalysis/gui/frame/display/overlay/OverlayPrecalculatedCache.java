@@ -32,20 +32,20 @@ import java.util.Optional;
 import org.anchoranalysis.core.color.RGBColor;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.OperationFailedException;
-import org.anchoranalysis.core.geometry.Point3i;
 import org.anchoranalysis.core.index.SetOperationFailedException;
-import org.anchoranalysis.image.binary.values.BinaryValues;
-import org.anchoranalysis.image.binary.values.BinaryValuesByte;
-import org.anchoranalysis.image.extent.Dimensions;
-import org.anchoranalysis.image.extent.box.BoundingBox;
-import org.anchoranalysis.image.index.RTree;
-import org.anchoranalysis.image.object.properties.ObjectWithProperties;
-import org.anchoranalysis.image.scale.ScaleFactor;
+import org.anchoranalysis.image.core.dimensions.Dimensions;
+import org.anchoranalysis.image.core.object.properties.ObjectWithProperties;
+import org.anchoranalysis.image.voxel.binary.values.BinaryValues;
+import org.anchoranalysis.image.voxel.binary.values.BinaryValuesByte;
 import org.anchoranalysis.overlay.Overlay;
 import org.anchoranalysis.overlay.collection.ColoredOverlayCollection;
 import org.anchoranalysis.overlay.collection.OverlayCollection;
 import org.anchoranalysis.overlay.writer.DrawOverlay;
 import org.anchoranalysis.overlay.writer.PrecalculationOverlay;
+import org.anchoranalysis.spatial.extent.box.BoundingBox;
+import org.anchoranalysis.spatial.extent.rtree.RTree;
+import org.anchoranalysis.spatial.extent.scale.ScaleFactor;
+import org.anchoranalysis.spatial.point.Point3i;
 
 public class OverlayPrecalculatedCache implements OverlayRetriever {
 
@@ -357,20 +357,22 @@ public class OverlayPrecalculatedCache implements OverlayRetriever {
         // We create a scaled version of our dimensions
         return dimEntireImage.scaleXYBy(new ScaleFactor(zoomFactorNew));
     }
-    
+
     /**
      * Creates an r-tree with the indices of each item from a list.
      *
-     * @param boxes added to the r-tree, with the index of the element in the stream as the corresponding item
+     * @param boxes added to the r-tree, with the index of the element in the stream as the
+     *     corresponding item
      * @param maxNumberEntriesSuggested suggested a maximum number of entries in the r-tree
      */
-    private static RTree<Integer> createRTreeOfIndices(List<BoundingBox> boxes, int maxNumberEntriesSuggested) {
+    private static RTree<Integer> createRTreeOfIndices(
+            List<BoundingBox> boxes, int maxNumberEntriesSuggested) {
         RTree<Integer> tree = new RTree<>(maxNumberEntriesSuggested);
-        
-        for( int i=0; i<boxes.size(); i++) {
+
+        for (int i = 0; i < boxes.size(); i++) {
             tree.add(boxes.get(i), i);
         }
-        
+
         return tree;
     }
 }

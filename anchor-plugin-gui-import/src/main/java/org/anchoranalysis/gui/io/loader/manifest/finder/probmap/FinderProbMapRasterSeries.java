@@ -27,11 +27,11 @@
 package org.anchoranalysis.gui.io.loader.manifest.finder.probmap;
 
 import org.anchoranalysis.gui.finder.FinderRasterFolder;
-import org.anchoranalysis.image.io.bean.rasterreader.RasterReader;
+import org.anchoranalysis.image.io.bean.stack.StackReader;
 
 public class FinderProbMapRasterSeries extends FinderRasterFolder {
 
-    public FinderProbMapRasterSeries(RasterReader rasterReader, String folderName) {
-        super(folderName, "probMapSeries", rasterReader);
+    public FinderProbMapRasterSeries(StackReader stackReader, String folderName) {
+        super(folderName, "probMapSeries", stackReader);
     }
 }

@@ -33,7 +33,7 @@ import java.util.List;
 import javax.swing.JTable;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.gui.file.interactive.InteractiveFile;
-import org.anchoranalysis.gui.file.opened.IOpenedFileGUI;
+import org.anchoranalysis.gui.file.opened.OpenedFileGUI;
 import org.anchoranalysis.gui.file.opened.OpenedFile;
 import org.anchoranalysis.gui.interactivebrowser.IOpenFile;
 import org.anchoranalysis.gui.marks.MarkDisplaySettings;
@@ -145,7 +145,7 @@ public class InteractiveFileListMouseListener extends MouseAdapter {
 
         try {
             OpenedFile of = fileOpenManager.open(tableModel.get(row));
-            IOpenedFileGUI dropDown = of.getGUI();
+            OpenedFileGUI dropDown = of.getGUI();
 
             if (dropDown != null) {
                 dropDown.executeDefaultOperation();
@@ -163,7 +163,7 @@ public class InteractiveFileListMouseListener extends MouseAdapter {
 
         try {
             OpenedFile of = fileOpenManager.open(tableModel.get(row));
-            IOpenedFileGUI dropDown = of.getGUI();
+            OpenedFileGUI dropDown = of.getGUI();
 
             if (dropDown != null) {
                 dropDown.getPopup().show(e.getComponent(), e.getX(), e.getY());
@@ -178,7 +178,7 @@ public class InteractiveFileListMouseListener extends MouseAdapter {
 
     private void multipleSelectionPopup(JTable target, MouseEvent e) {
 
-        List<IOpenedFileGUI> listSelectedDropDown = openAllSelected(target);
+        List<OpenedFileGUI> listSelectedDropDown = openAllSelected(target);
 
         if (listSelectedDropDown.size() == 0) {
             return;
@@ -193,15 +193,15 @@ public class InteractiveFileListMouseListener extends MouseAdapter {
         dropDown.getPopupMenu().show(e.getComponent(), e.getX(), e.getY());
     }
 
-    private List<IOpenedFileGUI> openAllSelected(JTable target) {
-        List<IOpenedFileGUI> list = new ArrayList<>();
+    private List<OpenedFileGUI> openAllSelected(JTable target) {
+        List<OpenedFileGUI> list = new ArrayList<>();
         for (int i : target.getSelectedRows()) {
             addIndice(list, i);
         }
         return list;
     }
 
-    private void addIndice(List<IOpenedFileGUI> listSelectedDropDown, int rowIndex) {
+    private void addIndice(List<OpenedFileGUI> listSelectedDropDown, int rowIndex) {
         InteractiveFile file = tableModel.get(rowIndex);
         if (file != null) {
             try {

@@ -34,7 +34,7 @@ import java.awt.Dimension;
 import java.util.TimeZone;
 import javax.swing.JInternalFrame;
 import javax.swing.JPanel;
-import org.anchoranalysis.gui.plot.definition.GraphDefinition;
+import org.anchoranalysis.gui.plot.definition.PlotDefinition;
 import org.anchoranalysis.gui.videostats.EnergyUpdater;
 import org.anchoranalysis.mpp.feature.energy.marks.MarksWithTotalEnergy;
 import org.anchoranalysis.mpp.segment.optimization.feedback.aggregate.Aggregator;
@@ -45,14 +45,14 @@ public class GraphPanel extends JPanel implements EnergyUpdater {
 
     private SimpleXYChartSupport support;
 
-    private GraphDefinition graphDefinition = null;
+    private PlotDefinition graphDefinition = null;
 
     private long timeZoneOffset;
 
     // We create an internalframe for every JPanel, this is WEIRD, we should switch to containment
     private JInternalFrame containingFrame;
 
-    public GraphPanel(GraphDefinition graphDefinition) {
+    public GraphPanel(PlotDefinition graphDefinition) {
 
         support = ChartFactory.createSimpleXYChart(graphDefinition.descriptor());
         setLayout(new BorderLayout());

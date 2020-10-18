@@ -90,8 +90,7 @@ public class FeatureListSrcBuilder {
         addFromStore(energySchemeSet, soFeature.getFeatureListSet(), energyScheme.getRegionMap());
 
         // We deliberately do not used the SharedFeatures as we wish to keep the Image Features
-        // seperate
-        //  and prevent any of the features being initialized prematurely
+        // separate and prevent any of the features being initialized prematurely.
         KeyValueParamsAugmenter augmenter =
                 new KeyValueParamsAugmenter(energyScheme, soFeature.getSharedFeatureSet(), logger);
 
@@ -129,8 +128,7 @@ public class FeatureListSrcBuilder {
                 // soFeature.getCachedCalculationList()) );
 
                 // Determines which features belong in the Unary part of the EnergyScheme, and which
-                // in
-                // the Pairwise part
+                // in the Pairwise part.
                 FeatureList<FeatureInputSingleMemo> outUnary = FeatureListFactory.empty();
                 FeatureList<FeatureInputPairMemo> outPairwise = FeatureListFactory.empty();
                 determineUnaryPairwiseFeatures(fl, outUnary, outPairwise);

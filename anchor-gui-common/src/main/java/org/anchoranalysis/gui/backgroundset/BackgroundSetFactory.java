@@ -32,26 +32,19 @@ import lombok.NoArgsConstructor;
 import org.anchoranalysis.core.cache.CachedSupplier;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.OperationFailedException;
-import org.anchoranalysis.core.index.GetOperationFailedException;
-import org.anchoranalysis.core.index.container.BoundedIndexContainer;
-import org.anchoranalysis.core.index.container.bridge.BoundedIndexContainerBridgeWithoutIndex;
 import org.anchoranalysis.core.name.provider.NamedProvider;
 import org.anchoranalysis.core.name.provider.NamedProviderGetException;
 import org.anchoranalysis.core.progress.ProgressReporter;
 import org.anchoranalysis.core.progress.ProgressReporterIncrement;
 import org.anchoranalysis.gui.container.background.BackgroundStackContainer;
 import org.anchoranalysis.gui.container.background.BackgroundStackContainerException;
-import org.anchoranalysis.gui.container.background.SingleBackgroundStackCntr;
-import org.anchoranalysis.gui.serializedobjectset.MarkWithRaster;
-import org.anchoranalysis.image.channel.factory.ChannelFactory;
+import org.anchoranalysis.image.core.channel.factory.ChannelFactory;
+import org.anchoranalysis.image.core.dimensions.Dimensions;
+import org.anchoranalysis.image.core.dimensions.IncorrectImageSizeException;
+import org.anchoranalysis.image.core.stack.Stack;
+import org.anchoranalysis.image.core.stack.TimeSequence;
 import org.anchoranalysis.image.experiment.identifiers.StackIdentifiers;
-import org.anchoranalysis.image.extent.Dimensions;
-import org.anchoranalysis.image.extent.IncorrectImageSizeException;
-import org.anchoranalysis.image.stack.DisplayStack;
-import org.anchoranalysis.image.stack.Stack;
-import org.anchoranalysis.image.stack.TimeSequence;
 import org.anchoranalysis.image.voxel.datatype.UnsignedByteVoxelType;
-import org.anchoranalysis.io.manifest.deserializer.folder.LoadContainer;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class BackgroundSetFactory {
@@ -74,8 +67,7 @@ public class BackgroundSetFactory {
             ProgressReporter progressReporter)
             throws CreateException {
 
-        BackgroundSet set = new BackgroundSet();
-        set.addAll(existing);
+        BackgroundSet set = new BackgroundSet(existing);
         try {
             BackgroundSetFactory.addFromStacks(set, stacks, progressReporter);
         } catch (OperationFailedException e) {
@@ -92,44 +84,14 @@ public class BackgroundSetFactory {
             ProgressReporter progressReporter)
             throws CreateException {
 
-        BackgroundSet bsNew = new BackgroundSet();
-        bsNew.addAll(existing);
+        BackgroundSet backgroundSetNew = new BackgroundSet(existing);
         try {
-            BackgroundSetFactory.addFromStacks(bsNew, stacks, keys, progressReporter);
+            BackgroundSetFactory.addFromStacks(backgroundSetNew, stacks, keys, progressReporter);
         } catch (OperationFailedException e) {
             throw new CreateException(e);
         }
 
-        return bsNew;
-    }
-
-    public static BackgroundSet createMergedBackgroundSet(LoadContainer<MarkWithRaster> lc)
-            throws GetOperationFailedException {
-        BackgroundSet backgroundSet = new BackgroundSet();
-
-        // We assume every LoadContainer contains the same rasters in the BackgroundSet
-        ///  and use the first one to get the names
-
-        BackgroundSet first =
-                lc.getContainer().get(lc.getContainer().getMinimumIndex()).getBackgroundSet();
-
-        for (String name : first.names()) {
-            backgroundSet.addItem(name, new SingleBackgroundStackCntr(rasterBridge(lc, name)));
-        }
-
-        return backgroundSet;
-    }
-
-    private static BoundedIndexContainer<DisplayStack> rasterBridge(
-            final LoadContainer<MarkWithRaster> cntr, final String name) {
-
-        assert (cntr != null);
-        return new BoundedIndexContainerBridgeWithoutIndex<>(
-                cntr.getContainer(),
-                sourceObject -> {
-                    assert (sourceObject != null);
-                    return sourceObject.getBackgroundSet().singleStack(name);
-                });
+        return backgroundSetNew;
     }
 
     private static BackgroundStackContainer addBackgroundSetItem(

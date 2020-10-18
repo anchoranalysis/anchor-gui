@@ -32,45 +32,35 @@ import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.name.store.StoreSupplier;
 import org.anchoranalysis.core.progress.ProgressReporter;
 import org.anchoranalysis.core.progress.ProgressReporterNull;
-import org.anchoranalysis.image.io.RasterIOException;
-import org.anchoranalysis.image.io.bean.rasterreader.RasterReader;
-import org.anchoranalysis.image.io.rasterreader.OpenedRaster;
-import org.anchoranalysis.image.stack.NamedStacks;
-import org.anchoranalysis.image.stack.Stack;
-import org.anchoranalysis.io.manifest.ManifestRecorder;
-import org.anchoranalysis.io.manifest.file.FileWrite;
+import org.anchoranalysis.image.core.stack.NamedStacks;
+import org.anchoranalysis.image.core.stack.Stack;
+import org.anchoranalysis.image.io.ImageIOException;
+import org.anchoranalysis.image.io.bean.stack.StackReader;
+import org.anchoranalysis.image.io.stack.OpenedRaster;
+import org.anchoranalysis.io.manifest.Manifest;
+import org.anchoranalysis.io.manifest.file.OutputtedFile;
+import org.anchoranalysis.io.manifest.finder.FindFailedException;
 import org.anchoranalysis.io.manifest.finder.Finder;
 import org.anchoranalysis.io.manifest.finder.FinderUtilities;
-import org.anchoranalysis.io.manifest.match.FileWriteManifestMatch;
-import org.anchoranalysis.io.manifest.match.ManifestDescriptionFunctionMatch;
-import org.anchoranalysis.io.manifest.match.ManifestDescriptionMatchAnd;
-import org.anchoranalysis.io.manifest.match.ManifestDescriptionTypeMatch;
+import org.anchoranalysis.io.manifest.finder.match.FileMatch;
+import lombok.RequiredArgsConstructor;
 
+@RequiredArgsConstructor
 public class FinderRasterFilesByManifestDescriptionFunction implements Finder {
 
-    private String function;
+    // START REQUIRED ARGUMENTS
+    private final StackReader stackReader;
+    
+    private final String function;
+    // END REQUIRED ARGUMENTS
 
-    private List<FileWrite> list;
-
-    private RasterReader rasterReader;
-
-    public FinderRasterFilesByManifestDescriptionFunction(
-            RasterReader rasterReader, String function) {
-
-        this.function = function;
-        this.rasterReader = rasterReader;
-    }
-
+    private List<OutputtedFile> list;
+    
     @Override
-    public boolean doFind(ManifestRecorder manifestRecorder) {
-
-        ManifestDescriptionMatchAnd matchManifest = new ManifestDescriptionMatchAnd();
-        matchManifest.addCondition(new ManifestDescriptionFunctionMatch(function));
-        matchManifest.addCondition(new ManifestDescriptionTypeMatch("raster"));
-
+    public boolean doFind(Manifest manifestRecorder) throws FindFailedException {
         list =
                 FinderUtilities.findListFile(
-                        manifestRecorder, new FileWriteManifestMatch(matchManifest));
+                        manifestRecorder, FileMatch.description(function, "raster"));
         return exists();
     }
 
@@ -82,7 +72,7 @@ public class FinderRasterFilesByManifestDescriptionFunction implements Finder {
     public NamedStacks createStackCollection() {
 
         NamedStacks out = new NamedStacks();
-        for (FileWrite fileWrite : list) {
+        for (OutputtedFile fileWrite : list) {
             String name = fileWrite.getIndex();
 
             // Assume single series, single channel
@@ -92,19 +82,19 @@ public class FinderRasterFilesByManifestDescriptionFunction implements Finder {
                             () ->
                                     openStack(
                                             fileWrite.calculatePath(),
-                                            rasterReader,
+                                            stackReader,
                                             ProgressReporterNull.get())));
         }
         return out;
     }
 
     private Stack openStack(
-            Path filePath, RasterReader rasterReader, ProgressReporter progressReporter)
+            Path filePath, StackReader stackReader, ProgressReporter progressReporter)
             throws OperationFailedException {
-        try (OpenedRaster openedRaster = rasterReader.openFile(filePath)) {
+        try (OpenedRaster openedRaster = stackReader.openFile(filePath)) {
             return openedRaster.open(0, progressReporter).get(0);
 
-        } catch (RasterIOException e) {
+        } catch (ImageIOException e) {
             throw new OperationFailedException(e);
         }
     }

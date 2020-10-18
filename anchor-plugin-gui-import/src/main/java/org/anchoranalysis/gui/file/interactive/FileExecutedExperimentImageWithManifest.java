@@ -33,34 +33,33 @@ import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.gui.bean.filecreator.MarkCreatorParams;
 import org.anchoranalysis.gui.file.opened.OpenedFile;
-import org.anchoranalysis.gui.file.opened.OpenedFileGUI;
+import org.anchoranalysis.gui.file.opened.OpenedFileGUIWithFile;
 import org.anchoranalysis.gui.videostats.dropdown.AddVideoStatsModule;
 import org.anchoranalysis.gui.videostats.dropdown.manifest.ManifestDropDown;
-import org.anchoranalysis.image.io.bean.rasterreader.RasterReader;
-import org.anchoranalysis.io.output.bound.BoundOutputManagerRouteErrors;
+import org.anchoranalysis.image.io.bean.stack.StackReader;
+import org.anchoranalysis.io.output.outputter.InputOutputContext;
 import org.anchoranalysis.plugin.io.manifest.CoupledManifests;
+import lombok.RequiredArgsConstructor;
 
-// A file representing the results applied to an image within an executed experiment
+/**
+ * A file representing the results applied to an image within an executed experiment
+ * 
+ * @author Owen Feehan
+ *
+ */
+@RequiredArgsConstructor
 public class FileExecutedExperimentImageWithManifest extends InteractiveFile {
-
+    
+    // START REQUIRED ARGUMENTS
+    private final CoupledManifests coupledManifests;
+    private final StackReader stackReader;
+    private final MarkCreatorParams markCreatorParams;
+    // END REQUIRED ARGUMENTS
+    
     private ManifestDropDown manifestDropDown;
 
-    private CoupledManifests coupledManifests;
-    private RasterReader rasterReader;
-    private MarkCreatorParams markCreatorParams;
-
-    public FileExecutedExperimentImageWithManifest(
-            CoupledManifests coupledManifests,
-            RasterReader rasterReader,
-            MarkCreatorParams markCreatorParams) {
-        this.coupledManifests = coupledManifests;
-        this.rasterReader = rasterReader;
-        this.markCreatorParams = markCreatorParams;
-    }
-
     @Override
-    public OpenedFile open(
-            final AddVideoStatsModule adder, final BoundOutputManagerRouteErrors outputManager)
+    public OpenedFile open(final AddVideoStatsModule adder, final InputOutputContext context)
             throws OperationFailedException {
 
         manifestDropDown =
@@ -69,20 +68,20 @@ public class FileExecutedExperimentImageWithManifest extends InteractiveFile {
         try {
             manifestDropDown.init(
                     adder,
-                    rasterReader,
+                    stackReader,
                     markCreatorParams.getMarkEvaluatorManager(),
-                    outputManager,
+                    context,
                     markCreatorParams.getModuleParams());
         } catch (InitException e) {
             throw new OperationFailedException(e);
         }
 
-        return new OpenedFileGUI(this, manifestDropDown.openedFileGUI());
+        return new OpenedFileGUIWithFile(this, manifestDropDown.openedFileGUI());
     }
 
     @Override
     public String identifier() {
-        return coupledManifests.descriptiveName();
+        return coupledManifests.name();
     }
 
     @Override

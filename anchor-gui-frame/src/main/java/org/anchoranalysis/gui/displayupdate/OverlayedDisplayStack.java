@@ -26,7 +26,7 @@
 
 package org.anchoranalysis.gui.displayupdate;
 
-import org.anchoranalysis.image.stack.DisplayStack;
+import org.anchoranalysis.image.core.stack.DisplayStack;
 import org.anchoranalysis.overlay.collection.ColoredOverlayCollection;
 
 public class OverlayedDisplayStack {

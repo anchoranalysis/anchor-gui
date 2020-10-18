@@ -32,10 +32,10 @@ import org.anchoranalysis.bean.annotation.BeanField;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.progress.ProgressReporter;
 import org.anchoranalysis.gui.file.interactive.InteractiveFile;
-import org.anchoranalysis.io.bean.input.InputManager;
-import org.anchoranalysis.io.bean.input.InputManagerParams;
-import org.anchoranalysis.io.error.AnchorIOException;
 import org.anchoranalysis.io.input.InputFromManager;
+import org.anchoranalysis.io.input.InputReadFailedException;
+import org.anchoranalysis.io.input.bean.InputManager;
+import org.anchoranalysis.io.input.bean.InputManagerParams;
 
 public abstract class FileCreatorFromInputManager<T extends InputFromManager>
         extends FileCreatorGeneralList {
@@ -54,7 +54,7 @@ public abstract class FileCreatorFromInputManager<T extends InputFromManager>
         try {
 
             List<? extends T> list =
-                    input.inputObjects(
+                    input.inputs(
                             new InputManagerParams(
                                     params.createInputContext(),
                                     progressReporter,
@@ -64,7 +64,7 @@ public abstract class FileCreatorFromInputManager<T extends InputFromManager>
                 listFiles.add(create(element, params.getMarkCreatorParams()));
             }
 
-        } catch (AnchorIOException e) {
+        } catch (InputReadFailedException e) {
             throw new OperationFailedException(e);
         }
     }

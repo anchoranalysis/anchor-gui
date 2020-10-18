@@ -45,7 +45,6 @@ import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.error.reporter.ErrorReporter;
-import org.anchoranalysis.core.geometry.Point2i;
 import org.anchoranalysis.core.index.IndexGettableSettable;
 import org.anchoranalysis.core.index.container.BoundedRangeIncompleteDynamic;
 import org.anchoranalysis.gui.displayupdate.DisplayUpdateRememberStack;
@@ -65,10 +64,11 @@ import org.anchoranalysis.gui.retrieveelements.InternalFrameIJPopupClickListener
 import org.anchoranalysis.gui.retrieveelements.RetrieveElements;
 import org.anchoranalysis.gui.retrieveelements.RetrieveElementsImage;
 import org.anchoranalysis.gui.videostats.dropdown.VideoStatsModuleGlobalParams;
-import org.anchoranalysis.image.extent.Dimensions;
-import org.anchoranalysis.image.extent.Resolution;
-import org.anchoranalysis.image.stack.DisplayStack;
+import org.anchoranalysis.image.core.dimensions.Dimensions;
+import org.anchoranalysis.image.core.dimensions.Resolution;
+import org.anchoranalysis.image.core.stack.DisplayStack;
 import org.anchoranalysis.image.voxel.datatype.VoxelDataType;
+import org.anchoranalysis.spatial.point.Point2i;
 
 public class InternalFrameCanvas {
 
@@ -280,8 +280,8 @@ public class InternalFrameCanvas {
         return canvas.getZoomScale();
     }
 
-    public Resolution getRes() {
-        return canvas.getRes();
+    public Optional<Resolution> getResolution() {
+        return canvas.getResolution();
     }
 
     public boolean canvasContainsAbsolute(Point2i point) {

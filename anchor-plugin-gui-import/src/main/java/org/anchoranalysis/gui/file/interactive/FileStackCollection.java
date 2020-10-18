@@ -38,31 +38,31 @@ import org.anchoranalysis.core.name.store.LazyEvaluationStore;
 import org.anchoranalysis.core.progress.ProgressReporter;
 import org.anchoranalysis.gui.bean.filecreator.MarkCreatorParams;
 import org.anchoranalysis.gui.file.opened.OpenedFile;
-import org.anchoranalysis.gui.file.opened.OpenedFileGUI;
+import org.anchoranalysis.gui.file.opened.OpenedFileGUIWithFile;
 import org.anchoranalysis.gui.series.TimeSequenceProvider;
 import org.anchoranalysis.gui.series.TimeSequenceProviderSupplier;
 import org.anchoranalysis.gui.videostats.dropdown.AddVideoStatsModule;
 import org.anchoranalysis.gui.videostats.dropdown.multicollection.MultiCollectionDropDown;
-import org.anchoranalysis.image.io.RasterIOException;
-import org.anchoranalysis.image.stack.TimeSequence;
-import org.anchoranalysis.io.output.bound.BoundOutputManagerRouteErrors;
+import org.anchoranalysis.image.core.stack.TimeSequence;
+import org.anchoranalysis.image.io.ImageIOException;
+import org.anchoranalysis.io.output.outputter.InputOutputContext;
 import org.anchoranalysis.plugin.io.bean.input.stack.StackSequenceInput;
 import org.apache.commons.io.FilenameUtils;
 
 @AllArgsConstructor
 public class FileStackCollection extends InteractiveFile {
 
-    private StackSequenceInput inputObject;
+    private StackSequenceInput input;
     private MarkCreatorParams params;
 
     @Override
     public String identifier() {
-        return FilenameUtils.removeExtension(new File(inputObject.descriptiveName()).getName());
+        return FilenameUtils.removeExtension(new File(input.name()).getName());
     }
 
     @Override
     public Optional<File> associatedFile() {
-        return inputObject.pathForBinding().map(Path::toFile);
+        return input.pathForBinding().map(Path::toFile);
     }
 
     @Override
@@ -71,8 +71,7 @@ public class FileStackCollection extends InteractiveFile {
     }
 
     @Override
-    public OpenedFile open(
-            AddVideoStatsModule globalSubgroupAdder, BoundOutputManagerRouteErrors outputManager)
+    public OpenedFile open(AddVideoStatsModule globalSubgroupAdder, InputOutputContext context)
             throws OperationFailedException {
 
         MultiCollectionDropDown dropDown =
@@ -87,27 +86,27 @@ public class FileStackCollection extends InteractiveFile {
                         false);
 
         try {
-            dropDown.init(globalSubgroupAdder, outputManager, params);
+            dropDown.init(globalSubgroupAdder, context, params);
         } catch (InitException e) {
             throw new OperationFailedException(e);
         }
 
-        return new OpenedFileGUI(this, dropDown.openedFileGUI());
+        return new OpenedFileGUIWithFile(this, dropDown.openedFileGUI());
     }
 
     private TimeSequenceProvider extractTimeSequenceFromInput(
-            ProgressReporter progressReporter, int seriesNum) throws CreateException {
+            ProgressReporter progressReporter, int seriesIndex) throws CreateException {
         try {
             TimeSequence timeSeries =
-                    inputObject.createStackSequenceForSeries(seriesNum).get(progressReporter);
+                    input.createStackSequenceForSeries(seriesIndex).get(progressReporter);
 
             LazyEvaluationStore<TimeSequence> store =
                     new LazyEvaluationStore<>("extractTimeSequence");
 
             store.add("input_stack", () -> timeSeries);
 
-            return new TimeSequenceProvider(store, inputObject.numberFrames());
-        } catch (RasterIOException | OperationFailedException e) {
+            return new TimeSequenceProvider(store, input.numberFrames());
+        } catch (ImageIOException | OperationFailedException e) {
             throw new CreateException(e);
         }
     }

@@ -38,9 +38,9 @@ import org.anchoranalysis.core.params.KeyValueParams;
 import org.anchoranalysis.gui.annotation.mark.MarkAnnotator;
 import org.anchoranalysis.gui.interactivebrowser.MarkEvaluatorManager;
 import org.anchoranalysis.gui.interactivebrowser.MarkEvaluatorSetForImage;
-import org.anchoranalysis.image.stack.NamedStacksSupplier;
-import org.anchoranalysis.io.bean.filepath.generator.FilePathGenerator;
-import org.anchoranalysis.io.error.AnchorIOException;
+import org.anchoranalysis.image.core.stack.NamedStacksSupplier;
+import org.anchoranalysis.io.input.bean.path.DerivePath;
+import org.anchoranalysis.io.input.path.DerivePathException;
 import org.anchoranalysis.plugin.annotation.bean.strategy.MarkProposerStrategy;
 import org.anchoranalysis.plugin.annotation.bean.strategy.PathFromGenerator;
 
@@ -69,21 +69,21 @@ class CreateMarkEvaluator {
             throws CreateException {
         return markEvaluatorManager.createSetForStackCollection(
                 stacks,
-                () -> paramsFromGenerator(pathForBinding, strategy.paramsFilePathGenerator()));
+                () -> paramsFromGenerator(pathForBinding, strategy.paramsDeriver()));
     }
 
     private static Optional<KeyValueParams> paramsFromGenerator(
-            Path pathForBinding, Optional<FilePathGenerator> filePathGenerator) throws IOException {
+            Path pathForBinding, Optional<DerivePath> derivePath) throws IOException {
         return OptionalUtilities.map(
-                filePathGenerator, generator -> readParams(generator, pathForBinding));
+                derivePath, generator -> readParams(generator, pathForBinding));
     }
 
     private static KeyValueParams readParams(
-            FilePathGenerator filePathGenerator, Path pathForBinding) throws IOException {
+            DerivePath derivePath, Path pathForBinding) throws IOException {
         try {
             return KeyValueParams.readFromFile(
-                    PathFromGenerator.derivePath(filePathGenerator, pathForBinding));
-        } catch (AnchorIOException e) {
+                    PathFromGenerator.derivePath(derivePath, pathForBinding));
+        } catch (DerivePathException e) {
             throw new IOException(e);
         }
     }

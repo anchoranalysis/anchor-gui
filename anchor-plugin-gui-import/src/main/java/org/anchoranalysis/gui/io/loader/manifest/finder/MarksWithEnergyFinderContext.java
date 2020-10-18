@@ -32,7 +32,7 @@ import lombok.Value;
 import org.anchoranalysis.gui.finder.imgstackcollection.FinderStacks;
 import org.anchoranalysis.gui.videostats.dropdown.VideoStatsModuleGlobalParams;
 import org.anchoranalysis.io.manifest.finder.FinderSerializedObject;
-import org.anchoranalysis.io.output.bound.BoundOutputManagerRouteErrors;
+import org.anchoranalysis.io.output.outputter.InputOutputContext;
 import org.anchoranalysis.mpp.feature.energy.marks.VoxelizedMarksWithEnergy;
 import org.anchoranalysis.mpp.segment.bean.kernel.proposer.KernelProposer;
 
@@ -43,6 +43,6 @@ public class MarksWithEnergyFinderContext {
     private FinderStacks finderStacks;
     private FinderSerializedObject<KernelProposer<VoxelizedMarksWithEnergy>> finderKernelProposer;
     private JFrame parentFrame;
-    private BoundOutputManagerRouteErrors outputManager;
+    private InputOutputContext inputOutputContext;
     private VideoStatsModuleGlobalParams mpg;
 }

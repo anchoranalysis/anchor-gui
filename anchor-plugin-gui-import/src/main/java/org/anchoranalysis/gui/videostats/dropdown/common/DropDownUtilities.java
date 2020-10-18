@@ -48,11 +48,11 @@ import org.anchoranalysis.gui.videostats.modulecreator.VideoStatsModuleCreator;
 import org.anchoranalysis.gui.videostats.operation.VideoStatsOperationFromCreatorAndAdder;
 import org.anchoranalysis.gui.videostats.operation.VideoStatsOperationMenu;
 import org.anchoranalysis.gui.videostats.operation.combine.OverlayCollectionSupplier;
-import org.anchoranalysis.image.object.ObjectCollection;
-import org.anchoranalysis.io.manifest.ManifestFolderDescription;
-import org.anchoranalysis.io.manifest.sequencetype.SetSequenceType;
+import org.anchoranalysis.image.voxel.object.ObjectCollection;
+import org.anchoranalysis.io.manifest.ManifestDirectoryDescription;
+import org.anchoranalysis.io.manifest.sequencetype.StringsWithoutOrder;
 import org.anchoranalysis.io.output.bean.OutputWriteSettings;
-import org.anchoranalysis.io.output.bound.BoundOutputManagerRouteErrors;
+import org.anchoranalysis.io.output.outputter.InputOutputContext;
 import org.anchoranalysis.mpp.mark.MarkCollection;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
@@ -194,19 +194,15 @@ public class DropDownUtilities {
         }
     }
 
-    public static BoundOutputManagerRouteErrors createOutputManagerForSubfolder(
-            BoundOutputManagerRouteErrors parentOutputManager, String subFolderName)
-            throws InitException {
+    public static InputOutputContext createSubdirectoryContext(
+            InputOutputContext inputOutputContext, String subdirectoryName) throws InitException {
 
-        ManifestFolderDescription mfd =
-                new ManifestFolderDescription(
-                        "interactiveOutput", "manifestInteractiveOutput", new SetSequenceType());
+        ManifestDirectoryDescription mfd =
+                new ManifestDirectoryDescription(
+                        "interactiveOutput", "manifestInteractiveOutput", new StringsWithoutOrder());
 
         // NB: As bindAsSubFolder can now return nulls, maybe some knock-on bugs are introduced here
-        return parentOutputManager
-                .getWriterAlwaysAllowed()
-                .bindAsSubdirectory(subFolderName, mfd)
-                .orElseThrow(() -> new InitException("Cannot create a sub-folder for output"));
+        return inputOutputContext.subdirectory(subdirectoryName, mfd, false);
     }
 
     private static void addModule(

@@ -40,13 +40,12 @@ import org.anchoranalysis.gui.reassign.FrameTitleCreator;
 import org.anchoranalysis.gui.videostats.IModuleCreatorDefaultState;
 import org.anchoranalysis.gui.videostats.link.LinkModules;
 import org.anchoranalysis.gui.videostats.module.VideoStatsModule;
-import org.anchoranalysis.io.manifest.deserializer.folder.LoadContainer;
 
 public class StatePanelFrameHistory<T> {
 
     private StatePanelFrame<T> delegate;
 
-    private BoundedIndexContainer<T> boundedIndexCntr;
+    private BoundedIndexContainer<T> boundedIndexContainer;
     private boolean includeIndexAdjusting;
     private IndexSlider indexSlider;
     private String title;
@@ -66,8 +65,8 @@ public class StatePanelFrameHistory<T> {
 
                 // Our updated state
                 {
-                    int index = boundedIndexCntr.previousEqualIndex(evt.getValue());
-                    T crntState = boundedIndexCntr.get(index);
+                    int index = boundedIndexContainer.previousEqualIndex(evt.getValue());
+                    T crntState = boundedIndexContainer.get(index);
 
                     delegate.updateState(crntState);
                     updateTitle(index);
@@ -86,7 +85,7 @@ public class StatePanelFrameHistory<T> {
 
     public void init(
             int initialIndex,
-            LoadContainer<T> selectedHistory,
+            BoundedIndexContainer<T> selectedHistory,
             StatePanel<T> tablePanel,
             ErrorReporter errorReporter)
             throws InitException {
@@ -94,16 +93,16 @@ public class StatePanelFrameHistory<T> {
         this.errorReporter = errorReporter;
 
         try {
-            this.boundedIndexCntr = selectedHistory.getContainer();
-            int actualPhysicalIndex = this.boundedIndexCntr.previousEqualIndex(initialIndex);
+            this.boundedIndexContainer = selectedHistory;
+            int actualPhysicalIndex = this.boundedIndexContainer.previousEqualIndex(initialIndex);
             assert (actualPhysicalIndex != -1);
-            T startState = this.boundedIndexCntr.get(actualPhysicalIndex);
+            T startState = this.boundedIndexContainer.get(actualPhysicalIndex);
 
             this.delegate = new StatePanelFrame<>(title, startState, tablePanel);
             {
                 indexSlider =
                         new IndexSlider(
-                                selectedHistory.getContainer(), !selectedHistory.isExpensiveLoad());
+                                selectedHistory, true);
                 indexSlider.setIndex(initialIndex, false);
 
                 indexSlider

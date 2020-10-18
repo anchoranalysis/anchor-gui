@@ -32,14 +32,14 @@ import java.util.List;
 import javax.swing.event.EventListenerList;
 import org.anchoranalysis.annotation.mark.DualMarks;
 import org.anchoranalysis.core.color.RGBColor;
-import org.anchoranalysis.core.geometry.Point3d;
-import org.anchoranalysis.core.geometry.Point3f;
-import org.anchoranalysis.core.geometry.Point3i;
 import org.anchoranalysis.gui.videostats.internalframe.annotator.SaveMonitor;
 import org.anchoranalysis.gui.videostats.internalframe.annotator.navigation.ConfirmResetStateChangedListener;
 import org.anchoranalysis.mpp.mark.ColoredMarks;
 import org.anchoranalysis.mpp.mark.Mark;
 import org.anchoranalysis.mpp.mark.MarkCollection;
+import org.anchoranalysis.spatial.point.Point3d;
+import org.anchoranalysis.spatial.point.Point3f;
+import org.anchoranalysis.spatial.point.Point3i;
 
 class CurrentState implements IQuerySelectedPoints {
 

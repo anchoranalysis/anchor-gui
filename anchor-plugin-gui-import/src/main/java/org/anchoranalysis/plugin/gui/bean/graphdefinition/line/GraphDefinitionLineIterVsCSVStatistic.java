@@ -29,11 +29,11 @@ package org.anchoranalysis.plugin.gui.bean.graphdefinition.line;
 import java.util.Iterator;
 import java.util.Optional;
 import org.anchoranalysis.core.error.CreateException;
-import org.anchoranalysis.gui.io.loader.manifest.finder.csvstatistic.CSVStatistic;
+import org.anchoranalysis.gui.finder.csvstatistic.CSVStatistic;
 import org.anchoranalysis.plot.AxisLimits;
 import org.anchoranalysis.plot.PlotInstance;
 import org.anchoranalysis.plot.bean.Plot;
-import org.anchoranalysis.plot.bean.colorscheme.GraphColorScheme;
+import org.anchoranalysis.plot.bean.colorscheme.PlotColorScheme;
 import org.anchoranalysis.plot.index.LinePlot;
 import org.anchoranalysis.plot.index.LinePlot.YValGetter;
 
@@ -49,7 +49,7 @@ public abstract class GraphDefinitionLineIterVsCSVStatistic extends Plot<CSVStat
             String[] seriesName,
             String yAxisLabel,
             YValGetter<CSVStatistic> yValGetter,
-            GraphColorScheme graphColorScheme) {
+            PlotColorScheme graphColorScheme) {
         this(title, title, seriesName, yAxisLabel, yValGetter, graphColorScheme);
     }
 
@@ -59,7 +59,7 @@ public abstract class GraphDefinitionLineIterVsCSVStatistic extends Plot<CSVStat
             String[] seriesName,
             String yAxisLabel,
             YValGetter<CSVStatistic> yValGetter,
-            GraphColorScheme graphColorScheme) {
+            PlotColorScheme graphColorScheme) {
         this.title = title;
         this.shortTitle = shortTitle;
 

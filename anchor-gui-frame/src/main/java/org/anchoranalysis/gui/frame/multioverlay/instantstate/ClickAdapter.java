@@ -29,7 +29,6 @@ package org.anchoranalysis.gui.frame.multioverlay.instantstate;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.SwingUtilities;
-import org.anchoranalysis.core.geometry.Point3i;
 import org.anchoranalysis.core.index.IndicesSelection;
 import org.anchoranalysis.core.property.IPropertyValueReceivable;
 import org.anchoranalysis.core.property.change.PropertyValueChangeEvent;
@@ -40,6 +39,7 @@ import org.anchoranalysis.gui.indices.DualIndicesSelection;
 import org.anchoranalysis.gui.propertyvalue.PropertyValueChangeListenerList;
 import org.anchoranalysis.overlay.collection.ColoredOverlayCollection;
 import org.anchoranalysis.overlay.collection.OverlayCollection;
+import org.anchoranalysis.spatial.point.Point3i;
 
 class ClickAdapter extends MouseAdapter {
 

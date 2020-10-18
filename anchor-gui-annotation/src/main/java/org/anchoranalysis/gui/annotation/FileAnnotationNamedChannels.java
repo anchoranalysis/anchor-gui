@@ -36,11 +36,11 @@ import org.anchoranalysis.gui.annotation.dropdown.AnnotationDropDown;
 import org.anchoranalysis.gui.annotation.state.AnnotationSummary;
 import org.anchoranalysis.gui.file.interactive.InteractiveFile;
 import org.anchoranalysis.gui.file.opened.OpenedFile;
-import org.anchoranalysis.gui.file.opened.OpenedFileGUI;
+import org.anchoranalysis.gui.file.opened.OpenedFileGUIWithFile;
 import org.anchoranalysis.gui.interactivebrowser.MarkEvaluatorManager;
 import org.anchoranalysis.gui.videostats.dropdown.AddVideoStatsModule;
 import org.anchoranalysis.gui.videostats.dropdown.VideoStatsModuleGlobalParams;
-import org.anchoranalysis.io.output.bound.BoundOutputManagerRouteErrors;
+import org.anchoranalysis.io.output.outputter.InputOutputContext;
 
 public class FileAnnotationNamedChannels extends InteractiveFile {
 
@@ -73,7 +73,7 @@ public class FileAnnotationNamedChannels extends InteractiveFile {
 
     @Override
     public String identifier() {
-        return annotation.descriptiveName();
+        return annotation.inputName();
     }
 
     private void invalidateProgressState() {
@@ -95,8 +95,7 @@ public class FileAnnotationNamedChannels extends InteractiveFile {
     }
 
     @Override
-    public OpenedFile open(
-            AddVideoStatsModule globalSubgroupAdder, BoundOutputManagerRouteErrors outputManager)
+    public OpenedFile open(AddVideoStatsModule globalSubgroupAdder, InputOutputContext context)
             throws OperationFailedException {
 
         AnnotationRefresher refresherResetCache =
@@ -111,9 +110,9 @@ public class FileAnnotationNamedChannels extends InteractiveFile {
                         new AnnotationGuiContext(refresherResetCache, markEvaluatorManager),
                         identifier());
 
-        dropDown.init(globalSubgroupAdder, outputManager, mpg);
+        dropDown.init(globalSubgroupAdder, mpg, context);
 
-        return new OpenedFileGUI(this, dropDown.openedFileGUI());
+        return new OpenedFileGUIWithFile(this, dropDown.openedFileGUI());
     }
 
     @Override

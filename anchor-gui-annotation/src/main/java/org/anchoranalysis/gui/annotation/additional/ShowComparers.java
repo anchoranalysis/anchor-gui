@@ -32,6 +32,7 @@ import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.anchoranalysis.annotation.io.bean.comparer.MultipleComparer;
 import org.anchoranalysis.annotation.mark.AnnotationWithMarks;
+import org.anchoranalysis.bean.shared.color.scheme.ColorScheme;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.functional.function.CheckedFunction;
 import org.anchoranalysis.core.log.Logger;
@@ -39,16 +40,15 @@ import org.anchoranalysis.core.name.value.NameValue;
 import org.anchoranalysis.gui.annotation.AnnotatorModuleCreator;
 import org.anchoranalysis.gui.backgroundset.BackgroundSet;
 import org.anchoranalysis.gui.container.background.BackgroundStackContainerException;
-import org.anchoranalysis.image.stack.DisplayStack;
-import org.anchoranalysis.image.stack.Stack;
-import org.anchoranalysis.io.bean.color.list.ColorListFactory;
+import org.anchoranalysis.image.core.stack.DisplayStack;
+import org.anchoranalysis.image.core.stack.Stack;
 
 @RequiredArgsConstructor
 public class ShowComparers {
 
     private final ShowRaster showRaster;
     private final MultipleComparer multipleComparer;
-    private final ColorListFactory colorSetGenerator;
+    private final ColorScheme colorScheme;
     private final Path matchPath;
     private final String name;
     private final CheckedFunction<Integer, DisplayStack, ? extends Throwable> defaultBackground;
@@ -72,7 +72,7 @@ public class ShowComparers {
                             annotationExst,
                             background,
                             matchPath,
-                            colorSetGenerator,
+                            colorScheme,
                             modelDirectory,
                             logger,
                             false);

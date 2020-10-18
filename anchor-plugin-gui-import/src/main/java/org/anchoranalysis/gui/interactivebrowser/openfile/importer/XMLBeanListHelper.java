@@ -42,7 +42,7 @@ import org.anchoranalysis.gui.bean.filecreator.FileFeatureEvaluatorCreator;
 import org.anchoranalysis.gui.bean.filecreator.NamedSingleStackCreator;
 import org.anchoranalysis.gui.interactivebrowser.openfile.type.EnergySchemeCreatorState;
 import org.anchoranalysis.image.io.input.ProvidesStackInput;
-import org.anchoranalysis.io.bean.input.InputManager;
+import org.anchoranalysis.io.input.bean.InputManager;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 class XMLBeanListHelper {

@@ -27,12 +27,12 @@
 package org.anchoranalysis.gui.frame.canvas.zoom;
 
 import lombok.Getter;
-import org.anchoranalysis.core.geometry.Point2i;
-import org.anchoranalysis.image.extent.Dimensions;
-import org.anchoranalysis.image.extent.Extent;
-import org.anchoranalysis.image.extent.box.BoundingBox;
-import org.anchoranalysis.image.scale.ScaleFactor;
+import org.anchoranalysis.image.core.dimensions.Dimensions;
 import org.anchoranalysis.mpp.bean.bound.ResolvedBound;
+import org.anchoranalysis.spatial.extent.Extent;
+import org.anchoranalysis.spatial.extent.box.BoundingBox;
+import org.anchoranalysis.spatial.extent.scale.ScaleFactor;
+import org.anchoranalysis.spatial.point.Point2i;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 
 public class ZoomScale {

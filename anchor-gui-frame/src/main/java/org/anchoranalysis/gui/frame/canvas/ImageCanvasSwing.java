@@ -31,9 +31,9 @@ import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import javax.swing.JPanel;
 import lombok.NoArgsConstructor;
-import org.anchoranalysis.core.geometry.Point2i;
-import org.anchoranalysis.image.extent.Extent;
-import org.anchoranalysis.image.stack.bufferedimage.BufferedImageOverlay;
+import org.anchoranalysis.image.core.stack.bufferedimage.BufferedImageOverlay;
+import org.anchoranalysis.spatial.extent.Extent;
+import org.anchoranalysis.spatial.point.Point2i;
 
 @NoArgsConstructor
 class ImageCanvasSwing extends JPanel {

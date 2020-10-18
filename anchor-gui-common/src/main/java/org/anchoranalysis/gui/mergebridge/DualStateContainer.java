@@ -33,7 +33,7 @@ import org.anchoranalysis.core.functional.FunctionalList;
 import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.index.container.BoundChangeListener;
 import org.anchoranalysis.core.index.container.BoundedIndexContainer;
-import org.anchoranalysis.io.manifest.sequencetype.IncrementalSequenceType;
+import org.anchoranalysis.io.manifest.sequencetype.IncrementingIntegers;
 import org.anchoranalysis.mpp.feature.energy.IndexableMarksWithEnergy;
 
 // Contains both the selected and proposal histories
@@ -45,7 +45,7 @@ public class DualStateContainer<T> implements BoundedIndexContainer<IndexableDua
     private final TransformInstanteState<T> transformer;
     // END REQUIRED ARGUMENTS
 
-    private IncrementalSequenceType incrementalSequenceType;
+    private IncrementingIntegers incrementalSequenceType;
 
     private LRUCache<Integer, IndexableDualState<T>> recentAccessCache;
 
@@ -59,9 +59,7 @@ public class DualStateContainer<T> implements BoundedIndexContainer<IndexableDua
         this.recentAccessCache =
                 new LRUCache<>(3, index -> new IndexableDualState<T>(index, instanceStates(index)));
 
-        this.incrementalSequenceType = new IncrementalSequenceType();
-        this.incrementalSequenceType.setStart(maxOfMins());
-        this.incrementalSequenceType.setIncrementSize(1);
+        this.incrementalSequenceType = new IncrementingIntegers(maxOfMins(),1);
         this.incrementalSequenceType.setEnd(minOfMaxs());
     }
 
@@ -72,27 +70,27 @@ public class DualStateContainer<T> implements BoundedIndexContainer<IndexableDua
 
     @Override
     public int nextIndex(int index) {
-        return this.incrementalSequenceType.nextIndex(index);
+        return this.incrementalSequenceType.elementRange().nextIndex(index);
     }
 
     @Override
     public int previousIndex(int index) {
-        return this.incrementalSequenceType.previousIndex(index);
+        return this.incrementalSequenceType.elementRange().previousIndex(index);
     }
 
     @Override
     public int previousEqualIndex(int index) {
-        return this.incrementalSequenceType.previousEqualIndex(index);
+        return this.incrementalSequenceType.elementRange().previousEqualIndex(index);
     }
 
     @Override
     public int getMinimumIndex() {
-        return this.incrementalSequenceType.getMinimumIndex();
+        return this.incrementalSequenceType.elementRange().getMinimumIndex();
     }
 
     @Override
     public int getMaximumIndex() {
-        return this.incrementalSequenceType.getMaximumIndex();
+        return this.incrementalSequenceType.elementRange().getMaximumIndex();
     }
 
     @Override

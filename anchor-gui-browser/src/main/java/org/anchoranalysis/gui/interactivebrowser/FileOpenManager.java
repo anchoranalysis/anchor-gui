@@ -32,46 +32,40 @@ import org.anchoranalysis.gui.file.opened.OpenedFile;
 import org.anchoranalysis.gui.videostats.dropdown.AddVideoStatsModule;
 import org.anchoranalysis.gui.videostats.frame.IGetToolbar;
 import org.anchoranalysis.gui.videostats.module.VideoStatsModule;
-import org.anchoranalysis.io.output.bound.BoundOutputManagerRouteErrors;
+import org.anchoranalysis.io.output.outputter.InputOutputContext;
+import lombok.RequiredArgsConstructor;
 
+@RequiredArgsConstructor
 public class FileOpenManager implements IOpenFile {
 
+    // START REQUIRED ARGUMENTS
+    
     // The Parameters we need to perform the opening
-    private AddVideoStatsModule globalSubgroupAdder;
-    private IGetToolbar videoStatsFrame;
-    private BoundOutputManagerRouteErrors outputManager;
+    private final AddVideoStatsModule globalSubgroupAdder;
+    private final IGetToolbar videoStatsFrame;
+    private final InputOutputContext inputOutputContext;
+    // END REQUIRED ARGUMENTS
 
     // A map to keep track from currently opened-modules to the appropriate file counter
-    private VideoStatsModuleMapToOpenedFileCounter mapModules;
+    private VideoStatsModuleMapToOpenedFileCounter mapModules = new VideoStatsModuleMapToOpenedFileCounter();
 
     // A hash-map we use to keep track of all currently opened-files to the file counter
     private VideoStatsFileMapToOpenedFileCounter mapFile =
             new VideoStatsFileMapToOpenedFileCounter();
 
-    public FileOpenManager(
-            AddVideoStatsModule globalSubgroupAdder,
-            IGetToolbar videoStatsFrame,
-            BoundOutputManagerRouteErrors outputManager) {
-        super();
-        this.globalSubgroupAdder = globalSubgroupAdder;
-        this.videoStatsFrame = videoStatsFrame;
-        this.outputManager = outputManager;
-        this.mapModules = new VideoStatsModuleMapToOpenedFileCounter();
-    }
-
     @Override
     public OpenedFile open(InteractiveFile file) throws OperationFailedException {
 
-        OpenedFileCounter ofc = mapFile.get(file);
+        OpenedFileCounter openedFileCounter = mapFile.get(file);
 
-        if (ofc == null) {
+        if (openedFileCounter == null) {
 
             OpenedFileCounter counter =
                     new OpenedFileCounter(mapModules, mapFile, videoStatsFrame.getToolbar());
 
             AdderGUICountToolbar addToToolbarAdder =
                     new AdderGUICountToolbar(globalSubgroupAdder, counter);
-            OpenedFile of = file.open(addToToolbarAdder, outputManager);
+            OpenedFile of = file.open(addToToolbarAdder, inputOutputContext);
             counter.setOpenedFile(of);
 
             // We don't actually add this to our mapFile, until the first module is added, as
@@ -81,7 +75,7 @@ public class FileOpenManager implements IOpenFile {
             return counter.getOpenedFile();
         }
 
-        return ofc.getOpenedFile();
+        return openedFileCounter.getOpenedFile();
     }
 
     public void closeModule(VideoStatsModule module) {
@@ -90,24 +84,14 @@ public class FileOpenManager implements IOpenFile {
         if (counter != null) {
             if (counter.removeVideoStatsModule(module)) {
                 // If it returns true, it means we have removed the last module associated with an
-                // open file, and therefore
-                //   we can remove it from our cache
-                // System.out.println("Removing open file counter from mapFile");
-
+                // open file, and therefore we can remove it from our cache
                 mapFile.remove(counter.getOpenedFile().getFile());
                 mapModules.remove(module);
-
-                // module.getComponent().dispose();
-
-                System.gc();
             }
         } else {
             // NO FILE ASSOCIATED WITH MODULE, we're not sure if this is called in error for now,
             // let's write a message
             System.out.println("No file associated with module");
         }
-
-        // To expedite garbage collection (maybe??)
-        counter = null;
     }
 }

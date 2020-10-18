@@ -27,14 +27,14 @@
 package org.anchoranalysis.plugin.gui.bean.graphdefinition.line;
 
 import org.anchoranalysis.core.index.GetOperationFailedException;
-import org.anchoranalysis.gui.io.loader.manifest.finder.csvstatistic.CSVStatistic;
-import org.anchoranalysis.plot.bean.colorscheme.GraphColorScheme;
+import org.anchoranalysis.gui.finder.csvstatistic.CSVStatistic;
+import org.anchoranalysis.plot.bean.colorscheme.PlotColorScheme;
 import org.anchoranalysis.plot.index.LinePlot.YValGetter;
 
 public class GraphDefinitionLineIterVsIntervalTimePerIter
         extends GraphDefinitionLineIterVsCSVStatistic {
 
-    public GraphDefinitionLineIterVsIntervalTimePerIter(GraphColorScheme graphColorScheme) {
+    public GraphDefinitionLineIterVsIntervalTimePerIter(PlotColorScheme graphColorScheme) {
 
         super(
                 "Execution Interval Time per Iter",
@@ -52,7 +52,7 @@ public class GraphDefinitionLineIterVsIntervalTimePerIter
     }
 
     @Override
-    public boolean isItemAccepted(CSVStatistic item) {
+    public boolean isItemIncluded(CSVStatistic item) {
         return item.hasTemperature();
     }
 }

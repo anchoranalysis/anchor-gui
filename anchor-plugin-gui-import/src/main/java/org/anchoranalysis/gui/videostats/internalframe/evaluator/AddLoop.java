@@ -27,7 +27,6 @@
 package org.anchoranalysis.gui.videostats.internalframe.evaluator;
 
 import org.anchoranalysis.core.error.OperationFailedException;
-import org.anchoranalysis.core.geometry.Point3d;
 import org.anchoranalysis.gui.frame.overlays.ProposedMarks;
 import org.anchoranalysis.gui.videostats.internalframe.ProposalOperation;
 import org.anchoranalysis.gui.videostats.internalframe.ProposeLoopPanel;
@@ -36,6 +35,7 @@ import org.anchoranalysis.mpp.mark.MarkCollection;
 import org.anchoranalysis.mpp.proposer.ProposalAbnormalFailureException;
 import org.anchoranalysis.mpp.proposer.ProposerContext;
 import org.anchoranalysis.mpp.proposer.error.ErrorNode;
+import org.anchoranalysis.spatial.point.Point3d;
 
 class AddLoop implements ProposalOperationCreator {
     private ProposalOperationCreator delegate;

@@ -28,7 +28,7 @@ package org.anchoranalysis.gui.annotation.strategy.builder.whole;
 
 import java.awt.Color;
 import javax.swing.JButton;
-import org.anchoranalysis.io.bean.color.RGBColorBean;
+import org.anchoranalysis.bean.shared.color.RGBColorBean;
 
 class ColorUtilities {
 

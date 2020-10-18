@@ -32,11 +32,12 @@ import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.index.GetOperationFailedException;
+import org.anchoranalysis.core.index.container.BoundedIndexContainer;
 import org.anchoranalysis.core.index.container.SingleContainer;
 import org.anchoranalysis.core.name.provider.NamedProvider;
 import org.anchoranalysis.core.params.KeyValueParams;
 import org.anchoranalysis.feature.energy.EnergyStack;
-import org.anchoranalysis.gui.file.opened.IOpenedFileGUI;
+import org.anchoranalysis.gui.file.opened.OpenedFileGUI;
 import org.anchoranalysis.gui.finder.FinderEnergyStack;
 import org.anchoranalysis.gui.finder.imgstackcollection.FinderStacksCombine;
 import org.anchoranalysis.gui.finder.imgstackcollection.FinderStacksFromEnergyStack;
@@ -45,8 +46,6 @@ import org.anchoranalysis.gui.finder.imgstackcollection.FinderStacksFromRootFile
 import org.anchoranalysis.gui.interactivebrowser.MarkEvaluatorManager;
 import org.anchoranalysis.gui.interactivebrowser.MarkEvaluatorSetForImage;
 import org.anchoranalysis.gui.io.loader.manifest.finder.FinderMarksFolder;
-import org.anchoranalysis.gui.io.loader.manifest.finder.MarksWithEnergyFinderContext;
-import org.anchoranalysis.gui.io.loader.manifest.finder.historyfolder.FinderHistoryFolderKernelDecision;
 import org.anchoranalysis.gui.marks.MarkDisplaySettings;
 import org.anchoranalysis.gui.series.TimeSequenceProvider;
 import org.anchoranalysis.gui.series.TimeSequenceProviderSupplier;
@@ -61,20 +60,18 @@ import org.anchoranalysis.gui.videostats.dropdown.common.EnergyStackSupplier;
 import org.anchoranalysis.gui.videostats.dropdown.common.GuessEnergyFromStacks;
 import org.anchoranalysis.gui.videostats.dropdown.contextualmodulecreator.EnergyTableCreator;
 import org.anchoranalysis.gui.videostats.dropdown.contextualmodulecreator.SingleContextualModuleCreator;
-import org.anchoranalysis.gui.videostats.dropdown.modulecreator.graph.KernelIterDescriptionModuleCreator;
 import org.anchoranalysis.gui.videostats.operation.combine.OverlayCollectionSupplier;
-import org.anchoranalysis.image.io.bean.rasterreader.RasterReader;
-import org.anchoranalysis.image.io.stack.StacksOutputter;
-import org.anchoranalysis.image.stack.NamedStacksSupplier;
-import org.anchoranalysis.image.stack.wrap.WrapStackAsTimeSequence;
-import org.anchoranalysis.io.manifest.deserializer.folder.LoadContainer;
+import org.anchoranalysis.image.core.stack.NamedStacksSupplier;
+import org.anchoranalysis.image.core.stack.wrap.WrapStackAsTimeSequence;
+import org.anchoranalysis.image.io.bean.stack.StackReader;
+import org.anchoranalysis.io.manifest.finder.FindFailedException;
 import org.anchoranalysis.io.manifest.finder.FinderSerializedObject;
-import org.anchoranalysis.io.output.bound.BoundOutputManagerRouteErrors;
+import org.anchoranalysis.io.output.outputter.InputOutputContext;
+import org.anchoranalysis.io.output.outputter.Outputter;
 import org.anchoranalysis.mpp.feature.energy.IndexableMarksWithEnergy;
 import org.anchoranalysis.mpp.feature.energy.marks.MarksWithEnergyBreakdown;
-import org.anchoranalysis.mpp.feature.energy.marks.VoxelizedMarksWithEnergy;
 import org.anchoranalysis.mpp.mark.MarkCollection;
-import org.anchoranalysis.mpp.segment.bean.kernel.proposer.KernelProposer;
+import org.anchoranalysis.mpp.segment.define.OutputterDirectories;
 import org.anchoranalysis.plugin.io.manifest.CoupledManifests;
 
 public class ManifestDropDown {
@@ -91,7 +88,15 @@ public class ManifestDropDown {
         this.markDisplaySettings = markDisplaySettings;
         this.delegate =
                 new BoundVideoStatsModuleDropDown(
-                        manifests.descriptiveName(), "/toolbarIcon/rectangle.png");
+                        manifests.name(), "/toolbarIcon/rectangle.png");
+    }
+    
+    public OpenedFileGUI openedFileGUI() {
+        return delegate.openedFileGUI();
+    }
+
+    public String getName() {
+        return delegate.getName();
     }
 
     private OperationCreateBackgroundSetWithAdder createBackgroundSetWithEnergy(
@@ -140,24 +145,24 @@ public class ManifestDropDown {
     }
 
     private FinderStacksCombine createFinderStacks(
-            FinderEnergyStack finderEnergyStack, RasterReader rasterReader) throws InitException {
+            FinderEnergyStack finderEnergyStack, StackReader stackReader) throws InitException {
         // Finders
         FinderStacksCombine combined = new FinderStacksCombine();
-        combined.add(new FinderStacksFromFolder(rasterReader, StacksOutputter.OUTPUT_NAME));
-        combined.add(new FinderStacksFromRootFiles(rasterReader, "out"));
+        combined.add(new FinderStacksFromFolder(stackReader, OutputterDirectories.STACKS));
+        combined.add(new FinderStacksFromRootFiles(stackReader, "out"));
         combined.add(
                 new FinderStacksFromEnergyStack(
                         finderEnergyStack)); // Adds the energy stack to the input stack collection
 
         // Disabled, as they not be the same size as the existing image
-        combined.add(new FinderStacksFromRootFiles(rasterReader, "stackFromCollection"));
-        combined.add(new FinderStacksFromFolder(rasterReader, "channelScaledCollection"));
+        combined.add(new FinderStacksFromRootFiles(stackReader, "stackFromCollection"));
+        combined.add(new FinderStacksFromFolder(stackReader, "channelScaledCollection"));
 
         try {
-            if (!combined.doFind(manifests.getFileManifest().get())) {
+            if (!combined.doFind(manifests.getJobManifest().get())) {
                 throw new InitException("cannot find image stack collection");
             }
-        } catch (OperationFailedException e) {
+        } catch (OperationFailedException | FindFailedException e) {
             throw new InitException(e);
         }
 
@@ -165,25 +170,15 @@ public class ManifestDropDown {
     }
 
     private FinderEnergyStack createFinderEnergyStack(
-            RasterReader rasterReader, VideoStatsModuleGlobalParams mpg) throws InitException {
+            StackReader stackReader, VideoStatsModuleGlobalParams mpg) throws InitException {
         FinderEnergyStack finderEnergyStack =
-                new FinderEnergyStack(rasterReader, mpg.getLogger().errorReporter());
+                new FinderEnergyStack(stackReader, mpg.getLogger().errorReporter());
         try {
-            finderEnergyStack.doFind(manifests.getFileManifest().get());
+            finderEnergyStack.doFind(manifests.getJobManifest().get());
         } catch (OperationFailedException e) {
             throw new InitException(e);
         }
         return finderEnergyStack;
-    }
-
-    private FinderSerializedObject<KernelProposer<VoxelizedMarksWithEnergy>>
-            createFinderKernelProposer(VideoStatsModuleGlobalParams mpg) {
-        FinderSerializedObject<KernelProposer<VoxelizedMarksWithEnergy>> finderKernelProposer =
-                new FinderSerializedObject<>("kernelProposer", mpg.getLogger().errorReporter());
-        finderKernelProposer.doFind(
-                manifests.getExperimentManifest().get() // NOSONAR
-                );
-        return finderKernelProposer;
     }
 
     private FinderSerializedObject<KeyValueParams> createFinderGroupParams(
@@ -191,24 +186,11 @@ public class ManifestDropDown {
         final FinderSerializedObject<KeyValueParams> finderGroupParams =
                 new FinderSerializedObject<>("groupParams", mpg.getLogger().errorReporter());
         try {
-            finderGroupParams.doFind(manifests.getFileManifest().get());
+            finderGroupParams.doFind(manifests.getJobManifest().get());
         } catch (OperationFailedException e) {
             throw new InitException(e);
         }
         return finderGroupParams;
-    }
-
-    private FinderHistoryFolderKernelDecision createFinderKernelIterDescription()
-            throws InitException {
-
-        final FinderHistoryFolderKernelDecision finderKernelIterDescription =
-                new FinderHistoryFolderKernelDecision("kernelIterDescription");
-        try {
-            finderKernelIterDescription.doFind(manifests.getFileManifest().get());
-        } catch (OperationFailedException e) {
-            throw new InitException(e);
-        }
-        return finderKernelIterDescription;
     }
 
     private MarkEvaluatorSetForImage createMarkEvaluatorSet(
@@ -226,88 +208,40 @@ public class ManifestDropDown {
 
     public void init(
             AddVideoStatsModule adder,
-            RasterReader rasterReader,
+            StackReader stackReader,
             MarkEvaluatorManager markEvaluatorManager,
-            BoundOutputManagerRouteErrors outputManager,
+            InputOutputContext inputOutputContext,
             VideoStatsModuleGlobalParams mpg)
             throws InitException {
 
         // Some necessary Finders and Objects
-        FinderEnergyStack finderEnergyStack = createFinderEnergyStack(rasterReader, mpg);
-        FinderStacksCombine finderStacks = createFinderStacks(finderEnergyStack, rasterReader);
+        FinderEnergyStack finderEnergyStack = createFinderEnergyStack(stackReader, mpg);
+        FinderStacksCombine finderStacks = createFinderStacks(finderEnergyStack, stackReader);
         OperationCreateBackgroundSetWithAdder backgroundEnergy =
                 createBackgroundSetWithEnergy(finderEnergyStack, finderStacks, adder, mpg);
 
         // Add: Markss, Rasters and object-masks
-        boolean defaultAdded = addMarkss(backgroundEnergy, finderEnergyStack, mpg);
+        boolean defaultAdded = addMarks(backgroundEnergy, finderEnergyStack, mpg);
         addRaster(backgroundEnergy, mpg, defaultAdded);
         new AddObjects(delegate, manifests, finderEnergyStack, mpg, markDisplaySettings)
                 .apply(backgroundEnergy);
 
-        // Various useful finders
-        FinderSerializedObject<KernelProposer<VoxelizedMarksWithEnergy>> finderKernelProposer =
-                createFinderKernelProposer(mpg);
-
         FinderSerializedObject<KeyValueParams> finderGroupParams = createFinderGroupParams(mpg);
-        FinderHistoryFolderKernelDecision finderKernelIterDescription =
-                createFinderKernelIterDescription();
 
-        addKernelHistoryNavigator(
-                finderKernelIterDescription, finderKernelProposer, backgroundEnergy, mpg);
-
-        outputManager =
-                DropDownUtilities.createOutputManagerForSubfolder(
-                        outputManager, delegate.getName());
+        inputOutputContext = DropDownUtilities.createSubdirectoryContext(inputOutputContext, delegate.getName());
 
         // Proposer Evaluators
         MarkEvaluatorSetForImage markEvaluatorSet =
                 createMarkEvaluatorSet(markEvaluatorManager, finderStacks, finderGroupParams);
         addProposerEvaluator(
-                finderStacks, finderEnergyStack, markEvaluatorSet, outputManager, adder, mpg);
-
-        delegate.getRootMenu().addSeparator();
-
-        addSetsWrap(
-                finderEnergyStack,
-                finderStacks,
-                backgroundEnergy,
-                finderKernelProposer,
-                outputManager,
-                adder,
-                mpg);
-    }
-
-    private void addSetsWrap(
-            FinderEnergyStack finderEnergyStack,
-            FinderStacksCombine finderStacks,
-            OperationCreateBackgroundSetWithAdder backgroundEnergy,
-            FinderSerializedObject<KernelProposer<VoxelizedMarksWithEnergy>> finderKernelProposer,
-            BoundOutputManagerRouteErrors outputManager,
-            AddVideoStatsModule adder,
-            VideoStatsModuleGlobalParams mpg) {
-        try {
-            MarksWithEnergyFinderContext context =
-                    new MarksWithEnergyFinderContext(
-                            finderStacks,
-                            finderKernelProposer,
-                            adder.getParentFrame(),
-                            outputManager,
-                            mpg);
-
-            AddSets addSets = new AddSets(delegate, backgroundEnergy, context);
-
-            addSets.apply(manifests, finderEnergyStack);
-
-        } catch (OperationFailedException e) {
-            mpg.getLogger().errorReporter().recordError(ManifestDropDown.class, e);
-        }
+                finderStacks, finderEnergyStack, markEvaluatorSet, inputOutputContext.getOutputter(), adder, mpg);
     }
 
     private void addProposerEvaluator(
             FinderStacksCombine finderStacks,
             FinderEnergyStack finderEnergyStack,
             MarkEvaluatorSetForImage markEvaluatorSet,
-            BoundOutputManagerRouteErrors outputManager,
+            Outputter outputter,
             AddVideoStatsModule adder,
             VideoStatsModuleGlobalParams mpg) {
         OperationCreateBackgroundSetWithAdder operationBwsa =
@@ -326,25 +260,9 @@ public class ManifestDropDown {
                 operationBwsa.operationAdder(),
                 operationBwsa.energyBackground().getBackground().getBackgroundSet(),
                 markEvaluatorSet,
-                outputManager.getOutputWriteSettings(),
+                outputter.getSettings(),
                 true,
                 mpg);
-    }
-
-    private void addKernelHistoryNavigator(
-            FinderHistoryFolderKernelDecision finderKernelIterDescription,
-            FinderSerializedObject<KernelProposer<VoxelizedMarksWithEnergy>> finderKernelProposer,
-            OperationCreateBackgroundSetWithAdder backgroundEnergy,
-            VideoStatsModuleGlobalParams mpg) {
-        if (finderKernelIterDescription.exists() && finderKernelProposer.exists()) {
-            delegate.addModule(
-                    backgroundEnergy.operationAdder(),
-                    new SingleContextualModuleCreator(
-                            new KernelIterDescriptionModuleCreator(
-                                    finderKernelIterDescription, finderKernelProposer)),
-                    "Kernel History Navigator",
-                    mpg);
-        }
     }
 
     private void addRaster(
@@ -362,7 +280,7 @@ public class ManifestDropDown {
     }
 
     // Returns true if it's added a default, false otherwise
-    private boolean addMarkss(
+    private boolean addMarks(
             OperationCreateBackgroundSetWithAdder operationBwsaWithEnergy,
             FinderEnergyStack finderEnergyStack,
             VideoStatsModuleGlobalParams mpg) {
@@ -372,7 +290,7 @@ public class ManifestDropDown {
         try {
             final FinderSerializedObject<MarkCollection> finderFinalMarks =
                     new FinderSerializedObject<>("marks", mpg.getLogger().errorReporter());
-            finderFinalMarks.doFind(manifests.getFileManifest().get());
+            finderFinalMarks.doFind(manifests.getJobManifest().get());
 
             if (finderFinalMarks.exists()) {
 
@@ -417,11 +335,11 @@ public class ManifestDropDown {
         try {
             final FinderSerializedObject<MarksWithEnergyBreakdown> finderFinalMarks =
                     new FinderSerializedObject<>("marks", mpg.getLogger().errorReporter());
-            finderFinalMarks.doFind(manifests.getFileManifest().get());
+            finderFinalMarks.doFind(manifests.getJobManifest().get());
 
             if (finderFinalMarks.exists()) {
 
-                CachedSupplier<LoadContainer<IndexableMarksWithEnergy>, OperationFailedException>
+                CachedSupplier<BoundedIndexContainer<IndexableMarksWithEnergy>, OperationFailedException>
                         op =
                                 CachedSupplier.cache(
                                         () -> {
@@ -434,12 +352,7 @@ public class ManifestDropDown {
                                                 throw new OperationFailedException(e);
                                             }
 
-                                            LoadContainer<IndexableMarksWithEnergy> lc =
-                                                    new LoadContainer<>();
-                                            lc.setExpensiveLoad(false);
-                                            lc.setContainer(
-                                                    new SingleContainer<>(instantState, 0, false));
-                                            return lc;
+                                            return new SingleContainer<>(instantState, 0, false);
                                         });
 
                 if (finderEnergyStack.exists()) {
@@ -467,7 +380,7 @@ public class ManifestDropDown {
             VideoStatsModuleGlobalParams mpg) {
         try {
             FinderMarksFolder finder = new FinderMarksFolder("marksCollection", "marks");
-            finder.doFind(manifests.getFileManifest().get());
+            finder.doFind(manifests.getJobManifest().get());
 
             NamedProvider<MarkCollection> provider = finder.createNamedProvider(false);
             DropDownUtilities.addMarksSubmenu(
@@ -481,13 +394,5 @@ public class ManifestDropDown {
         } catch (OperationFailedException e) {
             mpg.getLogger().errorReporter().recordError(ManifestDropDown.class, e);
         }
-    }
-
-    public IOpenedFileGUI openedFileGUI() {
-        return delegate.openedFileGUI();
-    }
-
-    public String getName() {
-        return delegate.getName();
     }
 }

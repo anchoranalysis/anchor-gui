@@ -35,9 +35,9 @@ import org.anchoranalysis.experiment.bean.task.TaskWithoutSharedState;
 import org.anchoranalysis.experiment.task.InputBound;
 import org.anchoranalysis.experiment.task.InputTypesExpected;
 import org.anchoranalysis.experiment.task.NoSharedState;
+import org.anchoranalysis.gui.export.bean.task.ExportTaskList;
 import org.anchoranalysis.gui.interactivebrowser.browser.InteractiveBrowser;
 import org.anchoranalysis.gui.interactivebrowser.input.InteractiveBrowserInput;
-import org.anchoranalysis.plugin.gui.bean.exporttask.ExportTaskList;
 
 public class InteractiveBrowserTask extends TaskWithoutSharedState<InteractiveBrowserInput> {
 
@@ -51,13 +51,13 @@ public class InteractiveBrowserTask extends TaskWithoutSharedState<InteractiveBr
     }
 
     @Override
-    public void doJobOnInputObject(InputBound<InteractiveBrowserInput, NoSharedState> params)
+    public void doJobOnInput(InputBound<InteractiveBrowserInput, NoSharedState> params)
             throws JobExecutionException {
 
         try {
             InteractiveBrowser browser =
                     new InteractiveBrowser(params.context(), getExportTaskList());
-            browser.init(params.getInputObject());
+            browser.init(params.getInput());
             browser.showWithDefaultView();
         } catch (InitException e) {
             throw new JobExecutionException(e);

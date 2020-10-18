@@ -37,8 +37,8 @@ import org.anchoranalysis.gui.interactivebrowser.MarkEvaluatorResolved;
 import org.anchoranalysis.gui.interactivebrowser.MarkEvaluatorSetForImage;
 import org.anchoranalysis.gui.videostats.internalframe.annotator.tool.ToolErrorReporter;
 import org.anchoranalysis.gui.videostats.internalframe.evaluator.EvaluatorWithContext;
-import org.anchoranalysis.image.extent.Dimensions;
-import org.anchoranalysis.image.stack.Stack;
+import org.anchoranalysis.image.core.dimensions.Dimensions;
+import org.anchoranalysis.image.core.stack.Stack;
 import org.anchoranalysis.mpp.bean.init.MPPInitParams;
 import org.anchoranalysis.mpp.bean.points.fitter.PointsFitter;
 import org.anchoranalysis.mpp.bean.proposer.MarkProposer;
@@ -62,7 +62,7 @@ public class MarkAnnotator {
         markEvaluatorResolved = setupMarkEvaluator(annotationStrategy, markEvaluatorSet);
 
         MPPInitParams soMPP =
-                setupEvaluatorAndPointsFitter(markEvaluatorResolved, annotationStrategy);
+                setupEvaluatorAndPointsFitter(markEvaluatorResolved);
 
         pointsFitterSelectPoints = extractPointsFitter(annotationStrategy, soMPP);
 
@@ -96,7 +96,7 @@ public class MarkAnnotator {
     }
 
     private static MPPInitParams setupEvaluatorAndPointsFitter(
-            MarkEvaluatorResolved markEvaluator, MarkProposerStrategy annotationStrategy)
+            MarkEvaluatorResolved markEvaluator)
             throws CreateException {
         return markEvaluator.getProposerSharedObjectsOperation().get();
     }
@@ -106,7 +106,7 @@ public class MarkAnnotator {
         try {
             return soMPP.getPoints()
                     .getPointsFitterSet()
-                    .getException(annotationStrategy.getPointsFitterName());
+                    .getException(annotationStrategy.getPointsFitter());
         } catch (NamedProviderGetException e) {
             throw new CreateException(e);
         }
@@ -116,7 +116,7 @@ public class MarkAnnotator {
             MPPInitParams soMPP, MarkProposerStrategy annotationStrategy, Logger logger) {
         try {
             return soMPP.getMarkProposerSet()
-                    .getException(annotationStrategy.getMarkProposerName());
+                    .getException(annotationStrategy.getMarkProposer());
         } catch (NamedProviderGetException e) {
             logger.messageLogger().log("Proceeding without 'Guess Tool' as an error occured");
             logger.errorReporter()
@@ -129,13 +129,11 @@ public class MarkAnnotator {
             MarkProposerStrategy annotationStrategy, MarkEvaluatorSetForImage markEvaluatorSet)
             throws CreateException {
         try {
-            if (annotationStrategy.getMarkEvaluator() != null) {
-                markEvaluatorSet.add(
-                        annotationStrategy.getMarkEvaluatorName(),
-                        annotationStrategy.getMarkEvaluator());
-            }
+            markEvaluatorSet.add(
+                    annotationStrategy.getMarkEvaluator().getName(),
+                    annotationStrategy.getMarkEvaluator().getItem());
 
-            return markEvaluatorSet.get(annotationStrategy.getMarkEvaluatorName());
+            return markEvaluatorSet.get(annotationStrategy.getMarkEvaluator().getName());
         } catch (OperationFailedException e1) {
             throw new CreateException(e1);
         }

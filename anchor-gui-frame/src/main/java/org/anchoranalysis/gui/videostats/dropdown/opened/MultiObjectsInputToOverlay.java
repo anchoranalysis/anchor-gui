@@ -30,7 +30,7 @@ import org.anchoranalysis.core.bridge.BridgeElementWithIndex;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.idgetter.IDGetterIter;
 import org.anchoranalysis.gui.videostats.internalframe.markstorgb.MultiInput;
-import org.anchoranalysis.image.object.ObjectCollection;
+import org.anchoranalysis.image.voxel.object.ObjectCollection;
 import org.anchoranalysis.overlay.IndexableOverlays;
 import org.anchoranalysis.overlay.collection.OverlayCollection;
 import org.anchoranalysis.overlay.collection.OverlayCollectionObjectFactory;

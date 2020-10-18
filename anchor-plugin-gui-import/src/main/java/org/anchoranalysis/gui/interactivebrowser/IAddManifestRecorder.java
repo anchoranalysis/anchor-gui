@@ -27,9 +27,9 @@
 package org.anchoranalysis.gui.interactivebrowser;
 
 import org.anchoranalysis.gui.videostats.dropdown.manifest.ManifestDropDown;
-import org.anchoranalysis.io.manifest.ManifestRecorder;
+import org.anchoranalysis.io.manifest.Manifest;
 
 public interface IAddManifestRecorder {
 
-    ManifestDropDown add(ManifestRecorder manifestRecorder);
+    ManifestDropDown add(Manifest manifestRecorder);
 }

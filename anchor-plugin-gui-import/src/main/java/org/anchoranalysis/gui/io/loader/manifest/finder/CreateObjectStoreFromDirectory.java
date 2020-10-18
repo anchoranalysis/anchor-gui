@@ -32,7 +32,7 @@ import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.log.Logger;
 import org.anchoranalysis.core.name.store.LazyEvaluationStore;
 import org.anchoranalysis.image.io.objects.ObjectCollectionReader;
-import org.anchoranalysis.image.object.ObjectCollection;
+import org.anchoranalysis.image.voxel.object.ObjectCollection;
 import org.apache.commons.io.FilenameUtils;
 
 class CreateObjectStoreFromDirectory {

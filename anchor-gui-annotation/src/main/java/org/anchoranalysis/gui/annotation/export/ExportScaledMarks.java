@@ -39,7 +39,7 @@ import org.anchoranalysis.core.error.OptionalOperationUnsupportedException;
 import org.anchoranalysis.gui.annotation.AnnotationRefresher;
 import org.anchoranalysis.gui.annotation.mark.RejectionReason;
 import org.anchoranalysis.gui.videostats.internalframe.annotator.AnnotationWriterGUI;
-import org.anchoranalysis.io.error.AnchorIOException;
+import org.anchoranalysis.io.input.InputReadFailedException;
 import org.apache.commons.io.FilenameUtils;
 
 @RequiredArgsConstructor
@@ -88,7 +88,7 @@ public class ExportScaledMarks extends ExportAnnotation {
             AnnotationWriterGUI<DualMarksAnnotation<RejectionReason>> writerGUI =
                     new AnnotationWriterGUI<>(writer, annotationRefresher, Optional.empty());
             writerGUI.saveAnnotation(ann.get(), path, parentFrame);
-        } catch (AnchorIOException | OptionalOperationUnsupportedException e) {
+        } catch (InputReadFailedException | OptionalOperationUnsupportedException e) {
             throw new OperationFailedException(e);
         }
     }

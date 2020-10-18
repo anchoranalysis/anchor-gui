@@ -28,25 +28,13 @@ package org.anchoranalysis.gui.frame.canvas;
 
 import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
-import org.anchoranalysis.core.geometry.Point2i;
+import org.anchoranalysis.spatial.point.Point2i;
+import lombok.AllArgsConstructor;
 
+@AllArgsConstructor
 class MouseWheelListenerZoom implements MouseWheelListener {
 
     private ImageCanvas imageCanvas;
-
-    public MouseWheelListenerZoom(ImageCanvas imageCanvas) {
-        super();
-        this.imageCanvas = imageCanvas;
-    }
-
-    private void changeZoom(int notches, Point2i mousePoint) {
-
-        if (notches < 0) {
-            imageCanvas.zoomIn(mousePoint);
-        } else {
-            imageCanvas.zoomOut(mousePoint);
-        }
-    }
 
     @Override
     public void mouseWheelMoved(MouseWheelEvent event) {
@@ -57,6 +45,15 @@ class MouseWheelListenerZoom implements MouseWheelListener {
 
             Point2i point = new Point2i(event.getX(), event.getY());
             changeZoom(notches, point);
+        }
+    }
+
+    private void changeZoom(int notches, Point2i mousePoint) {
+
+        if (notches < 0) {
+            imageCanvas.zoomIn(mousePoint);
+        } else {
+            imageCanvas.zoomOut(mousePoint);
         }
     }
 }

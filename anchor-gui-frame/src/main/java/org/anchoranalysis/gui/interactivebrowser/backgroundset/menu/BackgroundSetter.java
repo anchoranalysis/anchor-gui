@@ -29,7 +29,7 @@ package org.anchoranalysis.gui.interactivebrowser.backgroundset.menu;
 import org.anchoranalysis.core.functional.function.CheckedFunction;
 import org.anchoranalysis.core.index.SetOperationFailedException;
 import org.anchoranalysis.gui.container.background.BackgroundStackContainerException;
-import org.anchoranalysis.image.stack.DisplayStack;
+import org.anchoranalysis.image.core.stack.DisplayStack;
 
 @FunctionalInterface
 public interface BackgroundSetter {

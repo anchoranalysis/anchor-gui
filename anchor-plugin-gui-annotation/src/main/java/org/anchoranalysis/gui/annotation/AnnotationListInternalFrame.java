@@ -47,8 +47,8 @@ import org.anchoranalysis.gui.interactivebrowser.filelist.InteractiveFileListInt
 import org.anchoranalysis.gui.videostats.IModuleCreatorDefaultState;
 import org.anchoranalysis.gui.videostats.dropdown.AddVideoStatsModule;
 import org.anchoranalysis.image.io.input.ProvidesStackInput;
-import org.anchoranalysis.io.bean.input.InputManagerParams;
-import org.anchoranalysis.io.error.AnchorIOException;
+import org.anchoranalysis.io.input.InputReadFailedException;
+import org.anchoranalysis.io.input.bean.InputManagerParams;
 
 public class AnnotationListInternalFrame {
 
@@ -139,20 +139,20 @@ public class AnnotationListInternalFrame {
             ProgressReporter progressReporter)
             throws OperationFailedException {
         try {
-            Collection<AnnotationWithStrategy<T>> inputObjects =
-                    inputManager.inputObjects(
+            Collection<AnnotationWithStrategy<T>> inputs =
+                    inputManager.inputs(
                             new InputManagerParams(
                                     params.getModuleParams().createInputContext(),
                                     progressReporter,
                                     params.getModuleParams().getLogger()));
 
             return new AnnotationProject(
-                    inputObjects,
+                    inputs,
                     params.getMarkEvaluatorManager(),
                     params.getModuleParams(),
                     ProgressReporterNull.get());
 
-        } catch (AnchorIOException | CreateException e) {
+        } catch (InputReadFailedException | CreateException e) {
             throw new OperationFailedException(e);
         }
     }

@@ -34,7 +34,7 @@ import lombok.Getter;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.log.Logger;
 import org.anchoranalysis.gui.IconFactory;
-import org.anchoranalysis.gui.file.opened.IOpenedFileGUI;
+import org.anchoranalysis.gui.file.opened.OpenedFileGUI;
 import org.anchoranalysis.gui.reassign.JDropdownButton;
 import org.anchoranalysis.gui.videostats.dropdown.contextualmodulecreator.ContextualModuleCreator;
 import org.anchoranalysis.gui.videostats.dropdown.contextualmodulecreator.SingleContextualModuleCreator;
@@ -155,7 +155,7 @@ public class BoundVideoStatsModuleDropDown {
         return delegate.getRootMenu();
     }
 
-    public IOpenedFileGUI openedFileGUI() {
+    public OpenedFileGUI openedFileGUI() {
         return delegate;
     }
 }

@@ -30,7 +30,6 @@ import java.awt.Color;
 import java.util.Optional;
 import org.anchoranalysis.core.color.RGBColor;
 import org.anchoranalysis.core.error.OperationFailedException;
-import org.anchoranalysis.core.geometry.Point3d;
 import org.anchoranalysis.gui.frame.overlays.ProposedMarks;
 import org.anchoranalysis.gui.videostats.internalframe.ProposalOperation;
 import org.anchoranalysis.mpp.bean.mark.MarkWithIdentifierFactory;
@@ -44,6 +43,7 @@ import org.anchoranalysis.mpp.pair.PairPxlMarkMemo;
 import org.anchoranalysis.mpp.proposer.ProposalAbnormalFailureException;
 import org.anchoranalysis.mpp.proposer.ProposerContext;
 import org.anchoranalysis.mpp.proposer.error.ErrorNode;
+import org.anchoranalysis.spatial.point.Point3d;
 
 public class MarkSplitProposerEvaluator implements ProposalOperationCreator {
 

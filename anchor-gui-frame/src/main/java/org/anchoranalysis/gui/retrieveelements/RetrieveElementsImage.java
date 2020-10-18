@@ -32,9 +32,9 @@ import lombok.AllArgsConstructor;
 import org.anchoranalysis.core.cache.CachedSupplier;
 import org.anchoranalysis.core.error.AnchorNeverOccursException;
 import org.anchoranalysis.core.error.OperationFailedException;
-import org.anchoranalysis.image.io.generator.raster.ProjectMeanGenerator;
-import org.anchoranalysis.image.stack.DisplayStack;
-import org.anchoranalysis.image.stack.Stack;
+import org.anchoranalysis.image.core.stack.DisplayStack;
+import org.anchoranalysis.image.core.stack.Stack;
+import org.anchoranalysis.image.io.generator.raster.FlattenStackGenerator;
 
 // An interface that allows receiving elements from a module
 // When a function returns null, that element doesn't exist
@@ -62,9 +62,10 @@ public class RetrieveElementsImage extends RetrieveElements {
         }
 
         if (stack.dimensions().z() > 1) {
-            ProjectMeanGenerator generatorMIP = new ProjectMeanGenerator(true, "selectedStackMIP");
+            FlattenStackGenerator generatorMIP =
+                    new FlattenStackGenerator(true, "selectedStackMIP");
 
-            OperationGenerator<Stack, Stack> generator = new OperationGenerator<>(generatorMIP);
+            SupplierGenerator<Stack, Stack> generator = new SupplierGenerator<>(generatorMIP);
             popUp.addExportItem(
                     generator,
                     opCreateStack,

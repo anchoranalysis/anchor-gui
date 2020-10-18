@@ -39,7 +39,7 @@ import org.anchoranalysis.gui.interactivebrowser.openfile.importer.ImporterSetti
 import org.anchoranalysis.gui.marks.MarkDisplaySettings;
 import org.anchoranalysis.gui.toolbar.VideoStatsToolbar;
 import org.anchoranalysis.gui.videostats.dropdown.VideoStatsModuleGlobalParams;
-import org.anchoranalysis.image.io.bean.rasterreader.RasterReader;
+import org.anchoranalysis.image.io.bean.stack.StackReader;
 
 @AllArgsConstructor
 class AdderWithEnergy {
@@ -54,7 +54,7 @@ class AdderWithEnergy {
     }
 
     public FileCreatorLoader createFileCreatorLoader(
-            RasterReader rasterReader,
+            StackReader stackReader,
             FileOpenManager fileOpenManager,
             MarkEvaluatorManager markEvaluatorManager,
             ImporterSettings importerSettings,
@@ -63,7 +63,7 @@ class AdderWithEnergy {
         FileCreatorParams params = new FileCreatorParams();
         params.setMarkCreatorParams(
                 new MarkCreatorParams(moduleParams, markDisplaySettings, markEvaluatorManager));
-        params.setRasterReader(rasterReader);
+        params.setStackReader(stackReader);
         params.setImporterSettings(importerSettings);
 
         return new FileCreatorLoader(params, fileOpenManager, globalSubgroupAdder);

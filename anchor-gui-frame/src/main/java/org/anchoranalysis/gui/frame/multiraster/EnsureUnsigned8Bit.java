@@ -26,18 +26,15 @@
 
 package org.anchoranalysis.gui.frame.multiraster;
 
+import lombok.AllArgsConstructor;
 import org.anchoranalysis.core.functional.function.CheckedFunction;
-import org.anchoranalysis.image.stack.DisplayStack;
+import org.anchoranalysis.image.core.stack.DisplayStack;
 
 // Ensure unsigned 8-bit
+@AllArgsConstructor
 class EnsureUnsigned8Bit<E extends Exception> implements CheckedFunction<Integer, DisplayStack, E> {
 
     private CheckedFunction<Integer, DisplayStack, E> bridge;
-
-    public EnsureUnsigned8Bit(CheckedFunction<Integer, DisplayStack, E> bridge) {
-        super();
-        this.bridge = bridge;
-    }
 
     @Override
     public DisplayStack apply(Integer sourceObject) throws E {

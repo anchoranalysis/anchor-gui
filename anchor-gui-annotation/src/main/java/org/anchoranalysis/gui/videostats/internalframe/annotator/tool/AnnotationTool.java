@@ -27,9 +27,9 @@
 package org.anchoranalysis.gui.videostats.internalframe.annotator.tool;
 
 import java.util.Optional;
-import org.anchoranalysis.core.geometry.Point3d;
 import org.anchoranalysis.gui.frame.overlays.ProposedMarks;
 import org.anchoranalysis.gui.videostats.internalframe.evaluator.EvaluatorWithContext;
+import org.anchoranalysis.spatial.point.Point3d;
 
 public abstract class AnnotationTool {
 

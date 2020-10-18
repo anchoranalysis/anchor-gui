@@ -34,11 +34,11 @@ import lombok.Setter;
 import org.anchoranalysis.bean.annotation.BeanField;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.progress.ProgressReporter;
+import org.anchoranalysis.core.serialize.DeserializationFailedException;
 import org.anchoranalysis.gui.file.interactive.FileExecutedExperimentImageWithManifest;
 import org.anchoranalysis.gui.file.interactive.InteractiveFile;
-import org.anchoranalysis.io.bean.input.InputManagerParams;
-import org.anchoranalysis.io.deserializer.DeserializationFailedException;
-import org.anchoranalysis.io.manifest.ManifestRecorder;
+import org.anchoranalysis.io.input.bean.InputManagerParams;
+import org.anchoranalysis.io.manifest.Manifest;
 import org.anchoranalysis.io.manifest.finder.FinderSerializedObject;
 import org.anchoranalysis.mpp.feature.energy.scheme.EnergyScheme;
 import org.anchoranalysis.plugin.io.bean.input.manifest.CoupledManifestsInputManager;
@@ -78,10 +78,10 @@ public class ExecutedExperimentFileCreator extends FileCreatorGeneralList {
 
         experimentNames = new ArrayList<>();
 
-        for (Iterator<ManifestRecorder> itrExp =
+        for (Iterator<Manifest> itrExp =
                         manifestCouplingDefinition.iteratorExperimentalManifests();
                 itrExp.hasNext(); ) {
-            ManifestRecorder manifestExperiment = itrExp.next();
+            Manifest manifestExperiment = itrExp.next();
             addVideoStatsFileFromManifestExperiment(
                     manifestExperiment, params, manifestCouplingDefinition, listFiles);
         }
@@ -99,11 +99,11 @@ public class ExecutedExperimentFileCreator extends FileCreatorGeneralList {
     }
 
     private void addVideoStatsFileFromManifestExperiment(
-            ManifestRecorder manifestExperiment,
+            Manifest manifestExperiment,
             FileCreatorParams params,
             ManifestCouplingDefinition manifestCouplingDefinition,
             List<InteractiveFile> listFiles) {
-        experimentNames.add(manifestExperiment.getRootFolder().getRelativePath().toString());
+        experimentNames.add(manifestExperiment.getRootFolder().relativePath().toString());
 
         FinderSerializedObject<EnergyScheme> finderEnergyScheme =
                 new FinderSerializedObject<>(
@@ -125,7 +125,7 @@ public class ExecutedExperimentFileCreator extends FileCreatorGeneralList {
 
         FileExecutedExperimentImageWithManifest file =
                 new FileExecutedExperimentImageWithManifest(
-                        coupledManifests, params.getRasterReader(), params.getMarkCreatorParams());
+                        coupledManifests, params.getStackReader(), params.getMarkCreatorParams());
 
         listFiles.add(file);
     }

@@ -34,7 +34,7 @@ import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.gui.bean.filecreator.ExecutedExperimentFileCreator;
 import org.anchoranalysis.gui.bean.filecreator.FileCreator;
 import org.anchoranalysis.gui.interactivebrowser.openfile.importer.ImporterSettings;
-import org.anchoranalysis.io.bean.provider.file.SpecificPathList;
+import org.anchoranalysis.io.input.bean.files.SpecificPathList;
 import org.anchoranalysis.plugin.io.bean.input.manifest.CoupledManifestsInputManager;
 import org.apache.commons.io.FilenameUtils;
 

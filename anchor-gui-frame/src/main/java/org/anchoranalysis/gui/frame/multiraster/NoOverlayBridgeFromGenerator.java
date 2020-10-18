@@ -26,34 +26,29 @@
 
 package org.anchoranalysis.gui.frame.multiraster;
 
+import lombok.AllArgsConstructor;
+import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.functional.function.CheckedFunction;
-import org.anchoranalysis.core.index.SetOperationFailedException;
 import org.anchoranalysis.gui.container.background.BackgroundStackContainerException;
 import org.anchoranalysis.gui.frame.display.BoundOverlayedDisplayStack;
 import org.anchoranalysis.gui.frame.display.DisplayUpdate;
-import org.anchoranalysis.image.stack.DisplayStack;
-import org.anchoranalysis.io.generator.IterableObjectGenerator;
+import org.anchoranalysis.image.io.generator.raster.RasterGenerator;
 import org.anchoranalysis.io.output.error.OutputWriteFailedException;
 
+@AllArgsConstructor
 class NoOverlayBridgeFromGenerator
         implements CheckedFunction<Integer, DisplayUpdate, BackgroundStackContainerException> {
 
-    private IterableObjectGenerator<Integer, DisplayStack> generator;
-
-    public NoOverlayBridgeFromGenerator(IterableObjectGenerator<Integer, DisplayStack> generator) {
-        super();
-        this.generator = generator;
-    }
+    private RasterGenerator<Integer> generator;
 
     @Override
     public DisplayUpdate apply(Integer sourceObject) throws BackgroundStackContainerException {
         try {
-            generator.setIterableElement(sourceObject);
             BoundOverlayedDisplayStack overlayedStack =
-                    new BoundOverlayedDisplayStack(generator.getGenerator().generate());
+                    new BoundOverlayedDisplayStack(generator.transform(sourceObject));
             return DisplayUpdate.assignNewStack(overlayedStack);
 
-        } catch (SetOperationFailedException | OutputWriteFailedException e) {
+        } catch (OutputWriteFailedException | CreateException e) {
             throw new BackgroundStackContainerException(e);
         }
     }

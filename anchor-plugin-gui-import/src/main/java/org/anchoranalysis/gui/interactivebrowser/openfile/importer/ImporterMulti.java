@@ -30,20 +30,25 @@ import java.io.File;
 import java.util.Optional;
 import org.anchoranalysis.gui.bean.filecreator.FileCreator;
 import org.anchoranalysis.gui.bean.filecreator.NamedMultiCollectionCreator;
-import org.anchoranalysis.io.bean.input.InputManager;
-import org.anchoranalysis.mpp.io.bean.input.MultiInputManagerBase;
+import org.anchoranalysis.io.input.bean.InputManager;
+import org.anchoranalysis.mpp.io.bean.input.MultiInputManager;
 import org.anchoranalysis.mpp.io.input.MultiInput;
 
+/**
+ * TODO this class no longer supports MultiInputManagerQuick, fix to support it again
+ *
+ * @author Owen Feehan
+ */
 public class ImporterMulti extends ImporterFromBean {
 
     @Override
     public boolean isApplicable(Object bean) {
-        return bean instanceof MultiInputManagerBase;
+        return bean instanceof MultiInputManager;
     }
 
     @Override
     public Optional<FileCreator> create(Object bean, File file) {
-        return Optional.of(createMultiCollection((MultiInputManagerBase) bean, file));
+        return Optional.of(createMultiCollection((MultiInputManager) bean, file));
     }
 
     private static FileCreator createMultiCollection(

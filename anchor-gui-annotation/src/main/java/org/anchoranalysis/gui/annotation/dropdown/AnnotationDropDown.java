@@ -31,7 +31,7 @@ import org.anchoranalysis.gui.annotation.AnnotatorModuleCreator;
 import org.anchoranalysis.gui.annotation.builder.AnnotationGuiBuilder;
 import org.anchoranalysis.gui.annotation.builder.AnnotationGuiContext;
 import org.anchoranalysis.gui.annotation.export.ExportAnnotation;
-import org.anchoranalysis.gui.file.opened.IOpenedFileGUI;
+import org.anchoranalysis.gui.file.opened.OpenedFileGUI;
 import org.anchoranalysis.gui.videostats.dropdown.AddVideoStatsModule;
 import org.anchoranalysis.gui.videostats.dropdown.BoundVideoStatsModuleDropDown;
 import org.anchoranalysis.gui.videostats.dropdown.OperationCreateBackgroundSetWithAdder;
@@ -42,7 +42,7 @@ import org.anchoranalysis.gui.videostats.dropdown.common.EnergyBackground;
 import org.anchoranalysis.gui.videostats.modulecreator.VideoStatsModuleCreator;
 import org.anchoranalysis.gui.videostats.operation.VideoStatsOperationFromCreatorAndAdder;
 import org.anchoranalysis.io.output.bean.OutputWriteSettings;
-import org.anchoranalysis.io.output.bound.BoundOutputManagerRouteErrors;
+import org.anchoranalysis.io.output.outputter.InputOutputContext;
 
 public class AnnotationDropDown {
 
@@ -61,11 +61,9 @@ public class AnnotationDropDown {
     }
 
     public void init(
-            AddVideoStatsModule adder,
-            BoundOutputManagerRouteErrors outputManager,
-            VideoStatsModuleGlobalParams mpg) {
+            AddVideoStatsModule adder, VideoStatsModuleGlobalParams mpg, InputOutputContext context) {
 
-        addAnnotation(adder, outputManager.getOutputWriteSettings(), mpg);
+        addAnnotation(adder, context.getOutputter().getSettings(), mpg);
 
         // Add Channel Viewer
         addChannelViewer(adder, mpg);
@@ -128,7 +126,7 @@ public class AnnotationDropDown {
                 false);
     }
 
-    public IOpenedFileGUI openedFileGUI() {
+    public OpenedFileGUI openedFileGUI() {
         return delegate.openedFileGUI();
     }
 

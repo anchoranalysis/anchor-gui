@@ -34,19 +34,19 @@ import lombok.RequiredArgsConstructor;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.error.friendly.AnchorFriendlyRuntimeException;
 import org.anchoranalysis.core.error.reporter.ErrorReporter;
-import org.anchoranalysis.gui.bean.exporttask.ExportTask;
-import org.anchoranalysis.gui.bean.exporttask.ExportTaskActionAsThread;
-import org.anchoranalysis.gui.bean.exporttask.ExportTaskActionAsThread.ExportTaskCommand;
-import org.anchoranalysis.gui.bean.exporttask.ExportTaskGenerator;
-import org.anchoranalysis.gui.bean.exporttask.ExportTaskParams;
+import org.anchoranalysis.gui.export.bean.ExportTask;
+import org.anchoranalysis.gui.export.bean.ExportTaskActionAsThread;
+import org.anchoranalysis.gui.export.bean.ExportTaskActionAsThread.ExportTaskCommand;
+import org.anchoranalysis.gui.export.bean.ExportTaskGenerator;
+import org.anchoranalysis.gui.export.bean.ExportTaskParams;
+import org.anchoranalysis.image.core.stack.Stack;
 import org.anchoranalysis.image.io.generator.raster.StackGenerator;
-import org.anchoranalysis.image.stack.Stack;
-import org.anchoranalysis.io.generator.IterableGenerator;
+import org.anchoranalysis.io.generator.Generator;
 import org.anchoranalysis.io.manifest.ManifestDescription;
-import org.anchoranalysis.io.manifest.ManifestFolderDescription;
-import org.anchoranalysis.io.manifest.sequencetype.IncrementalSequenceType;
-import org.anchoranalysis.io.namestyle.IntegerSuffixOutputNameStyle;
-import org.anchoranalysis.io.output.bound.BoundOutputManagerRouteErrors;
+import org.anchoranalysis.io.manifest.ManifestDirectoryDescription;
+import org.anchoranalysis.io.manifest.sequencetype.IncrementingIntegers;
+import org.anchoranalysis.io.output.namestyle.IntegerSuffixOutputNameStyle;
+import org.anchoranalysis.io.output.outputter.InputOutputContext;
 
 @RequiredArgsConstructor
 public class ExportSubMenu implements AddToExportSubMenu {
@@ -60,50 +60,34 @@ public class ExportSubMenu implements AddToExportSubMenu {
     public void addExportItemStackGenerator(String outputName, String label, Supplier<Stack> stack)
             throws OperationFailedException {
 
-        StackGenerator stackGenerator = new StackGenerator(true, outputName);
-        OperationGenerator<Stack, Stack> generator = new OperationGenerator<>(stackGenerator);
+        StackGenerator stackGenerator = new StackGenerator(true, Optional.of(outputName), false);
+        SupplierGenerator<Stack, Stack> generator = new SupplierGenerator<>(stackGenerator);
         addExportItem(
                 generator, stack, outputName, label, generator.createManifestDescription(), 1);
     }
-
+    
     @Override
     public <T> void addExportItem(
-            IterableGenerator<T> generator,
+            Generator<T> generator,
             T itemToGenerate,
             String outputName,
             String label,
-            Optional<ManifestDescription> md,
-            int numItems) {
+            Optional<ManifestDescription> manifestDescription,
+            int numberItems) {
 
+        ManifestDirectoryDescription manifestFolderDescription = createManifestFolderDescription(manifestDescription);
+        
         // No parameters available in this context
-        ExportTaskParams exportTaskParams = new ExportTaskParams();
-
-        ManifestFolderDescription mfd =
-                new ManifestFolderDescription(
-                        md.orElseThrow(
-                                () ->
-                                        new AnchorFriendlyRuntimeException(
-                                                "A manifest-description is required for this operation")),
-                        new IncrementalSequenceType());
-
-        // NB: As bindAsSubFolder can now return nulls, maybe some knock-on bugs are introduced here
-        exportTaskParams.setOutputManager(
-                params.getOutputManager()
-                        .getWriterAlwaysAllowed()
-                        .bindAsSubdirectory(outputName, mfd)
-                        .orElseThrow(
-                                () ->
-                                        new AnchorFriendlyRuntimeException(
-                                                "No subdirectory can be created for output")));
-
-        IntegerSuffixOutputNameStyle ons = new IntegerSuffixOutputNameStyle(outputName, 6);
+        ExportTaskParams exportTaskParams = new ExportTaskParams(
+           params.getContext().subdirectory(outputName, manifestFolderDescription, false)   
+        );
 
         ExportTask task =
                 new ExportTaskGenerator<T>(
                         generator,
                         itemToGenerate,
                         params.getParentFrame(),
-                        ons,
+                        new IntegerSuffixOutputNameStyle(outputName, 6),
                         params.getSequenceMemory());
 
         ExportTaskActionAsThread action =
@@ -123,7 +107,16 @@ public class ExportSubMenu implements AddToExportSubMenu {
     }
 
     @Override
-    public BoundOutputManagerRouteErrors getOutputManager() {
-        return params.getOutputManager();
+    public InputOutputContext getInputOutputContext() {
+        return params.getContext();
+    }
+    
+    private ManifestDirectoryDescription createManifestFolderDescription(Optional<ManifestDescription> manifestDescription) {
+        return new ManifestDirectoryDescription(
+                manifestDescription.orElseThrow(
+                        () ->
+                                new AnchorFriendlyRuntimeException(
+                                        "A manifest-description is required for this operation")),
+                new IncrementingIntegers());
     }
 }

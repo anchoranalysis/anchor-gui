@@ -35,7 +35,7 @@ import org.anchoranalysis.core.name.store.NamedProviderStore;
 import org.anchoranalysis.core.params.KeyValueParams;
 import org.anchoranalysis.core.progress.ProgressReporter;
 import org.anchoranalysis.gui.bean.filecreator.MarkCreatorParams;
-import org.anchoranalysis.gui.file.opened.IOpenedFileGUI;
+import org.anchoranalysis.gui.file.opened.OpenedFileGUI;
 import org.anchoranalysis.gui.interactivebrowser.MarkEvaluatorManager;
 import org.anchoranalysis.gui.interactivebrowser.MarkEvaluatorSetForImage;
 import org.anchoranalysis.gui.series.TimeSequenceProviderSupplier;
@@ -47,9 +47,10 @@ import org.anchoranalysis.gui.videostats.dropdown.common.DropDownUtilities;
 import org.anchoranalysis.gui.videostats.dropdown.common.DropDownUtilitiesRaster;
 import org.anchoranalysis.gui.videostats.dropdown.common.EnergyBackground;
 import org.anchoranalysis.gui.videostats.dropdown.common.GuessEnergyFromStacks;
-import org.anchoranalysis.image.object.ObjectCollection;
-import org.anchoranalysis.image.stack.wrap.WrapTimeSequenceAsStack;
-import org.anchoranalysis.io.output.bound.BoundOutputManagerRouteErrors;
+import org.anchoranalysis.image.core.stack.wrap.WrapTimeSequenceAsStack;
+import org.anchoranalysis.image.voxel.object.ObjectCollection;
+import org.anchoranalysis.io.output.outputter.InputOutputContext;
+import org.anchoranalysis.io.output.outputter.Outputter;
 import org.anchoranalysis.mpp.mark.MarkCollection;
 
 public class MultiCollectionDropDown {
@@ -78,10 +79,7 @@ public class MultiCollectionDropDown {
         this.objCollection = objCollection;
     }
 
-    public void init(
-            final AddVideoStatsModule adder,
-            BoundOutputManagerRouteErrors outputManager,
-            MarkCreatorParams params)
+    public void init(final AddVideoStatsModule adder, InputOutputContext context, MarkCreatorParams params)
             throws InitException {
 
         OperationCreateBackgroundSetWithAdder operationBwsa =
@@ -127,7 +125,7 @@ public class MultiCollectionDropDown {
                     params.getMarkEvaluatorManager(),
                     operationBwsa,
                     params.getModuleParams(),
-                    outputManager);
+                    context);
         }
     }
 
@@ -135,12 +133,11 @@ public class MultiCollectionDropDown {
             MarkEvaluatorManager markEvaluatorManager,
             OperationCreateBackgroundSetWithAdder operationBwsa,
             VideoStatsModuleGlobalParams mpg,
-            BoundOutputManagerRouteErrors outputManager)
+            InputOutputContext context)
             throws InitException {
 
-        BoundOutputManagerRouteErrors outputManagerSub =
-                DropDownUtilities.createOutputManagerForSubfolder(
-                        outputManager, delegate.getName());
+        Outputter outputterSubdirectory =
+                DropDownUtilities.createSubdirectoryContext(context, delegate.getName()).getOutputter();
 
         try {
             MarkEvaluatorSetForImage markEvaluatorSet =
@@ -157,7 +154,7 @@ public class MultiCollectionDropDown {
                         operationBwsa.operationAdder(),
                         operationBwsa.energyBackground().getBackground().getBackgroundSet(),
                         markEvaluatorSet,
-                        outputManagerSub.getOutputWriteSettings(),
+                        outputterSubdirectory.getSettings(),
                         true,
                         mpg);
             }
@@ -167,7 +164,7 @@ public class MultiCollectionDropDown {
         }
     }
 
-    public IOpenedFileGUI openedFileGUI() {
+    public OpenedFileGUI openedFileGUI() {
         return delegate.openedFileGUI();
     }
 

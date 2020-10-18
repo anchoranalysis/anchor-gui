@@ -28,9 +28,9 @@ package org.anchoranalysis.gui.file.opened;
 
 import org.anchoranalysis.gui.file.interactive.InteractiveFile;
 
-public abstract class OpenedFile {
+public interface OpenedFile {
 
-    public abstract InteractiveFile getFile();
+    InteractiveFile getFile();
 
-    public abstract IOpenedFileGUI getGUI();
+    OpenedFileGUI getGUI();
 }
