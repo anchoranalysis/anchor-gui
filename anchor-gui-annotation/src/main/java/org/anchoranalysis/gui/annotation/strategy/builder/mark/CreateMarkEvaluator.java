@@ -68,8 +68,7 @@ class CreateMarkEvaluator {
             NamedStacksSupplier stacks)
             throws CreateException {
         return markEvaluatorManager.createSetForStackCollection(
-                stacks,
-                () -> paramsFromGenerator(pathForBinding, strategy.paramsDeriver()));
+                stacks, () -> paramsFromGenerator(pathForBinding, strategy.paramsDeriver()));
     }
 
     private static Optional<KeyValueParams> paramsFromGenerator(
@@ -78,8 +77,8 @@ class CreateMarkEvaluator {
                 derivePath, generator -> readParams(generator, pathForBinding));
     }
 
-    private static KeyValueParams readParams(
-            DerivePath derivePath, Path pathForBinding) throws IOException {
+    private static KeyValueParams readParams(DerivePath derivePath, Path pathForBinding)
+            throws IOException {
         try {
             return KeyValueParams.readFromFile(
                     PathFromGenerator.derivePath(derivePath, pathForBinding));

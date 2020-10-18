@@ -45,7 +45,7 @@ import org.anchoranalysis.mpp.mark.MarkCollection;
 public class FinderMarksFolder extends FinderSingleDirectory {
 
     private static final Deserializer<MarkCollection> DESERIALIZER = new XStreamDeserializer<>();
-    
+
     // START REQUIRED ARGUMENTS
     private final String manifestFunction;
     private final String directoryName;
@@ -64,12 +64,16 @@ public class FinderMarksFolder extends FinderSingleDirectory {
                 new SequencedDirectoryDeserializer<>(getFoundDirectory(), DESERIALIZER);
 
         AddFromSequenceHelper.addFromSequence(
-                getFoundDirectory().getAssociatedElementRange(), deserializer, out::add, namesAsIndexes);
+                getFoundDirectory().getAssociatedElementRange(),
+                deserializer,
+                out::add,
+                namesAsIndexes);
         return out;
     }
 
     @Override
     protected Predicate<MutableDirectory> matchDirectories() {
-        return DirectoryMatch.path(directoryName).and(DirectoryMatch.description(this.manifestFunction, "serialized"));
+        return DirectoryMatch.path(directoryName)
+                .and(DirectoryMatch.description(this.manifestFunction, "serialized"));
     }
 }

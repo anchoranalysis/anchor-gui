@@ -31,12 +31,9 @@ import java.awt.event.MouseListener;
 import lombok.AllArgsConstructor;
 
 /**
- * 
- * <p>We ignore any of these events if CONTROL or SHIFT is pressed, as we reserve
- *  these for ourselves
- * 
- * @author Owen Feehan
+ * We ignore any of these events if CONTROL or SHIFT is pressed, as we reserve these for ourselves
  *
+ * @author Owen Feehan
  */
 @AllArgsConstructor
 class MouseListenerRelative implements MouseListener {
@@ -45,26 +42,31 @@ class MouseListenerRelative implements MouseListener {
 
     @Override
     public void mouseClicked(MouseEvent event) {
-        broadcast.sendChangedEvent(event, false, (listener, eventNew) -> listener.mouseClicked(eventNew) );
+        broadcast.sendChangedEvent(
+                event, false, (listener, eventNew) -> listener.mouseClicked(eventNew));
     }
 
     @Override
     public void mousePressed(MouseEvent event) {
-        broadcast.sendChangedEvent(event, false, (listener, eventNew) -> listener.mousePressed(eventNew) );
+        broadcast.sendChangedEvent(
+                event, false, (listener, eventNew) -> listener.mousePressed(eventNew));
     }
 
     @Override
     public void mouseReleased(MouseEvent event) {
-        broadcast.sendChangedEvent(event, false, (listener, eventNew) -> listener.mouseReleased(eventNew) );
+        broadcast.sendChangedEvent(
+                event, false, (listener, eventNew) -> listener.mouseReleased(eventNew));
     }
 
     @Override
     public void mouseEntered(MouseEvent event) {
-        broadcast.sendChangedEvent(event, true, (listener, eventNew) -> listener.mouseEntered(eventNew) );
+        broadcast.sendChangedEvent(
+                event, true, (listener, eventNew) -> listener.mouseEntered(eventNew));
     }
 
     @Override
     public void mouseExited(MouseEvent event) {
-        broadcast.sendChangedEvent(event, true, (listener, eventNew) -> listener.mouseExited(eventNew) );
+        broadcast.sendChangedEvent(
+                event, true, (listener, eventNew) -> listener.mouseExited(eventNew));
     }
 }

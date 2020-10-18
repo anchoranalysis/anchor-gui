@@ -37,11 +37,13 @@ class MouseMotionListenerRelative implements MouseMotionListener {
 
     @Override
     public void mouseDragged(MouseEvent event) {
-        broadcast.sendChangedEvent(event, false, (listener, eventNew) -> listener.mouseDragged(eventNew) );
+        broadcast.sendChangedEvent(
+                event, false, (listener, eventNew) -> listener.mouseDragged(eventNew));
     }
 
     @Override
     public void mouseMoved(MouseEvent event) {
-        broadcast.sendChangedEvent(event, false, (listener, eventNew) -> listener.mouseMoved(eventNew) );
+        broadcast.sendChangedEvent(
+                event, false, (listener, eventNew) -> listener.mouseMoved(eventNew));
     }
 }

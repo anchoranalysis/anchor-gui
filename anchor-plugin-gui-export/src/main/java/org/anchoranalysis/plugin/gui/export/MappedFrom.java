@@ -29,7 +29,8 @@ package org.anchoranalysis.plugin.gui.export;
 import lombok.AllArgsConstructor;
 import lombok.Value;
 
-@AllArgsConstructor @Value
+@AllArgsConstructor
+@Value
 public class MappedFrom<T> {
 
     private int originalIteration;

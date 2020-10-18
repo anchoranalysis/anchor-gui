@@ -199,7 +199,9 @@ public class DropDownUtilities {
 
         ManifestDirectoryDescription mfd =
                 new ManifestDirectoryDescription(
-                        "interactiveOutput", "manifestInteractiveOutput", new StringsWithoutOrder());
+                        "interactiveOutput",
+                        "manifestInteractiveOutput",
+                        new StringsWithoutOrder());
 
         // NB: As bindAsSubFolder can now return nulls, maybe some knock-on bugs are introduced here
         return inputOutputContext.subdirectory(subdirectoryName, mfd, false);

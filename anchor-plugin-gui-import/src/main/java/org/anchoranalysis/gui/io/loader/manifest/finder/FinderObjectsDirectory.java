@@ -50,7 +50,8 @@ public class FinderObjectsDirectory extends FinderSingleDirectory {
             return new NameValueSet<>();
         }
 
-        return new CreateObjectStoreFromDirectory().apply(getFoundDirectory().calculatePath(), logger);
+        return new CreateObjectStoreFromDirectory()
+                .apply(getFoundDirectory().calculatePath(), logger);
     }
 
     @Override

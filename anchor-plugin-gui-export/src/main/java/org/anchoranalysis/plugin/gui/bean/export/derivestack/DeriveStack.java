@@ -35,9 +35,8 @@ import org.anchoranalysis.plugin.gui.export.MappedFrom;
 
 /**
  * Derives a {@link Stack} from another element.
- * 
- * @author Owen Feehan
  *
+ * @author Owen Feehan
  * @param <T> element to derive stack from.
  */
 public abstract class DeriveStack<T> extends AnchorBean<DeriveStack<T>> {

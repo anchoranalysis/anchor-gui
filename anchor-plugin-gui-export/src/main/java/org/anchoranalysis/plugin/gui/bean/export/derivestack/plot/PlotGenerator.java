@@ -48,9 +48,9 @@ import org.jfree.chart.ChartUtils;
  * Writes a plot to the filesystem as a PNG file.
  *
  * <p>Note that {@link #writeToFile} replaces the existing behaviour in {@link RasterGenerator}.
- * 
+ *
  * <p>TODO fix the above point.
- * 
+ *
  * @author Owen Feehan
  */
 @AllArgsConstructor
@@ -62,7 +62,8 @@ class PlotGenerator extends RasterGenerator<PlotInstance> {
     private final SizeXY size;
 
     @Override
-    public void writeToFile(PlotInstance element, OutputWriteSettings outputWriteSettings, Path filePath)
+    public void writeToFile(
+            PlotInstance element, OutputWriteSettings outputWriteSettings, Path filePath)
             throws OutputWriteFailedException {
 
         try (FileOutputStream fileOutput = new FileOutputStream(filePath.toFile())) {

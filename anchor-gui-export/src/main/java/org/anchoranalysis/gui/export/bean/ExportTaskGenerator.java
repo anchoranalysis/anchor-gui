@@ -55,9 +55,14 @@ public class ExportTaskGenerator<T> implements ExportTask {
         int index = sequenceMemory.lastIndex(outputNameStyle.getOutputName());
 
         int numberWritten =
-                params.getInputOutputContext().getOutputter()
+                params.getInputOutputContext()
+                        .getOutputter()
                         .writerSelective()
-                        .writeWithIndex(outputNameStyle, () -> generator, () -> item, Integer.toString(index));
+                        .writeWithIndex(
+                                outputNameStyle,
+                                () -> generator,
+                                () -> item,
+                                Integer.toString(index));
         sequenceMemory.updateIndex(outputNameStyle.getOutputName(), index + numberWritten);
 
         if (numberWritten == 0) {

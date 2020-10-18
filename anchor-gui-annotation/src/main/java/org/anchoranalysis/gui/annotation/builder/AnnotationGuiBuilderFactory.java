@@ -43,7 +43,7 @@ public class AnnotationGuiBuilderFactory {
     public static AnnotationGuiBuilder<?> create(AnnotationWithStrategy<?> annotation)
             throws CreateException {
         AnnotatorStrategy strategy = annotation.getStrategy();
-        
+
         // UGLY hard-coding of mapping between AnnotationWithStrategy to an AnnotationGuiBuilder
         if (strategy instanceof MarkProposerStrategy) {
             return new BuilderProposeMarks(

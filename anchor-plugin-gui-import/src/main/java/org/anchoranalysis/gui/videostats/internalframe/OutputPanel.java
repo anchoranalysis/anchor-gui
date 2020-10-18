@@ -35,9 +35,9 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 import org.anchoranalysis.core.color.ColorIndex;
 import org.anchoranalysis.image.io.bean.object.draw.Outline;
+import org.anchoranalysis.io.generator.sequence.OutputSequenceFactory;
 import org.anchoranalysis.io.generator.sequence.OutputSequenceIncrementing;
 import org.anchoranalysis.io.generator.sequence.pattern.OutputPatternIntegerSuffix;
-import org.anchoranalysis.io.generator.sequence.OutputSequenceFactory;
 import org.anchoranalysis.io.manifest.ManifestDescription;
 import org.anchoranalysis.io.output.error.OutputWriteFailedException;
 import org.anchoranalysis.io.output.outputter.InputOutputContext;
@@ -70,12 +70,19 @@ public class OutputPanel {
         public void actionPerformed(ActionEvent arg0) {
             MarksGenerator generator = new MarksGenerator(new Outline(2), new IDGetterOverlayID());
 
-            OutputPatternIntegerSuffix directory = new OutputPatternIntegerSuffix("markEvaluator", 6, false, Optional.of(new ManifestDescription("raster", "markEvaluator")));
+            OutputPatternIntegerSuffix directory =
+                    new OutputPatternIntegerSuffix(
+                            "markEvaluator",
+                            6,
+                            false,
+                            Optional.of(new ManifestDescription("raster", "markEvaluator")));
 
             OutputterChecked outputter = context.getOutputter().getChecked();
-            
+
             try {
-                outputSequence = new OutputSequenceFactory<>(generator, outputter).incrementingByOne(directory);
+                outputSequence =
+                        new OutputSequenceFactory<>(generator, outputter)
+                                .incrementingByOne(directory);
             } catch (OutputWriteFailedException e) {
                 context.getErrorReporter().recordError(OutputPanel.class, e);
                 outputSequence = null;
@@ -128,8 +135,8 @@ public class OutputPanel {
             }
         }
     }
-        
+
     private static void createAndButton(Action action, JPanel panel) {
-        panel.add(new JButton(action)); 
+        panel.add(new JButton(action));
     }
 }

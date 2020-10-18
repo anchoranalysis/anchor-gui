@@ -178,7 +178,7 @@ class DisplayStackViewport {
     public Dimensions dim() {
         return displayStackEntireImage.dimensions();
     }
-    
+
     private static void addCond(Point2i scrollVal, ReadableTuple3i toAdd, Extent cond) {
         if (cond.x() > 0 && toAdd.x() != 0) {
             scrollVal.setX(scrollVal.x() + toAdd.x());

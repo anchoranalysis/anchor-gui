@@ -45,7 +45,8 @@ import org.anchoranalysis.io.output.error.OutputWriteFailedException;
 import org.anchoranalysis.overlay.writer.DrawOverlay;
 
 @RequiredArgsConstructor
-class CachedRGBGenerator extends SingleFileTypeGenerator<OverlayedDisplayStackUpdate, DisplayStack> implements Redrawable {
+class CachedRGBGenerator extends SingleFileTypeGenerator<OverlayedDisplayStackUpdate, DisplayStack>
+        implements Redrawable {
 
     // START BEAN PROPERTIES
     private final CachedRGB cachedRGB;
@@ -64,7 +65,8 @@ class CachedRGBGenerator extends SingleFileTypeGenerator<OverlayedDisplayStackUp
     }
 
     @Override
-    public DisplayStack transform(OverlayedDisplayStackUpdate element) throws OutputWriteFailedException {
+    public DisplayStack transform(OverlayedDisplayStackUpdate element)
+            throws OutputWriteFailedException {
         try {
             assignElement(element);
             return DisplayStack.create(cachedRGB.getRGB());
@@ -87,12 +89,15 @@ class CachedRGBGenerator extends SingleFileTypeGenerator<OverlayedDisplayStackUp
     }
 
     @Override
-    public void writeToFile(OverlayedDisplayStackUpdate element, OutputWriteSettings outputWriteSettings, Path filePath)
+    public void writeToFile(
+            OverlayedDisplayStackUpdate element,
+            OutputWriteSettings outputWriteSettings,
+            Path filePath)
             throws OutputWriteFailedException {
         try {
             assignElement(element);
-            GeneratorOutputter.writer(outputWriteSettings).writeStack(
-                    cachedRGB.getRGB().asStack(), filePath, true, rasterOptions);
+            GeneratorOutputter.writer(outputWriteSettings)
+                    .writeStack(cachedRGB.getRGB().asStack(), filePath, true, rasterOptions);
         } catch (ImageIOException e) {
             throw new OutputWriteFailedException(e);
         }
@@ -101,16 +106,16 @@ class CachedRGBGenerator extends SingleFileTypeGenerator<OverlayedDisplayStackUp
     @Override
     public String getFileExtension(OutputWriteSettings outputWriteSettings)
             throws OperationFailedException {
-        return GeneratorOutputter.fileExtensionWriter(
-                outputWriteSettings, rasterOptions);
+        return GeneratorOutputter.fileExtensionWriter(outputWriteSettings, rasterOptions);
     }
-    
+
     @Override
     public Optional<ManifestDescription> createManifestDescription() {
         return Optional.of(new ManifestDescription("raster", "marks"));
     }
-    
-    private void assignElement(OverlayedDisplayStackUpdate elementToAssign) throws OutputWriteFailedException {
+
+    private void assignElement(OverlayedDisplayStackUpdate elementToAssign)
+            throws OutputWriteFailedException {
 
         // We don't do any changes if is exactly the same, if some other
         //   factor has altered, to change how the generator would

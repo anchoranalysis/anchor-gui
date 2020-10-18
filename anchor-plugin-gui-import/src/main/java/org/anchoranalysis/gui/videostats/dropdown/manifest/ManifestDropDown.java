@@ -87,10 +87,9 @@ public class ManifestDropDown {
         this.manifests = manifests;
         this.markDisplaySettings = markDisplaySettings;
         this.delegate =
-                new BoundVideoStatsModuleDropDown(
-                        manifests.name(), "/toolbarIcon/rectangle.png");
+                new BoundVideoStatsModuleDropDown(manifests.name(), "/toolbarIcon/rectangle.png");
     }
-    
+
     public OpenedFileGUI openedFileGUI() {
         return delegate.openedFileGUI();
     }
@@ -228,13 +227,19 @@ public class ManifestDropDown {
 
         FinderSerializedObject<KeyValueParams> finderGroupParams = createFinderGroupParams(mpg);
 
-        inputOutputContext = DropDownUtilities.createSubdirectoryContext(inputOutputContext, delegate.getName());
+        inputOutputContext =
+                DropDownUtilities.createSubdirectoryContext(inputOutputContext, delegate.getName());
 
         // Proposer Evaluators
         MarkEvaluatorSetForImage markEvaluatorSet =
                 createMarkEvaluatorSet(markEvaluatorManager, finderStacks, finderGroupParams);
         addProposerEvaluator(
-                finderStacks, finderEnergyStack, markEvaluatorSet, inputOutputContext.getOutputter(), adder, mpg);
+                finderStacks,
+                finderEnergyStack,
+                markEvaluatorSet,
+                inputOutputContext.getOutputter(),
+                adder,
+                mpg);
     }
 
     private void addProposerEvaluator(
@@ -339,7 +344,9 @@ public class ManifestDropDown {
 
             if (finderFinalMarks.exists()) {
 
-                CachedSupplier<BoundedIndexContainer<IndexableMarksWithEnergy>, OperationFailedException>
+                CachedSupplier<
+                                BoundedIndexContainer<IndexableMarksWithEnergy>,
+                                OperationFailedException>
                         op =
                                 CachedSupplier.cache(
                                         () -> {

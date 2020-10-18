@@ -38,11 +38,10 @@ import org.anchoranalysis.io.manifest.directory.sequenced.SequencedDirectory;
 
 /**
  * Reads a stack from each file in a directory with a sequence of files.
- * 
- * <p>Only the first time-point of the first series is opened.
- * 
- * @author Owen Feehan
  *
+ * <p>Only the first time-point of the first series is opened.
+ *
+ * @author Owen Feehan
  */
 class SequencedDirectoryStackReader extends DeriveElementsFromSequencedDirectory<Stack> {
 

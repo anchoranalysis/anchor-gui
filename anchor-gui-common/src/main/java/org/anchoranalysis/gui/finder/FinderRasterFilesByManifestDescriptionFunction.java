@@ -28,6 +28,7 @@ package org.anchoranalysis.gui.finder;
 
 import java.nio.file.Path;
 import java.util.List;
+import lombok.RequiredArgsConstructor;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.core.name.store.StoreSupplier;
 import org.anchoranalysis.core.progress.ProgressReporter;
@@ -43,19 +44,18 @@ import org.anchoranalysis.io.manifest.finder.FindFailedException;
 import org.anchoranalysis.io.manifest.finder.Finder;
 import org.anchoranalysis.io.manifest.finder.FinderUtilities;
 import org.anchoranalysis.io.manifest.finder.match.FileMatch;
-import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 public class FinderRasterFilesByManifestDescriptionFunction implements Finder {
 
     // START REQUIRED ARGUMENTS
     private final StackReader stackReader;
-    
+
     private final String function;
     // END REQUIRED ARGUMENTS
 
     private List<OutputtedFile> list;
-    
+
     @Override
     public boolean doFind(Manifest manifestRecorder) throws FindFailedException {
         list =

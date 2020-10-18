@@ -61,8 +61,7 @@ public class MarkAnnotator {
 
         markEvaluatorResolved = setupMarkEvaluator(annotationStrategy, markEvaluatorSet);
 
-        MPPInitParams soMPP =
-                setupEvaluatorAndPointsFitter(markEvaluatorResolved);
+        MPPInitParams soMPP = setupEvaluatorAndPointsFitter(markEvaluatorResolved);
 
         pointsFitterSelectPoints = extractPointsFitter(annotationStrategy, soMPP);
 
@@ -95,8 +94,7 @@ public class MarkAnnotator {
         return pointsFitterSelectPoints;
     }
 
-    private static MPPInitParams setupEvaluatorAndPointsFitter(
-            MarkEvaluatorResolved markEvaluator)
+    private static MPPInitParams setupEvaluatorAndPointsFitter(MarkEvaluatorResolved markEvaluator)
             throws CreateException {
         return markEvaluator.getProposerSharedObjectsOperation().get();
     }
@@ -115,8 +113,7 @@ public class MarkAnnotator {
     private static MarkProposer setupGuess(
             MPPInitParams soMPP, MarkProposerStrategy annotationStrategy, Logger logger) {
         try {
-            return soMPP.getMarkProposerSet()
-                    .getException(annotationStrategy.getMarkProposer());
+            return soMPP.getMarkProposerSet().getException(annotationStrategy.getMarkProposer());
         } catch (NamedProviderGetException e) {
             logger.messageLogger().log("Proceeding without 'Guess Tool' as an error occured");
             logger.errorReporter()

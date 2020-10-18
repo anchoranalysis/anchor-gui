@@ -58,7 +58,8 @@ public class DemuxDualState<T> extends DeriveStack<DualStateWithoutIndex<T>> {
                 generator,
                 sourceObject ->
                         new MappedFrom<>(
-                                sourceObject.getOriginalIteration(), demux(sourceObject.getObject())));
+                                sourceObject.getOriginalIteration(),
+                                demux(sourceObject.getObject())));
     }
 
     @Override

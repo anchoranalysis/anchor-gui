@@ -32,8 +32,7 @@ import org.anchoranalysis.image.io.bean.stack.StackReader;
 // currently unused, as we don't write the contour repersentation to the file system
 class FinderContourRepresentationRGBRasterSeries extends FinderRasterFolder {
 
-    public FinderContourRepresentationRGBRasterSeries(
-            StackReader stackReader, String folderName) {
+    public FinderContourRepresentationRGBRasterSeries(StackReader stackReader, String folderName) {
         super(folderName, "contourRepresentationRGB", stackReader);
     }
 }

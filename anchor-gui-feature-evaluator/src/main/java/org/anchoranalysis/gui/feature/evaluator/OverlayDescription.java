@@ -76,7 +76,8 @@ class OverlayDescription extends TitleValueTableModel implements UpdatableSingle
         fireTableDataChanged();
     }
 
-    private void addOverlayDetails(Overlay overlay, String titlePrefix, Optional<Resolution> resolution) {
+    private void addOverlayDetails(
+            Overlay overlay, String titlePrefix, Optional<Resolution> resolution) {
 
         OverlayProperties properties = overlay.generateProperties(resolution);
 

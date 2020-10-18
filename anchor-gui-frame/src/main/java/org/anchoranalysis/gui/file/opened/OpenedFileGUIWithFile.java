@@ -26,9 +26,9 @@
 
 package org.anchoranalysis.gui.file.opened;
 
-import org.anchoranalysis.gui.file.interactive.InteractiveFile;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import org.anchoranalysis.gui.file.interactive.InteractiveFile;
 
 @AllArgsConstructor
 public class OpenedFileGUIWithFile implements OpenedFile {

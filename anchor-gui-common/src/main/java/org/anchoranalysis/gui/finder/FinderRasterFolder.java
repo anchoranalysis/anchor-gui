@@ -69,14 +69,18 @@ public class FinderRasterFolder extends FinderSingleDirectory {
                 new SequencedDirectoryStackReader(getFoundDirectory(), stackReader);
 
         AddFromSequenceHelper.addFromSequence(
-                getFoundDirectory().getAssociatedElementRange(), reader, stacks::add, namesAsIndexes);
+                getFoundDirectory().getAssociatedElementRange(),
+                reader,
+                stacks::add,
+                namesAsIndexes);
 
         return stacks;
     }
 
     @Override
     protected Predicate<MutableDirectory> matchDirectories() {
-        return DirectoryMatch.path(directoryName).and(DirectoryMatch.description(this.manifestFunction, "raster"));
+        return DirectoryMatch.path(directoryName)
+                .and(DirectoryMatch.description(this.manifestFunction, "raster"));
     }
 
     private BoundedIndexContainer<Stack> createContainer(MutableDirectory folder) {

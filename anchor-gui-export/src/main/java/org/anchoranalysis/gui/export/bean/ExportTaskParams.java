@@ -44,13 +44,13 @@ public class ExportTaskParams {
     // START REQUIRED ARGUMENTS
     @Getter private final InputOutputContext inputOutputContext;
     // END REQUIRED ARGUMENTS
-    
+
     @Getter @Setter private ColorIndex colorIndexMarks;
     @Getter @Setter private FinderStacks finderStacks;
 
     private List<ContainerGetter<IndexableMarksWithEnergy>> listFinderMarksHistory =
             new ArrayList<>();
-    
+
     public ContainerGetter<IndexableMarksWithEnergy> getFinderMarksHistory() {
         return listFinderMarksHistory.get(0);
     }

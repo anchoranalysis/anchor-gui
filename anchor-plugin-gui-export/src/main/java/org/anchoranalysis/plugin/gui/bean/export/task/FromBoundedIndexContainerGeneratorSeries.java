@@ -90,12 +90,12 @@ public class FromBoundedIndexContainerGeneratorSeries<T>
             throw new ExportTaskFailedException(e);
         }
     }
-    
+
     public CheckedFunction<ExportTaskParams, BoundedIndexContainer<T>, OperationFailedException>
             getContainerBridge() {
         return containerBridge;
     }
-    
+
     private boolean execute(
             BoundedIndexContainer<T> container,
             ProgressMonitor progressMonitor,
@@ -107,39 +107,42 @@ public class FromBoundedIndexContainerGeneratorSeries<T>
 
         int indexOut = 0;
 
-        OutputSequenceIndexed<MappedFrom<T>,Integer> outputSequence = outputSequenceCreator.createAndStart(min);
+        OutputSequenceIndexed<MappedFrom<T>, Integer> outputSequence =
+                outputSequenceCreator.createAndStart(min);
 
         try {
             if (startAtEnd) {
                 for (int i = max; i >= min; i -= incrementSize) {
-    
-                    // Escape if we reach our match iterations (limitIterations is off if its negative)
+
+                    // Escape if we reach our match iterations (limitIterations is off if its
+                    // negative)
                     if (indexOut == limitIterations) {
                         break;
                     }
-    
+
                     if (progressMonitor.isCanceled()) {
                         return false;
                     }
-    
+
                     addToWriter(container, outputSequence, i, indexOut);
-    
+
                     progressMonitor.setProgress(indexOut++);
                 }
             } else {
                 for (int i = min; i <= max; i += incrementSize) {
-    
-                    // Escape if we reach our match iterations (limitIterations is off if its negative)
+
+                    // Escape if we reach our match iterations (limitIterations is off if its
+                    // negative)
                     if (indexOut == limitIterations) {
                         break;
                     }
-    
+
                     if (progressMonitor.isCanceled()) {
                         return false;
                     }
-    
+
                     addToWriter(container, outputSequence, i, indexOut);
-    
+
                     progressMonitor.setProgress(indexOut++);
                 }
             }
@@ -152,12 +155,11 @@ public class FromBoundedIndexContainerGeneratorSeries<T>
 
     private void addToWriter(
             BoundedIndexContainer<T> container,
-            OutputSequenceIndexed<MappedFrom<T>,Integer> generatorSequenceWriter,
+            OutputSequenceIndexed<MappedFrom<T>, Integer> generatorSequenceWriter,
             int indexIn,
             int indexOut)
             throws OutputWriteFailedException, GetOperationFailedException {
         int index = container.previousEqualIndex(indexIn);
-        generatorSequenceWriter.add(
-                new MappedFrom<>(indexIn, container.get(index)), indexOut);
+        generatorSequenceWriter.add(new MappedFrom<>(indexIn, container.get(index)), indexOut);
     }
 }

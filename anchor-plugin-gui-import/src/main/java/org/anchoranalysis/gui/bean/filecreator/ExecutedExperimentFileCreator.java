@@ -78,8 +78,7 @@ public class ExecutedExperimentFileCreator extends FileCreatorGeneralList {
 
         experimentNames = new ArrayList<>();
 
-        for (Iterator<Manifest> itrExp =
-                        manifestCouplingDefinition.iteratorExperimentalManifests();
+        for (Iterator<Manifest> itrExp = manifestCouplingDefinition.iteratorExperimentalManifests();
                 itrExp.hasNext(); ) {
             Manifest manifestExperiment = itrExp.next();
             addVideoStatsFileFromManifestExperiment(

@@ -83,10 +83,7 @@ public class RetrieveElementsOverlayCollection extends RetrieveElements {
         ObjectOutputStreamGenerator<Mark> generatorMark =
                 new ObjectOutputStreamGenerator<>(Optional.of("mark"));
         CollectionGenerator<Mark> generatorCollection =
-                new CollectionGenerator<>(
-                        generatorMark,
-                        "selectedMarksObjects"
-                );
+                new CollectionGenerator<>(generatorMark, "selectedMarksObjects");
         popUp.addExportItem(
                 generatorCollection,
                 marksCreated,

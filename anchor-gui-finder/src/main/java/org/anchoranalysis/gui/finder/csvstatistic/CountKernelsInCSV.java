@@ -27,10 +27,9 @@
 package org.anchoranalysis.gui.finder.csvstatistic;
 
 import lombok.AccessLevel;
-
 import lombok.NoArgsConstructor;
 
-@NoArgsConstructor(access=AccessLevel.PRIVATE)
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 class CountKernelsInCSV {
 
     public static int apply(String[] headers) {

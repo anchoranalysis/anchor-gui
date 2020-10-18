@@ -48,7 +48,7 @@ public class BackgroundSet {
     public BackgroundSet(BackgroundSet source) {
         source.map.forEach(this::addItem);
     }
-    
+
     public void addItem(String name, BackgroundStackContainer rasterBackground) {
         addItem(name, () -> rasterBackground);
     }

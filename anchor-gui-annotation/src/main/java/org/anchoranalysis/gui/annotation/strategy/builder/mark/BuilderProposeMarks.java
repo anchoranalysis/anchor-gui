@@ -76,7 +76,7 @@ public class BuilderProposeMarks
                             getStrategy().marksDeriver(),
                             pathForBinding(),
                             PathFromGenerator::derivePath);
-    
+
             return new OpenAnnotationMPP(annotationPath(), marksPath, annotationReader);
         } catch (DerivePathException e) {
             throw new CreateException(e);

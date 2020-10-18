@@ -121,7 +121,7 @@ class AddObjects {
 
         return false;
     }
-    
+
     private boolean fromSerializedMarks(
             OperationCreateBackgroundSetWithAdder operationBwsaWithEnergy) {
         try {
@@ -131,10 +131,12 @@ class AddObjects {
 
             if (finderFinalMarks.exists()) {
 
-                CachedSupplier<BoundedIndexContainer<IndexableMarksWithEnergy>, OperationFailedException>
-                        op = CachedSupplier.cache(
-                           () -> createSerializedMarksContainer(finderFinalMarks)
-                        );
+                CachedSupplier<
+                                BoundedIndexContainer<IndexableMarksWithEnergy>,
+                                OperationFailedException>
+                        op =
+                                CachedSupplier.cache(
+                                        () -> createSerializedMarksContainer(finderFinalMarks));
 
                 if (finderEnergyStack.exists()) {
                     // Energy Table
@@ -155,17 +157,19 @@ class AddObjects {
         }
         return false;
     }
-    
-    private BoundedIndexContainer<IndexableMarksWithEnergy> createSerializedMarksContainer(FinderSerializedObject<MarksWithEnergyBreakdown> finderFinalMarks) throws OperationFailedException {
+
+    private BoundedIndexContainer<IndexableMarksWithEnergy> createSerializedMarksContainer(
+            FinderSerializedObject<MarksWithEnergyBreakdown> finderFinalMarks)
+            throws OperationFailedException {
         try {
-            IndexableMarksWithEnergy instantState = new IndexableMarksWithEnergy(
-                0, finderFinalMarks.get());
+            IndexableMarksWithEnergy instantState =
+                    new IndexableMarksWithEnergy(0, finderFinalMarks.get());
             return new SingleContainer<>(instantState, 0, false);
         } catch (IOException e) {
             throw new OperationFailedException(e);
         }
     }
-    
+
     private void fromMarks(OperationCreateBackgroundSetWithAdder operationBwsaWithEnergy) {
 
         try {

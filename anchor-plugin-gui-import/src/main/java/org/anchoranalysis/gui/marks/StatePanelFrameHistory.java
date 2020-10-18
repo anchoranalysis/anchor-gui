@@ -100,9 +100,7 @@ public class StatePanelFrameHistory<T> {
 
             this.delegate = new StatePanelFrame<>(title, startState, tablePanel);
             {
-                indexSlider =
-                        new IndexSlider(
-                                selectedHistory, true);
+                indexSlider = new IndexSlider(selectedHistory, true);
                 indexSlider.setIndex(initialIndex, false);
 
                 indexSlider

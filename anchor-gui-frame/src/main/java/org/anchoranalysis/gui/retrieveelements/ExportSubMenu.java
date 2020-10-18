@@ -65,7 +65,7 @@ public class ExportSubMenu implements AddToExportSubMenu {
         addExportItem(
                 generator, stack, outputName, label, generator.createManifestDescription(), 1);
     }
-    
+
     @Override
     public <T> void addExportItem(
             Generator<T> generator,
@@ -75,12 +75,14 @@ public class ExportSubMenu implements AddToExportSubMenu {
             Optional<ManifestDescription> manifestDescription,
             int numberItems) {
 
-        ManifestDirectoryDescription manifestFolderDescription = createManifestFolderDescription(manifestDescription);
-        
+        ManifestDirectoryDescription manifestFolderDescription =
+                createManifestFolderDescription(manifestDescription);
+
         // No parameters available in this context
-        ExportTaskParams exportTaskParams = new ExportTaskParams(
-           params.getContext().subdirectory(outputName, manifestFolderDescription, false)   
-        );
+        ExportTaskParams exportTaskParams =
+                new ExportTaskParams(
+                        params.getContext()
+                                .subdirectory(outputName, manifestFolderDescription, false));
 
         ExportTask task =
                 new ExportTaskGenerator<T>(
@@ -110,8 +112,9 @@ public class ExportSubMenu implements AddToExportSubMenu {
     public InputOutputContext getInputOutputContext() {
         return params.getContext();
     }
-    
-    private ManifestDirectoryDescription createManifestFolderDescription(Optional<ManifestDescription> manifestDescription) {
+
+    private ManifestDirectoryDescription createManifestFolderDescription(
+            Optional<ManifestDescription> manifestDescription) {
         return new ManifestDirectoryDescription(
                 manifestDescription.orElseThrow(
                         () ->

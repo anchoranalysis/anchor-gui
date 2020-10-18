@@ -43,8 +43,7 @@ import org.anchoranalysis.io.output.error.OutputWriteFailedException;
 import org.anchoranalysis.plugin.gui.export.CreateOutputSequence;
 import org.anchoranalysis.plugin.gui.export.MappedFrom;
 
-public abstract class FromBoundedIndexContainer<T>
-        extends ExportStackSequence<T> {
+public abstract class FromBoundedIndexContainer<T> extends ExportStackSequence<T> {
 
     // START BEAN PROPERTIES
     @BeanField @Getter @Setter private FromBoundedIndexContainerGeneratorSeries<T> delegate;
@@ -77,7 +76,7 @@ public abstract class FromBoundedIndexContainer<T>
     public void setIncrementSize(int incrementSize) {
         delegate.setIncrementSize(incrementSize);
     }
-    
+
     @Override
     public boolean execute(ExportTaskParams params, ProgressMonitor progressMonitor)
             throws ExportTaskFailedException {
@@ -99,18 +98,20 @@ public abstract class FromBoundedIndexContainer<T>
     public void setLimitIterations(int limitIterations) {
         delegate.setLimitIterations(limitIterations);
     }
-    
-    private CreateOutputSequence<T> outputSequenceCreator(
-            ExportTaskParams params) {
-        return startIndex -> new OutputSequenceFactory<>(
-                createGenerator(params),
-                params.getInputOutputContext().getOutputter().getChecked()
-            ).incrementingIntegers(
-                new OutputPatternIntegerSuffix(getOutputName(),false),
-                startIndex, 1);
+
+    private CreateOutputSequence<T> outputSequenceCreator(ExportTaskParams params) {
+        return startIndex ->
+                new OutputSequenceFactory<>(
+                                createGenerator(params),
+                                params.getInputOutputContext().getOutputter().getChecked())
+                        .incrementingIntegers(
+                                new OutputPatternIntegerSuffix(getOutputName(), false),
+                                startIndex,
+                                1);
     }
-    
-    private Generator<MappedFrom<T>> createGenerator(ExportTaskParams params) throws OutputWriteFailedException {
+
+    private Generator<MappedFrom<T>> createGenerator(ExportTaskParams params)
+            throws OutputWriteFailedException {
         try {
             return getStack().createGenerator(params);
         } catch (CreateException e) {

@@ -38,8 +38,7 @@ import org.anchoranalysis.mpp.feature.energy.IndexableMarksWithEnergy;
 import org.anchoranalysis.plugin.gui.export.DualStateWithoutIndex;
 
 public class Marks
-        extends FromBoundedIndexContainer<
-                DualStateWithoutIndex<IndexableMarksWithEnergy>> {
+        extends FromBoundedIndexContainer<DualStateWithoutIndex<IndexableMarksWithEnergy>> {
 
     @Override
     public void init() {

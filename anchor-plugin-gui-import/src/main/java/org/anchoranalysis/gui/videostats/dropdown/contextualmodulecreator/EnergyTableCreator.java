@@ -47,7 +47,8 @@ import org.anchoranalysis.mpp.feature.energy.IndexableMarksWithEnergy;
 @AllArgsConstructor
 public class EnergyTableCreator extends VideoStatsModuleCreatorContext {
 
-    private final CheckedSupplier<BoundedIndexContainer<IndexableMarksWithEnergy>, OperationFailedException>
+    private final CheckedSupplier<
+                    BoundedIndexContainer<IndexableMarksWithEnergy>, OperationFailedException>
             operation;
     private final EnergyStackSupplier energyStackWithParams;
     private final ColorIndex colorIndex;
@@ -67,8 +68,7 @@ public class EnergyTableCreator extends VideoStatsModuleCreatorContext {
         try {
             BoundedIndexContainer<IndexableMarksWithEnergy> container = operation.get();
 
-            StatePanelFrameHistoryMarks frame =
-                    new StatePanelFrameHistoryMarks(namePrefix, true);
+            StatePanelFrameHistoryMarks frame = new StatePanelFrameHistoryMarks(namePrefix, true);
             frame.init(
                     defaultStateManager.getLinkStateManager().getState().getFrameIndex(),
                     container,

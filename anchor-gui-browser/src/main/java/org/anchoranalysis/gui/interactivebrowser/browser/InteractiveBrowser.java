@@ -224,11 +224,7 @@ public class InteractiveBrowser {
     }
 
     private ExportPopupParams createExportPopupParams() {
-        return new ExportPopupParams(
-            videoStatsFrame,
-            new SequenceMemory(),
-            context
-        );
+        return new ExportPopupParams(videoStatsFrame, new SequenceMemory(), context);
     }
 
     private VideoStatsModuleGlobalParams createModuleParams(

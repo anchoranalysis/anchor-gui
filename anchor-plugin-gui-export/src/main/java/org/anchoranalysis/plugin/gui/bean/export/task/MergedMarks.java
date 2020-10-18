@@ -31,8 +31,7 @@ import org.anchoranalysis.mpp.bean.regionmap.RegionMembershipWithFlags;
 import org.anchoranalysis.mpp.feature.energy.IndexableMarksWithEnergy;
 import org.anchoranalysis.mpp.mark.GlobalRegionIdentifiers;
 
-public class MergedMarks
-        extends FromBoundedIndexContainer<IndexableMarksWithEnergy> {
+public class MergedMarks extends FromBoundedIndexContainer<IndexableMarksWithEnergy> {
 
     public void init() {
         RegionMembershipWithFlags regionMembership =

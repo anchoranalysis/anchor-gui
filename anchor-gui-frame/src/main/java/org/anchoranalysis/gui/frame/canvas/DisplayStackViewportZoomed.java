@@ -28,6 +28,8 @@ package org.anchoranalysis.gui.frame.canvas;
 
 import java.awt.image.BufferedImage;
 import java.util.Optional;
+import lombok.Getter;
+import lombok.Setter;
 import org.anchoranalysis.core.error.OperationFailedException;
 import org.anchoranalysis.gui.frame.canvas.zoom.ZoomScale;
 import org.anchoranalysis.gui.frame.display.BoundOverlayedDisplayStack;
@@ -39,8 +41,6 @@ import org.anchoranalysis.spatial.extent.box.BoundingBox;
 import org.anchoranalysis.spatial.extent.scale.ScaleFactor;
 import org.anchoranalysis.spatial.point.Point2i;
 import org.anchoranalysis.spatial.point.Point3i;
-import lombok.Getter;
-import lombok.Setter;
 
 class DisplayStackViewportZoomed {
 
@@ -168,7 +168,7 @@ class DisplayStackViewportZoomed {
     public BoundOverlayedDisplayStack getDisplayStackEntireImage() {
         return unzoomed.getDisplayStackEntireImage();
     }
-    
+
     private int cnvrtCanvasXToImage(int val, ZoomScale zs) {
         return zs.removeScale(val) + unzoomed.boundingBox().cornerMin().x();
     }

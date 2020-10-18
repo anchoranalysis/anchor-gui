@@ -29,6 +29,7 @@ package org.anchoranalysis.gui.file.interactive;
 import java.io.File;
 import java.nio.file.Path;
 import java.util.Optional;
+import lombok.AllArgsConstructor;
 import org.anchoranalysis.core.error.CreateException;
 import org.anchoranalysis.core.error.InitException;
 import org.anchoranalysis.core.error.OperationFailedException;
@@ -45,7 +46,6 @@ import org.anchoranalysis.gui.videostats.dropdown.multicollection.MultiCollectio
 import org.anchoranalysis.image.core.stack.TimeSequence;
 import org.anchoranalysis.image.io.input.ProvidesStackInput;
 import org.anchoranalysis.io.output.outputter.InputOutputContext;
-import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
 public class FileSingleStack extends InteractiveFile {
@@ -91,8 +91,8 @@ public class FileSingleStack extends InteractiveFile {
         return new OpenedFileGUIWithFile(this, dropDown.openedFileGUI());
     }
 
-    private TimeSequenceProvider createTimeSeries(ProgressReporter progressReporter, int seriesIndex)
-            throws CreateException {
+    private TimeSequenceProvider createTimeSeries(
+            ProgressReporter progressReporter, int seriesIndex) throws CreateException {
         try {
             LazyEvaluationStore<TimeSequence> stacks =
                     new LazyEvaluationStore<>("createTimeSeries");

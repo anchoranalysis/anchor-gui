@@ -59,7 +59,7 @@ public class DualStateContainer<T> implements BoundedIndexContainer<IndexableDua
         this.recentAccessCache =
                 new LRUCache<>(3, index -> new IndexableDualState<T>(index, instanceStates(index)));
 
-        this.incrementalSequenceType = new IncrementingIntegers(maxOfMins(),1);
+        this.incrementalSequenceType = new IncrementingIntegers(maxOfMins(), 1);
         this.incrementalSequenceType.setEnd(minOfMaxs());
     }
 

@@ -39,8 +39,7 @@ import org.anchoranalysis.mpp.feature.energy.marks.MarksWithEnergyBreakdown;
 import org.anchoranalysis.plugin.gui.bean.export.derivestack.DeriveStack;
 import org.anchoranalysis.plugin.gui.export.MappedFrom;
 
-public abstract class DrawTextFromMarks
-        extends DeriveStack<IndexableMarksWithEnergy> {
+public abstract class DrawTextFromMarks extends DeriveStack<IndexableMarksWithEnergy> {
 
     // START BEAN PROPERTIES
     @BeanField @Getter @Setter private TextStyle textStyle;
