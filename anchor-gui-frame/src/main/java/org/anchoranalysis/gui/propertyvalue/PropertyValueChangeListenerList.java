@@ -29,7 +29,7 @@ package org.anchoranalysis.gui.propertyvalue;
 import java.util.ArrayList;
 import java.util.Iterator;
 import org.anchoranalysis.core.property.IPropertyValueReceivable;
-import org.anchoranalysis.core.property.change.PropertyValueChangeListener;
+import org.anchoranalysis.gui.property.PropertyValueChangeListener;
 
 public class PropertyValueChangeListenerList<T>
         implements Iterable<PropertyValueChangeListener<T>> {

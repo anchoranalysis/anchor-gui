@@ -26,9 +26,9 @@
 
 package org.anchoranalysis.gui.videostats.internalframe;
 
-import org.anchoranalysis.core.error.InitException;
-import org.anchoranalysis.core.idgetter.IDGetter;
-import org.anchoranalysis.core.index.container.SingleContainer;
+import org.anchoranalysis.core.exception.InitException;
+import org.anchoranalysis.core.identifier.getter.IdentifierGetter;
+import org.anchoranalysis.core.index.bounded.SingleContainer;
 import org.anchoranalysis.gui.frame.multioverlay.instantstate.InternalFrameOverlayedInstantStateToRGBSelectable;
 import org.anchoranalysis.gui.image.frame.SliderState;
 import org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.ControllerPopupMenuWithBackground;
@@ -38,7 +38,7 @@ import org.anchoranalysis.gui.videostats.module.DefaultModuleState;
 import org.anchoranalysis.overlay.IndexableOverlays;
 import org.anchoranalysis.overlay.Overlay;
 import org.anchoranalysis.overlay.collection.OverlayCollection;
-import org.anchoranalysis.overlay.id.IDGetterOverlayID;
+import org.anchoranalysis.overlay.identifier.IdentifierFromOverlay;
 
 public class InternalFrameStaticOverlaySelectable {
 
@@ -59,7 +59,7 @@ public class InternalFrameStaticOverlaySelectable {
         SingleContainer<IndexableOverlays> marksCntr = new SingleContainer<>(false);
         marksCntr.setItem(cis, cis.getIndex());
 
-        IDGetter<Overlay> idGetter = new IDGetterOverlayID();
+        IdentifierGetter<Overlay> idGetter = new IdentifierFromOverlay();
 
         SliderState sliderState =
                 this.delegate.init(

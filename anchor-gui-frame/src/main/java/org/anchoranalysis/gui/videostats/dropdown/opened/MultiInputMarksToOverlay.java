@@ -27,8 +27,8 @@
 package org.anchoranalysis.gui.videostats.dropdown.opened;
 
 import lombok.RequiredArgsConstructor;
-import org.anchoranalysis.core.bridge.BridgeElementWithIndex;
-import org.anchoranalysis.core.error.OperationFailedException;
+import org.anchoranalysis.core.exception.OperationFailedException;
+import org.anchoranalysis.core.index.BridgeElementWithIndex;
 import org.anchoranalysis.gui.marks.MarkDisplaySettings;
 import org.anchoranalysis.gui.videostats.internalframe.markstorgb.MultiInput;
 import org.anchoranalysis.mpp.mark.MarkCollection;

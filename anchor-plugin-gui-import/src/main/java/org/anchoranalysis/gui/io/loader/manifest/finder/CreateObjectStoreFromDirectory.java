@@ -28,9 +28,9 @@ package org.anchoranalysis.gui.io.loader.manifest.finder;
 
 import java.io.File;
 import java.nio.file.Path;
-import org.anchoranalysis.core.error.OperationFailedException;
+import org.anchoranalysis.core.exception.OperationFailedException;
+import org.anchoranalysis.core.identifier.provider.store.LazyEvaluationStore;
 import org.anchoranalysis.core.log.Logger;
-import org.anchoranalysis.core.name.store.LazyEvaluationStore;
 import org.anchoranalysis.image.io.objects.ObjectCollectionReader;
 import org.anchoranalysis.image.voxel.object.ObjectCollection;
 import org.apache.commons.io.FilenameUtils;

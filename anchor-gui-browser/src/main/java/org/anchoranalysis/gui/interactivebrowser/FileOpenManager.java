@@ -27,7 +27,7 @@
 package org.anchoranalysis.gui.interactivebrowser;
 
 import lombok.RequiredArgsConstructor;
-import org.anchoranalysis.core.error.OperationFailedException;
+import org.anchoranalysis.core.exception.OperationFailedException;
 import org.anchoranalysis.gui.file.interactive.InteractiveFile;
 import org.anchoranalysis.gui.file.opened.OpenedFile;
 import org.anchoranalysis.gui.videostats.dropdown.AddVideoStatsModule;

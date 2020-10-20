@@ -27,9 +27,9 @@
 package org.anchoranalysis.gui.videostats.dropdown.addoverlays;
 
 import javax.swing.JFrame;
-import org.anchoranalysis.core.error.reporter.ErrorReporter;
 import org.anchoranalysis.core.event.RoutableReceivable;
-import org.anchoranalysis.core.property.change.PropertyValueChangeEvent;
+import org.anchoranalysis.core.log.error.ErrorReporter;
+import org.anchoranalysis.gui.property.PropertyValueChangeEvent;
 import org.anchoranalysis.gui.videostats.dropdown.AddVideoStatsModule;
 import org.anchoranalysis.gui.videostats.link.LinkModules;
 import org.anchoranalysis.gui.videostats.module.VideoStatsModule;

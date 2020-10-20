@@ -29,7 +29,7 @@ package org.anchoranalysis.gui.frame.multiraster;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import org.anchoranalysis.core.index.GetOperationFailedException;
-import org.anchoranalysis.core.index.container.BoundedIndexContainer;
+import org.anchoranalysis.core.index.bounded.BoundedIndexContainer;
 import org.anchoranalysis.core.progress.ProgressReporterNull;
 import org.anchoranalysis.gui.backgroundset.BackgroundSet;
 import org.anchoranalysis.gui.container.background.BackgroundStackContainerException;

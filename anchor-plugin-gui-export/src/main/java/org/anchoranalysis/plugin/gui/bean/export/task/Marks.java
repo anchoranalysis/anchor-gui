@@ -27,9 +27,9 @@
 package org.anchoranalysis.plugin.gui.bean.export.task;
 
 import java.util.List;
-import org.anchoranalysis.core.error.OperationFailedException;
-import org.anchoranalysis.core.index.container.BoundedIndexContainer;
-import org.anchoranalysis.core.index.container.bridge.BoundedIndexContainerBridgeWithoutIndex;
+import org.anchoranalysis.core.exception.OperationFailedException;
+import org.anchoranalysis.core.index.bounded.BoundedIndexContainer;
+import org.anchoranalysis.core.index.bounded.bridge.BoundedIndexContainerBridgeWithoutIndex;
 import org.anchoranalysis.gui.container.ContainerGetter;
 import org.anchoranalysis.gui.container.ContainerUtilities;
 import org.anchoranalysis.gui.export.bean.ExportTaskParams;

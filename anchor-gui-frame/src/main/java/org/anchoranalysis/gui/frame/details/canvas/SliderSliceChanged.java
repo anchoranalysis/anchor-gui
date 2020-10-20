@@ -26,9 +26,9 @@
 
 package org.anchoranalysis.gui.frame.details.canvas;
 
-import org.anchoranalysis.core.property.change.PropertyValueChangeEvent;
-import org.anchoranalysis.core.property.change.PropertyValueChangeListener;
 import org.anchoranalysis.gui.frame.canvas.ImageCanvas;
+import org.anchoranalysis.gui.property.PropertyValueChangeEvent;
+import org.anchoranalysis.gui.property.PropertyValueChangeListener;
 
 class SliderSliceChanged implements PropertyValueChangeListener<Integer> {
 

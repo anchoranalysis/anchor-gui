@@ -26,7 +26,7 @@
 
 package org.anchoranalysis.gui.interactivebrowser.input;
 
-import org.anchoranalysis.core.error.CreateException;
+import org.anchoranalysis.core.exception.CreateException;
 import org.anchoranalysis.mpp.feature.energy.scheme.EnergyScheme;
 import org.anchoranalysis.mpp.feature.energy.scheme.EnergySchemeSet;
 

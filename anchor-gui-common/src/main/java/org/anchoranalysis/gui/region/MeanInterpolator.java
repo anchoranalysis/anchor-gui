@@ -26,10 +26,10 @@
 
 package org.anchoranalysis.gui.region;
 
-import org.anchoranalysis.core.arithmetic.RunningSum;
-import org.anchoranalysis.core.error.OperationFailedException;
+import org.anchoranalysis.core.exception.OperationFailedException;
 import org.anchoranalysis.image.voxel.buffer.primitive.UnsignedBufferAsInt;
-import org.anchoranalysis.spatial.extent.Extent;
+import org.anchoranalysis.math.arithmetic.RunningSum;
+import org.anchoranalysis.spatial.Extent;
 import org.anchoranalysis.spatial.point.Point2i;
 
 class MeanInterpolator {

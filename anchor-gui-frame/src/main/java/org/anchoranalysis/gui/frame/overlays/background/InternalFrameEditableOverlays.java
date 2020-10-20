@@ -26,7 +26,7 @@
 
 package org.anchoranalysis.gui.frame.overlays.background;
 
-import org.anchoranalysis.core.error.InitException;
+import org.anchoranalysis.core.exception.InitException;
 import org.anchoranalysis.gui.container.background.BackgroundStackContainerException;
 import org.anchoranalysis.gui.displayupdate.OverlayedDisplayStack;
 import org.anchoranalysis.gui.frame.details.canvas.ControllerAction;
@@ -45,7 +45,7 @@ import org.anchoranalysis.gui.videostats.internalframe.ColoredMarksUpdater;
 import org.anchoranalysis.gui.videostats.internalframe.markstorgb.markdisplay.MarkDisplaySettingsWrapper;
 import org.anchoranalysis.gui.videostats.module.DefaultModuleState;
 import org.anchoranalysis.overlay.collection.ColoredOverlayCollection;
-import org.anchoranalysis.overlay.id.IDGetterOverlayID;
+import org.anchoranalysis.overlay.identifier.IdentifierFromOverlay;
 
 public class InternalFrameEditableOverlays implements ColoredMarksUpdater {
 
@@ -68,7 +68,7 @@ public class InternalFrameEditableOverlays implements ColoredMarksUpdater {
                             new OverlayedDisplayStack(
                                     new ColoredOverlayCollection(),
                                     defaultState.getLinkState().getBackground().apply(0)),
-                            new IDGetterOverlayID(),
+                            new IdentifierFromOverlay(),
                             false,
                             defaultState,
                             markDisplaySettings,

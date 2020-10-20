@@ -27,15 +27,15 @@
 package org.anchoranalysis.gui.frame.overlays;
 
 import java.util.Optional;
-import org.anchoranalysis.core.error.InitException;
-import org.anchoranalysis.core.property.change.PropertyValueChangeEvent;
-import org.anchoranalysis.core.property.change.PropertyValueChangeListener;
+import org.anchoranalysis.core.exception.InitException;
 import org.anchoranalysis.gui.container.background.BackgroundStackContainerException;
 import org.anchoranalysis.gui.frame.details.canvas.ControllerAction;
 import org.anchoranalysis.gui.frame.details.canvas.controller.imageview.ControllerImageView;
 import org.anchoranalysis.gui.frame.overlays.background.InternalFrameEditableOverlays;
 import org.anchoranalysis.gui.image.frame.SliderState;
 import org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.ControllerPopupMenuWithBackground;
+import org.anchoranalysis.gui.property.PropertyValueChangeEvent;
+import org.anchoranalysis.gui.property.PropertyValueChangeListener;
 import org.anchoranalysis.gui.propertyvalue.PropertyValueChangeListenerList;
 import org.anchoranalysis.gui.videostats.IModuleCreatorDefaultStateSliderState;
 import org.anchoranalysis.gui.videostats.dropdown.VideoStatsModuleGlobalParams;

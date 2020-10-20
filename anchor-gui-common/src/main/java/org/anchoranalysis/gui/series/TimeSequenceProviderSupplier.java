@@ -25,7 +25,7 @@
  */
 package org.anchoranalysis.gui.series;
 
-import org.anchoranalysis.core.error.CreateException;
+import org.anchoranalysis.core.exception.CreateException;
 import org.anchoranalysis.core.progress.CachedProgressingSupplier;
 import org.anchoranalysis.core.progress.ProgressReporter;
 

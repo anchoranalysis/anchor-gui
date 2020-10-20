@@ -29,7 +29,7 @@ package org.anchoranalysis.plugin.gui.bean.export.derivestack.plot;
 import lombok.Getter;
 import lombok.Setter;
 import org.anchoranalysis.bean.annotation.BeanField;
-import org.anchoranalysis.core.error.CreateException;
+import org.anchoranalysis.core.exception.CreateException;
 import org.anchoranalysis.gui.export.bean.ExportTaskParams;
 import org.anchoranalysis.image.bean.spatial.SizeXY;
 import org.anchoranalysis.image.io.generator.raster.RasterGenerator;

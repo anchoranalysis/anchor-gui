@@ -26,7 +26,7 @@
 package org.anchoranalysis.gui.videostats.operation.combine;
 
 import org.anchoranalysis.core.cache.CachedSupplier;
-import org.anchoranalysis.core.error.OperationFailedException;
+import org.anchoranalysis.core.exception.OperationFailedException;
 
 /**
  * Supplies some kind of overlay-collection

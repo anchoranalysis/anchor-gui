@@ -31,7 +31,7 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import org.anchoranalysis.core.index.IndicesSelection;
+import org.anchoranalysis.gui.index.IndicesSelection;
 import org.anchoranalysis.gui.kernel.match.MatchKernel;
 import org.anchoranalysis.gui.kernel.match.MatchKernelAccptd;
 import org.anchoranalysis.gui.kernel.match.MatchKernelAllChangedMarksFoundIn;

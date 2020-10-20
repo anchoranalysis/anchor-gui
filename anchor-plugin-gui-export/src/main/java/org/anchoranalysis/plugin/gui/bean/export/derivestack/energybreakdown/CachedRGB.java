@@ -27,8 +27,8 @@
 package org.anchoranalysis.plugin.gui.bean.export.derivestack.energybreakdown;
 
 import java.util.List;
-import org.anchoranalysis.core.error.OperationFailedException;
-import org.anchoranalysis.core.idgetter.IDGetter;
+import org.anchoranalysis.core.exception.OperationFailedException;
+import org.anchoranalysis.core.identifier.getter.IdentifierGetter;
 import org.anchoranalysis.gui.frame.display.OverlayedDisplayStackUpdate;
 import org.anchoranalysis.image.core.channel.Channel;
 import org.anchoranalysis.image.core.stack.DisplayStack;
@@ -39,12 +39,12 @@ import org.anchoranalysis.image.voxel.buffer.primitive.UnsignedByteBuffer;
 import org.anchoranalysis.overlay.Overlay;
 import org.anchoranalysis.overlay.collection.ColoredOverlayCollection;
 import org.anchoranalysis.overlay.writer.DrawOverlay;
-import org.anchoranalysis.spatial.extent.box.BoundingBox;
+import org.anchoranalysis.spatial.box.BoundingBox;
 
 class CachedRGB {
 
     // Start - these parameters never change
-    private final IDGetter<Overlay> idGetter;
+    private final IdentifierGetter<Overlay> idGetter;
 
     private DisplayStack backgroundOriginal;
 
@@ -56,7 +56,7 @@ class CachedRGB {
 
     private boolean needsBackgroundRefresh = false;
 
-    public CachedRGB(final IDGetter<Overlay> idGetter) {
+    public CachedRGB(final IdentifierGetter<Overlay> idGetter) {
 
         this.idGetter = idGetter;
 

@@ -27,10 +27,10 @@
 package org.anchoranalysis.plugin.gui.bean.export.derivestack.plot.energybreakdown;
 
 import lombok.AllArgsConstructor;
-import org.anchoranalysis.core.error.OperationFailedException;
-import org.anchoranalysis.core.functional.function.CheckedFunction;
+import org.anchoranalysis.core.exception.OperationFailedException;
+import org.anchoranalysis.core.functional.checked.CheckedFunction;
 import org.anchoranalysis.core.index.GetOperationFailedException;
-import org.anchoranalysis.core.index.container.BoundedIndexContainer;
+import org.anchoranalysis.core.index.bounded.BoundedIndexContainer;
 import org.anchoranalysis.gui.finder.csvstatistic.CSVStatistic;
 import org.anchoranalysis.mpp.feature.energy.IndexableMarksWithEnergy;
 import org.anchoranalysis.plugin.gui.export.MappedFrom;

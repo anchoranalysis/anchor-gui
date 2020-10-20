@@ -27,9 +27,9 @@
 package org.anchoranalysis.gui.feature.evaluator;
 
 import javax.swing.SwingUtilities;
-import org.anchoranalysis.core.error.OperationFailedException;
-import org.anchoranalysis.core.error.reporter.ErrorReporter;
+import org.anchoranalysis.core.exception.OperationFailedException;
 import org.anchoranalysis.core.log.Logger;
+import org.anchoranalysis.core.log.error.ErrorReporter;
 import org.anchoranalysis.gui.feature.evaluator.treetable.FeatureListSrc;
 import org.anchoranalysis.gui.image.OverlaysWithEnergyStack;
 import org.anchoranalysis.gui.image.frame.ControllerSize;

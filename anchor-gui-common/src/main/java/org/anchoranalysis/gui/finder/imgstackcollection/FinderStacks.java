@@ -26,8 +26,8 @@
 
 package org.anchoranalysis.gui.finder.imgstackcollection;
 
-import org.anchoranalysis.core.error.OperationFailedException;
-import org.anchoranalysis.core.name.provider.NamedProvider;
+import org.anchoranalysis.core.exception.OperationFailedException;
+import org.anchoranalysis.core.identifier.provider.NamedProvider;
 import org.anchoranalysis.image.core.stack.NamedStacksSupplier;
 import org.anchoranalysis.image.core.stack.Stack;
 import org.anchoranalysis.io.manifest.finder.Finder;

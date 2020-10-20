@@ -26,7 +26,7 @@
 
 package org.anchoranalysis.gui.finder;
 
-import org.anchoranalysis.core.error.OperationFailedException;
+import org.anchoranalysis.core.exception.OperationFailedException;
 import org.anchoranalysis.image.core.channel.Channel;
 
 public interface FinderRasterSingleChannel {

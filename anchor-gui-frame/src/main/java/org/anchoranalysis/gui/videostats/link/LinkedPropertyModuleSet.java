@@ -33,7 +33,7 @@ import org.anchoranalysis.core.event.RoutableEvent;
 import org.anchoranalysis.core.event.RoutableEventSourceObject;
 import org.anchoranalysis.core.event.RoutableListener;
 import org.anchoranalysis.core.property.IPropertyValueSendable;
-import org.anchoranalysis.core.property.change.PropertyValueChangeEvent;
+import org.anchoranalysis.gui.property.PropertyValueChangeEvent;
 import org.anchoranalysis.gui.videostats.ModuleEventRouter;
 import org.anchoranalysis.gui.videostats.ModuleEventRouter.RouterStyle;
 import org.anchoranalysis.gui.videostats.SubgroupRetriever;
@@ -67,14 +67,12 @@ class LinkedPropertyModuleSet<PropertyValueType> {
         @Override
         public void eventOccurred(RoutableEvent<PropertyValueChangeEvent<PropertyValueType>> evt) {
 
-            if (enabled != true) {
-                return;
+            if (enabled) {
+                setPropertyValue(
+                        evt.getEvent().getValue(),
+                        evt.getEvent().isAdjusting(),
+                        evt.getRoutableSource());
             }
-
-            setPropertyValue(
-                    evt.getEvent().getValue(),
-                    evt.getEvent().getAdjusting(),
-                    evt.getRoutableSource());
         }
     }
 

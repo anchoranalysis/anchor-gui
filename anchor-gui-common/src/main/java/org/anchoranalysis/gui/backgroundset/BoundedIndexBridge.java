@@ -28,9 +28,9 @@ package org.anchoranalysis.gui.backgroundset;
 
 import lombok.AllArgsConstructor;
 import lombok.Setter;
-import org.anchoranalysis.core.functional.function.CheckedFunction;
+import org.anchoranalysis.core.functional.checked.CheckedFunction;
 import org.anchoranalysis.core.index.GetOperationFailedException;
-import org.anchoranalysis.core.index.container.BoundedIndexContainer;
+import org.anchoranalysis.core.index.bounded.BoundedIndexContainer;
 import org.anchoranalysis.gui.container.background.BackgroundStackContainerException;
 
 @AllArgsConstructor

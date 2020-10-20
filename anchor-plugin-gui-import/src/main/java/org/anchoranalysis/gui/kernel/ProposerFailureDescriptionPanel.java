@@ -42,7 +42,7 @@ import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreeModel;
 import javax.swing.tree.TreePath;
 import org.anchoranalysis.core.color.RGBColor;
-import org.anchoranalysis.core.index.IntArray;
+import org.anchoranalysis.gui.videostats.link.IntArray;
 import org.anchoranalysis.core.property.IPropertyValueReceivable;
 import org.anchoranalysis.core.property.IPropertyValueSendable;
 import org.anchoranalysis.gui.frame.display.OverlayedDisplayStackUpdate;

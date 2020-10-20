@@ -28,7 +28,7 @@ package org.anchoranalysis.gui.marks;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
-import org.anchoranalysis.core.index.IndicesSelection;
+import org.anchoranalysis.gui.index.IndicesSelection;
 import org.anchoranalysis.mpp.mark.Mark;
 import org.anchoranalysis.mpp.mark.MarkCollection;
 
@@ -41,7 +41,7 @@ public class MarkCollectionUtilities {
 
         // This our current
         for (Mark mark : marks) {
-            if (indices.contains(mark.getId())) {
+            if (indices.contains(mark.getIdentifier())) {
                 out.add(mark);
             }
         }

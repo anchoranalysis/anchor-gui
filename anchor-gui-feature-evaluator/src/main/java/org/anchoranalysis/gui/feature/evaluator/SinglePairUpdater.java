@@ -26,7 +26,7 @@
 
 package org.anchoranalysis.gui.feature.evaluator;
 
-import org.anchoranalysis.core.error.CreateException;
+import org.anchoranalysis.core.exception.CreateException;
 import org.anchoranalysis.feature.energy.EnergyStack;
 import org.anchoranalysis.gui.feature.evaluator.singlepair.UpdatableSinglePair;
 import org.anchoranalysis.gui.feature.evaluator.singlepair.UpdatableSinglePairList;

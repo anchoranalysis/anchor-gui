@@ -28,7 +28,7 @@ package org.anchoranalysis.gui.frame.details.canvas.controller.imageview;
 
 import java.awt.GraphicsConfiguration;
 import java.awt.Rectangle;
-import org.anchoranalysis.spatial.extent.Extent;
+import org.anchoranalysis.spatial.Extent;
 
 class Utilities {
 

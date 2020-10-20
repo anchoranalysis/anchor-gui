@@ -31,8 +31,8 @@ import lombok.RequiredArgsConstructor;
 import org.anchoranalysis.core.cache.LRUCache;
 import org.anchoranalysis.core.functional.FunctionalList;
 import org.anchoranalysis.core.index.GetOperationFailedException;
-import org.anchoranalysis.core.index.container.BoundChangeListener;
-import org.anchoranalysis.core.index.container.BoundedIndexContainer;
+import org.anchoranalysis.core.index.bounded.BoundChangeListener;
+import org.anchoranalysis.core.index.bounded.BoundedIndexContainer;
 import org.anchoranalysis.io.manifest.sequencetype.IncrementingIntegers;
 import org.anchoranalysis.mpp.feature.energy.IndexableMarksWithEnergy;
 

@@ -29,7 +29,7 @@ package org.anchoranalysis.gui.feature.evaluator;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.JOptionPane;
-import org.anchoranalysis.core.error.reporter.ErrorReporter;
+import org.anchoranalysis.core.log.error.ErrorReporter;
 import org.anchoranalysis.gui.feature.evaluator.energytree.Node;
 import org.anchoranalysis.gui.feature.evaluator.treetable.ITreeTableModel;
 import org.netbeans.swing.outline.Outline;

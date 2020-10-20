@@ -32,7 +32,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JMenu;
 import javax.swing.JPopupMenu;
-import org.anchoranalysis.core.error.reporter.ErrorReporter;
+import org.anchoranalysis.core.log.error.ErrorReporter;
 import org.anchoranalysis.gui.frame.details.ControllerPopupMenu;
 
 public class InternalFrameIJPopupClickListener extends MouseAdapter {

@@ -28,8 +28,8 @@ package org.anchoranalysis.gui.feature.evaluator;
 
 import java.util.Optional;
 import lombok.AllArgsConstructor;
-import org.anchoranalysis.core.error.CreateException;
-import org.anchoranalysis.core.error.InitException;
+import org.anchoranalysis.core.exception.CreateException;
+import org.anchoranalysis.core.exception.InitException;
 import org.anchoranalysis.core.log.Logger;
 import org.anchoranalysis.feature.bean.list.FeatureList;
 import org.anchoranalysis.feature.calculate.FeatureInitParams;
@@ -133,7 +133,7 @@ class FinderEvaluator {
             for (Mark m2 : marks) {
 
                 // Let's only do each combination once
-                if (m1.getId() >= m2.getId()) {
+                if (m1.getIdentifier() >= m2.getIdentifier()) {
                     continue;
                 }
 

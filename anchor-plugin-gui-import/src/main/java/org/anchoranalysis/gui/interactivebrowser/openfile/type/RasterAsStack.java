@@ -30,7 +30,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import org.anchoranalysis.bean.xml.RegisterBeanFactories;
-import org.anchoranalysis.core.error.CreateException;
+import org.anchoranalysis.core.exception.CreateException;
 import org.anchoranalysis.gui.bean.filecreator.FileCreator;
 import org.anchoranalysis.gui.bean.filecreator.StackCollectionCreator;
 import org.anchoranalysis.gui.interactivebrowser.openfile.importer.ImporterSettings;

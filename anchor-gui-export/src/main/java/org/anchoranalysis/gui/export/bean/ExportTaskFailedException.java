@@ -26,7 +26,7 @@
 
 package org.anchoranalysis.gui.export.bean;
 
-import org.anchoranalysis.core.error.AnchorCheckedException;
+import org.anchoranalysis.core.exception.AnchorCheckedException;
 
 public class ExportTaskFailedException extends AnchorCheckedException {
 

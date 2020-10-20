@@ -26,7 +26,7 @@
 
 package org.anchoranalysis.gui.videostats.internalframe.annotator.tool;
 
-import org.anchoranalysis.core.error.reporter.ErrorReporter;
+import org.anchoranalysis.core.log.error.ErrorReporter;
 import org.anchoranalysis.gui.videostats.internalframe.annotator.currentstate.IShowError;
 
 public class ToolErrorReporter implements IShowError {

@@ -27,12 +27,12 @@
 package org.anchoranalysis.gui.frame.multioverlay.instantstate;
 
 import lombok.AllArgsConstructor;
-import org.anchoranalysis.core.error.InitException;
-import org.anchoranalysis.core.functional.function.CheckedFunction;
-import org.anchoranalysis.core.idgetter.IDGetter;
+import org.anchoranalysis.core.exception.InitException;
+import org.anchoranalysis.core.functional.checked.CheckedFunction;
+import org.anchoranalysis.core.identifier.getter.IdentifierGetter;
 import org.anchoranalysis.core.index.IndexGettableSettable;
 import org.anchoranalysis.core.index.SetOperationFailedException;
-import org.anchoranalysis.core.index.container.BoundedIndexContainer;
+import org.anchoranalysis.core.index.bounded.BoundedIndexContainer;
 import org.anchoranalysis.core.property.IPropertyValueSendable;
 import org.anchoranalysis.gui.container.background.BackgroundStackContainerException;
 import org.anchoranalysis.gui.frame.details.GenerateExtraDetail;
@@ -71,7 +71,7 @@ class InternalFrameOverlayedInstantStateToRGB {
     // Must be called before usage
     public SliderState init(
             BoundedIndexContainer<IndexableColoredOverlays> overlaysCntr,
-            IDGetter<Overlay> idGetter,
+            IdentifierGetter<Overlay> idGetter,
             boolean includeFrameAdjusting,
             DefaultModuleState initialState,
             MarkDisplaySettingsWrapper markDisplaySettingsWrapper,

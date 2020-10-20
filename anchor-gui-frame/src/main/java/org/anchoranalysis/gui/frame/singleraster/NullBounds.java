@@ -26,8 +26,8 @@
 
 package org.anchoranalysis.gui.frame.singleraster;
 
-import org.anchoranalysis.core.index.container.BoundChangeListener;
-import org.anchoranalysis.core.index.container.BoundedRangeIncompleteDynamic;
+import org.anchoranalysis.core.index.bounded.BoundChangeListener;
+import org.anchoranalysis.core.index.bounded.BoundedRangeIncompleteDynamic;
 
 class NullBounds implements BoundedRangeIncompleteDynamic {
 

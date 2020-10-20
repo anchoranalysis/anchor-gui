@@ -26,7 +26,7 @@
 
 package org.anchoranalysis.gui.indices;
 
-import org.anchoranalysis.core.index.IndicesSelection;
+import org.anchoranalysis.gui.index.IndicesSelection;
 
 // Maintains a record of two selection of indices
 //   CURRENT 		- whatever the indices are associated with the current widget state

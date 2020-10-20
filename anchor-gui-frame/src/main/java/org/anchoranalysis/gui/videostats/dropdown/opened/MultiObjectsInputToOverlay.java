@@ -26,9 +26,9 @@
 
 package org.anchoranalysis.gui.videostats.dropdown.opened;
 
-import org.anchoranalysis.core.bridge.BridgeElementWithIndex;
-import org.anchoranalysis.core.error.OperationFailedException;
-import org.anchoranalysis.core.idgetter.IDGetterIter;
+import org.anchoranalysis.core.exception.OperationFailedException;
+import org.anchoranalysis.core.identifier.getter.IdentifyByIteration;
+import org.anchoranalysis.core.index.BridgeElementWithIndex;
 import org.anchoranalysis.gui.videostats.internalframe.markstorgb.MultiInput;
 import org.anchoranalysis.image.voxel.object.ObjectCollection;
 import org.anchoranalysis.overlay.IndexableOverlays;
@@ -45,7 +45,7 @@ class MultiObjectsInputToOverlay
 
         OverlayCollection oc =
                 OverlayCollectionObjectFactory.createWithoutColor(
-                        sourceObject.getAssociatedObjects().get(), new IDGetterIter<>());
+                        sourceObject.getAssociatedObjects().get(), new IdentifyByIteration<>());
         return new IndexableOverlays(index, oc);
     }
 }

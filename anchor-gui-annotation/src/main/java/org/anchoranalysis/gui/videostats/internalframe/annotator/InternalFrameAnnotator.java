@@ -27,8 +27,8 @@
 package org.anchoranalysis.gui.videostats.internalframe.annotator;
 
 import javax.swing.JFrame;
-import org.anchoranalysis.core.error.InitException;
-import org.anchoranalysis.core.error.reporter.ErrorReporter;
+import org.anchoranalysis.core.exception.InitException;
+import org.anchoranalysis.core.log.error.ErrorReporter;
 import org.anchoranalysis.gui.annotation.builder.AnnotationGuiBuilder;
 import org.anchoranalysis.gui.frame.details.canvas.ControllerFrame;
 import org.anchoranalysis.gui.frame.details.canvas.controller.imageview.ControllerImageView;

@@ -27,10 +27,10 @@
 package org.anchoranalysis.gui.videostats.internalframe;
 
 import org.anchoranalysis.anchor.mpp.feature.instantstate.EnergyInstantStateBridge;
-import org.anchoranalysis.core.error.InitException;
-import org.anchoranalysis.core.idgetter.IDGetter;
-import org.anchoranalysis.core.index.container.BoundedIndexContainer;
-import org.anchoranalysis.core.index.container.bridge.BoundedIndexContainerBridgeWithoutIndex;
+import org.anchoranalysis.core.exception.InitException;
+import org.anchoranalysis.core.identifier.getter.IdentifierGetter;
+import org.anchoranalysis.core.index.bounded.BoundedIndexContainer;
+import org.anchoranalysis.core.index.bounded.bridge.BoundedIndexContainerBridgeWithoutIndex;
 import org.anchoranalysis.gui.frame.multioverlay.instantstate.InternalFrameOverlayedInstantStateToRGBSelectable;
 import org.anchoranalysis.gui.image.frame.SliderState;
 import org.anchoranalysis.gui.videostats.IModuleCreatorDefaultState;
@@ -39,7 +39,7 @@ import org.anchoranalysis.gui.videostats.dropdown.VideoStatsModuleGlobalParams;
 import org.anchoranalysis.gui.videostats.module.DefaultModuleState;
 import org.anchoranalysis.mpp.feature.energy.IndexableMarksWithEnergy;
 import org.anchoranalysis.overlay.Overlay;
-import org.anchoranalysis.overlay.id.IDGetterOverlayID;
+import org.anchoranalysis.overlay.identifier.IdentifierFromOverlay;
 
 public class InternalFrameMarksHistoryFolder {
 
@@ -56,7 +56,7 @@ public class InternalFrameMarksHistoryFolder {
             VideoStatsModuleGlobalParams mpg)
             throws InitException {
 
-        IDGetter<Overlay> idGetter = new IDGetterOverlayID();
+        IdentifierGetter<Overlay> idGetter = new IdentifierFromOverlay();
 
         SliderState sliderState =
                 this.delegate.init(

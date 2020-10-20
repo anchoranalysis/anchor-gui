@@ -28,8 +28,8 @@ package org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.definition;
 
 import java.util.List;
 import lombok.RequiredArgsConstructor;
-import org.anchoranalysis.core.error.reporter.ErrorReporter;
 import org.anchoranalysis.core.functional.FunctionalList;
+import org.anchoranalysis.core.log.error.ErrorReporter;
 import org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.IGetNames;
 import org.anchoranalysis.gui.videostats.dropdown.BackgroundSetProgressingSupplier;
 

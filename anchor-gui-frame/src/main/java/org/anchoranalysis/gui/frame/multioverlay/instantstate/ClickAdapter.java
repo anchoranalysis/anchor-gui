@@ -29,37 +29,33 @@ package org.anchoranalysis.gui.frame.multioverlay.instantstate;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.SwingUtilities;
-import org.anchoranalysis.core.index.IndicesSelection;
 import org.anchoranalysis.core.property.IPropertyValueReceivable;
-import org.anchoranalysis.core.property.change.PropertyValueChangeEvent;
-import org.anchoranalysis.core.property.change.PropertyValueChangeListener;
 import org.anchoranalysis.gui.frame.display.overlay.OverlayRetriever;
 import org.anchoranalysis.gui.image.ISliceNumGetter;
+import org.anchoranalysis.gui.index.IndicesSelection;
 import org.anchoranalysis.gui.indices.DualIndicesSelection;
+import org.anchoranalysis.gui.property.PropertyValueChangeEvent;
+import org.anchoranalysis.gui.property.PropertyValueChangeListener;
 import org.anchoranalysis.gui.propertyvalue.PropertyValueChangeListenerList;
 import org.anchoranalysis.overlay.collection.ColoredOverlayCollection;
 import org.anchoranalysis.overlay.collection.OverlayCollection;
 import org.anchoranalysis.spatial.point.Point3i;
+import org.apache.commons.lang3.ArrayUtils;
+import lombok.RequiredArgsConstructor;
 
+@RequiredArgsConstructor
 class ClickAdapter extends MouseAdapter {
 
-    private ISliceNumGetter sliceNumGetter;
+    // START REQUIRED ARGUMENTS
+    private final DualIndicesSelection selectionIndices;
+    
+    private final ISliceNumGetter sliceNumGetter;
 
-    private OverlayRetriever overlaysGetter;
-
-    private DualIndicesSelection selectionIndices;
+    private final OverlayRetriever overlaysGetter;
+    // END REQUIRED ARGUMENTS
+    
     private PropertyValueChangeListenerList<OverlayCollection> eventListenerList =
             new PropertyValueChangeListenerList<>();
-
-    public ClickAdapter(
-            DualIndicesSelection selectionIndices,
-            ISliceNumGetter sliceNumGetter,
-            OverlayRetriever overlaysGetter) {
-        super();
-        this.selectionIndices = selectionIndices;
-        this.sliceNumGetter = sliceNumGetter;
-        this.overlaysGetter = overlaysGetter;
-    }
 
     @Override
     public void mousePressed(MouseEvent event) {
@@ -104,17 +100,18 @@ class ClickAdapter extends MouseAdapter {
 
         ColoredOverlayCollection overlays = overlaysGetter.getOverlays();
 
+        final int[] idsFinal = ids;
         OverlayCollection overlaysSubset =
-                overlays.getOverlays().createSubset(new IndicesSelection(ids));
+                overlays.getOverlays().createSubset( idToFind -> ArrayUtils.contains(idsFinal, idToFind) );
 
         // We also trigger an selectMark
         triggerObjectChangeEvent(overlaysSubset);
     }
 
-    private static int[] idArrayFromOverlayCollection(OverlayCollection oc) {
-        int[] out = new int[oc.size()];
-        for (int i = 0; i < oc.size(); i++) {
-            out[i] = oc.get(i).getId();
+    private static int[] idArrayFromOverlayCollection(OverlayCollection overlays) {
+        int[] out = new int[overlays.size()];
+        for (int i = 0; i < overlays.size(); i++) {
+            out[i] = overlays.get(i).getIdentifier();
         }
         return out;
     }

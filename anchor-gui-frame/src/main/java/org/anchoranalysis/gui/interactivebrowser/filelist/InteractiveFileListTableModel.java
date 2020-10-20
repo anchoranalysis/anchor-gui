@@ -28,7 +28,7 @@ package org.anchoranalysis.gui.interactivebrowser.filelist;
 
 import javax.swing.event.TableModelListener;
 import javax.swing.table.TableModel;
-import org.anchoranalysis.core.error.OperationFailedException;
+import org.anchoranalysis.core.exception.OperationFailedException;
 import org.anchoranalysis.core.progress.ProgressReporter;
 import org.anchoranalysis.gui.file.interactive.InteractiveFile;
 

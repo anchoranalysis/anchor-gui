@@ -27,11 +27,11 @@ package org.anchoranalysis.gui.finder;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
-import org.anchoranalysis.core.error.OperationFailedException;
-import org.anchoranalysis.core.functional.function.CheckedBiConsumer;
+import org.anchoranalysis.core.exception.OperationFailedException;
+import org.anchoranalysis.core.functional.checked.CheckedBiConsumer;
+import org.anchoranalysis.core.identifier.provider.store.StoreSupplier;
 import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.index.GetterFromIndex;
-import org.anchoranalysis.core.name.store.StoreSupplier;
 import org.anchoranalysis.io.manifest.sequencetype.IncompleteElementRange;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)

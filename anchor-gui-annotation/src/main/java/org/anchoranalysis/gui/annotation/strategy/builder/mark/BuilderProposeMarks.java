@@ -28,10 +28,10 @@ package org.anchoranalysis.gui.annotation.strategy.builder.mark;
 
 import java.nio.file.Path;
 import java.util.Optional;
-import org.anchoranalysis.annotation.io.input.AnnotationWithStrategy;
+import org.anchoranalysis.annotation.io.AnnotationWithStrategy;
 import org.anchoranalysis.annotation.io.mark.MarkAnnotationReader;
-import org.anchoranalysis.core.error.CreateException;
-import org.anchoranalysis.core.error.OperationFailedException;
+import org.anchoranalysis.core.exception.CreateException;
+import org.anchoranalysis.core.exception.OperationFailedException;
 import org.anchoranalysis.core.functional.OptionalUtilities;
 import org.anchoranalysis.core.log.Logger;
 import org.anchoranalysis.core.progress.ProgressReporterMultiple;

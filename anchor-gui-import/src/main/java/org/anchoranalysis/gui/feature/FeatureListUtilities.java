@@ -29,7 +29,7 @@ package org.anchoranalysis.gui.feature;
 import java.util.function.Function;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
-import org.anchoranalysis.core.name.value.SimpleNameValue;
+import org.anchoranalysis.core.identifier.name.SimpleNameValue;
 import org.anchoranalysis.feature.bean.Feature;
 import org.anchoranalysis.feature.bean.list.FeatureList;
 import org.anchoranalysis.feature.bean.operator.Sum;

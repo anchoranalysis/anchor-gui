@@ -28,7 +28,7 @@ package org.anchoranalysis.gui.videostats.dropdown;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
-import org.anchoranalysis.core.name.provider.NamedProvider;
+import org.anchoranalysis.core.identifier.provider.NamedProvider;
 import org.anchoranalysis.core.progress.ProgressReporterNull;
 import org.anchoranalysis.gui.backgroundset.BackgroundSetFactory;
 import org.anchoranalysis.gui.container.background.BackgroundStackContainerException;

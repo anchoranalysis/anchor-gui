@@ -28,8 +28,8 @@ package org.anchoranalysis.gui.finder;
 
 import java.util.function.Predicate;
 import lombok.RequiredArgsConstructor;
-import org.anchoranalysis.core.index.container.BoundedIndexContainer;
-import org.anchoranalysis.core.index.container.BoundsFromRange;
+import org.anchoranalysis.core.index.bounded.BoundedIndexContainer;
+import org.anchoranalysis.core.index.bounded.BoundsFromRange;
 import org.anchoranalysis.image.core.stack.NamedStacks;
 import org.anchoranalysis.image.core.stack.Stack;
 import org.anchoranalysis.image.io.bean.stack.StackReader;

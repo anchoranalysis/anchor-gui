@@ -28,9 +28,9 @@ package org.anchoranalysis.gui.annotation.builder;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
+import org.anchoranalysis.annotation.io.AnnotationWithStrategy;
 import org.anchoranalysis.annotation.io.bean.AnnotatorStrategy;
-import org.anchoranalysis.annotation.io.input.AnnotationWithStrategy;
-import org.anchoranalysis.core.error.CreateException;
+import org.anchoranalysis.core.exception.CreateException;
 import org.anchoranalysis.gui.annotation.strategy.builder.mark.BuilderProposeMarks;
 import org.anchoranalysis.gui.annotation.strategy.builder.whole.BuilderWholeImage;
 import org.anchoranalysis.plugin.annotation.bean.strategy.MarkProposerStrategy;

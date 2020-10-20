@@ -27,15 +27,15 @@
 package org.anchoranalysis.gui.marks;
 
 import java.awt.BorderLayout;
-import org.anchoranalysis.core.error.InitException;
-import org.anchoranalysis.core.error.reporter.ErrorReporter;
+import org.anchoranalysis.core.exception.InitException;
 import org.anchoranalysis.core.index.GetOperationFailedException;
-import org.anchoranalysis.core.index.container.BoundedIndexContainer;
+import org.anchoranalysis.core.index.bounded.BoundedIndexContainer;
+import org.anchoranalysis.core.log.error.ErrorReporter;
 import org.anchoranalysis.core.property.IPropertyValueReceivable;
-import org.anchoranalysis.core.property.change.PropertyValueChangeEvent;
-import org.anchoranalysis.core.property.change.PropertyValueChangeListener;
 import org.anchoranalysis.gui.image.IndexSlider;
 import org.anchoranalysis.gui.image.frame.ControllerSize;
+import org.anchoranalysis.gui.property.PropertyValueChangeEvent;
+import org.anchoranalysis.gui.property.PropertyValueChangeListener;
 import org.anchoranalysis.gui.reassign.FrameTitleCreator;
 import org.anchoranalysis.gui.videostats.IModuleCreatorDefaultState;
 import org.anchoranalysis.gui.videostats.link.LinkModules;
@@ -57,7 +57,7 @@ public class StatePanelFrameHistory<T> {
         public void propertyValueChanged(PropertyValueChangeEvent<Integer> evt) {
 
             // We ignore any events which are adjusting, unless includeFrameAdjusting mode is on
-            if (!includeIndexAdjusting && evt.getAdjusting()) {
+            if (!includeIndexAdjusting && evt.isAdjusting()) {
                 return;
             }
 

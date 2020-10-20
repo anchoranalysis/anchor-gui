@@ -26,7 +26,7 @@
 
 package org.anchoranalysis.gui.videostats.module;
 
-import org.anchoranalysis.core.error.AnchorCheckedException;
+import org.anchoranalysis.core.exception.AnchorCheckedException;
 
 public class VideoStatsModuleCreateException extends AnchorCheckedException {
 

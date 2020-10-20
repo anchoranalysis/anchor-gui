@@ -28,8 +28,7 @@ package org.anchoranalysis.gui.videostats.link;
 
 import java.util.HashMap;
 import lombok.Getter;
-import org.anchoranalysis.core.functional.function.CheckedFunction;
-import org.anchoranalysis.core.index.IntArray;
+import org.anchoranalysis.core.functional.checked.CheckedFunction;
 import org.anchoranalysis.core.property.IPropertyValueSendable;
 import org.anchoranalysis.gui.container.background.BackgroundStackContainerException;
 import org.anchoranalysis.gui.image.OverlaysWithEnergyStack;

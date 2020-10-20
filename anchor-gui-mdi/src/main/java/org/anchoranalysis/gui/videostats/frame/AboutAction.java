@@ -29,7 +29,7 @@ package org.anchoranalysis.gui.videostats.frame;
 import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
-import org.anchoranalysis.core.error.reporter.ErrorReporter;
+import org.anchoranalysis.core.log.error.ErrorReporter;
 import org.anchoranalysis.gui.interactivebrowser.browser.SplashScreenTime;
 
 class AboutAction extends AbstractAction {

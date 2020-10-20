@@ -27,15 +27,13 @@
 package org.anchoranalysis.gui.frame.threaded.overlay;
 
 import lombok.RequiredArgsConstructor;
-import org.anchoranalysis.core.error.InitException;
-import org.anchoranalysis.core.error.reporter.ErrorReporter;
-import org.anchoranalysis.core.functional.function.CheckedFunction;
-import org.anchoranalysis.core.idgetter.IDGetter;
+import org.anchoranalysis.core.exception.InitException;
+import org.anchoranalysis.core.functional.checked.CheckedFunction;
+import org.anchoranalysis.core.identifier.getter.IdentifierGetter;
 import org.anchoranalysis.core.index.IndexGettableSettable;
 import org.anchoranalysis.core.index.SetOperationFailedException;
 import org.anchoranalysis.core.log.Logger;
-import org.anchoranalysis.core.property.change.PropertyValueChangeEvent;
-import org.anchoranalysis.core.property.change.PropertyValueChangeListener;
+import org.anchoranalysis.core.log.error.ErrorReporter;
 import org.anchoranalysis.gui.container.background.BackgroundStackContainerException;
 import org.anchoranalysis.gui.displayupdate.DisplayUpdateRememberStack;
 import org.anchoranalysis.gui.displayupdate.OverlayedDisplayStack;
@@ -46,6 +44,8 @@ import org.anchoranalysis.gui.frame.threaded.stack.ThreadedDisplayUpdateConsumer
 import org.anchoranalysis.gui.frame.threaded.stack.ThreadedProducer;
 import org.anchoranalysis.gui.image.DisplayUpdateCreator;
 import org.anchoranalysis.gui.marks.MarkDisplaySettings;
+import org.anchoranalysis.gui.property.PropertyValueChangeEvent;
+import org.anchoranalysis.gui.property.PropertyValueChangeListener;
 import org.anchoranalysis.gui.videostats.internalframe.markstorgb.markdisplay.MarkDisplaySettingsWrapper;
 import org.anchoranalysis.gui.videostats.threading.InteractiveThreadPool;
 import org.anchoranalysis.overlay.Overlay;
@@ -60,7 +60,7 @@ class ThreadedOverlayUpdateProducer implements Redrawable, ThreadedProducer, IGe
     private OverlayedDisplayStackUpdate waitingUpdate = null;
     private PropertyValueChange propertyValueChange = null;
     private MarkDisplaySettingsWrapper markDisplaySettingsWrapper = null;
-    private IDGetter<Overlay> idGetter;
+    private IdentifierGetter<Overlay> idGetter;
     private Logger logger;
 
     @RequiredArgsConstructor
@@ -84,7 +84,7 @@ class ThreadedOverlayUpdateProducer implements Redrawable, ThreadedProducer, IGe
         }
     }
 
-    public ThreadedOverlayUpdateProducer(IDGetter<Overlay> idGetter, Logger logger) {
+    public ThreadedOverlayUpdateProducer(IdentifierGetter<Overlay> idGetter, Logger logger) {
         this.idGetter = idGetter;
         this.logger = logger;
     }
@@ -180,7 +180,7 @@ class ThreadedOverlayUpdateProducer implements Redrawable, ThreadedProducer, IGe
     private static DisplayUpdateCreator setupDisplayUpdateCreator(
             CheckedFunction<Integer, OverlayedDisplayStackUpdate, BackgroundStackContainerException>
                     findCorrectUpdate,
-            IDGetter<Overlay> idGetter,
+            IdentifierGetter<Overlay> idGetter,
             DrawOverlay drawOverlay)
             throws InitException {
 

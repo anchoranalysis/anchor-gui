@@ -26,11 +26,11 @@
 
 package org.anchoranalysis.gui.frame.overlays.background;
 
-import org.anchoranalysis.core.error.InitException;
-import org.anchoranalysis.core.functional.function.CheckedFunction;
-import org.anchoranalysis.core.idgetter.IDGetter;
+import org.anchoranalysis.core.exception.InitException;
+import org.anchoranalysis.core.functional.checked.CheckedFunction;
+import org.anchoranalysis.core.identifier.getter.IdentifierGetter;
 import org.anchoranalysis.core.index.IndexGettableSettable;
-import org.anchoranalysis.core.index.container.SingleContainer;
+import org.anchoranalysis.core.index.bounded.SingleContainer;
 import org.anchoranalysis.gui.container.background.BackgroundStackContainerException;
 import org.anchoranalysis.gui.displayupdate.OverlayedDisplayStack;
 import org.anchoranalysis.gui.frame.details.GenerateExtraDetail;
@@ -73,7 +73,7 @@ class InternalFrameOverlaysOnRGB {
     // Must be called before usage
     public SliderState init(
             OverlayedDisplayStack overlayedDisplayStack,
-            IDGetter<Overlay> idGetter,
+            IdentifierGetter<Overlay> idGetter,
             boolean includeFrameAdjusting,
             DefaultModuleState initialState,
             MarkDisplaySettingsWrapper markDisplaySettingsWrapper,

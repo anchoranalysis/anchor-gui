@@ -31,7 +31,7 @@ import javax.swing.JButton;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import org.anchoranalysis.core.error.CreateException;
+import org.anchoranalysis.core.exception.CreateException;
 import org.anchoranalysis.core.log.Logger;
 import org.anchoranalysis.gui.IconFactory;
 import org.anchoranalysis.gui.file.opened.OpenedFileGUI;

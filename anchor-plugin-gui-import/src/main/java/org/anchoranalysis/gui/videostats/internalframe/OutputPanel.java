@@ -45,8 +45,8 @@ import org.anchoranalysis.io.output.outputter.OutputterChecked;
 import org.anchoranalysis.mpp.io.marks.ColoredMarksWithDisplayStack;
 import org.anchoranalysis.mpp.io.marks.MarksWithDisplayStack;
 import org.anchoranalysis.mpp.io.marks.generator.MarksGenerator;
-import org.anchoranalysis.mpp.mark.IDGetterMarkID;
-import org.anchoranalysis.overlay.id.IDGetterOverlayID;
+import org.anchoranalysis.mpp.mark.IdentifierFromMark;
+import org.anchoranalysis.overlay.identifier.IdentifierFromOverlay;
 
 public class OutputPanel {
 
@@ -68,7 +68,7 @@ public class OutputPanel {
 
         @Override
         public void actionPerformed(ActionEvent arg0) {
-            MarksGenerator generator = new MarksGenerator(new Outline(2), new IDGetterOverlayID());
+            MarksGenerator generator = new MarksGenerator(new Outline(2), new IdentifierFromOverlay());
 
             OutputPatternIntegerSuffix directory =
                     new OutputPatternIntegerSuffix(
@@ -126,7 +126,7 @@ public class OutputPanel {
         if (outputSequence != null) {
 
             ColoredMarksWithDisplayStack colored =
-                    new ColoredMarksWithDisplayStack(cws, colorIndex, new IDGetterMarkID());
+                    new ColoredMarksWithDisplayStack(cws, colorIndex, new IdentifierFromMark());
             try {
                 outputSequence.add(colored);
             } catch (OutputWriteFailedException e) {

@@ -28,7 +28,7 @@ package org.anchoranalysis.gui.annotation.export;
 
 import java.nio.file.Path;
 import javax.swing.JFrame;
-import org.anchoranalysis.core.error.OperationFailedException;
+import org.anchoranalysis.core.exception.OperationFailedException;
 import org.anchoranalysis.gui.annotation.AnnotationRefresher;
 
 public abstract class ExportAnnotation {

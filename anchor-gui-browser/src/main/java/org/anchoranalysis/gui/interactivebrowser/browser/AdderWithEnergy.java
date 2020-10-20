@@ -27,7 +27,7 @@
 package org.anchoranalysis.gui.interactivebrowser.browser;
 
 import lombok.AllArgsConstructor;
-import org.anchoranalysis.core.error.InitException;
+import org.anchoranalysis.core.exception.InitException;
 import org.anchoranalysis.gui.bean.filecreator.FileCreatorParams;
 import org.anchoranalysis.gui.bean.filecreator.MarkCreatorParams;
 import org.anchoranalysis.gui.feature.evaluator.treetable.FeatureListSrc;

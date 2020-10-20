@@ -26,9 +26,9 @@
 
 package org.anchoranalysis.gui.frame.threaded.stack;
 
-import org.anchoranalysis.core.error.InitException;
+import org.anchoranalysis.core.exception.InitException;
 import org.anchoranalysis.core.index.IndexGettableSettable;
-import org.anchoranalysis.core.index.container.BoundedRangeIncompleteDynamic;
+import org.anchoranalysis.core.index.bounded.BoundedRangeIncompleteDynamic;
 import org.anchoranalysis.gui.frame.details.ControllerPopupMenu;
 import org.anchoranalysis.gui.frame.details.GenerateExtraDetail;
 import org.anchoranalysis.gui.frame.details.InternalFrameWithDetailsTopPanel;

@@ -28,7 +28,7 @@ package org.anchoranalysis.gui.file.interactive;
 
 import java.io.File;
 import java.util.Optional;
-import org.anchoranalysis.core.error.OperationFailedException;
+import org.anchoranalysis.core.exception.OperationFailedException;
 import org.anchoranalysis.gui.file.opened.OpenedFile;
 import org.anchoranalysis.gui.videostats.dropdown.AddVideoStatsModule;
 import org.anchoranalysis.io.output.outputter.InputOutputContext;

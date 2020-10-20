@@ -27,8 +27,8 @@
 package org.anchoranalysis.gui.frame.details.canvas;
 
 import org.anchoranalysis.core.index.IndexGettableSettable;
-import org.anchoranalysis.core.property.change.PropertyValueChangeEvent;
-import org.anchoranalysis.core.property.change.PropertyValueChangeListener;
+import org.anchoranalysis.gui.property.PropertyValueChangeEvent;
+import org.anchoranalysis.gui.property.PropertyValueChangeListener;
 
 class SliderIndexChanged implements PropertyValueChangeListener<Integer> {
 

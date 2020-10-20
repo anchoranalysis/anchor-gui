@@ -28,7 +28,7 @@ package org.anchoranalysis.gui.interactivebrowser;
 import java.io.IOException;
 import java.util.Optional;
 import org.anchoranalysis.core.cache.CachedSupplier;
-import org.anchoranalysis.core.params.KeyValueParams;
+import org.anchoranalysis.core.value.KeyValueParams;
 
 public interface KeyValueParamsSupplier {
 

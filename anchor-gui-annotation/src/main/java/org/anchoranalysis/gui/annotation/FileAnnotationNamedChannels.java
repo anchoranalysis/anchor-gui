@@ -29,7 +29,7 @@ package org.anchoranalysis.gui.annotation;
 import java.io.File;
 import java.util.Optional;
 import org.anchoranalysis.core.cache.CachedSupplier;
-import org.anchoranalysis.core.error.OperationFailedException;
+import org.anchoranalysis.core.exception.OperationFailedException;
 import org.anchoranalysis.gui.annotation.builder.AnnotationGuiBuilder;
 import org.anchoranalysis.gui.annotation.builder.AnnotationGuiContext;
 import org.anchoranalysis.gui.annotation.dropdown.AnnotationDropDown;

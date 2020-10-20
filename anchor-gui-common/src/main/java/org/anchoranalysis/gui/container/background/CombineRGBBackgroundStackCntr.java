@@ -26,10 +26,10 @@
 
 package org.anchoranalysis.gui.container.background;
 
+import org.anchoranalysis.core.exception.CreateException;
+import org.anchoranalysis.core.exception.InitException;
 import lombok.Getter;
 import lombok.Setter;
-import org.anchoranalysis.core.error.CreateException;
-import org.anchoranalysis.core.error.InitException;
 
 public class CombineRGBBackgroundStackCntr {
 

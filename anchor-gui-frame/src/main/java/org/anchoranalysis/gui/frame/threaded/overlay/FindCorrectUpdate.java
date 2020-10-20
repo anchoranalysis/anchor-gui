@@ -27,7 +27,7 @@
 package org.anchoranalysis.gui.frame.threaded.overlay;
 
 import java.util.function.Supplier;
-import org.anchoranalysis.core.functional.function.CheckedFunction;
+import org.anchoranalysis.core.functional.checked.CheckedFunction;
 import org.anchoranalysis.gui.container.background.BackgroundStackContainerException;
 import org.anchoranalysis.gui.displayupdate.OverlayedDisplayStack;
 import org.anchoranalysis.gui.frame.display.OverlayedDisplayStackUpdate;

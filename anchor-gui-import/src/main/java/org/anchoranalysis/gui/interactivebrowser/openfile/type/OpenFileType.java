@@ -29,7 +29,7 @@ package org.anchoranalysis.gui.interactivebrowser.openfile.type;
 import java.io.File;
 import java.util.List;
 import org.anchoranalysis.bean.AnchorBean;
-import org.anchoranalysis.core.error.CreateException;
+import org.anchoranalysis.core.exception.CreateException;
 import org.anchoranalysis.gui.bean.filecreator.FileCreator;
 import org.anchoranalysis.gui.interactivebrowser.openfile.importer.ImporterSettings;
 import org.anchoranalysis.io.input.bean.files.SpecificPathList;

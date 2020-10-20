@@ -29,7 +29,7 @@ package org.anchoranalysis.gui.videostats.operation;
 import java.awt.event.ActionListener;
 import java.util.Optional;
 import javax.swing.JFrame;
-import org.anchoranalysis.core.error.reporter.ErrorReporter;
+import org.anchoranalysis.core.log.error.ErrorReporter;
 import org.anchoranalysis.gui.export.bean.ExportTask;
 import org.anchoranalysis.gui.export.bean.ExportTaskActionAsThread;
 import org.anchoranalysis.gui.export.bean.ExportTaskActionAsThread.ExportTaskCommand;

@@ -36,7 +36,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.TableColumn;
 import org.anchoranalysis.core.color.ColorIndex;
-import org.anchoranalysis.core.index.IndicesSelection;
+import org.anchoranalysis.gui.index.IndicesSelection;
 import org.anchoranalysis.gui.videostats.ISelectIndicesSendable;
 import org.anchoranalysis.mpp.feature.energy.EnergyPair;
 import org.apache.commons.logging.Log;
@@ -125,8 +125,8 @@ public class PairTablePanel {
         for (EnergyPair pair : tableModel.getPairs()) {
 
             if (this.tablePanel.getTable().getSelectionModel().isSelectedIndex(i++)) {
-                idSet.add(pair.getPair().getSource().getId());
-                idSet.add(pair.getPair().getDestination().getId());
+                idSet.add(pair.getPair().getSource().getIdentifier());
+                idSet.add(pair.getPair().getDestination().getIdentifier());
             }
         }
 
@@ -157,8 +157,8 @@ public class PairTablePanel {
 
                 EnergyPair pair = tableModel.getPairs()[i];
 
-                if (idSet.contains(pair.getPair().getSource().getId())
-                        && idSet.contains(pair.getPair().getDestination().getId())) {
+                if (idSet.contains(pair.getPair().getSource().getIdentifier())
+                        && idSet.contains(pair.getPair().getDestination().getIdentifier())) {
                     tablePanel.getTable().getSelectionModel().addSelectionInterval(i, i);
                     IDUtilities.scrollJTableToRow(tablePanel.getTable(), i);
                 }

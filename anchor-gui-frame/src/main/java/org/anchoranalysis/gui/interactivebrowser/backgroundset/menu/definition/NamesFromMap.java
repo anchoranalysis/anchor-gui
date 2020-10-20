@@ -33,7 +33,7 @@ import java.util.Set;
 import java.util.TreeSet;
 import lombok.AllArgsConstructor;
 import org.anchoranalysis.bean.shared.StringMap;
-import org.anchoranalysis.core.error.reporter.ErrorReporter;
+import org.anchoranalysis.core.log.error.ErrorReporter;
 import org.anchoranalysis.core.progress.ProgressReporterNull;
 import org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.IGetNames;
 import org.anchoranalysis.gui.videostats.dropdown.BackgroundSetProgressingSupplier;

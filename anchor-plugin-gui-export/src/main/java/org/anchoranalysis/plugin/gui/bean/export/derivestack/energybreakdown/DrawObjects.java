@@ -29,11 +29,11 @@ package org.anchoranalysis.plugin.gui.bean.export.derivestack.energybreakdown;
 import lombok.Getter;
 import lombok.Setter;
 import org.anchoranalysis.bean.annotation.BeanField;
-import org.anchoranalysis.core.error.CreateException;
-import org.anchoranalysis.core.error.OperationFailedException;
-import org.anchoranalysis.core.idgetter.IDGetter;
-import org.anchoranalysis.core.idgetter.IDGetterIter;
-import org.anchoranalysis.core.name.provider.NamedProviderGetException;
+import org.anchoranalysis.core.exception.CreateException;
+import org.anchoranalysis.core.exception.OperationFailedException;
+import org.anchoranalysis.core.identifier.getter.IdentifierGetter;
+import org.anchoranalysis.core.identifier.getter.IdentifyByIteration;
+import org.anchoranalysis.core.identifier.provider.NamedProviderGetException;
 import org.anchoranalysis.gui.export.bean.ExportTaskParams;
 import org.anchoranalysis.gui.frame.display.OverlayedDisplayStackUpdate;
 import org.anchoranalysis.image.core.stack.DisplayStack;
@@ -50,13 +50,13 @@ import org.anchoranalysis.mpp.feature.energy.marks.MarksWithEnergyBreakdown;
 import org.anchoranalysis.mpp.io.marks.generator.SimpleOverlayWriter;
 import org.anchoranalysis.mpp.mark.ColoredMarks;
 import org.anchoranalysis.mpp.mark.GlobalRegionIdentifiers;
-import org.anchoranalysis.mpp.mark.IDGetterMarkID;
+import org.anchoranalysis.mpp.mark.IdentifierFromMark;
 import org.anchoranalysis.mpp.mark.Mark;
 import org.anchoranalysis.mpp.mark.MarkCollection;
 import org.anchoranalysis.mpp.overlay.OverlayCollectionMarkFactory;
 import org.anchoranalysis.overlay.bean.DrawObject;
 import org.anchoranalysis.overlay.collection.ColoredOverlayCollection;
-import org.anchoranalysis.overlay.id.IDGetterOverlayID;
+import org.anchoranalysis.overlay.identifier.IdentifierFromOverlay;
 import org.anchoranalysis.plugin.gui.bean.export.derivestack.DeriveStack;
 import org.anchoranalysis.plugin.gui.export.MappedFrom;
 
@@ -89,7 +89,7 @@ public class DrawObjects extends DeriveStack<IndexableMarksWithEnergy> {
         } else {
 
             // TODO the defaultImage for the cachedRGB should probably come from elsewhere
-            CachedRGB cachedRGB = new CachedRGB(new IDGetterOverlayID());
+            CachedRGB cachedRGB = new CachedRGB(new IdentifierFromOverlay());
 
             CachedRGBGenerator ccGenerator =
                     new CachedRGBGenerator(
@@ -128,11 +128,11 @@ public class DrawObjects extends DeriveStack<IndexableMarksWithEnergy> {
         return StackWriteOptions.alwaysOneOrThreeChannels(mip);
     }
 
-    private IDGetter<Mark> colorGetter() {
+    private IdentifierGetter<Mark> colorGetter() {
         if (colorFromIter) {
-            return new IDGetterIter<>();
+            return new IdentifyByIteration<>();
         } else {
-            return new IDGetterMarkID();
+            return new IdentifierFromMark();
         }
     }
 

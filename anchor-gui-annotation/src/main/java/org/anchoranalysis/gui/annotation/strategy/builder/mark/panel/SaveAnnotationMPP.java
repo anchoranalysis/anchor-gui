@@ -34,7 +34,7 @@ import javax.swing.JComponent;
 import javax.swing.JOptionPane;
 import org.anchoranalysis.annotation.mark.DualMarks;
 import org.anchoranalysis.annotation.mark.DualMarksAnnotation;
-import org.anchoranalysis.core.error.friendly.AnchorImpossibleSituationException;
+import org.anchoranalysis.core.exception.friendly.AnchorImpossibleSituationException;
 import org.anchoranalysis.gui.annotation.mark.RejectionReason;
 import org.anchoranalysis.gui.annotation.save.ISaveAnnotation;
 import org.anchoranalysis.gui.videostats.internalframe.annotator.AnnotationWriterGUI;

@@ -29,11 +29,11 @@ package org.anchoranalysis.gui.videostats.dropdown.multicollection;
 import java.util.Optional;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
-import org.anchoranalysis.core.error.OperationFailedException;
-import org.anchoranalysis.core.error.reporter.ErrorReporter;
-import org.anchoranalysis.core.name.provider.NamedProviderGetException;
-import org.anchoranalysis.core.name.store.NamedProviderStore;
-import org.anchoranalysis.core.params.KeyValueParams;
+import org.anchoranalysis.core.exception.OperationFailedException;
+import org.anchoranalysis.core.identifier.provider.NamedProviderGetException;
+import org.anchoranalysis.core.identifier.provider.store.NamedProviderStore;
+import org.anchoranalysis.core.log.error.ErrorReporter;
+import org.anchoranalysis.core.value.KeyValueParams;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 class ParamsUtils {

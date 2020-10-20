@@ -28,8 +28,8 @@ package org.anchoranalysis.gui.videostats.dropdown.common;
 
 import lombok.AllArgsConstructor;
 import org.anchoranalysis.core.cache.CachedSupplier;
-import org.anchoranalysis.core.error.CreateException;
-import org.anchoranalysis.core.error.InitException;
+import org.anchoranalysis.core.exception.CreateException;
+import org.anchoranalysis.core.exception.InitException;
 import org.anchoranalysis.core.progress.ProgressReporter;
 import org.anchoranalysis.gui.backgroundset.BackgroundSet;
 import org.anchoranalysis.gui.backgroundset.BackgroundSetFactory;

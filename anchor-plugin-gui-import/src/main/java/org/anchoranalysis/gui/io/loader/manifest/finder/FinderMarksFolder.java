@@ -28,10 +28,10 @@ package org.anchoranalysis.gui.io.loader.manifest.finder;
 
 import java.util.function.Predicate;
 import lombok.RequiredArgsConstructor;
-import org.anchoranalysis.core.error.OperationFailedException;
-import org.anchoranalysis.core.name.provider.NameValueSet;
-import org.anchoranalysis.core.name.provider.NamedProvider;
-import org.anchoranalysis.core.name.store.LazyEvaluationStore;
+import org.anchoranalysis.core.exception.OperationFailedException;
+import org.anchoranalysis.core.identifier.provider.NameValueSet;
+import org.anchoranalysis.core.identifier.provider.NamedProvider;
+import org.anchoranalysis.core.identifier.provider.store.LazyEvaluationStore;
 import org.anchoranalysis.core.serialize.Deserializer;
 import org.anchoranalysis.core.serialize.XStreamDeserializer;
 import org.anchoranalysis.gui.finder.AddFromSequenceHelper;

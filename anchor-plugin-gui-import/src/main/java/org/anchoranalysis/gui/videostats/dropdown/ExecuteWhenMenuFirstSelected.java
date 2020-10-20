@@ -28,8 +28,8 @@ package org.anchoranalysis.gui.videostats.dropdown;
 
 import javax.swing.event.MenuEvent;
 import javax.swing.event.MenuListener;
-import org.anchoranalysis.core.error.OperationFailedException;
-import org.anchoranalysis.core.error.reporter.ErrorReporter;
+import org.anchoranalysis.core.exception.OperationFailedException;
+import org.anchoranalysis.core.log.error.ErrorReporter;
 
 public abstract class ExecuteWhenMenuFirstSelected implements MenuListener {
 

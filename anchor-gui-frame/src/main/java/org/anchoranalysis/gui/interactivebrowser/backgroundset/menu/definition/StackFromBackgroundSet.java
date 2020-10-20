@@ -27,8 +27,8 @@
 package org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.definition;
 
 import lombok.AllArgsConstructor;
-import org.anchoranalysis.core.error.reporter.ErrorReporter;
-import org.anchoranalysis.core.functional.function.CheckedFunction;
+import org.anchoranalysis.core.functional.checked.CheckedFunction;
+import org.anchoranalysis.core.log.error.ErrorReporter;
 import org.anchoranalysis.core.progress.ProgressReporterNull;
 import org.anchoranalysis.gui.container.background.BackgroundStackContainerException;
 import org.anchoranalysis.gui.videostats.dropdown.BackgroundSetProgressingSupplier;

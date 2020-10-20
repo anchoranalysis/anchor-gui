@@ -27,10 +27,10 @@
 package org.anchoranalysis.gui.image;
 
 import lombok.RequiredArgsConstructor;
-import org.anchoranalysis.core.error.CreateException;
-import org.anchoranalysis.core.error.OperationFailedException;
-import org.anchoranalysis.core.functional.function.CheckedFunction;
-import org.anchoranalysis.core.idgetter.IDGetter;
+import org.anchoranalysis.core.exception.CreateException;
+import org.anchoranalysis.core.exception.OperationFailedException;
+import org.anchoranalysis.core.functional.checked.CheckedFunction;
+import org.anchoranalysis.core.identifier.getter.IdentifierGetter;
 import org.anchoranalysis.core.index.SetOperationFailedException;
 import org.anchoranalysis.gui.container.background.BackgroundStackContainerException;
 import org.anchoranalysis.gui.frame.display.BoundColoredOverlayCollection;
@@ -50,7 +50,7 @@ public class DisplayUpdateCreator
                     Integer, OverlayedDisplayStackUpdate, BackgroundStackContainerException>
             src;
 
-    private final IDGetter<Overlay> idGetter;
+    private final IdentifierGetter<Overlay> idGetter;
     // END REQUIRED ARGUMENTS
 
     private DrawOverlay drawOverlay;
