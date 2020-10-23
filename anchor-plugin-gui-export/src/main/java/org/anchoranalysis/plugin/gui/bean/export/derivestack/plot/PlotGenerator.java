@@ -38,6 +38,7 @@ import org.anchoranalysis.image.core.stack.Stack;
 import org.anchoranalysis.image.core.stack.bufferedimage.CreateStackFromBufferedImage;
 import org.anchoranalysis.image.io.generator.raster.RasterGenerator;
 import org.anchoranalysis.image.io.stack.StackWriteOptions;
+import org.anchoranalysis.image.io.stack.StackWriteOptionsFactory;
 import org.anchoranalysis.io.manifest.ManifestDescription;
 import org.anchoranalysis.io.output.bean.OutputWriteSettings;
 import org.anchoranalysis.io.output.error.OutputWriteFailedException;
@@ -78,7 +79,7 @@ class PlotGenerator extends RasterGenerator<PlotInstance> {
     }
 
     @Override
-    public void writeToFile(PlotInstance element, Stack transformedElement, OutputWriteSettings settings, Path filePath) throws OutputWriteFailedException {
+    public void writeToFile(PlotInstance element, Stack transformedElement, StackWriteOptions options, OutputWriteSettings settings, Path filePath) throws OutputWriteFailedException {
 
         try (FileOutputStream fileOutput = new FileOutputStream(filePath.toFile())) {
             ChartUtils.writeChartAsPNG(
@@ -89,17 +90,12 @@ class PlotGenerator extends RasterGenerator<PlotInstance> {
     }
 
     @Override
-    public boolean isRGB() {
-        return true;
+    public StackWriteOptions guaranteedImageAttributes() {
+        return StackWriteOptionsFactory.rgb(true);
     }
 
     @Override
-    public StackWriteOptions writeOptions() {
-        return StackWriteOptions.rgb(true);
-    }
-
-    @Override
-    protected String selectFileExtension(Stack stack, OutputWriteSettings settings)
+    protected String selectFileExtension(Stack stack, StackWriteOptions options, OutputWriteSettings settings)
             throws OperationFailedException {
         return EXTENSION;
     }

@@ -43,6 +43,7 @@ import org.anchoranalysis.image.io.generator.raster.RasterGenerator;
 import org.anchoranalysis.image.io.generator.raster.RasterGeneratorBridge;
 import org.anchoranalysis.image.io.generator.raster.RasterGeneratorDelegateToDisplayStack;
 import org.anchoranalysis.image.io.stack.StackWriteOptions;
+import org.anchoranalysis.image.io.stack.StackWriteOptionsFactory;
 import org.anchoranalysis.mpp.bean.regionmap.RegionMapSingleton;
 import org.anchoranalysis.mpp.bean.regionmap.RegionMembershipWithFlags;
 import org.anchoranalysis.mpp.feature.energy.IndexableMarksWithEnergy;
@@ -125,7 +126,7 @@ public class DrawObjects extends DeriveStack<IndexableMarksWithEnergy> {
     }
 
     private StackWriteOptions createRasterOptions() {
-        return StackWriteOptions.alwaysOneOrThreeChannels(mip);
+        return StackWriteOptionsFactory.alwaysOneOrThreeChannels(mip);
     }
 
     private IdentifierGetter<Mark> colorGetter() {

@@ -97,7 +97,7 @@ class CachedRGBGenerator extends SingleFileTypeGenerator<OverlayedDisplayStackUp
         try {
             assignElement(element);
             GeneratorOutputter.writer(outputWriteSettings)
-                    .writeStack(cachedRGB.getRGB().asStack(), filePath, true, rasterOptions);
+                    .writeStack(cachedRGB.getRGB().asStack(), filePath, rasterOptions);
         } catch (ImageIOException e) {
             throw new OutputWriteFailedException(e);
         }
