@@ -33,7 +33,6 @@ import org.anchoranalysis.core.exception.CreateException;
 import org.anchoranalysis.gui.export.bean.ExportTaskParams;
 import org.anchoranalysis.image.bean.spatial.SizeXY;
 import org.anchoranalysis.image.io.generator.raster.RasterGenerator;
-import org.anchoranalysis.plot.PlotInstance;
 import org.anchoranalysis.plot.bean.Plot;
 import org.anchoranalysis.plugin.gui.bean.export.derivestack.DeriveStack;
 import org.anchoranalysis.plugin.gui.export.MappedFrom;
@@ -46,7 +45,7 @@ public abstract class DrawPlot<T, S> extends DeriveStack<S> {
     @BeanField @Getter @Setter private SizeXY size = new SizeXY(1024, 768);
     // END BEAN PARAMETERS
 
-    protected RasterGenerator<PlotInstance> createPlotGenerator() {
+    protected PlotGenerator createPlotGenerator() {
         return new PlotGenerator(size);
     }
 

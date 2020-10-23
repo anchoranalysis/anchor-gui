@@ -197,14 +197,14 @@ public class DropDownUtilities {
     public static InputOutputContext createSubdirectoryContext(
             InputOutputContext inputOutputContext, String subdirectoryName) throws InitException {
 
-        ManifestDirectoryDescription mfd =
+        ManifestDirectoryDescription manifestDescription =
                 new ManifestDirectoryDescription(
                         "interactiveOutput",
                         "manifestInteractiveOutput",
                         new StringsWithoutOrder());
 
         // NB: As bindAsSubFolder can now return nulls, maybe some knock-on bugs are introduced here
-        return inputOutputContext.subdirectory(subdirectoryName, mfd, false);
+        return inputOutputContext.subdirectory(subdirectoryName, manifestDescription, false);
     }
 
     private static void addModule(

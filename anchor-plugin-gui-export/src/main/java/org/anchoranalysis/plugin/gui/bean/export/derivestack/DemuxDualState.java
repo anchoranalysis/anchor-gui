@@ -44,10 +44,6 @@ public class DemuxDualState<T> extends DeriveStack<DualStateWithoutIndex<T>> {
     @BeanField @Getter @Setter private DeriveStack<T> item;
     // END BEAN PROPERTIES
 
-    private T demux(DualStateWithoutIndex<T> in) {
-        return in.getItem(index);
-    }
-
     @Override
     public RasterGenerator<MappedFrom<DualStateWithoutIndex<T>>> createGenerator(
             ExportTaskParams params) throws CreateException {
@@ -65,5 +61,9 @@ public class DemuxDualState<T> extends DeriveStack<DualStateWithoutIndex<T>> {
     @Override
     public boolean hasNecessaryParams(ExportTaskParams params) {
         return true;
+    }
+
+    private T demux(DualStateWithoutIndex<T> in) {
+        return in.getItem(index);
     }
 }

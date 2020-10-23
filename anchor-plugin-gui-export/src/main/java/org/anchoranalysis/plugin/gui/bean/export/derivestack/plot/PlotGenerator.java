@@ -47,42 +47,17 @@ import org.jfree.chart.ChartUtils;
 /**
  * Writes a plot to the filesystem as a PNG file.
  *
- * <p>Note that {@link #writeToFile} replaces the existing behaviour in {@link RasterGenerator}.
- *
- * <p>TODO fix the above point.
- *
  * @author Owen Feehan
  */
 @AllArgsConstructor
 class PlotGenerator extends RasterGenerator<PlotInstance> {
 
-    private static final String MANIFEST_FUNCTION = "plot";
+    private static final ManifestDescription MANIFEST_DESCRIPTION = new ManifestDescription("raster", "plot");
 
+    private static final String EXTENSION = "png";
+    
     /** Width/height of raster-image into which the plot is rendered. */
     private final SizeXY size;
-
-    @Override
-    public void writeToFile(
-            PlotInstance element, OutputWriteSettings outputWriteSettings, Path filePath)
-            throws OutputWriteFailedException {
-
-        try (FileOutputStream fileOutput = new FileOutputStream(filePath.toFile())) {
-            ChartUtils.writeChartAsPNG(
-                    fileOutput, element.getChart(), size.getWidth(), size.getHeight());
-        } catch (IOException e) {
-            throw new OutputWriteFailedException(e);
-        }
-    }
-
-    @Override
-    public String getFileExtension(OutputWriteSettings outputWriteSettings) {
-        return "png";
-    }
-
-    @Override
-    public Optional<ManifestDescription> createManifestDescription() {
-        return Optional.of(new ManifestDescription("raster", MANIFEST_FUNCTION));
-    }
 
     @Override
     public Stack transform(PlotInstance element) throws OutputWriteFailedException {
@@ -98,12 +73,34 @@ class PlotGenerator extends RasterGenerator<PlotInstance> {
     }
 
     @Override
+    public Optional<ManifestDescription> createManifestDescription() {
+        return Optional.of(MANIFEST_DESCRIPTION);
+    }
+
+    @Override
+    public void writeToFile(PlotInstance element, OutputWriteSettings settings, Path filePath) throws OutputWriteFailedException {
+
+        try (FileOutputStream fileOutput = new FileOutputStream(filePath.toFile())) {
+            ChartUtils.writeChartAsPNG(
+                    fileOutput, element.getChart(), size.getWidth(), size.getHeight());
+        } catch (IOException e) {
+            throw new OutputWriteFailedException(e);
+        }
+    }
+
+    @Override
     public boolean isRGB() {
         return true;
     }
 
     @Override
     public StackWriteOptions writeOptions() {
-        return StackWriteOptions.rgbAlways2D();
+        return StackWriteOptions.rgb(true);
+    }
+
+    @Override
+    protected String selectFileExtension(OutputWriteSettings outputWriteSettings)
+            throws OperationFailedException {
+        return EXTENSION;
     }
 }

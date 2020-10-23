@@ -37,11 +37,8 @@ import org.anchoranalysis.gui.frame.details.ControllerPopupMenu;
 
 public class InternalFrameIJPopupClickListener extends MouseAdapter {
 
-    private ExportPopupParams popUpParams;
-    private IRetrieveElements retriever;
     private List<JMenu> additionalMenuList = new ArrayList<>();
-    private ErrorReporter errorReporter;
-    private boolean retrieveElementsInPopupEnabled = true;
+    
 
     private ControllerPopupMenu controllerPopupMenu;
 
@@ -49,10 +46,6 @@ public class InternalFrameIJPopupClickListener extends MouseAdapter {
             ExportPopupParams popUpParams,
             IRetrieveElements retriever,
             ErrorReporter errorReporter) {
-        this.popUpParams = popUpParams;
-        this.retriever = retriever;
-        this.errorReporter = errorReporter;
-        assert (popUpParams != null);
 
         controllerPopupMenu =
                 new ControllerPopupMenu() {
@@ -64,7 +57,7 @@ public class InternalFrameIJPopupClickListener extends MouseAdapter {
 
                     @Override
                     public void setRetrieveElementsInPopupEnabled(boolean r) {
-                        retrieveElementsInPopupEnabled = r;
+                        // NOTHING TO DO
                     }
                 };
     }
@@ -84,14 +77,6 @@ public class InternalFrameIJPopupClickListener extends MouseAdapter {
         JPopupMenu popUp = new JPopupMenu();
 
         boolean menuAdded = false;
-
-        if (retrieveElementsInPopupEnabled) {
-            ExportSubMenu exportSubMenu = new ExportSubMenu(popUpParams, errorReporter);
-            RetrieveElements re = retriever.retrieveElements();
-            re.addToPopUp(exportSubMenu);
-            popUp.add(exportSubMenu.getMenu());
-            menuAdded = true;
-        }
 
         for (JMenu menu : additionalMenuList) {
             popUp.add(menu);

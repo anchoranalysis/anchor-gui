@@ -71,7 +71,7 @@ public class RetrieveElementsImage extends RetrieveElements {
                     opCreateStack,
                     "selectedStackMIP",
                     "MIP",
-                    generator.createManifestDescription(),
+                    Optional.empty(),
                     1);
         }
     }
