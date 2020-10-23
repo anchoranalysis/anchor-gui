@@ -104,7 +104,7 @@ class CachedRGBGenerator extends SingleFileTypeGenerator<OverlayedDisplayStackUp
     }
 
     @Override
-    public String getFileExtension(OutputWriteSettings outputWriteSettings)
+    public String selectFileExtension(OutputWriteSettings outputWriteSettings)
             throws OperationFailedException {
         return GeneratorOutputter.fileExtensionWriter(outputWriteSettings, rasterOptions);
     }

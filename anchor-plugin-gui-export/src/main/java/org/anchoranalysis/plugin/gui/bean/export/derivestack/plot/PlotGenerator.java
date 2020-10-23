@@ -78,7 +78,7 @@ class PlotGenerator extends RasterGenerator<PlotInstance> {
     }
 
     @Override
-    public void writeToFile(PlotInstance element, OutputWriteSettings settings, Path filePath) throws OutputWriteFailedException {
+    public void writeToFile(PlotInstance element, Stack transformedElement, OutputWriteSettings settings, Path filePath) throws OutputWriteFailedException {
 
         try (FileOutputStream fileOutput = new FileOutputStream(filePath.toFile())) {
             ChartUtils.writeChartAsPNG(
@@ -99,7 +99,7 @@ class PlotGenerator extends RasterGenerator<PlotInstance> {
     }
 
     @Override
-    protected String selectFileExtension(OutputWriteSettings outputWriteSettings)
+    protected String selectFileExtension(Stack stack, OutputWriteSettings settings)
             throws OperationFailedException {
         return EXTENSION;
     }
