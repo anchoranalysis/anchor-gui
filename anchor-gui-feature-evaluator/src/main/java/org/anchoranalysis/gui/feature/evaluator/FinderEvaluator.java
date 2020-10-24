@@ -35,7 +35,7 @@ import org.anchoranalysis.feature.bean.list.FeatureList;
 import org.anchoranalysis.feature.calculate.FeatureInitParams;
 import org.anchoranalysis.feature.energy.EnergyStack;
 import org.anchoranalysis.feature.session.FeatureSession;
-import org.anchoranalysis.feature.session.calculator.FeatureCalculatorMulti;
+import org.anchoranalysis.feature.session.calculator.multi.FeatureCalculatorMulti;
 import org.anchoranalysis.feature.shared.SharedFeatureMulti;
 import org.anchoranalysis.mpp.bean.regionmap.RegionMap;
 import org.anchoranalysis.mpp.bean.regionmap.RegionMapSingleton;

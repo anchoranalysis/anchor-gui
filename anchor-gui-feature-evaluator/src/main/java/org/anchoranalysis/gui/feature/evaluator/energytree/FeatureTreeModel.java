@@ -37,7 +37,7 @@ import org.anchoranalysis.feature.energy.EnergyStack;
 import org.anchoranalysis.feature.input.FeatureInput;
 import org.anchoranalysis.feature.session.CreateFeatureInput;
 import org.anchoranalysis.feature.session.FeatureSession;
-import org.anchoranalysis.feature.session.calculator.FeatureCalculatorMulti;
+import org.anchoranalysis.feature.session.calculator.multi.FeatureCalculatorMulti;
 import org.anchoranalysis.feature.shared.SharedFeatureMulti;
 import org.anchoranalysis.gui.feature.FeatureListWithRegionMap;
 import org.anchoranalysis.gui.feature.evaluator.energytree.overlayparams.CreateParamsFromOverlay;
