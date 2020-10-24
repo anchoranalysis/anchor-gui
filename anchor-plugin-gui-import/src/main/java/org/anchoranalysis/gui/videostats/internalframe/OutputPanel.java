@@ -68,7 +68,8 @@ public class OutputPanel {
 
         @Override
         public void actionPerformed(ActionEvent arg0) {
-            MarksGenerator generator = new MarksGenerator(new Outline(2), new IdentifierFromOverlay());
+            MarksGenerator generator =
+                    new MarksGenerator(new Outline(2), new IdentifierFromOverlay());
 
             OutputPatternIntegerSuffix directory =
                     new OutputPatternIntegerSuffix(

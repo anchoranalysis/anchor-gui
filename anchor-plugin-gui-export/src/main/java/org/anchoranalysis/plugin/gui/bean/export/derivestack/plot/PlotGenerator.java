@@ -53,10 +53,11 @@ import org.jfree.chart.ChartUtils;
 @AllArgsConstructor
 class PlotGenerator extends RasterGenerator<PlotInstance> {
 
-    private static final ManifestDescription MANIFEST_DESCRIPTION = new ManifestDescription("raster", "plot");
+    private static final ManifestDescription MANIFEST_DESCRIPTION =
+            new ManifestDescription("raster", "plot");
 
     private static final String EXTENSION = "png";
-    
+
     /** Width/height of raster-image into which the plot is rendered. */
     private final SizeXY size;
 
@@ -79,7 +80,13 @@ class PlotGenerator extends RasterGenerator<PlotInstance> {
     }
 
     @Override
-    public void writeToFile(PlotInstance element, Stack transformedElement, StackWriteOptions options, OutputWriteSettings settings, Path filePath) throws OutputWriteFailedException {
+    public void writeToFile(
+            PlotInstance element,
+            Stack transformedElement,
+            StackWriteOptions options,
+            OutputWriteSettings settings,
+            Path filePath)
+            throws OutputWriteFailedException {
 
         try (FileOutputStream fileOutput = new FileOutputStream(filePath.toFile())) {
             ChartUtils.writeChartAsPNG(
@@ -95,7 +102,8 @@ class PlotGenerator extends RasterGenerator<PlotInstance> {
     }
 
     @Override
-    protected String selectFileExtension(Stack stack, StackWriteOptions options, OutputWriteSettings settings)
+    protected String selectFileExtension(
+            Stack stack, StackWriteOptions options, OutputWriteSettings settings)
             throws OperationFailedException {
         return EXTENSION;
     }

@@ -54,8 +54,7 @@ public class InternalFrameMultiRaster {
             VideoStatsModuleGlobalParams mpg)
             throws InitException {
 
-        BoundedIndexContainerBridgeWithoutIndex<
-                        NamedRasterSet, DisplayStack, InitException>
+        BoundedIndexContainerBridgeWithoutIndex<NamedRasterSet, DisplayStack, InitException>
                 bridge =
                         new BoundedIndexContainerBridgeWithoutIndex<>(
                                 new BoundedIndexContainerFromList<>(list),

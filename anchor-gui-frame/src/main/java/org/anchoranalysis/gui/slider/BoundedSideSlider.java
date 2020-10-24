@@ -29,9 +29,9 @@ package org.anchoranalysis.gui.slider;
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
 import org.anchoranalysis.core.index.bounded.BoundChangeEvent;
+import org.anchoranalysis.core.index.bounded.BoundChangeEvent.BoundType;
 import org.anchoranalysis.core.index.bounded.BoundChangeListener;
 import org.anchoranalysis.core.index.bounded.BoundedRangeIncompleteDynamic;
-import org.anchoranalysis.core.index.bounded.BoundChangeEvent.BoundType;
 import org.anchoranalysis.core.property.IPropertyValueReceivable;
 
 public class BoundedSideSlider {

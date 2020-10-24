@@ -40,6 +40,6 @@ public class IntArray implements Serializable {
     @Getter private int[] arr;
 
     public IntArray() {
-        this( new int[] {} );
+        this(new int[] {});
     }
 }

@@ -1,8 +1,8 @@
 package org.anchoranalysis.gui.finder.csvstatistic;
 
-import org.anchoranalysis.core.index.IndexGetter;
 import lombok.AllArgsConstructor;
 import lombok.Value;
+import org.anchoranalysis.core.index.IndexGetter;
 
 /*
  * #%L
@@ -29,7 +29,8 @@ import lombok.Value;
  * THE SOFTWARE.
  * #L%
  */
-@AllArgsConstructor @Value
+@AllArgsConstructor
+@Value
 class SimpleIndex implements IndexGetter {
 
     private int index;

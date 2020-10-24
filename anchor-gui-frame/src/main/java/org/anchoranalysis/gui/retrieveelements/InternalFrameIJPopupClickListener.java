@@ -38,7 +38,6 @@ import org.anchoranalysis.gui.frame.details.ControllerPopupMenu;
 public class InternalFrameIJPopupClickListener extends MouseAdapter {
 
     private List<JMenu> additionalMenuList = new ArrayList<>();
-    
 
     private ControllerPopupMenu controllerPopupMenu;
 

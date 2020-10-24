@@ -32,9 +32,9 @@ import javax.swing.event.EventListenerList;
 import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.index.IndexGetter;
 import org.anchoranalysis.core.index.bounded.BoundChangeEvent;
+import org.anchoranalysis.core.index.bounded.BoundChangeEvent.BoundType;
 import org.anchoranalysis.core.index.bounded.BoundChangeListener;
 import org.anchoranalysis.core.index.bounded.BoundedIndexContainer;
-import org.anchoranalysis.core.index.bounded.BoundChangeEvent.BoundType;
 
 class ArrayListContainer<T extends IndexGetter & Comparable<IndexGetter>>
         implements BoundedIndexContainer<T> {

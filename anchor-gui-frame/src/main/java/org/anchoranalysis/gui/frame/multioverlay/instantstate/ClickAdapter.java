@@ -29,6 +29,7 @@ package org.anchoranalysis.gui.frame.multioverlay.instantstate;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.SwingUtilities;
+import lombok.RequiredArgsConstructor;
 import org.anchoranalysis.core.property.IPropertyValueReceivable;
 import org.anchoranalysis.gui.frame.display.overlay.OverlayRetriever;
 import org.anchoranalysis.gui.image.ISliceNumGetter;
@@ -41,19 +42,18 @@ import org.anchoranalysis.overlay.collection.ColoredOverlayCollection;
 import org.anchoranalysis.overlay.collection.OverlayCollection;
 import org.anchoranalysis.spatial.point.Point3i;
 import org.apache.commons.lang3.ArrayUtils;
-import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 class ClickAdapter extends MouseAdapter {
 
     // START REQUIRED ARGUMENTS
     private final DualIndicesSelection selectionIndices;
-    
+
     private final ISliceNumGetter sliceNumGetter;
 
     private final OverlayRetriever overlaysGetter;
     // END REQUIRED ARGUMENTS
-    
+
     private PropertyValueChangeListenerList<OverlayCollection> eventListenerList =
             new PropertyValueChangeListenerList<>();
 
@@ -102,7 +102,8 @@ class ClickAdapter extends MouseAdapter {
 
         final int[] idsFinal = ids;
         OverlayCollection overlaysSubset =
-                overlays.getOverlays().createSubset( idToFind -> ArrayUtils.contains(idsFinal, idToFind) );
+                overlays.getOverlays()
+                        .createSubset(idToFind -> ArrayUtils.contains(idsFinal, idToFind));
 
         // We also trigger an selectMark
         triggerObjectChangeEvent(overlaysSubset);

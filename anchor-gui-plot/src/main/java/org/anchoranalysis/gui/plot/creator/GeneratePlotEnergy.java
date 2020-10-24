@@ -106,7 +106,8 @@ public class GeneratePlotEnergy
             EnergyGraphItem item =
                     new EnergyGraphItem(objectIdentifier(pair), pair.getEnergyTotal().getTotal());
 
-            Color colorSource = colorIndex.get(pair.getPair().getSource().getIdentifier()).toAWTColor();
+            Color colorSource =
+                    colorIndex.get(pair.getPair().getSource().getIdentifier()).toAWTColor();
             Color colorDestination =
                     colorIndex.get(pair.getPair().getDestination().getIdentifier()).toAWTColor();
 

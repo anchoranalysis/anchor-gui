@@ -62,8 +62,7 @@ public class BackgroundStackContainerFactory {
 
         BoundedIndexContainer<DisplayStack> bridge =
                 new BoundedIndexContainerBridgeWithoutIndex<>(
-                        new TimeSequenceBridge(seq),
-                        BackgroundStackContainerFactory::convert);
+                        new TimeSequenceBridge(seq), BackgroundStackContainerFactory::convert);
 
         return new ExistingStack(bridge);
     }
@@ -80,7 +79,7 @@ public class BackgroundStackContainerFactory {
             throw new OperationFailedException(e);
         }
     }
-    
+
     private static DisplayStack convert(Stack s) throws CreateException {
         if (s.getNumberChannels() <= 3) {
             s = s.extractUpToThreeChannels();

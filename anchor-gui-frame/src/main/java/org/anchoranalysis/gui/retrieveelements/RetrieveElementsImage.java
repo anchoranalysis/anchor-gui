@@ -67,12 +67,7 @@ public class RetrieveElementsImage extends RetrieveElements {
 
             SupplierGenerator<Stack, Stack> generator = new SupplierGenerator<>(generatorMIP);
             popUp.addExportItem(
-                    generator,
-                    opCreateStack,
-                    "selectedStackMIP",
-                    "MIP",
-                    Optional.empty(),
-                    1);
+                    generator, opCreateStack, "selectedStackMIP", "MIP", Optional.empty(), 1);
         }
     }
 
