@@ -42,7 +42,7 @@ import org.anchoranalysis.gui.videostats.internalframe.annotator.AnnotationFrame
 import org.anchoranalysis.gui.videostats.internalframe.annotator.AnnotationInitParams;
 import org.anchoranalysis.gui.videostats.internalframe.annotator.AnnotationPanelParams;
 import org.anchoranalysis.gui.videostats.internalframe.annotator.navigation.PanelNavigation;
-import org.anchoranalysis.image.core.stack.NamedStacksSupplier;
+import org.anchoranalysis.image.core.stack.named.NamedStacksSupplier;
 
 public abstract class AnnotationGuiBuilder<T extends AnnotationInitParams> {
 

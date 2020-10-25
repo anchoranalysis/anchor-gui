@@ -30,8 +30,8 @@ import org.anchoranalysis.core.exception.OperationFailedException;
 import org.anchoranalysis.core.identifier.provider.NamedProvider;
 import org.anchoranalysis.core.progress.ProgressReporterNull;
 import org.anchoranalysis.gui.finder.FinderRasterFolder;
-import org.anchoranalysis.image.core.stack.NamedStacksSupplier;
 import org.anchoranalysis.image.core.stack.Stack;
+import org.anchoranalysis.image.core.stack.named.NamedStacksSupplier;
 import org.anchoranalysis.image.io.bean.stack.StackReader;
 import org.anchoranalysis.io.manifest.Manifest;
 

@@ -47,7 +47,7 @@ import org.anchoranalysis.gui.videostats.module.VideoStatsModuleCreateException;
 import org.anchoranalysis.gui.videostats.modulecreator.VideoStatsModuleCreator;
 import org.anchoranalysis.image.bean.nonbean.init.CreateCombinedStack;
 import org.anchoranalysis.image.bean.nonbean.init.ImageInitParams;
-import org.anchoranalysis.image.core.stack.wrap.WrapStackAsTimeSequence;
+import org.anchoranalysis.image.core.stack.time.WrapStackAsTimeSequence;
 import org.anchoranalysis.io.output.bean.OutputWriteSettings;
 import org.anchoranalysis.mpp.bean.init.MPPInitParams;
 

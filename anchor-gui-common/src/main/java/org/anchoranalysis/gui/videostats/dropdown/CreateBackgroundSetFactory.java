@@ -36,7 +36,7 @@ import org.anchoranalysis.gui.series.TimeSequenceProvider;
 import org.anchoranalysis.gui.series.TimeSequenceProviderSupplier;
 import org.anchoranalysis.image.core.stack.Stack;
 import org.anchoranalysis.image.core.stack.TimeSequence;
-import org.anchoranalysis.image.core.stack.wrap.WrapStackAsTimeSequence;
+import org.anchoranalysis.image.core.stack.time.WrapStackAsTimeSequence;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class CreateBackgroundSetFactory {

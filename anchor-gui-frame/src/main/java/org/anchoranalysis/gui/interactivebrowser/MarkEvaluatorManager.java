@@ -31,7 +31,7 @@ import java.util.Map;
 import java.util.Set;
 import org.anchoranalysis.core.exception.CreateException;
 import org.anchoranalysis.core.exception.OperationFailedException;
-import org.anchoranalysis.image.core.stack.NamedStacksSupplier;
+import org.anchoranalysis.image.core.stack.named.NamedStacksSupplier;
 import org.anchoranalysis.io.output.outputter.InputOutputContext;
 import org.anchoranalysis.mpp.feature.bean.mark.MarkEvaluator;
 

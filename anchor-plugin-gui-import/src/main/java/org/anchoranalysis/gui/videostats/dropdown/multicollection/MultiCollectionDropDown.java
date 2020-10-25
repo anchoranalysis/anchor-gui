@@ -47,7 +47,7 @@ import org.anchoranalysis.gui.videostats.dropdown.common.DropDownUtilities;
 import org.anchoranalysis.gui.videostats.dropdown.common.DropDownUtilitiesRaster;
 import org.anchoranalysis.gui.videostats.dropdown.common.EnergyBackground;
 import org.anchoranalysis.gui.videostats.dropdown.common.GuessEnergyFromStacks;
-import org.anchoranalysis.image.core.stack.wrap.WrapTimeSequenceAsStack;
+import org.anchoranalysis.image.core.stack.time.WrapTimeSequenceAsStack;
 import org.anchoranalysis.image.voxel.object.ObjectCollection;
 import org.anchoranalysis.io.output.outputter.InputOutputContext;
 import org.anchoranalysis.io.output.outputter.Outputter;

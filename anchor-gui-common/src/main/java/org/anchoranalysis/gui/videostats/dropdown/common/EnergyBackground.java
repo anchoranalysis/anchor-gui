@@ -42,8 +42,8 @@ import org.anchoranalysis.gui.videostats.dropdown.AddVideoStatsModule;
 import org.anchoranalysis.gui.videostats.dropdown.AdderAppendEnergyStack;
 import org.anchoranalysis.gui.videostats.dropdown.BackgroundSetProgressingSupplier;
 import org.anchoranalysis.gui.videostats.dropdown.CreateBackgroundSetFactory;
-import org.anchoranalysis.image.core.stack.NamedStacksSupplier;
-import org.anchoranalysis.image.core.stack.wrap.WrapStackAsTimeSequence;
+import org.anchoranalysis.image.core.stack.named.NamedStacksSupplier;
+import org.anchoranalysis.image.core.stack.time.WrapStackAsTimeSequence;
 
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class EnergyBackground {

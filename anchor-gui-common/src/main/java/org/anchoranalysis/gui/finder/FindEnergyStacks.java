@@ -35,8 +35,8 @@ import org.anchoranalysis.core.progress.ProgressReporterNull;
 import org.anchoranalysis.feature.energy.EnergyStack;
 import org.anchoranalysis.image.core.channel.Channel;
 import org.anchoranalysis.image.core.dimensions.IncorrectImageSizeException;
-import org.anchoranalysis.image.core.stack.NamedStacksSupplier;
 import org.anchoranalysis.image.core.stack.Stack;
+import org.anchoranalysis.image.core.stack.named.NamedStacksSupplier;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 class FindEnergyStacks {

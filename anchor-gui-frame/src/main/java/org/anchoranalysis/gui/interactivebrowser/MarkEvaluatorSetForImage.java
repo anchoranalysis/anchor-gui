@@ -39,7 +39,7 @@ import org.anchoranalysis.core.exception.InitException;
 import org.anchoranalysis.core.exception.OperationFailedException;
 import org.anchoranalysis.core.identifier.provider.store.StoreSupplier;
 import org.anchoranalysis.core.progress.ProgressReporterNull;
-import org.anchoranalysis.image.core.stack.NamedStacksSupplier;
+import org.anchoranalysis.image.core.stack.named.NamedStacksSupplier;
 import org.anchoranalysis.io.output.outputter.InputOutputContext;
 import org.anchoranalysis.mpp.bean.init.MPPInitParams;
 import org.anchoranalysis.mpp.feature.bean.mark.MarkEvaluator;

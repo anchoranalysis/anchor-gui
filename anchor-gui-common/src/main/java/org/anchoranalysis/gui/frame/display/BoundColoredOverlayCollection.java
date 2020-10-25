@@ -34,7 +34,7 @@ import org.anchoranalysis.core.identifier.getter.IdentifyByIteration;
 import org.anchoranalysis.core.index.SetOperationFailedException;
 import org.anchoranalysis.gui.frame.display.overlay.OverlayPrecalculatedCache;
 import org.anchoranalysis.image.core.dimensions.Dimensions;
-import org.anchoranalysis.image.core.stack.rgb.RGBStack;
+import org.anchoranalysis.image.core.stack.RGBStack;
 import org.anchoranalysis.overlay.Overlay;
 import org.anchoranalysis.overlay.collection.ColoredOverlayCollection;
 import org.anchoranalysis.overlay.collection.OverlayCollection;

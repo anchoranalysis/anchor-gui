@@ -30,7 +30,7 @@ import org.anchoranalysis.core.exception.CreateException;
 import org.anchoranalysis.core.exception.OperationFailedException;
 import org.anchoranalysis.gui.region.RegionExtracter;
 import org.anchoranalysis.image.core.stack.DisplayStack;
-import org.anchoranalysis.image.core.stack.rgb.RGBStack;
+import org.anchoranalysis.image.core.stack.RGBStack;
 import org.anchoranalysis.image.io.stack.ConvertDisplayStackToRGB;
 import org.anchoranalysis.spatial.box.BoundingBox;
 

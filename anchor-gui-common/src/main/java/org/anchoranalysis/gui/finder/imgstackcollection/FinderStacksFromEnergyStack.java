@@ -35,9 +35,9 @@ import org.anchoranalysis.core.progress.ProgressReporter;
 import org.anchoranalysis.core.progress.ProgressReporterNull;
 import org.anchoranalysis.feature.energy.EnergyStack;
 import org.anchoranalysis.gui.finder.FinderEnergyStack;
-import org.anchoranalysis.image.core.stack.NamedStacks;
-import org.anchoranalysis.image.core.stack.NamedStacksSupplier;
 import org.anchoranalysis.image.core.stack.Stack;
+import org.anchoranalysis.image.core.stack.named.NamedStacks;
+import org.anchoranalysis.image.core.stack.named.NamedStacksSupplier;
 import org.anchoranalysis.io.manifest.Manifest;
 
 @RequiredArgsConstructor

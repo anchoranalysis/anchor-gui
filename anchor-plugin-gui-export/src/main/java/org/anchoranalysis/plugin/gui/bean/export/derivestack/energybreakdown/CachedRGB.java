@@ -32,7 +32,7 @@ import org.anchoranalysis.core.identifier.getter.IdentifierGetter;
 import org.anchoranalysis.gui.frame.display.OverlayedDisplayStackUpdate;
 import org.anchoranalysis.image.core.channel.Channel;
 import org.anchoranalysis.image.core.stack.DisplayStack;
-import org.anchoranalysis.image.core.stack.rgb.RGBStack;
+import org.anchoranalysis.image.core.stack.RGBStack;
 import org.anchoranalysis.image.io.stack.ConvertDisplayStackToRGB;
 import org.anchoranalysis.image.voxel.Voxels;
 import org.anchoranalysis.image.voxel.buffer.primitive.UnsignedByteBuffer;
