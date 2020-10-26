@@ -35,7 +35,6 @@ import org.anchoranalysis.core.color.ColorIndex;
 import org.anchoranalysis.core.log.CommonContext;
 import org.anchoranalysis.core.log.Logger;
 import org.anchoranalysis.core.random.RandomNumberGenerator;
-import org.anchoranalysis.gui.export.bean.task.ExportTaskList;
 import org.anchoranalysis.gui.retrieveelements.ExportPopupParams;
 import org.anchoranalysis.gui.videostats.threading.InteractiveThreadPool;
 import org.anchoranalysis.io.input.InputContextParams;
@@ -55,8 +54,6 @@ public class VideoStatsModuleGlobalParams {
     @Getter private final InteractiveThreadPool threadPool;
 
     @Getter private final RandomNumberGenerator randomNumberGenerator;
-
-    @Getter private final ExportTaskList exportTaskList;
 
     @Getter private final ColorIndex defaultColorIndexForMarks;
 

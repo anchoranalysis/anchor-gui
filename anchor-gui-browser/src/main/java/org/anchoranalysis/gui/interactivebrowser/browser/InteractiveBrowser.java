@@ -37,7 +37,6 @@ import org.anchoranalysis.core.exception.OperationFailedException;
 import org.anchoranalysis.core.random.RandomNumberGenerator;
 import org.anchoranalysis.core.random.RandomNumberGeneratorMersenne;
 import org.anchoranalysis.gui.bean.filecreator.FileCreator;
-import org.anchoranalysis.gui.export.bean.task.ExportTaskList;
 import org.anchoranalysis.gui.feature.evaluator.treetable.FeatureListSrc;
 import org.anchoranalysis.gui.interactivebrowser.FileOpenManager;
 import org.anchoranalysis.gui.interactivebrowser.MarkEvaluatorManager;
@@ -55,7 +54,9 @@ import org.anchoranalysis.image.io.bean.stack.StackReader;
 import org.anchoranalysis.io.generator.sequence.SequenceMemory;
 import org.anchoranalysis.io.output.outputter.InputOutputContext;
 import org.anchoranalysis.mpp.feature.bean.mark.MarkEvaluator;
+import lombok.RequiredArgsConstructor;
 
+@RequiredArgsConstructor
 public class InteractiveBrowser {
 
     // How long the splash screen displays for
@@ -64,22 +65,16 @@ public class InteractiveBrowser {
 
     private VideoStatsFrame videoStatsFrame;
 
-    private ExportTaskList exportTaskList;
-
+    // START REQUIRED ARGUMENTS
+    private final InputOutputContext context;
+    // END REQUIRED ARGUMENTS
+    
     // Manages the available mark evaluators
     private MarkEvaluatorManager markEvaluatorManager;
 
     private OpenFile openFileCreator;
 
     private OpenFileTypeFactory openFileTypeFactory;
-
-    private InputOutputContext context;
-
-    public InteractiveBrowser(InputOutputContext context, ExportTaskList exportTaskList) {
-        super();
-        this.exportTaskList = exportTaskList;
-        this.context = context;
-    }
 
     public void init(InteractiveBrowserInput interactiveBrowserInput) throws InitException {
 
@@ -236,7 +231,6 @@ public class InteractiveBrowser {
                 context.common(),
                 videoStatsFrame.getThreadPool(),
                 randomNumberGenerator,
-                exportTaskList,
                 colorIndex,
                 videoStatsFrame.getGraphicsConfiguration());
     }

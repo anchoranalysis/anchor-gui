@@ -34,7 +34,7 @@ import org.anchoranalysis.spatial.point.Point2i;
 
 class MeanInterpolator {
 
-    private static final String EXC_ZERO_CNT =
+    private static final String EXCEPTION_ZERO_COUNT =
             "\"The interpolator has a count of 0, and cannot return a valid value\"";
 
     private final Extent sizeToInterpolate;
@@ -73,7 +73,7 @@ class MeanInterpolator {
                 });
 
         if (runningSum.getCount() == 0) {
-            throw new OperationFailedException(EXC_ZERO_CNT);
+            throw new OperationFailedException(EXCEPTION_ZERO_COUNT);
         }
 
         return runningSum.mean();
