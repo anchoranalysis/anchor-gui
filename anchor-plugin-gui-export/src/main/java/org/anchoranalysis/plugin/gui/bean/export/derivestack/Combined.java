@@ -33,8 +33,8 @@ import org.anchoranalysis.bean.annotation.BeanField;
 import org.anchoranalysis.core.exception.CreateException;
 import org.anchoranalysis.gui.export.bean.ExportTaskParams;
 import org.anchoranalysis.image.bean.spatial.arrange.ArrangeStackBean;
-import org.anchoranalysis.image.io.bean.generator.CombineRasterGenerator;
-import org.anchoranalysis.image.io.generator.raster.RasterGenerator;
+import org.anchoranalysis.image.io.bean.stack.combine.CombineRasterGenerator;
+import org.anchoranalysis.image.io.stack.output.generator.RasterGenerator;
 import org.anchoranalysis.plugin.gui.export.MappedFrom;
 
 public class Combined<T> extends DeriveStack<T> {

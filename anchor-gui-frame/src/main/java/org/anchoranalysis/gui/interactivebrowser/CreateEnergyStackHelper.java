@@ -36,7 +36,7 @@ import org.anchoranalysis.core.value.KeyValueParams;
 import org.anchoranalysis.feature.energy.EnergyStack;
 import org.anchoranalysis.feature.energy.EnergyStackWithoutParams;
 import org.anchoranalysis.image.core.stack.Stack;
-import org.anchoranalysis.image.experiment.identifiers.StackIdentifiers;
+import org.anchoranalysis.image.core.stack.StackIdentifiers;
 import org.anchoranalysis.mpp.bean.init.MPPInitParams;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)

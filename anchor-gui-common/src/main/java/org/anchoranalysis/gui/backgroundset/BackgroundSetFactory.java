@@ -42,8 +42,8 @@ import org.anchoranalysis.image.core.channel.factory.ChannelFactory;
 import org.anchoranalysis.image.core.dimensions.Dimensions;
 import org.anchoranalysis.image.core.dimensions.IncorrectImageSizeException;
 import org.anchoranalysis.image.core.stack.Stack;
+import org.anchoranalysis.image.core.stack.StackIdentifiers;
 import org.anchoranalysis.image.core.stack.TimeSequence;
-import org.anchoranalysis.image.experiment.identifiers.StackIdentifiers;
 import org.anchoranalysis.image.voxel.datatype.UnsignedByteVoxelType;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)

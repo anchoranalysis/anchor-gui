@@ -28,7 +28,7 @@ package org.anchoranalysis.gui.bean.filecreator;
 
 import org.anchoranalysis.gui.file.interactive.FileSingleStack;
 import org.anchoranalysis.gui.file.interactive.InteractiveFile;
-import org.anchoranalysis.image.io.input.ProvidesStackInput;
+import org.anchoranalysis.image.io.stack.input.ProvidesStackInput;
 
 // A named channel collection derived from a file
 public class NamedSingleStackCreator extends FileCreatorFromInputManager<ProvidesStackInput> {

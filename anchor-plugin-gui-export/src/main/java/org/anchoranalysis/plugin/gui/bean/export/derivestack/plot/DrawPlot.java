@@ -32,7 +32,7 @@ import org.anchoranalysis.bean.annotation.BeanField;
 import org.anchoranalysis.core.exception.CreateException;
 import org.anchoranalysis.gui.export.bean.ExportTaskParams;
 import org.anchoranalysis.image.bean.spatial.SizeXY;
-import org.anchoranalysis.image.io.generator.raster.RasterGenerator;
+import org.anchoranalysis.image.io.stack.output.generator.RasterGenerator;
 import org.anchoranalysis.plot.bean.Plot;
 import org.anchoranalysis.plugin.gui.bean.export.derivestack.DeriveStack;
 import org.anchoranalysis.plugin.gui.export.MappedFrom;

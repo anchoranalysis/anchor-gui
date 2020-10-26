@@ -31,8 +31,8 @@ import lombok.Setter;
 import org.anchoranalysis.bean.annotation.BeanField;
 import org.anchoranalysis.core.exception.CreateException;
 import org.anchoranalysis.gui.export.bean.ExportTaskParams;
-import org.anchoranalysis.image.io.generator.raster.RasterGenerator;
-import org.anchoranalysis.image.io.generator.raster.RasterGeneratorBridge;
+import org.anchoranalysis.image.io.stack.output.generator.RasterGenerator;
+import org.anchoranalysis.image.io.stack.output.generator.RasterGeneratorBridge;
 import org.anchoranalysis.plugin.gui.export.DualStateWithoutIndex;
 import org.anchoranalysis.plugin.gui.export.MappedFrom;
 

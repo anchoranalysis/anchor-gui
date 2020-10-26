@@ -31,7 +31,7 @@ import java.nio.file.Path;
 import org.anchoranalysis.core.exception.OperationFailedException;
 import org.anchoranalysis.core.identifier.provider.store.LazyEvaluationStore;
 import org.anchoranalysis.core.log.Logger;
-import org.anchoranalysis.image.io.objects.ObjectCollectionReader;
+import org.anchoranalysis.image.io.object.input.ObjectCollectionReader;
 import org.anchoranalysis.image.voxel.object.ObjectCollection;
 import org.apache.commons.io.FilenameUtils;
 
