@@ -41,7 +41,7 @@ import org.anchoranalysis.gui.file.opened.OpenedFileGUI;
 import org.anchoranalysis.gui.finder.FinderEnergyStack;
 import org.anchoranalysis.gui.finder.imgstackcollection.FinderStacksCombine;
 import org.anchoranalysis.gui.finder.imgstackcollection.FinderStacksFromEnergyStack;
-import org.anchoranalysis.gui.finder.imgstackcollection.FinderStacksFromFolder;
+import org.anchoranalysis.gui.finder.imgstackcollection.FinderStacksFromDirectory;
 import org.anchoranalysis.gui.finder.imgstackcollection.FinderStacksFromRootFiles;
 import org.anchoranalysis.gui.interactivebrowser.MarkEvaluatorManager;
 import org.anchoranalysis.gui.interactivebrowser.MarkEvaluatorSetForImage;
@@ -147,7 +147,7 @@ public class ManifestDropDown {
             FinderEnergyStack finderEnergyStack, StackReader stackReader) throws InitException {
         // Finders
         FinderStacksCombine combined = new FinderStacksCombine();
-        combined.add(new FinderStacksFromFolder(stackReader, OutputterDirectories.STACKS));
+        combined.add(new FinderStacksFromDirectory(stackReader, OutputterDirectories.STACKS));
         combined.add(new FinderStacksFromRootFiles(stackReader, "out"));
         combined.add(
                 new FinderStacksFromEnergyStack(
@@ -155,7 +155,7 @@ public class ManifestDropDown {
 
         // Disabled, as they not be the same size as the existing image
         combined.add(new FinderStacksFromRootFiles(stackReader, "stackFromCollection"));
-        combined.add(new FinderStacksFromFolder(stackReader, "channelScaledCollection"));
+        combined.add(new FinderStacksFromDirectory(stackReader, "channelScaledCollection"));
 
         try {
             if (!combined.doFind(manifests.getJobManifest().get())) {

@@ -38,7 +38,7 @@ import org.anchoranalysis.io.manifest.finder.FinderSingleDirectory;
 import org.anchoranalysis.io.manifest.finder.match.DirectoryMatch;
 
 @RequiredArgsConstructor
-public class FinderRasterFolder extends FinderSingleDirectory {
+public class FinderRasterDirectory extends FinderSingleDirectory {
 
     // START: REQUIRED ARGUMENTS
     private final String directoryName;
@@ -59,7 +59,7 @@ public class FinderRasterFolder extends FinderSingleDirectory {
     // If namesAsIndexes is true, we use the indexes as names instead of the existing names
     public NamedStacks createStackCollection(boolean namesAsIndexes) {
 
-        if (getFoundDirectory() == null) {
+        if (!exists()) {
             return new NamedStacks();
         }
 

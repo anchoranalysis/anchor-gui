@@ -26,11 +26,11 @@
 
 package org.anchoranalysis.gui.io.loader.manifest.finder;
 
-import org.anchoranalysis.gui.finder.FinderRasterFolder;
+import org.anchoranalysis.gui.finder.FinderRasterDirectory;
 import org.anchoranalysis.image.io.bean.stack.StackReader;
 
 // currently unused, as we don't write the contour repersentation to the file system
-class FinderContourRepresentationRGBRasterSeries extends FinderRasterFolder {
+class FinderContourRepresentationRGBRasterSeries extends FinderRasterDirectory {
 
     public FinderContourRepresentationRGBRasterSeries(StackReader stackReader, String folderName) {
         super(folderName, "contourRepresentationRGB", stackReader);

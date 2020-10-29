@@ -29,22 +29,23 @@ package org.anchoranalysis.gui.finder.imgstackcollection;
 import org.anchoranalysis.core.exception.OperationFailedException;
 import org.anchoranalysis.core.identifier.provider.NamedProvider;
 import org.anchoranalysis.core.progress.ProgressReporterNull;
-import org.anchoranalysis.gui.finder.FinderRasterFolder;
+import org.anchoranalysis.gui.finder.FinderRasterDirectory;
 import org.anchoranalysis.image.core.stack.Stack;
 import org.anchoranalysis.image.core.stack.named.NamedStacksSupplier;
 import org.anchoranalysis.image.io.bean.stack.StackReader;
+import org.anchoranalysis.image.io.stack.output.NamedStacksOutputter;
 import org.anchoranalysis.io.manifest.Manifest;
 
 // Finds an image stack collection
-public class FinderStacksFromFolder implements FinderStacks {
+public class FinderStacksFromDirectory implements FinderStacks {
 
-    private FinderRasterFolder delegate;
+    private FinderRasterDirectory delegate;
 
     private NamedStacksSupplier operationStacks =
-            NamedStacksSupplier.cache(pr -> delegate.createStackCollection(false));
+            NamedStacksSupplier.cache(progress -> delegate.createStackCollection(false));
 
-    public FinderStacksFromFolder(StackReader stackReader, String folderName) {
-        delegate = new FinderRasterFolder(folderName, "stackFromCollection", stackReader);
+    public FinderStacksFromDirectory(StackReader stackReader, String directoryName) {
+        delegate = new FinderRasterDirectory(directoryName, NamedStacksOutputter.MANIFEST_FUNCTION, stackReader);
     }
 
     @Override

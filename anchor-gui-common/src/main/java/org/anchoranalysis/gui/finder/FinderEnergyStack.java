@@ -42,14 +42,14 @@ import org.anchoranalysis.io.manifest.finder.FinderKeyValueParams;
 
 public class FinderEnergyStack implements Finder {
 
-    private FinderRasterFolder finderRasterFolder;
+    private FinderRasterDirectory finderRasterFolder;
     private EnergyStackSupplier energyStackSupplier;
     private FinderKeyValueParams finderImageParams;
 
     private NamedStacksSupplier operationStacks;
 
     public FinderEnergyStack(StackReader stackReader, ErrorReporter errorReporter) {
-        finderRasterFolder = new FinderRasterFolder("energyStack", "energyStack", stackReader);
+        finderRasterFolder = new FinderRasterDirectory("energyStack", "energyStack", stackReader);
 
         this.operationStacks =
                 NamedStacksSupplier.cache(
