@@ -102,7 +102,7 @@ public class ExecutedExperimentFileCreator extends FileCreatorGeneralList {
             FileCreatorParams params,
             ManifestCouplingDefinition manifestCouplingDefinition,
             List<InteractiveFile> listFiles) {
-        experimentNames.add(manifestExperiment.getRootFolder().relativePath().toString());
+        experimentNames.add(manifestExperiment.getRootDirectory().relativePath().toString());
 
         FinderSerializedObject<EnergyScheme> finderEnergyScheme =
                 new FinderSerializedObject<>(

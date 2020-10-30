@@ -37,33 +37,33 @@ import org.apache.commons.io.FilenameUtils;
 
 class CreateObjectStoreFromDirectory {
 
-    public LazyEvaluationStore<ObjectCollection> apply(Path pathFolder, Logger logger)
+    public LazyEvaluationStore<ObjectCollection> apply(Path pathDirectory, Logger logger)
             throws OperationFailedException {
 
         LazyEvaluationStore<ObjectCollection> out =
                 new LazyEvaluationStore<>("finder object-collections");
 
-        addHdf5Files(out, pathFolder);
+        addHdf5Files(out, pathDirectory);
 
         /** All the sub-directories */
-        addSubdirectories(out, pathFolder);
+        addSubdirectories(out, pathDirectory);
 
         return out;
     }
 
-    private void addHdf5Files(LazyEvaluationStore<ObjectCollection> out, Path pathFolder)
+    private void addHdf5Files(LazyEvaluationStore<ObjectCollection> out, Path pathDirectory)
             throws OperationFailedException {
 
-        for (File file : hd5fFilesFor(pathFolder)) {
+        for (File file : hd5fFilesFor(pathDirectory)) {
             String nameWithoutExt = FilenameUtils.removeExtension(file.getName());
             addPath(out, nameWithoutExt, file.toPath());
         }
     }
 
-    private void addSubdirectories(LazyEvaluationStore<ObjectCollection> out, Path pathFolder)
+    private void addSubdirectories(LazyEvaluationStore<ObjectCollection> out, Path pathDirectory)
             throws OperationFailedException {
 
-        for (File dir : subdirectoriesFor(pathFolder)) {
+        for (File dir : subdirectoriesFor(pathDirectory)) {
             addPath(out, dir.getName(), dir.toPath());
         }
     }
@@ -73,12 +73,12 @@ class CreateObjectStoreFromDirectory {
         out.add(name, ObjectCollectionReader.createFromPathCached(() -> path)::get);
     }
 
-    private static File[] subdirectoriesFor(Path pathFolder) {
-        return pathFolder.toFile().listFiles(File::isDirectory);
+    private static File[] subdirectoriesFor(Path pathDirectory) {
+        return pathDirectory.toFile().listFiles(File::isDirectory);
     }
 
-    private static File[] hd5fFilesFor(Path pathFolder) {
-        return pathFolder
+    private static File[] hd5fFilesFor(Path pathDirectory) {
+        return pathDirectory
                 .toFile()
                 .listFiles(f -> ObjectCollectionReader.hasHdf5Extension(f.toPath()));
     }

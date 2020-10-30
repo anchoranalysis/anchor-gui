@@ -45,7 +45,7 @@ import org.anchoranalysis.gui.finder.imgstackcollection.FinderStacksFromDirector
 import org.anchoranalysis.gui.finder.imgstackcollection.FinderStacksFromRootFiles;
 import org.anchoranalysis.gui.interactivebrowser.MarkEvaluatorManager;
 import org.anchoranalysis.gui.interactivebrowser.MarkEvaluatorSetForImage;
-import org.anchoranalysis.gui.io.loader.manifest.finder.FinderMarksFolder;
+import org.anchoranalysis.gui.io.loader.manifest.finder.FinderMarksDirectory;
 import org.anchoranalysis.gui.marks.MarkDisplaySettings;
 import org.anchoranalysis.gui.series.TimeSequenceProvider;
 import org.anchoranalysis.gui.series.TimeSequenceProviderSupplier;
@@ -386,7 +386,7 @@ public class ManifestDropDown {
             OperationCreateBackgroundSetWithAdder operationBwsaWithEnergy,
             VideoStatsModuleGlobalParams mpg) {
         try {
-            FinderMarksFolder finder = new FinderMarksFolder("marksCollection", "marks");
+            FinderMarksDirectory finder = new FinderMarksDirectory("marksCollection", "marks");
             finder.doFind(manifests.getJobManifest().get());
 
             NamedProvider<MarkCollection> provider = finder.createNamedProvider(false);

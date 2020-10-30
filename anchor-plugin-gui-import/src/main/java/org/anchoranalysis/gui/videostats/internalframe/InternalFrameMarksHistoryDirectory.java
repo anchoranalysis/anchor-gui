@@ -41,11 +41,11 @@ import org.anchoranalysis.mpp.feature.energy.IndexableMarksWithEnergy;
 import org.anchoranalysis.overlay.Overlay;
 import org.anchoranalysis.overlay.identifier.IdentifierFromOverlay;
 
-public class InternalFrameMarksHistoryFolder {
+public class InternalFrameMarksHistoryDirectory {
 
     private InternalFrameOverlayedInstantStateToRGBSelectable delegate;
 
-    public InternalFrameMarksHistoryFolder(String title) {
+    public InternalFrameMarksHistoryDirectory(String title) {
         this.delegate = new InternalFrameOverlayedInstantStateToRGBSelectable(title, true, true);
     }
 

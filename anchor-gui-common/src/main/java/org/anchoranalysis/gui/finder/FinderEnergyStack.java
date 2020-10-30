@@ -42,18 +42,18 @@ import org.anchoranalysis.io.manifest.finder.FinderKeyValueParams;
 
 public class FinderEnergyStack implements Finder {
 
-    private FinderRasterDirectory finderRasterFolder;
+    private FinderRasterDirectory finderRasterDirectory;
     private EnergyStackSupplier energyStackSupplier;
     private FinderKeyValueParams finderImageParams;
 
     private NamedStacksSupplier operationStacks;
 
     public FinderEnergyStack(StackReader stackReader, ErrorReporter errorReporter) {
-        finderRasterFolder = new FinderRasterDirectory("energyStack", "energyStack", stackReader);
+        finderRasterDirectory = new FinderRasterDirectory("energyStack", "energyStack", stackReader);
 
         this.operationStacks =
                 NamedStacksSupplier.cache(
-                        progressReporter -> finderRasterFolder.createStackCollection(true));
+                        progressReporter -> finderRasterDirectory.createStackCollection(true));
 
         this.finderImageParams = new FinderKeyValueParams("energyStackParams", errorReporter);
 
@@ -63,12 +63,12 @@ public class FinderEnergyStack implements Finder {
     @Override
     public boolean doFind(Manifest manifestRecorder) {
         finderImageParams.doFind(manifestRecorder);
-        return finderRasterFolder.doFind(manifestRecorder);
+        return finderRasterDirectory.doFind(manifestRecorder);
     }
 
     @Override
     public boolean exists() {
-        return finderRasterFolder.exists();
+        return finderRasterDirectory.exists();
     }
 
     public NamedProvider<Stack> getNamedStacks() throws OperationFailedException {

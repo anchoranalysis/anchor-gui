@@ -42,7 +42,7 @@ import org.anchoranalysis.io.manifest.finder.match.DirectoryMatch;
 import org.anchoranalysis.mpp.mark.MarkCollection;
 
 @RequiredArgsConstructor
-public class FinderMarksFolder extends FinderSingleDirectory {
+public class FinderMarksDirectory extends FinderSingleDirectory {
 
     private static final Deserializer<MarkCollection> DESERIALIZER = new XStreamDeserializer<>();
 

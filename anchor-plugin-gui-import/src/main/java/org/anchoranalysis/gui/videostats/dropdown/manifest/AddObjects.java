@@ -35,7 +35,7 @@ import org.anchoranalysis.core.identifier.provider.NamedProviderGetException;
 import org.anchoranalysis.core.index.bounded.BoundedIndexContainer;
 import org.anchoranalysis.core.index.bounded.SingleContainer;
 import org.anchoranalysis.gui.finder.FinderEnergyStack;
-import org.anchoranalysis.gui.io.loader.manifest.finder.FinderMarksFolder;
+import org.anchoranalysis.gui.io.loader.manifest.finder.FinderMarksDirectory;
 import org.anchoranalysis.gui.io.loader.manifest.finder.FinderObjectsDirectory;
 import org.anchoranalysis.gui.marks.MarkDisplaySettings;
 import org.anchoranalysis.gui.videostats.dropdown.BoundVideoStatsModuleDropDown;
@@ -69,7 +69,7 @@ class AddObjects {
 
         boolean defaultAdded = false;
 
-        if (fromObjectCollectionFolder(subMenu, operationBwsaWithEnergy)) {
+        if (fromObjectsDirectory(subMenu, operationBwsaWithEnergy)) {
             defaultAdded = true;
         }
 
@@ -82,7 +82,7 @@ class AddObjects {
         return defaultAdded;
     }
 
-    private boolean fromObjectCollectionFolder(
+    private boolean fromObjectsDirectory(
             VideoStatsOperationMenu subMenu,
             OperationCreateBackgroundSetWithAdder operationBwsaWithEnergy) {
         try {
@@ -173,7 +173,7 @@ class AddObjects {
     private void fromMarks(OperationCreateBackgroundSetWithAdder operationBwsaWithEnergy) {
 
         try {
-            FinderMarksFolder finder = new FinderMarksFolder("marksCollection", "marks");
+            FinderMarksDirectory finder = new FinderMarksDirectory("marksCollection", "marks");
             finder.doFind(manifests.getJobManifest().get());
 
             NamedProvider<MarkCollection> provider = finder.createNamedProvider(false);

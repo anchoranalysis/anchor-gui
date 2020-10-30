@@ -47,8 +47,8 @@ class SequencedDirectoryStackReader extends DeriveElementsFromSequencedDirectory
 
     private StackReader stackReader;
 
-    public SequencedDirectoryStackReader(SequencedDirectory rootFolder, StackReader stackReader) {
-        super(rootFolder);
+    public SequencedDirectoryStackReader(SequencedDirectory rootDirectory, StackReader stackReader) {
+        super(rootDirectory);
         this.stackReader = stackReader;
     }
 
