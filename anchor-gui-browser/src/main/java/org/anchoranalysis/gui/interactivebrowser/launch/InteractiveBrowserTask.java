@@ -47,7 +47,7 @@ public class InteractiveBrowserTask extends TaskWithoutSharedState<InteractiveBr
             throws JobExecutionException {
 
         try {
-            InteractiveBrowser browser = new InteractiveBrowser(params.context());
+            InteractiveBrowser browser = new InteractiveBrowser(params.getContextJob());
             browser.init(params.getInput());
             browser.showWithDefaultView();
         } catch (InitException e) {
