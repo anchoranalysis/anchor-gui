@@ -38,7 +38,7 @@ import org.anchoranalysis.core.exception.CreateException;
 import org.anchoranalysis.core.exception.OperationFailedException;
 import org.anchoranalysis.core.identifier.provider.store.SharedObjects;
 import org.anchoranalysis.core.log.CommonContext;
-import org.anchoranalysis.core.progress.ProgressReporter;
+import org.anchoranalysis.core.progress.Progress;
 import org.anchoranalysis.feature.bean.list.FeatureListProvider;
 import org.anchoranalysis.feature.input.FeatureInput;
 import org.anchoranalysis.feature.shared.SharedFeaturesInitParams;
@@ -73,7 +73,7 @@ public class FileFeatureEvaluatorCreator extends FileCreator {
             VideoStatsModuleGlobalParams mpg,
             AddVideoStatsModule adder,
             IOpenFile fileOpenManager,
-            ProgressReporter progressReporter)
+            Progress progress)
             throws VideoStatsModuleCreateException {
 
         try {

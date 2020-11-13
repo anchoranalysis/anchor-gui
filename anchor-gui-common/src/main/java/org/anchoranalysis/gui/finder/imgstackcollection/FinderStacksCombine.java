@@ -30,7 +30,7 @@ import java.util.ArrayList;
 import java.util.List;
 import org.anchoranalysis.core.exception.OperationFailedException;
 import org.anchoranalysis.core.identifier.provider.NamedProvider;
-import org.anchoranalysis.core.progress.ProgressReporterNull;
+import org.anchoranalysis.core.progress.ProgressIgnore;
 import org.anchoranalysis.image.core.stack.Stack;
 import org.anchoranalysis.image.core.stack.named.NamedStacks;
 import org.anchoranalysis.image.core.stack.named.NamedStacksSupplier;
@@ -56,7 +56,7 @@ public class FinderStacksCombine implements FinderStacks {
 
     @Override
     public NamedProvider<Stack> getStacks() throws OperationFailedException {
-        return operation.get(ProgressReporterNull.get());
+        return operation.get(ProgressIgnore.get());
     }
 
     @Override

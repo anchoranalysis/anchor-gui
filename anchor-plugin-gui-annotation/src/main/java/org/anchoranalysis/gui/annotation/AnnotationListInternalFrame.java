@@ -39,8 +39,8 @@ import org.anchoranalysis.annotation.io.bean.AnnotatorStrategy;
 import org.anchoranalysis.core.exception.CreateException;
 import org.anchoranalysis.core.exception.InitException;
 import org.anchoranalysis.core.exception.OperationFailedException;
-import org.anchoranalysis.core.progress.ProgressReporter;
-import org.anchoranalysis.core.progress.ProgressReporterNull;
+import org.anchoranalysis.core.progress.Progress;
+import org.anchoranalysis.core.progress.ProgressIgnore;
 import org.anchoranalysis.gui.bean.filecreator.MarkCreatorParams;
 import org.anchoranalysis.gui.interactivebrowser.IOpenFile;
 import org.anchoranalysis.gui.interactivebrowser.filelist.InteractiveFileListInternalFrame;
@@ -66,15 +66,15 @@ public class AnnotationListInternalFrame {
             AddVideoStatsModule adder,
             IOpenFile fileOpenManager,
             MarkCreatorParams params,
-            ProgressReporter progressReporter,
+            Progress progress,
             int widthDescriptionColumn)
             throws InitException {
 
         try {
             annotationTableModel =
                     new AnnotationTableModel(
-                            pr -> createProject(inputManager, params, progressReporter),
-                            progressReporter);
+                            pr -> createProject(inputManager, params, progress),
+                            progress);
             delegate.init(
                     adder,
                     annotationTableModel,
@@ -136,21 +136,21 @@ public class AnnotationListInternalFrame {
     private <T extends AnnotatorStrategy> AnnotationProject createProject(
             AnnotationInputManager<ProvidesStackInput, T> inputManager,
             MarkCreatorParams params,
-            ProgressReporter progressReporter)
+            Progress progress)
             throws OperationFailedException {
         try {
             Collection<AnnotationWithStrategy<T>> inputs =
                     inputManager.inputs(
                             new InputManagerParams(
                                     params.getModuleParams().createInputContext(),
-                                    progressReporter,
+                                    progress,
                                     params.getModuleParams().getLogger()));
 
             return new AnnotationProject(
                     inputs,
                     params.getMarkEvaluatorManager(),
                     params.getModuleParams(),
-                    ProgressReporterNull.get());
+                    ProgressIgnore.get());
 
         } catch (InputReadFailedException | CreateException e) {
             throw new OperationFailedException(e);

@@ -91,7 +91,7 @@ public class FileMultiCollection extends InteractiveFile {
 
         MultiCollectionDropDown dropDown =
                 new MultiCollectionDropDown(
-                        progressReporter -> createTimeSequenceProvider(stacks),
+                        progress -> createTimeSequenceProvider(stacks),
                         markss,
                         objects,
                         keyValueParams,

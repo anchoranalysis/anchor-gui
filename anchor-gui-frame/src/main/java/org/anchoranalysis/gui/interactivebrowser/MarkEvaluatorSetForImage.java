@@ -38,7 +38,7 @@ import org.anchoranalysis.core.exception.CreateException;
 import org.anchoranalysis.core.exception.InitException;
 import org.anchoranalysis.core.exception.OperationFailedException;
 import org.anchoranalysis.core.identifier.provider.store.StoreSupplier;
-import org.anchoranalysis.core.progress.ProgressReporterNull;
+import org.anchoranalysis.core.progress.ProgressIgnore;
 import org.anchoranalysis.image.core.stack.named.NamedStacksSupplier;
 import org.anchoranalysis.io.output.outputter.InputOutputContext;
 import org.anchoranalysis.mpp.bean.init.MPPInitParams;
@@ -97,7 +97,7 @@ public class MarkEvaluatorSetForImage {
                 return MPPInitParamsFactory.createFromExistingCollections(
                         context,
                         Optional.ofNullable(define),
-                        Optional.of(namedStacks.get(ProgressReporterNull.get())),
+                        Optional.of(namedStacks.get(ProgressIgnore.get())),
                         Optional.empty(),
                         keyParams.get());
 

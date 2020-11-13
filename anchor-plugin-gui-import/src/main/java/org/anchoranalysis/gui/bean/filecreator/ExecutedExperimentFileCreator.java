@@ -33,7 +33,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.anchoranalysis.bean.annotation.BeanField;
 import org.anchoranalysis.core.exception.OperationFailedException;
-import org.anchoranalysis.core.progress.ProgressReporter;
+import org.anchoranalysis.core.progress.Progress;
 import org.anchoranalysis.core.serialize.DeserializationFailedException;
 import org.anchoranalysis.gui.file.interactive.FileExecutedExperimentImageWithManifest;
 import org.anchoranalysis.gui.file.interactive.InteractiveFile;
@@ -58,7 +58,7 @@ public class ExecutedExperimentFileCreator extends FileCreatorGeneralList {
     protected void addFilesToList(
             List<InteractiveFile> listFiles,
             FileCreatorParams params,
-            ProgressReporter progressReporter)
+            Progress progress)
             throws OperationFailedException {
 
         // TODO for now, we have no features from the NamedDefinitons added to the global feature
@@ -70,7 +70,7 @@ public class ExecutedExperimentFileCreator extends FileCreatorGeneralList {
                     coupledManifestsInputManager.manifestCouplingDefinition(
                             new InputManagerParams(
                                     params.createInputContext(),
-                                    progressReporter,
+                                    progress,
                                     params.getLogErrorReporter()));
         } catch (DeserializationFailedException e) {
             throw new OperationFailedException(e);

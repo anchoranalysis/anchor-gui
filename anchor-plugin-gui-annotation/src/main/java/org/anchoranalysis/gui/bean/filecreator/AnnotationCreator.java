@@ -32,7 +32,7 @@ import lombok.Setter;
 import org.anchoranalysis.annotation.io.bean.AnnotationInputManager;
 import org.anchoranalysis.bean.annotation.BeanField;
 import org.anchoranalysis.core.exception.InitException;
-import org.anchoranalysis.core.progress.ProgressReporter;
+import org.anchoranalysis.core.progress.Progress;
 import org.anchoranalysis.gui.annotation.AnnotationListInternalFrame;
 import org.anchoranalysis.gui.interactivebrowser.IOpenFile;
 import org.anchoranalysis.gui.videostats.dropdown.AddVideoStatsModule;
@@ -63,7 +63,7 @@ public class AnnotationCreator extends FileCreator {
             VideoStatsModuleGlobalParams mpg,
             AddVideoStatsModule adder,
             IOpenFile fileOpenManager,
-            ProgressReporter progressReporter)
+            Progress progress)
             throws VideoStatsModuleCreateException {
 
         AnnotationListInternalFrame listFrame = new AnnotationListInternalFrame(name);
@@ -74,7 +74,7 @@ public class AnnotationCreator extends FileCreator {
                     adder,
                     fileOpenManager,
                     params.getMarkCreatorParams(),
-                    progressReporter,
+                    progress,
                     weightWidthDescription);
         } catch (InitException e) {
             throw new VideoStatsModuleCreateException(e);

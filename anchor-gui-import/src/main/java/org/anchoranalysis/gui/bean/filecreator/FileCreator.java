@@ -30,7 +30,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.anchoranalysis.bean.AnchorBean;
 import org.anchoranalysis.bean.annotation.BeanField;
-import org.anchoranalysis.core.progress.ProgressReporter;
+import org.anchoranalysis.core.progress.Progress;
 import org.anchoranalysis.gui.interactivebrowser.IOpenFile;
 import org.anchoranalysis.gui.videostats.dropdown.AddVideoStatsModule;
 import org.anchoranalysis.gui.videostats.dropdown.VideoStatsModuleGlobalParams;
@@ -56,6 +56,6 @@ public abstract class FileCreator extends AnchorBean<FileCreator> {
             VideoStatsModuleGlobalParams mpg,
             AddVideoStatsModule adder,
             IOpenFile fileOpenManager,
-            ProgressReporter progressReporter)
+            Progress progress)
             throws VideoStatsModuleCreateException;
 }

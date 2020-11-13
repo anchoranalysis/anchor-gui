@@ -28,7 +28,7 @@ package org.anchoranalysis.gui.interactivebrowser.filelist;
 
 import org.anchoranalysis.core.exception.InitException;
 import org.anchoranalysis.core.exception.OperationFailedException;
-import org.anchoranalysis.core.progress.ProgressReporter;
+import org.anchoranalysis.core.progress.Progress;
 import org.anchoranalysis.gui.interactivebrowser.IOpenFile;
 import org.anchoranalysis.gui.interactivebrowser.InteractiveFileSupplier;
 import org.anchoranalysis.gui.interactivebrowser.SimpleVideoStatsFileListTableModel;
@@ -53,13 +53,13 @@ public class SimpleInteractiveFileListInternalFrame {
             IOpenFile fileOpenManager,
             VideoStatsModuleGlobalParams mpg,
             MarkDisplaySettings markDisplaySettings,
-            ProgressReporter progressReporter)
+            Progress progress)
             throws InitException {
 
         try {
             delegate.init(
                     adder,
-                    new SimpleVideoStatsFileListTableModel(opListFile, progressReporter),
+                    new SimpleVideoStatsFileListTableModel(opListFile, progress),
                     fileOpenManager,
                     mpg,
                     markDisplaySettings);

@@ -84,7 +84,7 @@ public class ShowComparers {
         for (final NameValue<Stack> ni : rasters) {
 
             showRaster.show(
-                    progressReporter -> createBackgroundSet(ni.getValue()),
+                    progress -> createBackgroundSet(ni.getValue()),
                     rasterName(ni.getName()));
         }
     }

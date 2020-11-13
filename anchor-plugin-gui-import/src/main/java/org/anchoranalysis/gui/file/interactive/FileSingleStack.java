@@ -35,7 +35,7 @@ import org.anchoranalysis.core.exception.InitException;
 import org.anchoranalysis.core.exception.OperationFailedException;
 import org.anchoranalysis.core.identifier.provider.store.EagerEvaluationStore;
 import org.anchoranalysis.core.identifier.provider.store.LazyEvaluationStore;
-import org.anchoranalysis.core.progress.ProgressReporter;
+import org.anchoranalysis.core.progress.Progress;
 import org.anchoranalysis.gui.bean.filecreator.MarkCreatorParams;
 import org.anchoranalysis.gui.file.opened.OpenedFile;
 import org.anchoranalysis.gui.file.opened.OpenedFileGUIWithFile;
@@ -75,7 +75,7 @@ public class FileSingleStack extends InteractiveFile {
         MultiCollectionDropDown dropDown =
                 new MultiCollectionDropDown(
                         TimeSequenceProviderSupplier.cache(
-                                progressReporter -> createTimeSeries(progressReporter, 0)),
+                                progress -> createTimeSeries(progress, 0)),
                         null,
                         null,
                         new EagerEvaluationStore<>(),
@@ -92,11 +92,11 @@ public class FileSingleStack extends InteractiveFile {
     }
 
     private TimeSequenceProvider createTimeSeries(
-            ProgressReporter progressReporter, int seriesIndex) throws CreateException {
+            Progress progress, int seriesIndex) throws CreateException {
         try {
             LazyEvaluationStore<TimeSequence> stacks =
                     new LazyEvaluationStore<>("createTimeSeries");
-            input.addToStoreInferNames(stacks, seriesIndex, progressReporter);
+            input.addToStoreInferNames(stacks, seriesIndex, progress);
             return new TimeSequenceProvider(stacks, input.numberFrames());
         } catch (OperationFailedException e) {
             throw new CreateException(e);

@@ -28,7 +28,7 @@ package org.anchoranalysis.gui.finder.imgstackcollection;
 
 import org.anchoranalysis.core.exception.OperationFailedException;
 import org.anchoranalysis.core.identifier.provider.NamedProvider;
-import org.anchoranalysis.core.progress.ProgressReporterNull;
+import org.anchoranalysis.core.progress.ProgressIgnore;
 import org.anchoranalysis.gui.finder.FinderRasterDirectory;
 import org.anchoranalysis.image.core.stack.Stack;
 import org.anchoranalysis.image.core.stack.named.NamedStacksSupplier;
@@ -50,7 +50,7 @@ public class FinderStacksFromDirectory implements FinderStacks {
 
     @Override
     public NamedProvider<Stack> getStacks() throws OperationFailedException {
-        return operationStacks.get(ProgressReporterNull.get());
+        return operationStacks.get(ProgressIgnore.get());
     }
 
     @Override

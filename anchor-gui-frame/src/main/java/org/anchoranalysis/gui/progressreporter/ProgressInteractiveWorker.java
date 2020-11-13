@@ -26,10 +26,10 @@
 
 package org.anchoranalysis.gui.progressreporter;
 
-import org.anchoranalysis.core.progress.ProgressReporter;
+import org.anchoranalysis.core.progress.Progress;
 import org.anchoranalysis.gui.videostats.threading.InteractiveWorker;
 
-public class ProgressReporterInteractiveWorker implements ProgressReporter {
+public class ProgressInteractiveWorker implements Progress {
 
     private int min;
     private int max;
@@ -37,12 +37,11 @@ public class ProgressReporterInteractiveWorker implements ProgressReporter {
 
     private int range;
 
-    public ProgressReporterInteractiveWorker(InteractiveWorker<?, ?> worker) {
+    public ProgressInteractiveWorker(InteractiveWorker<?, ?> worker) {
         this(worker, 0, 1);
     }
 
-    public ProgressReporterInteractiveWorker(InteractiveWorker<?, ?> worker, int min, int max) {
-        super();
+    public ProgressInteractiveWorker(InteractiveWorker<?, ?> worker, int min, int max) {
         this.worker = worker;
         this.min = min;
         this.max = max;
@@ -55,24 +54,21 @@ public class ProgressReporterInteractiveWorker implements ProgressReporter {
 
     @Override
     public void open() {
-        // System.out.println("Start");
+        // NOTHING TO DO
     }
 
     @Override
-    public void update(int val) {
-        assert (val <= max);
+    public void update(int value) {
+        assert (value <= max);
 
-        int valRec = val - min;
+        int valRec = value - min;
         double progress = (((double) valRec) / range) * 100;
-        worker.setProgressExt((int) Math.round(progress));
-
-        // System.out.printf("Update %d of %d\n", val, max);
+        worker.updateProgress((int) Math.round(progress));
     }
 
     @Override
     public void close() {
-        worker.setProgressExt(100);
-        // System.out.println("End");
+        worker.updateProgress(100);
     }
 
     @Override

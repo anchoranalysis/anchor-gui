@@ -31,7 +31,7 @@ import lombok.NoArgsConstructor;
 import org.anchoranalysis.core.exception.OperationFailedException;
 import org.anchoranalysis.core.identifier.provider.NamedProvider;
 import org.anchoranalysis.core.identifier.provider.NamedProviderGetException;
-import org.anchoranalysis.core.progress.ProgressReporterNull;
+import org.anchoranalysis.core.progress.ProgressIgnore;
 import org.anchoranalysis.feature.energy.EnergyStack;
 import org.anchoranalysis.image.core.channel.Channel;
 import org.anchoranalysis.image.core.dimensions.IncorrectImageSizeException;
@@ -47,7 +47,7 @@ class FindEnergyStacks {
      */
     public static EnergyStack find(NamedStacksSupplier stacks) throws OperationFailedException {
         // NB Note assumption about named-stack ordering
-        NamedProvider<Stack> provider = stacks.get(ProgressReporterNull.get());
+        NamedProvider<Stack> provider = stacks.get(ProgressIgnore.get());
 
         // We expects the keys to be the indexes
         Stack stack = allChannelsInStack(provider);

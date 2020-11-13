@@ -34,7 +34,7 @@ import org.anchoranalysis.annotation.io.AnnotationWithStrategy;
 import org.anchoranalysis.annotation.io.bean.AnnotatorStrategy;
 import org.anchoranalysis.core.exception.CreateException;
 import org.anchoranalysis.core.identifier.provider.NamedProvider;
-import org.anchoranalysis.core.progress.ProgressReporterMultiple;
+import org.anchoranalysis.core.progress.ProgressMultiple;
 import org.anchoranalysis.gui.annotation.AnnotationBackgroundInstance;
 import org.anchoranalysis.gui.container.background.BackgroundStackContainerException;
 import org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.definition.ChangeableBackground;
@@ -96,11 +96,11 @@ public abstract class AnnotationGuiBuilderWithDelegate<
     }
 
     protected AnnotationBackgroundInstance createBackground(
-            ProgressReporterMultiple prm, NamedProvider<Stack> backgroundStacks)
+            ProgressMultiple progressMultiple, NamedProvider<Stack> backgroundStacks)
             throws CreateException {
         try {
             return new AnnotationBackgroundInstance(
-                    prm,
+                    progressMultiple,
                     backgroundStacks,
                     getStrategy().getBackground().getStackNameVisualOriginal());
         } catch (BackgroundStackContainerException e) {

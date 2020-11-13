@@ -28,7 +28,7 @@ package org.anchoranalysis.gui.finder;
 
 import java.nio.file.Path;
 import org.anchoranalysis.core.exception.CreateException;
-import org.anchoranalysis.core.progress.ProgressReporterNull;
+import org.anchoranalysis.core.progress.ProgressIgnore;
 import org.anchoranalysis.image.core.stack.Stack;
 import org.anchoranalysis.image.io.ImageIOException;
 import org.anchoranalysis.image.io.bean.stack.StackReader;
@@ -58,7 +58,7 @@ class SequencedDirectoryStackReader extends DeriveElementsFromSequencedDirectory
         try {
             OpenedRaster openedRaster = stackReader.openFile(path);
             try {
-                return openedRaster.open(0, ProgressReporterNull.get()).get(0);
+                return openedRaster.open(0, ProgressIgnore.get()).get(0);
             } finally {
                 openedRaster.close();
             }

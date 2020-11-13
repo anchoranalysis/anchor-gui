@@ -27,12 +27,12 @@ package org.anchoranalysis.gui.series;
 
 import org.anchoranalysis.core.exception.CreateException;
 import org.anchoranalysis.core.progress.CachedProgressingSupplier;
-import org.anchoranalysis.core.progress.ProgressReporter;
+import org.anchoranalysis.core.progress.Progress;
 
 @FunctionalInterface
 public interface TimeSequenceProviderSupplier {
 
-    TimeSequenceProvider get(ProgressReporter progressReporter) throws CreateException;
+    TimeSequenceProvider get(Progress progress) throws CreateException;
 
     public static TimeSequenceProviderSupplier cache(TimeSequenceProviderSupplier supplier) {
         return CachedProgressingSupplier.cache(supplier::get)::get;

@@ -33,8 +33,8 @@ import org.anchoranalysis.core.exception.CreateException;
 import org.anchoranalysis.core.exception.InitException;
 import org.anchoranalysis.core.exception.OperationFailedException;
 import org.anchoranalysis.core.progress.CheckedProgressingSupplier;
-import org.anchoranalysis.core.progress.ProgressReporter;
-import org.anchoranalysis.core.progress.ProgressReporterNull;
+import org.anchoranalysis.core.progress.Progress;
+import org.anchoranalysis.core.progress.ProgressIgnore;
 import org.anchoranalysis.gui.container.background.BackgroundStackContainerException;
 import org.anchoranalysis.gui.series.TimeSequenceProvider;
 import org.anchoranalysis.gui.series.TimeSequenceProviderSupplier;
@@ -63,7 +63,7 @@ public class EnergyBackground {
             NamedStacksSupplier backgroundSupplier, EnergyStackSupplier energyStack) {
 
         return createStackSequence(
-                progressReporter -> sequenceProviderFrom(progressReporter, backgroundSupplier),
+                progress -> sequenceProviderFrom(progress, backgroundSupplier),
                 energyStack);
     }
 
@@ -91,12 +91,12 @@ public class EnergyBackground {
     }
 
     public int numberFrames() throws OperationFailedException {
-        return numberFrames.get(ProgressReporterNull.get());
+        return numberFrames.get(ProgressIgnore.get());
     }
 
     public String arbitraryBackgroundStackName() throws InitException {
         try {
-            return getBackgroundSet().get(ProgressReporterNull.get()).names().iterator().next();
+            return getBackgroundSet().get(ProgressIgnore.get()).names().iterator().next();
 
         } catch (BackgroundStackContainerException e) {
             throw new InitException(e);
@@ -104,11 +104,11 @@ public class EnergyBackground {
     }
 
     private static TimeSequenceProvider sequenceProviderFrom(
-            ProgressReporter progressReporter, NamedStacksSupplier backgroundSupplier)
+            Progress progress, NamedStacksSupplier backgroundSupplier)
             throws CreateException {
         try {
             return new TimeSequenceProvider(
-                    new WrapStackAsTimeSequence(backgroundSupplier.get(progressReporter)), 1);
+                    new WrapStackAsTimeSequence(backgroundSupplier.get(progress)), 1);
         } catch (OperationFailedException e) {
             throw new CreateException(e);
         }

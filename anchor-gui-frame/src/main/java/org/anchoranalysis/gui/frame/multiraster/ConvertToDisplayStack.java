@@ -30,7 +30,7 @@ import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.index.bounded.BoundedIndexContainer;
-import org.anchoranalysis.core.progress.ProgressReporterNull;
+import org.anchoranalysis.core.progress.ProgressIgnore;
 import org.anchoranalysis.gui.backgroundset.BackgroundSet;
 import org.anchoranalysis.gui.container.background.BackgroundStackContainerException;
 import org.anchoranalysis.image.core.stack.DisplayStack;
@@ -44,7 +44,7 @@ class ConvertToDisplayStack {
 
     private static BackgroundSet backgroundFromSet(NamedRasterSet set)
             throws BackgroundStackContainerException {
-        return set.getBackgroundSet().get(ProgressReporterNull.get());
+        return set.getBackgroundSet().get(ProgressIgnore.get());
     }
 
     private static BoundedIndexContainer<DisplayStack> convertBackgroundSet(BackgroundSet bg)

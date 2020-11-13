@@ -31,8 +31,8 @@ import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.anchoranalysis.core.exception.OperationFailedException;
 import org.anchoranalysis.core.identifier.provider.store.StoreSupplier;
-import org.anchoranalysis.core.progress.ProgressReporter;
-import org.anchoranalysis.core.progress.ProgressReporterNull;
+import org.anchoranalysis.core.progress.Progress;
+import org.anchoranalysis.core.progress.ProgressIgnore;
 import org.anchoranalysis.image.core.stack.Stack;
 import org.anchoranalysis.image.core.stack.named.NamedStacks;
 import org.anchoranalysis.image.io.ImageIOException;
@@ -83,16 +83,16 @@ public class FinderRasterFilesByManifestDescriptionFunction implements Finder {
                                     openStack(
                                             fileWrite.calculatePath(),
                                             stackReader,
-                                            ProgressReporterNull.get())));
+                                            ProgressIgnore.get())));
         }
         return out;
     }
 
     private Stack openStack(
-            Path filePath, StackReader stackReader, ProgressReporter progressReporter)
+            Path filePath, StackReader stackReader, Progress progress)
             throws OperationFailedException {
         try (OpenedRaster openedRaster = stackReader.openFile(filePath)) {
-            return openedRaster.open(0, progressReporter).get(0);
+            return openedRaster.open(0, progress).get(0);
 
         } catch (ImageIOException e) {
             throw new OperationFailedException(e);

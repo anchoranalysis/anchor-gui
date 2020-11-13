@@ -31,8 +31,8 @@ import javax.swing.JOptionPane;
 import org.anchoranalysis.core.exception.CreateException;
 import org.anchoranalysis.core.exception.InitException;
 import org.anchoranalysis.core.exception.OperationFailedException;
-import org.anchoranalysis.core.progress.ProgressReporter;
-import org.anchoranalysis.core.progress.ProgressReporterMultiple;
+import org.anchoranalysis.core.progress.Progress;
+import org.anchoranalysis.core.progress.ProgressMultiple;
 import org.anchoranalysis.gui.annotation.builder.AdditionalFramesContext;
 import org.anchoranalysis.gui.annotation.builder.AnnotationGuiBuilder;
 import org.anchoranalysis.gui.annotation.builder.AnnotationGuiContext;
@@ -95,19 +95,19 @@ public class AnnotatorModuleCreator<T extends AnnotationInitParams>
     }
 
     @Override
-    public void doInBackground(ProgressReporter progressReporter)
+    public void doInBackground(Progress progress)
             throws VideoStatsModuleCreateException {
-        super.doInBackground(progressReporter);
+        super.doInBackground(progress);
 
-        try (ProgressReporterMultiple prm = new ProgressReporterMultiple(progressReporter, 1)) {
+        try (ProgressMultiple progressMultiple = new ProgressMultiple(progress, 1)) {
 
             try {
                 paramsInit =
-                        annotation.createInitParams(prm, context, mpg.getLogger(), useDefaultMarks);
+                        annotation.createInitParams(progressMultiple, context, mpg.getLogger(), useDefaultMarks);
             } catch (CreateException e) {
                 throw new VideoStatsModuleCreateException(e);
             }
-            prm.incrementWorker();
+            progressMultiple.incrementWorker();
         }
     }
 

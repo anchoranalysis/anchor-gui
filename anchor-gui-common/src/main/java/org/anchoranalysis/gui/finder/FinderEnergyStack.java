@@ -30,7 +30,7 @@ import org.anchoranalysis.core.exception.OperationFailedException;
 import org.anchoranalysis.core.identifier.provider.NamedProvider;
 import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.log.error.ErrorReporter;
-import org.anchoranalysis.core.progress.ProgressReporterNull;
+import org.anchoranalysis.core.progress.ProgressIgnore;
 import org.anchoranalysis.feature.energy.EnergyStack;
 import org.anchoranalysis.gui.videostats.dropdown.common.EnergyStackSupplier;
 import org.anchoranalysis.image.core.stack.Stack;
@@ -53,7 +53,7 @@ public class FinderEnergyStack implements Finder {
 
         this.operationStacks =
                 NamedStacksSupplier.cache(
-                        progressReporter -> finderRasterDirectory.createStackCollection(true));
+                        progress -> finderRasterDirectory.createStackCollection(true));
 
         this.finderImageParams = new FinderKeyValueParams("energyStackParams", errorReporter);
 
@@ -72,7 +72,7 @@ public class FinderEnergyStack implements Finder {
     }
 
     public NamedProvider<Stack> getNamedStacks() throws OperationFailedException {
-        return operationStacks.get(ProgressReporterNull.get());
+        return operationStacks.get(ProgressIgnore.get());
     }
 
     public EnergyStackSupplier energyStackSupplier() {

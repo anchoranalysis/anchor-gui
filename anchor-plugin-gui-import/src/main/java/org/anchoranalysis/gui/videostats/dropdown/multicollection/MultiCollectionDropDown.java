@@ -32,7 +32,7 @@ import org.anchoranalysis.core.exception.InitException;
 import org.anchoranalysis.core.exception.OperationFailedException;
 import org.anchoranalysis.core.identifier.provider.NamedProvider;
 import org.anchoranalysis.core.identifier.provider.store.NamedProviderStore;
-import org.anchoranalysis.core.progress.ProgressReporter;
+import org.anchoranalysis.core.progress.Progress;
 import org.anchoranalysis.core.value.KeyValueParams;
 import org.anchoranalysis.gui.bean.filecreator.MarkCreatorParams;
 import org.anchoranalysis.gui.file.opened.OpenedFileGUI;
@@ -174,10 +174,10 @@ public class MultiCollectionDropDown {
         return delegate.getName();
     }
 
-    private WrapTimeSequenceAsStack extractFromRasterProvider(ProgressReporter progressReporter)
+    private WrapTimeSequenceAsStack extractFromRasterProvider(Progress progress)
             throws OperationFailedException {
         try {
-            return new WrapTimeSequenceAsStack(rasterProvider.get(progressReporter).getSequence());
+            return new WrapTimeSequenceAsStack(rasterProvider.get(progress).getSequence());
         } catch (CreateException e) {
             throw new OperationFailedException(e);
         }

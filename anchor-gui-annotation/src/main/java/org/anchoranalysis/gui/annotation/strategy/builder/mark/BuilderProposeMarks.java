@@ -34,7 +34,7 @@ import org.anchoranalysis.core.exception.CreateException;
 import org.anchoranalysis.core.exception.OperationFailedException;
 import org.anchoranalysis.core.functional.OptionalUtilities;
 import org.anchoranalysis.core.log.Logger;
-import org.anchoranalysis.core.progress.ProgressReporterMultiple;
+import org.anchoranalysis.core.progress.ProgressMultiple;
 import org.anchoranalysis.gui.annotation.InitAnnotation;
 import org.anchoranalysis.gui.annotation.builder.AdditionalFramesContext;
 import org.anchoranalysis.gui.annotation.builder.AnnotationGuiBuilderWithDelegate;
@@ -85,7 +85,7 @@ public class BuilderProposeMarks
 
     @Override
     public InitParamsProposeMarks createInitParams(
-            ProgressReporterMultiple prm,
+            ProgressMultiple progressMultiple,
             AnnotationGuiContext context,
             Logger logger,
             boolean useDefaultMarks)
@@ -106,7 +106,7 @@ public class BuilderProposeMarks
             return new InitParamsProposeMarks(
                     context.getAnnotationRefresher(),
                     markAnnotator,
-                    createBackground(prm, markAnnotator.getBackgroundStacks()),
+                    createBackground(progressMultiple, markAnnotator.getBackgroundStacks()),
                     annotationExisting);
 
         } catch (VideoStatsModuleCreateException | InputReadFailedException e) {

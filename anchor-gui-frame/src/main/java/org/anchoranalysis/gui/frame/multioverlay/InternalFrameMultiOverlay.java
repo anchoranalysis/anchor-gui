@@ -37,7 +37,7 @@ import org.anchoranalysis.core.index.bounded.BoundedIndexContainer;
 import org.anchoranalysis.core.index.bounded.BoundedIndexContainerFromList;
 import org.anchoranalysis.core.index.bounded.bridge.BoundedIndexContainerBridgeWithIndex;
 import org.anchoranalysis.core.log.error.ErrorReporter;
-import org.anchoranalysis.core.progress.ProgressReporterNull;
+import org.anchoranalysis.core.progress.ProgressIgnore;
 import org.anchoranalysis.gui.container.background.BackgroundStackContainerException;
 import org.anchoranalysis.gui.frame.multioverlay.instantstate.InternalFrameOverlayedInstantStateToRGBSelectable;
 import org.anchoranalysis.gui.image.frame.SliderState;
@@ -106,7 +106,7 @@ class InternalFrameMultiOverlay<T> {
                     return list.get(sourceObject)
                             .getEnergyBackground()
                             .getBackgroundSet()
-                            .get(ProgressReporterNull.get())
+                            .get(ProgressIgnore.get())
                             .singleStack(name);
                 };
     }
@@ -154,7 +154,7 @@ class InternalFrameMultiOverlay<T> {
                         list.get(sliderState.getIndex())
                                 .getEnergyBackground()
                                 .getBackgroundSet()
-                                .get(ProgressReporterNull.get())
+                                .get(ProgressIgnore.get())
                                 .names();
                 return new ArrayList<>(names);
 

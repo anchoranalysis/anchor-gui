@@ -31,7 +31,7 @@ import lombok.AllArgsConstructor;
 import org.anchoranalysis.core.exception.InitException;
 import org.anchoranalysis.core.exception.OperationFailedException;
 import org.anchoranalysis.core.index.GetOperationFailedException;
-import org.anchoranalysis.core.progress.ProgressReporterNull;
+import org.anchoranalysis.core.progress.ProgressIgnore;
 import org.anchoranalysis.gui.annotation.AnnotatorModuleCreator;
 import org.anchoranalysis.gui.backgroundset.BackgroundSet;
 import org.anchoranalysis.gui.container.background.BackgroundStackContainerException;
@@ -58,9 +58,9 @@ public class ShowRaster {
     public void openAndShow(String rasterName, final Path rasterPath, StackReader stackReader) {
 
         show(
-                progressReporter -> {
+                progress -> {
                     try (OpenedRaster or = stackReader.openFile(rasterPath)) {
-                        TimeSequence ts = or.open(0, progressReporter);
+                        TimeSequence ts = or.open(0, progress);
 
                         Stack stack = ts.get(0);
 
@@ -83,7 +83,7 @@ public class ShowRaster {
                             .getDefaultModuleState()
                             .copyChangeBackground(
                                     backgroundSetCreator
-                                            .get(ProgressReporterNull.get())
+                                            .get(ProgressIgnore.get())
                                             .stackCntr("Associated Raster"));
 
             InternalFrameSingleRaster imageFrame = new InternalFrameSingleRaster(rasterName);

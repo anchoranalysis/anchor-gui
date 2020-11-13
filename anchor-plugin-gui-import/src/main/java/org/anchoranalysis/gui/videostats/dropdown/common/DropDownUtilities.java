@@ -32,7 +32,7 @@ import org.anchoranalysis.core.exception.InitException;
 import org.anchoranalysis.core.exception.OperationFailedException;
 import org.anchoranalysis.core.identifier.provider.NamedProvider;
 import org.anchoranalysis.core.identifier.provider.NamedProviderGetException;
-import org.anchoranalysis.core.progress.ProgressReporterNull;
+import org.anchoranalysis.core.progress.ProgressIgnore;
 import org.anchoranalysis.gui.interactivebrowser.MarkEvaluatorSetForImage;
 import org.anchoranalysis.gui.marks.MarkDisplaySettings;
 import org.anchoranalysis.gui.videostats.dropdown.AddVideoStatsModule;
@@ -73,12 +73,12 @@ public class DropDownUtilities {
         EnergyBackground energyBackground =
                 EnergyBackground.createFromBackground(
                         backgroundSet,
-                        () -> operationgetEnergyStack.get(ProgressReporterNull.get()));
+                        () -> operationgetEnergyStack.get(ProgressIgnore.get()));
 
         AddVideoStatsModuleSupplier adderOp =
                 AddVideoStatsModuleSupplier.cache(
-                        progressReporter -> {
-                            AddVideoStatsModule adder = adderOpWithoutEnergy.get(progressReporter);
+                        progress -> {
+                            AddVideoStatsModule adder = adderOpWithoutEnergy.get(progress);
 
                             if (addEnergyAdder) {
                                 energyBackground.addEnergyStackToAdder(adder);

@@ -33,7 +33,7 @@ import org.anchoranalysis.core.cache.CachedSupplier;
 import org.anchoranalysis.core.exception.CreateException;
 import org.anchoranalysis.core.exception.OperationFailedException;
 import org.anchoranalysis.core.log.Logger;
-import org.anchoranalysis.core.progress.ProgressReporterMultiple;
+import org.anchoranalysis.core.progress.ProgressMultiple;
 import org.anchoranalysis.gui.annotation.AnnotationBackgroundInstance;
 import org.anchoranalysis.gui.annotation.export.ExportAnnotation;
 import org.anchoranalysis.gui.annotation.state.AnnotationSummary;
@@ -57,7 +57,7 @@ public abstract class AnnotationGuiBuilder<T extends AnnotationInitParams> {
     public abstract boolean isUseDefaultPromptNeeded();
 
     public abstract T createInitParams(
-            ProgressReporterMultiple prm,
+            ProgressMultiple progressMultiple,
             AnnotationGuiContext context,
             Logger logger,
             boolean useDefaultMarks)
