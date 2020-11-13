@@ -28,6 +28,7 @@ package org.anchoranalysis.gui.progressreporter;
 
 import org.anchoranalysis.core.progress.Progress;
 import org.anchoranalysis.gui.videostats.threading.InteractiveWorker;
+import com.google.common.base.Preconditions;
 
 public class ProgressInteractiveWorker implements Progress {
 
@@ -59,10 +60,9 @@ public class ProgressInteractiveWorker implements Progress {
 
     @Override
     public void update(int value) {
-        assert (value <= max);
-
-        int valRec = value - min;
-        double progress = (((double) valRec) / range) * 100;
+        Preconditions.checkArgument(value <= max);
+        int valRange = value - min;
+        double progress = (((double) valRange) / range) * 100;
         worker.updateProgress((int) Math.round(progress));
     }
 
