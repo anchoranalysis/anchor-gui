@@ -82,12 +82,12 @@ class DisplayStackViewport {
 
         Point2i point = new Point2i(xNew, yNew);
         point =
-                DisplayStackViewportUtilities.clipToImage(
+                DisplayStackViewportUtilities.clampToImage(
                         point, boxViewport.extent(), dimensionsEntire());
-        point = DisplayStackViewportUtilities.clipToImage(point, canvasExtent, dimensionsEntire());
+        point = DisplayStackViewportUtilities.clampToImage(point, canvasExtent, dimensionsEntire());
         assert (point.x() >= 0);
         assert (point.y() >= 0);
-        // We need to clip
+        // We need to clamp
 
         Point3i point3 = new Point3i(point.x(), point.y(), this.boxViewport.cornerMin().z());
 
@@ -137,7 +137,7 @@ class DisplayStackViewport {
 
         addCond(scrollValImage, diff, extentOld);
 
-        return DisplayStackViewportUtilities.clipToImage(
+        return DisplayStackViewportUtilities.clampToImage(
                 scrollValImage, extentNew, dimensionsEntire());
     }
 

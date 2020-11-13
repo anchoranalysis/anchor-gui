@@ -107,7 +107,7 @@ public class AnnotatorModuleCreator<T extends AnnotationInitParams>
             } catch (CreateException e) {
                 throw new VideoStatsModuleCreateException(e);
             }
-            prm.incrWorker();
+            prm.incrementWorker();
         }
     }
 

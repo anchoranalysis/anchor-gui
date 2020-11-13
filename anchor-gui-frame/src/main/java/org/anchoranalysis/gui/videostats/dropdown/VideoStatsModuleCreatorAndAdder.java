@@ -80,7 +80,7 @@ public class VideoStatsModuleCreatorAndAdder {
                             new ProgressReporterMultiple(progressReporter, 2)) {
                         AddVideoStatsModule adder =
                                 adderOperation.get(new ProgressReporterOneOfMany(prm));
-                        prm.incrWorker();
+                        prm.incrementWorker();
 
                         creator.doInBackground(new ProgressReporterOneOfMany(prm));
 
