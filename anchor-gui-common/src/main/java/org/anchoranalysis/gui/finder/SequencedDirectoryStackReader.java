@@ -31,7 +31,7 @@ import org.anchoranalysis.core.exception.CreateException;
 import org.anchoranalysis.core.progress.ProgressIgnore;
 import org.anchoranalysis.image.core.stack.Stack;
 import org.anchoranalysis.image.io.ImageIOException;
-import org.anchoranalysis.image.io.bean.stack.StackReader;
+import org.anchoranalysis.image.io.bean.stack.reader.StackReader;
 import org.anchoranalysis.image.io.stack.input.OpenedRaster;
 import org.anchoranalysis.io.manifest.directory.sequenced.DeriveElementsFromSequencedDirectory;
 import org.anchoranalysis.io.manifest.directory.sequenced.SequencedDirectory;

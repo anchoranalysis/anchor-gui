@@ -35,7 +35,7 @@ import org.anchoranalysis.feature.energy.EnergyStack;
 import org.anchoranalysis.gui.videostats.dropdown.common.EnergyStackSupplier;
 import org.anchoranalysis.image.core.stack.Stack;
 import org.anchoranalysis.image.core.stack.named.NamedStacksSupplier;
-import org.anchoranalysis.image.io.bean.stack.StackReader;
+import org.anchoranalysis.image.io.bean.stack.reader.StackReader;
 import org.anchoranalysis.io.manifest.Manifest;
 import org.anchoranalysis.io.manifest.finder.Finder;
 import org.anchoranalysis.io.manifest.finder.FinderKeyValueParams;

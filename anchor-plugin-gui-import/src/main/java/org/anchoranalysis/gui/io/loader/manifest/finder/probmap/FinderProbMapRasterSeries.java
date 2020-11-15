@@ -27,7 +27,7 @@
 package org.anchoranalysis.gui.io.loader.manifest.finder.probmap;
 
 import org.anchoranalysis.gui.finder.FinderRasterDirectory;
-import org.anchoranalysis.image.io.bean.stack.StackReader;
+import org.anchoranalysis.image.io.bean.stack.reader.StackReader;
 
 public class FinderProbMapRasterSeries extends FinderRasterDirectory {
 

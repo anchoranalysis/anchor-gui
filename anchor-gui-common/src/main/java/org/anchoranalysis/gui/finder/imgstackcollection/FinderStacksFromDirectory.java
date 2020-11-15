@@ -32,7 +32,7 @@ import org.anchoranalysis.core.progress.ProgressIgnore;
 import org.anchoranalysis.gui.finder.FinderRasterDirectory;
 import org.anchoranalysis.image.core.stack.Stack;
 import org.anchoranalysis.image.core.stack.named.NamedStacksSupplier;
-import org.anchoranalysis.image.io.bean.stack.StackReader;
+import org.anchoranalysis.image.io.bean.stack.reader.StackReader;
 import org.anchoranalysis.image.io.stack.output.NamedStacksOutputter;
 import org.anchoranalysis.io.manifest.Manifest;
 
