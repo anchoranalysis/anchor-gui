@@ -55,7 +55,7 @@ public class RasterAsStack extends OpenFileType {
             throws CreateException {
 
         NamedFiles fileInputManager = new NamedFiles();
-        fileInputManager.setFilesProvider(createFileList(files));
+        fileInputManager.setFiles(createFileList(files));
 
         StackReader reader = RegisterBeanFactories.getDefaultInstances().get(StackReader.class);
 
