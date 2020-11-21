@@ -31,6 +31,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import org.anchoranalysis.core.exception.CreateException;
+import org.anchoranalysis.core.format.NonImageFileFormat;
 import org.anchoranalysis.gui.bean.filecreator.ExecutedExperimentFileCreator;
 import org.anchoranalysis.gui.bean.filecreator.FileCreator;
 import org.anchoranalysis.gui.interactivebrowser.openfile.importer.ImporterSettings;
@@ -42,7 +43,7 @@ public class Manifest extends OpenFileType {
 
     @Override
     public String[] getExtensions() {
-        return new String[] {"ser"};
+        return NonImageFileFormat.SERIALIZED_BINARY.extensionAsArray();
     }
 
     @Override

@@ -31,6 +31,7 @@ import java.util.ArrayList;
 import java.util.List;
 import org.anchoranalysis.bean.xml.RegisterBeanFactories;
 import org.anchoranalysis.core.exception.CreateException;
+import org.anchoranalysis.core.format.FormatExtensions;
 import org.anchoranalysis.gui.bean.filecreator.FileCreator;
 import org.anchoranalysis.gui.bean.filecreator.StackCollectionCreator;
 import org.anchoranalysis.gui.interactivebrowser.openfile.importer.ImporterSettings;
@@ -42,7 +43,7 @@ public class RasterAsStack extends OpenFileType {
 
     @Override
     public String[] getExtensions() {
-        return new String[] {"tif", "tiff", "jpeg", "jpg", "png", "gif", "bmp"};
+        return FormatExtensions.allImageExtensions();
     }
 
     @Override
