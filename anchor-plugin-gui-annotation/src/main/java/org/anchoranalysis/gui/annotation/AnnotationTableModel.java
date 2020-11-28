@@ -129,8 +129,7 @@ public class AnnotationTableModel implements InteractiveFileListTableModel {
     }
 
     @Override
-    public void refreshEntireTable(Progress progress)
-            throws OperationFailedException {
+    public void refreshEntireTable(Progress progress) throws OperationFailedException {
         this.annotationProject = opAnnotationProject.get(progress);
         this.annotationProject.addAnnotationChangedListener(
                 index -> tableModel.fireTableRowsUpdated(index, index));

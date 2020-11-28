@@ -27,6 +27,7 @@
 package org.anchoranalysis.gui.interactivebrowser.browser;
 
 import java.util.List;
+import lombok.RequiredArgsConstructor;
 import org.anchoranalysis.bean.NamedBean;
 import org.anchoranalysis.bean.shared.color.scheme.HSB;
 import org.anchoranalysis.bean.shared.color.scheme.Shuffle;
@@ -54,7 +55,6 @@ import org.anchoranalysis.image.io.bean.stack.reader.StackReader;
 import org.anchoranalysis.io.generator.sequence.SequenceMemory;
 import org.anchoranalysis.io.output.outputter.InputOutputContext;
 import org.anchoranalysis.mpp.feature.bean.mark.MarkEvaluator;
-import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 public class InteractiveBrowser {
@@ -68,7 +68,7 @@ public class InteractiveBrowser {
     // START REQUIRED ARGUMENTS
     private final InputOutputContext context;
     // END REQUIRED ARGUMENTS
-    
+
     // Manages the available mark evaluators
     private MarkEvaluatorManager markEvaluatorManager;
 

@@ -69,9 +69,7 @@ public abstract class FileCreatorGeneralList extends FileCreator {
     }
 
     protected abstract void addFilesToList(
-            List<InteractiveFile> listFiles,
-            FileCreatorParams params,
-            Progress progress)
+            List<InteractiveFile> listFiles, FileCreatorParams params, Progress progress)
             throws OperationFailedException;
 
     private List<InteractiveFile> files(Progress progress, FileCreatorParams params)

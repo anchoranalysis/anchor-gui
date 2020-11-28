@@ -73,8 +73,7 @@ public class AnnotationListInternalFrame {
         try {
             annotationTableModel =
                     new AnnotationTableModel(
-                            pr -> createProject(inputManager, params, progress),
-                            progress);
+                            pr -> createProject(inputManager, params, progress), progress);
             delegate.init(
                     adder,
                     annotationTableModel,

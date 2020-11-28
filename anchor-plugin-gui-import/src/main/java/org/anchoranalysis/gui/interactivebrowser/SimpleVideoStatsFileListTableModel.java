@@ -109,8 +109,7 @@ public class SimpleVideoStatsFileListTableModel implements InteractiveFileListTa
     // called from different threads
     //   from a SwingWorker
     @Override
-    public void refreshEntireTable(Progress progress)
-            throws OperationFailedException {
+    public void refreshEntireTable(Progress progress) throws OperationFailedException {
         this.fileInputList = opFileInputList.get(progress);
     }
 

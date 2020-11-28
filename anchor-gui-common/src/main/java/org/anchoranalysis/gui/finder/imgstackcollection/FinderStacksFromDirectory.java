@@ -45,7 +45,9 @@ public class FinderStacksFromDirectory implements FinderStacks {
             NamedStacksSupplier.cache(progress -> delegate.createStackCollection(false));
 
     public FinderStacksFromDirectory(StackReader stackReader, String directoryName) {
-        delegate = new FinderRasterDirectory(directoryName, NamedStacksOutputter.MANIFEST_FUNCTION, stackReader);
+        delegate =
+                new FinderRasterDirectory(
+                        directoryName, NamedStacksOutputter.MANIFEST_FUNCTION, stackReader);
     }
 
     @Override

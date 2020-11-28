@@ -88,8 +88,7 @@ public class FinderRasterFilesByManifestDescriptionFunction implements Finder {
         return out;
     }
 
-    private Stack openStack(
-            Path filePath, StackReader stackReader, Progress progress)
+    private Stack openStack(Path filePath, StackReader stackReader, Progress progress)
             throws OperationFailedException {
         try (OpenedRaster openedRaster = stackReader.openFile(filePath)) {
             return openedRaster.open(0, progress).get(0);

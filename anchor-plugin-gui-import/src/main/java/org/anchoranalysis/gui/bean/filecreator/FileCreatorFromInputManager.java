@@ -46,9 +46,7 @@ public abstract class FileCreatorFromInputManager<T extends InputFromManager>
 
     @Override
     protected void addFilesToList(
-            List<InteractiveFile> listFiles,
-            FileCreatorParams params,
-            Progress progress)
+            List<InteractiveFile> listFiles, FileCreatorParams params, Progress progress)
             throws OperationFailedException {
 
         try {

@@ -95,15 +95,15 @@ public class AnnotatorModuleCreator<T extends AnnotationInitParams>
     }
 
     @Override
-    public void doInBackground(Progress progress)
-            throws VideoStatsModuleCreateException {
+    public void doInBackground(Progress progress) throws VideoStatsModuleCreateException {
         super.doInBackground(progress);
 
         try (ProgressMultiple progressMultiple = new ProgressMultiple(progress, 1)) {
 
             try {
                 paramsInit =
-                        annotation.createInitParams(progressMultiple, context, mpg.getLogger(), useDefaultMarks);
+                        annotation.createInitParams(
+                                progressMultiple, context, mpg.getLogger(), useDefaultMarks);
             } catch (CreateException e) {
                 throw new VideoStatsModuleCreateException(e);
             }

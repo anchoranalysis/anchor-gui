@@ -72,8 +72,7 @@ public class DropDownUtilities {
 
         EnergyBackground energyBackground =
                 EnergyBackground.createFromBackground(
-                        backgroundSet,
-                        () -> operationgetEnergyStack.get(ProgressIgnore.get()));
+                        backgroundSet, () -> operationgetEnergyStack.get(ProgressIgnore.get()));
 
         AddVideoStatsModuleSupplier adderOp =
                 AddVideoStatsModuleSupplier.cache(
@@ -203,7 +202,8 @@ public class DropDownUtilities {
                         "manifestInteractiveOutput",
                         new StringsWithoutOrder());
 
-        // NB: As bindAsSubdirectory can now return nulls, maybe some knock-on bugs are introduced here
+        // NB: As bindAsSubdirectory can now return nulls, maybe some knock-on bugs are introduced
+        // here
         return inputOutputContext.subdirectory(subdirectoryName, manifestDescription, false);
     }
 

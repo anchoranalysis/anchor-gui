@@ -32,7 +32,7 @@ public abstract class InteractiveWorker<T, V> extends SwingWorker<T, V> {
 
     /**
      * Updates the current state of progress.
-     * 
+     *
      * @param index
      */
     public void updateProgress(int index) {

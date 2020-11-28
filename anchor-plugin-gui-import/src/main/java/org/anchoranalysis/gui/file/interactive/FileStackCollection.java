@@ -77,8 +77,7 @@ public class FileStackCollection extends InteractiveFile {
         MultiCollectionDropDown dropDown =
                 new MultiCollectionDropDown(
                         TimeSequenceProviderSupplier.cache(
-                                progress ->
-                                        extractTimeSequenceFromInput(progress, 0)),
+                                progress -> extractTimeSequenceFromInput(progress, 0)),
                         null,
                         null,
                         new EagerEvaluationStore<>(),
@@ -94,11 +93,10 @@ public class FileStackCollection extends InteractiveFile {
         return new OpenedFileGUIWithFile(this, dropDown.openedFileGUI());
     }
 
-    private TimeSequenceProvider extractTimeSequenceFromInput(
-            Progress progress, int seriesIndex) throws CreateException {
+    private TimeSequenceProvider extractTimeSequenceFromInput(Progress progress, int seriesIndex)
+            throws CreateException {
         try {
-            TimeSequence timeSeries =
-                    input.createStackSequenceForSeries(seriesIndex).get(progress);
+            TimeSequence timeSeries = input.createStackSequenceForSeries(seriesIndex).get(progress);
 
             LazyEvaluationStore<TimeSequence> store =
                     new LazyEvaluationStore<>("extractTimeSequence");

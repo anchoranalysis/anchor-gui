@@ -63,8 +63,7 @@ public class EnergyBackground {
             NamedStacksSupplier backgroundSupplier, EnergyStackSupplier energyStack) {
 
         return createStackSequence(
-                progress -> sequenceProviderFrom(progress, backgroundSupplier),
-                energyStack);
+                progress -> sequenceProviderFrom(progress, backgroundSupplier), energyStack);
     }
 
     public static EnergyBackground createStackSequence(
@@ -104,8 +103,7 @@ public class EnergyBackground {
     }
 
     private static TimeSequenceProvider sequenceProviderFrom(
-            Progress progress, NamedStacksSupplier backgroundSupplier)
-            throws CreateException {
+            Progress progress, NamedStacksSupplier backgroundSupplier) throws CreateException {
         try {
             return new TimeSequenceProvider(
                     new WrapStackAsTimeSequence(backgroundSupplier.get(progress)), 1);

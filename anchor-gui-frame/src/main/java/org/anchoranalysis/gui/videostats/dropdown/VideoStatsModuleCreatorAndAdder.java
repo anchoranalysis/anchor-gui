@@ -73,11 +73,9 @@ public class VideoStatsModuleCreatorAndAdder {
             exceptionRecorded = null;
 
             try {
-                try (Progress progress =
-                        new ProgressInteractiveWorker(this)) {
+                try (Progress progress = new ProgressInteractiveWorker(this)) {
 
-                    try (ProgressMultiple progressMultiple =
-                            new ProgressMultiple(progress, 2)) {
+                    try (ProgressMultiple progressMultiple = new ProgressMultiple(progress, 2)) {
                         AddVideoStatsModule adder =
                                 adderOperation.get(new ProgressOneOfMany(progressMultiple));
                         progressMultiple.incrementWorker();

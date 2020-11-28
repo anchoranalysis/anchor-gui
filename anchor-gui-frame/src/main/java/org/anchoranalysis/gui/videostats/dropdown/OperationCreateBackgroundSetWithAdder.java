@@ -78,8 +78,7 @@ public class OperationCreateBackgroundSetWithAdder {
 
         this.backgroundSetSupplier =
                 BackgroundSetProgressingSupplier.cache(
-                        progress ->
-                                withAdderSupplier.get(progress).getBackgroundSet());
+                        progress -> withAdderSupplier.get(progress).getBackgroundSet());
 
         // A new energyBackground that includes the changed operation for the background
         this.energyBackgroundNew =

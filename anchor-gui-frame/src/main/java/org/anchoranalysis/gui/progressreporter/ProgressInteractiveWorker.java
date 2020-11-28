@@ -26,9 +26,9 @@
 
 package org.anchoranalysis.gui.progressreporter;
 
+import com.google.common.base.Preconditions;
 import org.anchoranalysis.core.progress.Progress;
 import org.anchoranalysis.gui.videostats.threading.InteractiveWorker;
-import com.google.common.base.Preconditions;
 
 public class ProgressInteractiveWorker implements Progress {
 

@@ -42,8 +42,7 @@ public abstract class VideoStatsModuleCreator {
     public abstract void createAndAddVideoStatsModule(AddVideoStatsModule adder)
             throws VideoStatsModuleCreateException;
 
-    public void doInBackground(Progress progress)
-            throws VideoStatsModuleCreateException {}
+    public void doInBackground(Progress progress) throws VideoStatsModuleCreateException {}
 
     // If it returns empty(), no combining is possible. Override with operations
     public Optional<VideoStatsOperationCombine> getCombiner() {

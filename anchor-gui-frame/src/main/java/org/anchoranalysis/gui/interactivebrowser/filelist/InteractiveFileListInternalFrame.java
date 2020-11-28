@@ -170,8 +170,7 @@ public class InteractiveFileListInternalFrame {
 
                         @Override
                         protected Integer doInBackground() throws Exception {
-                            try (Progress progress =
-                                    new ProgressInteractiveWorker(this)) {
+                            try (Progress progress = new ProgressInteractiveWorker(this)) {
                                 progress.open();
                                 tableModel.refreshEntireTable(progress);
                             }

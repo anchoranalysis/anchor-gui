@@ -49,7 +49,8 @@ public class FinderEnergyStack implements Finder {
     private NamedStacksSupplier operationStacks;
 
     public FinderEnergyStack(StackReader stackReader, ErrorReporter errorReporter) {
-        finderRasterDirectory = new FinderRasterDirectory("energyStack", "energyStack", stackReader);
+        finderRasterDirectory =
+                new FinderRasterDirectory("energyStack", "energyStack", stackReader);
 
         this.operationStacks =
                 NamedStacksSupplier.cache(

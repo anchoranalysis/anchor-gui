@@ -50,8 +50,7 @@ import org.anchoranalysis.image.voxel.datatype.UnsignedByteVoxelType;
 public class BackgroundSetFactory {
 
     public static BackgroundSet createBackgroundSet(
-            NamedProvider<TimeSequence> stacks, Progress progress)
-            throws CreateException {
+            NamedProvider<TimeSequence> stacks, Progress progress) throws CreateException {
         BackgroundSet set = new BackgroundSet();
         try {
             addFromStacks(set, stacks, progress);
@@ -62,9 +61,7 @@ public class BackgroundSetFactory {
     }
 
     public static BackgroundSet createBackgroundSetFromExisting(
-            BackgroundSet existing,
-            NamedProvider<TimeSequence> stacks,
-            Progress progress)
+            BackgroundSet existing, NamedProvider<TimeSequence> stacks, Progress progress)
             throws CreateException {
 
         BackgroundSet set = new BackgroundSet(existing);
@@ -127,8 +124,7 @@ public class BackgroundSetFactory {
             NamedProvider<TimeSequence> imageStackCollection,
             Progress progress)
             throws OperationFailedException {
-        addFromStacks(
-                backgroundSet, imageStackCollection, imageStackCollection.keys(), progress);
+        addFromStacks(backgroundSet, imageStackCollection, imageStackCollection.keys(), progress);
 
         addEmpty(backgroundSet, imageStackCollection);
     }

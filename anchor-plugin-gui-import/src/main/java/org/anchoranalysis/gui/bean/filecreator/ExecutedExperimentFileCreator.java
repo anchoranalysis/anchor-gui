@@ -56,9 +56,7 @@ public class ExecutedExperimentFileCreator extends FileCreatorGeneralList {
 
     @Override
     protected void addFilesToList(
-            List<InteractiveFile> listFiles,
-            FileCreatorParams params,
-            Progress progress)
+            List<InteractiveFile> listFiles, FileCreatorParams params, Progress progress)
             throws OperationFailedException {
 
         // TODO for now, we have no features from the NamedDefinitons added to the global feature

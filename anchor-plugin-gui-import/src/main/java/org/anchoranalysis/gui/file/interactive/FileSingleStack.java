@@ -91,8 +91,8 @@ public class FileSingleStack extends InteractiveFile {
         return new OpenedFileGUIWithFile(this, dropDown.openedFileGUI());
     }
 
-    private TimeSequenceProvider createTimeSeries(
-            Progress progress, int seriesIndex) throws CreateException {
+    private TimeSequenceProvider createTimeSeries(Progress progress, int seriesIndex)
+            throws CreateException {
         try {
             LazyEvaluationStore<TimeSequence> stacks =
                     new LazyEvaluationStore<>("createTimeSeries");

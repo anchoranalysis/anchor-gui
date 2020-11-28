@@ -69,8 +69,7 @@ public class FinderStacksFromEnergyStack implements FinderStacks {
         return delegate.exists();
     }
 
-    private NamedProvider<Stack> buildStacks(Progress progress)
-            throws OperationFailedException {
+    private NamedProvider<Stack> buildStacks(Progress progress) throws OperationFailedException {
         NamedStacks stackCollection = new NamedStacks();
 
         // finder energy stack

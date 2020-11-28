@@ -46,7 +46,8 @@ import org.anchoranalysis.io.input.bean.path.provider.FilePathProvider;
 import org.anchoranalysis.mpp.feature.bean.energy.scheme.EnergySchemeCreator;
 import org.anchoranalysis.mpp.feature.bean.mark.MarkEvaluator;
 
-public class InteractiveBrowserInputManager extends InputManagerWithStackReader<InteractiveBrowserInput> {
+public class InteractiveBrowserInputManager
+        extends InputManagerWithStackReader<InteractiveBrowserInput> {
 
     // START BEAN PROPERTIES
     @BeanField @Getter @Setter private List<FileCreator> listFileCreators = new ArrayList<>();
