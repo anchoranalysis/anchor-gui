@@ -28,9 +28,9 @@ package org.anchoranalysis.gui.videostats.dropdown.common;
 
 import lombok.AllArgsConstructor;
 import org.anchoranalysis.core.cache.CachedSupplier;
-import org.anchoranalysis.core.error.CreateException;
-import org.anchoranalysis.core.error.InitException;
-import org.anchoranalysis.core.progress.ProgressReporter;
+import org.anchoranalysis.core.exception.CreateException;
+import org.anchoranalysis.core.exception.InitException;
+import org.anchoranalysis.core.progress.Progress;
 import org.anchoranalysis.gui.backgroundset.BackgroundSet;
 import org.anchoranalysis.gui.backgroundset.BackgroundSetFactory;
 import org.anchoranalysis.gui.container.background.BackgroundStackContainerException;
@@ -47,7 +47,7 @@ import org.anchoranalysis.gui.videostats.module.VideoStatsModuleCreateException;
 import org.anchoranalysis.gui.videostats.modulecreator.VideoStatsModuleCreator;
 import org.anchoranalysis.image.bean.nonbean.init.CreateCombinedStack;
 import org.anchoranalysis.image.bean.nonbean.init.ImageInitParams;
-import org.anchoranalysis.image.core.stack.wrap.WrapStackAsTimeSequence;
+import org.anchoranalysis.image.core.stack.time.WrapStackAsTimeSequence;
 import org.anchoranalysis.io.output.bean.OutputWriteSettings;
 import org.anchoranalysis.mpp.bean.init.MPPInitParams;
 
@@ -91,9 +91,9 @@ class ProposerEvaluatorModuleCreator extends VideoStatsModuleCreator {
                         if (e.getMarkEvaluator() != null) {
                             backgroundUpdater.update(
                                     BackgroundSetProgressingSupplier.cache(
-                                            progressReporter ->
+                                            progress ->
                                                     createBackgroundSetFromExisting(
-                                                            progressReporter,
+                                                            progress,
                                                             e.getMarkEvaluator()
                                                                     .getProposerSharedObjectsOperation())));
                             markEvaluatorUpdater.setMarkEvaluatorIdentifier(
@@ -113,11 +113,11 @@ class ProposerEvaluatorModuleCreator extends VideoStatsModuleCreator {
     }
 
     private BackgroundSet createBackgroundSetFromExisting(
-            ProgressReporter progressReporter, CachedSupplier<MPPInitParams, CreateException> pso)
+            Progress progress, CachedSupplier<MPPInitParams, CreateException> pso)
             throws BackgroundStackContainerException {
 
         try {
-            BackgroundSet bsExisting = energyBackground.getBackgroundSet().get(progressReporter);
+            BackgroundSet bsExisting = energyBackground.getBackgroundSet().get(progress);
 
             MPPInitParams so = pso.get();
             ImageInitParams soImage = so.getImage();
@@ -125,7 +125,7 @@ class ProposerEvaluatorModuleCreator extends VideoStatsModuleCreator {
             return BackgroundSetFactory.createBackgroundSetFromExisting(
                     bsExisting,
                     new WrapStackAsTimeSequence(CreateCombinedStack.apply(soImage)),
-                    progressReporter);
+                    progress);
 
         } catch (CreateException e) {
             throw new BackgroundStackContainerException(e);

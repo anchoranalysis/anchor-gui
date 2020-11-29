@@ -27,9 +27,9 @@
 package org.anchoranalysis.gui.frame.overlays.background;
 
 import lombok.AllArgsConstructor;
-import org.anchoranalysis.core.functional.function.CheckedFunction;
+import org.anchoranalysis.core.functional.checked.CheckedFunction;
 import org.anchoranalysis.core.index.GetOperationFailedException;
-import org.anchoranalysis.core.index.container.SingleContainer;
+import org.anchoranalysis.core.index.bounded.SingleContainer;
 import org.anchoranalysis.gui.container.background.BackgroundStackContainerException;
 import org.anchoranalysis.gui.displayupdate.OverlayedDisplayStack;
 

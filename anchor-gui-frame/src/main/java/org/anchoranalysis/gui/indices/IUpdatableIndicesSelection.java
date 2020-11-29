@@ -26,7 +26,7 @@
 
 package org.anchoranalysis.gui.indices;
 
-import org.anchoranalysis.core.index.IndicesSelection;
+import org.anchoranalysis.gui.index.IndicesSelection;
 
 public interface IUpdatableIndicesSelection {
 

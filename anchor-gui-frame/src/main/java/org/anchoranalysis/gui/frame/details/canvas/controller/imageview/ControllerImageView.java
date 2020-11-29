@@ -33,7 +33,7 @@ import org.anchoranalysis.gui.frame.canvas.zoom.DefaultZoomSuggestor;
 import org.anchoranalysis.gui.frame.details.canvas.ControllerZoom;
 import org.anchoranalysis.gui.image.frame.ControllerSize;
 import org.anchoranalysis.image.core.dimensions.Dimensions;
-import org.anchoranalysis.spatial.extent.Extent;
+import org.anchoranalysis.spatial.Extent;
 
 public class ControllerImageView {
 

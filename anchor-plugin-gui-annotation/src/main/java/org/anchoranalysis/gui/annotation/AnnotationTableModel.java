@@ -30,11 +30,11 @@ import javax.swing.event.TableModelListener;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableModel;
 import lombok.Getter;
-import org.anchoranalysis.core.error.CreateException;
-import org.anchoranalysis.core.error.OperationFailedException;
-import org.anchoranalysis.core.error.friendly.AnchorImpossibleSituationException;
+import org.anchoranalysis.core.exception.CreateException;
+import org.anchoranalysis.core.exception.OperationFailedException;
+import org.anchoranalysis.core.exception.friendly.AnchorImpossibleSituationException;
 import org.anchoranalysis.core.progress.CheckedProgressingSupplier;
-import org.anchoranalysis.core.progress.ProgressReporter;
+import org.anchoranalysis.core.progress.Progress;
 import org.anchoranalysis.gui.file.interactive.InteractiveFile;
 import org.anchoranalysis.gui.interactivebrowser.filelist.InteractiveFileListTableModel;
 
@@ -112,11 +112,11 @@ public class AnnotationTableModel implements InteractiveFileListTableModel {
     public AnnotationTableModel(
             CheckedProgressingSupplier<AnnotationProject, OperationFailedException>
                     opAnnotationProject,
-            ProgressReporter progressReporter)
+            Progress progress)
             throws CreateException {
         this.opAnnotationProject = opAnnotationProject;
         try {
-            refreshEntireTable(progressReporter);
+            refreshEntireTable(progress);
             tableModel.fireTableDataChanged();
         } catch (OperationFailedException e) {
             throw new CreateException(e);
@@ -129,9 +129,8 @@ public class AnnotationTableModel implements InteractiveFileListTableModel {
     }
 
     @Override
-    public void refreshEntireTable(ProgressReporter progressReporter)
-            throws OperationFailedException {
-        this.annotationProject = opAnnotationProject.get(progressReporter);
+    public void refreshEntireTable(Progress progress) throws OperationFailedException {
+        this.annotationProject = opAnnotationProject.get(progress);
         this.annotationProject.addAnnotationChangedListener(
                 index -> tableModel.fireTableRowsUpdated(index, index));
     }

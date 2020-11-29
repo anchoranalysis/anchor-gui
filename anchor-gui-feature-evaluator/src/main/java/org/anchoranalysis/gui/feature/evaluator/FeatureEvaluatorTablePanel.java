@@ -32,8 +32,7 @@ import javax.swing.BorderFactory;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
-import org.anchoranalysis.core.error.CreateException;
-import org.anchoranalysis.core.index.IntArray;
+import org.anchoranalysis.core.exception.CreateException;
 import org.anchoranalysis.core.log.Logger;
 import org.anchoranalysis.core.property.IPropertyValueReceivable;
 import org.anchoranalysis.core.property.IPropertyValueSendable;
@@ -41,6 +40,7 @@ import org.anchoranalysis.gui.feature.evaluator.treetable.FeatureListSrc;
 import org.anchoranalysis.gui.image.OverlaysWithEnergyStack;
 import org.anchoranalysis.gui.marks.StatePanel;
 import org.anchoranalysis.gui.marks.StatePanelUpdateException;
+import org.anchoranalysis.gui.videostats.link.IntArray;
 import org.anchoranalysis.overlay.collection.OverlayCollection;
 
 public class FeatureEvaluatorTablePanel extends StatePanel<OverlaysWithEnergyStack> {

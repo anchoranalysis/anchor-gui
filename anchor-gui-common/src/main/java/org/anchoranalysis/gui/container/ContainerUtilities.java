@@ -28,8 +28,8 @@ package org.anchoranalysis.gui.container;
 
 import java.util.ArrayList;
 import java.util.List;
-import org.anchoranalysis.core.error.OperationFailedException;
-import org.anchoranalysis.core.index.container.BoundedIndexContainer;
+import org.anchoranalysis.core.exception.OperationFailedException;
+import org.anchoranalysis.core.index.bounded.BoundedIndexContainer;
 import org.anchoranalysis.mpp.feature.energy.IndexableMarksWithEnergy;
 
 public class ContainerUtilities {

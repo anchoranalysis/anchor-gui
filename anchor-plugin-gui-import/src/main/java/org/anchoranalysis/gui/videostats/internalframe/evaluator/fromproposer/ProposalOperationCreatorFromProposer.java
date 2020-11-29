@@ -27,9 +27,9 @@
 package org.anchoranalysis.gui.videostats.internalframe.evaluator.fromproposer;
 
 import java.util.Set;
-import org.anchoranalysis.core.error.CreateException;
-import org.anchoranalysis.core.name.provider.NamedProvider;
-import org.anchoranalysis.core.name.provider.NamedProviderGetException;
+import org.anchoranalysis.core.exception.CreateException;
+import org.anchoranalysis.core.identifier.provider.NamedProvider;
+import org.anchoranalysis.core.identifier.provider.NamedProviderGetException;
 import org.anchoranalysis.gui.videostats.internalframe.evaluator.ProposalOperationCreator;
 import org.anchoranalysis.mpp.bean.init.MPPInitParams;
 

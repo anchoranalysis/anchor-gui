@@ -26,8 +26,8 @@
 
 package org.anchoranalysis.gui.container;
 
-import org.anchoranalysis.core.error.OperationFailedException;
-import org.anchoranalysis.core.index.container.BoundedIndexContainer;
+import org.anchoranalysis.core.exception.OperationFailedException;
+import org.anchoranalysis.core.index.bounded.BoundedIndexContainer;
 
 public interface ContainerGetter<T> {
 

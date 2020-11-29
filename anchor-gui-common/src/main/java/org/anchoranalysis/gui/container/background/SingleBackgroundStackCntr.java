@@ -27,7 +27,7 @@
 package org.anchoranalysis.gui.container.background;
 
 import lombok.AllArgsConstructor;
-import org.anchoranalysis.core.index.container.BoundedIndexContainer;
+import org.anchoranalysis.core.index.bounded.BoundedIndexContainer;
 import org.anchoranalysis.image.core.stack.DisplayStack;
 
 @AllArgsConstructor

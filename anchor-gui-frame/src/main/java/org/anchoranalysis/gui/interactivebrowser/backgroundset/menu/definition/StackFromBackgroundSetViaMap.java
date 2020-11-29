@@ -28,9 +28,9 @@ package org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.definition;
 
 import java.util.Map;
 import org.anchoranalysis.bean.shared.StringMap;
-import org.anchoranalysis.core.error.reporter.ErrorReporter;
-import org.anchoranalysis.core.functional.function.CheckedFunction;
-import org.anchoranalysis.core.progress.ProgressReporterNull;
+import org.anchoranalysis.core.functional.checked.CheckedFunction;
+import org.anchoranalysis.core.log.error.ErrorReporter;
+import org.anchoranalysis.core.progress.ProgressIgnore;
 import org.anchoranalysis.gui.container.background.BackgroundStackContainerException;
 import org.anchoranalysis.gui.videostats.dropdown.BackgroundSetProgressingSupplier;
 import org.anchoranalysis.image.core.stack.DisplayStack;
@@ -54,7 +54,7 @@ class StackFromBackgroundSetViaMap implements ImageStackContainerFromName {
     public CheckedFunction<Integer, DisplayStack, BackgroundStackContainerException> get(
             String name) throws BackgroundStackContainerException {
         try {
-            return backgroundSet.get(ProgressReporterNull.get()).stackCntr(map.get(name));
+            return backgroundSet.get(ProgressIgnore.get()).stackCntr(map.get(name));
         } catch (Exception e) {
             errorReporter.recordError(NamesFromBackgroundSet.class, e);
             return null;

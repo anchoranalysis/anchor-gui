@@ -32,7 +32,8 @@ import lombok.Value;
 import org.anchoranalysis.io.generator.sequence.SequenceMemory;
 import org.anchoranalysis.io.output.outputter.InputOutputContext;
 
-@AllArgsConstructor @Value 
+@AllArgsConstructor
+@Value
 public class ExportPopupParams {
     private JFrame parentFrame;
     private SequenceMemory sequenceMemory;

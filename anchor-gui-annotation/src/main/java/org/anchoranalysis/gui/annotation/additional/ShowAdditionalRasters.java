@@ -29,8 +29,8 @@ package org.anchoranalysis.gui.annotation.additional;
 import java.nio.file.Path;
 import java.util.List;
 import lombok.AllArgsConstructor;
-import org.anchoranalysis.core.error.OperationFailedException;
-import org.anchoranalysis.image.io.bean.stack.StackReader;
+import org.anchoranalysis.core.exception.OperationFailedException;
+import org.anchoranalysis.image.io.bean.stack.reader.StackReader;
 import org.anchoranalysis.io.input.bean.path.DerivePath;
 import org.anchoranalysis.io.input.path.DerivePathException;
 

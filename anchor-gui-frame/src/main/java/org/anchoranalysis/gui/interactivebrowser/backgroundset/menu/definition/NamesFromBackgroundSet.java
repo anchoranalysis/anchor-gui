@@ -31,8 +31,8 @@ import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 import lombok.AllArgsConstructor;
-import org.anchoranalysis.core.error.reporter.ErrorReporter;
-import org.anchoranalysis.core.progress.ProgressReporterNull;
+import org.anchoranalysis.core.log.error.ErrorReporter;
+import org.anchoranalysis.core.progress.ProgressIgnore;
 import org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.IGetNames;
 import org.anchoranalysis.gui.videostats.dropdown.BackgroundSetProgressingSupplier;
 
@@ -46,7 +46,7 @@ class NamesFromBackgroundSet implements IGetNames {
     public List<String> names() {
         try {
             Set<String> namesSorted =
-                    new TreeSet<>(backgroundSet.get(ProgressReporterNull.get()).names());
+                    new TreeSet<>(backgroundSet.get(ProgressIgnore.get()).names());
             return new ArrayList<>(namesSorted);
 
         } catch (Exception e) {

@@ -28,7 +28,7 @@ package org.anchoranalysis.gui.frame.canvas;
 
 import java.awt.event.MouseEvent;
 import javax.swing.event.MouseInputAdapter;
-import org.anchoranalysis.core.error.reporter.ErrorReporter;
+import org.anchoranalysis.core.log.error.ErrorReporter;
 import org.anchoranalysis.spatial.point.Point2i;
 
 class MouseMotionListenerDragView extends MouseInputAdapter {

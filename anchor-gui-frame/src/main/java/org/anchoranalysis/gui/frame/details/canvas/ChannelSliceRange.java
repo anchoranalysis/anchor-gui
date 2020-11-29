@@ -27,7 +27,7 @@
 package org.anchoranalysis.gui.frame.details.canvas;
 
 import lombok.AllArgsConstructor;
-import org.anchoranalysis.core.index.container.BoundedRange;
+import org.anchoranalysis.core.index.bounded.BoundedRange;
 import org.anchoranalysis.image.core.dimensions.Dimensions;
 
 @AllArgsConstructor

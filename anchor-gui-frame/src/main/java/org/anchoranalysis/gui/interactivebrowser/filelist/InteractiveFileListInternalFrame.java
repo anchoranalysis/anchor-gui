@@ -37,11 +37,11 @@ import javax.swing.JComponent;
 import javax.swing.JInternalFrame;
 import javax.swing.JPanel;
 import javax.swing.table.TableCellRenderer;
-import org.anchoranalysis.core.progress.ProgressReporter;
+import org.anchoranalysis.core.progress.Progress;
 import org.anchoranalysis.gui.interactivebrowser.IOpenFile;
 import org.anchoranalysis.gui.marks.MarkDisplaySettings;
 import org.anchoranalysis.gui.marks.table.CellSelectedListener;
-import org.anchoranalysis.gui.progressreporter.ProgressReporterInteractiveWorker;
+import org.anchoranalysis.gui.progressreporter.ProgressInteractiveWorker;
 import org.anchoranalysis.gui.videostats.IModuleCreatorDefaultState;
 import org.anchoranalysis.gui.videostats.dropdown.AddVideoStatsModule;
 import org.anchoranalysis.gui.videostats.dropdown.VideoStatsModuleGlobalParams;
@@ -170,10 +170,9 @@ public class InteractiveFileListInternalFrame {
 
                         @Override
                         protected Integer doInBackground() throws Exception {
-                            try (ProgressReporter progressReporter =
-                                    new ProgressReporterInteractiveWorker(this)) {
-                                progressReporter.open();
-                                tableModel.refreshEntireTable(progressReporter);
+                            try (Progress progress = new ProgressInteractiveWorker(this)) {
+                                progress.open();
+                                tableModel.refreshEntireTable(progress);
                             }
                             return 1;
                         }

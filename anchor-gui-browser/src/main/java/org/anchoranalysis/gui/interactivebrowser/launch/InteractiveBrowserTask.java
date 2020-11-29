@@ -26,24 +26,16 @@
 
 package org.anchoranalysis.gui.interactivebrowser.launch;
 
-import lombok.Getter;
-import lombok.Setter;
-import org.anchoranalysis.bean.annotation.BeanField;
-import org.anchoranalysis.core.error.InitException;
+import org.anchoranalysis.core.exception.InitException;
 import org.anchoranalysis.experiment.JobExecutionException;
 import org.anchoranalysis.experiment.bean.task.TaskWithoutSharedState;
 import org.anchoranalysis.experiment.task.InputBound;
 import org.anchoranalysis.experiment.task.InputTypesExpected;
 import org.anchoranalysis.experiment.task.NoSharedState;
-import org.anchoranalysis.gui.export.bean.task.ExportTaskList;
 import org.anchoranalysis.gui.interactivebrowser.browser.InteractiveBrowser;
 import org.anchoranalysis.gui.interactivebrowser.input.InteractiveBrowserInput;
 
 public class InteractiveBrowserTask extends TaskWithoutSharedState<InteractiveBrowserInput> {
-
-    // START BEAN PROPERTIES
-    @BeanField @Getter @Setter private ExportTaskList exportTaskList;
-    // END BEAN PROPERTIES
 
     @Override
     public InputTypesExpected inputTypesExpected() {
@@ -55,8 +47,7 @@ public class InteractiveBrowserTask extends TaskWithoutSharedState<InteractiveBr
             throws JobExecutionException {
 
         try {
-            InteractiveBrowser browser =
-                    new InteractiveBrowser(params.context(), getExportTaskList());
+            InteractiveBrowser browser = new InteractiveBrowser(params.getContextJob());
             browser.init(params.getInput());
             browser.showWithDefaultView();
         } catch (InitException e) {

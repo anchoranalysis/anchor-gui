@@ -28,16 +28,16 @@ package org.anchoranalysis.gui.frame.canvas;
 
 import java.awt.image.BufferedImage;
 import java.util.Optional;
-import org.anchoranalysis.core.error.CreateException;
-import org.anchoranalysis.core.error.OperationFailedException;
+import org.anchoranalysis.core.exception.CreateException;
+import org.anchoranalysis.core.exception.OperationFailedException;
 import org.anchoranalysis.gui.frame.canvas.zoom.ZoomScale;
 import org.anchoranalysis.gui.frame.display.BoundOverlayedDisplayStack;
 import org.anchoranalysis.gui.region.RegionExtracter;
 import org.anchoranalysis.image.core.dimensions.Dimensions;
 import org.anchoranalysis.image.core.stack.DisplayStack;
 import org.anchoranalysis.image.voxel.datatype.VoxelDataType;
-import org.anchoranalysis.spatial.extent.Extent;
-import org.anchoranalysis.spatial.extent.box.BoundingBox;
+import org.anchoranalysis.spatial.Extent;
+import org.anchoranalysis.spatial.box.BoundingBox;
 import org.anchoranalysis.spatial.point.Point2i;
 import org.anchoranalysis.spatial.point.Point3i;
 import org.anchoranalysis.spatial.point.ReadableTuple3i;
@@ -82,12 +82,12 @@ class DisplayStackViewport {
 
         Point2i point = new Point2i(xNew, yNew);
         point =
-                DisplayStackViewportUtilities.clipToImage(
+                DisplayStackViewportUtilities.clampToImage(
                         point, boxViewport.extent(), dimensionsEntire());
-        point = DisplayStackViewportUtilities.clipToImage(point, canvasExtent, dimensionsEntire());
+        point = DisplayStackViewportUtilities.clampToImage(point, canvasExtent, dimensionsEntire());
         assert (point.x() >= 0);
         assert (point.y() >= 0);
-        // We need to clip
+        // We need to clamp
 
         Point3i point3 = new Point3i(point.x(), point.y(), this.boxViewport.cornerMin().z());
 
@@ -137,7 +137,7 @@ class DisplayStackViewport {
 
         addCond(scrollValImage, diff, extentOld);
 
-        return DisplayStackViewportUtilities.clipToImage(
+        return DisplayStackViewportUtilities.clampToImage(
                 scrollValImage, extentNew, dimensionsEntire());
     }
 
@@ -178,7 +178,7 @@ class DisplayStackViewport {
     public Dimensions dim() {
         return displayStackEntireImage.dimensions();
     }
-    
+
     private static void addCond(Point2i scrollVal, ReadableTuple3i toAdd, Extent cond) {
         if (cond.x() > 0 && toAdd.x() != 0) {
             scrollVal.setX(scrollVal.x() + toAdd.x());

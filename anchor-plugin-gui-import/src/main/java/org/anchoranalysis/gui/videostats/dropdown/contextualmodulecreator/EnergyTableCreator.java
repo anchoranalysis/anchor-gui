@@ -29,11 +29,11 @@ package org.anchoranalysis.gui.videostats.dropdown.contextualmodulecreator;
 import java.util.Optional;
 import lombok.AllArgsConstructor;
 import org.anchoranalysis.core.color.ColorIndex;
-import org.anchoranalysis.core.error.InitException;
-import org.anchoranalysis.core.error.OperationFailedException;
-import org.anchoranalysis.core.functional.function.CheckedSupplier;
+import org.anchoranalysis.core.exception.InitException;
+import org.anchoranalysis.core.exception.OperationFailedException;
+import org.anchoranalysis.core.functional.checked.CheckedSupplier;
 import org.anchoranalysis.core.index.GetOperationFailedException;
-import org.anchoranalysis.core.index.container.BoundedIndexContainer;
+import org.anchoranalysis.core.index.bounded.BoundedIndexContainer;
 import org.anchoranalysis.gui.marks.StatePanelFrameHistoryMarks;
 import org.anchoranalysis.gui.marks.table.MarksEnergyTablePanel;
 import org.anchoranalysis.gui.videostats.IModuleCreatorDefaultState;
@@ -47,7 +47,8 @@ import org.anchoranalysis.mpp.feature.energy.IndexableMarksWithEnergy;
 @AllArgsConstructor
 public class EnergyTableCreator extends VideoStatsModuleCreatorContext {
 
-    private final CheckedSupplier<BoundedIndexContainer<IndexableMarksWithEnergy>, OperationFailedException>
+    private final CheckedSupplier<
+                    BoundedIndexContainer<IndexableMarksWithEnergy>, OperationFailedException>
             operation;
     private final EnergyStackSupplier energyStackWithParams;
     private final ColorIndex colorIndex;
@@ -67,8 +68,7 @@ public class EnergyTableCreator extends VideoStatsModuleCreatorContext {
         try {
             BoundedIndexContainer<IndexableMarksWithEnergy> container = operation.get();
 
-            StatePanelFrameHistoryMarks frame =
-                    new StatePanelFrameHistoryMarks(namePrefix, true);
+            StatePanelFrameHistoryMarks frame = new StatePanelFrameHistoryMarks(namePrefix, true);
             frame.init(
                     defaultStateManager.getLinkStateManager().getState().getFrameIndex(),
                     container,

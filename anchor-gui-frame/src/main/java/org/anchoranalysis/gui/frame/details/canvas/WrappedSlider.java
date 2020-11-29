@@ -29,11 +29,11 @@ package org.anchoranalysis.gui.frame.details.canvas;
 import java.util.Optional;
 import javax.swing.JComponent;
 import org.anchoranalysis.core.index.IndexGettableSettable;
-import org.anchoranalysis.core.index.container.BoundedRangeIncompleteDynamic;
+import org.anchoranalysis.core.index.bounded.BoundedRangeIncompleteDynamic;
 import org.anchoranalysis.core.property.IPropertyValueSendable;
-import org.anchoranalysis.core.property.change.PropertyValueChangeListener;
 import org.anchoranalysis.gui.frame.canvas.ImageCanvas;
 import org.anchoranalysis.gui.image.frame.SliderState;
+import org.anchoranalysis.gui.property.PropertyValueChangeListener;
 import org.anchoranalysis.gui.videostats.link.LinkModules.Adder;
 
 class WrappedSlider implements SliderState {

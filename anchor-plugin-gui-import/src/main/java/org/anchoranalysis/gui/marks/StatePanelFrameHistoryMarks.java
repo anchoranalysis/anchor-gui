@@ -26,9 +26,9 @@
 
 package org.anchoranalysis.gui.marks;
 
-import org.anchoranalysis.core.error.InitException;
-import org.anchoranalysis.core.error.reporter.ErrorReporter;
-import org.anchoranalysis.core.index.container.BoundedIndexContainer;
+import org.anchoranalysis.core.exception.InitException;
+import org.anchoranalysis.core.index.bounded.BoundedIndexContainer;
+import org.anchoranalysis.core.log.error.ErrorReporter;
 import org.anchoranalysis.gui.image.frame.ControllerSize;
 import org.anchoranalysis.gui.videostats.IModuleCreatorDefaultState;
 import org.anchoranalysis.mpp.feature.energy.IndexableMarksWithEnergy;

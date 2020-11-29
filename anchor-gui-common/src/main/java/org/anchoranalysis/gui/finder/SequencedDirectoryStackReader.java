@@ -27,29 +27,29 @@
 package org.anchoranalysis.gui.finder;
 
 import java.nio.file.Path;
-import org.anchoranalysis.core.error.CreateException;
-import org.anchoranalysis.core.progress.ProgressReporterNull;
+import org.anchoranalysis.core.exception.CreateException;
+import org.anchoranalysis.core.progress.ProgressIgnore;
 import org.anchoranalysis.image.core.stack.Stack;
 import org.anchoranalysis.image.io.ImageIOException;
-import org.anchoranalysis.image.io.bean.stack.StackReader;
-import org.anchoranalysis.image.io.stack.OpenedRaster;
+import org.anchoranalysis.image.io.bean.stack.reader.StackReader;
+import org.anchoranalysis.image.io.stack.input.OpenedRaster;
 import org.anchoranalysis.io.manifest.directory.sequenced.DeriveElementsFromSequencedDirectory;
 import org.anchoranalysis.io.manifest.directory.sequenced.SequencedDirectory;
 
 /**
  * Reads a stack from each file in a directory with a sequence of files.
- * 
- * <p>Only the first time-point of the first series is opened.
- * 
- * @author Owen Feehan
  *
+ * <p>Only the first time-point of the first series is opened.
+ *
+ * @author Owen Feehan
  */
 class SequencedDirectoryStackReader extends DeriveElementsFromSequencedDirectory<Stack> {
 
     private StackReader stackReader;
 
-    public SequencedDirectoryStackReader(SequencedDirectory rootFolder, StackReader stackReader) {
-        super(rootFolder);
+    public SequencedDirectoryStackReader(
+            SequencedDirectory rootDirectory, StackReader stackReader) {
+        super(rootDirectory);
         this.stackReader = stackReader;
     }
 
@@ -59,7 +59,7 @@ class SequencedDirectoryStackReader extends DeriveElementsFromSequencedDirectory
         try {
             OpenedRaster openedRaster = stackReader.openFile(path);
             try {
-                return openedRaster.open(0, ProgressReporterNull.get()).get(0);
+                return openedRaster.open(0, ProgressIgnore.get()).get(0);
             } finally {
                 openedRaster.close();
             }

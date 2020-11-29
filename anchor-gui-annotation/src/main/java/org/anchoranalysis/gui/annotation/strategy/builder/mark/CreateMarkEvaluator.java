@@ -31,14 +31,14 @@ import java.nio.file.Path;
 import java.util.Optional;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
-import org.anchoranalysis.core.error.CreateException;
+import org.anchoranalysis.core.exception.CreateException;
 import org.anchoranalysis.core.functional.OptionalUtilities;
 import org.anchoranalysis.core.log.Logger;
-import org.anchoranalysis.core.params.KeyValueParams;
+import org.anchoranalysis.core.value.KeyValueParams;
 import org.anchoranalysis.gui.annotation.mark.MarkAnnotator;
 import org.anchoranalysis.gui.interactivebrowser.MarkEvaluatorManager;
 import org.anchoranalysis.gui.interactivebrowser.MarkEvaluatorSetForImage;
-import org.anchoranalysis.image.core.stack.NamedStacksSupplier;
+import org.anchoranalysis.image.core.stack.named.NamedStacksSupplier;
 import org.anchoranalysis.io.input.bean.path.DerivePath;
 import org.anchoranalysis.io.input.path.DerivePathException;
 import org.anchoranalysis.plugin.annotation.bean.strategy.MarkProposerStrategy;
@@ -68,8 +68,7 @@ class CreateMarkEvaluator {
             NamedStacksSupplier stacks)
             throws CreateException {
         return markEvaluatorManager.createSetForStackCollection(
-                stacks,
-                () -> paramsFromGenerator(pathForBinding, strategy.paramsDeriver()));
+                stacks, () -> paramsFromGenerator(pathForBinding, strategy.paramsDeriver()));
     }
 
     private static Optional<KeyValueParams> paramsFromGenerator(
@@ -78,8 +77,8 @@ class CreateMarkEvaluator {
                 derivePath, generator -> readParams(generator, pathForBinding));
     }
 
-    private static KeyValueParams readParams(
-            DerivePath derivePath, Path pathForBinding) throws IOException {
+    private static KeyValueParams readParams(DerivePath derivePath, Path pathForBinding)
+            throws IOException {
         try {
             return KeyValueParams.readFromFile(
                     PathFromGenerator.derivePath(derivePath, pathForBinding));

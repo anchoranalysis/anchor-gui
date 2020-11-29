@@ -28,19 +28,19 @@ package org.anchoranalysis.gui.frame.canvas;
 
 import java.awt.image.BufferedImage;
 import java.util.Optional;
-import org.anchoranalysis.core.error.OperationFailedException;
+import lombok.Getter;
+import lombok.Setter;
+import org.anchoranalysis.core.exception.OperationFailedException;
 import org.anchoranalysis.gui.frame.canvas.zoom.ZoomScale;
 import org.anchoranalysis.gui.frame.display.BoundOverlayedDisplayStack;
 import org.anchoranalysis.image.core.dimensions.Dimensions;
 import org.anchoranalysis.image.core.dimensions.Resolution;
 import org.anchoranalysis.image.voxel.datatype.VoxelDataType;
-import org.anchoranalysis.spatial.extent.Extent;
-import org.anchoranalysis.spatial.extent.box.BoundingBox;
-import org.anchoranalysis.spatial.extent.scale.ScaleFactor;
+import org.anchoranalysis.spatial.Extent;
+import org.anchoranalysis.spatial.box.BoundingBox;
 import org.anchoranalysis.spatial.point.Point2i;
 import org.anchoranalysis.spatial.point.Point3i;
-import lombok.Getter;
-import lombok.Setter;
+import org.anchoranalysis.spatial.scale.ScaleFactor;
 
 class DisplayStackViewportZoomed {
 
@@ -54,7 +54,7 @@ class DisplayStackViewportZoomed {
         BoundingBox boxScaled = box.scale(new ScaleFactor(zoomScale.getScaleInv()));
 
         // Scaling seemingly can produce a box that is slightly too-big
-        boxScaled = boxScaled.clipTo(unzoomed.getDisplayStackEntireImage().dimensions().extent());
+        boxScaled = boxScaled.clampTo(unzoomed.getDisplayStackEntireImage().dimensions().extent());
         assert (unzoomed.getDisplayStackEntireImage().dimensions().contains(boxScaled));
         return unzoomed.updateView(boxScaled, zoomScale);
     }
@@ -168,7 +168,7 @@ class DisplayStackViewportZoomed {
     public BoundOverlayedDisplayStack getDisplayStackEntireImage() {
         return unzoomed.getDisplayStackEntireImage();
     }
-    
+
     private int cnvrtCanvasXToImage(int val, ZoomScale zs) {
         return zs.removeScale(val) + unzoomed.boundingBox().cornerMin().x();
     }

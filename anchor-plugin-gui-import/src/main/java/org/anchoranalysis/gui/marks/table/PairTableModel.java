@@ -30,7 +30,7 @@ import javax.swing.table.AbstractTableModel;
 import lombok.RequiredArgsConstructor;
 import org.anchoranalysis.core.color.ColorIndex;
 import org.anchoranalysis.core.color.RGBColor;
-import org.anchoranalysis.core.error.friendly.AnchorImpossibleSituationException;
+import org.anchoranalysis.core.exception.friendly.AnchorImpossibleSituationException;
 import org.anchoranalysis.mpp.feature.energy.EnergyPair;
 import org.anchoranalysis.mpp.feature.energy.IndexableMarksWithEnergy;
 import org.anchoranalysis.mpp.feature.energy.saved.EnergySavedPairs;
@@ -118,13 +118,13 @@ public class PairTableModel extends AbstractTableModel implements IUpdateTableDa
 
         switch (column) {
             case 0:
-                return colorIndex.get(pairArr[row].getPair().getSource().getId());
+                return colorIndex.get(pairArr[row].getPair().getSource().getIdentifier());
             case 1:
-                return colorIndex.get(pairArr[row].getPair().getDestination().getId());
+                return colorIndex.get(pairArr[row].getPair().getDestination().getIdentifier());
             case 2:
-                return this.pairArr[row].getPair().getSource().getId();
+                return this.pairArr[row].getPair().getSource().getIdentifier();
             case 3:
-                return this.pairArr[row].getPair().getDestination().getId();
+                return this.pairArr[row].getPair().getDestination().getIdentifier();
             case 4:
                 return String.format("%16.3f", pairArr[row].getEnergyTotal().getTotal());
             default:

@@ -26,11 +26,11 @@
 
 package org.anchoranalysis.gui.frame.threaded.overlay;
 
-import org.anchoranalysis.core.error.InitException;
-import org.anchoranalysis.core.functional.function.CheckedFunction;
-import org.anchoranalysis.core.idgetter.IDGetter;
+import org.anchoranalysis.core.exception.InitException;
+import org.anchoranalysis.core.functional.checked.CheckedFunction;
+import org.anchoranalysis.core.identifier.getter.IdentifierGetter;
 import org.anchoranalysis.core.index.IndexGettableSettable;
-import org.anchoranalysis.core.index.container.BoundedRangeIncompleteDynamic;
+import org.anchoranalysis.core.index.bounded.BoundedRangeIncompleteDynamic;
 import org.anchoranalysis.gui.container.background.BackgroundStackContainerException;
 import org.anchoranalysis.gui.displayupdate.OverlayedDisplayStack;
 import org.anchoranalysis.gui.frame.details.ControllerPopupMenu;
@@ -65,7 +65,7 @@ public class InternalFrameThreadedOverlayProvider {
     public void beforeInit(
             CheckedFunction<Integer, OverlayedDisplayStack, BackgroundStackContainerException>
                     bridge,
-            IDGetter<Overlay> idGetter,
+            IdentifierGetter<Overlay> idGetter,
             int defaultIndex,
             MarkDisplaySettingsWrapper markDisplaySettingsWrapper,
             VideoStatsModuleGlobalParams mpg)

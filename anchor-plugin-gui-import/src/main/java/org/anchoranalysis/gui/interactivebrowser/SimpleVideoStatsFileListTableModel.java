@@ -29,9 +29,9 @@ package org.anchoranalysis.gui.interactivebrowser;
 import java.util.List;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.AbstractTableModel;
-import org.anchoranalysis.core.error.OperationFailedException;
-import org.anchoranalysis.core.error.friendly.AnchorImpossibleSituationException;
-import org.anchoranalysis.core.progress.ProgressReporter;
+import org.anchoranalysis.core.exception.OperationFailedException;
+import org.anchoranalysis.core.exception.friendly.AnchorImpossibleSituationException;
+import org.anchoranalysis.core.progress.Progress;
 import org.anchoranalysis.gui.file.interactive.InteractiveFile;
 import org.anchoranalysis.gui.interactivebrowser.filelist.InteractiveFileListTableModel;
 
@@ -93,10 +93,10 @@ public class SimpleVideoStatsFileListTableModel implements InteractiveFileListTa
             };
 
     public SimpleVideoStatsFileListTableModel(
-            InteractiveFileSupplier opFileInputList, ProgressReporter progressReporter)
+            InteractiveFileSupplier opFileInputList, Progress progress)
             throws OperationFailedException {
         this.opFileInputList = opFileInputList;
-        refreshEntireTable(progressReporter);
+        refreshEntireTable(progress);
         tableModel.fireTableDataChanged();
     }
 
@@ -109,9 +109,8 @@ public class SimpleVideoStatsFileListTableModel implements InteractiveFileListTa
     // called from different threads
     //   from a SwingWorker
     @Override
-    public void refreshEntireTable(ProgressReporter progressReporter)
-            throws OperationFailedException {
-        this.fileInputList = opFileInputList.get(progressReporter);
+    public void refreshEntireTable(Progress progress) throws OperationFailedException {
+        this.fileInputList = opFileInputList.get(progress);
     }
 
     @Override

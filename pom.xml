@@ -31,7 +31,6 @@
 	   <module>anchor-gui-plot</module>
 	   <module>anchor-gui-mdi</module>
 	   <module>anchor-plugin-gui-annotation</module>
-	   <module>anchor-plugin-gui-export</module>
 	   <module>anchor-plugin-gui-import</module>
     </modules>
 

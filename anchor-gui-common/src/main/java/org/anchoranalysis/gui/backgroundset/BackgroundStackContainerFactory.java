@@ -28,12 +28,11 @@ package org.anchoranalysis.gui.backgroundset;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
-import org.anchoranalysis.core.bridge.BridgeElementException;
-import org.anchoranalysis.core.error.CreateException;
-import org.anchoranalysis.core.error.OperationFailedException;
-import org.anchoranalysis.core.index.container.BoundedIndexContainer;
-import org.anchoranalysis.core.index.container.SingleContainer;
-import org.anchoranalysis.core.index.container.bridge.BoundedIndexContainerBridgeWithoutIndex;
+import org.anchoranalysis.core.exception.CreateException;
+import org.anchoranalysis.core.exception.OperationFailedException;
+import org.anchoranalysis.core.index.bounded.BoundedIndexContainer;
+import org.anchoranalysis.core.index.bounded.SingleContainer;
+import org.anchoranalysis.core.index.bounded.bridge.BoundedIndexContainerBridgeWithoutIndex;
 import org.anchoranalysis.gui.container.background.BackgroundStackContainer;
 import org.anchoranalysis.image.core.stack.DisplayStack;
 import org.anchoranalysis.image.core.stack.Stack;
@@ -41,13 +40,6 @@ import org.anchoranalysis.image.core.stack.TimeSequence;
 
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class BackgroundStackContainerFactory {
-
-    private static DisplayStack convert(Stack s) throws CreateException {
-        if (s.getNumberChannels() <= 3) {
-            s = s.extractUpToThreeChannels();
-        }
-        return DisplayStack.create(s);
-    }
 
     @AllArgsConstructor
     private static class ExistingStack implements BackgroundStackContainer {
@@ -70,14 +62,7 @@ public class BackgroundStackContainerFactory {
 
         BoundedIndexContainer<DisplayStack> bridge =
                 new BoundedIndexContainerBridgeWithoutIndex<>(
-                        new TimeSequenceBridge(seq),
-                        s -> {
-                            try {
-                                return convert(s);
-                            } catch (CreateException e) {
-                                throw new BridgeElementException(e);
-                            }
-                        });
+                        new TimeSequenceBridge(seq), BackgroundStackContainerFactory::convert);
 
         return new ExistingStack(bridge);
     }
@@ -93,5 +78,12 @@ public class BackgroundStackContainerFactory {
         } catch (CreateException e) {
             throw new OperationFailedException(e);
         }
+    }
+
+    private static DisplayStack convert(Stack s) throws CreateException {
+        if (s.getNumberChannels() <= 3) {
+            s = s.extractUpToThreeChannels();
+        }
+        return DisplayStack.create(s);
     }
 }

@@ -28,11 +28,11 @@ package org.anchoranalysis.gui.videostats.dropdown.common;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
-import org.anchoranalysis.core.error.CreateException;
+import org.anchoranalysis.core.exception.CreateException;
+import org.anchoranalysis.core.identifier.provider.NamedProvider;
+import org.anchoranalysis.core.identifier.provider.NamedProviderGetException;
 import org.anchoranalysis.core.index.GetOperationFailedException;
-import org.anchoranalysis.core.name.provider.NamedProvider;
-import org.anchoranalysis.core.name.provider.NamedProviderGetException;
-import org.anchoranalysis.core.progress.ProgressReporterNull;
+import org.anchoranalysis.core.progress.ProgressIgnore;
 import org.anchoranalysis.feature.energy.EnergyStack;
 import org.anchoranalysis.gui.series.TimeSequenceProviderSupplier;
 import org.anchoranalysis.image.core.stack.TimeSequence;
@@ -50,7 +50,7 @@ public class GuessEnergyFromStacks {
             TimeSequenceProviderSupplier stackSequenceProvider) throws GetOperationFailedException {
         try {
             NamedProvider<TimeSequence> stacks =
-                    stackSequenceProvider.get(ProgressReporterNull.get()).getSequence();
+                    stackSequenceProvider.get(ProgressIgnore.get()).getSequence();
             String arbitraryKey = stacks.keys().iterator().next();
 
             try {

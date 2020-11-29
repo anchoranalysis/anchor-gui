@@ -30,31 +30,30 @@ import java.util.Set;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import org.anchoranalysis.core.cache.CachedSupplier;
-import org.anchoranalysis.core.error.CreateException;
-import org.anchoranalysis.core.error.OperationFailedException;
-import org.anchoranalysis.core.name.provider.NamedProvider;
-import org.anchoranalysis.core.name.provider.NamedProviderGetException;
-import org.anchoranalysis.core.progress.ProgressReporter;
-import org.anchoranalysis.core.progress.ProgressReporterIncrement;
+import org.anchoranalysis.core.exception.CreateException;
+import org.anchoranalysis.core.exception.OperationFailedException;
+import org.anchoranalysis.core.identifier.provider.NamedProvider;
+import org.anchoranalysis.core.identifier.provider.NamedProviderGetException;
+import org.anchoranalysis.core.progress.Progress;
+import org.anchoranalysis.core.progress.ProgressIncrement;
 import org.anchoranalysis.gui.container.background.BackgroundStackContainer;
 import org.anchoranalysis.gui.container.background.BackgroundStackContainerException;
 import org.anchoranalysis.image.core.channel.factory.ChannelFactory;
 import org.anchoranalysis.image.core.dimensions.Dimensions;
 import org.anchoranalysis.image.core.dimensions.IncorrectImageSizeException;
 import org.anchoranalysis.image.core.stack.Stack;
+import org.anchoranalysis.image.core.stack.StackIdentifiers;
 import org.anchoranalysis.image.core.stack.TimeSequence;
-import org.anchoranalysis.image.experiment.identifiers.StackIdentifiers;
 import org.anchoranalysis.image.voxel.datatype.UnsignedByteVoxelType;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class BackgroundSetFactory {
 
     public static BackgroundSet createBackgroundSet(
-            NamedProvider<TimeSequence> stacks, ProgressReporter progressReporter)
-            throws CreateException {
+            NamedProvider<TimeSequence> stacks, Progress progress) throws CreateException {
         BackgroundSet set = new BackgroundSet();
         try {
-            addFromStacks(set, stacks, progressReporter);
+            addFromStacks(set, stacks, progress);
         } catch (OperationFailedException e) {
             throw new CreateException(e);
         }
@@ -62,14 +61,12 @@ public class BackgroundSetFactory {
     }
 
     public static BackgroundSet createBackgroundSetFromExisting(
-            BackgroundSet existing,
-            NamedProvider<TimeSequence> stacks,
-            ProgressReporter progressReporter)
+            BackgroundSet existing, NamedProvider<TimeSequence> stacks, Progress progress)
             throws CreateException {
 
         BackgroundSet set = new BackgroundSet(existing);
         try {
-            BackgroundSetFactory.addFromStacks(set, stacks, progressReporter);
+            BackgroundSetFactory.addFromStacks(set, stacks, progress);
         } catch (OperationFailedException e) {
             throw new CreateException(e);
         }
@@ -81,12 +78,12 @@ public class BackgroundSetFactory {
             BackgroundSet existing,
             NamedProvider<TimeSequence> stacks,
             Set<String> keys,
-            ProgressReporter progressReporter)
+            Progress progress)
             throws CreateException {
 
         BackgroundSet backgroundSetNew = new BackgroundSet(existing);
         try {
-            BackgroundSetFactory.addFromStacks(backgroundSetNew, stacks, keys, progressReporter);
+            BackgroundSetFactory.addFromStacks(backgroundSetNew, stacks, keys, progress);
         } catch (OperationFailedException e) {
             throw new CreateException(e);
         }
@@ -125,10 +122,9 @@ public class BackgroundSetFactory {
     private static void addFromStacks(
             BackgroundSet backgroundSet,
             NamedProvider<TimeSequence> imageStackCollection,
-            ProgressReporter progressReporter)
+            Progress progress)
             throws OperationFailedException {
-        addFromStacks(
-                backgroundSet, imageStackCollection, imageStackCollection.keys(), progressReporter);
+        addFromStacks(backgroundSet, imageStackCollection, imageStackCollection.keys(), progress);
 
         addEmpty(backgroundSet, imageStackCollection);
     }
@@ -173,16 +169,16 @@ public class BackgroundSetFactory {
             BackgroundSet backgroundSet,
             NamedProvider<TimeSequence> namedStacks,
             Set<String> keys,
-            ProgressReporter progressReporter)
+            Progress progress)
             throws OperationFailedException {
 
         boolean hasEnergyStack = keys.contains(StackIdentifiers.ENERGY_STACK);
 
-        ProgressReporterIncrement pri = new ProgressReporterIncrement(progressReporter);
-        pri.setMin(0);
-        pri.setMax(keys.size() + (hasEnergyStack ? 1 : 0));
+        ProgressIncrement progressIncrement = new ProgressIncrement(progress);
+        progressIncrement.setMin(0);
+        progressIncrement.setMax(keys.size() + (hasEnergyStack ? 1 : 0));
 
-        pri.open();
+        progressIncrement.open();
 
         try {
 
@@ -192,7 +188,7 @@ public class BackgroundSetFactory {
                 BackgroundSetSupplier<BackgroundStackContainer> operation =
                         CachedSupplier.cache(() -> addBackgroundSetItem(namedStacks, id))::get;
                 backgroundSet.addItem(id, operation);
-                pri.update();
+                progressIncrement.update();
             }
 
             // TODO fix, this will always evaluate the energy stack
@@ -205,13 +201,13 @@ public class BackgroundSetFactory {
                                 .getException(StackIdentifiers.ENERGY_STACK)
                                 .get(0), // Only take first
                         "energyStack-channel");
-                pri.update();
+                progressIncrement.update();
             }
 
         } catch (NamedProviderGetException e) {
             throw new OperationFailedException(e.summarize());
         } finally {
-            pri.close();
+            progressIncrement.close();
         }
     }
 

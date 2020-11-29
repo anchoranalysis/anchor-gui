@@ -29,15 +29,15 @@ package org.anchoranalysis.gui.frame.multioverlay;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
-import org.anchoranalysis.core.bridge.BridgeElementWithIndex;
-import org.anchoranalysis.core.error.InitException;
-import org.anchoranalysis.core.error.OperationFailedException;
-import org.anchoranalysis.core.error.reporter.ErrorReporter;
-import org.anchoranalysis.core.idgetter.IDGetter;
-import org.anchoranalysis.core.index.container.BoundedIndexContainer;
-import org.anchoranalysis.core.index.container.BoundedIndexContainerFromList;
-import org.anchoranalysis.core.index.container.bridge.BoundedIndexContainerBridgeWithIndex;
-import org.anchoranalysis.core.progress.ProgressReporterNull;
+import org.anchoranalysis.core.exception.InitException;
+import org.anchoranalysis.core.exception.OperationFailedException;
+import org.anchoranalysis.core.identifier.getter.IdentifierGetter;
+import org.anchoranalysis.core.index.BridgeElementWithIndex;
+import org.anchoranalysis.core.index.bounded.BoundedIndexContainer;
+import org.anchoranalysis.core.index.bounded.BoundedIndexContainerFromList;
+import org.anchoranalysis.core.index.bounded.bridge.BoundedIndexContainerBridgeWithIndex;
+import org.anchoranalysis.core.log.error.ErrorReporter;
+import org.anchoranalysis.core.progress.ProgressIgnore;
 import org.anchoranalysis.gui.container.background.BackgroundStackContainerException;
 import org.anchoranalysis.gui.frame.multioverlay.instantstate.InternalFrameOverlayedInstantStateToRGBSelectable;
 import org.anchoranalysis.gui.image.frame.SliderState;
@@ -53,7 +53,7 @@ import org.anchoranalysis.gui.videostats.module.DefaultModuleState;
 import org.anchoranalysis.gui.videostats.module.DefaultModuleStateManager;
 import org.anchoranalysis.overlay.IndexableOverlays;
 import org.anchoranalysis.overlay.Overlay;
-import org.anchoranalysis.overlay.id.IDGetterOverlayID;
+import org.anchoranalysis.overlay.identifier.IdentifierFromOverlay;
 
 class InternalFrameMultiOverlay<T> {
     private InternalFrameOverlayedInstantStateToRGBSelectable delegate;
@@ -79,7 +79,7 @@ class InternalFrameMultiOverlay<T> {
         DefaultModuleState defaultStateNew =
                 assignInitialBackground(defaultState, arbitraryStackName, imageStackCntrFromName);
 
-        IDGetter<Overlay> idGetter = new IDGetterOverlayID();
+        IdentifierGetter<Overlay> idGetter = new IdentifierFromOverlay();
 
         SliderState sliderState =
                 delegate.init(
@@ -106,7 +106,7 @@ class InternalFrameMultiOverlay<T> {
                     return list.get(sourceObject)
                             .getEnergyBackground()
                             .getBackgroundSet()
-                            .get(ProgressReporterNull.get())
+                            .get(ProgressIgnore.get())
                             .singleStack(name);
                 };
     }
@@ -154,7 +154,7 @@ class InternalFrameMultiOverlay<T> {
                         list.get(sliderState.getIndex())
                                 .getEnergyBackground()
                                 .getBackgroundSet()
-                                .get(ProgressReporterNull.get())
+                                .get(ProgressIgnore.get())
                                 .names();
                 return new ArrayList<>(names);
 

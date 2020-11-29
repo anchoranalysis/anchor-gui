@@ -29,8 +29,8 @@ package org.anchoranalysis.gui.feature.evaluator;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Optional;
-import org.anchoranalysis.core.name.value.ComparatorOrderByName;
-import org.anchoranalysis.core.name.value.NameValue;
+import org.anchoranalysis.core.identifier.name.ComparatorOrderByName;
+import org.anchoranalysis.core.identifier.name.NameValue;
 import org.anchoranalysis.feature.energy.EnergyStack;
 import org.anchoranalysis.gui.feature.evaluator.singlepair.UpdatableSinglePair;
 import org.anchoranalysis.gui.marks.table.TitleValueTableModel;
@@ -76,7 +76,8 @@ class OverlayDescription extends TitleValueTableModel implements UpdatableSingle
         fireTableDataChanged();
     }
 
-    private void addOverlayDetails(Overlay overlay, String titlePrefix, Optional<Resolution> resolution) {
+    private void addOverlayDetails(
+            Overlay overlay, String titlePrefix, Optional<Resolution> resolution) {
 
         OverlayProperties properties = overlay.generateProperties(resolution);
 

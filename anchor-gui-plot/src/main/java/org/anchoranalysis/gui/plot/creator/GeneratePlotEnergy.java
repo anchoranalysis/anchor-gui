@@ -34,9 +34,9 @@ import java.util.List;
 import java.util.Optional;
 import lombok.AllArgsConstructor;
 import org.anchoranalysis.core.color.ColorIndex;
-import org.anchoranalysis.core.error.CreateException;
-import org.anchoranalysis.core.error.OperationFailedException;
-import org.anchoranalysis.core.functional.function.CheckedFunction;
+import org.anchoranalysis.core.exception.CreateException;
+import org.anchoranalysis.core.exception.OperationFailedException;
+import org.anchoranalysis.core.functional.checked.CheckedFunction;
 import org.anchoranalysis.feature.energy.EnergyTotal;
 import org.anchoranalysis.gui.plot.EnergyGraphItem;
 import org.anchoranalysis.gui.plot.panel.ClickableGraphFactory;
@@ -78,9 +78,9 @@ public class GeneratePlotEnergy
     }
 
     private static String objectIdentifier(EnergyPair pair) {
-        return Integer.toString(pair.getPair().getSource().getId())
+        return Integer.toString(pair.getPair().getSource().getIdentifier())
                 + "--"
-                + Integer.toString(pair.getPair().getDestination().getId());
+                + Integer.toString(pair.getPair().getDestination().getIdentifier());
     }
 
     public static List<EnergyGraphItem> createGraphItems(
@@ -95,9 +95,9 @@ public class GeneratePlotEnergy
 
             list.add(
                     new EnergyGraphItem(
-                            Integer.toString(mark.getId()),
+                            Integer.toString(mark.getIdentifier()),
                             energy.getTotal(),
-                            colorIndex.get(mark.getId()).toAWTColor()));
+                            colorIndex.get(mark.getIdentifier()).toAWTColor()));
         }
 
         // Each double energy item
@@ -106,9 +106,10 @@ public class GeneratePlotEnergy
             EnergyGraphItem item =
                     new EnergyGraphItem(objectIdentifier(pair), pair.getEnergyTotal().getTotal());
 
-            Color colorSource = colorIndex.get(pair.getPair().getSource().getId()).toAWTColor();
+            Color colorSource =
+                    colorIndex.get(pair.getPair().getSource().getIdentifier()).toAWTColor();
             Color colorDestination =
-                    colorIndex.get(pair.getPair().getDestination().getId()).toAWTColor();
+                    colorIndex.get(pair.getPair().getDestination().getIdentifier()).toAWTColor();
 
             item.setPaint(
                     new GradientPaint(

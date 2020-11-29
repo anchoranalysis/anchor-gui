@@ -28,7 +28,7 @@ package org.anchoranalysis.gui.bean.filecreator;
 
 import org.anchoranalysis.gui.file.interactive.FileStackCollection;
 import org.anchoranalysis.gui.file.interactive.InteractiveFile;
-import org.anchoranalysis.plugin.io.bean.input.stack.StackSequenceInput;
+import org.anchoranalysis.image.io.stack.input.StackSequenceInput;
 
 // A named channel collection derived from a file
 public class StackCollectionCreator extends FileCreatorFromInputManager<StackSequenceInput> {

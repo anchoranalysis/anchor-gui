@@ -30,11 +30,11 @@ import java.util.Optional;
 import java.util.function.Supplier;
 import lombok.AllArgsConstructor;
 import org.anchoranalysis.core.cache.CachedSupplier;
-import org.anchoranalysis.core.error.AnchorNeverOccursException;
-import org.anchoranalysis.core.error.OperationFailedException;
+import org.anchoranalysis.core.exception.AnchorNeverOccursException;
+import org.anchoranalysis.core.exception.OperationFailedException;
 import org.anchoranalysis.image.core.stack.DisplayStack;
 import org.anchoranalysis.image.core.stack.Stack;
-import org.anchoranalysis.image.io.generator.raster.FlattenStackGenerator;
+import org.anchoranalysis.image.io.stack.output.generator.FlattenStackGenerator;
 
 // An interface that allows receiving elements from a module
 // When a function returns null, that element doesn't exist
@@ -67,12 +67,7 @@ public class RetrieveElementsImage extends RetrieveElements {
 
             SupplierGenerator<Stack, Stack> generator = new SupplierGenerator<>(generatorMIP);
             popUp.addExportItem(
-                    generator,
-                    opCreateStack,
-                    "selectedStackMIP",
-                    "MIP",
-                    generator.createManifestDescription(),
-                    1);
+                    generator, opCreateStack, "selectedStackMIP", "MIP", Optional.empty(), 1);
         }
     }
 

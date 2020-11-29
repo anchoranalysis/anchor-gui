@@ -27,7 +27,7 @@
 package org.anchoranalysis.gui.feature.evaluator.energytree;
 
 import lombok.AllArgsConstructor;
-import org.anchoranalysis.core.error.reporter.ErrorReporter;
+import org.anchoranalysis.core.log.error.ErrorReporter;
 import org.netbeans.swing.outline.RenderDataProvider;
 
 @AllArgsConstructor

@@ -28,7 +28,7 @@ package org.anchoranalysis.gui.frame.canvas;
 
 import javax.swing.JScrollBar;
 import javax.swing.event.ChangeListener;
-import org.anchoranalysis.spatial.extent.Extent;
+import org.anchoranalysis.spatial.Extent;
 import org.anchoranalysis.spatial.point.Point2i;
 
 // Two scroll bars mapping a 2d extent

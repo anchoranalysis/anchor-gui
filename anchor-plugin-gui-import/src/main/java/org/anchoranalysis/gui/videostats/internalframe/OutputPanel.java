@@ -35,9 +35,9 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 import org.anchoranalysis.core.color.ColorIndex;
 import org.anchoranalysis.image.io.bean.object.draw.Outline;
+import org.anchoranalysis.io.generator.sequence.OutputSequenceFactory;
 import org.anchoranalysis.io.generator.sequence.OutputSequenceIncrementing;
 import org.anchoranalysis.io.generator.sequence.pattern.OutputPatternIntegerSuffix;
-import org.anchoranalysis.io.generator.sequence.OutputSequenceFactory;
 import org.anchoranalysis.io.manifest.ManifestDescription;
 import org.anchoranalysis.io.output.error.OutputWriteFailedException;
 import org.anchoranalysis.io.output.outputter.InputOutputContext;
@@ -45,8 +45,8 @@ import org.anchoranalysis.io.output.outputter.OutputterChecked;
 import org.anchoranalysis.mpp.io.marks.ColoredMarksWithDisplayStack;
 import org.anchoranalysis.mpp.io.marks.MarksWithDisplayStack;
 import org.anchoranalysis.mpp.io.marks.generator.MarksGenerator;
-import org.anchoranalysis.mpp.mark.IDGetterMarkID;
-import org.anchoranalysis.overlay.id.IDGetterOverlayID;
+import org.anchoranalysis.mpp.mark.IdentifierFromMark;
+import org.anchoranalysis.overlay.identifier.IdentifierFromOverlay;
 
 public class OutputPanel {
 
@@ -68,14 +68,22 @@ public class OutputPanel {
 
         @Override
         public void actionPerformed(ActionEvent arg0) {
-            MarksGenerator generator = new MarksGenerator(new Outline(2), new IDGetterOverlayID());
+            MarksGenerator generator =
+                    new MarksGenerator(new Outline(2), new IdentifierFromOverlay());
 
-            OutputPatternIntegerSuffix directory = new OutputPatternIntegerSuffix("markEvaluator", 6, false, Optional.of(new ManifestDescription("raster", "markEvaluator")));
+            OutputPatternIntegerSuffix directory =
+                    new OutputPatternIntegerSuffix(
+                            "markEvaluator",
+                            6,
+                            false,
+                            Optional.of(new ManifestDescription("raster", "markEvaluator")));
 
             OutputterChecked outputter = context.getOutputter().getChecked();
-            
+
             try {
-                outputSequence = new OutputSequenceFactory<>(generator, outputter).incrementingByOne(directory);
+                outputSequence =
+                        new OutputSequenceFactory<>(generator, outputter)
+                                .incrementingByOne(directory);
             } catch (OutputWriteFailedException e) {
                 context.getErrorReporter().recordError(OutputPanel.class, e);
                 outputSequence = null;
@@ -119,7 +127,7 @@ public class OutputPanel {
         if (outputSequence != null) {
 
             ColoredMarksWithDisplayStack colored =
-                    new ColoredMarksWithDisplayStack(cws, colorIndex, new IDGetterMarkID());
+                    new ColoredMarksWithDisplayStack(cws, colorIndex, new IdentifierFromMark());
             try {
                 outputSequence.add(colored);
             } catch (OutputWriteFailedException e) {
@@ -128,8 +136,8 @@ public class OutputPanel {
             }
         }
     }
-        
+
     private static void createAndButton(Action action, JPanel panel) {
-        panel.add(new JButton(action)); 
+        panel.add(new JButton(action));
     }
 }

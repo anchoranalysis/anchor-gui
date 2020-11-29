@@ -31,7 +31,7 @@ import java.util.List;
 import java.util.Set;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
-import org.anchoranalysis.core.progress.ProgressReporterNull;
+import org.anchoranalysis.core.progress.ProgressIgnore;
 import org.anchoranalysis.gui.frame.details.ControllerPopupMenu;
 import org.anchoranalysis.gui.image.frame.SliderState;
 import org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.BackgroundSetter;
@@ -59,7 +59,7 @@ class AddBackgroundPopup {
                 sourceObject -> {
                     return list.get(sourceObject)
                             .getBackgroundSet()
-                            .get(ProgressReporterNull.get())
+                            .get(ProgressIgnore.get())
                             .singleStack(name);
                 };
     }
@@ -71,7 +71,7 @@ class AddBackgroundPopup {
                 Set<String> names =
                         list.get(sliderState.getIndex())
                                 .getBackgroundSet()
-                                .get(ProgressReporterNull.get())
+                                .get(ProgressIgnore.get())
                                 .names();
                 return new ArrayList<>(names);
 

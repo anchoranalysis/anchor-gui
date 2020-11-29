@@ -32,7 +32,6 @@ import lombok.Getter;
 import lombok.Setter;
 import org.anchoranalysis.bean.NamedBean;
 import org.anchoranalysis.bean.annotation.BeanField;
-import org.anchoranalysis.bean.annotation.DefaultInstance;
 import org.anchoranalysis.bean.annotation.OptionalBean;
 import org.anchoranalysis.bean.shared.params.keyvalue.KeyValueParamsProvider;
 import org.anchoranalysis.feature.bean.list.FeatureListProvider;
@@ -40,20 +39,18 @@ import org.anchoranalysis.feature.input.FeatureInput;
 import org.anchoranalysis.gui.bean.filecreator.FileCreator;
 import org.anchoranalysis.gui.interactivebrowser.input.InteractiveBrowserInput;
 import org.anchoranalysis.gui.interactivebrowser.openfile.importer.ImporterSettings;
-import org.anchoranalysis.image.io.bean.stack.StackReader;
+import org.anchoranalysis.image.io.bean.stack.reader.InputManagerWithStackReader;
 import org.anchoranalysis.io.input.InputReadFailedException;
-import org.anchoranalysis.io.input.bean.InputManager;
 import org.anchoranalysis.io.input.bean.InputManagerParams;
 import org.anchoranalysis.io.input.bean.path.provider.FilePathProvider;
 import org.anchoranalysis.mpp.feature.bean.energy.scheme.EnergySchemeCreator;
 import org.anchoranalysis.mpp.feature.bean.mark.MarkEvaluator;
 
-public class InteractiveBrowserInputManager extends InputManager<InteractiveBrowserInput> {
+public class InteractiveBrowserInputManager
+        extends InputManagerWithStackReader<InteractiveBrowserInput> {
 
     // START BEAN PROPERTIES
     @BeanField @Getter @Setter private List<FileCreator> listFileCreators = new ArrayList<>();
-
-    @BeanField @DefaultInstance @Getter @Setter private StackReader stackReader;
 
     @BeanField @OptionalBean @Getter @Setter private EnergySchemeCreator energySchemeCreator;
 
@@ -78,17 +75,17 @@ public class InteractiveBrowserInputManager extends InputManager<InteractiveBrow
     public List<InteractiveBrowserInput> inputs(InputManagerParams params)
             throws InputReadFailedException {
 
-        InteractiveBrowserInput ibi = new InteractiveBrowserInput();
-        ibi.setListFileCreators(listFileCreators);
-        ibi.setStackReader(stackReader);
-        ibi.setEnergySchemeCreator(energySchemeCreator);
-        ibi.setNamedItemSharedFeatureList(namedItemSharedFeatureList);
-        ibi.setNamedItemMarkEvaluatorList(namedItemMarkEvaluatorList);
-        ibi.setNamedItemKeyValueParamsProviderList(namedItemKeyValueParamsProviderList);
-        ibi.setNamedItemFilePathProviderList(namedItemFilePathProviderList);
-        ibi.setImporterSettings(importerSettings);
+        InteractiveBrowserInput input = new InteractiveBrowserInput();
+        input.setListFileCreators(listFileCreators);
+        input.setStackReader(getStackReader());
+        input.setEnergySchemeCreator(energySchemeCreator);
+        input.setNamedItemSharedFeatureList(namedItemSharedFeatureList);
+        input.setNamedItemMarkEvaluatorList(namedItemMarkEvaluatorList);
+        input.setNamedItemKeyValueParamsProviderList(namedItemKeyValueParamsProviderList);
+        input.setNamedItemFilePathProviderList(namedItemFilePathProviderList);
+        input.setImporterSettings(importerSettings);
 
-        return singletonList(ibi);
+        return singletonList(input);
     }
 
     private static <T> List<T> singletonList(T elem) {

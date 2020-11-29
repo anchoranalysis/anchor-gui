@@ -27,7 +27,7 @@
 package org.anchoranalysis.gui.videostats.modulecreator;
 
 import java.util.Optional;
-import org.anchoranalysis.core.idgetter.IDGetterIter;
+import org.anchoranalysis.core.identifier.getter.IdentifyByIteration;
 import org.anchoranalysis.gui.videostats.dropdown.VideoStatsModuleGlobalParams;
 import org.anchoranalysis.gui.videostats.dropdown.common.EnergyBackground;
 import org.anchoranalysis.gui.videostats.internalframe.InternalFrameStaticOverlaySelectable;
@@ -52,7 +52,7 @@ public class ObjectCollectionModuleCreator
     @Override
     protected OverlayCollection createOverlays(ObjectCollection initialContents) {
         return OverlayCollectionObjectFactory.createWithoutColor(
-                initialContents, new IDGetterIter<>());
+                initialContents, new IdentifyByIteration<>());
     }
 
     @Override

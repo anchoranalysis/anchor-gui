@@ -26,9 +26,9 @@
 
 package org.anchoranalysis.gui.frame.threaded.indexable;
 
-import org.anchoranalysis.core.error.InitException;
+import org.anchoranalysis.core.exception.InitException;
 import org.anchoranalysis.core.index.IndexBridge;
-import org.anchoranalysis.core.index.container.BoundedIndexContainer;
+import org.anchoranalysis.core.index.bounded.BoundedIndexContainer;
 import org.anchoranalysis.gui.frame.details.ControllerPopupMenu;
 import org.anchoranalysis.gui.frame.details.GenerateExtraDetail;
 import org.anchoranalysis.gui.frame.multiraster.ThreadedIndexedDisplayStackSetter;
@@ -55,24 +55,24 @@ public class InternalFrameThreadedIndexableRaster {
         return delegate.controllerPopupMenu();
     }
 
-    public boolean addAdditionalDetails(GenerateExtraDetail arg0) {
-        return delegate.addAdditionalDetails(arg0);
+    public boolean addAdditionalDetails(GenerateExtraDetail generate) {
+        return delegate.addAdditionalDetails(generate);
     }
 
     public SliderState init(
-            BoundedIndexContainer<DisplayStack> cntr,
+            BoundedIndexContainer<DisplayStack> container,
             DefaultModuleState initialState,
             boolean includeFrameAdjusting,
             IRetrieveElements elementRetriever,
             VideoStatsModuleGlobalParams mpg)
             throws InitException {
 
-        threadedProvider = setupProvider(cntr, mpg);
+        threadedProvider = setupProvider(container, mpg);
 
         SliderState sliderState =
                 delegate.init(
                         threadedProvider,
-                        cntr,
+                        container,
                         includeFrameAdjusting,
                         initialState,
                         elementRetriever,
@@ -98,12 +98,11 @@ public class InternalFrameThreadedIndexableRaster {
     }
 
     private static ThreadedIndexedDisplayStackSetter setupProvider(
-            BoundedIndexContainer<DisplayStack> cntr, VideoStatsModuleGlobalParams mpg)
-            throws InitException {
+            BoundedIndexContainer<DisplayStack> container, VideoStatsModuleGlobalParams mpg) {
         ThreadedIndexedDisplayStackSetter threadedProvider =
                 new ThreadedIndexedDisplayStackSetter();
         threadedProvider.init(
-                new IndexBridge<>(cntr), mpg.getThreadPool(), mpg.getLogger().errorReporter());
+                new IndexBridge<>(container), mpg.getThreadPool(), mpg.getLogger().errorReporter());
         return threadedProvider;
     }
 }

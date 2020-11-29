@@ -33,20 +33,20 @@ import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
+import org.anchoranalysis.annotation.io.AnnotationWithStrategy;
 import org.anchoranalysis.annotation.io.bean.AnnotationInputManager;
 import org.anchoranalysis.annotation.io.bean.AnnotatorStrategy;
-import org.anchoranalysis.annotation.io.input.AnnotationWithStrategy;
-import org.anchoranalysis.core.error.CreateException;
-import org.anchoranalysis.core.error.InitException;
-import org.anchoranalysis.core.error.OperationFailedException;
-import org.anchoranalysis.core.progress.ProgressReporter;
-import org.anchoranalysis.core.progress.ProgressReporterNull;
+import org.anchoranalysis.core.exception.CreateException;
+import org.anchoranalysis.core.exception.InitException;
+import org.anchoranalysis.core.exception.OperationFailedException;
+import org.anchoranalysis.core.progress.Progress;
+import org.anchoranalysis.core.progress.ProgressIgnore;
 import org.anchoranalysis.gui.bean.filecreator.MarkCreatorParams;
 import org.anchoranalysis.gui.interactivebrowser.IOpenFile;
 import org.anchoranalysis.gui.interactivebrowser.filelist.InteractiveFileListInternalFrame;
 import org.anchoranalysis.gui.videostats.IModuleCreatorDefaultState;
 import org.anchoranalysis.gui.videostats.dropdown.AddVideoStatsModule;
-import org.anchoranalysis.image.io.input.ProvidesStackInput;
+import org.anchoranalysis.image.io.stack.input.ProvidesStackInput;
 import org.anchoranalysis.io.input.InputReadFailedException;
 import org.anchoranalysis.io.input.bean.InputManagerParams;
 
@@ -66,15 +66,14 @@ public class AnnotationListInternalFrame {
             AddVideoStatsModule adder,
             IOpenFile fileOpenManager,
             MarkCreatorParams params,
-            ProgressReporter progressReporter,
+            Progress progress,
             int widthDescriptionColumn)
             throws InitException {
 
         try {
             annotationTableModel =
                     new AnnotationTableModel(
-                            pr -> createProject(inputManager, params, progressReporter),
-                            progressReporter);
+                            pr -> createProject(inputManager, params, progress), progress);
             delegate.init(
                     adder,
                     annotationTableModel,
@@ -136,21 +135,21 @@ public class AnnotationListInternalFrame {
     private <T extends AnnotatorStrategy> AnnotationProject createProject(
             AnnotationInputManager<ProvidesStackInput, T> inputManager,
             MarkCreatorParams params,
-            ProgressReporter progressReporter)
+            Progress progress)
             throws OperationFailedException {
         try {
             Collection<AnnotationWithStrategy<T>> inputs =
                     inputManager.inputs(
                             new InputManagerParams(
                                     params.getModuleParams().createInputContext(),
-                                    progressReporter,
+                                    progress,
                                     params.getModuleParams().getLogger()));
 
             return new AnnotationProject(
                     inputs,
                     params.getMarkEvaluatorManager(),
                     params.getModuleParams(),
-                    ProgressReporterNull.get());
+                    ProgressIgnore.get());
 
         } catch (InputReadFailedException | CreateException e) {
             throw new OperationFailedException(e);

@@ -28,8 +28,8 @@ package org.anchoranalysis.gui.frame.canvas;
 
 import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
-import org.anchoranalysis.spatial.point.Point2i;
 import lombok.AllArgsConstructor;
+import org.anchoranalysis.spatial.point.Point2i;
 
 @AllArgsConstructor
 class MouseWheelListenerZoom implements MouseWheelListener {

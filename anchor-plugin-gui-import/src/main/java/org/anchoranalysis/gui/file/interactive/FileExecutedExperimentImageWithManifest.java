@@ -29,33 +29,32 @@ package org.anchoranalysis.gui.file.interactive;
 import java.io.File;
 import java.nio.file.Path;
 import java.util.Optional;
-import org.anchoranalysis.core.error.InitException;
-import org.anchoranalysis.core.error.OperationFailedException;
+import lombok.RequiredArgsConstructor;
+import org.anchoranalysis.core.exception.InitException;
+import org.anchoranalysis.core.exception.OperationFailedException;
 import org.anchoranalysis.gui.bean.filecreator.MarkCreatorParams;
 import org.anchoranalysis.gui.file.opened.OpenedFile;
 import org.anchoranalysis.gui.file.opened.OpenedFileGUIWithFile;
 import org.anchoranalysis.gui.videostats.dropdown.AddVideoStatsModule;
 import org.anchoranalysis.gui.videostats.dropdown.manifest.ManifestDropDown;
-import org.anchoranalysis.image.io.bean.stack.StackReader;
+import org.anchoranalysis.image.io.bean.stack.reader.StackReader;
 import org.anchoranalysis.io.output.outputter.InputOutputContext;
 import org.anchoranalysis.plugin.io.manifest.CoupledManifests;
-import lombok.RequiredArgsConstructor;
 
 /**
  * A file representing the results applied to an image within an executed experiment
- * 
- * @author Owen Feehan
  *
+ * @author Owen Feehan
  */
 @RequiredArgsConstructor
 public class FileExecutedExperimentImageWithManifest extends InteractiveFile {
-    
+
     // START REQUIRED ARGUMENTS
     private final CoupledManifests coupledManifests;
     private final StackReader stackReader;
     private final MarkCreatorParams markCreatorParams;
     // END REQUIRED ARGUMENTS
-    
+
     private ManifestDropDown manifestDropDown;
 
     @Override

@@ -29,7 +29,7 @@ package org.anchoranalysis.gui.marks.table;
 import javax.swing.table.AbstractTableModel;
 import org.anchoranalysis.core.color.ColorIndex;
 import org.anchoranalysis.core.color.RGBColor;
-import org.anchoranalysis.core.error.friendly.AnchorImpossibleSituationException;
+import org.anchoranalysis.core.exception.friendly.AnchorImpossibleSituationException;
 import org.anchoranalysis.mpp.feature.energy.IndexableMarksWithEnergy;
 import org.anchoranalysis.mpp.feature.energy.saved.EnergySavedInd;
 import org.anchoranalysis.mpp.mark.Mark;
@@ -124,10 +124,10 @@ public class IndividualTableModel extends AbstractTableModel implements IUpdateT
         switch (column) {
             case 0:
                 // ICON
-                return colorIndex.get(marks.get(row).getId());
+                return colorIndex.get(marks.get(row).getIdentifier());
             case 1:
                 // ID
-                return marks.get(row).getId();
+                return marks.get(row).getIdentifier();
             case 2:
                 // Energy
                 return String.format("%16.3f", energySavedInd.get(row).getTotal());

@@ -29,9 +29,9 @@ package org.anchoranalysis.gui.bean.filecreator;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import org.anchoranalysis.core.error.InitException;
-import org.anchoranalysis.core.error.OperationFailedException;
-import org.anchoranalysis.core.progress.ProgressReporter;
+import org.anchoranalysis.core.exception.InitException;
+import org.anchoranalysis.core.exception.OperationFailedException;
+import org.anchoranalysis.core.progress.Progress;
 import org.anchoranalysis.gui.file.interactive.InteractiveFile;
 import org.anchoranalysis.gui.interactivebrowser.IOpenFile;
 import org.anchoranalysis.gui.interactivebrowser.filelist.SimpleInteractiveFileListInternalFrame;
@@ -49,7 +49,7 @@ public abstract class FileCreatorGeneralList extends FileCreator {
             VideoStatsModuleGlobalParams mpg,
             AddVideoStatsModule adder,
             IOpenFile fileOpenManager,
-            ProgressReporter progressReporter)
+            Progress progress)
             throws VideoStatsModuleCreateException {
 
         SimpleInteractiveFileListInternalFrame manifestListSummary =
@@ -61,7 +61,7 @@ public abstract class FileCreatorGeneralList extends FileCreator {
                     fileOpenManager,
                     mpg,
                     params.getMarkCreatorParams().getMarkDisplaySettings(),
-                    progressReporter);
+                    progress);
         } catch (InitException e) {
             throw new VideoStatsModuleCreateException(e);
         }
@@ -69,15 +69,13 @@ public abstract class FileCreatorGeneralList extends FileCreator {
     }
 
     protected abstract void addFilesToList(
-            List<InteractiveFile> listFiles,
-            FileCreatorParams params,
-            ProgressReporter progressReporter)
+            List<InteractiveFile> listFiles, FileCreatorParams params, Progress progress)
             throws OperationFailedException;
 
-    private List<InteractiveFile> files(ProgressReporter progressReporter, FileCreatorParams params)
+    private List<InteractiveFile> files(Progress progress, FileCreatorParams params)
             throws OperationFailedException {
         List<InteractiveFile> out = new ArrayList<>();
-        addFilesToList(out, params, progressReporter);
+        addFilesToList(out, params, progress);
 
         // Let's sort out list before we display them
         Collections.sort(out);

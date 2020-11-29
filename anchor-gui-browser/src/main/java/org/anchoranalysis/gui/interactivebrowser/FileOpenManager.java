@@ -26,20 +26,20 @@
 
 package org.anchoranalysis.gui.interactivebrowser;
 
-import org.anchoranalysis.core.error.OperationFailedException;
+import lombok.RequiredArgsConstructor;
+import org.anchoranalysis.core.exception.OperationFailedException;
 import org.anchoranalysis.gui.file.interactive.InteractiveFile;
 import org.anchoranalysis.gui.file.opened.OpenedFile;
 import org.anchoranalysis.gui.videostats.dropdown.AddVideoStatsModule;
 import org.anchoranalysis.gui.videostats.frame.IGetToolbar;
 import org.anchoranalysis.gui.videostats.module.VideoStatsModule;
 import org.anchoranalysis.io.output.outputter.InputOutputContext;
-import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 public class FileOpenManager implements IOpenFile {
 
     // START REQUIRED ARGUMENTS
-    
+
     // The Parameters we need to perform the opening
     private final AddVideoStatsModule globalSubgroupAdder;
     private final IGetToolbar videoStatsFrame;
@@ -47,7 +47,8 @@ public class FileOpenManager implements IOpenFile {
     // END REQUIRED ARGUMENTS
 
     // A map to keep track from currently opened-modules to the appropriate file counter
-    private VideoStatsModuleMapToOpenedFileCounter mapModules = new VideoStatsModuleMapToOpenedFileCounter();
+    private VideoStatsModuleMapToOpenedFileCounter mapModules =
+            new VideoStatsModuleMapToOpenedFileCounter();
 
     // A hash-map we use to keep track of all currently opened-files to the file counter
     private VideoStatsFileMapToOpenedFileCounter mapFile =

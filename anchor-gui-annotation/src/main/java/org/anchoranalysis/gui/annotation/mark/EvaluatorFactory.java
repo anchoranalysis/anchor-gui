@@ -29,7 +29,7 @@ package org.anchoranalysis.gui.annotation.mark;
 import java.util.Optional;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
-import org.anchoranalysis.core.error.OperationFailedException;
+import org.anchoranalysis.core.exception.OperationFailedException;
 import org.anchoranalysis.gui.interactivebrowser.MarkEvaluatorResolved;
 import org.anchoranalysis.gui.videostats.internalframe.annotator.InternalFrameAnnotator;
 import org.anchoranalysis.gui.videostats.internalframe.annotator.tool.ToolErrorReporter;

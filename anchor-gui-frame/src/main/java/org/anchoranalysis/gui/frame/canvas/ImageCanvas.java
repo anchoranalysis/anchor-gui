@@ -45,9 +45,9 @@ import javax.swing.JPanel;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.EventListenerList;
-import org.anchoranalysis.core.error.InitException;
-import org.anchoranalysis.core.error.OperationFailedException;
-import org.anchoranalysis.core.error.reporter.ErrorReporter;
+import org.anchoranalysis.core.exception.InitException;
+import org.anchoranalysis.core.exception.OperationFailedException;
+import org.anchoranalysis.core.log.error.ErrorReporter;
 import org.anchoranalysis.gui.displayupdate.ProvidesDisplayUpdate;
 import org.anchoranalysis.gui.frame.canvas.zoom.DefaultZoomSuggestor;
 import org.anchoranalysis.gui.frame.canvas.zoom.ZoomScale;
@@ -55,8 +55,8 @@ import org.anchoranalysis.gui.frame.display.DisplayUpdate;
 import org.anchoranalysis.image.core.dimensions.Dimensions;
 import org.anchoranalysis.image.core.dimensions.Resolution;
 import org.anchoranalysis.image.voxel.datatype.VoxelDataType;
-import org.anchoranalysis.spatial.extent.Extent;
-import org.anchoranalysis.spatial.extent.box.BoundingBox;
+import org.anchoranalysis.spatial.Extent;
+import org.anchoranalysis.spatial.box.BoundingBox;
 import org.anchoranalysis.spatial.point.Point2i;
 import org.anchoranalysis.spatial.point.Point3i;
 import org.anchoranalysis.spatial.point.PointConverter;
@@ -64,7 +64,7 @@ import org.anchoranalysis.spatial.point.PointConverter;
 public class ImageCanvas {
 
     private static final Dimension MINIMUM_SIZE = new Dimension(200, 200);
-    
+
     private ImageCanvasSwing canvas;
 
     private ProvidesDisplayUpdate imageProvider;
@@ -119,7 +119,7 @@ public class ImageCanvas {
             }
         }
     }
-    
+
     public void init(ProvidesDisplayUpdate imageProvider, final ErrorReporter errorReporter)
             throws InitException {
 
@@ -131,8 +131,10 @@ public class ImageCanvas {
 
         this.canvas = new ImageCanvasSwing();
 
-        this.canvas.addMouseListener(new MouseListenerRelative(mouseEventsBroadCaster(MouseListener.class)));
-        this.canvas.addMouseMotionListener(new MouseMotionListenerRelative(mouseEventsBroadCaster(MouseMotionListener.class)));
+        this.canvas.addMouseListener(
+                new MouseListenerRelative(mouseEventsBroadCaster(MouseListener.class)));
+        this.canvas.addMouseMotionListener(
+                new MouseMotionListenerRelative(mouseEventsBroadCaster(MouseMotionListener.class)));
 
         this.canvas.addMouseWheelListener(new MouseWheelListenerZoom(this));
 
@@ -427,9 +429,7 @@ public class ImageCanvas {
                                                         "The bounding-box does not intersect with the viewport"));
 
                 BufferedImage bi =
-                        displayStackViewport
-                                .getUnzoomed()
-                                .createPartOfCurrentView(boxIntersect);
+                        displayStackViewport.getUnzoomed().createPartOfCurrentView(boxIntersect);
 
                 // Impose the bi on top of the existing fi
                 int xCanvas =
@@ -586,12 +586,10 @@ public class ImageCanvas {
         int diffY = first.y() - second.y();
         return Math.min(diffX, diffY);
     }
-    
-    private <T extends EventListener> BroadcastMouseEvents<T> mouseEventsBroadCaster(Class<T> listenerType) {
+
+    private <T extends EventListener> BroadcastMouseEvents<T> mouseEventsBroadCaster(
+            Class<T> listenerType) {
         return new BroadcastMouseEvents<>(
-                new MouseEventCreator(canvas, displayStackViewport),
-                eventList,
-                listenerType
-        );
+                new MouseEventCreator(canvas, displayStackViewport), eventList, listenerType);
     }
 }

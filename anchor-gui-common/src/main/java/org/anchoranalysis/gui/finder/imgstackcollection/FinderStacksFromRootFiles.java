@@ -26,13 +26,13 @@
 
 package org.anchoranalysis.gui.finder.imgstackcollection;
 
-import org.anchoranalysis.core.error.OperationFailedException;
-import org.anchoranalysis.core.name.provider.NamedProvider;
-import org.anchoranalysis.core.progress.ProgressReporterNull;
+import org.anchoranalysis.core.exception.OperationFailedException;
+import org.anchoranalysis.core.identifier.provider.NamedProvider;
+import org.anchoranalysis.core.progress.ProgressIgnore;
 import org.anchoranalysis.gui.finder.FinderRasterFilesByManifestDescriptionFunction;
-import org.anchoranalysis.image.core.stack.NamedStacksSupplier;
 import org.anchoranalysis.image.core.stack.Stack;
-import org.anchoranalysis.image.io.bean.stack.StackReader;
+import org.anchoranalysis.image.core.stack.named.NamedStacksSupplier;
+import org.anchoranalysis.image.io.bean.stack.reader.StackReader;
 import org.anchoranalysis.io.manifest.Manifest;
 import org.anchoranalysis.io.manifest.finder.FindFailedException;
 
@@ -50,7 +50,7 @@ public class FinderStacksFromRootFiles implements FinderStacks {
 
     @Override
     public NamedProvider<Stack> getStacks() throws OperationFailedException {
-        return operationStacks.get(ProgressReporterNull.get());
+        return operationStacks.get(ProgressIgnore.get());
     }
 
     @Override

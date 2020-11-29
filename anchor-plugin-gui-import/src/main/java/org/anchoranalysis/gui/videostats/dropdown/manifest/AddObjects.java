@@ -29,13 +29,13 @@ package org.anchoranalysis.gui.videostats.dropdown.manifest;
 import java.io.IOException;
 import lombok.AllArgsConstructor;
 import org.anchoranalysis.core.cache.CachedSupplier;
-import org.anchoranalysis.core.error.OperationFailedException;
-import org.anchoranalysis.core.index.container.BoundedIndexContainer;
-import org.anchoranalysis.core.index.container.SingleContainer;
-import org.anchoranalysis.core.name.provider.NamedProvider;
-import org.anchoranalysis.core.name.provider.NamedProviderGetException;
+import org.anchoranalysis.core.exception.OperationFailedException;
+import org.anchoranalysis.core.identifier.provider.NamedProvider;
+import org.anchoranalysis.core.identifier.provider.NamedProviderGetException;
+import org.anchoranalysis.core.index.bounded.BoundedIndexContainer;
+import org.anchoranalysis.core.index.bounded.SingleContainer;
 import org.anchoranalysis.gui.finder.FinderEnergyStack;
-import org.anchoranalysis.gui.io.loader.manifest.finder.FinderMarksFolder;
+import org.anchoranalysis.gui.io.loader.manifest.finder.FinderMarksDirectory;
 import org.anchoranalysis.gui.io.loader.manifest.finder.FinderObjectsDirectory;
 import org.anchoranalysis.gui.marks.MarkDisplaySettings;
 import org.anchoranalysis.gui.videostats.dropdown.BoundVideoStatsModuleDropDown;
@@ -69,7 +69,7 @@ class AddObjects {
 
         boolean defaultAdded = false;
 
-        if (fromObjectCollectionFolder(subMenu, operationBwsaWithEnergy)) {
+        if (fromObjectsDirectory(subMenu, operationBwsaWithEnergy)) {
             defaultAdded = true;
         }
 
@@ -82,7 +82,7 @@ class AddObjects {
         return defaultAdded;
     }
 
-    private boolean fromObjectCollectionFolder(
+    private boolean fromObjectsDirectory(
             VideoStatsOperationMenu subMenu,
             OperationCreateBackgroundSetWithAdder operationBwsaWithEnergy) {
         try {
@@ -121,7 +121,7 @@ class AddObjects {
 
         return false;
     }
-    
+
     private boolean fromSerializedMarks(
             OperationCreateBackgroundSetWithAdder operationBwsaWithEnergy) {
         try {
@@ -131,10 +131,12 @@ class AddObjects {
 
             if (finderFinalMarks.exists()) {
 
-                CachedSupplier<BoundedIndexContainer<IndexableMarksWithEnergy>, OperationFailedException>
-                        op = CachedSupplier.cache(
-                           () -> createSerializedMarksContainer(finderFinalMarks)
-                        );
+                CachedSupplier<
+                                BoundedIndexContainer<IndexableMarksWithEnergy>,
+                                OperationFailedException>
+                        op =
+                                CachedSupplier.cache(
+                                        () -> createSerializedMarksContainer(finderFinalMarks));
 
                 if (finderEnergyStack.exists()) {
                     // Energy Table
@@ -155,21 +157,23 @@ class AddObjects {
         }
         return false;
     }
-    
-    private BoundedIndexContainer<IndexableMarksWithEnergy> createSerializedMarksContainer(FinderSerializedObject<MarksWithEnergyBreakdown> finderFinalMarks) throws OperationFailedException {
+
+    private BoundedIndexContainer<IndexableMarksWithEnergy> createSerializedMarksContainer(
+            FinderSerializedObject<MarksWithEnergyBreakdown> finderFinalMarks)
+            throws OperationFailedException {
         try {
-            IndexableMarksWithEnergy instantState = new IndexableMarksWithEnergy(
-                0, finderFinalMarks.get());
+            IndexableMarksWithEnergy instantState =
+                    new IndexableMarksWithEnergy(0, finderFinalMarks.get());
             return new SingleContainer<>(instantState, 0, false);
         } catch (IOException e) {
             throw new OperationFailedException(e);
         }
     }
-    
+
     private void fromMarks(OperationCreateBackgroundSetWithAdder operationBwsaWithEnergy) {
 
         try {
-            FinderMarksFolder finder = new FinderMarksFolder("marksCollection", "marks");
+            FinderMarksDirectory finder = new FinderMarksDirectory("marksCollection", "marks");
             finder.doFind(manifests.getJobManifest().get());
 
             NamedProvider<MarkCollection> provider = finder.createNamedProvider(false);

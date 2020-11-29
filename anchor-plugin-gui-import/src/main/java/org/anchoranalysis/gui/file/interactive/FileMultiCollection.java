@@ -29,11 +29,12 @@ package org.anchoranalysis.gui.file.interactive;
 import java.io.File;
 import java.nio.file.Path;
 import java.util.Optional;
-import org.anchoranalysis.core.error.CreateException;
-import org.anchoranalysis.core.error.InitException;
-import org.anchoranalysis.core.error.OperationFailedException;
-import org.anchoranalysis.core.name.store.LazyEvaluationStore;
-import org.anchoranalysis.core.params.KeyValueParams;
+import lombok.AllArgsConstructor;
+import org.anchoranalysis.core.exception.CreateException;
+import org.anchoranalysis.core.exception.InitException;
+import org.anchoranalysis.core.exception.OperationFailedException;
+import org.anchoranalysis.core.identifier.provider.store.LazyEvaluationStore;
+import org.anchoranalysis.core.value.KeyValueParams;
 import org.anchoranalysis.gui.bean.filecreator.MarkCreatorParams;
 import org.anchoranalysis.gui.file.opened.OpenedFile;
 import org.anchoranalysis.gui.file.opened.OpenedFileGUIWithFile;
@@ -46,7 +47,6 @@ import org.anchoranalysis.io.output.outputter.InputOutputContext;
 import org.anchoranalysis.mpp.io.input.MultiInput;
 import org.anchoranalysis.mpp.mark.MarkCollection;
 import org.anchoranalysis.mpp.segment.define.OutputterDirectories;
-import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
 public class FileMultiCollection extends InteractiveFile {
@@ -73,10 +73,12 @@ public class FileMultiCollection extends InteractiveFile {
     public OpenedFile open(AddVideoStatsModule globalSubgroupAdder, InputOutputContext context)
             throws OperationFailedException {
 
-        LazyEvaluationStore<TimeSequence> stacks = new LazyEvaluationStore<>(OutputterDirectories.STACKS);
+        LazyEvaluationStore<TimeSequence> stacks =
+                new LazyEvaluationStore<>(OutputterDirectories.STACKS);
         input.stack().addToStore(stacks);
 
-        LazyEvaluationStore<MarkCollection> markss = new LazyEvaluationStore<>(OutputterDirectories.MARKS);
+        LazyEvaluationStore<MarkCollection> markss =
+                new LazyEvaluationStore<>(OutputterDirectories.MARKS);
         input.marks().addToStore(markss);
 
         LazyEvaluationStore<KeyValueParams> keyValueParams =
@@ -89,7 +91,7 @@ public class FileMultiCollection extends InteractiveFile {
 
         MultiCollectionDropDown dropDown =
                 new MultiCollectionDropDown(
-                        progressReporter -> createTimeSequenceProvider(stacks),
+                        progress -> createTimeSequenceProvider(stacks),
                         markss,
                         objects,
                         keyValueParams,

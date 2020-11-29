@@ -27,10 +27,10 @@
 package org.anchoranalysis.gui.videostats.dropdown;
 
 import lombok.RequiredArgsConstructor;
-import org.anchoranalysis.core.error.OperationFailedException;
+import org.anchoranalysis.core.exception.OperationFailedException;
 import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.progress.CheckedProgressingSupplier;
-import org.anchoranalysis.core.progress.ProgressReporter;
+import org.anchoranalysis.core.progress.Progress;
 import org.anchoranalysis.feature.energy.EnergyStack;
 import org.anchoranalysis.gui.interactivebrowser.MarkEvaluatorSetForImage;
 
@@ -46,7 +46,7 @@ public class OperationEnergyStackFromMarkEvaluatorSet
     private String markEvaluatorIdentifier;
 
     @Override
-    public EnergyStack get(ProgressReporter progressReporter) throws GetOperationFailedException {
+    public EnergyStack get(Progress progress) throws GetOperationFailedException {
 
         if (markEvaluatorIdentifier == null || markEvaluatorIdentifier.isEmpty()) {
             return null;

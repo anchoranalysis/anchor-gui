@@ -27,28 +27,28 @@
 package org.anchoranalysis.gui.frame.display;
 
 import java.util.List;
-import org.anchoranalysis.core.error.CreateException;
-import org.anchoranalysis.core.error.OperationFailedException;
-import org.anchoranalysis.core.idgetter.IDGetter;
-import org.anchoranalysis.core.idgetter.IDGetterIter;
+import org.anchoranalysis.core.exception.CreateException;
+import org.anchoranalysis.core.exception.OperationFailedException;
+import org.anchoranalysis.core.identifier.getter.IdentifierGetter;
+import org.anchoranalysis.core.identifier.getter.IdentifyByIteration;
 import org.anchoranalysis.core.index.SetOperationFailedException;
 import org.anchoranalysis.gui.frame.display.overlay.OverlayPrecalculatedCache;
 import org.anchoranalysis.image.core.dimensions.Dimensions;
-import org.anchoranalysis.image.core.stack.rgb.RGBStack;
+import org.anchoranalysis.image.core.stack.RGBStack;
 import org.anchoranalysis.overlay.Overlay;
 import org.anchoranalysis.overlay.collection.ColoredOverlayCollection;
 import org.anchoranalysis.overlay.collection.OverlayCollection;
 import org.anchoranalysis.overlay.writer.DrawOverlay;
 import org.anchoranalysis.overlay.writer.ObjectDrawAttributesFactory;
-import org.anchoranalysis.spatial.extent.Extent;
-import org.anchoranalysis.spatial.extent.box.BoundingBox;
+import org.anchoranalysis.spatial.Extent;
+import org.anchoranalysis.spatial.box.BoundingBox;
 import org.anchoranalysis.spatial.point.Point3i;
 
 public class BoundColoredOverlayCollection {
 
     private DrawOverlay drawOverlay;
 
-    private IDGetter<Overlay> idGetter;
+    private IdentifierGetter<Overlay> idGetter;
 
     private Dimensions dimEntireImage;
 
@@ -56,7 +56,7 @@ public class BoundColoredOverlayCollection {
     private OverlayPrecalculatedCache cache;
 
     public BoundColoredOverlayCollection(
-            DrawOverlay drawOverlay, IDGetter<Overlay> idGetter, Dimensions dim)
+            DrawOverlay drawOverlay, IdentifierGetter<Overlay> idGetter, Dimensions dim)
             throws CreateException {
         super();
         this.drawOverlay = drawOverlay;
@@ -100,7 +100,7 @@ public class BoundColoredOverlayCollection {
                 dimEntireImage,
                 stack,
                 ObjectDrawAttributesFactory.createFromOverlays(
-                        marksWithinView.getOverlays(), idGetter, new IDGetterIter<>()),
+                        marksWithinView.getOverlays(), idGetter, new IdentifyByIteration<>()),
                 container);
     }
 

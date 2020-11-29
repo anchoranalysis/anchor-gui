@@ -30,10 +30,10 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import javax.swing.event.EventListenerList;
+import org.anchoranalysis.annotation.io.AnnotationWithStrategy;
 import org.anchoranalysis.annotation.io.bean.AnnotatorStrategy;
-import org.anchoranalysis.annotation.io.input.AnnotationWithStrategy;
-import org.anchoranalysis.core.error.CreateException;
-import org.anchoranalysis.core.progress.ProgressReporter;
+import org.anchoranalysis.core.exception.CreateException;
+import org.anchoranalysis.core.progress.Progress;
 import org.anchoranalysis.gui.annotation.builder.AnnotationGuiBuilderFactory;
 import org.anchoranalysis.gui.interactivebrowser.MarkEvaluatorManager;
 import org.anchoranalysis.gui.videostats.dropdown.VideoStatsModuleGlobalParams;
@@ -67,7 +67,7 @@ public class AnnotationProject {
             Collection<AnnotationWithStrategy<T>> collInputs,
             MarkEvaluatorManager markEvaluatorManager,
             VideoStatsModuleGlobalParams mpg,
-            ProgressReporter progressReporter)
+            Progress progress)
             throws CreateException {
         List<AnnotationWithStrategy<T>> listTemp = new ArrayList<>();
 
@@ -75,9 +75,9 @@ public class AnnotationProject {
             listTemp.add(input);
         }
 
-        progressReporter.setMin(0);
-        progressReporter.setMax(listTemp.size() - 1);
-        progressReporter.open();
+        progress.setMin(0);
+        progress.setMax(listTemp.size() - 1);
+        progress.open();
 
         try {
             for (int i = 0; i < listTemp.size(); i++) {
@@ -91,11 +91,11 @@ public class AnnotationProject {
                                 markEvaluatorManager,
                                 mpg));
 
-                progressReporter.update(i);
+                progress.update(i);
             }
 
         } finally {
-            progressReporter.close();
+            progress.close();
         }
     }
 

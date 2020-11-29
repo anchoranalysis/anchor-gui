@@ -27,17 +27,17 @@
 package org.anchoranalysis.gui.interactivebrowser.browser;
 
 import java.util.List;
+import lombok.RequiredArgsConstructor;
 import org.anchoranalysis.bean.NamedBean;
 import org.anchoranalysis.bean.shared.color.scheme.HSB;
 import org.anchoranalysis.bean.shared.color.scheme.Shuffle;
 import org.anchoranalysis.core.color.ColorIndex;
-import org.anchoranalysis.core.error.CreateException;
-import org.anchoranalysis.core.error.InitException;
-import org.anchoranalysis.core.error.OperationFailedException;
+import org.anchoranalysis.core.exception.CreateException;
+import org.anchoranalysis.core.exception.InitException;
+import org.anchoranalysis.core.exception.OperationFailedException;
 import org.anchoranalysis.core.random.RandomNumberGenerator;
 import org.anchoranalysis.core.random.RandomNumberGeneratorMersenne;
 import org.anchoranalysis.gui.bean.filecreator.FileCreator;
-import org.anchoranalysis.gui.export.bean.task.ExportTaskList;
 import org.anchoranalysis.gui.feature.evaluator.treetable.FeatureListSrc;
 import org.anchoranalysis.gui.interactivebrowser.FileOpenManager;
 import org.anchoranalysis.gui.interactivebrowser.MarkEvaluatorManager;
@@ -51,11 +51,12 @@ import org.anchoranalysis.gui.retrieveelements.ExportPopupParams;
 import org.anchoranalysis.gui.videostats.dropdown.VideoStatsModuleGlobalParams;
 import org.anchoranalysis.gui.videostats.frame.VideoStatsFrame;
 import org.anchoranalysis.gui.videostats.module.DefaultModuleState;
-import org.anchoranalysis.image.io.bean.stack.StackReader;
+import org.anchoranalysis.image.io.bean.stack.reader.StackReader;
 import org.anchoranalysis.io.generator.sequence.SequenceMemory;
 import org.anchoranalysis.io.output.outputter.InputOutputContext;
 import org.anchoranalysis.mpp.feature.bean.mark.MarkEvaluator;
 
+@RequiredArgsConstructor
 public class InteractiveBrowser {
 
     // How long the splash screen displays for
@@ -64,7 +65,9 @@ public class InteractiveBrowser {
 
     private VideoStatsFrame videoStatsFrame;
 
-    private ExportTaskList exportTaskList;
+    // START REQUIRED ARGUMENTS
+    private final InputOutputContext context;
+    // END REQUIRED ARGUMENTS
 
     // Manages the available mark evaluators
     private MarkEvaluatorManager markEvaluatorManager;
@@ -72,14 +75,6 @@ public class InteractiveBrowser {
     private OpenFile openFileCreator;
 
     private OpenFileTypeFactory openFileTypeFactory;
-
-    private InputOutputContext context;
-
-    public InteractiveBrowser(InputOutputContext context, ExportTaskList exportTaskList) {
-        super();
-        this.exportTaskList = exportTaskList;
-        this.context = context;
-    }
 
     public void init(InteractiveBrowserInput interactiveBrowserInput) throws InitException {
 
@@ -224,11 +219,7 @@ public class InteractiveBrowser {
     }
 
     private ExportPopupParams createExportPopupParams() {
-        return new ExportPopupParams(
-            videoStatsFrame,
-            new SequenceMemory(),
-            context
-        );
+        return new ExportPopupParams(videoStatsFrame, new SequenceMemory(), context);
     }
 
     private VideoStatsModuleGlobalParams createModuleParams(
@@ -240,7 +231,6 @@ public class InteractiveBrowser {
                 context.common(),
                 videoStatsFrame.getThreadPool(),
                 randomNumberGenerator,
-                exportTaskList,
                 colorIndex,
                 videoStatsFrame.getGraphicsConfiguration());
     }

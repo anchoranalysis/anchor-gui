@@ -26,9 +26,9 @@
 
 package org.anchoranalysis.gui.frame.singleraster;
 
-import org.anchoranalysis.core.error.InitException;
-import org.anchoranalysis.core.index.container.IntegerSequenceContaner;
-import org.anchoranalysis.core.index.container.bridge.BoundedIndexContainerBridgeWithoutIndex;
+import org.anchoranalysis.core.exception.InitException;
+import org.anchoranalysis.core.index.bounded.IntegerSequenceContaner;
+import org.anchoranalysis.core.index.bounded.bridge.BoundedIndexContainerBridgeWithoutIndex;
 import org.anchoranalysis.gui.container.background.BackgroundStackContainerException;
 import org.anchoranalysis.gui.frame.threaded.indexable.InternalFrameThreadedIndexableRaster;
 import org.anchoranalysis.gui.image.frame.SliderState;

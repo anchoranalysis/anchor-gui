@@ -32,10 +32,10 @@ import javax.swing.JOptionPane;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.anchoranalysis.core.log.Logger;
-import org.anchoranalysis.core.progress.ProgressReporter;
-import org.anchoranalysis.core.progress.ProgressReporterMultiple;
-import org.anchoranalysis.core.progress.ProgressReporterOneOfMany;
-import org.anchoranalysis.gui.progressreporter.ProgressReporterInteractiveWorker;
+import org.anchoranalysis.core.progress.Progress;
+import org.anchoranalysis.core.progress.ProgressMultiple;
+import org.anchoranalysis.core.progress.ProgressOneOfMany;
+import org.anchoranalysis.gui.progressreporter.ProgressInteractiveWorker;
 import org.anchoranalysis.gui.videostats.module.VideoStatsModuleCreateException;
 import org.anchoranalysis.gui.videostats.modulecreator.VideoStatsModuleCreator;
 import org.anchoranalysis.gui.videostats.threading.InteractiveThreadPool;
@@ -73,16 +73,14 @@ public class VideoStatsModuleCreatorAndAdder {
             exceptionRecorded = null;
 
             try {
-                try (ProgressReporter progressReporter =
-                        new ProgressReporterInteractiveWorker(this)) {
+                try (Progress progress = new ProgressInteractiveWorker(this)) {
 
-                    try (ProgressReporterMultiple prm =
-                            new ProgressReporterMultiple(progressReporter, 2)) {
+                    try (ProgressMultiple progressMultiple = new ProgressMultiple(progress, 2)) {
                         AddVideoStatsModule adder =
-                                adderOperation.get(new ProgressReporterOneOfMany(prm));
-                        prm.incrWorker();
+                                adderOperation.get(new ProgressOneOfMany(progressMultiple));
+                        progressMultiple.incrementWorker();
 
-                        creator.doInBackground(new ProgressReporterOneOfMany(prm));
+                        creator.doInBackground(new ProgressOneOfMany(progressMultiple));
 
                         return adder;
                     }

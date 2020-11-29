@@ -32,8 +32,8 @@ import java.util.List;
 import lombok.Getter;
 import lombok.Setter;
 import org.anchoranalysis.bean.annotation.BeanField;
-import org.anchoranalysis.core.error.OperationFailedException;
-import org.anchoranalysis.core.progress.ProgressReporter;
+import org.anchoranalysis.core.exception.OperationFailedException;
+import org.anchoranalysis.core.progress.Progress;
 import org.anchoranalysis.core.serialize.DeserializationFailedException;
 import org.anchoranalysis.gui.file.interactive.FileExecutedExperimentImageWithManifest;
 import org.anchoranalysis.gui.file.interactive.InteractiveFile;
@@ -56,9 +56,7 @@ public class ExecutedExperimentFileCreator extends FileCreatorGeneralList {
 
     @Override
     protected void addFilesToList(
-            List<InteractiveFile> listFiles,
-            FileCreatorParams params,
-            ProgressReporter progressReporter)
+            List<InteractiveFile> listFiles, FileCreatorParams params, Progress progress)
             throws OperationFailedException {
 
         // TODO for now, we have no features from the NamedDefinitons added to the global feature
@@ -70,7 +68,7 @@ public class ExecutedExperimentFileCreator extends FileCreatorGeneralList {
                     coupledManifestsInputManager.manifestCouplingDefinition(
                             new InputManagerParams(
                                     params.createInputContext(),
-                                    progressReporter,
+                                    progress,
                                     params.getLogErrorReporter()));
         } catch (DeserializationFailedException e) {
             throw new OperationFailedException(e);
@@ -78,8 +76,7 @@ public class ExecutedExperimentFileCreator extends FileCreatorGeneralList {
 
         experimentNames = new ArrayList<>();
 
-        for (Iterator<Manifest> itrExp =
-                        manifestCouplingDefinition.iteratorExperimentalManifests();
+        for (Iterator<Manifest> itrExp = manifestCouplingDefinition.iteratorExperimentalManifests();
                 itrExp.hasNext(); ) {
             Manifest manifestExperiment = itrExp.next();
             addVideoStatsFileFromManifestExperiment(
@@ -103,7 +100,7 @@ public class ExecutedExperimentFileCreator extends FileCreatorGeneralList {
             FileCreatorParams params,
             ManifestCouplingDefinition manifestCouplingDefinition,
             List<InteractiveFile> listFiles) {
-        experimentNames.add(manifestExperiment.getRootFolder().relativePath().toString());
+        experimentNames.add(manifestExperiment.getRootDirectory().relativePath().toString());
 
         FinderSerializedObject<EnergyScheme> finderEnergyScheme =
                 new FinderSerializedObject<>(

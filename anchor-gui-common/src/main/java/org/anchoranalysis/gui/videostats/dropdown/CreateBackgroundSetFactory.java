@@ -28,15 +28,15 @@ package org.anchoranalysis.gui.videostats.dropdown;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
-import org.anchoranalysis.core.name.provider.NamedProvider;
-import org.anchoranalysis.core.progress.ProgressReporterNull;
+import org.anchoranalysis.core.identifier.provider.NamedProvider;
+import org.anchoranalysis.core.progress.ProgressIgnore;
 import org.anchoranalysis.gui.backgroundset.BackgroundSetFactory;
 import org.anchoranalysis.gui.container.background.BackgroundStackContainerException;
 import org.anchoranalysis.gui.series.TimeSequenceProvider;
 import org.anchoranalysis.gui.series.TimeSequenceProviderSupplier;
 import org.anchoranalysis.image.core.stack.Stack;
 import org.anchoranalysis.image.core.stack.TimeSequence;
-import org.anchoranalysis.image.core.stack.wrap.WrapStackAsTimeSequence;
+import org.anchoranalysis.image.core.stack.time.WrapStackAsTimeSequence;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class CreateBackgroundSetFactory {
@@ -44,20 +44,20 @@ public class CreateBackgroundSetFactory {
     public static BackgroundSetProgressingSupplier createCached(
             NamedProvider<Stack> namedProvider) {
         return createCached(
-                progressReporter ->
+                progress ->
                         new TimeSequenceProvider(new WrapStackAsTimeSequence(namedProvider), 1));
     }
 
     public static BackgroundSetProgressingSupplier createCached(
             TimeSequenceProviderSupplier stacksOverTime) {
         return BackgroundSetProgressingSupplier.cache(
-                progressReporter -> {
+                progress -> {
                     try {
                         NamedProvider<TimeSequence> stacks =
-                                stacksOverTime.get(progressReporter).getSequence();
+                                stacksOverTime.get(progress).getSequence();
 
                         return BackgroundSetFactory.createBackgroundSet(
-                                stacks, ProgressReporterNull.get());
+                                stacks, ProgressIgnore.get());
                     } catch (Exception e) {
                         throw new BackgroundStackContainerException(e);
                     }

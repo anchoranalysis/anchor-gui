@@ -34,7 +34,7 @@ import java.awt.dnd.DropTarget;
 import java.awt.dnd.DropTargetDropEvent;
 import java.io.File;
 import java.util.List;
-import org.anchoranalysis.core.error.reporter.ErrorReporter;
+import org.anchoranalysis.core.log.error.ErrorReporter;
 import org.anchoranalysis.gui.interactivebrowser.openfile.OpenFile;
 import org.anchoranalysis.gui.interactivebrowser.openfile.importer.ImporterSettings;
 

@@ -28,34 +28,34 @@ package org.anchoranalysis.gui.finder;
 
 import java.nio.file.Path;
 import java.util.List;
-import org.anchoranalysis.core.error.OperationFailedException;
-import org.anchoranalysis.core.name.store.StoreSupplier;
-import org.anchoranalysis.core.progress.ProgressReporter;
-import org.anchoranalysis.core.progress.ProgressReporterNull;
-import org.anchoranalysis.image.core.stack.NamedStacks;
+import lombok.RequiredArgsConstructor;
+import org.anchoranalysis.core.exception.OperationFailedException;
+import org.anchoranalysis.core.identifier.provider.store.StoreSupplier;
+import org.anchoranalysis.core.progress.Progress;
+import org.anchoranalysis.core.progress.ProgressIgnore;
 import org.anchoranalysis.image.core.stack.Stack;
+import org.anchoranalysis.image.core.stack.named.NamedStacks;
 import org.anchoranalysis.image.io.ImageIOException;
-import org.anchoranalysis.image.io.bean.stack.StackReader;
-import org.anchoranalysis.image.io.stack.OpenedRaster;
+import org.anchoranalysis.image.io.bean.stack.reader.StackReader;
+import org.anchoranalysis.image.io.stack.input.OpenedRaster;
 import org.anchoranalysis.io.manifest.Manifest;
 import org.anchoranalysis.io.manifest.file.OutputtedFile;
 import org.anchoranalysis.io.manifest.finder.FindFailedException;
 import org.anchoranalysis.io.manifest.finder.Finder;
 import org.anchoranalysis.io.manifest.finder.FinderUtilities;
 import org.anchoranalysis.io.manifest.finder.match.FileMatch;
-import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 public class FinderRasterFilesByManifestDescriptionFunction implements Finder {
 
     // START REQUIRED ARGUMENTS
     private final StackReader stackReader;
-    
+
     private final String function;
     // END REQUIRED ARGUMENTS
 
     private List<OutputtedFile> list;
-    
+
     @Override
     public boolean doFind(Manifest manifestRecorder) throws FindFailedException {
         list =
@@ -83,16 +83,15 @@ public class FinderRasterFilesByManifestDescriptionFunction implements Finder {
                                     openStack(
                                             fileWrite.calculatePath(),
                                             stackReader,
-                                            ProgressReporterNull.get())));
+                                            ProgressIgnore.get())));
         }
         return out;
     }
 
-    private Stack openStack(
-            Path filePath, StackReader stackReader, ProgressReporter progressReporter)
+    private Stack openStack(Path filePath, StackReader stackReader, Progress progress)
             throws OperationFailedException {
         try (OpenedRaster openedRaster = stackReader.openFile(filePath)) {
-            return openedRaster.open(0, progressReporter).get(0);
+            return openedRaster.open(0, progress).get(0);
 
         } catch (ImageIOException e) {
             throw new OperationFailedException(e);

@@ -30,8 +30,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import org.anchoranalysis.core.color.RGBColor;
-import org.anchoranalysis.core.error.CreateException;
-import org.anchoranalysis.core.error.OperationFailedException;
+import org.anchoranalysis.core.exception.CreateException;
+import org.anchoranalysis.core.exception.OperationFailedException;
 import org.anchoranalysis.core.index.SetOperationFailedException;
 import org.anchoranalysis.image.core.dimensions.Dimensions;
 import org.anchoranalysis.image.core.object.properties.ObjectWithProperties;
@@ -42,10 +42,10 @@ import org.anchoranalysis.overlay.collection.ColoredOverlayCollection;
 import org.anchoranalysis.overlay.collection.OverlayCollection;
 import org.anchoranalysis.overlay.writer.DrawOverlay;
 import org.anchoranalysis.overlay.writer.PrecalculationOverlay;
-import org.anchoranalysis.spatial.extent.box.BoundingBox;
-import org.anchoranalysis.spatial.extent.rtree.RTree;
-import org.anchoranalysis.spatial.extent.scale.ScaleFactor;
+import org.anchoranalysis.spatial.box.BoundingBox;
 import org.anchoranalysis.spatial.point.Point3i;
+import org.anchoranalysis.spatial.rtree.RTree;
+import org.anchoranalysis.spatial.scale.ScaleFactor;
 
 public class OverlayPrecalculatedCache implements OverlayRetriever {
 

@@ -29,7 +29,7 @@ package org.anchoranalysis.gui.annotation.strategy.builder.mark;
 import java.nio.file.Path;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
-import org.anchoranalysis.core.error.OperationFailedException;
+import org.anchoranalysis.core.exception.OperationFailedException;
 import org.anchoranalysis.gui.annotation.additional.ShowAdditionalRasters;
 import org.anchoranalysis.gui.annotation.additional.ShowComparers;
 import org.anchoranalysis.gui.annotation.additional.ShowRaster;

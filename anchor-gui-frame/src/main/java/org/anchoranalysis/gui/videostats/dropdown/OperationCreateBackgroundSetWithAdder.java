@@ -26,12 +26,12 @@
 
 package org.anchoranalysis.gui.videostats.dropdown;
 
-import org.anchoranalysis.core.error.reporter.ErrorReporter;
-import org.anchoranalysis.core.functional.function.CheckedFunction;
+import org.anchoranalysis.core.functional.checked.CheckedFunction;
 import org.anchoranalysis.core.index.GetOperationFailedException;
+import org.anchoranalysis.core.log.error.ErrorReporter;
 import org.anchoranalysis.core.progress.CachedProgressingSupplier;
 import org.anchoranalysis.core.progress.CheckedProgressingSupplier;
-import org.anchoranalysis.core.progress.ProgressReporter;
+import org.anchoranalysis.core.progress.Progress;
 import org.anchoranalysis.core.property.IPropertyValueSendable;
 import org.anchoranalysis.gui.backgroundset.BackgroundSet;
 import org.anchoranalysis.gui.container.background.BackgroundStackContainerException;
@@ -40,7 +40,7 @@ import org.anchoranalysis.gui.videostats.dropdown.common.EnergyBackground;
 import org.anchoranalysis.gui.videostats.dropdown.common.EnergyBackgroundAdder;
 import org.anchoranalysis.gui.videostats.threading.InteractiveThreadPool;
 import org.anchoranalysis.image.core.stack.DisplayStack;
-import org.anchoranalysis.image.experiment.identifiers.StackIdentifiers;
+import org.anchoranalysis.image.core.stack.StackIdentifiers;
 
 public class OperationCreateBackgroundSetWithAdder {
 
@@ -74,12 +74,11 @@ public class OperationCreateBackgroundSetWithAdder {
 
         this.addVideoStatsModule =
                 AddVideoStatsModuleSupplier.cache(
-                        progressReporter -> withAdderSupplier.get(progressReporter).getAdder());
+                        progress -> withAdderSupplier.get(progress).getAdder());
 
         this.backgroundSetSupplier =
                 BackgroundSetProgressingSupplier.cache(
-                        progressReporter ->
-                                withAdderSupplier.get(progressReporter).getBackgroundSet());
+                        progress -> withAdderSupplier.get(progress).getBackgroundSet());
 
         // A new energyBackground that includes the changed operation for the background
         this.energyBackgroundNew =
@@ -87,11 +86,11 @@ public class OperationCreateBackgroundSetWithAdder {
                         energyBackground.copyChangeOp(backgroundSetSupplier), addVideoStatsModule);
     }
 
-    private BackgroundSetWithAdder createBackgroundSetWithAdder(ProgressReporter progressReporter)
+    private BackgroundSetWithAdder createBackgroundSetWithAdder(Progress progress)
             throws BackgroundStackContainerException {
         BackgroundSetWithAdder bwsa = new BackgroundSetWithAdder();
 
-        BackgroundSet backgroundSet = energyBackground.getBackgroundSet().get(progressReporter);
+        BackgroundSet backgroundSet = energyBackground.getBackgroundSet().get(progress);
 
         bwsa.setBackgroundSet(backgroundSet);
 

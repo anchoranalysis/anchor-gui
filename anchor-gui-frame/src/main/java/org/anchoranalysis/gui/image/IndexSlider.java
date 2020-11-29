@@ -26,7 +26,7 @@
 
 package org.anchoranalysis.gui.image;
 
-import org.anchoranalysis.core.index.container.BoundedRangeIncompleteDynamic;
+import org.anchoranalysis.core.index.bounded.BoundedRangeIncompleteDynamic;
 import org.anchoranalysis.core.property.IPropertyValueReceivable;
 import org.anchoranalysis.core.property.IPropertyValueSendable;
 import org.anchoranalysis.gui.slider.BoundedSideSlider;

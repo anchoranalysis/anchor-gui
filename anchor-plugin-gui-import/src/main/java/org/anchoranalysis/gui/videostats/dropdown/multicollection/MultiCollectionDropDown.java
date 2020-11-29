@@ -27,13 +27,13 @@
 package org.anchoranalysis.gui.videostats.dropdown.multicollection;
 
 import java.util.Optional;
-import org.anchoranalysis.core.error.CreateException;
-import org.anchoranalysis.core.error.InitException;
-import org.anchoranalysis.core.error.OperationFailedException;
-import org.anchoranalysis.core.name.provider.NamedProvider;
-import org.anchoranalysis.core.name.store.NamedProviderStore;
-import org.anchoranalysis.core.params.KeyValueParams;
-import org.anchoranalysis.core.progress.ProgressReporter;
+import org.anchoranalysis.core.exception.CreateException;
+import org.anchoranalysis.core.exception.InitException;
+import org.anchoranalysis.core.exception.OperationFailedException;
+import org.anchoranalysis.core.identifier.provider.NamedProvider;
+import org.anchoranalysis.core.identifier.provider.store.NamedProviderStore;
+import org.anchoranalysis.core.progress.Progress;
+import org.anchoranalysis.core.value.KeyValueParams;
 import org.anchoranalysis.gui.bean.filecreator.MarkCreatorParams;
 import org.anchoranalysis.gui.file.opened.OpenedFileGUI;
 import org.anchoranalysis.gui.interactivebrowser.MarkEvaluatorManager;
@@ -47,7 +47,7 @@ import org.anchoranalysis.gui.videostats.dropdown.common.DropDownUtilities;
 import org.anchoranalysis.gui.videostats.dropdown.common.DropDownUtilitiesRaster;
 import org.anchoranalysis.gui.videostats.dropdown.common.EnergyBackground;
 import org.anchoranalysis.gui.videostats.dropdown.common.GuessEnergyFromStacks;
-import org.anchoranalysis.image.core.stack.wrap.WrapTimeSequenceAsStack;
+import org.anchoranalysis.image.core.stack.time.WrapTimeSequenceAsStack;
 import org.anchoranalysis.image.voxel.object.ObjectCollection;
 import org.anchoranalysis.io.output.outputter.InputOutputContext;
 import org.anchoranalysis.io.output.outputter.Outputter;
@@ -79,7 +79,8 @@ public class MultiCollectionDropDown {
         this.objCollection = objCollection;
     }
 
-    public void init(final AddVideoStatsModule adder, InputOutputContext context, MarkCreatorParams params)
+    public void init(
+            final AddVideoStatsModule adder, InputOutputContext context, MarkCreatorParams params)
             throws InitException {
 
         OperationCreateBackgroundSetWithAdder operationBwsa =
@@ -137,7 +138,8 @@ public class MultiCollectionDropDown {
             throws InitException {
 
         Outputter outputterSubdirectory =
-                DropDownUtilities.createSubdirectoryContext(context, delegate.getName()).getOutputter();
+                DropDownUtilities.createSubdirectoryContext(context, delegate.getName())
+                        .getOutputter();
 
         try {
             MarkEvaluatorSetForImage markEvaluatorSet =
@@ -172,10 +174,10 @@ public class MultiCollectionDropDown {
         return delegate.getName();
     }
 
-    private WrapTimeSequenceAsStack extractFromRasterProvider(ProgressReporter progressReporter)
+    private WrapTimeSequenceAsStack extractFromRasterProvider(Progress progress)
             throws OperationFailedException {
         try {
-            return new WrapTimeSequenceAsStack(rasterProvider.get(progressReporter).getSequence());
+            return new WrapTimeSequenceAsStack(rasterProvider.get(progress).getSequence());
         } catch (CreateException e) {
             throw new OperationFailedException(e);
         }

@@ -34,7 +34,7 @@ import javax.swing.SwingConstants;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import org.anchoranalysis.core.color.ColorIndex;
-import org.anchoranalysis.core.index.IndicesSelection;
+import org.anchoranalysis.gui.index.IndicesSelection;
 import org.anchoranalysis.gui.videostats.ISelectIndicesSendable;
 import org.anchoranalysis.mpp.mark.Mark;
 import org.apache.commons.logging.Log;
@@ -127,7 +127,7 @@ public class IndividualTablePanel {
         int markIDs[] = new int[selectedIndices.length];
         for (int i = 0; i < selectedIndices.length; i++) {
             Mark m = this.tableModel.getMark(selectedIndices[i]);
-            markIDs[i] = m.getId();
+            markIDs[i] = m.getIdentifier();
         }
 
         return markIDs;
@@ -162,7 +162,7 @@ public class IndividualTablePanel {
             int i = 0;
             for (Mark mark : tableModel.getMarks()) {
 
-                if (idSet.contains(mark.getId())) {
+                if (idSet.contains(mark.getIdentifier())) {
                     tablePanel.getTable().getSelectionModel().addSelectionInterval(i, i);
                     IDUtilities.scrollJTableToRow(tablePanel.getTable(), i);
                 }

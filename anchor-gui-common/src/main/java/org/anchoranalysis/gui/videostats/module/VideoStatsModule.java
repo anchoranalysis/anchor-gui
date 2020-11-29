@@ -33,7 +33,7 @@ import javax.swing.event.EventListenerList;
 import org.anchoranalysis.core.event.RoutableEventSourceObject;
 import org.anchoranalysis.core.event.RoutableReceivable;
 import org.anchoranalysis.core.property.IPropertyValueSendable;
-import org.anchoranalysis.core.property.change.PropertyValueChangeEvent;
+import org.anchoranalysis.gui.property.PropertyValueChangeEvent;
 import org.anchoranalysis.gui.videostats.AssociatedEnergyStackGetter;
 import org.anchoranalysis.gui.videostats.action.changemarkdisplay.IChangeMarkDisplaySendable;
 

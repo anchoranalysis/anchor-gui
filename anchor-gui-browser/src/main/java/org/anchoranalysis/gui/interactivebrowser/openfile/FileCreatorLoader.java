@@ -31,13 +31,13 @@ import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import org.anchoranalysis.bean.NamedBean;
-import org.anchoranalysis.core.progress.ProgressReporter;
+import org.anchoranalysis.core.progress.Progress;
 import org.anchoranalysis.gui.bean.filecreator.FileCreator;
 import org.anchoranalysis.gui.bean.filecreator.FileCreatorParams;
 import org.anchoranalysis.gui.interactivebrowser.FileOpenManager;
 import org.anchoranalysis.gui.interactivebrowser.SubgrouppedAdder;
 import org.anchoranalysis.gui.interactivebrowser.openfile.importer.ImporterSettings;
-import org.anchoranalysis.gui.progressreporter.ProgressReporterInteractiveWorker;
+import org.anchoranalysis.gui.progressreporter.ProgressInteractiveWorker;
 import org.anchoranalysis.gui.videostats.dropdown.VideoStatsModuleGlobalParams;
 import org.anchoranalysis.gui.videostats.module.VideoStatsModule;
 import org.anchoranalysis.gui.videostats.module.VideoStatsModuleCreateException;
@@ -105,7 +105,7 @@ public class FileCreatorLoader {
 
             String name = fileCreator.getValue().suggestName();
 
-            try (ProgressReporter progressReporter = new ProgressReporterInteractiveWorker(this)) {
+            try (Progress progress = new ProgressInteractiveWorker(this)) {
 
                 VideoStatsModule module =
                         fileCreator
@@ -116,7 +116,7 @@ public class FileCreatorLoader {
                                         mpg,
                                         globalSubgroupAdder.createChild(),
                                         fileOpenManager,
-                                        progressReporter);
+                                        progress);
 
                 mpg.getLogger()
                         .messageLogger()

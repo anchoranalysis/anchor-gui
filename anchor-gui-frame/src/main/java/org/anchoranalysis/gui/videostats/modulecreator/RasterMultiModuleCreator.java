@@ -27,7 +27,7 @@
 package org.anchoranalysis.gui.videostats.modulecreator;
 
 import java.util.List;
-import org.anchoranalysis.core.error.InitException;
+import org.anchoranalysis.core.exception.InitException;
 import org.anchoranalysis.gui.frame.multiraster.InternalFrameMultiRaster;
 import org.anchoranalysis.gui.frame.multiraster.NamedRasterSet;
 import org.anchoranalysis.gui.image.frame.SliderState;

@@ -28,11 +28,11 @@ package org.anchoranalysis.gui.videostats.dropdown.common;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
-import org.anchoranalysis.core.error.InitException;
-import org.anchoranalysis.core.error.OperationFailedException;
-import org.anchoranalysis.core.name.provider.NamedProvider;
-import org.anchoranalysis.core.name.provider.NamedProviderGetException;
-import org.anchoranalysis.core.progress.ProgressReporterNull;
+import org.anchoranalysis.core.exception.InitException;
+import org.anchoranalysis.core.exception.OperationFailedException;
+import org.anchoranalysis.core.identifier.provider.NamedProvider;
+import org.anchoranalysis.core.identifier.provider.NamedProviderGetException;
+import org.anchoranalysis.core.progress.ProgressIgnore;
 import org.anchoranalysis.gui.interactivebrowser.MarkEvaluatorSetForImage;
 import org.anchoranalysis.gui.marks.MarkDisplaySettings;
 import org.anchoranalysis.gui.videostats.dropdown.AddVideoStatsModule;
@@ -72,13 +72,12 @@ public class DropDownUtilities {
 
         EnergyBackground energyBackground =
                 EnergyBackground.createFromBackground(
-                        backgroundSet,
-                        () -> operationgetEnergyStack.get(ProgressReporterNull.get()));
+                        backgroundSet, () -> operationgetEnergyStack.get(ProgressIgnore.get()));
 
         AddVideoStatsModuleSupplier adderOp =
                 AddVideoStatsModuleSupplier.cache(
-                        progressReporter -> {
-                            AddVideoStatsModule adder = adderOpWithoutEnergy.get(progressReporter);
+                        progress -> {
+                            AddVideoStatsModule adder = adderOpWithoutEnergy.get(progress);
 
                             if (addEnergyAdder) {
                                 energyBackground.addEnergyStackToAdder(adder);
@@ -197,12 +196,15 @@ public class DropDownUtilities {
     public static InputOutputContext createSubdirectoryContext(
             InputOutputContext inputOutputContext, String subdirectoryName) throws InitException {
 
-        ManifestDirectoryDescription mfd =
+        ManifestDirectoryDescription manifestDescription =
                 new ManifestDirectoryDescription(
-                        "interactiveOutput", "manifestInteractiveOutput", new StringsWithoutOrder());
+                        "interactiveOutput",
+                        "manifestInteractiveOutput",
+                        new StringsWithoutOrder());
 
-        // NB: As bindAsSubFolder can now return nulls, maybe some knock-on bugs are introduced here
-        return inputOutputContext.subdirectory(subdirectoryName, mfd, false);
+        // NB: As bindAsSubdirectory can now return nulls, maybe some knock-on bugs are introduced
+        // here
+        return inputOutputContext.subdirectory(subdirectoryName, manifestDescription, false);
     }
 
     private static void addModule(

@@ -26,34 +26,35 @@
 
 package org.anchoranalysis.gui.finder;
 
-import org.anchoranalysis.core.error.OperationFailedException;
-import org.anchoranalysis.core.error.reporter.ErrorReporter;
+import org.anchoranalysis.core.exception.OperationFailedException;
+import org.anchoranalysis.core.identifier.provider.NamedProvider;
 import org.anchoranalysis.core.index.GetOperationFailedException;
-import org.anchoranalysis.core.name.provider.NamedProvider;
-import org.anchoranalysis.core.progress.ProgressReporterNull;
+import org.anchoranalysis.core.log.error.ErrorReporter;
+import org.anchoranalysis.core.progress.ProgressIgnore;
 import org.anchoranalysis.feature.energy.EnergyStack;
 import org.anchoranalysis.gui.videostats.dropdown.common.EnergyStackSupplier;
-import org.anchoranalysis.image.core.stack.NamedStacksSupplier;
 import org.anchoranalysis.image.core.stack.Stack;
-import org.anchoranalysis.image.io.bean.stack.StackReader;
+import org.anchoranalysis.image.core.stack.named.NamedStacksSupplier;
+import org.anchoranalysis.image.io.bean.stack.reader.StackReader;
 import org.anchoranalysis.io.manifest.Manifest;
 import org.anchoranalysis.io.manifest.finder.Finder;
 import org.anchoranalysis.io.manifest.finder.FinderKeyValueParams;
 
 public class FinderEnergyStack implements Finder {
 
-    private FinderRasterFolder finderRasterFolder;
+    private FinderRasterDirectory finderRasterDirectory;
     private EnergyStackSupplier energyStackSupplier;
     private FinderKeyValueParams finderImageParams;
 
     private NamedStacksSupplier operationStacks;
 
     public FinderEnergyStack(StackReader stackReader, ErrorReporter errorReporter) {
-        finderRasterFolder = new FinderRasterFolder("energyStack", "energyStack", stackReader);
+        finderRasterDirectory =
+                new FinderRasterDirectory("energyStack", "energyStack", stackReader);
 
         this.operationStacks =
                 NamedStacksSupplier.cache(
-                        progressReporter -> finderRasterFolder.createStackCollection(true));
+                        progress -> finderRasterDirectory.createStackCollection(true));
 
         this.finderImageParams = new FinderKeyValueParams("energyStackParams", errorReporter);
 
@@ -63,16 +64,16 @@ public class FinderEnergyStack implements Finder {
     @Override
     public boolean doFind(Manifest manifestRecorder) {
         finderImageParams.doFind(manifestRecorder);
-        return finderRasterFolder.doFind(manifestRecorder);
+        return finderRasterDirectory.doFind(manifestRecorder);
     }
 
     @Override
     public boolean exists() {
-        return finderRasterFolder.exists();
+        return finderRasterDirectory.exists();
     }
 
     public NamedProvider<Stack> getNamedStacks() throws OperationFailedException {
-        return operationStacks.get(ProgressReporterNull.get());
+        return operationStacks.get(ProgressIgnore.get());
     }
 
     public EnergyStackSupplier energyStackSupplier() {

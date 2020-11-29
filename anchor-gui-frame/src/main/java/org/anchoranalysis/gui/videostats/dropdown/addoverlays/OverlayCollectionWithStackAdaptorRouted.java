@@ -29,13 +29,13 @@ package org.anchoranalysis.gui.videostats.dropdown.addoverlays;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
-import org.anchoranalysis.core.error.reporter.ErrorReporter;
 import org.anchoranalysis.core.event.RoutableEvent;
 import org.anchoranalysis.core.event.RoutableListener;
 import org.anchoranalysis.core.event.RoutableReceivable;
-import org.anchoranalysis.core.property.change.PropertyValueChangeEvent;
+import org.anchoranalysis.core.log.error.ErrorReporter;
 import org.anchoranalysis.feature.energy.EnergyStack;
 import org.anchoranalysis.gui.image.OverlaysWithEnergyStack;
+import org.anchoranalysis.gui.property.PropertyValueChangeEvent;
 import org.anchoranalysis.gui.videostats.AssociatedEnergyStackGetter;
 import org.anchoranalysis.gui.videostats.threading.InteractiveThreadPool;
 import org.anchoranalysis.gui.videostats.threading.InteractiveWorker;
@@ -102,7 +102,7 @@ class OverlayCollectionWithStackAdaptorRouted
                             new PropertyValueChangeEvent<>(
                                     evt.getSource(),
                                     new OverlaysWithEnergyStack(evt.getEvent().getValue(), get()),
-                                    evt.getEvent().getAdjusting());
+                                    evt.getEvent().isAdjusting());
 
                     RoutableEvent<PropertyValueChangeEvent<OverlaysWithEnergyStack>>
                             routableEventNew = new RoutableEvent<>(evt.getRoutableSource(), evtNew);

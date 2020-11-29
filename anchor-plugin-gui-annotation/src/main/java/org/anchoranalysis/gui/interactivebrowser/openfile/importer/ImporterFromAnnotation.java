@@ -32,7 +32,7 @@ import org.anchoranalysis.annotation.io.bean.AnnotationInputManager;
 import org.anchoranalysis.annotation.io.bean.AnnotatorStrategy;
 import org.anchoranalysis.gui.bean.filecreator.AnnotationCreator;
 import org.anchoranalysis.gui.bean.filecreator.FileCreator;
-import org.anchoranalysis.image.io.input.ProvidesStackInput;
+import org.anchoranalysis.image.io.stack.input.ProvidesStackInput;
 
 public class ImporterFromAnnotation extends ImporterFromBean {
 

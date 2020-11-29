@@ -29,12 +29,12 @@ package org.anchoranalysis.gui.videostats.dropdown.common;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import org.anchoranalysis.core.error.CreateException;
-import org.anchoranalysis.core.error.InitException;
-import org.anchoranalysis.core.error.OperationFailedException;
+import org.anchoranalysis.core.exception.CreateException;
+import org.anchoranalysis.core.exception.InitException;
+import org.anchoranalysis.core.exception.OperationFailedException;
 import org.anchoranalysis.core.progress.CheckedProgressingSupplier;
-import org.anchoranalysis.core.progress.ProgressReporter;
-import org.anchoranalysis.core.progress.ProgressReporterNull;
+import org.anchoranalysis.core.progress.Progress;
+import org.anchoranalysis.core.progress.ProgressIgnore;
 import org.anchoranalysis.gui.container.background.BackgroundStackContainerException;
 import org.anchoranalysis.gui.series.TimeSequenceProvider;
 import org.anchoranalysis.gui.series.TimeSequenceProviderSupplier;
@@ -42,8 +42,8 @@ import org.anchoranalysis.gui.videostats.dropdown.AddVideoStatsModule;
 import org.anchoranalysis.gui.videostats.dropdown.AdderAppendEnergyStack;
 import org.anchoranalysis.gui.videostats.dropdown.BackgroundSetProgressingSupplier;
 import org.anchoranalysis.gui.videostats.dropdown.CreateBackgroundSetFactory;
-import org.anchoranalysis.image.core.stack.NamedStacksSupplier;
-import org.anchoranalysis.image.core.stack.wrap.WrapStackAsTimeSequence;
+import org.anchoranalysis.image.core.stack.named.NamedStacksSupplier;
+import org.anchoranalysis.image.core.stack.time.WrapStackAsTimeSequence;
 
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class EnergyBackground {
@@ -63,8 +63,7 @@ public class EnergyBackground {
             NamedStacksSupplier backgroundSupplier, EnergyStackSupplier energyStack) {
 
         return createStackSequence(
-                progressReporter -> sequenceProviderFrom(progressReporter, backgroundSupplier),
-                energyStack);
+                progress -> sequenceProviderFrom(progress, backgroundSupplier), energyStack);
     }
 
     public static EnergyBackground createStackSequence(
@@ -91,12 +90,12 @@ public class EnergyBackground {
     }
 
     public int numberFrames() throws OperationFailedException {
-        return numberFrames.get(ProgressReporterNull.get());
+        return numberFrames.get(ProgressIgnore.get());
     }
 
     public String arbitraryBackgroundStackName() throws InitException {
         try {
-            return getBackgroundSet().get(ProgressReporterNull.get()).names().iterator().next();
+            return getBackgroundSet().get(ProgressIgnore.get()).names().iterator().next();
 
         } catch (BackgroundStackContainerException e) {
             throw new InitException(e);
@@ -104,11 +103,10 @@ public class EnergyBackground {
     }
 
     private static TimeSequenceProvider sequenceProviderFrom(
-            ProgressReporter progressReporter, NamedStacksSupplier backgroundSupplier)
-            throws CreateException {
+            Progress progress, NamedStacksSupplier backgroundSupplier) throws CreateException {
         try {
             return new TimeSequenceProvider(
-                    new WrapStackAsTimeSequence(backgroundSupplier.get(progressReporter)), 1);
+                    new WrapStackAsTimeSequence(backgroundSupplier.get(progress)), 1);
         } catch (OperationFailedException e) {
             throw new CreateException(e);
         }

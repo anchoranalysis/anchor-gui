@@ -29,10 +29,10 @@ package org.anchoranalysis.gui.backgroundset;
 import java.util.HashMap;
 import java.util.Set;
 import lombok.NoArgsConstructor;
-import org.anchoranalysis.core.error.CreateException;
-import org.anchoranalysis.core.error.OperationFailedException;
-import org.anchoranalysis.core.error.friendly.AnchorImpossibleSituationException;
-import org.anchoranalysis.core.functional.function.CheckedFunction;
+import org.anchoranalysis.core.exception.CreateException;
+import org.anchoranalysis.core.exception.OperationFailedException;
+import org.anchoranalysis.core.exception.friendly.AnchorImpossibleSituationException;
+import org.anchoranalysis.core.functional.checked.CheckedFunction;
 import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.gui.container.background.BackgroundStackContainer;
 import org.anchoranalysis.gui.container.background.BackgroundStackContainerException;
@@ -48,7 +48,7 @@ public class BackgroundSet {
     public BackgroundSet(BackgroundSet source) {
         source.map.forEach(this::addItem);
     }
-    
+
     public void addItem(String name, BackgroundStackContainer rasterBackground) {
         addItem(name, () -> rasterBackground);
     }

@@ -26,7 +26,7 @@
 
 package org.anchoranalysis.gui.frame.singleraster;
 
-import org.anchoranalysis.core.error.InitException;
+import org.anchoranalysis.core.exception.InitException;
 import org.anchoranalysis.gui.displayupdate.DisplayUpdateRememberStack;
 import org.anchoranalysis.gui.frame.details.ControllerPopupMenu;
 import org.anchoranalysis.gui.frame.details.InternalFrameWithDetailsTopPanel;

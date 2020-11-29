@@ -27,17 +27,17 @@
 package org.anchoranalysis.gui.finder.imgstackcollection;
 
 import lombok.RequiredArgsConstructor;
-import org.anchoranalysis.core.error.OperationFailedException;
+import org.anchoranalysis.core.exception.OperationFailedException;
+import org.anchoranalysis.core.identifier.provider.NamedProvider;
+import org.anchoranalysis.core.identifier.provider.store.StoreSupplier;
 import org.anchoranalysis.core.index.GetOperationFailedException;
-import org.anchoranalysis.core.name.provider.NamedProvider;
-import org.anchoranalysis.core.name.store.StoreSupplier;
-import org.anchoranalysis.core.progress.ProgressReporter;
-import org.anchoranalysis.core.progress.ProgressReporterNull;
+import org.anchoranalysis.core.progress.Progress;
+import org.anchoranalysis.core.progress.ProgressIgnore;
 import org.anchoranalysis.feature.energy.EnergyStack;
 import org.anchoranalysis.gui.finder.FinderEnergyStack;
-import org.anchoranalysis.image.core.stack.NamedStacks;
-import org.anchoranalysis.image.core.stack.NamedStacksSupplier;
 import org.anchoranalysis.image.core.stack.Stack;
+import org.anchoranalysis.image.core.stack.named.NamedStacks;
+import org.anchoranalysis.image.core.stack.named.NamedStacksSupplier;
 import org.anchoranalysis.io.manifest.Manifest;
 
 @RequiredArgsConstructor
@@ -51,7 +51,7 @@ public class FinderStacksFromEnergyStack implements FinderStacks {
 
     @Override
     public NamedProvider<Stack> getStacks() throws OperationFailedException {
-        return operationStacks.get(ProgressReporterNull.get());
+        return operationStacks.get(ProgressIgnore.get());
     }
 
     @Override
@@ -69,8 +69,7 @@ public class FinderStacksFromEnergyStack implements FinderStacks {
         return delegate.exists();
     }
 
-    private NamedProvider<Stack> buildStacks(ProgressReporter progressReporter)
-            throws OperationFailedException {
+    private NamedProvider<Stack> buildStacks(Progress progress) throws OperationFailedException {
         NamedStacks stackCollection = new NamedStacks();
 
         // finder energy stack

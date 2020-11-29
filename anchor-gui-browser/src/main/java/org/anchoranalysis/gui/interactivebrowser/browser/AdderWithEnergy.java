@@ -27,7 +27,7 @@
 package org.anchoranalysis.gui.interactivebrowser.browser;
 
 import lombok.AllArgsConstructor;
-import org.anchoranalysis.core.error.InitException;
+import org.anchoranalysis.core.exception.InitException;
 import org.anchoranalysis.gui.bean.filecreator.FileCreatorParams;
 import org.anchoranalysis.gui.bean.filecreator.MarkCreatorParams;
 import org.anchoranalysis.gui.feature.evaluator.treetable.FeatureListSrc;
@@ -39,7 +39,7 @@ import org.anchoranalysis.gui.interactivebrowser.openfile.importer.ImporterSetti
 import org.anchoranalysis.gui.marks.MarkDisplaySettings;
 import org.anchoranalysis.gui.toolbar.VideoStatsToolbar;
 import org.anchoranalysis.gui.videostats.dropdown.VideoStatsModuleGlobalParams;
-import org.anchoranalysis.image.io.bean.stack.StackReader;
+import org.anchoranalysis.image.io.bean.stack.reader.StackReader;
 
 @AllArgsConstructor
 class AdderWithEnergy {

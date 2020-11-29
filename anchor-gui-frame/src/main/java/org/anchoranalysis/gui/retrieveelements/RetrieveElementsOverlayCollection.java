@@ -28,7 +28,7 @@ package org.anchoranalysis.gui.retrieveelements;
 
 import java.util.Collection;
 import java.util.Optional;
-import org.anchoranalysis.image.io.objects.ObjectCollectionWriter;
+import org.anchoranalysis.image.io.object.output.hdf5.ObjectCollectionWriter;
 import org.anchoranalysis.image.voxel.object.ObjectCollection;
 import org.anchoranalysis.io.generator.collection.CollectionGenerator;
 import org.anchoranalysis.io.generator.serialized.ObjectOutputStreamGenerator;
@@ -83,10 +83,7 @@ public class RetrieveElementsOverlayCollection extends RetrieveElements {
         ObjectOutputStreamGenerator<Mark> generatorMark =
                 new ObjectOutputStreamGenerator<>(Optional.of("mark"));
         CollectionGenerator<Mark> generatorCollection =
-                new CollectionGenerator<>(
-                        generatorMark,
-                        "selectedMarksObjects"
-                );
+                new CollectionGenerator<>(generatorMark, "selectedMarksObjects");
         popUp.addExportItem(
                 generatorCollection,
                 marksCreated,

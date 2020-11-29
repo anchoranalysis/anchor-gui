@@ -27,8 +27,7 @@
 package org.anchoranalysis.gui.finder.csvstatistic;
 
 import java.nio.file.Path;
-import org.anchoranalysis.core.index.container.ArrayListContainer;
-import org.anchoranalysis.core.index.container.BoundedIndexContainer;
+import org.anchoranalysis.core.index.bounded.BoundedIndexContainer;
 import org.anchoranalysis.io.input.csv.CSVReaderByLine;
 import org.anchoranalysis.io.input.csv.CSVReaderException;
 import org.anchoranalysis.io.input.csv.ReadByLine;

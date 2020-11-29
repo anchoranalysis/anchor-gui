@@ -26,7 +26,7 @@
 
 package org.anchoranalysis.gui.videostats.internalframe.evaluator.fromproposer;
 
-import org.anchoranalysis.core.name.provider.NamedProvider;
+import org.anchoranalysis.core.identifier.provider.NamedProvider;
 import org.anchoranalysis.gui.videostats.internalframe.evaluator.MarkProposerEvaluatorEnergyStack;
 import org.anchoranalysis.gui.videostats.internalframe.evaluator.ProposalOperationCreator;
 import org.anchoranalysis.mpp.bean.init.MPPInitParams;

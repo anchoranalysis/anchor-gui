@@ -27,11 +27,11 @@
 package org.anchoranalysis.gui.annotation;
 
 import lombok.Getter;
-import org.anchoranalysis.core.functional.function.CheckedFunction;
+import org.anchoranalysis.core.functional.checked.CheckedFunction;
+import org.anchoranalysis.core.identifier.provider.NamedProvider;
 import org.anchoranalysis.core.index.GetOperationFailedException;
-import org.anchoranalysis.core.name.provider.NamedProvider;
-import org.anchoranalysis.core.progress.ProgressReporterMultiple;
-import org.anchoranalysis.core.progress.ProgressReporterOneOfMany;
+import org.anchoranalysis.core.progress.ProgressMultiple;
+import org.anchoranalysis.core.progress.ProgressOneOfMany;
 import org.anchoranalysis.gui.container.background.BackgroundStackContainerException;
 import org.anchoranalysis.gui.videostats.dropdown.BackgroundSetProgressingSupplier;
 import org.anchoranalysis.gui.videostats.dropdown.CreateBackgroundSetFactory;
@@ -51,7 +51,7 @@ public class AnnotationBackgroundInstance {
     @Getter private Dimensions dimensionsViewer;
 
     public AnnotationBackgroundInstance(
-            ProgressReporterMultiple prm,
+            ProgressMultiple progressMultiple,
             NamedProvider<Stack> backgroundStacks,
             String stackNameVisualOriginal)
             throws BackgroundStackContainerException {
@@ -59,7 +59,7 @@ public class AnnotationBackgroundInstance {
         try {
             defaultBackground =
                     backgroundSetOp
-                            .get(new ProgressReporterOneOfMany(prm))
+                            .get(new ProgressOneOfMany(progressMultiple))
                             .stackCntr(stackNameVisualOriginal);
 
             if (defaultBackground == null) {

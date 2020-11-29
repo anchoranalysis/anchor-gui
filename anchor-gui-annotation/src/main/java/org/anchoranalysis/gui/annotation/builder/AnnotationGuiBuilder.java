@@ -30,10 +30,10 @@ import java.io.File;
 import java.nio.file.Path;
 import java.util.Optional;
 import org.anchoranalysis.core.cache.CachedSupplier;
-import org.anchoranalysis.core.error.CreateException;
-import org.anchoranalysis.core.error.OperationFailedException;
+import org.anchoranalysis.core.exception.CreateException;
+import org.anchoranalysis.core.exception.OperationFailedException;
 import org.anchoranalysis.core.log.Logger;
-import org.anchoranalysis.core.progress.ProgressReporterMultiple;
+import org.anchoranalysis.core.progress.ProgressMultiple;
 import org.anchoranalysis.gui.annotation.AnnotationBackgroundInstance;
 import org.anchoranalysis.gui.annotation.export.ExportAnnotation;
 import org.anchoranalysis.gui.annotation.state.AnnotationSummary;
@@ -42,7 +42,7 @@ import org.anchoranalysis.gui.videostats.internalframe.annotator.AnnotationFrame
 import org.anchoranalysis.gui.videostats.internalframe.annotator.AnnotationInitParams;
 import org.anchoranalysis.gui.videostats.internalframe.annotator.AnnotationPanelParams;
 import org.anchoranalysis.gui.videostats.internalframe.annotator.navigation.PanelNavigation;
-import org.anchoranalysis.image.core.stack.NamedStacksSupplier;
+import org.anchoranalysis.image.core.stack.named.NamedStacksSupplier;
 
 public abstract class AnnotationGuiBuilder<T extends AnnotationInitParams> {
 
@@ -57,7 +57,7 @@ public abstract class AnnotationGuiBuilder<T extends AnnotationInitParams> {
     public abstract boolean isUseDefaultPromptNeeded();
 
     public abstract T createInitParams(
-            ProgressReporterMultiple prm,
+            ProgressMultiple progressMultiple,
             AnnotationGuiContext context,
             Logger logger,
             boolean useDefaultMarks)

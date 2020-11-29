@@ -32,13 +32,13 @@ import java.util.Optional;
 import javax.swing.Action;
 import javax.swing.JInternalFrame;
 import org.anchoranalysis.annotation.image.ImageLabelAnnotation;
+import org.anchoranalysis.annotation.io.AnnotationWithStrategy;
 import org.anchoranalysis.annotation.io.image.WholeImageLabelAnnotationWriter;
-import org.anchoranalysis.annotation.io.input.AnnotationWithStrategy;
-import org.anchoranalysis.core.error.CreateException;
-import org.anchoranalysis.core.error.OperationFailedException;
+import org.anchoranalysis.core.exception.CreateException;
+import org.anchoranalysis.core.exception.OperationFailedException;
 import org.anchoranalysis.core.log.Logger;
-import org.anchoranalysis.core.progress.ProgressReporterMultiple;
-import org.anchoranalysis.core.progress.ProgressReporterNull;
+import org.anchoranalysis.core.progress.ProgressIgnore;
+import org.anchoranalysis.core.progress.ProgressMultiple;
 import org.anchoranalysis.gui.annotation.AnnotationBackgroundInstance;
 import org.anchoranalysis.gui.annotation.AnnotationRefresher;
 import org.anchoranalysis.gui.annotation.builder.AdditionalFramesContext;
@@ -69,7 +69,7 @@ public class BuilderWholeImage
 
     @Override
     public InitParamsWholeImage createInitParams(
-            ProgressReporterMultiple prm,
+            ProgressMultiple progressMultiple,
             AnnotationGuiContext context,
             Logger logger,
             boolean useDefaultMarks)
@@ -77,7 +77,7 @@ public class BuilderWholeImage
 
         try {
             AnnotationBackgroundInstance background =
-                    createBackground(prm, stacks().get(ProgressReporterNull.get()));
+                    createBackground(progressMultiple, stacks().get(ProgressIgnore.get()));
 
             return new InitParamsWholeImage(background, context.getAnnotationRefresher());
         } catch (OperationFailedException e) {

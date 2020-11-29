@@ -29,9 +29,9 @@ package org.anchoranalysis.gui.frame.multioverlay.instantstate;
 import lombok.AllArgsConstructor;
 import org.anchoranalysis.core.color.ColorIndex;
 import org.anchoranalysis.core.color.ColorList;
-import org.anchoranalysis.core.error.AnchorNeverOccursException;
-import org.anchoranalysis.core.functional.function.CheckedFunction;
-import org.anchoranalysis.core.idgetter.IDGetter;
+import org.anchoranalysis.core.exception.AnchorNeverOccursException;
+import org.anchoranalysis.core.functional.checked.CheckedFunction;
+import org.anchoranalysis.core.identifier.getter.IdentifierGetter;
 import org.anchoranalysis.gui.videostats.internalframe.markstorgb.IndexableColoredOverlays;
 import org.anchoranalysis.overlay.IndexableOverlays;
 import org.anchoranalysis.overlay.Overlay;
@@ -44,7 +44,7 @@ class AddColorBridge
                 IndexableOverlays, IndexableColoredOverlays, AnchorNeverOccursException> {
 
     private final ColorIndex colorIndex;
-    private final IDGetter<Overlay> colorIDGetter;
+    private final IdentifierGetter<Overlay> colorIDGetter;
 
     @Override
     public IndexableColoredOverlays apply(IndexableOverlays sourceObject) {
@@ -63,7 +63,7 @@ class AddColorBridge
 
         for (int i = 0; i < overlays.size(); i++) {
             Overlay overlay = overlays.get(i);
-            colors.add(colorIndex.get(colorIDGetter.getID(overlay, i)));
+            colors.add(colorIndex.get(colorIDGetter.getIdentifier(overlay, i)));
         }
 
         return colors;

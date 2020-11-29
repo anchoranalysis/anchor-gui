@@ -27,8 +27,8 @@
 package org.anchoranalysis.gui.retrieveelements;
 
 import java.util.function.Supplier;
-import org.anchoranalysis.io.generator.SingleFileTypeGenerator;
-import org.anchoranalysis.io.generator.SingleFileTypeGeneratorBridge;
+import org.anchoranalysis.io.generator.TransformingGenerator;
+import org.anchoranalysis.io.generator.TransformingGeneratorBridge;
 
 /**
  * A generator that gets an element from a supplier.
@@ -37,9 +37,9 @@ import org.anchoranalysis.io.generator.SingleFileTypeGeneratorBridge;
  * @param <S> generator-type
  * @param <T> type that is supplied
  */
-class SupplierGenerator<S, T> extends SingleFileTypeGeneratorBridge<S, Supplier<T>, T> {
+class SupplierGenerator<S, T> extends TransformingGeneratorBridge<S, Supplier<T>, T> {
 
-    public SupplierGenerator(SingleFileTypeGenerator<T, S> generator) {
+    public SupplierGenerator(TransformingGenerator<T, S> generator) {
         super(generator, Supplier::get);
     }
 }

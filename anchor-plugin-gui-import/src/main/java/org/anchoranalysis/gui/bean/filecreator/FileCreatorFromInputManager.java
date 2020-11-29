@@ -29,8 +29,8 @@ import java.util.List;
 import lombok.Getter;
 import lombok.Setter;
 import org.anchoranalysis.bean.annotation.BeanField;
-import org.anchoranalysis.core.error.OperationFailedException;
-import org.anchoranalysis.core.progress.ProgressReporter;
+import org.anchoranalysis.core.exception.OperationFailedException;
+import org.anchoranalysis.core.progress.Progress;
 import org.anchoranalysis.gui.file.interactive.InteractiveFile;
 import org.anchoranalysis.io.input.InputFromManager;
 import org.anchoranalysis.io.input.InputReadFailedException;
@@ -46,9 +46,7 @@ public abstract class FileCreatorFromInputManager<T extends InputFromManager>
 
     @Override
     protected void addFilesToList(
-            List<InteractiveFile> listFiles,
-            FileCreatorParams params,
-            ProgressReporter progressReporter)
+            List<InteractiveFile> listFiles, FileCreatorParams params, Progress progress)
             throws OperationFailedException {
 
         try {
@@ -57,7 +55,7 @@ public abstract class FileCreatorFromInputManager<T extends InputFromManager>
                     input.inputs(
                             new InputManagerParams(
                                     params.createInputContext(),
-                                    progressReporter,
+                                    progress,
                                     params.getLogErrorReporter()));
 
             for (T element : list) {

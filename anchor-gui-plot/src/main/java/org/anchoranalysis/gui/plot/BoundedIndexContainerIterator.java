@@ -28,9 +28,9 @@ package org.anchoranalysis.gui.plot;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
+import org.anchoranalysis.core.exception.OperationFailedRuntimeException;
 import org.anchoranalysis.core.index.GetOperationFailedException;
-import org.anchoranalysis.core.index.GetOperationFailedExceptionRuntime;
-import org.anchoranalysis.core.index.container.BoundedIndexContainer;
+import org.anchoranalysis.core.index.bounded.BoundedIndexContainer;
 
 public class BoundedIndexContainerIterator<T> implements Iterator<T> {
 
@@ -78,7 +78,7 @@ public class BoundedIndexContainerIterator<T> implements Iterator<T> {
             currentIndex += increment;
             return item;
         } catch (GetOperationFailedException e) {
-            throw new GetOperationFailedExceptionRuntime(e);
+            throw new OperationFailedRuntimeException(e);
         }
     }
 

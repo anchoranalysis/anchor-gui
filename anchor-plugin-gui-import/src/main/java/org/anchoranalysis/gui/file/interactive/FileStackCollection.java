@@ -30,12 +30,12 @@ import java.io.File;
 import java.nio.file.Path;
 import java.util.Optional;
 import lombok.AllArgsConstructor;
-import org.anchoranalysis.core.error.CreateException;
-import org.anchoranalysis.core.error.InitException;
-import org.anchoranalysis.core.error.OperationFailedException;
-import org.anchoranalysis.core.name.store.EagerEvaluationStore;
-import org.anchoranalysis.core.name.store.LazyEvaluationStore;
-import org.anchoranalysis.core.progress.ProgressReporter;
+import org.anchoranalysis.core.exception.CreateException;
+import org.anchoranalysis.core.exception.InitException;
+import org.anchoranalysis.core.exception.OperationFailedException;
+import org.anchoranalysis.core.identifier.provider.store.EagerEvaluationStore;
+import org.anchoranalysis.core.identifier.provider.store.LazyEvaluationStore;
+import org.anchoranalysis.core.progress.Progress;
 import org.anchoranalysis.gui.bean.filecreator.MarkCreatorParams;
 import org.anchoranalysis.gui.file.opened.OpenedFile;
 import org.anchoranalysis.gui.file.opened.OpenedFileGUIWithFile;
@@ -45,8 +45,8 @@ import org.anchoranalysis.gui.videostats.dropdown.AddVideoStatsModule;
 import org.anchoranalysis.gui.videostats.dropdown.multicollection.MultiCollectionDropDown;
 import org.anchoranalysis.image.core.stack.TimeSequence;
 import org.anchoranalysis.image.io.ImageIOException;
+import org.anchoranalysis.image.io.stack.input.StackSequenceInput;
 import org.anchoranalysis.io.output.outputter.InputOutputContext;
-import org.anchoranalysis.plugin.io.bean.input.stack.StackSequenceInput;
 import org.apache.commons.io.FilenameUtils;
 
 @AllArgsConstructor
@@ -77,8 +77,7 @@ public class FileStackCollection extends InteractiveFile {
         MultiCollectionDropDown dropDown =
                 new MultiCollectionDropDown(
                         TimeSequenceProviderSupplier.cache(
-                                progressReporter ->
-                                        extractTimeSequenceFromInput(progressReporter, 0)),
+                                progress -> extractTimeSequenceFromInput(progress, 0)),
                         null,
                         null,
                         new EagerEvaluationStore<>(),
@@ -94,11 +93,10 @@ public class FileStackCollection extends InteractiveFile {
         return new OpenedFileGUIWithFile(this, dropDown.openedFileGUI());
     }
 
-    private TimeSequenceProvider extractTimeSequenceFromInput(
-            ProgressReporter progressReporter, int seriesIndex) throws CreateException {
+    private TimeSequenceProvider extractTimeSequenceFromInput(Progress progress, int seriesIndex)
+            throws CreateException {
         try {
-            TimeSequence timeSeries =
-                    input.createStackSequenceForSeries(seriesIndex).get(progressReporter);
+            TimeSequence timeSeries = input.createStackSequenceForSeries(seriesIndex).get(progress);
 
             LazyEvaluationStore<TimeSequence> store =
                     new LazyEvaluationStore<>("extractTimeSequence");

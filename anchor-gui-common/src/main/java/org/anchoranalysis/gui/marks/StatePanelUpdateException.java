@@ -26,7 +26,7 @@
 
 package org.anchoranalysis.gui.marks;
 
-import org.anchoranalysis.core.error.AnchorCheckedException;
+import org.anchoranalysis.core.exception.AnchorCheckedException;
 
 public class StatePanelUpdateException extends AnchorCheckedException {
 

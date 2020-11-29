@@ -28,10 +28,10 @@ package org.anchoranalysis.gui.frame.multioverlay.instantstate;
 
 import java.util.Optional;
 import org.anchoranalysis.core.color.ColorIndex;
-import org.anchoranalysis.core.error.InitException;
-import org.anchoranalysis.core.idgetter.IDGetter;
-import org.anchoranalysis.core.index.container.BoundedIndexContainer;
-import org.anchoranalysis.core.index.container.bridge.BoundedIndexContainerBridgeWithoutIndex;
+import org.anchoranalysis.core.exception.InitException;
+import org.anchoranalysis.core.identifier.getter.IdentifierGetter;
+import org.anchoranalysis.core.index.bounded.BoundedIndexContainer;
+import org.anchoranalysis.core.index.bounded.bridge.BoundedIndexContainerBridgeWithoutIndex;
 import org.anchoranalysis.core.property.IPropertyValueReceivable;
 import org.anchoranalysis.core.property.PropertyValueReceivableFromIndicesSelection;
 import org.anchoranalysis.gui.frame.details.GenerateExtraDetail;
@@ -52,7 +52,7 @@ import org.anchoranalysis.gui.videostats.link.LinkModules;
 import org.anchoranalysis.gui.videostats.module.DefaultModuleState;
 import org.anchoranalysis.gui.videostats.module.VideoStatsModule;
 import org.anchoranalysis.image.core.object.properties.ObjectWithProperties;
-import org.anchoranalysis.image.core.stack.rgb.RGBStack;
+import org.anchoranalysis.image.core.stack.RGBStack;
 import org.anchoranalysis.overlay.IndexableOverlays;
 import org.anchoranalysis.overlay.Overlay;
 import org.anchoranalysis.overlay.collection.ColoredOverlayCollection;
@@ -82,7 +82,7 @@ public class InternalFrameOverlayedInstantStateToRGBSelectable {
         public ColoredOverlayCollection getOverlays() {
             return delegate.getOverlayRetriever()
                     .getOverlays()
-                    .createSubsetFromIDs(selectionIndices.getCurrentSelection());
+                    .createSubsetFromIDs(selectionIndices.getCurrentSelection()::contains);
         }
     }
 
@@ -96,8 +96,8 @@ public class InternalFrameOverlayedInstantStateToRGBSelectable {
     public SliderState init(
             BoundedIndexContainer<IndexableOverlays> marksCntr,
             ColorIndex colorIndex,
-            IDGetter<Overlay> idGetter,
-            IDGetter<Overlay> idColorGetter,
+            IdentifierGetter<Overlay> idGetter,
+            IdentifierGetter<Overlay> idColorGetter,
             boolean includeFrameAdjusting,
             DefaultModuleState initialState,
             VideoStatsModuleGlobalParams mpg)

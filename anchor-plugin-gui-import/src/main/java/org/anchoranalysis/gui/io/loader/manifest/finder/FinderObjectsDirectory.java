@@ -28,10 +28,10 @@ package org.anchoranalysis.gui.io.loader.manifest.finder;
 
 import java.util.function.Predicate;
 import lombok.AllArgsConstructor;
-import org.anchoranalysis.core.error.OperationFailedException;
+import org.anchoranalysis.core.exception.OperationFailedException;
+import org.anchoranalysis.core.identifier.provider.NameValueSet;
+import org.anchoranalysis.core.identifier.provider.NamedProvider;
 import org.anchoranalysis.core.log.Logger;
-import org.anchoranalysis.core.name.provider.NameValueSet;
-import org.anchoranalysis.core.name.provider.NamedProvider;
 import org.anchoranalysis.image.voxel.object.ObjectCollection;
 import org.anchoranalysis.io.manifest.directory.MutableDirectory;
 import org.anchoranalysis.io.manifest.finder.FinderSingleDirectory;
@@ -50,7 +50,8 @@ public class FinderObjectsDirectory extends FinderSingleDirectory {
             return new NameValueSet<>();
         }
 
-        return new CreateObjectStoreFromDirectory().apply(getFoundDirectory().calculatePath(), logger);
+        return new CreateObjectStoreFromDirectory()
+                .apply(getFoundDirectory().calculatePath(), logger);
     }
 
     @Override
