@@ -32,7 +32,7 @@ import org.anchoranalysis.core.progress.ProgressIgnore;
 import org.anchoranalysis.image.core.stack.Stack;
 import org.anchoranalysis.image.io.ImageIOException;
 import org.anchoranalysis.image.io.bean.stack.reader.StackReader;
-import org.anchoranalysis.image.io.stack.input.OpenedRaster;
+import org.anchoranalysis.image.io.stack.input.OpenedImageFile;
 import org.anchoranalysis.io.manifest.directory.sequenced.DeriveElementsFromSequencedDirectory;
 import org.anchoranalysis.io.manifest.directory.sequenced.SequencedDirectory;
 
@@ -57,11 +57,11 @@ class SequencedDirectoryStackReader extends DeriveElementsFromSequencedDirectory
     protected Stack createFromFile(Path path) throws CreateException {
         // We don't support multiple series for now
         try {
-            OpenedRaster openedRaster = stackReader.openFile(path);
+            OpenedImageFile openedFile = stackReader.openFile(path);
             try {
-                return openedRaster.open(0, ProgressIgnore.get()).get(0);
+                return openedFile.open(0, ProgressIgnore.get()).get(0);
             } finally {
-                openedRaster.close();
+                openedFile.close();
             }
         } catch (ImageIOException e) {
             throw new CreateException(e);
