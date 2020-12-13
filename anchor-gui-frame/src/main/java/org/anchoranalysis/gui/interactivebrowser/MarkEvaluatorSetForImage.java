@@ -96,12 +96,11 @@ public class MarkEvaluatorSetForImage {
             // We initialise the markEvaluator
             try {
                 return MPPInitParamsFactory.createFromExistingCollections(
-                    new InitParamsContext(context),
-                    Optional.ofNullable(define),
-                    Optional.of(namedStacks.get(ProgressIgnore.get())),
-                    Optional.empty(),
-                    keyParams.get()
-                );
+                        new InitParamsContext(context),
+                        Optional.ofNullable(define),
+                        Optional.of(namedStacks.get(ProgressIgnore.get())),
+                        Optional.empty(),
+                        keyParams.get());
 
             } catch (Exception e) {
                 throw new CreateException(e);
