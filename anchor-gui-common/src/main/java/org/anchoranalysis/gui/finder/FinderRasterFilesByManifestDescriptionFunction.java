@@ -37,7 +37,7 @@ import org.anchoranalysis.image.core.stack.Stack;
 import org.anchoranalysis.image.core.stack.named.NamedStacks;
 import org.anchoranalysis.image.io.ImageIOException;
 import org.anchoranalysis.image.io.bean.stack.reader.StackReader;
-import org.anchoranalysis.image.io.stack.input.OpenedRaster;
+import org.anchoranalysis.image.io.stack.input.OpenedImageFile;
 import org.anchoranalysis.io.manifest.Manifest;
 import org.anchoranalysis.io.manifest.file.OutputtedFile;
 import org.anchoranalysis.io.manifest.finder.FindFailedException;
@@ -90,8 +90,8 @@ public class FinderRasterFilesByManifestDescriptionFunction implements Finder {
 
     private Stack openStack(Path filePath, StackReader stackReader, Progress progress)
             throws OperationFailedException {
-        try (OpenedRaster openedRaster = stackReader.openFile(filePath)) {
-            return openedRaster.open(0, progress).get(0);
+        try (OpenedImageFile openedFile = stackReader.openFile(filePath)) {
+            return openedFile.open(0, progress).get(0);
 
         } catch (ImageIOException e) {
             throw new OperationFailedException(e);

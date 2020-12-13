@@ -47,7 +47,7 @@ import org.anchoranalysis.image.core.stack.Stack;
 import org.anchoranalysis.image.core.stack.TimeSequence;
 import org.anchoranalysis.image.io.ImageIOException;
 import org.anchoranalysis.image.io.bean.stack.reader.StackReader;
-import org.anchoranalysis.image.io.stack.input.OpenedRaster;
+import org.anchoranalysis.image.io.stack.input.OpenedImageFile;
 
 @AllArgsConstructor
 public class ShowRaster {
@@ -59,7 +59,7 @@ public class ShowRaster {
 
         show(
                 progress -> {
-                    try (OpenedRaster or = stackReader.openFile(rasterPath)) {
+                    try (OpenedImageFile or = stackReader.openFile(rasterPath)) {
                         TimeSequence ts = or.open(0, progress);
 
                         Stack stack = ts.get(0);
