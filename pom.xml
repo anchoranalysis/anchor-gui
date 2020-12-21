@@ -11,13 +11,34 @@
     <packaging>pom</packaging>
     <version>0.0.4-SNAPSHOT</version>
     <name>anchor-parent-gui</name>
-      
+		
+	<!-- Where to depoy (upload) artifacts to, making sure to associate with the corresponding
+	repository in GitHub Packages. Overrides settings that already are inherited from anchor-pom. -->
+	<distributionManagement>
+        <repository>
+            <id>github</id>
+            <name>GitHub</name>
+            <url>https://maven.pkg.github.com/anchoranalysis/anchor-gui/</url>
+        </repository>
+	  <snapshotRepository>
+            <id>github</id>
+            <name>GitHub</name>
+            <url>https://maven.pkg.github.com/anchoranalysis/anchor-gui/</url>
+        </snapshotRepository>
+	</distributionManagement>
+	
+	<!-- For tagging releases. -->
   	<scm>
-		<connection>scm:git:ssh://git@bitbucket.org/anchorimageanalysis/anchor-gui.git</connection>
-		<developerConnection>scm:git:ssh://git@bitbucket.org/anchorimageanalysis/anchor-gui.git</developerConnection>
-		<url>https://git@bitbucket.org/anchorimageanalysis/anchor-gui.git</url>
-	  <tag>anchor-parent-0.0.1</tag>
-  </scm>
+		<connection>scm:git:git@github.com:anchoranalysis/anchor-gui.git</connection>
+		<developerConnection>scm:git:git@github.com:anchoranalysis/anchor-gui.git</developerConnection>
+		<url>https://github.com/anchoranalysis/anchor-gui</url>
+		<tag>anchor-parent-0.0.1</tag>
+	</scm>
+	
+	<!-- For connecting to SonarCloud. -->
+	<properties>
+	  <sonar.projectKey>anchoranalysis_anchor-gui</sonar.projectKey>
+	</properties>
     
     <modules>
 	   <module>anchor-gui-common</module>
@@ -34,7 +55,7 @@
 	   <module>anchor-plugin-gui-import</module>
     </modules>
 
-	<!-- Provides a means of reaching anchor-pom and ImageJ -->
+	<!-- Provides a means of reaching anchor-pom and other dependencies -->
     <repositories>
 		<repository>
 		  <releases>
@@ -47,18 +68,11 @@
 			<updatePolicy>always</updatePolicy>
 			<checksumPolicy>warn</checksumPolicy>
 		  </snapshots>
-		  <id>anchor</id>
-		   <name>anchor</name>
-		   <url>http://maven.anchoranalysis.org:8081/repository/anchor</url>
+		  <id>github</id>
+		   <name>GitHub anchor Apache Maven Packages</name>
+		   <url>https://maven.pkg.github.com/anchoranalysis/anchor-gui</url>
 		  <layout>default</layout>
 		</repository>
-		
-		<repository>
-			<id>imagej</id>
-			<name>ImageJ repository</name>
-			<url>http://maven.imagej.net/content/groups/public</url>
-		</repository>
-		
 	</repositories>
 	
 		<dependencies>

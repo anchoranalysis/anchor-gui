@@ -7,6 +7,23 @@
     </parent>
   <artifactId>anchor-gui-feature-evaluator</artifactId>
   <version>0.0.1-SNAPSHOT</version>
+  
+  	<!-- Provides a means of reaching anchor-pom and ImageJ -->
+    <repositories>
+		<repository>
+		  <releases>
+			<enabled>true</enabled>
+			<updatePolicy>never</updatePolicy>
+			<checksumPolicy>warn</checksumPolicy>
+		  </releases>
+		  <id>netbeans</id>
+		   <name>netbeans</name>
+		   <url>http://bits.netbeans.org/maven2/</url>
+		  <layout>default</layout>
+		</repository>
+		
+   	</repositories>
+	
   <dependencies>
 	
 
@@ -20,26 +37,26 @@
 	<dependency>
 		<groupId>org.netbeans.api</groupId>
 		<artifactId>org-netbeans-swing-outline</artifactId>
-		<version>RELEASE731</version>
+		<version>RELEASE802</version>
 	</dependency>
 	
 	<dependency>
 		<groupId>org.netbeans.api</groupId>
 		<artifactId>org-openide-awt</artifactId>
-		<version>RELEASE731</version>
-	</dependency>
-	
-	<dependency>
-	    <groupId>org.netbeans.api</groupId>
-	    <artifactId>org-openide-util</artifactId>
-	    <version>RELEASE731</version>
+		<version>RELEASE802</version>
 	</dependency>
 	
 	<dependency>
 		<groupId>org.netbeans.api</groupId>
 		<artifactId>org-openide-filesystems</artifactId>
-		<version>RELEASE731</version>
+		<version>RELEASE802</version>
 	</dependency>
-	
+
+	<dependency>
+	    <groupId>org.netbeans.api</groupId>
+	    <artifactId>org-openide-util</artifactId>
+	    <version>RELEASE802</version>
+	</dependency>
+
   </dependencies>
 </project>
