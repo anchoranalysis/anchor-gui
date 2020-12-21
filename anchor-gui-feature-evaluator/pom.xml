@@ -20,26 +20,26 @@
 	<dependency>
 		<groupId>org.netbeans.api</groupId>
 		<artifactId>org-netbeans-swing-outline</artifactId>
-		<version>RELEASE731</version>
+		<version>0.0.1</version>
 	</dependency>
 	
 	<dependency>
 		<groupId>org.netbeans.api</groupId>
 		<artifactId>org-openide-awt</artifactId>
-		<version>RELEASE731</version>
-	</dependency>
-	
-	<dependency>
-	    <groupId>org.netbeans.api</groupId>
-	    <artifactId>org-openide-util</artifactId>
-	    <version>RELEASE731</version>
+		<version>0.0.1</version>
 	</dependency>
 	
 	<dependency>
 		<groupId>org.netbeans.api</groupId>
 		<artifactId>org-openide-filesystems</artifactId>
-		<version>RELEASE731</version>
+		<version>0.0.1</version>
 	</dependency>
-	
+
+	<dependency>
+	    <groupId>visualvm</groupId>
+	    <artifactId>org-openide-util</artifactId>
+	    <version>0.0.1</version>
+	</dependency>
+
   </dependencies>
 </project>
