@@ -55,7 +55,7 @@ public class MarkProposerEvaluatorUtilities {
         }
 
         MarkWithPosition meCast = (MarkWithPosition) me;
-        meCast.setPos(position);
+        meCast.setPosition(position);
 
         return me;
     }

@@ -41,8 +41,11 @@ import org.anchoranalysis.gui.kernel.match.MatchKernelAnyChangedMarksFoundIn;
 import org.anchoranalysis.gui.kernel.match.MatchKernelExecutionTimeGreaterThanEquals;
 import org.anchoranalysis.gui.kernel.match.MatchKernelProp;
 import org.anchoranalysis.mpp.feature.energy.marks.VoxelizedMarksWithEnergy;
+import org.anchoranalysis.mpp.feature.mark.UpdatableMarksList;
 import org.anchoranalysis.mpp.segment.bean.kernel.proposer.KernelProposer;
 import org.anchoranalysis.mpp.segment.kernel.proposer.WeightedKernel;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 
 public class KernelMatchPanel {
 
@@ -66,7 +69,7 @@ public class KernelMatchPanel {
     private static final int MARKSELECTION_ANY = 1;
     private static final int MARKSELECTION_ALL = 0;
 
-    public KernelMatchPanel(KernelProposer<VoxelizedMarksWithEnergy> kernelProposer) {
+    public KernelMatchPanel(KernelProposer<VoxelizedMarksWithEnergy,UpdatableMarksList> kernelProposer) {
 
         delegate.setLayout(new GridLayout(6, 2));
 
@@ -76,7 +79,7 @@ public class KernelMatchPanel {
             comboKernelType.addItem(new NameIntValue("any", -1));
 
             for (int i = 0; i < kernelProposer.getNumberKernels(); i++) {
-                WeightedKernel<VoxelizedMarksWithEnergy> kf =
+                WeightedKernel<VoxelizedMarksWithEnergy,UpdatableMarksList> kf =
                         kernelProposer.getAllKernelFactories().get(i);
                 comboKernelType.addItem(new NameIntValue(kf.getName(), i));
             }
@@ -190,19 +193,10 @@ public class KernelMatchPanel {
         return delegate;
     }
 
+    @AllArgsConstructor
     private static class NameIntValue {
         private String name;
-        private int value;
-
-        public NameIntValue(String name, int value) {
-            super();
-            this.name = name;
-            this.value = value;
-        }
-
-        public int getValue() {
-            return value;
-        }
+        @Getter private int value;
 
         @Override
         public String toString() {

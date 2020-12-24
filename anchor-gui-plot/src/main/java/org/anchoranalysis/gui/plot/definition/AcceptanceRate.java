@@ -39,7 +39,7 @@ public class AcceptanceRate extends PlotDefinition {
 
     // START REQUIRED ARGUMENTS
     private final int windowSize;
-    private final WeightedKernelList<?> kernelFactoryList;
+    private final WeightedKernelList<?,?> kernelFactoryList;
     // END REQUIRED ARGUMENTS
 
     private Aggregator aggregator;
@@ -55,7 +55,7 @@ public class AcceptanceRate extends PlotDefinition {
                 SimpleXYChartDescriptor.decimal(0, 500, 0, 0.001d, true, windowSize);
 
         descriptor.addLineItems("all");
-        for (WeightedKernel<?> kf : kernelFactoryList) {
+        for (WeightedKernel<?,?> kf : kernelFactoryList) {
             descriptor.addLineItems(kf.getName());
         }
 
@@ -66,7 +66,7 @@ public class AcceptanceRate extends PlotDefinition {
         details[i++] = "Iteration";
         details[i++] = "Time";
         details[i++] = "all";
-        for (WeightedKernel<?> kf : kernelFactoryList) {
+        for (WeightedKernel<?,?> kf : kernelFactoryList) {
             details[i++] = kf.getName();
         }
 

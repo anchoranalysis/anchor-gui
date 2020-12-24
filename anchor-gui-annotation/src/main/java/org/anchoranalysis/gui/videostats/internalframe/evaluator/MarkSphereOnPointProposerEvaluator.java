@@ -70,7 +70,7 @@ public class MarkSphereOnPointProposerEvaluator implements ProposalOperationCrea
 
             Sphere markSphere = new Sphere();
             markSphere.setRadius(1);
-            markSphere.setPos(position);
+            markSphere.setPosition(position);
 
             proposedMarks.getMarksCore().add(markSphere);
             proposedMarks.getMarksToRedraw().add(markSphere);

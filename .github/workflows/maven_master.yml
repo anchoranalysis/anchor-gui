@@ -47,7 +47,8 @@ jobs:
     - name: Build with Maven
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      run: mvn --batch-mode --update-snapshots deploy
+      run: mvn --batch-mode --update-snapshots clean javadoc:jar source:jar deploy
+      run: mvn --batch-mode javadoc:jar deploy
       
   sonarcloud:
 
