@@ -54,6 +54,7 @@ import org.anchoranalysis.gui.property.PropertyValueChangeListener;
 import org.anchoranalysis.gui.reassign.SimpleToggleAction;
 import org.anchoranalysis.gui.videostats.link.IntArray;
 import org.anchoranalysis.mpp.feature.energy.marks.VoxelizedMarksWithEnergy;
+import org.anchoranalysis.mpp.feature.mark.UpdatableMarksList;
 import org.anchoranalysis.mpp.segment.bean.kernel.proposer.KernelProposer;
 import org.anchoranalysis.mpp.segment.kernel.proposer.KernelDescision;
 import org.anchoranalysis.mpp.segment.kernel.proposer.WeightedKernel;
@@ -66,11 +67,11 @@ public class KernelIterDescriptionNavigatorPanel extends StatePanel<KernelDescis
     private JTextArea label;
     private ProposerFailureDescriptionPanel kernelFailurePanel;
 
-    private KernelProposer<VoxelizedMarksWithEnergy> kernelProposer;
+    private KernelProposer<VoxelizedMarksWithEnergy,UpdatableMarksList> kernelProposer;
 
     private int currentIndex;
 
-    private BoundedIndexContainer<KernelDescision> cntr;
+    private BoundedIndexContainer<KernelDescision> container;
 
     private EventListenerList listeners = new EventListenerList();
 
@@ -84,22 +85,22 @@ public class KernelIterDescriptionNavigatorPanel extends StatePanel<KernelDescis
     private int loopUntilIndex(int startIndex, boolean forward, MatchKernel match)
             throws GetOperationFailedException {
 
-        int currentIndex = startIndex;
+        int indexIteration = startIndex;
         while (true) {
 
-            currentIndex =
-                    forward ? cntr.nextIndex(currentIndex) : cntr.previousIndex(currentIndex);
+            indexIteration =
+                    forward ? container.nextIndex(indexIteration) : container.previousIndex(indexIteration);
 
             // No more to go
-            if (currentIndex == -1) {
+            if (indexIteration == -1) {
                 return -1;
             }
 
-            KernelDescision kid = cntr.get(currentIndex);
+            KernelDescision kid = container.get(indexIteration);
 
             // Does it meet our criteria
             if (match.matches(kid)) {
-                return currentIndex;
+                return indexIteration;
             }
         }
     }
@@ -159,11 +160,11 @@ public class KernelIterDescriptionNavigatorPanel extends StatePanel<KernelDescis
     }
 
     public KernelIterDescriptionNavigatorPanel(
-            BoundedIndexContainer<KernelDescision> cntr,
-            KernelProposer<VoxelizedMarksWithEnergy> kernelProposer) {
+            BoundedIndexContainer<KernelDescision> container,
+            KernelProposer<VoxelizedMarksWithEnergy,UpdatableMarksList> kernelProposer) {
 
         this.kernelProposer = kernelProposer;
-        this.cntr = cntr;
+        this.container = container;
 
         init();
     }
@@ -253,7 +254,7 @@ public class KernelIterDescriptionNavigatorPanel extends StatePanel<KernelDescis
 
         String newline = System.getProperty("line.separator");
 
-        WeightedKernel<VoxelizedMarksWithEnergy> kernelFactory =
+        WeightedKernel<VoxelizedMarksWithEnergy,UpdatableMarksList> kernelFactory =
                 kernelProposer.getAllKernelFactories().get(state.getId());
 
         StringBuilder s = new StringBuilder();

@@ -29,6 +29,7 @@ package org.anchoranalysis.plugin.gui.bean.graphdefinition.line;
 import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.gui.finder.csvstatistic.CSVStatistic;
 import org.anchoranalysis.mpp.feature.energy.marks.VoxelizedMarksWithEnergy;
+import org.anchoranalysis.mpp.feature.mark.UpdatableMarksList;
 import org.anchoranalysis.mpp.segment.bean.kernel.proposer.KernelProposer;
 import org.anchoranalysis.plot.bean.colorscheme.PlotColorScheme;
 import org.anchoranalysis.plot.index.LinePlot.YValGetter;
@@ -36,7 +37,7 @@ import org.anchoranalysis.plot.index.LinePlot.YValGetter;
 public class GraphDefinitionLineIterVsKernelProp extends GraphDefinitionLineIterVsCSVStatistic {
 
     public GraphDefinitionLineIterVsKernelProp(
-            KernelProposer<VoxelizedMarksWithEnergy> kernelProposer,
+            KernelProposer<VoxelizedMarksWithEnergy,UpdatableMarksList> kernelProposer,
             final int index,
             PlotColorScheme graphColorScheme) {
 

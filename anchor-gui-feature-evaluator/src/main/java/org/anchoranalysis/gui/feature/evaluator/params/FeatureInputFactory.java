@@ -29,7 +29,7 @@ package org.anchoranalysis.gui.feature.evaluator.params;
 import org.anchoranalysis.core.exception.CreateException;
 import org.anchoranalysis.feature.energy.EnergyStack;
 import org.anchoranalysis.feature.input.FeatureInput;
-import org.anchoranalysis.mpp.feature.mark.MemoCollection;
+import org.anchoranalysis.mpp.feature.mark.EnergyMemoList;
 import org.anchoranalysis.mpp.mark.voxelized.memo.VoxelizedMarkMemo;
 
 public interface FeatureInputFactory {
@@ -39,7 +39,7 @@ public interface FeatureInputFactory {
     FeatureInput create(VoxelizedMarkMemo pmm1, VoxelizedMarkMemo pmm2, EnergyStack raster)
             throws CreateException;
 
-    FeatureInput create(MemoCollection pmmhList, EnergyStack raster) throws CreateException;
+    FeatureInput create(EnergyMemoList pmmhList, EnergyStack raster) throws CreateException;
 
     boolean isPairwiseSupported();
 

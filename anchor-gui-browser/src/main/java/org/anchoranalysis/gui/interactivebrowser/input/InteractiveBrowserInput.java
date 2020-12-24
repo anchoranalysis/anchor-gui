@@ -73,7 +73,7 @@ public class InteractiveBrowserInput implements InputFromManager {
     public FeatureListSrc createFeatureListSrc(CommonContext context) throws CreateException {
 
         SharedObjects so = new SharedObjects(context);
-        KeyValueParamsInitParams soParams = KeyValueParamsInitParams.create(so);
+        KeyValueParamsInitParams soParams = new KeyValueParamsInitParams(so);
         SharedFeaturesInitParams soFeature = SharedFeaturesInitParams.create(so);
 
         try {
@@ -96,7 +96,7 @@ public class InteractiveBrowserInput implements InputFromManager {
 
         for (NamedBean<KeyValueParamsProvider> provider :
                 this.namedItemKeyValueParamsProviderList) {
-            soParams.getNamedKeyValueParamsCollection()
+            soParams.getNamedKeyValueParams()
                     .add(provider.getName(), cachedCreationFromProvider(provider.getValue()));
         }
     }
@@ -104,7 +104,7 @@ public class InteractiveBrowserInput implements InputFromManager {
     private void addFilePaths(KeyValueParamsInitParams soParams) throws OperationFailedException {
 
         for (NamedBean<FilePathProvider> provider : this.namedItemFilePathProviderList) {
-            soParams.getNamedFilePathCollection()
+            soParams.getNamedFilePaths()
                     .add(provider.getName(), cachedCreationFromProvider(provider.getValue()));
         }
     }

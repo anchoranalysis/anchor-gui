@@ -29,7 +29,7 @@ package org.anchoranalysis.gui.feature.evaluator.params;
 import org.anchoranalysis.core.exception.CreateException;
 import org.anchoranalysis.feature.energy.EnergyStack;
 import org.anchoranalysis.feature.input.FeatureInput;
-import org.anchoranalysis.mpp.feature.mark.MemoCollection;
+import org.anchoranalysis.mpp.feature.mark.EnergyMemoList;
 import org.anchoranalysis.mpp.mark.voxelized.memo.VoxelizedMarkMemo;
 
 public abstract class PairwiseFactory implements FeatureInputFactory {
@@ -41,7 +41,7 @@ public abstract class PairwiseFactory implements FeatureInputFactory {
     }
 
     @Override
-    public FeatureInput create(MemoCollection pmmhList, EnergyStack raster) throws CreateException {
+    public FeatureInput create(EnergyMemoList pmmhList, EnergyStack raster) throws CreateException {
         throw new CreateException("unsupported");
     }
 

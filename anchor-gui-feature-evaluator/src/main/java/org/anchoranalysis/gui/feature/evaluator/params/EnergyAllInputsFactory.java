@@ -30,12 +30,12 @@ import org.anchoranalysis.core.exception.CreateException;
 import org.anchoranalysis.feature.energy.EnergyStack;
 import org.anchoranalysis.feature.input.FeatureInput;
 import org.anchoranalysis.mpp.feature.input.memo.FeatureInputAllMemo;
-import org.anchoranalysis.mpp.feature.mark.MemoCollection;
+import org.anchoranalysis.mpp.feature.mark.EnergyMemoList;
 
 public class EnergyAllInputsFactory extends AllFactory {
 
     @Override
-    public FeatureInput create(MemoCollection pmmhList, EnergyStack raster) throws CreateException {
+    public FeatureInput create(EnergyMemoList pmmhList, EnergyStack raster) throws CreateException {
         return new FeatureInputAllMemo(pmmhList, raster);
     }
 }

@@ -29,7 +29,7 @@ package org.anchoranalysis.gui.interactivebrowser.openfile.type;
 import java.io.File;
 import java.util.List;
 import java.util.Optional;
-import org.anchoranalysis.bean.xml.BeanXmlLoader;
+import org.anchoranalysis.bean.xml.BeanXMLLoader;
 import org.anchoranalysis.bean.xml.exception.BeanXmlException;
 import org.anchoranalysis.core.exception.CreateException;
 import org.anchoranalysis.core.format.NonImageFileFormat;
@@ -54,7 +54,7 @@ public class XMLBean extends OpenFileTypeSingle {
             throws CreateException {
 
         try {
-            Object bean = BeanXmlLoader.loadBean(f.toPath());
+            Object bean = BeanXMLLoader.loadBean(f.toPath());
             return importBean(bean, f, importerSettings.getBeanImporters());
 
         } catch (BeanXmlException e) {
