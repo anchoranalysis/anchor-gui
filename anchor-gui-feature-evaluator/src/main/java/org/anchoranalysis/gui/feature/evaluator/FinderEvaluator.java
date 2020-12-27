@@ -122,7 +122,7 @@ class FinderEvaluator {
             return null;
         }
 
-        EdgeTester edgeTester = new EdgeTester(raster, sharedFeatureList, logger);
+        EdgeEvaluator edgeTester = new EdgeEvaluator(raster, sharedFeatureList, logger);
 
         // We loop through all permutations of selected Marks, and test if a pair
         //  can be found amongst them
@@ -150,7 +150,7 @@ class FinderEvaluator {
         return null;
     }
 
-    public static class EdgeTester {
+    public static class EdgeEvaluator {
 
         // WE HARDCODE AN OVERLAP CRITERIA FOR NOW
         private AddCriteriaPair addCriteria = new BoundingBoxIntersection();
@@ -161,7 +161,7 @@ class FinderEvaluator {
         private EnergyStack raster;
         private Optional<FeatureCalculatorMulti<FeatureInputPairMemo>> session;
 
-        public EdgeTester(EnergyStack raster, SharedFeatureMulti sharedFeatureList, Logger logger)
+        public EdgeEvaluator(EnergyStack raster, SharedFeatureMulti sharedFeatureList, Logger logger)
                 throws CreateException {
 
             this.raster = raster;
