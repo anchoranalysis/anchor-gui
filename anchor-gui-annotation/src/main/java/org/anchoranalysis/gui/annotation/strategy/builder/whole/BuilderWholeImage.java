@@ -125,7 +125,7 @@ public class BuilderWholeImage
     @Override
     public int heightNonImagePanel() {
         // Formula based on observed pixel size of components in Windows
-        return 15 + (35 * getStrategy().groupedLabels().numGroups());
+        return 15 + (35 * getStrategy().groupedLabels().numberGroups());
     }
 
     @Override
