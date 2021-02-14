@@ -95,11 +95,10 @@ public class MarksProposerMouseClickAdapter extends MouseAdapter {
                     evaluatorWithContext.get());
         } catch (ProposalAbnormalFailureException e) {
 
-            errorReporter.recordError(
+            errorReporter.recordErrorFormatted(
                     MarksProposerMouseClickAdapter.class,
-                    String.format(
                             "Failed to propose marks due to an abnormal error%n%s%n",
-                            e.friendlyMessageHierarchy()));
+                            e.friendlyMessageHierarchy());
         }
     }
 
