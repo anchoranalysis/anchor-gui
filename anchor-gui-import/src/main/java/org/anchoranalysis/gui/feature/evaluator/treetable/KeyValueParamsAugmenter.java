@@ -29,7 +29,7 @@ package org.anchoranalysis.gui.feature.evaluator.treetable;
 import org.anchoranalysis.core.exception.CreateException;
 import org.anchoranalysis.core.exception.OperationFailedException;
 import org.anchoranalysis.core.log.Logger;
-import org.anchoranalysis.core.value.KeyValueParams;
+import org.anchoranalysis.core.value.Dictionary;
 import org.anchoranalysis.feature.energy.EnergyStack;
 import org.anchoranalysis.feature.shared.SharedFeatureMulti;
 import org.anchoranalysis.mpp.feature.energy.scheme.EnergyScheme;
@@ -55,7 +55,7 @@ public class KeyValueParamsAugmenter {
         KeyValueParamsForImageCreator creator =
                 new KeyValueParamsForImageCreator(scheme, sharedFeatures, logger);
         try {
-            KeyValueParams kpvNew = creator.createParamsForImage(in.withoutParams());
+            Dictionary kpvNew = creator.createParamsForImage(in.withoutParams());
 
             return addParams(in, kpvNew);
 
@@ -64,11 +64,11 @@ public class KeyValueParamsAugmenter {
         }
     }
 
-    private static EnergyStack addParams(EnergyStack in, KeyValueParams toAdd)
+    private static EnergyStack addParams(EnergyStack in, Dictionary toAdd)
             throws OperationFailedException {
 
-        KeyValueParams dup = in.getParams().duplicate();
-        dup.putAll(toAdd);
+        Dictionary dup = in.getParams().duplicate();
+        dup.putCheck(toAdd);
 
         return in.copyChangeParams(dup);
     }

@@ -30,7 +30,7 @@ import lombok.Getter;
 import org.anchoranalysis.core.cache.CachedSupplier;
 import org.anchoranalysis.core.exception.CreateException;
 import org.anchoranalysis.core.exception.OperationFailedException;
-import org.anchoranalysis.core.value.KeyValueParams;
+import org.anchoranalysis.core.value.Dictionary;
 import org.anchoranalysis.feature.energy.EnergyStack;
 import org.anchoranalysis.mpp.bean.init.MPPInitParams;
 import org.anchoranalysis.mpp.bean.mark.MarkWithIdentifierFactory;
@@ -52,7 +52,7 @@ public class MarkEvaluatorResolved {
             CachedSupplier<MPPInitParams, CreateException> proposerSharedObjects,
             MarkWithIdentifierFactory markFactory,
             EnergyScheme energyScheme,
-            KeyValueParams params) {
+            Dictionary params) {
         super();
         this.operationCreateProposerSharedObjects = proposerSharedObjects;
         this.markFactory = markFactory;

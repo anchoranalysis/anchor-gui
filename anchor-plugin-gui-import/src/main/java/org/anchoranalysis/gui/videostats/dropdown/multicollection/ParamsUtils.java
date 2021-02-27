@@ -33,19 +33,19 @@ import org.anchoranalysis.core.exception.OperationFailedException;
 import org.anchoranalysis.core.identifier.provider.NamedProviderGetException;
 import org.anchoranalysis.core.identifier.provider.store.NamedProviderStore;
 import org.anchoranalysis.core.log.error.ErrorReporter;
-import org.anchoranalysis.core.value.KeyValueParams;
+import org.anchoranalysis.core.value.Dictionary;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 class ParamsUtils {
 
-    public static KeyValueParams apply(
-            NamedProviderStore<KeyValueParams> paramsCollection, ErrorReporter errorReporter) {
+    public static Dictionary apply(
+            NamedProviderStore<Dictionary> paramsCollection, ErrorReporter errorReporter) {
         if (paramsCollection.keys().size() > 1) {
 
             // TODO change
             // HARDCORE a default for when we have more than one
             try {
-                Optional<KeyValueParams> params = paramsCollection.getOptional("input_params");
+                Optional<Dictionary> params = paramsCollection.getOptional("input_params");
                 if (params.isPresent()) {
                     return params.get();
                 }
@@ -57,16 +57,16 @@ class ParamsUtils {
                     ParamsUtils.class,
                     new OperationFailedException(
                             "More than one params. Cannot choose between them."));
-            return new KeyValueParams();
+            return new Dictionary();
         } else if (paramsCollection.keys().size() == 1) {
             try {
                 return paramsCollection.getException(paramsCollection.keys().iterator().next());
             } catch (NamedProviderGetException e) {
                 errorReporter.recordError(ParamsUtils.class, e.summarize());
-                return new KeyValueParams();
+                return new Dictionary();
             }
         } else {
-            return new KeyValueParams();
+            return new Dictionary();
         }
     }
 }

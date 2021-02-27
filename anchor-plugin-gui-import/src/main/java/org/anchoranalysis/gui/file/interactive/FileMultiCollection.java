@@ -34,7 +34,7 @@ import org.anchoranalysis.core.exception.CreateException;
 import org.anchoranalysis.core.exception.InitException;
 import org.anchoranalysis.core.exception.OperationFailedException;
 import org.anchoranalysis.core.identifier.provider.store.LazyEvaluationStore;
-import org.anchoranalysis.core.value.KeyValueParams;
+import org.anchoranalysis.core.value.Dictionary;
 import org.anchoranalysis.gui.bean.filecreator.MarkCreatorParams;
 import org.anchoranalysis.gui.file.opened.OpenedFile;
 import org.anchoranalysis.gui.file.opened.OpenedFileGUIWithFile;
@@ -81,7 +81,7 @@ public class FileMultiCollection extends InteractiveFile {
                 new LazyEvaluationStore<>(OutputterDirectories.MARKS);
         input.marks().addToStore(markss);
 
-        LazyEvaluationStore<KeyValueParams> keyValueParams =
+        LazyEvaluationStore<Dictionary> keyValueParams =
                 new LazyEvaluationStore<>("keyValueParams");
         input.keyValueParams().addToStore(keyValueParams);
 

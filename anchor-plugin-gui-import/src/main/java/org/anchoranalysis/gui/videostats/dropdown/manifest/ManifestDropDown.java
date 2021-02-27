@@ -35,7 +35,7 @@ import org.anchoranalysis.core.identifier.provider.NamedProvider;
 import org.anchoranalysis.core.index.GetOperationFailedException;
 import org.anchoranalysis.core.index.bounded.BoundedIndexContainer;
 import org.anchoranalysis.core.index.bounded.SingleContainer;
-import org.anchoranalysis.core.value.KeyValueParams;
+import org.anchoranalysis.core.value.Dictionary;
 import org.anchoranalysis.feature.energy.EnergyStack;
 import org.anchoranalysis.gui.file.opened.OpenedFileGUI;
 import org.anchoranalysis.gui.finder.FinderEnergyStack;
@@ -180,9 +180,9 @@ public class ManifestDropDown {
         return finderEnergyStack;
     }
 
-    private FinderSerializedObject<KeyValueParams> createFinderGroupParams(
+    private FinderSerializedObject<Dictionary> createFinderGroupParams(
             VideoStatsModuleGlobalParams mpg) throws InitException {
-        final FinderSerializedObject<KeyValueParams> finderGroupParams =
+        final FinderSerializedObject<Dictionary> finderGroupParams =
                 new FinderSerializedObject<>("groupParams", mpg.getLogger().errorReporter());
         try {
             finderGroupParams.doFind(manifests.getJobManifest().get());
@@ -195,7 +195,7 @@ public class ManifestDropDown {
     private MarkEvaluatorSetForImage createMarkEvaluatorSet(
             MarkEvaluatorManager markEvaluatorManager,
             FinderStacksCombine finderStacks,
-            FinderSerializedObject<KeyValueParams> finderGroupParams)
+            FinderSerializedObject<Dictionary> finderGroupParams)
             throws InitException {
         try {
             return markEvaluatorManager.createSetForStackCollection(
@@ -225,7 +225,7 @@ public class ManifestDropDown {
         new AddObjects(delegate, manifests, finderEnergyStack, mpg, markDisplaySettings)
                 .apply(backgroundEnergy);
 
-        FinderSerializedObject<KeyValueParams> finderGroupParams = createFinderGroupParams(mpg);
+        FinderSerializedObject<Dictionary> finderGroupParams = createFinderGroupParams(mpg);
 
         inputOutputContext =
                 DropDownUtilities.createSubdirectoryContext(inputOutputContext, delegate.getName());

@@ -33,7 +33,7 @@ import org.anchoranalysis.core.exception.OperationFailedException;
 import org.anchoranalysis.core.identifier.provider.NamedProvider;
 import org.anchoranalysis.core.identifier.provider.store.NamedProviderStore;
 import org.anchoranalysis.core.progress.Progress;
-import org.anchoranalysis.core.value.KeyValueParams;
+import org.anchoranalysis.core.value.Dictionary;
 import org.anchoranalysis.gui.bean.filecreator.MarkCreatorParams;
 import org.anchoranalysis.gui.file.opened.OpenedFileGUI;
 import org.anchoranalysis.gui.interactivebrowser.MarkEvaluatorManager;
@@ -60,7 +60,7 @@ public class MultiCollectionDropDown {
     private TimeSequenceProviderSupplier rasterProvider;
     private NamedProvider<MarkCollection> marksCollection;
     private NamedProvider<ObjectCollection> objCollection;
-    private NamedProviderStore<KeyValueParams> paramsCollection;
+    private NamedProviderStore<Dictionary> paramsCollection;
     private boolean addProposerEvaluator;
 
     // A dropdown menu representing a particular manifest
@@ -68,7 +68,7 @@ public class MultiCollectionDropDown {
             TimeSequenceProviderSupplier rasterProvider,
             NamedProvider<MarkCollection> marksCollection,
             NamedProvider<ObjectCollection> objCollection,
-            NamedProviderStore<KeyValueParams> paramsCollection,
+            NamedProviderStore<Dictionary> paramsCollection,
             String name,
             boolean addProposerEvaluator) {
         this.rasterProvider = rasterProvider;
@@ -183,7 +183,7 @@ public class MultiCollectionDropDown {
         }
     }
 
-    private Optional<KeyValueParams> extractParams(VideoStatsModuleGlobalParams mpg) {
+    private Optional<Dictionary> extractParams(VideoStatsModuleGlobalParams mpg) {
         return Optional.of(ParamsUtils.apply(paramsCollection, mpg.getLogger().errorReporter()));
     }
 }

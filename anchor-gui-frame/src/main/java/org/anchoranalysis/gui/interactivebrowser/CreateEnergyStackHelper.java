@@ -32,7 +32,7 @@ import org.anchoranalysis.core.exception.CreateException;
 import org.anchoranalysis.core.functional.checked.CheckedSupplier;
 import org.anchoranalysis.core.identifier.provider.NamedProvider;
 import org.anchoranalysis.core.identifier.provider.NamedProviderGetException;
-import org.anchoranalysis.core.value.KeyValueParams;
+import org.anchoranalysis.core.value.Dictionary;
 import org.anchoranalysis.feature.energy.EnergyStack;
 import org.anchoranalysis.feature.energy.EnergyStackWithoutParams;
 import org.anchoranalysis.image.core.stack.Stack;
@@ -46,7 +46,7 @@ class CreateEnergyStackHelper {
     // purposes of good caching
     public static EnergyStack create(
             CheckedSupplier<MPPInitParams, ? extends Throwable> operationProposerSharedObjects,
-            KeyValueParams params)
+            Dictionary params)
             throws CreateException {
         try {
             MPPInitParams soMPP = operationProposerSharedObjects.get();
