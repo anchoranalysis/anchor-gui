@@ -36,7 +36,7 @@ public abstract class Node implements TreeNode {
 
     public abstract Feature<FeatureInput> getFeature();
 
-    protected abstract void updateValueSource(ParamsSource paramSource);
+    protected abstract void updateValueSource(FeatureInputSource paramSource);
 
     public abstract boolean hasError();
 

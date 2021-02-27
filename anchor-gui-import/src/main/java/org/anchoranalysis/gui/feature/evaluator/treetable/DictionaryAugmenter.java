@@ -26,49 +26,41 @@
 
 package org.anchoranalysis.gui.feature.evaluator.treetable;
 
+import lombok.AllArgsConstructor;
 import org.anchoranalysis.core.exception.CreateException;
 import org.anchoranalysis.core.exception.OperationFailedException;
 import org.anchoranalysis.core.log.Logger;
-import org.anchoranalysis.core.value.KeyValueParams;
+import org.anchoranalysis.core.value.Dictionary;
 import org.anchoranalysis.feature.energy.EnergyStack;
 import org.anchoranalysis.feature.shared.SharedFeatureMulti;
+import org.anchoranalysis.mpp.feature.energy.scheme.DictionaryForImageCreator;
 import org.anchoranalysis.mpp.feature.energy.scheme.EnergyScheme;
-import org.anchoranalysis.mpp.feature.energy.scheme.KeyValueParamsForImageCreator;
 
-public class KeyValueParamsAugmenter {
+@AllArgsConstructor
+public class DictionaryAugmenter {
 
     private EnergyScheme scheme;
     private SharedFeatureMulti sharedFeatures;
     private Logger logger;
 
-    public KeyValueParamsAugmenter(
-            EnergyScheme scheme, SharedFeatureMulti sharedFeatures, Logger logger) {
-        super();
-        this.scheme = scheme;
-        this.sharedFeatures = sharedFeatures;
-        this.logger = logger;
-    }
-
     public EnergyStack augmentParams(EnergyStack in) throws OperationFailedException {
 
         // We should add any image-params to the key value pairs
-        KeyValueParamsForImageCreator creator =
-                new KeyValueParamsForImageCreator(scheme, sharedFeatures, logger);
+        DictionaryForImageCreator creator =
+                new DictionaryForImageCreator(scheme, sharedFeatures, logger);
         try {
-            KeyValueParams kpvNew = creator.createParamsForImage(in.withoutParams());
-
-            return addParams(in, kpvNew);
+            return addDictionary(in, creator.create(in.withoutParams()));
 
         } catch (CreateException e) {
             throw new OperationFailedException(e);
         }
     }
 
-    private static EnergyStack addParams(EnergyStack in, KeyValueParams toAdd)
+    private static EnergyStack addDictionary(EnergyStack in, Dictionary toAdd)
             throws OperationFailedException {
 
-        KeyValueParams dup = in.getParams().duplicate();
-        dup.putAll(toAdd);
+        Dictionary dup = in.getDictionary().duplicate();
+        dup.putCheck(toAdd);
 
         return in.copyChangeParams(dup);
     }

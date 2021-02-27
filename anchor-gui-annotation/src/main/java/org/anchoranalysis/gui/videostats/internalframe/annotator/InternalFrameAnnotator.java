@@ -51,9 +51,9 @@ public class InternalFrameAnnotator {
         delegate.controllerAction().frame().setUseSplitPlane(false);
     }
 
-    public <T extends AnnotationInitParams> SliderState init(
+    public <T extends AnnotationInitialization> SliderState init(
             AnnotationGuiBuilder<T> annotation,
-            T paramsInit,
+            T initialization,
             DefaultModuleState defaultState,
             OutputWriteSettings outputWriteSettings,
             VideoStatsModuleGlobalParams mpg)
@@ -67,7 +67,7 @@ public class InternalFrameAnnotator {
                         0,
                         annotation.heightNonImagePanel(),
                         mpg.getGraphicsCurrentScreen(),
-                        paramsInit.getBackground().getDimensionsViewer());
+                        initialization.getBackground().getDimensionsViewer());
 
         SliderState sliderState = delegate.init(defaultState, mpg);
 
@@ -75,7 +75,8 @@ public class InternalFrameAnnotator {
 
         // Panel navigation and current-state-displayer
         PanelNavigation panelNavigation =
-                createSetupNavigationPanel(annotation, paramsInit, saveMonitor, sliderState, mpg);
+                createSetupNavigationPanel(
+                        annotation, initialization, saveMonitor, sliderState, mpg);
 
         delegate.controllerAction().order().setAsBottomComponent(panelNavigation.getPanel());
 
@@ -93,9 +94,9 @@ public class InternalFrameAnnotator {
         return delegate.controllerBackgroundMenu();
     }
 
-    private <T extends AnnotationInitParams> PanelNavigation createSetupNavigationPanel(
+    private <T extends AnnotationInitialization> PanelNavigation createSetupNavigationPanel(
             AnnotationGuiBuilder<T> annotation,
-            T paramsInit,
+            T initialization,
             SaveMonitor saveMonitor,
             SliderState sliderState,
             VideoStatsModuleGlobalParams mpg) {
@@ -111,8 +112,8 @@ public class InternalFrameAnnotator {
                         toolErrorReporter);
 
         PanelNavigation panelNavigation =
-                annotation.createInitPanelNavigation(
-                        paramsInit, params, createControllers(sliderState));
+                annotation.createPanelNavigation(
+                        initialization, params, createControllers(sliderState));
 
         showError.setPanelNavigation(panelNavigation);
 

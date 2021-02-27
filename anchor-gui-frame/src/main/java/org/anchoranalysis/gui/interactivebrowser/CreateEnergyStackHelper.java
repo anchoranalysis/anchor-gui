@@ -32,12 +32,12 @@ import org.anchoranalysis.core.exception.CreateException;
 import org.anchoranalysis.core.functional.checked.CheckedSupplier;
 import org.anchoranalysis.core.identifier.provider.NamedProvider;
 import org.anchoranalysis.core.identifier.provider.NamedProviderGetException;
-import org.anchoranalysis.core.value.KeyValueParams;
+import org.anchoranalysis.core.value.Dictionary;
 import org.anchoranalysis.feature.energy.EnergyStack;
 import org.anchoranalysis.feature.energy.EnergyStackWithoutParams;
 import org.anchoranalysis.image.core.stack.Stack;
 import org.anchoranalysis.image.core.stack.StackIdentifiers;
-import org.anchoranalysis.mpp.bean.init.MPPInitParams;
+import org.anchoranalysis.mpp.bean.init.MarksInitialization;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 class CreateEnergyStackHelper {
@@ -45,17 +45,17 @@ class CreateEnergyStackHelper {
     // We first retrieve a NamedImgCollection which we use to construct our real EnergyStack for
     // purposes of good caching
     public static EnergyStack create(
-            CheckedSupplier<MPPInitParams, ? extends Throwable> operationProposerSharedObjects,
-            KeyValueParams params)
+            CheckedSupplier<MarksInitialization, ? extends Throwable> supplyInitialization,
+            Dictionary dictionary)
             throws CreateException {
         try {
-            MPPInitParams soMPP = operationProposerSharedObjects.get();
+            MarksInitialization initialization = supplyInitialization.get();
 
             // We expects the keys to be the indexes
-            Stack stack = deriveEnergyStack(soMPP.getImage().stacks());
+            Stack stack = deriveEnergyStack(initialization.getImage().stacks());
 
             if (stack.getNumberChannels() > 0) {
-                return new EnergyStack(new EnergyStackWithoutParams(stack), params);
+                return new EnergyStack(new EnergyStackWithoutParams(stack), dictionary);
             } else {
                 throw new CreateException("The stack has no channels");
             }

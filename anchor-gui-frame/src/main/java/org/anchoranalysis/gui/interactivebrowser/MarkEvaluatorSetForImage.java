@@ -39,19 +39,19 @@ import org.anchoranalysis.core.exception.InitException;
 import org.anchoranalysis.core.exception.OperationFailedException;
 import org.anchoranalysis.core.identifier.provider.store.StoreSupplier;
 import org.anchoranalysis.core.progress.ProgressIgnore;
-import org.anchoranalysis.experiment.io.InitParamsContext;
+import org.anchoranalysis.experiment.io.InitializationContext;
 import org.anchoranalysis.image.core.stack.named.NamedStacksSupplier;
 import org.anchoranalysis.io.output.outputter.InputOutputContext;
-import org.anchoranalysis.mpp.bean.init.MPPInitParams;
+import org.anchoranalysis.mpp.bean.init.MarksInitialization;
 import org.anchoranalysis.mpp.feature.bean.mark.MarkEvaluator;
-import org.anchoranalysis.mpp.io.input.MPPInitParamsFactory;
+import org.anchoranalysis.mpp.io.input.MarksInitializationFactory;
 
 @RequiredArgsConstructor
 public class MarkEvaluatorSetForImage {
 
     // START REQUIRED ARGUMENTS
     private final NamedStacksSupplier namedStacks;
-    private final KeyValueParamsSupplier keyParams;
+    private final DictionarySupplier keyParams;
     private final InputOutputContext context;
     // END REQUIRED ARGUMENTS
 
@@ -59,14 +59,15 @@ public class MarkEvaluatorSetForImage {
 
     private class Resolved {
 
-        private CachedSupplier<MPPInitParams, CreateException> operationProposerSharedObjects;
+        private CachedSupplier<MarksInitialization, CreateException> operationProposerSharedObjects;
         private MarkEvaluator me;
 
         public Resolved(MarkEvaluator me) throws CreateException {
             this.me = me;
             operationProposerSharedObjects =
                     /// TODO Do we need this duplication?
-                    CachedSupplier.cache(() -> deriveInitParams(me.getDefine().duplicateBean()));
+                    CachedSupplier.cache(
+                            () -> deriveInitialization(me.getDefine().duplicateBean()));
 
             try {
                 // TODO owen, this is causing a bug in the annotorator, we need to get our feature
@@ -91,12 +92,12 @@ public class MarkEvaluatorSetForImage {
             }
         }
 
-        private MPPInitParams deriveInitParams(Define define) throws CreateException {
+        private MarksInitialization deriveInitialization(Define define) throws CreateException {
 
             // We initialise the markEvaluator
             try {
-                return MPPInitParamsFactory.createFromExistingCollections(
-                        new InitParamsContext(context),
+                return MarksInitializationFactory.createFromExistingCollections(
+                        new InitializationContext(context),
                         Optional.ofNullable(define),
                         Optional.of(namedStacks.get(ProgressIgnore.get())),
                         Optional.empty(),

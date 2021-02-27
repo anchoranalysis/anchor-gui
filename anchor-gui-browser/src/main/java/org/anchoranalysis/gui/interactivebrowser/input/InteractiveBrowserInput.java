@@ -33,8 +33,9 @@ import lombok.Getter;
 import lombok.Setter;
 import org.anchoranalysis.bean.NamedBean;
 import org.anchoranalysis.bean.provider.Provider;
-import org.anchoranalysis.bean.shared.params.keyvalue.KeyValueParamsInitParams;
-import org.anchoranalysis.bean.shared.params.keyvalue.KeyValueParamsProvider;
+import org.anchoranalysis.bean.shared.dictionary.DictionaryInitialization;
+import org.anchoranalysis.bean.shared.dictionary.DictionaryProvider;
+import org.anchoranalysis.bean.shared.path.FilePathInitialization;
 import org.anchoranalysis.core.exception.CreateException;
 import org.anchoranalysis.core.exception.OperationFailedException;
 import org.anchoranalysis.core.identifier.provider.store.SharedObjects;
@@ -42,7 +43,7 @@ import org.anchoranalysis.core.identifier.provider.store.StoreSupplier;
 import org.anchoranalysis.core.log.CommonContext;
 import org.anchoranalysis.feature.bean.list.FeatureListProvider;
 import org.anchoranalysis.feature.input.FeatureInput;
-import org.anchoranalysis.feature.shared.SharedFeaturesInitParams;
+import org.anchoranalysis.feature.shared.FeaturesInitialization;
 import org.anchoranalysis.gui.bean.filecreator.FileCreator;
 import org.anchoranalysis.gui.feature.evaluator.treetable.FeatureListSrc;
 import org.anchoranalysis.gui.interactivebrowser.openfile.importer.ImporterSettings;
@@ -60,51 +61,51 @@ public class InteractiveBrowserInput implements InputFromManager {
 
     @Setter private EnergySchemeCreator energySchemeCreator;
 
-    @Setter private List<NamedBean<FeatureListProvider<FeatureInput>>> namedItemSharedFeatureList;
+    @Setter private List<NamedBean<FeatureListProvider<FeatureInput>>> featureLists;
 
-    @Getter @Setter private List<NamedBean<MarkEvaluator>> namedItemMarkEvaluatorList;
+    @Getter @Setter private List<NamedBean<MarkEvaluator>> markEvaluators;
 
-    @Setter private List<NamedBean<KeyValueParamsProvider>> namedItemKeyValueParamsProviderList;
+    @Setter private List<NamedBean<DictionaryProvider>> dictionaries;
 
-    @Setter private List<NamedBean<FilePathProvider>> namedItemFilePathProviderList;
+    @Setter private List<NamedBean<FilePathProvider>> filePaths;
 
     @Getter @Setter private ImporterSettings importerSettings;
 
     public FeatureListSrc createFeatureListSrc(CommonContext context) throws CreateException {
 
-        SharedObjects so = new SharedObjects(context);
-        KeyValueParamsInitParams soParams = new KeyValueParamsInitParams(so);
-        SharedFeaturesInitParams soFeature = SharedFeaturesInitParams.create(so);
+        SharedObjects sharedObjects = new SharedObjects(context);
+        FeaturesInitialization initialization = FeaturesInitialization.create(sharedObjects);
 
         try {
             // Adds the feature-lists to the shared-objects
-            soFeature.populate(namedItemSharedFeatureList, context.getLogger());
+            initialization.populate(featureLists, context.getLogger());
 
-            addKeyValueParams(soParams);
-            addFilePaths(soParams);
-
-            // so.g
+            addDictionary(initialization.getDictionary());
+            addFilePaths(initialization.getFilePaths());
         } catch (OperationFailedException e) {
             throw new CreateException(e);
         }
 
-        return new FeatureListSrcBuilder(context.getLogger()).build(soFeature, energySchemeCreator);
+        return new FeatureListSrcBuilder(context.getLogger())
+                .build(initialization, energySchemeCreator);
     }
 
-    private void addKeyValueParams(KeyValueParamsInitParams soParams)
+    private void addDictionary(DictionaryInitialization initialization)
             throws OperationFailedException {
 
-        for (NamedBean<KeyValueParamsProvider> provider :
-                this.namedItemKeyValueParamsProviderList) {
-            soParams.getNamedKeyValueParams()
+        for (NamedBean<DictionaryProvider> provider : this.dictionaries) {
+            initialization
+                    .getDictionaries()
                     .add(provider.getName(), cachedCreationFromProvider(provider.getValue()));
         }
     }
 
-    private void addFilePaths(KeyValueParamsInitParams soParams) throws OperationFailedException {
+    private void addFilePaths(FilePathInitialization initialization)
+            throws OperationFailedException {
 
-        for (NamedBean<FilePathProvider> provider : this.namedItemFilePathProviderList) {
-            soParams.getNamedFilePaths()
+        for (NamedBean<FilePathProvider> provider : this.filePaths) {
+            initialization
+                    .getFilePaths()
                     .add(provider.getName(), cachedCreationFromProvider(provider.getValue()));
         }
     }

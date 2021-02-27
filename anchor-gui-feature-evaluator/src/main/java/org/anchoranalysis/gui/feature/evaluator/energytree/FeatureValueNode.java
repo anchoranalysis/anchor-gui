@@ -51,7 +51,7 @@ class FeatureValueNode extends FeatureListNode {
     public FeatureValueNode(
             Feature<FeatureInput> parentFeature,
             TreeNode parentNode,
-            ParamsSource params,
+            FeatureInputSource params,
             ErrorReporter errorReporter) {
         super(errorReporter);
 
@@ -72,16 +72,17 @@ class FeatureValueNode extends FeatureListNode {
         initChildFeatures(childFeatures, createChildParam(parentFeature, params, childFeatures));
     }
 
-    private static ParamsSource createChildParam(
+    private static FeatureInputSource createChildParam(
             Feature<FeatureInput> parentFeature,
-            ParamsSource parentParams,
+            FeatureInputSource parentParams,
             FeatureList<FeatureInput> childFeatures) {
         return parentParams;
     }
 
     @Override
-    protected void updateValueSource(ParamsSource paramsSource) {
-        ParamsSource childParams = createChildParam(parentFeature, paramsSource, childFeatures);
+    protected void updateValueSource(FeatureInputSource paramsSource) {
+        FeatureInputSource childParams =
+                createChildParam(parentFeature, paramsSource, childFeatures);
         super.updateValueSource(childParams);
     }
 

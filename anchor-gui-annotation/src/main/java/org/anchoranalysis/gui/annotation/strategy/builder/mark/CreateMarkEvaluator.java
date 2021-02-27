@@ -34,7 +34,7 @@ import lombok.NoArgsConstructor;
 import org.anchoranalysis.core.exception.CreateException;
 import org.anchoranalysis.core.functional.OptionalUtilities;
 import org.anchoranalysis.core.log.Logger;
-import org.anchoranalysis.core.value.KeyValueParams;
+import org.anchoranalysis.core.value.Dictionary;
 import org.anchoranalysis.gui.annotation.mark.MarkAnnotator;
 import org.anchoranalysis.gui.interactivebrowser.MarkEvaluatorManager;
 import org.anchoranalysis.gui.interactivebrowser.MarkEvaluatorSetForImage;
@@ -71,16 +71,16 @@ class CreateMarkEvaluator {
                 stacks, () -> paramsFromGenerator(pathForBinding, strategy.paramsDeriver()));
     }
 
-    private static Optional<KeyValueParams> paramsFromGenerator(
+    private static Optional<Dictionary> paramsFromGenerator(
             Path pathForBinding, Optional<DerivePath> derivePath) throws IOException {
         return OptionalUtilities.map(
                 derivePath, generator -> readParams(generator, pathForBinding));
     }
 
-    private static KeyValueParams readParams(DerivePath derivePath, Path pathForBinding)
+    private static Dictionary readParams(DerivePath derivePath, Path pathForBinding)
             throws IOException {
         try {
-            return KeyValueParams.readFromFile(
+            return Dictionary.readFromFile(
                     PathFromGenerator.derivePath(derivePath, pathForBinding));
         } catch (DerivePathException e) {
             throw new IOException(e);

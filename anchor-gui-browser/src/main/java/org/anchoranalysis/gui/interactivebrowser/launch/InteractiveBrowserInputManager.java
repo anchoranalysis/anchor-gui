@@ -33,7 +33,7 @@ import lombok.Setter;
 import org.anchoranalysis.bean.NamedBean;
 import org.anchoranalysis.bean.annotation.BeanField;
 import org.anchoranalysis.bean.annotation.OptionalBean;
-import org.anchoranalysis.bean.shared.params.keyvalue.KeyValueParamsProvider;
+import org.anchoranalysis.bean.shared.dictionary.DictionaryProvider;
 import org.anchoranalysis.feature.bean.list.FeatureListProvider;
 import org.anchoranalysis.feature.input.FeatureInput;
 import org.anchoranalysis.gui.bean.filecreator.FileCreator;
@@ -55,18 +55,16 @@ public class InteractiveBrowserInputManager
     @BeanField @OptionalBean @Getter @Setter private EnergySchemeCreator energySchemeCreator;
 
     @BeanField @Getter @Setter
-    private List<NamedBean<FeatureListProvider<FeatureInput>>> namedItemSharedFeatureList =
-            new ArrayList<>();
+    private List<NamedBean<FeatureListProvider<FeatureInput>>> featuresShared = new ArrayList<>();
 
     @BeanField @Getter @Setter
-    private List<NamedBean<MarkEvaluator>> namedItemMarkEvaluatorList = new ArrayList<>();
+    private List<NamedBean<MarkEvaluator>> markEvaluators = new ArrayList<>();
 
     @BeanField @OptionalBean @Getter @Setter
-    private List<NamedBean<KeyValueParamsProvider>> namedItemKeyValueParamsProviderList =
-            new ArrayList<>();
+    private List<NamedBean<DictionaryProvider>> dictionaries = new ArrayList<>();
 
     @BeanField @OptionalBean @Getter @Setter
-    private List<NamedBean<FilePathProvider>> namedItemFilePathProviderList = new ArrayList<>();
+    private List<NamedBean<FilePathProvider>> filePaths = new ArrayList<>();
 
     @BeanField @Getter @Setter private ImporterSettings importerSettings;
     // END BEAN PROPERTIES
@@ -79,18 +77,18 @@ public class InteractiveBrowserInputManager
         input.setListFileCreators(listFileCreators);
         input.setStackReader(getStackReader());
         input.setEnergySchemeCreator(energySchemeCreator);
-        input.setNamedItemSharedFeatureList(namedItemSharedFeatureList);
-        input.setNamedItemMarkEvaluatorList(namedItemMarkEvaluatorList);
-        input.setNamedItemKeyValueParamsProviderList(namedItemKeyValueParamsProviderList);
-        input.setNamedItemFilePathProviderList(namedItemFilePathProviderList);
+        input.setFeatureLists(featuresShared);
+        input.setMarkEvaluators(markEvaluators);
+        input.setDictionaries(dictionaries);
+        input.setFilePaths(filePaths);
         input.setImporterSettings(importerSettings);
 
         return singletonList(input);
     }
 
     private static <T> List<T> singletonList(T elem) {
-        List<T> singletonList = new ArrayList<>();
-        singletonList.add(elem);
-        return singletonList;
+        List<T> list = new ArrayList<>();
+        list.add(elem);
+        return list;
     }
 }

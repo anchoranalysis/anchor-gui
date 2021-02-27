@@ -47,14 +47,15 @@ abstract class FeatureListNode extends Node {
     private FeatureList<FeatureInput> childFeatures;
 
     private List<FeatureValueNode> nodes = null;
-    private ParamsSource params;
+    private FeatureInputSource params;
     private ErrorReporter errorReporter;
 
     public FeatureListNode(ErrorReporter errorReporter) {
         this.errorReporter = errorReporter;
     }
 
-    protected void initChildFeatures(FeatureList<FeatureInput> features, ParamsSource params) {
+    protected void initChildFeatures(
+            FeatureList<FeatureInput> features, FeatureInputSource params) {
         // Sort out features in alphabetical order
         this.childFeatures =
                 features.sort((f1, f2) -> f1.getFriendlyName().compareTo(f2.getFriendlyName()));
@@ -66,7 +67,7 @@ abstract class FeatureListNode extends Node {
     }
 
     @Override
-    protected void updateValueSource(ParamsSource params) {
+    protected void updateValueSource(FeatureInputSource params) {
 
         this.params = params;
 
@@ -195,7 +196,9 @@ abstract class FeatureListNode extends Node {
      * here. TODO Fix
      */
     private static ResultsVector calculateSubsetSuppressErrors(
-            FeatureList<FeatureInput> features, ParamsSource params, ErrorReporter errorReporter) {
+            FeatureList<FeatureInput> features,
+            FeatureInputSource params,
+            ErrorReporter errorReporter) {
         ResultsVector res = new ResultsVector(features.size());
 
         for (int i = 0; i < features.size(); i++) {

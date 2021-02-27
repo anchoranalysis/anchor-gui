@@ -41,7 +41,7 @@ import org.anchoranalysis.core.log.CommonContext;
 import org.anchoranalysis.core.progress.Progress;
 import org.anchoranalysis.feature.bean.list.FeatureListProvider;
 import org.anchoranalysis.feature.input.FeatureInput;
-import org.anchoranalysis.feature.shared.SharedFeaturesInitParams;
+import org.anchoranalysis.feature.shared.FeaturesInitialization;
 import org.anchoranalysis.gui.feature.evaluator.treetable.FeatureListSrc;
 import org.anchoranalysis.gui.interactivebrowser.IOpenFile;
 import org.anchoranalysis.gui.interactivebrowser.input.FeatureListSrcBuilder;
@@ -78,7 +78,7 @@ public class FileFeatureEvaluatorCreator extends FileCreator {
 
         try {
             FeatureEvaluatorCreator creator =
-                    new FeatureEvaluatorCreator(createSrc(mpg.getContext()), mpg.getLogger());
+                    new FeatureEvaluatorCreator(createSource(mpg.getContext()), mpg.getLogger());
             return creator.createVideoStatsModule(adder);
 
         } catch (CreateException e) {
@@ -86,15 +86,15 @@ public class FileFeatureEvaluatorCreator extends FileCreator {
         }
     }
 
-    private FeatureListSrc createSrc(CommonContext context) throws CreateException {
+    private FeatureListSrc createSource(CommonContext context) throws CreateException {
         return new FeatureListSrcBuilder(context.getLogger())
-                .build(createInitParams(context), energySchemeCreator);
+                .build(createInitialization(context), energySchemeCreator);
     }
 
-    private SharedFeaturesInitParams createInitParams(CommonContext context)
+    private FeaturesInitialization createInitialization(CommonContext context)
             throws CreateException {
-        SharedFeaturesInitParams soFeature =
-                SharedFeaturesInitParams.create(new SharedObjects(context));
+        FeaturesInitialization soFeature =
+                FeaturesInitialization.create(new SharedObjects(context));
         try {
             soFeature.populate(listFeatures, context.getLogger());
         } catch (OperationFailedException e) {

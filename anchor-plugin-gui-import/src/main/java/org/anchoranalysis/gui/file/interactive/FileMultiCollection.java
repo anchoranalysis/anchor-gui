@@ -34,7 +34,7 @@ import org.anchoranalysis.core.exception.CreateException;
 import org.anchoranalysis.core.exception.InitException;
 import org.anchoranalysis.core.exception.OperationFailedException;
 import org.anchoranalysis.core.identifier.provider.store.LazyEvaluationStore;
-import org.anchoranalysis.core.value.KeyValueParams;
+import org.anchoranalysis.core.value.Dictionary;
 import org.anchoranalysis.gui.bean.filecreator.MarkCreatorParams;
 import org.anchoranalysis.gui.file.opened.OpenedFile;
 import org.anchoranalysis.gui.file.opened.OpenedFileGUIWithFile;
@@ -77,13 +77,12 @@ public class FileMultiCollection extends InteractiveFile {
                 new LazyEvaluationStore<>(OutputterDirectories.STACKS);
         input.stack().addToStore(stacks);
 
-        LazyEvaluationStore<MarkCollection> markss =
+        LazyEvaluationStore<MarkCollection> marks =
                 new LazyEvaluationStore<>(OutputterDirectories.MARKS);
-        input.marks().addToStore(markss);
+        input.marks().addToStore(marks);
 
-        LazyEvaluationStore<KeyValueParams> keyValueParams =
-                new LazyEvaluationStore<>("keyValueParams");
-        input.keyValueParams().addToStore(keyValueParams);
+        LazyEvaluationStore<Dictionary> dictionary = new LazyEvaluationStore<>("dictionaries");
+        input.dictionary().addToStore(dictionary);
 
         LazyEvaluationStore<ObjectCollection> objects =
                 new LazyEvaluationStore<>("object-collections");
@@ -92,9 +91,9 @@ public class FileMultiCollection extends InteractiveFile {
         MultiCollectionDropDown dropDown =
                 new MultiCollectionDropDown(
                         progress -> createTimeSequenceProvider(stacks),
-                        markss,
+                        marks,
                         objects,
-                        keyValueParams,
+                        dictionary,
                         identifier(),
                         true);
 

@@ -1,6 +1,6 @@
 /*-
  * #%L
- * anchor-gui-feature-evaluator
+ * anchor-gui-annotation
  * %%
  * Copyright (C) 2010 - 2020 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann-La Roche
  * %%
@@ -24,30 +24,23 @@
  * #L%
  */
 
-package org.anchoranalysis.gui.feature.evaluator.energytree;
+package org.anchoranalysis.gui.videostats.internalframe.annotator;
 
 import lombok.AllArgsConstructor;
-import org.anchoranalysis.core.exception.CreateException;
-import org.anchoranalysis.feature.bean.Feature;
-import org.anchoranalysis.feature.bean.list.FeatureListFactory;
-import org.anchoranalysis.feature.calculate.NamedFeatureCalculateException;
-import org.anchoranalysis.feature.input.FeatureInput;
-import org.anchoranalysis.feature.session.CreateFeatureInput;
-import org.anchoranalysis.feature.session.calculator.multi.FeatureCalculatorMulti;
+import org.anchoranalysis.gui.annotation.AnnotationBackgroundInstance;
+import org.anchoranalysis.image.core.dimensions.Dimensions;
 
 @AllArgsConstructor
-public class ParamsSource {
+public abstract class InitializationWithBackground implements AnnotationInitialization {
 
-    private CreateFeatureInput<FeatureInput> createParams;
-    private FeatureCalculatorMulti<FeatureInput> featureCalculator;
+    private AnnotationBackgroundInstance annotationBackground;
 
-    public double calc(Feature<FeatureInput> feature) throws NamedFeatureCalculateException {
-        try {
-            FeatureInput params = createParams.createForFeature(feature);
-            return featureCalculator.calculate(params, FeatureListFactory.from(feature)).get(0);
+    public Dimensions dimensionsViewer() {
+        return annotationBackground.getDimensionsViewer();
+    }
 
-        } catch (CreateException e) {
-            throw new NamedFeatureCalculateException(e);
-        }
+    @Override
+    public AnnotationBackgroundInstance getBackground() {
+        return annotationBackground;
     }
 }

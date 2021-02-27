@@ -28,13 +28,13 @@ package org.anchoranalysis.gui.interactivebrowser;
 import java.io.IOException;
 import java.util.Optional;
 import org.anchoranalysis.core.cache.CachedSupplier;
-import org.anchoranalysis.core.value.KeyValueParams;
+import org.anchoranalysis.core.value.Dictionary;
 
-public interface KeyValueParamsSupplier {
+public interface DictionarySupplier {
 
-    Optional<KeyValueParams> get() throws IOException;
+    Optional<Dictionary> get() throws IOException;
 
-    public static KeyValueParamsSupplier cache(KeyValueParamsSupplier supplier) {
+    public static DictionarySupplier cache(DictionarySupplier supplier) {
         return CachedSupplier.cache(supplier::get)::get;
     }
 }

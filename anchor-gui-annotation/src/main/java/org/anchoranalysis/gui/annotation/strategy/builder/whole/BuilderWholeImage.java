@@ -57,7 +57,8 @@ import org.anchoranalysis.plugin.annotation.bean.strategy.ReadAnnotationFromFile
 import org.anchoranalysis.plugin.annotation.bean.strategy.WholeImageLabelStrategy;
 
 public class BuilderWholeImage
-        extends AnnotationGuiBuilderWithDelegate<InitParamsWholeImage, WholeImageLabelStrategy> {
+        extends AnnotationGuiBuilderWithDelegate<
+                InitializationWholeImage, WholeImageLabelStrategy> {
 
     private CreateAnnotationSummary createSummary;
 
@@ -68,7 +69,7 @@ public class BuilderWholeImage
     }
 
     @Override
-    public InitParamsWholeImage createInitParams(
+    public InitializationWholeImage createInitialization(
             ProgressMultiple progressMultiple,
             AnnotationGuiContext context,
             Logger logger,
@@ -79,15 +80,15 @@ public class BuilderWholeImage
             AnnotationBackgroundInstance background =
                     createBackground(progressMultiple, stacks().get(ProgressIgnore.get()));
 
-            return new InitParamsWholeImage(background, context.getAnnotationRefresher());
+            return new InitializationWholeImage(background, context.getAnnotationRefresher());
         } catch (OperationFailedException e) {
             throw new CreateException(e);
         }
     }
 
     @Override
-    public PanelNavigation createInitPanelNavigation(
-            InitParamsWholeImage paramsInit,
+    public PanelNavigation createPanelNavigation(
+            InitializationWholeImage initialization,
             AnnotationPanelParams params,
             AnnotationFrameControllers controllers) {
         PanelWithLabel buttonPanel =
@@ -98,7 +99,7 @@ public class BuilderWholeImage
                                 saveAnnotationClose(
                                         label,
                                         createWriter(
-                                                paramsInit.getAnnotationRefresher(),
+                                                initialization.getAnnotationRefresher(),
                                                 Optional.of(params.getSaveMonitor())),
                                         controllers.action().frame().getFrame()));
 
@@ -106,7 +107,8 @@ public class BuilderWholeImage
     }
 
     @Override
-    public void showAllAdditional(InitParamsWholeImage paramsInit, AdditionalFramesContext context)
+    public void showAllAdditional(
+            InitializationWholeImage initialization, AdditionalFramesContext context)
             throws OperationFailedException {
         // DO NOTHING
     }

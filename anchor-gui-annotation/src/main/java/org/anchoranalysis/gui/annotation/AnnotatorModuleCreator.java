@@ -41,13 +41,13 @@ import org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.ControllerPo
 import org.anchoranalysis.gui.videostats.dropdown.AddVideoStatsModule;
 import org.anchoranalysis.gui.videostats.dropdown.ModuleAddUtilities;
 import org.anchoranalysis.gui.videostats.dropdown.VideoStatsModuleGlobalParams;
-import org.anchoranalysis.gui.videostats.internalframe.annotator.AnnotationInitParams;
+import org.anchoranalysis.gui.videostats.internalframe.annotator.AnnotationInitialization;
 import org.anchoranalysis.gui.videostats.internalframe.annotator.InternalFrameAnnotator;
 import org.anchoranalysis.gui.videostats.module.VideoStatsModuleCreateException;
 import org.anchoranalysis.gui.videostats.modulecreator.VideoStatsModuleCreator;
 import org.anchoranalysis.io.output.bean.OutputWriteSettings;
 
-public class AnnotatorModuleCreator<T extends AnnotationInitParams>
+public class AnnotatorModuleCreator<T extends AnnotationInitialization>
         extends VideoStatsModuleCreator {
 
     private AnnotationGuiBuilder<T> annotation;
@@ -61,7 +61,7 @@ public class AnnotatorModuleCreator<T extends AnnotationInitParams>
     private boolean useDefaultMarks = false;
 
     // Transient
-    private T paramsInit;
+    private T initialization;
 
     public AnnotatorModuleCreator(
             String name,
@@ -101,8 +101,8 @@ public class AnnotatorModuleCreator<T extends AnnotationInitParams>
         try (ProgressMultiple progressMultiple = new ProgressMultiple(progress, 1)) {
 
             try {
-                paramsInit =
-                        annotation.createInitParams(
+                initialization =
+                        annotation.createInitialization(
                                 progressMultiple, context, mpg.getLogger(), useDefaultMarks);
             } catch (CreateException e) {
                 throw new VideoStatsModuleCreateException(e);
@@ -123,7 +123,7 @@ public class AnnotatorModuleCreator<T extends AnnotationInitParams>
             AdditionalFramesContext context =
                     new AdditionalFramesContext(adder, name, mpg, outputWriteSettings);
 
-            annotation.showAllAdditional(paramsInit, context);
+            annotation.showAllAdditional(initialization, context);
 
         } catch (VideoStatsModuleCreateException | InitException | OperationFailedException e) {
             mpg.getLogger().errorReporter().recordError(AnnotatorModuleCreator.class, e);
@@ -136,7 +136,7 @@ public class AnnotatorModuleCreator<T extends AnnotationInitParams>
         InternalFrameAnnotator imageFrame =
                 new InternalFrameAnnotator(name, mpg.getLogger().errorReporter());
 
-        paramsInit
+        initialization
                 .getBackground()
                 .configureLinkManager(
                         adder.getSubgroup().getDefaultModuleState().getLinkStateManager());
@@ -145,12 +145,12 @@ public class AnnotatorModuleCreator<T extends AnnotationInitParams>
         SliderState sliderState =
                 imageFrame.init(
                         annotation,
-                        paramsInit,
+                        initialization,
                         adder.getSubgroup().getDefaultModuleState().getState(),
                         outputWriteSettings,
                         mpg);
 
-        addBackgroundMenu(imageFrame, paramsInit.getBackground());
+        addBackgroundMenu(imageFrame, initialization.getBackground());
 
         ModuleAddUtilities.add(adder, imageFrame.moduleCreator(), sliderState);
     }

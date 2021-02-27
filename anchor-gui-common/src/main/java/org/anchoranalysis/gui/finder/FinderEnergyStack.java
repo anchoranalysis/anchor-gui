@@ -38,13 +38,13 @@ import org.anchoranalysis.image.core.stack.named.NamedStacksSupplier;
 import org.anchoranalysis.image.io.bean.stack.reader.StackReader;
 import org.anchoranalysis.io.manifest.Manifest;
 import org.anchoranalysis.io.manifest.finder.Finder;
-import org.anchoranalysis.io.manifest.finder.FinderKeyValueParams;
+import org.anchoranalysis.io.manifest.finder.FinderDictionary;
 
 public class FinderEnergyStack implements Finder {
 
     private FinderRasterDirectory finderRasterDirectory;
     private EnergyStackSupplier energyStackSupplier;
-    private FinderKeyValueParams finderImageParams;
+    private FinderDictionary finderImageDictionary;
 
     private NamedStacksSupplier operationStacks;
 
@@ -56,14 +56,14 @@ public class FinderEnergyStack implements Finder {
                 NamedStacksSupplier.cache(
                         progress -> finderRasterDirectory.createStackCollection(true));
 
-        this.finderImageParams = new FinderKeyValueParams("energyStackParams", errorReporter);
+        this.finderImageDictionary = new FinderDictionary("energyStackParams", errorReporter);
 
         this.energyStackSupplier = EnergyStackSupplier.cache(this::findStack);
     }
 
     @Override
     public boolean doFind(Manifest manifestRecorder) {
-        finderImageParams.doFind(manifestRecorder);
+        finderImageDictionary.doFind(manifestRecorder);
         return finderRasterDirectory.doFind(manifestRecorder);
     }
 
@@ -85,8 +85,8 @@ public class FinderEnergyStack implements Finder {
         try {
             EnergyStack energyStack = FindEnergyStacks.find(operationStacks);
 
-            if (finderImageParams.exists()) {
-                energyStack.setParams(finderImageParams.get());
+            if (finderImageDictionary.exists()) {
+                energyStack.setDictionary(finderImageDictionary.get());
             }
 
             return energyStack;

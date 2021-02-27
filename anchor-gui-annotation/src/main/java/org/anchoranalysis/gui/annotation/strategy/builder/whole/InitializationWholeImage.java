@@ -24,23 +24,24 @@
  * #L%
  */
 
-package org.anchoranalysis.gui.videostats.internalframe.annotator;
+package org.anchoranalysis.gui.annotation.strategy.builder.whole;
 
-import lombok.AllArgsConstructor;
 import org.anchoranalysis.gui.annotation.AnnotationBackgroundInstance;
-import org.anchoranalysis.image.core.dimensions.Dimensions;
+import org.anchoranalysis.gui.annotation.AnnotationRefresher;
+import org.anchoranalysis.gui.videostats.internalframe.annotator.InitializationWithBackground;
 
-@AllArgsConstructor
-public abstract class InitParamsWithBackground implements AnnotationInitParams {
+public class InitializationWholeImage extends InitializationWithBackground {
 
-    private AnnotationBackgroundInstance annotationBackground;
+    private AnnotationRefresher annotationRefresher;
 
-    public Dimensions dimensionsViewer() {
-        return annotationBackground.getDimensionsViewer();
+    public InitializationWholeImage(
+            AnnotationBackgroundInstance annotationBackground,
+            AnnotationRefresher annotationRefresher) {
+        super(annotationBackground);
+        this.annotationRefresher = annotationRefresher;
     }
 
-    @Override
-    public AnnotationBackgroundInstance getBackground() {
-        return annotationBackground;
+    public AnnotationRefresher getAnnotationRefresher() {
+        return annotationRefresher;
     }
 }

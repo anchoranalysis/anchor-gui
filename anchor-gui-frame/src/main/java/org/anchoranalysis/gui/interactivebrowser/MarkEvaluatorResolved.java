@@ -30,18 +30,21 @@ import lombok.Getter;
 import org.anchoranalysis.core.cache.CachedSupplier;
 import org.anchoranalysis.core.exception.CreateException;
 import org.anchoranalysis.core.exception.OperationFailedException;
-import org.anchoranalysis.core.value.KeyValueParams;
+import org.anchoranalysis.core.value.Dictionary;
 import org.anchoranalysis.feature.energy.EnergyStack;
-import org.anchoranalysis.mpp.bean.init.MPPInitParams;
+import org.anchoranalysis.mpp.bean.init.MarksInitialization;
 import org.anchoranalysis.mpp.bean.mark.MarkWithIdentifierFactory;
+import org.anchoranalysis.mpp.feature.bean.mark.MarkEvaluator;
 import org.anchoranalysis.mpp.feature.energy.scheme.EnergyScheme;
 
-// A MarkEvaluator after it has been resolved for usage by converting
-//  it into a ProposerSharedObjectsImageSpecific and other necessary components
+/**
+ * A {@link MarkEvaluator} after it has been resolved for usage.
+ *
+ * @author Owen Feehan
+ */
 public class MarkEvaluatorResolved {
 
-    private final CachedSupplier<MPPInitParams, CreateException>
-            operationCreateProposerSharedObjects;
+    private final CachedSupplier<MarksInitialization, CreateException> supplyInitialization;
     private final CachedSupplier<EnergyStack, CreateException> operationCreateEnergyStack;
 
     @Getter private final MarkWithIdentifierFactory markFactory;
@@ -49,24 +52,22 @@ public class MarkEvaluatorResolved {
     @Getter private final EnergyScheme energyScheme;
 
     public MarkEvaluatorResolved(
-            CachedSupplier<MPPInitParams, CreateException> proposerSharedObjects,
+            CachedSupplier<MarksInitialization, CreateException> supplyInitialization,
             MarkWithIdentifierFactory markFactory,
             EnergyScheme energyScheme,
-            KeyValueParams params) {
-        super();
-        this.operationCreateProposerSharedObjects = proposerSharedObjects;
+            Dictionary dictionary) {
+        this.supplyInitialization = supplyInitialization;
         this.markFactory = markFactory;
         this.energyScheme = energyScheme;
 
         this.operationCreateEnergyStack =
                 CachedSupplier.cache(
-                        () ->
-                                CreateEnergyStackHelper.create(
-                                        operationCreateProposerSharedObjects, params));
+                        () -> CreateEnergyStackHelper.create(supplyInitialization, dictionary));
     }
 
-    public CachedSupplier<MPPInitParams, CreateException> getProposerSharedObjectsOperation() {
-        return operationCreateProposerSharedObjects;
+    public CachedSupplier<MarksInitialization, CreateException>
+            getProposerSharedObjectsOperation() {
+        return supplyInitialization;
     }
 
     public EnergyStack getEnergyStack() throws OperationFailedException {

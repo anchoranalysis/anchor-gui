@@ -1,6 +1,6 @@
 /*-
  * #%L
- * anchor-gui-annotation
+ * anchor-gui-feature-evaluator
  * %%
  * Copyright (C) 2010 - 2020 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann-La Roche
  * %%
@@ -24,16 +24,30 @@
  * #L%
  */
 
-package org.anchoranalysis.gui.videostats.internalframe.annotator;
+package org.anchoranalysis.gui.feature.evaluator.energytree;
 
-import org.anchoranalysis.gui.annotation.AnnotationBackgroundInstance;
-import org.anchoranalysis.gui.videostats.dropdown.BackgroundSetProgressingSupplier;
+import lombok.AllArgsConstructor;
+import org.anchoranalysis.core.exception.CreateException;
+import org.anchoranalysis.feature.bean.Feature;
+import org.anchoranalysis.feature.bean.list.FeatureListFactory;
+import org.anchoranalysis.feature.calculate.NamedFeatureCalculateException;
+import org.anchoranalysis.feature.input.FeatureInput;
+import org.anchoranalysis.feature.session.CreateFeatureInput;
+import org.anchoranalysis.feature.session.calculator.multi.FeatureCalculatorMulti;
 
-public interface AnnotationInitParams {
+@AllArgsConstructor
+public class FeatureInputSource {
 
-    default BackgroundSetProgressingSupplier getBackgroundSetOp() {
-        return getBackground().getBackgroundSetOp();
+    private CreateFeatureInput<FeatureInput> creator;
+    private FeatureCalculatorMulti<FeatureInput> featureCalculator;
+
+    public double calc(Feature<FeatureInput> feature) throws NamedFeatureCalculateException {
+        try {
+            FeatureInput params = creator.createForFeature(feature);
+            return featureCalculator.calculate(params, FeatureListFactory.from(feature)).get(0);
+
+        } catch (CreateException e) {
+            throw new NamedFeatureCalculateException(e);
+        }
     }
-
-    AnnotationBackgroundInstance getBackground();
 }

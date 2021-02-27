@@ -30,15 +30,15 @@ import org.anchoranalysis.gui.annotation.AnnotationBackgroundInstance;
 import org.anchoranalysis.gui.annotation.AnnotationRefresher;
 import org.anchoranalysis.gui.annotation.InitAnnotation;
 import org.anchoranalysis.gui.annotation.mark.MarkAnnotator;
-import org.anchoranalysis.gui.videostats.internalframe.annotator.InitParamsWithBackground;
+import org.anchoranalysis.gui.videostats.internalframe.annotator.InitializationWithBackground;
 
-public class InitParamsProposeMarks extends InitParamsWithBackground {
+public class InitializationProposeMarks extends InitializationWithBackground {
 
     private AnnotationRefresher annotationRefresher;
     private MarkAnnotator markAnnotator;
     private InitAnnotation initAnnotation;
 
-    public InitParamsProposeMarks(
+    public InitializationProposeMarks(
             AnnotationRefresher annotationRefresher,
             MarkAnnotator markAnnotator,
             AnnotationBackgroundInstance annotationBackground,

@@ -24,24 +24,16 @@
  * #L%
  */
 
-package org.anchoranalysis.gui.annotation.strategy.builder.whole;
+package org.anchoranalysis.gui.videostats.internalframe.annotator;
 
 import org.anchoranalysis.gui.annotation.AnnotationBackgroundInstance;
-import org.anchoranalysis.gui.annotation.AnnotationRefresher;
-import org.anchoranalysis.gui.videostats.internalframe.annotator.InitParamsWithBackground;
+import org.anchoranalysis.gui.videostats.dropdown.BackgroundSetProgressingSupplier;
 
-public class InitParamsWholeImage extends InitParamsWithBackground {
+public interface AnnotationInitialization {
 
-    private AnnotationRefresher annotationRefresher;
-
-    public InitParamsWholeImage(
-            AnnotationBackgroundInstance annotationBackground,
-            AnnotationRefresher annotationRefresher) {
-        super(annotationBackground);
-        this.annotationRefresher = annotationRefresher;
+    default BackgroundSetProgressingSupplier getBackgroundSetOp() {
+        return getBackground().getBackgroundSetOp();
     }
 
-    public AnnotationRefresher getAnnotationRefresher() {
-        return annotationRefresher;
-    }
+    AnnotationBackgroundInstance getBackground();
 }

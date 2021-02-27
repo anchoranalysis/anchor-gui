@@ -30,7 +30,7 @@ import java.util.Optional;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import org.anchoranalysis.gui.annotation.mark.MarkAnnotator;
-import org.anchoranalysis.gui.annotation.strategy.builder.mark.InitParamsProposeMarks;
+import org.anchoranalysis.gui.annotation.strategy.builder.mark.InitializationProposeMarks;
 import org.anchoranalysis.gui.videostats.internalframe.annotator.AnnotationFrameControllers;
 import org.anchoranalysis.gui.videostats.internalframe.annotator.AnnotationPanelParams;
 import org.anchoranalysis.gui.videostats.internalframe.annotator.ISaveActionListenerFactory;
@@ -48,7 +48,7 @@ class HelperPanelBuilder {
 
     public static PanelNavigation createPanelNavigation(
             CurrentStateDisplayer currentStateDisplayer,
-            InitParamsProposeMarks paramsInit,
+            InitializationProposeMarks initialization,
             AnnotationPanelParams params,
             AnnotationFrameControllers controllers,
             ISaveActionListenerFactory saveActions) {
@@ -58,8 +58,8 @@ class HelperPanelBuilder {
         PanelTool panelTool =
                 createPanelTool(
                         currentStateDisplayer,
-                        paramsInit.dimensionsViewer(),
-                        paramsInit.getMarkAnnotator(),
+                        initialization.dimensionsViewer(),
+                        initialization.getMarkAnnotator(),
                         params.getErrorReporter());
 
         PanelMark panelMark =

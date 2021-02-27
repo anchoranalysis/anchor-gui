@@ -41,13 +41,14 @@ class CustomRootNode extends FeatureListNode {
         initChildFeatures(FeatureListFactory.empty(), null);
     }
 
-    public void replaceFeatureList(FeatureList<FeatureInput> featureList, ParamsSource params) {
+    public void replaceFeatureList(
+            FeatureList<FeatureInput> featureList, FeatureInputSource params) {
         getFeatures().clear();
         resetCalcList();
         this.initChildFeatures(featureList, params);
     }
 
-    public void replaceCalcParams(ParamsSource params) {
+    public void replaceCalcParams(FeatureInputSource params) {
         updateValueSource(params);
     }
 

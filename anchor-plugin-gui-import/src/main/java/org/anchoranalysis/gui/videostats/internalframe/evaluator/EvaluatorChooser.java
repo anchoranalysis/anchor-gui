@@ -40,7 +40,7 @@ import org.anchoranalysis.core.log.error.ErrorReporter;
 import org.anchoranalysis.gui.interactivebrowser.MarkEvaluatorResolved;
 import org.anchoranalysis.gui.interactivebrowser.MarkEvaluatorSetForImage;
 import org.anchoranalysis.gui.videostats.internalframe.evaluator.fromproposer.ProposalOperationCreatorFromProposer;
-import org.anchoranalysis.mpp.bean.init.MPPInitParams;
+import org.anchoranalysis.mpp.bean.init.MarksInitialization;
 
 public class EvaluatorChooser {
 
@@ -154,7 +154,8 @@ public class EvaluatorChooser {
 
         for (ProposalOperationCreatorFromProposer<?> item : listEvaluators) {
             try {
-                MPPInitParams so = markEvaluatorSelected.getProposerSharedObjectsOperation().get();
+                MarksInitialization so =
+                        markEvaluatorSelected.getProposerSharedObjectsOperation().get();
                 item.init(so);
             } catch (CreateException e) {
                 errorReporter.recordError(EvaluatorChooser.class, e);

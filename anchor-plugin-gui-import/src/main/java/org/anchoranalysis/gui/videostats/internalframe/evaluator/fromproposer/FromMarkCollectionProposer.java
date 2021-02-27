@@ -29,7 +29,7 @@ package org.anchoranalysis.gui.videostats.internalframe.evaluator.fromproposer;
 import org.anchoranalysis.core.identifier.provider.NamedProvider;
 import org.anchoranalysis.gui.videostats.internalframe.evaluator.ProposalOperationCreator;
 import org.anchoranalysis.gui.videostats.internalframe.markredraw.MarksProposerEvaluator;
-import org.anchoranalysis.mpp.bean.init.MPPInitParams;
+import org.anchoranalysis.mpp.bean.init.MarksInitialization;
 import org.anchoranalysis.mpp.bean.proposer.MarkCollectionProposer;
 
 public class FromMarkCollectionProposer
@@ -41,7 +41,7 @@ public class FromMarkCollectionProposer
     }
 
     @Override
-    public NamedProvider<MarkCollectionProposer> allProposers(MPPInitParams so) {
+    public NamedProvider<MarkCollectionProposer> allProposers(MarksInitialization so) {
         return so.getMarksProposerSet();
     }
 

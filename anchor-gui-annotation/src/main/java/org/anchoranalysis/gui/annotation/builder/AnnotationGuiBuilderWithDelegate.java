@@ -38,14 +38,14 @@ import org.anchoranalysis.core.progress.ProgressMultiple;
 import org.anchoranalysis.gui.annotation.AnnotationBackgroundInstance;
 import org.anchoranalysis.gui.container.background.BackgroundStackContainerException;
 import org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.definition.ChangeableBackground;
-import org.anchoranalysis.gui.videostats.internalframe.annotator.AnnotationInitParams;
+import org.anchoranalysis.gui.videostats.internalframe.annotator.AnnotationInitialization;
 import org.anchoranalysis.image.core.stack.Stack;
 import org.anchoranalysis.image.core.stack.named.NamedStacksSupplier;
 import org.anchoranalysis.io.input.InputReadFailedException;
 
 @RequiredArgsConstructor
 public abstract class AnnotationGuiBuilderWithDelegate<
-                T extends AnnotationInitParams, S extends AnnotatorStrategy>
+                T extends AnnotationInitialization, S extends AnnotatorStrategy>
         extends AnnotationGuiBuilder<T> {
 
     private final AnnotationWithStrategy<S> delegate;

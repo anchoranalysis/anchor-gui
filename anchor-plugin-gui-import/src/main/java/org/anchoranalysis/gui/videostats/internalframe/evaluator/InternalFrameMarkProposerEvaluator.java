@@ -57,7 +57,7 @@ import org.anchoranalysis.gui.videostats.internalframe.evaluator.fromproposer.Fr
 import org.anchoranalysis.gui.videostats.internalframe.evaluator.fromproposer.ProposalOperationCreatorFromProposer;
 import org.anchoranalysis.gui.videostats.module.DefaultModuleState;
 import org.anchoranalysis.io.output.bean.OutputWriteSettings;
-import org.anchoranalysis.mpp.bean.init.MPPInitParams;
+import org.anchoranalysis.mpp.bean.init.MarksInitialization;
 import org.anchoranalysis.mpp.io.marks.MarksWithDisplayStack;
 import org.anchoranalysis.mpp.mark.MarkCollection;
 import org.anchoranalysis.mpp.overlay.OverlayCollectionMarkFactory;
@@ -201,7 +201,7 @@ public class InternalFrameMarkProposerEvaluator {
             }
 
             @Override
-            public NamedProvider<T> allProposers(MPPInitParams so) {
+            public NamedProvider<T> allProposers(MarksInitialization so) {
                 return creator.allProposers(so);
             }
 

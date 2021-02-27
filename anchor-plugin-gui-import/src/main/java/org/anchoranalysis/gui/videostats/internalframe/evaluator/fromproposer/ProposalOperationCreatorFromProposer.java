@@ -31,7 +31,7 @@ import org.anchoranalysis.core.exception.CreateException;
 import org.anchoranalysis.core.identifier.provider.NamedProvider;
 import org.anchoranalysis.core.identifier.provider.NamedProviderGetException;
 import org.anchoranalysis.gui.videostats.internalframe.evaluator.ProposalOperationCreator;
-import org.anchoranalysis.mpp.bean.init.MPPInitParams;
+import org.anchoranalysis.mpp.bean.init.MarksInitialization;
 
 public abstract class ProposalOperationCreatorFromProposer<T> {
     private NamedProvider<T> set;
@@ -40,7 +40,7 @@ public abstract class ProposalOperationCreatorFromProposer<T> {
         super();
     }
 
-    public void init(MPPInitParams so) {
+    public void init(MarksInitialization so) {
         this.set = allProposers(so);
     }
 
@@ -63,7 +63,7 @@ public abstract class ProposalOperationCreatorFromProposer<T> {
 
     public abstract ProposalOperationCreator creatorFromProposer(T proposer);
 
-    public abstract NamedProvider<T> allProposers(MPPInitParams so);
+    public abstract NamedProvider<T> allProposers(MarksInitialization so);
 
     public abstract String getEvaluatorName();
 }

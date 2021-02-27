@@ -37,7 +37,7 @@ import org.anchoranalysis.plot.index.LinePlot.YValGetter;
 public class GraphDefinitionLineIterVsKernelProp extends GraphDefinitionLineIterVsCSVStatistic {
 
     public GraphDefinitionLineIterVsKernelProp(
-            KernelProposer<VoxelizedMarksWithEnergy,UpdatableMarksList> kernelProposer,
+            KernelProposer<VoxelizedMarksWithEnergy, UpdatableMarksList> kernelProposer,
             final int index,
             PlotColorScheme graphColorScheme) {
 

@@ -39,12 +39,12 @@ import org.anchoranalysis.gui.annotation.export.ExportAnnotation;
 import org.anchoranalysis.gui.annotation.state.AnnotationSummary;
 import org.anchoranalysis.gui.interactivebrowser.backgroundset.menu.definition.ChangeableBackground;
 import org.anchoranalysis.gui.videostats.internalframe.annotator.AnnotationFrameControllers;
-import org.anchoranalysis.gui.videostats.internalframe.annotator.AnnotationInitParams;
+import org.anchoranalysis.gui.videostats.internalframe.annotator.AnnotationInitialization;
 import org.anchoranalysis.gui.videostats.internalframe.annotator.AnnotationPanelParams;
 import org.anchoranalysis.gui.videostats.internalframe.annotator.navigation.PanelNavigation;
 import org.anchoranalysis.image.core.stack.named.NamedStacksSupplier;
 
-public abstract class AnnotationGuiBuilder<T extends AnnotationInitParams> {
+public abstract class AnnotationGuiBuilder<T extends AnnotationInitialization> {
 
     private CachedSupplier<AnnotationSummary, CreateException> queryAnnotationStatus;
 
@@ -56,7 +56,7 @@ public abstract class AnnotationGuiBuilder<T extends AnnotationInitParams> {
     /** Should the user be prompted to use a default annotation? */
     public abstract boolean isUseDefaultPromptNeeded();
 
-    public abstract T createInitParams(
+    public abstract T createInitialization(
             ProgressMultiple progressMultiple,
             AnnotationGuiContext context,
             Logger logger,
@@ -70,10 +70,11 @@ public abstract class AnnotationGuiBuilder<T extends AnnotationInitParams> {
      */
     public abstract ExportAnnotation exportAnnotation();
 
-    public abstract PanelNavigation createInitPanelNavigation(
-            T paramsInit, AnnotationPanelParams params, AnnotationFrameControllers controllers);
+    /** Creates an initialized {@link PanelNavigation}. */
+    public abstract PanelNavigation createPanelNavigation(
+            T initialization, AnnotationPanelParams params, AnnotationFrameControllers controllers);
 
-    public abstract void showAllAdditional(T paramsInit, AdditionalFramesContext context)
+    public abstract void showAllAdditional(T initialization, AdditionalFramesContext context)
             throws OperationFailedException;
 
     /**

@@ -37,7 +37,7 @@ public class GraphDefinitionLineIterVsKernelAccptProb
         extends GraphDefinitionLineIterVsCSVStatistic {
 
     public GraphDefinitionLineIterVsKernelAccptProb(
-            KernelProposer<VoxelizedMarksWithEnergy,UpdatableMarksList> kernelProposer,
+            KernelProposer<VoxelizedMarksWithEnergy, UpdatableMarksList> kernelProposer,
             int index,
             PlotColorScheme graphColorScheme) {
         this(

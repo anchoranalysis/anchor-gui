@@ -42,7 +42,7 @@ import org.anchoranalysis.mpp.feature.input.memo.FeatureInputSingleMemo;
 public class ExtractFromEnergySchemeSet extends FeatureListSrc {
 
     private EnergySchemeSet source;
-    private KeyValueParamsAugmenter augmenter;
+    private DictionaryAugmenter augmenter;
 
     public ExtractFromEnergySchemeSet(EnergySchemeSet src) {
         this(src, null);
