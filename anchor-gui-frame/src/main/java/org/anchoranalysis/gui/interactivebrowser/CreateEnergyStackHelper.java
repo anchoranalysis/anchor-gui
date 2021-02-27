@@ -37,7 +37,7 @@ import org.anchoranalysis.feature.energy.EnergyStack;
 import org.anchoranalysis.feature.energy.EnergyStackWithoutParams;
 import org.anchoranalysis.image.core.stack.Stack;
 import org.anchoranalysis.image.core.stack.StackIdentifiers;
-import org.anchoranalysis.mpp.bean.init.MPPInitParams;
+import org.anchoranalysis.mpp.bean.init.MarksInitialization;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 class CreateEnergyStackHelper {
@@ -45,11 +45,11 @@ class CreateEnergyStackHelper {
     // We first retrieve a NamedImgCollection which we use to construct our real EnergyStack for
     // purposes of good caching
     public static EnergyStack create(
-            CheckedSupplier<MPPInitParams, ? extends Throwable> operationProposerSharedObjects,
+            CheckedSupplier<MarksInitialization, ? extends Throwable> operationProposerSharedObjects,
             Dictionary params)
             throws CreateException {
         try {
-            MPPInitParams soMPP = operationProposerSharedObjects.get();
+            MarksInitialization soMPP = operationProposerSharedObjects.get();
 
             // We expects the keys to be the indexes
             Stack stack = deriveEnergyStack(soMPP.getImage().stacks());

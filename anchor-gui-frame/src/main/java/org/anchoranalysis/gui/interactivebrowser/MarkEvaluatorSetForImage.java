@@ -42,7 +42,7 @@ import org.anchoranalysis.core.progress.ProgressIgnore;
 import org.anchoranalysis.experiment.io.InitParamsContext;
 import org.anchoranalysis.image.core.stack.named.NamedStacksSupplier;
 import org.anchoranalysis.io.output.outputter.InputOutputContext;
-import org.anchoranalysis.mpp.bean.init.MPPInitParams;
+import org.anchoranalysis.mpp.bean.init.MarksInitialization;
 import org.anchoranalysis.mpp.feature.bean.mark.MarkEvaluator;
 import org.anchoranalysis.mpp.io.input.MPPInitParamsFactory;
 
@@ -59,7 +59,7 @@ public class MarkEvaluatorSetForImage {
 
     private class Resolved {
 
-        private CachedSupplier<MPPInitParams, CreateException> operationProposerSharedObjects;
+        private CachedSupplier<MarksInitialization, CreateException> operationProposerSharedObjects;
         private MarkEvaluator me;
 
         public Resolved(MarkEvaluator me) throws CreateException {
@@ -91,7 +91,7 @@ public class MarkEvaluatorSetForImage {
             }
         }
 
-        private MPPInitParams deriveInitParams(Define define) throws CreateException {
+        private MarksInitialization deriveInitParams(Define define) throws CreateException {
 
             // We initialise the markEvaluator
             try {

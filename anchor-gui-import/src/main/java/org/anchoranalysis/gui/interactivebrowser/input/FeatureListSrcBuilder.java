@@ -36,7 +36,7 @@ import org.anchoranalysis.feature.bean.Feature;
 import org.anchoranalysis.feature.bean.list.FeatureList;
 import org.anchoranalysis.feature.bean.list.FeatureListFactory;
 import org.anchoranalysis.feature.input.FeatureInput;
-import org.anchoranalysis.feature.shared.SharedFeaturesInitParams;
+import org.anchoranalysis.feature.shared.FeaturesInitialization;
 import org.anchoranalysis.gui.feature.evaluator.params.FeatureInputFactory;
 import org.anchoranalysis.gui.feature.evaluator.params.ParamsFactoryForFeature;
 import org.anchoranalysis.gui.feature.evaluator.treetable.ExtractFromEnergySchemeSet;
@@ -57,10 +57,10 @@ public class FeatureListSrcBuilder {
     private Logger logger;
 
     public FeatureListSrc build(
-            SharedFeaturesInitParams soFeature, EnergySchemeCreator energySchemeCreator)
+            FeaturesInitialization soFeature, EnergySchemeCreator energySchemeCreator)
             throws CreateException {
 
-        EnergySchemeSet energySchemeSet = new EnergySchemeSet(soFeature.getSharedFeatureSet());
+        EnergySchemeSet energySchemeSet = new EnergySchemeSet(soFeature.getSharedFeatures());
 
         if (energySchemeCreator != null) {
             return buildWith(soFeature, energySchemeSet, energySchemeCreator);
@@ -72,14 +72,14 @@ public class FeatureListSrcBuilder {
 
     /** Build WITHOUT an existing energyScheme */
     private FeatureListSrc buildWithout(
-            SharedFeaturesInitParams soFeature, EnergySchemeSet energySchemeSet) {
+            FeaturesInitialization soFeature, EnergySchemeSet energySchemeSet) {
         addFromStore(energySchemeSet, soFeature.getFeatureListSet(), RegionMapSingleton.instance());
         return new ExtractFromEnergySchemeSet(energySchemeSet);
     }
 
     /** Build WITH an existing energyScheme */
     private FeatureListSrc buildWith(
-            SharedFeaturesInitParams soFeature,
+            FeaturesInitialization soFeature,
             EnergySchemeSet energySchemeSet,
             EnergySchemeCreator energySchemeCreator)
             throws CreateException {
@@ -92,14 +92,14 @@ public class FeatureListSrcBuilder {
         // We deliberately do not used the SharedFeatures as we wish to keep the Image Features
         // separate and prevent any of the features being initialized prematurely.
         KeyValueParamsAugmenter augmenter =
-                new KeyValueParamsAugmenter(energyScheme, soFeature.getSharedFeatureSet(), logger);
+                new KeyValueParamsAugmenter(energyScheme, soFeature.getSharedFeatures(), logger);
 
         return new ExtractFromEnergySchemeSet(energySchemeSet, augmenter);
     }
 
     private EnergyScheme createEnergyScheme(
             EnergySchemeCreator energySchemeCreator,
-            SharedFeaturesInitParams soFeature,
+            FeaturesInitialization soFeature,
             Logger logger)
             throws CreateException {
 

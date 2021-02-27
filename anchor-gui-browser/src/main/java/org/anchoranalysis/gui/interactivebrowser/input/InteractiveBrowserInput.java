@@ -33,8 +33,9 @@ import lombok.Getter;
 import lombok.Setter;
 import org.anchoranalysis.bean.NamedBean;
 import org.anchoranalysis.bean.provider.Provider;
-import org.anchoranalysis.bean.shared.params.keyvalue.KeyValueParamsInitParams;
-import org.anchoranalysis.bean.shared.params.keyvalue.KeyValueParamsProvider;
+import org.anchoranalysis.bean.shared.dictionary.DictionaryInitialization;
+import org.anchoranalysis.bean.shared.dictionary.DictionaryProvider;
+import org.anchoranalysis.bean.shared.path.FilePathInitialization;
 import org.anchoranalysis.core.exception.CreateException;
 import org.anchoranalysis.core.exception.OperationFailedException;
 import org.anchoranalysis.core.identifier.provider.store.SharedObjects;
@@ -42,7 +43,7 @@ import org.anchoranalysis.core.identifier.provider.store.StoreSupplier;
 import org.anchoranalysis.core.log.CommonContext;
 import org.anchoranalysis.feature.bean.list.FeatureListProvider;
 import org.anchoranalysis.feature.input.FeatureInput;
-import org.anchoranalysis.feature.shared.SharedFeaturesInitParams;
+import org.anchoranalysis.feature.shared.FeaturesInitialization;
 import org.anchoranalysis.gui.bean.filecreator.FileCreator;
 import org.anchoranalysis.gui.feature.evaluator.treetable.FeatureListSrc;
 import org.anchoranalysis.gui.interactivebrowser.openfile.importer.ImporterSettings;
@@ -64,7 +65,7 @@ public class InteractiveBrowserInput implements InputFromManager {
 
     @Getter @Setter private List<NamedBean<MarkEvaluator>> namedItemMarkEvaluatorList;
 
-    @Setter private List<NamedBean<KeyValueParamsProvider>> namedItemKeyValueParamsProviderList;
+    @Setter private List<NamedBean<DictionaryProvider>> namedItemKeyValueParamsProviderList;
 
     @Setter private List<NamedBean<FilePathProvider>> namedItemFilePathProviderList;
 
@@ -72,39 +73,36 @@ public class InteractiveBrowserInput implements InputFromManager {
 
     public FeatureListSrc createFeatureListSrc(CommonContext context) throws CreateException {
 
-        SharedObjects so = new SharedObjects(context);
-        KeyValueParamsInitParams soParams = new KeyValueParamsInitParams(so);
-        SharedFeaturesInitParams soFeature = SharedFeaturesInitParams.create(so);
+        SharedObjects sharedObjects = new SharedObjects(context);
+        FeaturesInitialization initParams = FeaturesInitialization.create(sharedObjects);
 
         try {
             // Adds the feature-lists to the shared-objects
-            soFeature.populate(namedItemSharedFeatureList, context.getLogger());
+            initParams.populate(namedItemSharedFeatureList, context.getLogger());
 
-            addKeyValueParams(soParams);
-            addFilePaths(soParams);
-
-            // so.g
+            addKeyValueParams( initParams.getDictionary() );
+            addFilePaths( initParams.getFilePaths() );
         } catch (OperationFailedException e) {
             throw new CreateException(e);
         }
 
-        return new FeatureListSrcBuilder(context.getLogger()).build(soFeature, energySchemeCreator);
+        return new FeatureListSrcBuilder(context.getLogger()).build(initParams, energySchemeCreator);
     }
 
-    private void addKeyValueParams(KeyValueParamsInitParams soParams)
+    private void addKeyValueParams(DictionaryInitialization soParams)
             throws OperationFailedException {
 
-        for (NamedBean<KeyValueParamsProvider> provider :
+        for (NamedBean<DictionaryProvider> provider :
                 this.namedItemKeyValueParamsProviderList) {
-            soParams.getNamedKeyValueParams()
+            soParams.getDictionaries()
                     .add(provider.getName(), cachedCreationFromProvider(provider.getValue()));
         }
     }
 
-    private void addFilePaths(KeyValueParamsInitParams soParams) throws OperationFailedException {
+    private void addFilePaths(FilePathInitialization initParams) throws OperationFailedException {
 
         for (NamedBean<FilePathProvider> provider : this.namedItemFilePathProviderList) {
-            soParams.getNamedFilePaths()
+            initParams.getFilePaths()
                     .add(provider.getName(), cachedCreationFromProvider(provider.getValue()));
         }
     }

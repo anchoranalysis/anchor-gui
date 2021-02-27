@@ -41,7 +41,7 @@ import org.anchoranalysis.core.log.CommonContext;
 import org.anchoranalysis.core.progress.Progress;
 import org.anchoranalysis.feature.bean.list.FeatureListProvider;
 import org.anchoranalysis.feature.input.FeatureInput;
-import org.anchoranalysis.feature.shared.SharedFeaturesInitParams;
+import org.anchoranalysis.feature.shared.FeaturesInitialization;
 import org.anchoranalysis.gui.feature.evaluator.treetable.FeatureListSrc;
 import org.anchoranalysis.gui.interactivebrowser.IOpenFile;
 import org.anchoranalysis.gui.interactivebrowser.input.FeatureListSrcBuilder;
@@ -91,10 +91,10 @@ public class FileFeatureEvaluatorCreator extends FileCreator {
                 .build(createInitParams(context), energySchemeCreator);
     }
 
-    private SharedFeaturesInitParams createInitParams(CommonContext context)
+    private FeaturesInitialization createInitParams(CommonContext context)
             throws CreateException {
-        SharedFeaturesInitParams soFeature =
-                SharedFeaturesInitParams.create(new SharedObjects(context));
+        FeaturesInitialization soFeature =
+                FeaturesInitialization.create(new SharedObjects(context));
         try {
             soFeature.populate(listFeatures, context.getLogger());
         } catch (OperationFailedException e) {

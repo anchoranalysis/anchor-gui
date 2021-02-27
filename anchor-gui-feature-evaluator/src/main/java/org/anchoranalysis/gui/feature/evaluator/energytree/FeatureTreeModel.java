@@ -32,7 +32,7 @@ import org.anchoranalysis.core.exception.InitException;
 import org.anchoranalysis.core.exception.OperationFailedException;
 import org.anchoranalysis.core.log.Logger;
 import org.anchoranalysis.feature.bean.list.FeatureList;
-import org.anchoranalysis.feature.calculate.FeatureInitParams;
+import org.anchoranalysis.feature.calculate.FeatureInitialization;
 import org.anchoranalysis.feature.energy.EnergyStack;
 import org.anchoranalysis.feature.input.FeatureInput;
 import org.anchoranalysis.feature.session.CreateFeatureInput;
@@ -131,7 +131,7 @@ public class FeatureTreeModel extends DefaultTreeModel implements UpdatableSingl
             CustomRootNode root = (CustomRootNode) getRoot();
             // root.setFeatureCalcParams(featureCalcParams);
 
-            FeatureInitParams paramsInit = new FeatureInitParams(energyStack);
+            FeatureInitialization paramsInit = new FeatureInitialization(energyStack);
             if (first) {
                 // Later on, both the features in featureList and various dependent features will be
                 // called through Subsessions

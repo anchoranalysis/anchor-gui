@@ -29,7 +29,7 @@ package org.anchoranalysis.gui.videostats.internalframe.evaluator.fromproposer;
 import org.anchoranalysis.core.identifier.provider.NamedProvider;
 import org.anchoranalysis.gui.videostats.internalframe.evaluator.MarkSplitProposerEvaluator;
 import org.anchoranalysis.gui.videostats.internalframe.evaluator.ProposalOperationCreator;
-import org.anchoranalysis.mpp.bean.init.MPPInitParams;
+import org.anchoranalysis.mpp.bean.init.MarksInitialization;
 import org.anchoranalysis.mpp.bean.proposer.MarkSplitProposer;
 
 public class FromMarkSplitProposer extends ProposalOperationCreatorFromProposer<MarkSplitProposer> {
@@ -40,7 +40,7 @@ public class FromMarkSplitProposer extends ProposalOperationCreatorFromProposer<
     }
 
     @Override
-    public NamedProvider<MarkSplitProposer> allProposers(MPPInitParams so) {
+    public NamedProvider<MarkSplitProposer> allProposers(MarksInitialization so) {
         return so.getMarkSplitProposerSet();
     }
 

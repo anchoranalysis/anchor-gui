@@ -33,7 +33,7 @@ import lombok.Setter;
 import org.anchoranalysis.bean.NamedBean;
 import org.anchoranalysis.bean.annotation.BeanField;
 import org.anchoranalysis.bean.annotation.OptionalBean;
-import org.anchoranalysis.bean.shared.params.keyvalue.KeyValueParamsProvider;
+import org.anchoranalysis.bean.shared.dictionary.DictionaryProvider;
 import org.anchoranalysis.feature.bean.list.FeatureListProvider;
 import org.anchoranalysis.feature.input.FeatureInput;
 import org.anchoranalysis.gui.bean.filecreator.FileCreator;
@@ -62,7 +62,7 @@ public class InteractiveBrowserInputManager
     private List<NamedBean<MarkEvaluator>> namedItemMarkEvaluatorList = new ArrayList<>();
 
     @BeanField @OptionalBean @Getter @Setter
-    private List<NamedBean<KeyValueParamsProvider>> namedItemKeyValueParamsProviderList =
+    private List<NamedBean<DictionaryProvider>> namedItemKeyValueParamsProviderList =
             new ArrayList<>();
 
     @BeanField @OptionalBean @Getter @Setter

@@ -39,7 +39,7 @@ import org.anchoranalysis.gui.videostats.internalframe.annotator.tool.ToolErrorR
 import org.anchoranalysis.gui.videostats.internalframe.evaluator.EvaluatorWithContext;
 import org.anchoranalysis.image.core.dimensions.Dimensions;
 import org.anchoranalysis.image.core.stack.Stack;
-import org.anchoranalysis.mpp.bean.init.MPPInitParams;
+import org.anchoranalysis.mpp.bean.init.MarksInitialization;
 import org.anchoranalysis.mpp.bean.points.fitter.PointsFitter;
 import org.anchoranalysis.mpp.bean.proposer.MarkProposer;
 import org.anchoranalysis.mpp.bean.regionmap.RegionMap;
@@ -61,7 +61,7 @@ public class MarkAnnotator {
 
         markEvaluatorResolved = setupMarkEvaluator(annotationStrategy, markEvaluatorSet);
 
-        MPPInitParams soMPP = setupEvaluatorAndPointsFitter(markEvaluatorResolved);
+        MarksInitialization soMPP = setupEvaluatorAndPointsFitter(markEvaluatorResolved);
 
         pointsFitterSelectPoints = extractPointsFitter(annotationStrategy, soMPP);
 
@@ -94,13 +94,13 @@ public class MarkAnnotator {
         return pointsFitterSelectPoints;
     }
 
-    private static MPPInitParams setupEvaluatorAndPointsFitter(MarkEvaluatorResolved markEvaluator)
+    private static MarksInitialization setupEvaluatorAndPointsFitter(MarkEvaluatorResolved markEvaluator)
             throws CreateException {
         return markEvaluator.getProposerSharedObjectsOperation().get();
     }
 
     private static PointsFitter extractPointsFitter(
-            MarkProposerStrategy annotationStrategy, MPPInitParams soMPP) throws CreateException {
+            MarkProposerStrategy annotationStrategy, MarksInitialization soMPP) throws CreateException {
         try {
             return soMPP.getPoints()
                     .getPointsFitterSet()
@@ -111,7 +111,7 @@ public class MarkAnnotator {
     }
 
     private static MarkProposer setupGuess(
-            MPPInitParams soMPP, MarkProposerStrategy annotationStrategy, Logger logger) {
+            MarksInitialization soMPP, MarkProposerStrategy annotationStrategy, Logger logger) {
         try {
             return soMPP.getMarkProposerSet().getException(annotationStrategy.getMarkProposer());
         } catch (NamedProviderGetException e) {

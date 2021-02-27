@@ -46,10 +46,10 @@ import org.anchoranalysis.gui.videostats.internalframe.evaluator.InternalFrameMa
 import org.anchoranalysis.gui.videostats.module.VideoStatsModuleCreateException;
 import org.anchoranalysis.gui.videostats.modulecreator.VideoStatsModuleCreator;
 import org.anchoranalysis.image.bean.nonbean.init.CreateCombinedStack;
-import org.anchoranalysis.image.bean.nonbean.init.ImageInitParams;
+import org.anchoranalysis.image.bean.nonbean.init.ImageInitialization;
 import org.anchoranalysis.image.core.stack.time.WrapStackAsTimeSequence;
 import org.anchoranalysis.io.output.bean.OutputWriteSettings;
-import org.anchoranalysis.mpp.bean.init.MPPInitParams;
+import org.anchoranalysis.mpp.bean.init.MarksInitialization;
 
 @AllArgsConstructor
 class ProposerEvaluatorModuleCreator extends VideoStatsModuleCreator {
@@ -113,14 +113,14 @@ class ProposerEvaluatorModuleCreator extends VideoStatsModuleCreator {
     }
 
     private BackgroundSet createBackgroundSetFromExisting(
-            Progress progress, CachedSupplier<MPPInitParams, CreateException> pso)
+            Progress progress, CachedSupplier<MarksInitialization, CreateException> pso)
             throws BackgroundStackContainerException {
 
         try {
             BackgroundSet bsExisting = energyBackground.getBackgroundSet().get(progress);
 
-            MPPInitParams so = pso.get();
-            ImageInitParams soImage = so.getImage();
+            MarksInitialization so = pso.get();
+            ImageInitialization soImage = so.getImage();
 
             return BackgroundSetFactory.createBackgroundSetFromExisting(
                     bsExisting,

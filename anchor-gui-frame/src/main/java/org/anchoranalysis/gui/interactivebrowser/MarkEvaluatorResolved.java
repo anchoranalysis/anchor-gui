@@ -32,7 +32,7 @@ import org.anchoranalysis.core.exception.CreateException;
 import org.anchoranalysis.core.exception.OperationFailedException;
 import org.anchoranalysis.core.value.Dictionary;
 import org.anchoranalysis.feature.energy.EnergyStack;
-import org.anchoranalysis.mpp.bean.init.MPPInitParams;
+import org.anchoranalysis.mpp.bean.init.MarksInitialization;
 import org.anchoranalysis.mpp.bean.mark.MarkWithIdentifierFactory;
 import org.anchoranalysis.mpp.feature.energy.scheme.EnergyScheme;
 
@@ -40,7 +40,7 @@ import org.anchoranalysis.mpp.feature.energy.scheme.EnergyScheme;
 //  it into a ProposerSharedObjectsImageSpecific and other necessary components
 public class MarkEvaluatorResolved {
 
-    private final CachedSupplier<MPPInitParams, CreateException>
+    private final CachedSupplier<MarksInitialization, CreateException>
             operationCreateProposerSharedObjects;
     private final CachedSupplier<EnergyStack, CreateException> operationCreateEnergyStack;
 
@@ -49,7 +49,7 @@ public class MarkEvaluatorResolved {
     @Getter private final EnergyScheme energyScheme;
 
     public MarkEvaluatorResolved(
-            CachedSupplier<MPPInitParams, CreateException> proposerSharedObjects,
+            CachedSupplier<MarksInitialization, CreateException> proposerSharedObjects,
             MarkWithIdentifierFactory markFactory,
             EnergyScheme energyScheme,
             Dictionary params) {
@@ -65,7 +65,7 @@ public class MarkEvaluatorResolved {
                                         operationCreateProposerSharedObjects, params));
     }
 
-    public CachedSupplier<MPPInitParams, CreateException> getProposerSharedObjectsOperation() {
+    public CachedSupplier<MarksInitialization, CreateException> getProposerSharedObjectsOperation() {
         return operationCreateProposerSharedObjects;
     }
 

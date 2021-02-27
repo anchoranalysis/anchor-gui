@@ -32,7 +32,7 @@ import org.anchoranalysis.core.exception.CreateException;
 import org.anchoranalysis.core.exception.InitException;
 import org.anchoranalysis.core.log.Logger;
 import org.anchoranalysis.feature.bean.list.FeatureList;
-import org.anchoranalysis.feature.calculate.FeatureInitParams;
+import org.anchoranalysis.feature.calculate.FeatureInitialization;
 import org.anchoranalysis.feature.energy.EnergyStack;
 import org.anchoranalysis.feature.session.FeatureSession;
 import org.anchoranalysis.feature.session.calculator.multi.FeatureCalculatorMulti;
@@ -189,7 +189,7 @@ class FinderEvaluator {
                     return Optional.of(
                             FeatureSession.with(
                                     relevantFeatures.get(),
-                                    new FeatureInitParams(raster.getParams()),
+                                    new FeatureInitialization(raster.getParams()),
                                     sharedFeatureList,
                                     logger));
                 } catch (InitException e) {
