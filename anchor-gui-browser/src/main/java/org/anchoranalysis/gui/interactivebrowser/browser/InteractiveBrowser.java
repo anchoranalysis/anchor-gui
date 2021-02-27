@@ -119,9 +119,8 @@ public class InteractiveBrowser {
     private void initMarkEvaluatorManager(InteractiveBrowserInput interactiveBrowserInput) {
         markEvaluatorManager = new MarkEvaluatorManager(context);
 
-        if (interactiveBrowserInput.getNamedItemMarkEvaluatorList() != null) {
-            for (NamedBean<MarkEvaluator> ni :
-                    interactiveBrowserInput.getNamedItemMarkEvaluatorList()) {
+        if (interactiveBrowserInput.getMarkEvaluators() != null) {
+            for (NamedBean<MarkEvaluator> ni : interactiveBrowserInput.getMarkEvaluators()) {
                 markEvaluatorManager.add(ni.getName(), ni.getValue());
             }
         }

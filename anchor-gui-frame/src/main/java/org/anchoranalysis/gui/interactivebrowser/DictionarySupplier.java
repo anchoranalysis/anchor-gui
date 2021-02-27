@@ -1,6 +1,6 @@
 /*-
  * #%L
- * anchor-gui-annotation
+ * anchor-gui-frame
  * %%
  * Copyright (C) 2010 - 2020 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann-La Roche
  * %%
@@ -23,24 +23,18 @@
  * THE SOFTWARE.
  * #L%
  */
+package org.anchoranalysis.gui.interactivebrowser;
 
-package org.anchoranalysis.gui.videostats.internalframe.annotator;
+import java.io.IOException;
+import java.util.Optional;
+import org.anchoranalysis.core.cache.CachedSupplier;
+import org.anchoranalysis.core.value.Dictionary;
 
-import lombok.AllArgsConstructor;
-import org.anchoranalysis.gui.annotation.AnnotationBackgroundInstance;
-import org.anchoranalysis.image.core.dimensions.Dimensions;
+public interface DictionarySupplier {
 
-@AllArgsConstructor
-public abstract class InitParamsWithBackground implements AnnotationInitParams {
+    Optional<Dictionary> get() throws IOException;
 
-    private AnnotationBackgroundInstance annotationBackground;
-
-    public Dimensions dimensionsViewer() {
-        return annotationBackground.getDimensionsViewer();
-    }
-
-    @Override
-    public AnnotationBackgroundInstance getBackground() {
-        return annotationBackground;
+    public static DictionarySupplier cache(DictionarySupplier supplier) {
+        return CachedSupplier.cache(supplier::get)::get;
     }
 }

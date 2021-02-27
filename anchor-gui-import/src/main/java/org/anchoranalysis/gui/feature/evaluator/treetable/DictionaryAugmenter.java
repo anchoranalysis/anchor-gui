@@ -1,6 +1,6 @@
 /*-
  * #%L
- * anchor-gui-feature-evaluator
+ * anchor-gui-import
  * %%
  * Copyright (C) 2010 - 2020 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann-La Roche
  * %%
@@ -24,30 +24,44 @@
  * #L%
  */
 
-package org.anchoranalysis.gui.feature.evaluator.energytree;
+package org.anchoranalysis.gui.feature.evaluator.treetable;
 
 import lombok.AllArgsConstructor;
 import org.anchoranalysis.core.exception.CreateException;
-import org.anchoranalysis.feature.bean.Feature;
-import org.anchoranalysis.feature.bean.list.FeatureListFactory;
-import org.anchoranalysis.feature.calculate.NamedFeatureCalculateException;
-import org.anchoranalysis.feature.input.FeatureInput;
-import org.anchoranalysis.feature.session.CreateFeatureInput;
-import org.anchoranalysis.feature.session.calculator.multi.FeatureCalculatorMulti;
+import org.anchoranalysis.core.exception.OperationFailedException;
+import org.anchoranalysis.core.log.Logger;
+import org.anchoranalysis.core.value.Dictionary;
+import org.anchoranalysis.feature.energy.EnergyStack;
+import org.anchoranalysis.feature.shared.SharedFeatureMulti;
+import org.anchoranalysis.mpp.feature.energy.scheme.DictionaryForImageCreator;
+import org.anchoranalysis.mpp.feature.energy.scheme.EnergyScheme;
 
 @AllArgsConstructor
-public class ParamsSource {
+public class DictionaryAugmenter {
 
-    private CreateFeatureInput<FeatureInput> createParams;
-    private FeatureCalculatorMulti<FeatureInput> featureCalculator;
+    private EnergyScheme scheme;
+    private SharedFeatureMulti sharedFeatures;
+    private Logger logger;
 
-    public double calc(Feature<FeatureInput> feature) throws NamedFeatureCalculateException {
+    public EnergyStack augmentParams(EnergyStack in) throws OperationFailedException {
+
+        // We should add any image-params to the key value pairs
+        DictionaryForImageCreator creator =
+                new DictionaryForImageCreator(scheme, sharedFeatures, logger);
         try {
-            FeatureInput params = createParams.createForFeature(feature);
-            return featureCalculator.calculate(params, FeatureListFactory.from(feature)).get(0);
+            return addDictionary(in, creator.create(in.withoutParams()));
 
         } catch (CreateException e) {
-            throw new NamedFeatureCalculateException(e);
+            throw new OperationFailedException(e);
         }
+    }
+
+    private static EnergyStack addDictionary(EnergyStack in, Dictionary toAdd)
+            throws OperationFailedException {
+
+        Dictionary dup = in.getDictionary().duplicate();
+        dup.putCheck(toAdd);
+
+        return in.copyChangeParams(dup);
     }
 }

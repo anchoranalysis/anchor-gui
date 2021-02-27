@@ -154,7 +154,8 @@ public class EvaluatorChooser {
 
         for (ProposalOperationCreatorFromProposer<?> item : listEvaluators) {
             try {
-                MarksInitialization so = markEvaluatorSelected.getProposerSharedObjectsOperation().get();
+                MarksInitialization so =
+                        markEvaluatorSelected.getProposerSharedObjectsOperation().get();
                 item.init(so);
             } catch (CreateException e) {
                 errorReporter.recordError(EvaluatorChooser.class, e);

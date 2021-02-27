@@ -97,8 +97,8 @@ public class MarksProposerMouseClickAdapter extends MouseAdapter {
 
             errorReporter.recordErrorFormatted(
                     MarksProposerMouseClickAdapter.class,
-                            "Failed to propose marks due to an abnormal error%n%s%n",
-                            e.friendlyMessageHierarchy());
+                    "Failed to propose marks due to an abnormal error%n%s%n",
+                    e.friendlyMessageHierarchy());
         }
     }
 

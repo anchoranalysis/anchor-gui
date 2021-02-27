@@ -161,7 +161,8 @@ class FinderEvaluator {
         private EnergyStack raster;
         private Optional<FeatureCalculatorMulti<FeatureInputPairMemo>> session;
 
-        public EdgeEvaluator(EnergyStack raster, SharedFeatureMulti sharedFeatureList, Logger logger)
+        public EdgeEvaluator(
+                EnergyStack raster, SharedFeatureMulti sharedFeatureList, Logger logger)
                 throws CreateException {
 
             this.raster = raster;
@@ -189,7 +190,7 @@ class FinderEvaluator {
                     return Optional.of(
                             FeatureSession.with(
                                     relevantFeatures.get(),
-                                    new FeatureInitialization(raster.getParams()),
+                                    new FeatureInitialization(raster.getDictionary()),
                                     sharedFeatureList,
                                     logger));
                 } catch (InitException e) {

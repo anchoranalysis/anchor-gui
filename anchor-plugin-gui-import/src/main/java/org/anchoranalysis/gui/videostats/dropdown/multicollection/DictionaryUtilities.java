@@ -36,7 +36,7 @@ import org.anchoranalysis.core.log.error.ErrorReporter;
 import org.anchoranalysis.core.value.Dictionary;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-class ParamsUtils {
+class DictionaryUtilities {
 
     public static Dictionary apply(
             NamedProviderStore<Dictionary> paramsCollection, ErrorReporter errorReporter) {
@@ -50,11 +50,11 @@ class ParamsUtils {
                     return params.get();
                 }
             } catch (NamedProviderGetException e) {
-                errorReporter.recordError(ParamsUtils.class, e.summarize());
+                errorReporter.recordError(DictionaryUtilities.class, e.summarize());
             }
 
             errorReporter.recordError(
-                    ParamsUtils.class,
+                    DictionaryUtilities.class,
                     new OperationFailedException(
                             "More than one params. Cannot choose between them."));
             return new Dictionary();
@@ -62,7 +62,7 @@ class ParamsUtils {
             try {
                 return paramsCollection.getException(paramsCollection.keys().iterator().next());
             } catch (NamedProviderGetException e) {
-                errorReporter.recordError(ParamsUtils.class, e.summarize());
+                errorReporter.recordError(DictionaryUtilities.class, e.summarize());
                 return new Dictionary();
             }
         } else {

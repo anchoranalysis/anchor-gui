@@ -56,7 +56,7 @@ import org.anchoranalysis.plugin.annotation.bean.strategy.MarkProposerStrategy;
 import org.anchoranalysis.plugin.annotation.bean.strategy.PathFromGenerator;
 
 public class BuilderProposeMarks
-        extends AnnotationGuiBuilderWithDelegate<InitParamsProposeMarks, MarkProposerStrategy> {
+        extends AnnotationGuiBuilderWithDelegate<InitializationProposeMarks, MarkProposerStrategy> {
 
     private MarkAnnotationReader<RejectionReason> annotationReader =
             new MarkAnnotationReader<>(true);
@@ -84,7 +84,7 @@ public class BuilderProposeMarks
     }
 
     @Override
-    public InitParamsProposeMarks createInitParams(
+    public InitializationProposeMarks createInitialization(
             ProgressMultiple progressMultiple,
             AnnotationGuiContext context,
             Logger logger,
@@ -103,7 +103,7 @@ public class BuilderProposeMarks
             // Open initial marks
             InitAnnotation annotationExisting = openAnnotation.open(useDefaultMarks, logger);
 
-            return new InitParamsProposeMarks(
+            return new InitializationProposeMarks(
                     context.getAnnotationRefresher(),
                     markAnnotator,
                     createBackground(progressMultiple, markAnnotator.getBackgroundStacks()),
@@ -115,21 +115,21 @@ public class BuilderProposeMarks
     }
 
     @Override
-    public PanelNavigation createInitPanelNavigation(
-            InitParamsProposeMarks paramsInit,
+    public PanelNavigation createPanelNavigation(
+            InitializationProposeMarks initialization,
             AnnotationPanelParams params,
             AnnotationFrameControllers controllers) {
-        return CreateNavigationPanel.apply(paramsInit, params, controllers, annotationPath());
+        return CreateNavigationPanel.apply(initialization, params, controllers, annotationPath());
     }
 
     @Override
     public void showAllAdditional(
-            InitParamsProposeMarks paramsInit, AdditionalFramesContext context)
+            InitializationProposeMarks initialization, AdditionalFramesContext context)
             throws OperationFailedException {
 
         try {
             ShowAdditionalFrames.apply(
-                    paramsInit, context, pathForBindingRequired(), getStrategy());
+                    initialization, context, pathForBindingRequired(), getStrategy());
         } catch (InputReadFailedException e) {
             throw new OperationFailedException(e);
         }

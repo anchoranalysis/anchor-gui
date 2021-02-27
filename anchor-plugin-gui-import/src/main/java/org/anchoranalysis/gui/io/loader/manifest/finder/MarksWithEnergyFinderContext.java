@@ -42,7 +42,8 @@ import org.anchoranalysis.mpp.segment.bean.kernel.proposer.KernelProposer;
 public class MarksWithEnergyFinderContext {
 
     private FinderStacks finderStacks;
-    private FinderSerializedObject<KernelProposer<VoxelizedMarksWithEnergy,UpdatableMarksList>> finderKernelProposer;
+    private FinderSerializedObject<KernelProposer<VoxelizedMarksWithEnergy, UpdatableMarksList>>
+            finderKernelProposer;
     private JFrame parentFrame;
     private InputOutputContext inputOutputContext;
     private VideoStatsModuleGlobalParams mpg;

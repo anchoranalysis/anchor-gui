@@ -45,17 +45,17 @@ class CreateEnergyStackHelper {
     // We first retrieve a NamedImgCollection which we use to construct our real EnergyStack for
     // purposes of good caching
     public static EnergyStack create(
-            CheckedSupplier<MarksInitialization, ? extends Throwable> operationProposerSharedObjects,
-            Dictionary params)
+            CheckedSupplier<MarksInitialization, ? extends Throwable> supplyInitialization,
+            Dictionary dictionary)
             throws CreateException {
         try {
-            MarksInitialization soMPP = operationProposerSharedObjects.get();
+            MarksInitialization initialization = supplyInitialization.get();
 
             // We expects the keys to be the indexes
-            Stack stack = deriveEnergyStack(soMPP.getImage().stacks());
+            Stack stack = deriveEnergyStack(initialization.getImage().stacks());
 
             if (stack.getNumberChannels() > 0) {
-                return new EnergyStack(new EnergyStackWithoutParams(stack), params);
+                return new EnergyStack(new EnergyStackWithoutParams(stack), dictionary);
             } else {
                 throw new CreateException("The stack has no channels");
             }

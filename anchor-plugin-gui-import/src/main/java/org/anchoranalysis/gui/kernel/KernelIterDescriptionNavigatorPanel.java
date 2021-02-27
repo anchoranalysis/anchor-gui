@@ -67,7 +67,7 @@ public class KernelIterDescriptionNavigatorPanel extends StatePanel<KernelDescis
     private JTextArea label;
     private ProposerFailureDescriptionPanel kernelFailurePanel;
 
-    private KernelProposer<VoxelizedMarksWithEnergy,UpdatableMarksList> kernelProposer;
+    private KernelProposer<VoxelizedMarksWithEnergy, UpdatableMarksList> kernelProposer;
 
     private int currentIndex;
 
@@ -89,7 +89,9 @@ public class KernelIterDescriptionNavigatorPanel extends StatePanel<KernelDescis
         while (true) {
 
             indexIteration =
-                    forward ? container.nextIndex(indexIteration) : container.previousIndex(indexIteration);
+                    forward
+                            ? container.nextIndex(indexIteration)
+                            : container.previousIndex(indexIteration);
 
             // No more to go
             if (indexIteration == -1) {
@@ -161,7 +163,7 @@ public class KernelIterDescriptionNavigatorPanel extends StatePanel<KernelDescis
 
     public KernelIterDescriptionNavigatorPanel(
             BoundedIndexContainer<KernelDescision> container,
-            KernelProposer<VoxelizedMarksWithEnergy,UpdatableMarksList> kernelProposer) {
+            KernelProposer<VoxelizedMarksWithEnergy, UpdatableMarksList> kernelProposer) {
 
         this.kernelProposer = kernelProposer;
         this.container = container;
@@ -254,7 +256,7 @@ public class KernelIterDescriptionNavigatorPanel extends StatePanel<KernelDescis
 
         String newline = System.getProperty("line.separator");
 
-        WeightedKernel<VoxelizedMarksWithEnergy,UpdatableMarksList> kernelFactory =
+        WeightedKernel<VoxelizedMarksWithEnergy, UpdatableMarksList> kernelFactory =
                 kernelProposer.getAllKernelFactories().get(state.getId());
 
         StringBuilder s = new StringBuilder();

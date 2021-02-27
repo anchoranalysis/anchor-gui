@@ -39,9 +39,9 @@ import org.anchoranalysis.feature.input.FeatureInput;
 import org.anchoranalysis.feature.shared.FeaturesInitialization;
 import org.anchoranalysis.gui.feature.evaluator.params.FeatureInputFactory;
 import org.anchoranalysis.gui.feature.evaluator.params.ParamsFactoryForFeature;
+import org.anchoranalysis.gui.feature.evaluator.treetable.DictionaryAugmenter;
 import org.anchoranalysis.gui.feature.evaluator.treetable.ExtractFromEnergySchemeSet;
 import org.anchoranalysis.gui.feature.evaluator.treetable.FeatureListSrc;
-import org.anchoranalysis.gui.feature.evaluator.treetable.KeyValueParamsAugmenter;
 import org.anchoranalysis.mpp.bean.regionmap.RegionMap;
 import org.anchoranalysis.mpp.bean.regionmap.RegionMapSingleton;
 import org.anchoranalysis.mpp.feature.addcriteria.BoundingBoxIntersection;
@@ -91,8 +91,8 @@ public class FeatureListSrcBuilder {
 
         // We deliberately do not used the SharedFeatures as we wish to keep the Image Features
         // separate and prevent any of the features being initialized prematurely.
-        KeyValueParamsAugmenter augmenter =
-                new KeyValueParamsAugmenter(energyScheme, soFeature.getSharedFeatures(), logger);
+        DictionaryAugmenter augmenter =
+                new DictionaryAugmenter(energyScheme, soFeature.getSharedFeatures(), logger);
 
         return new ExtractFromEnergySchemeSet(energySchemeSet, augmenter);
     }
@@ -124,7 +124,7 @@ public class FeatureListSrcBuilder {
                 // Put this in there, to get rid of error. Unsure why. It should go in refactoring
                 // when FeatureSessions are properly implemented
                 // TODO resolve this error
-                // fl.init( new FeatureInitParams(soFeature.getSharedFeatureSet(),
+                // fl.init( new FeatureInitialization(soFeature.getSharedFeatureSet(),
                 // soFeature.getCachedCalculationList()) );
 
                 // Determines which features belong in the Unary part of the EnergyScheme, and which

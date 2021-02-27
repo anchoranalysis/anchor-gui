@@ -61,14 +61,14 @@ public class MarkAnnotator {
 
         markEvaluatorResolved = setupMarkEvaluator(annotationStrategy, markEvaluatorSet);
 
-        MarksInitialization soMPP = setupEvaluatorAndPointsFitter(markEvaluatorResolved);
+        MarksInitialization initialization = setupEvaluatorAndPointsFitter(markEvaluatorResolved);
 
-        pointsFitterSelectPoints = extractPointsFitter(annotationStrategy, soMPP);
+        pointsFitterSelectPoints = extractPointsFitter(annotationStrategy, initialization);
 
         // Nullable
-        markProposerGuess = setupGuess(soMPP, annotationStrategy, logger);
+        markProposerGuess = setupGuess(initialization, annotationStrategy, logger);
 
-        this.backgroundStacks = soMPP.getImage().stacks();
+        this.backgroundStacks = initialization.getImage().stacks();
     }
 
     public RegionMap getRegionMap() {
@@ -94,15 +94,17 @@ public class MarkAnnotator {
         return pointsFitterSelectPoints;
     }
 
-    private static MarksInitialization setupEvaluatorAndPointsFitter(MarkEvaluatorResolved markEvaluator)
-            throws CreateException {
+    private static MarksInitialization setupEvaluatorAndPointsFitter(
+            MarkEvaluatorResolved markEvaluator) throws CreateException {
         return markEvaluator.getProposerSharedObjectsOperation().get();
     }
 
     private static PointsFitter extractPointsFitter(
-            MarkProposerStrategy annotationStrategy, MarksInitialization soMPP) throws CreateException {
+            MarkProposerStrategy annotationStrategy, MarksInitialization initialization)
+            throws CreateException {
         try {
-            return soMPP.getPoints()
+            return initialization
+                    .getPoints()
                     .getPointsFitterSet()
                     .getException(annotationStrategy.getPointsFitter());
         } catch (NamedProviderGetException e) {
@@ -111,9 +113,13 @@ public class MarkAnnotator {
     }
 
     private static MarkProposer setupGuess(
-            MarksInitialization soMPP, MarkProposerStrategy annotationStrategy, Logger logger) {
+            MarksInitialization initialization,
+            MarkProposerStrategy annotationStrategy,
+            Logger logger) {
         try {
-            return soMPP.getMarkProposerSet().getException(annotationStrategy.getMarkProposer());
+            return initialization
+                    .getMarkProposerSet()
+                    .getException(annotationStrategy.getMarkProposer());
         } catch (NamedProviderGetException e) {
             logger.messageLogger().log("Proceeding without 'Guess Tool' as an error occured");
             logger.errorReporter()

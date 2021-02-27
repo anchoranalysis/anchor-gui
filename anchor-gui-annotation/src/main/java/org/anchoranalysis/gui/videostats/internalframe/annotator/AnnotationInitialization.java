@@ -1,6 +1,6 @@
 /*-
  * #%L
- * anchor-gui-frame
+ * anchor-gui-annotation
  * %%
  * Copyright (C) 2010 - 2020 Owen Feehan, ETH Zurich, University of Zurich, Hoffmann-La Roche
  * %%
@@ -23,18 +23,17 @@
  * THE SOFTWARE.
  * #L%
  */
-package org.anchoranalysis.gui.interactivebrowser;
 
-import java.io.IOException;
-import java.util.Optional;
-import org.anchoranalysis.core.cache.CachedSupplier;
-import org.anchoranalysis.core.value.Dictionary;
+package org.anchoranalysis.gui.videostats.internalframe.annotator;
 
-public interface KeyValueParamsSupplier {
+import org.anchoranalysis.gui.annotation.AnnotationBackgroundInstance;
+import org.anchoranalysis.gui.videostats.dropdown.BackgroundSetProgressingSupplier;
 
-    Optional<Dictionary> get() throws IOException;
+public interface AnnotationInitialization {
 
-    public static KeyValueParamsSupplier cache(KeyValueParamsSupplier supplier) {
-        return CachedSupplier.cache(supplier::get)::get;
+    default BackgroundSetProgressingSupplier getBackgroundSetOp() {
+        return getBackground().getBackgroundSetOp();
     }
+
+    AnnotationBackgroundInstance getBackground();
 }

@@ -119,12 +119,12 @@ class ProposerEvaluatorModuleCreator extends VideoStatsModuleCreator {
         try {
             BackgroundSet bsExisting = energyBackground.getBackgroundSet().get(progress);
 
-            MarksInitialization so = pso.get();
-            ImageInitialization soImage = so.getImage();
+            MarksInitialization marks = pso.get();
+            ImageInitialization image = marks.getImage();
 
             return BackgroundSetFactory.createBackgroundSetFromExisting(
                     bsExisting,
-                    new WrapStackAsTimeSequence(CreateCombinedStack.apply(soImage)),
+                    new WrapStackAsTimeSequence(CreateCombinedStack.apply(image)),
                     progress);
 
         } catch (CreateException e) {

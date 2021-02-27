@@ -131,16 +131,16 @@ public class FeatureTreeModel extends DefaultTreeModel implements UpdatableSingl
             CustomRootNode root = (CustomRootNode) getRoot();
             // root.setFeatureCalcParams(featureCalcParams);
 
-            FeatureInitialization paramsInit = new FeatureInitialization(energyStack);
+            FeatureInitialization initialization = new FeatureInitialization(energyStack);
             if (first) {
                 // Later on, both the features in featureList and various dependent features will be
                 // called through Subsessions
                 //   so we rely on these dependent features being initialised through
                 // session.start() as the initialization
                 //   procedure is recursive
-                session = FeatureSession.with(featureList, paramsInit, sharedFeatures, logger);
+                session = FeatureSession.with(featureList, initialization, sharedFeatures, logger);
 
-                root.replaceFeatureList(featureList, new ParamsSource(createParams, session));
+                root.replaceFeatureList(featureList, new FeatureInputSource(createParams, session));
 
                 nodeStructureChanged(root);
                 reload();
@@ -148,7 +148,7 @@ public class FeatureTreeModel extends DefaultTreeModel implements UpdatableSingl
 
             } else {
 
-                root.replaceCalcParams(new ParamsSource(createParams, session));
+                root.replaceCalcParams(new FeatureInputSource(createParams, session));
 
                 nodeChanged(root);
             }

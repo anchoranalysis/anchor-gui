@@ -52,8 +52,7 @@ public class MarkEvaluatorManager {
     }
 
     public MarkEvaluatorSetForImage createSetForStackCollection(
-            NamedStacksSupplier namedStacks, KeyValueParamsSupplier keyParams)
-            throws CreateException {
+            NamedStacksSupplier namedStacks, DictionarySupplier keyParams) throws CreateException {
 
         try {
             MarkEvaluatorSetForImage out =

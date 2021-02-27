@@ -33,7 +33,7 @@ import lombok.NoArgsConstructor;
 import org.anchoranalysis.annotation.mark.DualMarks;
 import org.anchoranalysis.gui.annotation.AnnotationRefresher;
 import org.anchoranalysis.gui.annotation.InitAnnotation;
-import org.anchoranalysis.gui.annotation.strategy.builder.mark.InitParamsProposeMarks;
+import org.anchoranalysis.gui.annotation.strategy.builder.mark.InitializationProposeMarks;
 import org.anchoranalysis.gui.videostats.internalframe.annotator.AnnotationFrameControllers;
 import org.anchoranalysis.gui.videostats.internalframe.annotator.AnnotationPanelParams;
 import org.anchoranalysis.gui.videostats.internalframe.annotator.ISaveActionListenerFactory;
@@ -47,7 +47,7 @@ import org.anchoranalysis.gui.videostats.internalframe.annotator.navigation.Pane
 public class CreateNavigationPanel {
 
     public static PanelNavigation apply(
-            InitParamsProposeMarks paramsInit,
+            InitializationProposeMarks initialization,
             AnnotationPanelParams params,
             AnnotationFrameControllers controllers,
             Path annotationPath) {
@@ -55,8 +55,8 @@ public class CreateNavigationPanel {
                 new CurrentStateDisplayer(
                         new ShowCurrentState(controllers.showOverlays(), params.getErrorReporter()),
                         params.getSaveMonitor(),
-                        paramsInit.dimensionsViewer(),
-                        paramsInit
+                        initialization.dimensionsViewer(),
+                        initialization
                                 .getMarkAnnotator()
                                 .getRegionMap(), // How we calculate the overlap
                         params.getErrorReporter());
@@ -65,15 +65,15 @@ public class CreateNavigationPanel {
                 createSaveActions(
                         annotationPath,
                         currentStateDisplayer.queryAcceptReject(),
-                        paramsInit.getAnnotationRefresher(),
+                        initialization.getAnnotationRefresher(),
                         Optional.of(params.getSaveMonitor()));
 
         PanelNavigation panelNavigation =
                 HelperPanelBuilder.createPanelNavigation(
-                        currentStateDisplayer, paramsInit, params, controllers, saveActions);
+                        currentStateDisplayer, initialization, params, controllers, saveActions);
 
         configureFromInitAnnotation(
-                paramsInit.getInitAnnotation(), currentStateDisplayer, panelNavigation);
+                initialization.getInitAnnotation(), currentStateDisplayer, panelNavigation);
 
         return panelNavigation;
     }

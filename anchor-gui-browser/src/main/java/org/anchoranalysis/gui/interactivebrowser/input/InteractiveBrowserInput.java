@@ -61,48 +61,51 @@ public class InteractiveBrowserInput implements InputFromManager {
 
     @Setter private EnergySchemeCreator energySchemeCreator;
 
-    @Setter private List<NamedBean<FeatureListProvider<FeatureInput>>> namedItemSharedFeatureList;
+    @Setter private List<NamedBean<FeatureListProvider<FeatureInput>>> featureLists;
 
-    @Getter @Setter private List<NamedBean<MarkEvaluator>> namedItemMarkEvaluatorList;
+    @Getter @Setter private List<NamedBean<MarkEvaluator>> markEvaluators;
 
-    @Setter private List<NamedBean<DictionaryProvider>> namedItemKeyValueParamsProviderList;
+    @Setter private List<NamedBean<DictionaryProvider>> dictionaries;
 
-    @Setter private List<NamedBean<FilePathProvider>> namedItemFilePathProviderList;
+    @Setter private List<NamedBean<FilePathProvider>> filePaths;
 
     @Getter @Setter private ImporterSettings importerSettings;
 
     public FeatureListSrc createFeatureListSrc(CommonContext context) throws CreateException {
 
         SharedObjects sharedObjects = new SharedObjects(context);
-        FeaturesInitialization initParams = FeaturesInitialization.create(sharedObjects);
+        FeaturesInitialization initialization = FeaturesInitialization.create(sharedObjects);
 
         try {
             // Adds the feature-lists to the shared-objects
-            initParams.populate(namedItemSharedFeatureList, context.getLogger());
+            initialization.populate(featureLists, context.getLogger());
 
-            addKeyValueParams( initParams.getDictionary() );
-            addFilePaths( initParams.getFilePaths() );
+            addDictionary(initialization.getDictionary());
+            addFilePaths(initialization.getFilePaths());
         } catch (OperationFailedException e) {
             throw new CreateException(e);
         }
 
-        return new FeatureListSrcBuilder(context.getLogger()).build(initParams, energySchemeCreator);
+        return new FeatureListSrcBuilder(context.getLogger())
+                .build(initialization, energySchemeCreator);
     }
 
-    private void addKeyValueParams(DictionaryInitialization soParams)
+    private void addDictionary(DictionaryInitialization initialization)
             throws OperationFailedException {
 
-        for (NamedBean<DictionaryProvider> provider :
-                this.namedItemKeyValueParamsProviderList) {
-            soParams.getDictionaries()
+        for (NamedBean<DictionaryProvider> provider : this.dictionaries) {
+            initialization
+                    .getDictionaries()
                     .add(provider.getName(), cachedCreationFromProvider(provider.getValue()));
         }
     }
 
-    private void addFilePaths(FilePathInitialization initParams) throws OperationFailedException {
+    private void addFilePaths(FilePathInitialization initialization)
+            throws OperationFailedException {
 
-        for (NamedBean<FilePathProvider> provider : this.namedItemFilePathProviderList) {
-            initParams.getFilePaths()
+        for (NamedBean<FilePathProvider> provider : this.filePaths) {
+            initialization
+                    .getFilePaths()
                     .add(provider.getName(), cachedCreationFromProvider(provider.getValue()));
         }
     }

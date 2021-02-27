@@ -184,6 +184,7 @@ public class MultiCollectionDropDown {
     }
 
     private Optional<Dictionary> extractParams(VideoStatsModuleGlobalParams mpg) {
-        return Optional.of(ParamsUtils.apply(paramsCollection, mpg.getLogger().errorReporter()));
+        return Optional.of(
+                DictionaryUtilities.apply(paramsCollection, mpg.getLogger().errorReporter()));
     }
 }

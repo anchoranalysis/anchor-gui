@@ -26,14 +26,21 @@
 
 package org.anchoranalysis.gui.videostats.internalframe.annotator;
 
+import lombok.AllArgsConstructor;
 import org.anchoranalysis.gui.annotation.AnnotationBackgroundInstance;
-import org.anchoranalysis.gui.videostats.dropdown.BackgroundSetProgressingSupplier;
+import org.anchoranalysis.image.core.dimensions.Dimensions;
 
-public interface AnnotationInitParams {
+@AllArgsConstructor
+public abstract class InitializationWithBackground implements AnnotationInitialization {
 
-    default BackgroundSetProgressingSupplier getBackgroundSetOp() {
-        return getBackground().getBackgroundSetOp();
+    private AnnotationBackgroundInstance annotationBackground;
+
+    public Dimensions dimensionsViewer() {
+        return annotationBackground.getDimensionsViewer();
     }
 
-    AnnotationBackgroundInstance getBackground();
+    @Override
+    public AnnotationBackgroundInstance getBackground() {
+        return annotationBackground;
+    }
 }

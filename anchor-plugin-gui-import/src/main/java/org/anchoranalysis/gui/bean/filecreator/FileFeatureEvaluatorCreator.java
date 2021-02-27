@@ -78,7 +78,7 @@ public class FileFeatureEvaluatorCreator extends FileCreator {
 
         try {
             FeatureEvaluatorCreator creator =
-                    new FeatureEvaluatorCreator(createSrc(mpg.getContext()), mpg.getLogger());
+                    new FeatureEvaluatorCreator(createSource(mpg.getContext()), mpg.getLogger());
             return creator.createVideoStatsModule(adder);
 
         } catch (CreateException e) {
@@ -86,12 +86,12 @@ public class FileFeatureEvaluatorCreator extends FileCreator {
         }
     }
 
-    private FeatureListSrc createSrc(CommonContext context) throws CreateException {
+    private FeatureListSrc createSource(CommonContext context) throws CreateException {
         return new FeatureListSrcBuilder(context.getLogger())
-                .build(createInitParams(context), energySchemeCreator);
+                .build(createInitialization(context), energySchemeCreator);
     }
 
-    private FeaturesInitialization createInitParams(CommonContext context)
+    private FeaturesInitialization createInitialization(CommonContext context)
             throws CreateException {
         FeaturesInitialization soFeature =
                 FeaturesInitialization.create(new SharedObjects(context));

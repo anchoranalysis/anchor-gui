@@ -24,18 +24,30 @@
  * #L%
  */
 
-package org.anchoranalysis.gui.feature.evaluator.params;
+package org.anchoranalysis.gui.feature.evaluator.energytree;
 
+import lombok.AllArgsConstructor;
 import org.anchoranalysis.core.exception.CreateException;
-import org.anchoranalysis.feature.energy.EnergyStack;
+import org.anchoranalysis.feature.bean.Feature;
+import org.anchoranalysis.feature.bean.list.FeatureListFactory;
+import org.anchoranalysis.feature.calculate.NamedFeatureCalculateException;
 import org.anchoranalysis.feature.input.FeatureInput;
-import org.anchoranalysis.mpp.feature.bean.mark.FeatureInputMark;
-import org.anchoranalysis.mpp.mark.voxelized.memo.VoxelizedMarkMemo;
+import org.anchoranalysis.feature.session.CreateFeatureInput;
+import org.anchoranalysis.feature.session.calculator.multi.FeatureCalculatorMulti;
 
-public class MarkUnaryFactory extends UnaryFactory {
+@AllArgsConstructor
+public class FeatureInputSource {
 
-    @Override
-    public FeatureInput create(VoxelizedMarkMemo pmm, EnergyStack raster) throws CreateException {
-        return new FeatureInputMark(pmm.getMark(), raster.dimensions(), raster.getDictionary());
+    private CreateFeatureInput<FeatureInput> creator;
+    private FeatureCalculatorMulti<FeatureInput> featureCalculator;
+
+    public double calc(Feature<FeatureInput> feature) throws NamedFeatureCalculateException {
+        try {
+            FeatureInput params = creator.createForFeature(feature);
+            return featureCalculator.calculate(params, FeatureListFactory.from(feature)).get(0);
+
+        } catch (CreateException e) {
+            throw new NamedFeatureCalculateException(e);
+        }
     }
 }

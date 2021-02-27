@@ -24,24 +24,44 @@
  * #L%
  */
 
-package org.anchoranalysis.gui.annotation.strategy.builder.whole;
+package org.anchoranalysis.gui.annotation.strategy.builder.mark;
 
 import org.anchoranalysis.gui.annotation.AnnotationBackgroundInstance;
 import org.anchoranalysis.gui.annotation.AnnotationRefresher;
-import org.anchoranalysis.gui.videostats.internalframe.annotator.InitParamsWithBackground;
+import org.anchoranalysis.gui.annotation.InitAnnotation;
+import org.anchoranalysis.gui.annotation.mark.MarkAnnotator;
+import org.anchoranalysis.gui.videostats.internalframe.annotator.InitializationWithBackground;
 
-public class InitParamsWholeImage extends InitParamsWithBackground {
+public class InitializationProposeMarks extends InitializationWithBackground {
 
     private AnnotationRefresher annotationRefresher;
+    private MarkAnnotator markAnnotator;
+    private InitAnnotation initAnnotation;
 
-    public InitParamsWholeImage(
+    public InitializationProposeMarks(
+            AnnotationRefresher annotationRefresher,
+            MarkAnnotator markAnnotator,
             AnnotationBackgroundInstance annotationBackground,
-            AnnotationRefresher annotationRefresher) {
+            InitAnnotation initAnnotation) {
         super(annotationBackground);
         this.annotationRefresher = annotationRefresher;
+        this.markAnnotator = markAnnotator;
+        this.initAnnotation = initAnnotation;
     }
 
     public AnnotationRefresher getAnnotationRefresher() {
         return annotationRefresher;
+    }
+
+    public MarkAnnotator getMarkAnnotator() {
+        return markAnnotator;
+    }
+
+    public InitAnnotation getInitAnnotation() {
+        return initAnnotation;
+    }
+
+    public void setInitAnnotation(InitAnnotation initAnnotation) {
+        this.initAnnotation = initAnnotation;
     }
 }

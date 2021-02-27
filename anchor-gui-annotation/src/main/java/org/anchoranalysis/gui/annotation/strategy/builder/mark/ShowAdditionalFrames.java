@@ -40,7 +40,7 @@ import org.anchoranalysis.plugin.annotation.bean.strategy.MarkProposerStrategy;
 class ShowAdditionalFrames {
 
     public static void apply(
-            InitParamsProposeMarks paramsInit,
+            InitializationProposeMarks initialization,
             AdditionalFramesContext context,
             Path matchPath,
             MarkProposerStrategy strategy)
@@ -64,9 +64,9 @@ class ShowAdditionalFrames {
                         context.getOutputWriteSettings().getDefaultColors(),
                         matchPath,
                         context.getName(),
-                        paramsInit.getBackground().getDefaultBackground(),
+                        initialization.getBackground().getDefaultBackground(),
                         context.getMpg().getModelDirectory(),
                         context.getMpg().getLogger());
-        showComparers.apply(paramsInit.getInitAnnotation().getAnnotation());
+        showComparers.apply(initialization.getInitAnnotation().getAnnotation());
     }
 }
