@@ -43,7 +43,7 @@ import org.anchoranalysis.gui.annotation.export.ExportAnnotation;
 import org.anchoranalysis.gui.annotation.export.ExportScaledMarks;
 import org.anchoranalysis.gui.annotation.mark.MarkAnnotator;
 import org.anchoranalysis.gui.annotation.mark.RejectionReason;
-import org.anchoranalysis.gui.annotation.opener.OpenAnnotationMPP;
+import org.anchoranalysis.gui.annotation.opener.OpenAnnotationMarks;
 import org.anchoranalysis.gui.annotation.state.AnnotationSummary;
 import org.anchoranalysis.gui.annotation.strategy.builder.mark.panel.CreateNavigationPanel;
 import org.anchoranalysis.gui.videostats.internalframe.annotator.AnnotationFrameControllers;
@@ -61,7 +61,7 @@ public class BuilderProposeMarks
     private MarkAnnotationReader<RejectionReason> annotationReader =
             new MarkAnnotationReader<>(true);
 
-    private OpenAnnotationMPP openAnnotation;
+    private OpenAnnotationMarks openAnnotation;
 
     public BuilderProposeMarks(AnnotationWithStrategy<MarkProposerStrategy> delegate)
             throws CreateException {
@@ -69,7 +69,7 @@ public class BuilderProposeMarks
         this.openAnnotation = createOpenAnnotation();
     }
 
-    private OpenAnnotationMPP createOpenAnnotation() throws CreateException {
+    private OpenAnnotationMarks createOpenAnnotation() throws CreateException {
         try {
             Optional<Path> marksPath =
                     OptionalUtilities.mapBoth(
@@ -77,7 +77,7 @@ public class BuilderProposeMarks
                             pathForBinding(),
                             PathFromGenerator::derivePath);
 
-            return new OpenAnnotationMPP(annotationPath(), marksPath, annotationReader);
+            return new OpenAnnotationMarks(annotationPath(), marksPath, annotationReader);
         } catch (DerivePathException e) {
             throw new CreateException(e);
         }

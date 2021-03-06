@@ -84,7 +84,7 @@ public class CreateNavigationPanel {
             AnnotationRefresher annotationRefresher,
             Optional<SaveMonitor> saveMonitor) {
         return new SaveActionListenerFactory(
-                new SaveAnnotationMPP(annotationPath),
+                new SaveAnnotationMarks(annotationPath),
                 queryAcceptReject,
                 annotationRefresher,
                 saveMonitor);
