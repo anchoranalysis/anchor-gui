@@ -57,7 +57,7 @@ public class FileStackCollection extends InteractiveFile {
 
     @Override
     public String identifier() {
-        return ExtensionUtilities.removeExtension(new File(input.name()));
+        return ExtensionUtilities.removeExtension(new File(input.identifier()));
     }
 
     @Override

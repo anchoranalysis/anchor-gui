@@ -55,7 +55,7 @@ public class FileSingleStack extends InteractiveFile {
 
     @Override
     public String identifier() {
-        return input.name();
+        return input.identifier();
     }
 
     @Override
