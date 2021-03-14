@@ -36,6 +36,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Optional;
 import javax.swing.AbstractAction;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
@@ -121,7 +122,7 @@ public class OpenFile extends AbstractAction {
                         fileCreatorLoader.getImporterSettings());
             } else {
                 try {
-                    OpenFileType guessedType = guessFileTypeFromFiles(listFiles);
+                    Optional<OpenFileType> guessedType = guessFileTypeFromFiles(listFiles);
                     openFileCreator(
                             listFiles,
                             guessedType,
@@ -134,49 +135,51 @@ public class OpenFile extends AbstractAction {
         }
     }
 
-    private OpenFileType guessFileTypeFromFiles(List<File> files) throws OperationFailedException {
+    private Optional<OpenFileType> guessFileTypeFromFiles(List<File> files)
+            throws OperationFailedException {
 
         OpenFileType fileTypeChosen = null;
 
         for (File f : files) {
-            OpenFileType oft = factory.guessTypeFromFile(f);
+            Optional<OpenFileType> oft = factory.guessTypeFromFile(f);
 
-            if (oft == null) {
+            if (!oft.isPresent()) {
                 throw new OperationFailedException(
                         String.format("Cannot guess fileType for %s", f.getPath()));
             }
 
             if (fileTypeChosen == null) {
-                fileTypeChosen = oft;
+                fileTypeChosen = oft.get();
             } else {
                 // we check it's the same
-                if (!fileTypeChosen.equals(oft)) {
+                if (!fileTypeChosen.equals(oft.get())) {
                     throw new OperationFailedException("Multiple File Types detected");
                 }
             }
         }
 
-        return fileTypeChosen;
+        return Optional.ofNullable(fileTypeChosen);
     }
 
     //
     public void openFileCreator(
             List<File> files,
-            OpenFileType fileType,
+            Optional<OpenFileType> fileType,
             Component parentComponent,
             ImporterSettings importerSettings) {
 
         try {
-            if (fileType == null) {
+            if (!fileType.isPresent()) {
                 fileType = guessFileTypeFromFiles(files);
             }
 
-            if (fileType == null) {
+            if (!fileType.isPresent()) {
                 showError("FileType not supported");
             }
 
             fileCreatorLoader.addFileListSummaryModule(
-                    fileType.creatorForFile(files, importerSettings), parentComponent); // NOSONAR
+                    fileType.get().creatorForFile(files, importerSettings),
+                    parentComponent); // NOSONAR
 
         } catch (CreateException | OperationFailedException e) {
             logger.errorReporter().recordError(OpenFile.class, e);

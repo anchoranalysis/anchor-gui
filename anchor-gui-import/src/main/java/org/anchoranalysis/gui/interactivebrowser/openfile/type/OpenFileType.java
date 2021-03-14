@@ -30,10 +30,10 @@ import java.io.File;
 import java.util.List;
 import org.anchoranalysis.bean.AnchorBean;
 import org.anchoranalysis.core.exception.CreateException;
+import org.anchoranalysis.core.system.path.ExtensionUtilities;
 import org.anchoranalysis.gui.bean.filecreator.FileCreator;
 import org.anchoranalysis.gui.interactivebrowser.openfile.importer.ImporterSettings;
 import org.anchoranalysis.io.input.bean.files.SpecificPathList;
-import org.apache.commons.io.FilenameUtils;
 
 // Describes what type of file we are opening
 public abstract class OpenFileType extends AnchorBean<OpenFileType> {
@@ -46,12 +46,11 @@ public abstract class OpenFileType extends AnchorBean<OpenFileType> {
             List<File> files, ImporterSettings importerSettings) throws CreateException;
 
     protected static String createName(List<File> files) {
+        File firstFile = files.get(0);
         if (files.size() == 1) {
-            File f = files.get(0);
-            return FilenameUtils.removeExtension(f.getName());
+            return ExtensionUtilities.removeExtension(firstFile);
         } else {
-            File f = files.get(0);
-            return new File(f.getParent()).getName();
+            return new File(firstFile.getParent()).getName();
         }
     }
 

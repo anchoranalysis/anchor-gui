@@ -31,9 +31,9 @@ import java.nio.file.Path;
 import org.anchoranalysis.core.exception.OperationFailedException;
 import org.anchoranalysis.core.identifier.provider.store.LazyEvaluationStore;
 import org.anchoranalysis.core.log.Logger;
+import org.anchoranalysis.core.system.path.ExtensionUtilities;
 import org.anchoranalysis.image.io.object.input.ObjectCollectionReader;
 import org.anchoranalysis.image.voxel.object.ObjectCollection;
-import org.apache.commons.io.FilenameUtils;
 
 class CreateObjectStoreFromDirectory {
 
@@ -55,8 +55,7 @@ class CreateObjectStoreFromDirectory {
             throws OperationFailedException {
 
         for (File file : hd5fFilesFor(pathDirectory)) {
-            String nameWithoutExt = FilenameUtils.removeExtension(file.getName());
-            addPath(out, nameWithoutExt, file.toPath());
+            addPath(out, ExtensionUtilities.removeExtension(file), file.toPath());
         }
     }
 
