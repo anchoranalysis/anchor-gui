@@ -37,7 +37,7 @@ import org.anchoranalysis.gui.interactivebrowser.openfile.importer.ImporterSetti
 import org.anchoranalysis.image.io.bean.stack.reader.StackReader;
 import org.anchoranalysis.io.input.bean.InputManager;
 import org.anchoranalysis.io.input.bean.files.SpecificPathList;
-import org.anchoranalysis.io.input.files.FileInput;
+import org.anchoranalysis.io.input.file.FileInput;
 import org.anchoranalysis.plugin.io.bean.channel.map.Autoname;
 import org.anchoranalysis.plugin.io.bean.input.channel.NamedChannels;
 import org.anchoranalysis.plugin.io.bean.input.files.NamedFiles;
