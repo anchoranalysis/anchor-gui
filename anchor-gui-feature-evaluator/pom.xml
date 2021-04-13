@@ -8,7 +8,10 @@
   <artifactId>anchor-gui-feature-evaluator</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   
-  	<!-- Provides a means of reaching anchor-pom and ImageJ -->
+  	<!-- 
+  		Provides a means of reaching NetBeans.
+  	     Note the transition to Maven Central at https://netbeans.apache.org/about/oracle-transition.html
+  	 -->
     <repositories>
 		<repository>
 		  <releases>
@@ -18,7 +21,7 @@
 		  </releases>
 		  <id>netbeans</id>
 		   <name>netbeans</name>
-		   <url>http://bits.netbeans.org/maven2/</url>
+		   <url>http://netbeans.apidesign.org/maven2/</url>
 		  <layout>default</layout>
 		</repository>
 		
