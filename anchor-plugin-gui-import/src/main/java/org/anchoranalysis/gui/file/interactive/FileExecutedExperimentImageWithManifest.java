@@ -80,7 +80,7 @@ public class FileExecutedExperimentImageWithManifest extends InteractiveFile {
 
     @Override
     public String identifier() {
-        return coupledManifests.name();
+        return coupledManifests.identifier();
     }
 
     @Override

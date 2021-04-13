@@ -32,6 +32,7 @@ import java.util.Optional;
 import java.util.function.Consumer;
 import javax.swing.JComponent;
 import javax.swing.JOptionPane;
+import lombok.AllArgsConstructor;
 import org.anchoranalysis.annotation.mark.DualMarks;
 import org.anchoranalysis.annotation.mark.DualMarksAnnotation;
 import org.anchoranalysis.core.exception.friendly.AnchorImpossibleSituationException;
@@ -39,14 +40,10 @@ import org.anchoranalysis.gui.annotation.mark.RejectionReason;
 import org.anchoranalysis.gui.annotation.save.ISaveAnnotation;
 import org.anchoranalysis.gui.videostats.internalframe.annotator.AnnotationWriterGUI;
 
-class SaveAnnotationMPP implements ISaveAnnotation<DualMarksAnnotation<RejectionReason>> {
+@AllArgsConstructor
+class SaveAnnotationMarks implements ISaveAnnotation<DualMarksAnnotation<RejectionReason>> {
 
     private Path annotationPath;
-
-    public SaveAnnotationMPP(Path annotationPath) {
-        super();
-        this.annotationPath = annotationPath;
-    }
 
     @Override
     public void saveFinished(

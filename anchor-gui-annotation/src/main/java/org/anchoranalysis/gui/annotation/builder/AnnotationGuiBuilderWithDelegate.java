@@ -71,7 +71,7 @@ public abstract class AnnotationGuiBuilderWithDelegate<
 
     @Override
     public String inputName() {
-        return delegate.name();
+        return delegate.identifier();
     }
 
     @Override

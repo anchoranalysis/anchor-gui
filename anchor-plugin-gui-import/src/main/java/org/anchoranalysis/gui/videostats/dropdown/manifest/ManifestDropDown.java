@@ -87,7 +87,7 @@ public class ManifestDropDown {
         this.manifests = manifests;
         this.markDisplaySettings = markDisplaySettings;
         this.delegate =
-                new BoundVideoStatsModuleDropDown(manifests.name(), "/toolbarIcon/rectangle.png");
+                new BoundVideoStatsModuleDropDown(manifests.identifier(), "/toolbarIcon/rectangle.png");
     }
 
     public OpenedFileGUI openedFileGUI() {

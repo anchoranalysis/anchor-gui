@@ -42,7 +42,7 @@ import org.anchoranalysis.io.input.InputReadFailedException;
 import org.anchoranalysis.mpp.mark.MarkCollection;
 
 @AllArgsConstructor
-public class OpenAnnotationMPP implements OpenAnnotation {
+public class OpenAnnotationMarks implements OpenAnnotation {
 
     private Path annotationPath;
     private Optional<Path> defaultMarksPath;

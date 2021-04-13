@@ -29,7 +29,7 @@ package org.anchoranalysis.gui.interactivebrowser.openfile.importer;
 import java.io.File;
 import java.util.Optional;
 import org.anchoranalysis.gui.bean.filecreator.FileCreator;
-import org.anchoranalysis.plugin.io.bean.groupfiles.GroupFiles;
+import org.anchoranalysis.plugin.io.bean.file.group.GroupFiles;
 
 public class ImporterGroup extends ImporterFromBean {
 

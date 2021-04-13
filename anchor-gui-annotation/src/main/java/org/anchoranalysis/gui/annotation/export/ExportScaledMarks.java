@@ -36,11 +36,12 @@ import org.anchoranalysis.annotation.io.mark.MarkAnnotationWriter;
 import org.anchoranalysis.annotation.mark.DualMarksAnnotation;
 import org.anchoranalysis.core.exception.OperationFailedException;
 import org.anchoranalysis.core.exception.OptionalOperationUnsupportedException;
+import org.anchoranalysis.core.system.path.ExtensionUtilities;
+import org.anchoranalysis.core.system.path.FilenameSplitExtension;
 import org.anchoranalysis.gui.annotation.AnnotationRefresher;
 import org.anchoranalysis.gui.annotation.mark.RejectionReason;
 import org.anchoranalysis.gui.videostats.internalframe.annotator.AnnotationWriterGUI;
 import org.anchoranalysis.io.input.InputReadFailedException;
-import org.apache.commons.io.FilenameUtils;
 
 @RequiredArgsConstructor
 public class ExportScaledMarks extends ExportAnnotation {
@@ -94,13 +95,8 @@ public class ExportScaledMarks extends ExportAnnotation {
     }
 
     private static Path suffixBasename(Path path, String suffix) {
-
-        String filePath = path.toString();
-
-        String basename = FilenameUtils.getBaseName(filePath);
-        String extension = FilenameUtils.getExtension(filePath);
-        File dir = path.toFile().getParentFile();
-
-        return dir.toPath().resolve(basename + suffix + "." + extension);
+        FilenameSplitExtension filename = ExtensionUtilities.splitFilename(path.toString());
+        File directory = path.toFile().getParentFile();
+        return directory.toPath().resolve(filename.combineWithSuffix(suffix));
     }
 }

@@ -36,6 +36,7 @@ import org.anchoranalysis.core.exception.OperationFailedException;
 import org.anchoranalysis.core.identifier.provider.store.EagerEvaluationStore;
 import org.anchoranalysis.core.identifier.provider.store.LazyEvaluationStore;
 import org.anchoranalysis.core.progress.Progress;
+import org.anchoranalysis.core.system.path.ExtensionUtilities;
 import org.anchoranalysis.gui.bean.filecreator.MarkCreatorParams;
 import org.anchoranalysis.gui.file.opened.OpenedFile;
 import org.anchoranalysis.gui.file.opened.OpenedFileGUIWithFile;
@@ -47,7 +48,6 @@ import org.anchoranalysis.image.core.stack.TimeSequence;
 import org.anchoranalysis.image.io.ImageIOException;
 import org.anchoranalysis.image.io.stack.input.StackSequenceInput;
 import org.anchoranalysis.io.output.outputter.InputOutputContext;
-import org.apache.commons.io.FilenameUtils;
 
 @AllArgsConstructor
 public class FileStackCollection extends InteractiveFile {
@@ -57,7 +57,7 @@ public class FileStackCollection extends InteractiveFile {
 
     @Override
     public String identifier() {
-        return FilenameUtils.removeExtension(new File(input.name()).getName());
+        return ExtensionUtilities.removeExtension(new File(input.identifier()));
     }
 
     @Override

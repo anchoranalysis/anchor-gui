@@ -29,28 +29,28 @@ package org.anchoranalysis.gui.interactivebrowser.openfile;
 import java.io.File;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Optional;
+import lombok.AllArgsConstructor;
+import org.anchoranalysis.core.system.path.ExtensionUtilities;
 import org.anchoranalysis.gui.interactivebrowser.openfile.type.OpenFileType;
-import org.apache.commons.io.FilenameUtils;
 
+@AllArgsConstructor
 public class OpenFileTypeFactory {
 
-    private List<OpenFileType> list;
+    private final List<OpenFileType> list;
 
-    public OpenFileTypeFactory(List<OpenFileType> list) {
-        this.list = list;
-    }
-
-    public OpenFileType guessTypeFromFile(File f) {
-        String extFromFile = FilenameUtils.getExtension(f.getPath());
+    public Optional<OpenFileType> guessTypeFromFile(File file) {
+        Optional<String> extensionFromFile = ExtensionUtilities.extractExtension(file.getPath());
         for (OpenFileType type : list) {
-            String[] exts = type.getExtensions();
-            for (String extFromType : exts) {
-                if (extFromFile.equalsIgnoreCase(extFromType)) {
-                    return type;
+            String[] extensions = type.getExtensions();
+            for (String extensionFromType : extensions) {
+                if (extensionFromFile.isPresent()
+                        && extensionFromFile.get().equalsIgnoreCase(extensionFromType)) {
+                    return Optional.of(type);
                 }
             }
         }
-        return null;
+        return Optional.empty();
     }
 
     // All the types
@@ -58,12 +58,12 @@ public class OpenFileTypeFactory {
         return list.iterator();
     }
 
-    public OpenFileType factoryFromDescription(String dscr) {
+    public Optional<OpenFileType> factoryFromDescription(String dscr) {
         for (OpenFileType type : list) {
             if (dscr.equalsIgnoreCase(type.getDescription())) {
-                return type;
+                return Optional.of(type);
             }
         }
-        return null;
+        return Optional.empty();
     }
 }

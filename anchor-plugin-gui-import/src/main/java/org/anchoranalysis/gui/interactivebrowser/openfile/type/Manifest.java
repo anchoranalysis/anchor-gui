@@ -32,12 +32,12 @@ import java.util.Arrays;
 import java.util.List;
 import org.anchoranalysis.core.exception.CreateException;
 import org.anchoranalysis.core.format.NonImageFileFormat;
+import org.anchoranalysis.core.system.path.ExtensionUtilities;
 import org.anchoranalysis.gui.bean.filecreator.ExecutedExperimentFileCreator;
 import org.anchoranalysis.gui.bean.filecreator.FileCreator;
 import org.anchoranalysis.gui.interactivebrowser.openfile.importer.ImporterSettings;
 import org.anchoranalysis.io.input.bean.files.SpecificPathList;
 import org.anchoranalysis.plugin.io.bean.input.manifest.CoupledManifestsInputManager;
-import org.apache.commons.io.FilenameUtils;
 
 public class Manifest extends OpenFileType {
 
@@ -71,7 +71,7 @@ public class Manifest extends OpenFileType {
     private static String customNameForExperiment(List<File> files) {
         if (files.size() == 1) {
             return String.format(
-                    "experiment: %s", FilenameUtils.removeExtension(files.get(0).getName()));
+                    "experiment: %s", ExtensionUtilities.removeExtension(files.get(0)));
         } else {
             return "experiment: multiple";
         }

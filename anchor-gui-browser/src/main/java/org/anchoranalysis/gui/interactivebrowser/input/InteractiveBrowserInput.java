@@ -111,7 +111,7 @@ public class InteractiveBrowserInput implements InputFromManager {
     }
 
     @Override
-    public String name() {
+    public String identifier() {
         return "interactiveBrowserInput";
     }
 
