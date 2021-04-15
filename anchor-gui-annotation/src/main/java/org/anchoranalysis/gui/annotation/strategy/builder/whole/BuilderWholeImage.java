@@ -52,6 +52,7 @@ import org.anchoranalysis.gui.videostats.internalframe.annotator.AnnotationWrite
 import org.anchoranalysis.gui.videostats.internalframe.annotator.SaveMonitor;
 import org.anchoranalysis.gui.videostats.internalframe.annotator.navigation.PanelNavigation;
 import org.anchoranalysis.gui.videostats.internalframe.annotator.navigation.PanelWithLabel;
+import org.anchoranalysis.io.input.InputReadFailedException;
 import org.anchoranalysis.plugin.annotation.bean.label.AnnotationLabel;
 import org.anchoranalysis.plugin.annotation.bean.strategy.ReadAnnotationFromFile;
 import org.anchoranalysis.plugin.annotation.bean.strategy.WholeImageLabelStrategy;
@@ -93,7 +94,13 @@ public class BuilderWholeImage
             AnnotationFrameControllers controllers) {
         PanelWithLabel buttonPanel =
                 new ChooseLabel(
-                        () -> ReadAnnotationFromFile.readCheckExists(annotationPath()),
+                        () -> {
+                            try {
+                                return ReadAnnotationFromFile.readCheckExists(annotationPath());
+                            } catch (InputReadFailedException e) {
+                                return Optional.empty();
+                            }
+                        },
                         getStrategy().groupedLabels(),
                         label ->
                                 saveAnnotationClose(
