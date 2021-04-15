@@ -33,6 +33,7 @@ import java.util.Optional;
 import org.anchoranalysis.annotation.image.ImageLabelAnnotation;
 import org.anchoranalysis.core.exception.CreateException;
 import org.anchoranalysis.gui.annotation.state.AnnotationSummary;
+import org.anchoranalysis.io.input.InputReadFailedException;
 import org.anchoranalysis.plugin.annotation.bean.strategy.ReadAnnotationFromFile;
 
 class CreateAnnotationSummary {
@@ -54,17 +55,21 @@ class CreateAnnotationSummary {
 
     private AnnotationSummary createSummaryForExistingAnnotation(Path path) throws CreateException {
 
-        Optional<ImageLabelAnnotation> ann = ReadAnnotationFromFile.readAssumeExists(path);
-
-        if (!ann.isPresent()) {
-            throw new CreateException("Failed to read a label for the annotation");
+        try {
+            Optional<ImageLabelAnnotation> ann = ReadAnnotationFromFile.readAssumeExists(path);
+    
+            if (!ann.isPresent()) {
+                throw new CreateException("Failed to read a label for the annotation");
+            }
+    
+            AnnotationSummary as = new AnnotationSummary();
+            as.setShortDescription(ann.get().getLabel());
+            as.setColor(colors.get(ann.get().getLabel()));
+            as.setExistsFinished(true);
+            return as;
+        } catch (InputReadFailedException e) {
+            throw new CreateException(e);
         }
-
-        AnnotationSummary as = new AnnotationSummary();
-        as.setShortDescription(ann.get().getLabel());
-        as.setColor(colors.get(ann.get().getLabel()));
-        as.setExistsFinished(true);
-        return as;
     }
 
     private AnnotationSummary createSummaryForMissingAnnotation() {
