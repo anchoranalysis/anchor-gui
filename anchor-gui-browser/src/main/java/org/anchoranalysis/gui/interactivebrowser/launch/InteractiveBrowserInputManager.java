@@ -41,6 +41,7 @@ import org.anchoranalysis.gui.interactivebrowser.input.InteractiveBrowserInput;
 import org.anchoranalysis.gui.interactivebrowser.openfile.importer.ImporterSettings;
 import org.anchoranalysis.image.io.bean.stack.reader.InputManagerWithStackReader;
 import org.anchoranalysis.io.input.InputReadFailedException;
+import org.anchoranalysis.io.input.InputsWithDirectory;
 import org.anchoranalysis.io.input.bean.InputManagerParams;
 import org.anchoranalysis.io.input.bean.path.provider.FilePathProvider;
 import org.anchoranalysis.mpp.feature.bean.energy.scheme.EnergySchemeCreator;
@@ -70,7 +71,7 @@ public class InteractiveBrowserInputManager
     // END BEAN PROPERTIES
 
     @Override
-    public List<InteractiveBrowserInput> inputs(InputManagerParams params)
+    public InputsWithDirectory<InteractiveBrowserInput> inputs(InputManagerParams params)
             throws InputReadFailedException {
 
         InteractiveBrowserInput input = new InteractiveBrowserInput();
@@ -83,12 +84,12 @@ public class InteractiveBrowserInputManager
         input.setFilePaths(filePaths);
         input.setImporterSettings(importerSettings);
 
-        return singletonList(input);
+        return new InputsWithDirectory<>(singletonList(input));
     }
 
-    private static <T> List<T> singletonList(T elem) {
+    private static <T> List<T> singletonList(T elemelement) {
         List<T> list = new ArrayList<>();
-        list.add(elem);
+        list.add(elemelement);
         return list;
     }
 }

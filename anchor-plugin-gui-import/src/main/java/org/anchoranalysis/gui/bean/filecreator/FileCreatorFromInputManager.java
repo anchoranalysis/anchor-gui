@@ -50,13 +50,11 @@ public abstract class FileCreatorFromInputManager<T extends InputFromManager>
             throws OperationFailedException {
 
         try {
-
-            List<? extends T> list =
-                    input.inputs(
-                            new InputManagerParams(
-                                    params.createInputContext(),
-                                    progress,
-                                    params.getLogErrorReporter()));
+            InputManagerParams inputParams = new InputManagerParams(
+                    params.createInputContext(),
+                    progress,
+                    params.getLogErrorReporter()); 
+            List<? extends T> list = input.inputs(inputParams).inputs();
 
             for (T element : list) {
                 listFiles.add(create(element, params.getMarkCreatorParams()));
