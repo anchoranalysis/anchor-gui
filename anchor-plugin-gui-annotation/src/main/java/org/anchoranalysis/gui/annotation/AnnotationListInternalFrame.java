@@ -138,12 +138,13 @@ public class AnnotationListInternalFrame {
             Progress progress)
             throws OperationFailedException {
         try {
+            InputManagerParams inputParams =
+                    new InputManagerParams(
+                            params.getModuleParams().createInputContext(),
+                            progress,
+                            params.getModuleParams().getLogger());
             Collection<AnnotationWithStrategy<T>> inputs =
-                    inputManager.inputs(
-                            new InputManagerParams(
-                                    params.getModuleParams().createInputContext(),
-                                    progress,
-                                    params.getModuleParams().getLogger()));
+                    inputManager.inputs(inputParams).inputs();
 
             return new AnnotationProject(
                     inputs,
