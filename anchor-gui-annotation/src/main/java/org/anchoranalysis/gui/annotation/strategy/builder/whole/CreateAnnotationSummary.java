@@ -57,11 +57,11 @@ class CreateAnnotationSummary {
 
         try {
             Optional<ImageLabelAnnotation> ann = ReadAnnotationFromFile.readAssumeExists(path);
-    
+
             if (!ann.isPresent()) {
                 throw new CreateException("Failed to read a label for the annotation");
             }
-    
+
             AnnotationSummary as = new AnnotationSummary();
             as.setShortDescription(ann.get().getLabel());
             as.setColor(colors.get(ann.get().getLabel()));
