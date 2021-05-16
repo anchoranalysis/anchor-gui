@@ -42,7 +42,7 @@ public class FromMarkCollectionProposer
 
     @Override
     public NamedProvider<MarkCollectionProposer> allProposers(MarksInitialization so) {
-        return so.getMarksProposerSet();
+        return so.markCollectionProposers();
     }
 
     @Override

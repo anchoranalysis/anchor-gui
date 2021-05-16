@@ -52,7 +52,7 @@ class CreateEnergyStackHelper {
             MarksInitialization initialization = supplyInitialization.get();
 
             // We expects the keys to be the indexes
-            Stack stack = deriveEnergyStack(initialization.getImage().stacks());
+            Stack stack = deriveEnergyStack(initialization.image().stacks());
 
             if (stack.getNumberChannels() > 0) {
                 return new EnergyStack(new EnergyStackWithoutParams(stack), dictionary);

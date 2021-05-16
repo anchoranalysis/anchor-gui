@@ -41,7 +41,7 @@ public class FromMarkSplitProposer extends ProposalOperationCreatorFromProposer<
 
     @Override
     public NamedProvider<MarkSplitProposer> allProposers(MarksInitialization so) {
-        return so.getMarkSplitProposerSet();
+        return so.markSplitProposers();
     }
 
     @Override

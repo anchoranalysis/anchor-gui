@@ -37,9 +37,11 @@ import org.anchoranalysis.core.cache.CachedSupplier;
 import org.anchoranalysis.core.exception.CreateException;
 import org.anchoranalysis.core.exception.InitException;
 import org.anchoranalysis.core.exception.OperationFailedException;
+import org.anchoranalysis.core.identifier.provider.store.SharedObjects;
 import org.anchoranalysis.core.identifier.provider.store.StoreSupplier;
 import org.anchoranalysis.core.progress.ProgressIgnore;
 import org.anchoranalysis.experiment.io.InitializationContext;
+import org.anchoranalysis.image.bean.nonbean.init.ImageInitialization;
 import org.anchoranalysis.image.core.stack.named.NamedStacksSupplier;
 import org.anchoranalysis.io.output.outputter.InputOutputContext;
 import org.anchoranalysis.mpp.bean.init.MarksInitialization;
@@ -59,12 +61,12 @@ public class MarkEvaluatorSetForImage {
 
     private class Resolved {
 
-        private CachedSupplier<MarksInitialization, CreateException> operationProposerSharedObjects;
-        private MarkEvaluator me;
+        private CachedSupplier<MarksInitialization, CreateException> operationInitialization;
+        private MarkEvaluator markEvaluator;
 
         public Resolved(MarkEvaluator me) throws CreateException {
-            this.me = me;
-            operationProposerSharedObjects =
+            this.markEvaluator = me;
+            operationInitialization =
                     /// TODO Do we need this duplication?
                     CachedSupplier.cache(
                             () -> deriveInitialization(me.getDefine().duplicateBean()));
@@ -74,7 +76,7 @@ public class MarkEvaluatorSetForImage {
                 // params from somewhere else
                 //  i.e. where they are being passed around
                 me.initRecursive(
-                        operationProposerSharedObjects.get().getFeature(), context.getLogger());
+                        operationInitialization.get().feature(), context.getLogger());
             } catch (InitException e) {
                 throw new CreateException(e);
             }
@@ -83,9 +85,9 @@ public class MarkEvaluatorSetForImage {
         public MarkEvaluatorResolved get() throws OperationFailedException {
             try {
                 return new MarkEvaluatorResolved(
-                        operationProposerSharedObjects,
-                        me.getMarkFactory(),
-                        me.getEnergySchemeCreator().create(),
+                        operationInitialization,
+                        markEvaluator.getMarkFactory(),
+                        markEvaluator.getEnergySchemeCreator().create(),
                         keyParams.get().get()); // NOSONAR
             } catch (CreateException | IOException e) {
                 throw new OperationFailedException(e);
@@ -94,13 +96,17 @@ public class MarkEvaluatorSetForImage {
 
         private MarksInitialization deriveInitialization(Define define) throws CreateException {
 
+            SharedObjects sharedObjects = new SharedObjects(context.common());
+            ImageInitialization image = new ImageInitialization(sharedObjects);
+            
             // We initialise the markEvaluator
             try {
-                return MarksInitializationFactory.createFromExistingCollections(
+                image.copyStacksFrom(namedStacks.get(ProgressIgnore.get()));
+                
+                return MarksInitializationFactory.createFromExisting(
                         new InitializationContext(context),
-                        Optional.ofNullable(define),
-                        Optional.of(namedStacks.get(ProgressIgnore.get())),
-                        Optional.empty(),
+                        Optional.of(define),
+                        Optional.of(sharedObjects),
                         keyParams.get());
 
             } catch (Exception e) {
