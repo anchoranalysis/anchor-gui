@@ -45,7 +45,7 @@ public class FromMarkProposer extends ProposalOperationCreatorFromProposer<MarkP
 
     @Override
     public NamedProvider<MarkProposer> allProposers(MarksInitialization so) {
-        return so.getMarkProposerSet();
+        return so.markProposers();
     }
 
     @Override

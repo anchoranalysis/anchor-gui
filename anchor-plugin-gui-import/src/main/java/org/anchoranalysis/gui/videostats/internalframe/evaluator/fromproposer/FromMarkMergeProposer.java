@@ -41,7 +41,7 @@ public class FromMarkMergeProposer extends ProposalOperationCreatorFromProposer<
 
     @Override
     public NamedProvider<MarkMergeProposer> allProposers(MarksInitialization so) {
-        return so.getMarkMergeProposerSet();
+        return so.markMergeProposers();
     }
 
     @Override

@@ -68,7 +68,7 @@ public class MarkAnnotator {
         // Nullable
         markProposerGuess = setupGuess(initialization, annotationStrategy, logger);
 
-        this.backgroundStacks = initialization.getImage().stacks();
+        this.backgroundStacks = initialization.image().stacks();
     }
 
     public RegionMap getRegionMap() {
@@ -104,7 +104,7 @@ public class MarkAnnotator {
             throws CreateException {
         try {
             return initialization
-                    .getPoints()
+                    .points()
                     .getPointsFitterSet()
                     .getException(annotationStrategy.getPointsFitter());
         } catch (NamedProviderGetException e) {
@@ -118,7 +118,7 @@ public class MarkAnnotator {
             Logger logger) {
         try {
             return initialization
-                    .getMarkProposerSet()
+                    .markProposers()
                     .getException(annotationStrategy.getMarkProposer());
         } catch (NamedProviderGetException e) {
             logger.messageLogger().log("Proceeding without 'Guess Tool' as an error occured");
