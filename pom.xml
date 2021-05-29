@@ -12,7 +12,7 @@
     <version>0.0.4-SNAPSHOT</version>
     <name>anchor-parent-gui</name>
 		
-	<!-- Where to depoy (upload) artifacts to, making sure to associate with the corresponding
+	<!-- Where to deploy (upload) artifacts to, making sure to associate with the corresponding
 	repository in GitHub Packages. Overrides settings that already are inherited from anchor-pom. -->
 	<distributionManagement>
         <repository>
