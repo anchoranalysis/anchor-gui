@@ -71,7 +71,7 @@ public class Manifest extends OpenFileType {
     private static String customNameForExperiment(List<File> files) {
         if (files.size() == 1) {
             return String.format(
-                    "experiment: %s", ExtensionUtilities.removeExtension(files.get(0)));
+                    "experiment: %s", ExtensionUtilities.filenameWithoutExtension(files.get(0)));
         } else {
             return "experiment: multiple";
         }
