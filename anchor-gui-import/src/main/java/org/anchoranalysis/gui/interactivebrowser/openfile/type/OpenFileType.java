@@ -48,7 +48,7 @@ public abstract class OpenFileType extends AnchorBean<OpenFileType> {
     protected static String createName(List<File> files) {
         File firstFile = files.get(0);
         if (files.size() == 1) {
-            return ExtensionUtilities.removeExtension(firstFile);
+            return ExtensionUtilities.filenameWithoutExtension(firstFile);
         } else {
             return new File(firstFile.getParent()).getName();
         }

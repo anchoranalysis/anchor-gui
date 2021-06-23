@@ -55,7 +55,7 @@ class CreateObjectStoreFromDirectory {
             throws OperationFailedException {
 
         for (File file : hd5fFilesFor(pathDirectory)) {
-            addPath(out, ExtensionUtilities.removeExtension(file), file.toPath());
+            addPath(out, ExtensionUtilities.filenameWithoutExtension(file), file.toPath());
         }
     }
 
